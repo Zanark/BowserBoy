@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#141518">
+    <meta name="description" content="Your cartridges. Your browser. A local-first Game Boy Advance player with automatic resume and portable backups.">
+    <title>BowserBoyAdvance - Press play again.</title>
+    <link rel="icon" href="./assets/cartridge.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./src/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#player">Skip to player</a>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="BowserBoyAdvance home">
+        <img src="./assets/cartridge.svg" width="38" height="42" alt="">
+        <span>bowser<span class="brand-light">boy</span><span class="brand-accent">advance</span><small>THE GOOD OLD DAYS. ON A NEW TAB.</small></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a class="nav-active" href="#player">Play</a>
+        <button id="help-open" class="nav-button">How it works <span aria-hidden="true">&#8599;</span></button>
+        <a class="github-link" href="https://github.com/Zanark/BowserBoyAdvance" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">Source <span aria-hidden="true">&#8599;</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="headline">
+        <div><p class="eyebrow"><span class="tiny-square"></span> A LITTLE NOSTALGIA. ZERO INSTALLS.</p>
+        <h1 id="headline">Press play<span class="serif"> again.</span><span class="headline-star" aria-hidden="true">&#10035;</span></h1>
+        <p class="intro-copy">That game you never finished? It's still waiting for you.<br>Drop in a cartridge and pick up where you left off.</p></div>
+        <div class="platform-tag"><span class="status-dot"></span> GAME BOY ADVANCE <span class="tag-divider">/</span> WEB PLAYER</div>
+      </section>
+
+      <div class="workspace">
+        <section id="player" class="console" aria-label="GBA player">
+          <div class="console-top"><span><span class="live-led" id="power-led"></span> <span id="power-label">READY WHEN YOU ARE</span></span><span class="hardware-label">BBA&#8212;001 <span class="hardware-bars" aria-hidden="true">||||</span></span></div>
+          <div class="screen" id="screen">
+            <div class="empty-screen" id="empty-screen">
+              <div class="screen-grid" aria-hidden="true"></div>
+              <span class="pixel-spark spark-one" aria-hidden="true"></span><span class="pixel-spark spark-two" aria-hidden="true"></span>
+              <div class="cartridge-art" aria-hidden="true"><div class="cartridge-sticker"><span>GOOD<br>TIMES</span><i></i></div><div class="cartridge-pins"></div></div>
+              <p class="screen-kicker">YOUR NEXT ADVENTURE STARTS HERE</p>
+              <h2>One cartridge.<br>Endless afternoons.</h2>
+              <button id="screen-upload" class="button button-lime">Choose a ROM <span aria-hidden="true">&#8599;</span></button>
+              <p class="screen-hint">or drop a .gba file right here</p>
+              <div class="screen-bottom" aria-hidden="true"><span>240 &#215; 160 / 16.7 MHz</span><span>NO CARTRIDGE INSERTED</span></div>
+            </div>
+            <div id="frame-host"></div>
+            <div class="loading-screen" id="loading-screen" hidden>
+              <span class="loading-cartridge" aria-hidden="true"></span>
+              <h2 id="loading-title">Warming up the pixels...</h2>
+              <p id="loading-detail">Loading the emulator. The first launch needs internet.</p>
+              <button class="button button-outline" id="load-cancel">Cancel launch</button>
+            </div>
+          </div>
+          <div class="console-bottom">
+            <div class="game-info"><span id="game-monogram" class="game-icon" aria-hidden="true">?</span><div><h2 id="game-title">No game loaded</h2><p id="game-meta">Your next adventure goes here.</p></div></div>
+            <div class="player-actions"><button id="pause" class="icon-button" disabled aria-label="Pause game" title="Pause game">&#10074;&#10074;</button><button id="fullscreen" class="icon-button" disabled aria-label="Fullscreen player" title="Fullscreen player">&#x26F6;</button></div>
+          </div>
+          <div class="console-caption"><span>PLAY A LITTLE. FEEL A LOT.</span><span class="speaker-grille" aria-hidden="true">//////</span></div>
+        </section>
+
+        <aside class="side-panel" aria-label="Cartridge and progress">
+          <section class="panel cartridge-panel">
+            <div class="section-label"><span>01 / THE CARTRIDGE</span><span aria-hidden="true">&#8600;</span></div>
+            <h2>Bring your own adventure.</h2>
+            <p>A local ROM. A familiar feeling.<br>No installs. Just one more level.</p>
+            <button id="upload" class="upload-zone"><img src="./assets/cartridge.svg" width="29" height="34" alt=""><span>Drop your ROM here<small>or <span class="text-lime">browse files</span> &middot; .gba, up to 32 MB</small></span><span class="upload-plus" aria-hidden="true">+</span></button>
+            <input id="rom-file" type="file" accept=".gba" hidden>
+            <button id="demo" class="demo-link">Just looking? Try the original demo <span aria-hidden="true">&#8594;</span></button>
+            <div class="privacy-note"><span aria-hidden="true">&#9671;</span><span>Local files stay on your device.<br>No account. No ROM uploads.</span></div>
+          </section>
+
+          <section class="panel saves-panel">
+            <div class="section-label"><span>02 / PICK UP WHERE YOU LEFT OFF</span><span aria-hidden="true">&#10022;</span></div>
+            <div class="save-heading"><h2>Keep your progress.</h2><span id="storage-badge" class="small-badge">CHECKING</span></div>
+            <div class="autosave-row"><div><strong>Auto-save</strong><small id="autosave-description">A checkpoint every 15 seconds.</small></div><button id="autosave-toggle" class="toggle" aria-pressed="true" aria-label="Automatic checkpoints"><span></span></button></div>
+            <div class="save-slot"><div class="slot-icon" aria-hidden="true">&#10010;</div><div class="slot-info"><strong>Quick-save slot</strong><small id="quick-save-time">Your safety net for the tricky bits.</small></div><button id="restore" class="text-button" disabled>Restore</button></div>
+            <button id="save" class="button button-lime save-button" disabled>Save checkpoint <span aria-hidden="true">&#8595;</span></button>
+            <div class="backup-actions"><button id="export" disabled>Export backup <span aria-hidden="true">&#8599;</span></button><button id="import" disabled>Import backup <span aria-hidden="true">&#8601;</span></button></div>
+            <input id="backup-file" type="file" accept=".bba-save" hidden>
+            <p class="save-footnote" id="save-status">Saves live in this browser, not the cloud.<br>Export a backup before clearing site data.</p>
+          </section>
+          <div class="little-note"><span aria-hidden="true">&#10035;</span><p>Some things never get old.<br><strong>Especially a good save point.</strong></p></div>
+        </aside>
+      </div>
+
+      <section class="under-player" aria-label="Controls and player information">
+        <div class="control-guide"><span class="control-label">THE MUSCLE MEMORY</span><span><kbd>&#8593;</kbd><kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8594;</kbd> Move</span><span><kbd>X</kbd> A <kbd>Z</kbd> B</span><span><kbd>A</kbd> L <kbd>S</kbd> R</span><span><kbd>Enter</kbd> Start <kbd>Shift</kbd> Select</span></div>
+        <p>Click the game to focus &middot; Touch controls on mobile &middot; Remap in the emulator menu</p>
+      </section>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div>
+    </main>
+    <footer><span>A small escape, right in your browser.</span><span>POWERED BY <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EMULATORJS</a> + <a href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a><i></i> MADE FOR THE LOVE OF PLAY.</span></footer>
+
+    <dialog id="help">
+      <button class="dialog-close icon-button" id="help-close" aria-label="Close help">&times;</button>
+      <p class="eyebrow">A QUICK START</p><h2>Your games. Your save points.</h2>
+      <h3>1. Insert a cartridge</h3><p>Choose an uncompressed <strong>.gba</strong> file you have the right to use. It is read locally, not uploaded. No ROM or BIOS collection is supplied. The original Pixel Lab demo is included to try the player.</p>
+      <h3>2. Play</h3><p>Click the game for keyboard focus. Use arrows, X/Z for A/B, A/S for L/R, Enter for Start and Shift for Select. On phones, use the emulator's on-screen controls. The emulator menu offers control remapping, audio and display settings.</p>
+      <h3>3. Keep your place</h3><p><strong>Auto-save</strong> records one rolling checkpoint every 15 seconds, including the game's battery save when present. Selecting the same ROM later resumes the newest stored checkpoint, even if its file was renamed. <strong>Save checkpoint</strong> keeps a separate manual slot; Restore rolls back to it. Save manually before closing: abrupt shutdowns can lose progress since the last completed write.</p>
+      <h3>4. Take a backup</h3><p>Export captures the current session to a <strong>.bba-save</strong> file. Load the matching ROM before importing. Imports replace the current session and quick-save slot. Backups are specific to this ROM's exact bytes and EmulatorJS 4.2.3 / mGBA, not interchangeable with other emulators' .sav files.</p>
+      <p class="help-warning">Progress belongs to this browser and website origin. Private browsing, storage eviction or clearing site data can remove it. Different ports, devices or a different website origin do not share saves. Export regularly. ROM files are not retained; reselect yours to continue.</p>
+      <p class="help-fineprint">This is an independent prototype, not affiliated with Nintendo. Internet is required for the pinned third-party emulator runtime. That CDN receives normal network metadata and executes code in the player; there is no offline guarantee or cloud synchronization.</p>
+    </dialog>
+  </body>
+</html>

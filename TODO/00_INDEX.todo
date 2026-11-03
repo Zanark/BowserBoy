@@ -1,0 +1,11 @@
+BowserBoyAdvance workstreams
+==========================
+01_PLAYABLE_PROTOTYPE.todo - Local-ROM player and polished static shell.
+02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.
+03_VERIFICATION_AND_DELIVERY.todo - Real-runtime evidence and documentation.
+04_DEVELOPMENT_LEDGER.todo - Decisions, failures and completion evidence.
+
+Local prototype: technically complete, with 5 unit and 6 Edge browser tests.
+GitHub Actions Pages workflow: authored; hosted execution is not yet verified.
+Delivery authority: user authorized git add, commit and push on 2026-11-04.
+User acceptance and successful GitHub Pages publication remain separate gates.

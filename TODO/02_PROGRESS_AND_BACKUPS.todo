@@ -1,0 +1,28 @@
+Status: DONE (technical evidence; human acceptance pending)
+Milestone: Resume progress and carry a backup
+Dependencies: 01_PLAYABLE_PROTOTYPE
+Purpose: Make the prototype useful beyond one sitting without promising cloud sync.
+
+Tasks:
+- [x] Identify games by content, not mutable filenames.
+- [x] Persist checkpoints with checked IndexedDB transactions.
+- [x] Restore and export/import compatible checkpoints.
+- [x] Explain in-game saves, storage failures and browser/origin limitations.
+
+Acceptance criteria:
+- Real checkpoint restore survives refresh and matches the same ROM bytes.
+- Another ROM cannot accidentally receive a checkpoint.
+- Failed writes never produce a success badge.
+- Portable backups include identity and runtime compatibility validation.
+
+Completion evidence:
+- 2026-11-04: Real core round trip covers manual restore, SRAM capture,
+  backup export/import and reload with a renamed ROM.
+- Actual 15-second interval and different-ROM rejection exercised.
+- Browser transaction abort/quota fixtures retain prior data, show errors and
+  leave direct backup export usable. Five unit tests cover helpers/negative input.
+
+Completion log:
+- 2026-11-03: Separate battery saves, checkpoints and external backups in design.
+- 2026-11-04: Fixed upstream beforeunload core reset corrupting final resume.
+  Own checked checkpoint transactions define success, not upstream best effort.

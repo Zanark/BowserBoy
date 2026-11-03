@@ -1,0 +1,34 @@
+Status: DONE (local verification; publication and user acceptance pending)
+Milestone: Reproducible local handoff
+Dependencies: 01_PLAYABLE_PROTOTYPE, 02_PROGRESS_AND_BACKUPS
+Purpose: Verify the user-visible result, document limitations and retain continuity.
+
+Tasks:
+- [x] Run unit and real-browser integration tests.
+- [x] Verify nested-path static hosting and release build output.
+- [x] Document setup, controls, persistence, attribution and failure recovery.
+- [x] Update workstreams, development ledger and owned context.
+
+Acceptance criteria:
+- Actual emulator testing is distinguished from mocks and user acceptance.
+- Static build contains no private context, ROM library or dependencies.
+- No publication or commercial-game compatibility is falsely claimed.
+
+Completion evidence:
+- 2026-11-04: npm run check PASS; npm test 5/5 PASS; npm run build PASS.
+- Final browser suite: 6/6 PASS in Edge, including actual remote mGBA, under
+  /BowserBoyAdvance/, plus mobile touch UI, storage and CDN failure cases.
+- Pages workflow YAML parsed and job/dependency/artifact/permission structure
+  checked. Official current Action release tags verified through GitHub API.
+- Build inventory: ten static files, including original generated demo, with
+  no project/private context copied.
+- Pages API confirms build_type=workflow and expected URL. No hosted Actions
+  run, commit, push or live publication performed by this session.
+
+Completion log:
+- 2026-11-03: Workstream opened.
+- 2026-11-04: Local prototype delivered with real-core evidence, screenshots
+  and matching Actions-based Pages workflow. Hosted CI remains unexecuted.
+- 2026-11-04: User authorized staging, committing and pushing the completed
+  prototype. The push will trigger hosted CI/Pages; its result must be checked
+  separately rather than inferred from the passing local suite.

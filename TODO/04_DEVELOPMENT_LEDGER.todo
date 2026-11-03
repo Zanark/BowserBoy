@@ -1,0 +1,55 @@
+Status: ACTIVE
+Milestone: Ongoing causal development history
+Dependencies: None
+Purpose: Preserve what changed, why, evidence and unresolved boundaries.
+
+Tasks:
+- [x] Record initial emulator decision.
+- [x] Append implementation and verification outcomes at milestones.
+
+Acceptance criteria:
+- Decisions, actual technical evidence, human approval and publication remain distinct.
+
+Completion evidence:
+- Verified upstream v4.2.3 source maps gba to mgba.
+
+Completion log:
+- 2026-11-03 / Foundation:
+  Started from one README heading. Chose an established WebAssembly emulator
+  rather than building a CPU emulator for a UI prototype. Pin 4.2.3 and use a
+  small compatibility adapter: current docs include save hooks absent in the
+  release loader. Own checked checkpoint persistence instead of relying on
+  upstream storage methods that can swallow IndexedDB errors.
+- 2026-11-04 / Implementation:
+  Built a static vanilla-module shell, file validation/content identity, isolated
+  iframe adapter, independent automatic/manual slots and versioned backups.
+  Created original Pixel Lab ARM test program instead of using commercial ROM
+  bytes. Initial mode-3 full-screen redraw raced scanout, hiding its moving
+  square; changed to one initial fill plus bounded VBlank erase/redraw.
+- 2026-11-04 / Integration failures and fixes:
+  Runtime first threw because unused player maps were omitted; supply all four.
+  Reload then restored reset progress despite working in-session restores.
+  An initial two-frame acknowledgment change did not fix that reload regression.
+  Native logs and pinned source exposed upstream beforeunload resetting the
+  core, including cancelled navigation. Suppressing that child handler fixed
+  reload; the host retains its own leave prompt.
+  Touch initialization exposed a hidden-control setting and a zero-height
+  absolute-positioned wrapper; use documented default options and verify the
+  actual A button can be tapped, rather than the wrapper's geometry.
+- 2026-11-04 / Verification:
+  Final focused unit suite 5/5; real Edge browser suite 6/6; syntax/build pass.
+  Browser evidence includes actual input, SRAM capture, manual restore,
+  portable backup import/export, renamed-ROM reload, real interval capture,
+  ROM isolation, failed storage writes/export recovery, mobile control tap and
+  failed CDN load. Physical devices, commercial games and hearing audio remain
+  unverified. Screenshots reviewed; no user approval inferred.
+- 2026-11-04 / Pages:
+  User supplied Actions-source Pages settings. API independently confirmed
+  workflow configuration and https://zanark.github.io/BowserBoyAdvance/.
+  Added check/build/browser-test gates and dist-only deploy workflow. No
+  commit, push, dispatch or publication has been authorized/performed.
+- 2026-11-04 / Publication authorization:
+  User explicitly requested git add, commit and push after prototype completion.
+  Deliver the existing locally verified prototype without bundling private
+  context, dependencies or generated dist. A successful push is not itself
+  proof of a successful hosted Actions run or live Pages deployment.

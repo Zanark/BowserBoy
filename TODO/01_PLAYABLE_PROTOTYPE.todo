@@ -1,0 +1,26 @@
+Status: DONE (technical evidence; human acceptance pending)
+Milestone: First playable static GBA prototype
+Dependencies: None
+Purpose: Select a legally held local .gba ROM and actually play in the browser.
+
+Tasks:
+- [x] Verify a pinned emulator release and single-threaded GBA core.
+- [x] Build responsive, accessible local-file selection and player shell.
+- [x] Isolate the emulator lifecycle, inputs and explicit loading failures.
+- [x] Verify actual frames and input with an original test cartridge.
+
+Acceptance criteria:
+- Local files never go to an application backend.
+- GBA gameplay, keyboard input and mobile layout have runtime evidence.
+- Wrong/oversized files produce actionable errors without destroying play.
+
+Completion evidence:
+- 2026-11-04: Real mGBA framebuffer changes with keyboard input; original
+  Pixel Lab ROM, live CDN core, desktop Edge. Mobile touch controls accept taps.
+- Browser UI verifies narrow layout, help dismissal and invalid file handling.
+- See tests/browser/player.spec.mjs and docs/VERIFICATION.md for boundaries.
+
+Completion log:
+- 2026-11-03: Empty repository inspected; EmulatorJS 4.2.3 loader verified.
+- 2026-11-04: Playable static prototype completed. No commercial ROM matrix or
+  physical phone/controller acceptance implied.
