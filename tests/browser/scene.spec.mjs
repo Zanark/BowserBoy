@@ -38,6 +38,17 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   await page.goto('./');
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('dark');
+  await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const render = view.renderer.render.bind(view.renderer);
+    window.idleDraws = 0;
+    view.renderer.render = (...args) => { window.idleDraws++; return render(...args); };
+  });
+  await page.waitForTimeout(150);
+  const idleDraws = await page.evaluate(() => window.idleDraws);
+  await page.waitForTimeout(250);
+  expect(await page.evaluate(() => window.idleDraws), 'A static table must not repeatedly redraw or read back its LCD').toBe(idleDraws);
   const lit = await surfaceLight(page, [0, 0, 4]);
   expect(lit).toBeGreaterThan(20);
   await page.locator('#lamp-toggle').click();

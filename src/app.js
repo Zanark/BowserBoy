@@ -621,6 +621,7 @@ function toggleLamp() {
   $('lamp-toggle').setAttribute('aria-pressed', String(view.lampOn));
   $('lamp-toggle').setAttribute('aria-label', `Turn desk lamp ${view.lampOn ? 'off' : 'on'}`);
   $('lamp-label').textContent = view.lampOn ? 'Lamp on' : 'Lamp off';
+  view.canvas.focus({ preventScroll: true });
 }
 $('lamp-toggle').addEventListener('click', toggleLamp);
 $('pickup').addEventListener('click', () => changeView('playing'));

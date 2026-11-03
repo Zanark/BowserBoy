@@ -21,6 +21,7 @@ export class HandheldScene {
     this.renderer.toneMappingExposure = .015;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.shadowMap.autoUpdate = false;
     this.canvas = this.renderer.domElement;
     this.canvas.id = 'scene-canvas';
     this.canvas.tabIndex = 0;
@@ -167,6 +168,7 @@ export class HandheldScene {
     this.width = width;
     this.height = height;
     this.renderer.setSize(width, height, false);
+    this.changed = true;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.updateCameraTargets();
@@ -199,6 +201,7 @@ export class HandheldScene {
   setView(mode) {
     if (!['table', 'playing', 'inspecting'].includes(mode)) throw new Error('Unknown handheld view.');
     if (mode === this.mode && !this.transition) return;
+    this.changed = true;
     this.drag = null;
     this.inspectionPointers.clear();
     this.pinch = null;
@@ -221,10 +224,14 @@ export class HandheldScene {
     this.model.led.material.color.set(running ? '#bce76f' : '#495537');
     this.model.led.material.emissive.set(running ? '#00b800' : '#000000');
     this.model.led.material.emissiveIntensity = running ? 80 : 0;
-    this.model.controls.get('power').mesh.position.x = running ? 1.65 : 1.45;
+    const power = this.model.controls.get('power').mesh;
+    const x = running ? 1.65 : 1.45;
+    if (power.position.x !== x) this.changed = true;
+    power.position.x = x;
   }
 
   setLamp(enabled) {
+    this.changed = true;
     this.lampOn = enabled;
     this.lamp.light.visible = enabled;
     this.lamp.bounce.visible = enabled;
@@ -246,6 +253,7 @@ export class HandheldScene {
   }
 
   setDisplay(material) {
+    this.changed = true;
     const previous = this.model.screen.material;
     this.model.screen.material = material;
     previous.map?.dispose();
@@ -293,6 +301,9 @@ export class HandheldScene {
     this.lastRender = time;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, this.lampOn ? .015 : .45, 4, delta);
+    const exposure = this.lampOn ? .015 : .45;
+    const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
+    if (!adapting) this.renderer.toneMappingExposure = exposure;
     if (this.transition) {
       const transition = this.transition;
       const fraction = transition.duration ? Math.min(1, (time - transition.started) / transition.duration) : 1;
@@ -308,15 +319,24 @@ export class HandheldScene {
       }
     } else this.host.dataset.view = this.mode;
     this.camera.lookAt(this.lookAt);
+    let buttonsMoving = false;
     for (const { mesh, ids } of this.controlGroups) {
       const motion = mesh.userData.motion;
-      motion.press = THREE.MathUtils.damp(motion.press, ids.some((id) => this.pressed.has(id)) ? 1 : 0, 55, delta);
+      const target = ids.some((id) => this.pressed.has(id)) ? 1 : 0;
+      const previous = motion.press;
+      motion.press = THREE.MathUtils.damp(motion.press, target, 55, delta);
+      if (Math.abs(motion.press - target) < .00001) motion.press = target;
+      buttonsMoving ||= motion.press !== previous;
       mesh.position.copy(motion.restPosition).addScaledVector(motion.travel, motion.press);
       if (ids.includes('up')) {
         const x = Number(this.pressed.has('down')) - Number(this.pressed.has('up'));
         const y = Number(this.pressed.has('right')) - Number(this.pressed.has('left'));
+        const pitch = motion.pitch, yaw = motion.yaw;
         motion.pitch = THREE.MathUtils.damp(motion.pitch, x * .065, 55, delta);
         motion.yaw = THREE.MathUtils.damp(motion.yaw, y * .065, 55, delta);
+        if (Math.abs(motion.pitch - x * .065) < .00001) motion.pitch = x * .065;
+        if (Math.abs(motion.yaw - y * .065) < .00001) motion.yaw = y * .065;
+        buttonsMoving ||= motion.pitch !== pitch || motion.yaw !== yaw;
         mesh.rotation.set(motion.pitch, motion.yaw, 0);
       } else {
         mesh.quaternion.copy(motion.restQuaternion);
@@ -325,14 +345,23 @@ export class HandheldScene {
     }
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     if (!this.screenIllumination.failed) {
-      try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, delta); }
+      try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, delta, !!this.source); }
       catch (error) {
         this.screenIllumination.clear();
         this.screenIllumination.failed = true;
         this.onError(new Error(`LCD light sampling failed: ${error.message}. The game is retained; reload to retry lighting.`));
       }
     }
+    const poseChanged = !this.lastPosition?.equals(this.model.root.position) ||
+      !this.lastRotation?.equals(this.model.root.quaternion) || !this.lastCamera?.equals(this.camera.position);
+    if (!this.source && !this.changed && !poseChanged && !buttonsMoving &&
+        !adapting && this.screenIllumination.settled) return;
+    this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
+    this.lastPosition = this.model.root.position.clone();
+    this.lastRotation = this.model.root.quaternion.clone();
+    this.lastCamera = this.camera.position.clone();
+    this.changed = false;
     for (const [id, control] of this.model.controls) {
       const button = id === 'power' ? document.getElementById('hardware-power') : document.querySelector(`[data-control="${id}"]`);
       if (!button) continue;

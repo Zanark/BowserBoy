@@ -95,6 +95,8 @@ export class ScreenIllumination {
     this.target = new THREE.Color(0, 0, 0);
     this.current = new THREE.Color(0, 0, 0);
     this.nextSample = 0;
+    this.sampledSource = null;
+    this.settled = true;
   }
 
   clear() {
@@ -102,11 +104,13 @@ export class ScreenIllumination {
     this.current.copy(this.target);
     this.light.intensity = 0;
     this.nextSample = 0;
+    this.sampledSource = null;
+    this.settled = true;
   }
 
-  update(source, time, delta) {
+  update(source, time, delta, live = true) {
     if (!source) return;
-    if (time >= this.nextSample) {
+    if (source !== this.sampledSource || (live && time >= this.nextSample)) {
       this.context.drawImage(source, 0, 0, 24, 16);
       const { data } = this.context.getImageData(0, 0, 24, 16);
       let r = 0, g = 0, b = 0;
@@ -117,8 +121,12 @@ export class ScreenIllumination {
       }
       this.target.setRGB(r / 384, g / 384, b / 384);
       this.nextSample = time + 125;
+      this.sampledSource = source;
     }
     this.current.lerp(this.target, 1 - Math.exp(-delta * 18));
+    this.settled = Math.max(...['r', 'g', 'b'].map((channel) =>
+      Math.abs(this.current[channel] - this.target[channel]))) < .00001;
+    if (this.settled) this.current.copy(this.target);
     const peak = Math.max(this.current.r, this.current.g, this.current.b);
     this.light.intensity = peak * 120;
     if (peak > 0) this.light.color.copy(this.current).multiplyScalar(1 / peak);
