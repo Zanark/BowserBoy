@@ -48,12 +48,19 @@ function fromBase64(value, maxLength) {
   return Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
 }
 
+export function validateBatterySave(sram) {
+  if (!(sram === null || (sram instanceof Uint8Array && sram.byteLength <= 1024 * 1024))) {
+    throw new Error('The emulator returned invalid battery-save data.');
+  }
+  return sram;
+}
+
 export function validateCapture(capture) {
   if (!(capture?.state instanceof Uint8Array) || capture.state.byteLength === 0 ||
-      capture.state.byteLength > MAX_STATE_BYTES ||
-      !(capture.sram === null || (capture.sram instanceof Uint8Array && capture.sram.byteLength <= 1024 * 1024))) {
+      capture.state.byteLength > MAX_STATE_BYTES) {
     throw new Error('The emulator returned an invalid checkpoint.');
   }
+  validateBatterySave(capture.sram);
   return capture;
 }
 

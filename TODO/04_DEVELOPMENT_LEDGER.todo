@@ -53,3 +53,81 @@ Completion log:
   Deliver the existing locally verified prototype without bundling private
   context, dependencies or generated dist. A successful push is not itself
   proof of a successful hosted Actions run or live Pages deployment.
+- 2026-11-04 / Published prototype and approval:
+  Commit 8390832 reached origin/main; Actions run 41700230948 completed build
+  and deploy successfully. User separately reported the prototype works and
+  is good. Do not extend that approval to later design changes.
+- 2026-11-04 / Hardware UI:
+  User requested an actual-GBA aesthetic with no LCD buttons and Z=A/X=B.
+  Clarified scope before implementation: retain functional physical shell
+  buttons; move existing tools into a hidden drawer; add remapping and sound.
+  Used original CSS geometry, texture and project-name typography, not copied
+  photos, game artwork or a Nintendo logo. Retained all save/runtime identities.
+- 2026-11-04 / Input and settings:
+  Verified pinned simulateInput and setVolume internals before adapting them.
+  Shared keyboard handling prevents native mappings bypassing a rebind. Track
+  held sources separately so a pointer release cannot cancel a held key.
+  Give short taps a minimum 40 ms pulse and release on cancel/lost capture/blur.
+  Keep continuous inputs enabled while background checkpoint writes run.
+  Checked preference writes report session-only recovery instead of claiming
+  persistence. Keep sound settings distinct from evidence of audible playback.
+- 2026-11-04 / Visual verification:
+  An initial passing mobile test only hid the virtual-gamepad wrapper. Actual
+  screenshot review exposed a separate native hamburger over the LCD. Pinned
+  source identified ejs_virtualGamepad_open outside that wrapper; removed it
+  and asserted its invisibility. Final real-core suite 9/9, unit suite 8/8,
+  syntax and clean build pass. New UI acceptance/publication remain pending.
+- 2026-11-04 / Actual 3D and native shader:
+  User requested a real model on a table rather than another flat illustration.
+  Confirmed one indigo handheld, original cartridge props, pickup/play/inspect/
+  return and no default games yet. Chose original procedural Three.js geometry;
+  package only pinned 0.186.1 modules and its full MIT license.
+  Verified crt-geom.glslp in the actual 4.2.3 shader collection. A live probe
+  established that preserveDrawingBuffer:false makes native canvas copies black.
+  Disable engine auto-start, configure just its own canvas in EJS_ready, then
+  activate the native start button. Retained post-shader frames now feed a
+  CanvasTexture directly, without screenshots, flat iframe projection or a
+  replacement CRT approximation.
+- 2026-11-04 / 3D interaction and verification:
+  Mesh raycasting picks up the handheld; inspection rotates its actual front,
+  edges and back. Pointer/touch/pinch/wheel/keyboard interactions work, with
+  reduced-motion pickup and explicit unavailable/lost graphics errors.
+  Project transparent accessible inputs onto real button positions, keep them
+  off the LCD, gate host/keyboard input outside play view and retain gamepads.
+  The child marks its native canvas with an owned DOM contract, keeping engine
+  globals out of the parent. Existing checkpoint and runtime identities remain.
+  Initial visual review found small decals recessed behind beveled faces;
+  corrected their surface depth. Native core context can be WebGL 1; the 3D
+  renderer separately needs WebGL 2. Final syntax/build, 9 unit and 13 real Edge
+  browser cases pass, including native CRT pixel differences and touch pinch.
+  Only original Pixel Lab used; no stopped commercial-ROM test was restarted.
+  User visual approval and new publication remain pending.
+- 2026-11-04 / Reference correction:
+  User rejected the initial shape and supplied Andy Dream's Sketchfab model.
+  Public API reported no downloadable model and no listed reuse license.
+  Used its visible proportions only: stepped upper crown/shoulders, straighter
+  sides, bowed lower edge, smaller rounded controls and real recessed grille.
+  Mesh/texture assets were not extracted; the thumbnail remains private.
+  Corrected LCD recess occlusion, pivot-well floor and switch-grip depth.
+  Actual raycast assertions protect those three front-surface relationships.
+  Table/front/back renders reviewed; syntax/build, 9 units and final 13 browser
+  cases pass. Two earlier reload PNG assertions failed; direct pixel probing
+  and subsequent isolated/full runs passed without a production save change.
+  The intermittent assertion's root cause remains unresolved. Original demo
+  only; human visual acceptance and publication remain pending.
+- 2026-11-04 / Real power lifecycle and release authorization:
+  User requested actual off/on with ROM boot from in-game save, never an instant
+  checkpoint. Retain the selected File only in memory; flush/commit battery
+  memory separately, remove the iframe and blank the real LCD/LED. Power on
+  creates a new runtime, loads only battery memory and restarts the ROM.
+  Optional battery/bootMode record fields preserve existing database/backup
+  versions and old checkpoint slots. An explicit power off suppresses stale
+  checkpoint auto-resume after reload until a new checkpoint is captured.
+  Pause remains a separate drawer action. Failed battery writes keep the game
+  on for backup recovery. The first test found a status toast intercepting the
+  projected switch; made its noninteractive body pointer-transparent.
+  A globally denied IndexedDB fixture prevented the pinned core starting;
+  retained that reporting test and separately simulated only app-store denial
+  for session-only power-cycle coverage. Final syntax/build, 9 units and
+  16 browser cases pass. User then explicitly authorized deploying everything;
+  publish all completed public work, never private context or ROM bytes.

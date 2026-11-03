@@ -1,0 +1,50 @@
+Status: DONE (local correction); user visual acceptance and publication pending
+Milestone: Reference-informed GBA silhouette and recessed physical details
+Dependencies: 06_3D_TABLETOP
+Purpose: Correct the rejected oval model using the user's supplied Sketchfab
+  shape reference without extracting unavailable model assets.
+
+Tasks:
+- [x] Inspect the reference and establish download/license availability.
+- [x] Replace the oval shell with stepped shoulders, straight sides and lower bow.
+- [x] Reduce bezel/button proportions and move L/R to the shoulder edges.
+- [x] Add real speaker apertures, rounded button caps and a recessed D-pad center.
+- [x] Correct dependent framing, LCD occlusion and undersized switch details.
+- [x] Review actual table/front/back renders and verify physical controls.
+- [x] Preserve CRT Geom, saves, remapping and existing runtime identities.
+- [x] Document provenance, evidence, uncertainty and local-only delivery.
+
+Acceptance criteria:
+- Independently authored 3D geometry, not an extracted Sketchfab asset.
+- Stepped upper crown and shoulders, straighter sides and outward lower bow.
+- Lower-profile controls, angled recessed grille and unobstructed actual LCD.
+- Pickup/rotation/return and all ten physical inputs remain functional.
+- No copyrighted reference thumbnail, logo texture or boot image shipped.
+- Test evidence does not establish user approval or permission to publish.
+
+Completion evidence:
+- 2026-11-04: Public Sketchfab model a0b6d1eb5ccb4c72a6944d77b3ac7c05,
+  by Andy Dream, reported isDownloadable:false and an empty license object.
+- Original procedural geometry revised; no model/texture extraction performed.
+- Table/front/back screenshots inspected against the public reference thumbnail.
+- Actual raycast surfaces verify an unobstructed LCD, recessed speaker openings
+  and shallow D-pad pivot well; responsive mesh bounds remain within view.
+- Syntax check PASS; unit suite 9/9 PASS; build PASS.
+- Final complete Edge browser suite 13/13 PASS, using original Pixel Lab only.
+- An earlier full run and its isolated replay failed native PNG equality on
+  reload. A direct native-pixel probe, three subsequent isolated cases and the
+  final complete suite passed. Root cause remains unresolved; no save fix claimed.
+- Local dist preview rebuilt; no new commit, push or Pages deployment.
+
+Completion log:
+- 2026-11-04: User explicitly rejected the first 3D model and allowed shape
+  inspiration if the supplied model could not be used directly.
+- 2026-11-04: Reference inspection identified the oval shell, oversized raised
+  controls and raised grille as inaccurate. Rebuilt those features and adjusted
+  camera fit for the taller crown/bottom.
+- 2026-11-04: Depth review found the beveled LCD recess could cover its display;
+  reduced its bevel. Raised the pivot well floor above the underlying socket,
+  reduced switch grip size and made the upper oval marking horizontal.
+- 2026-11-04: Geometry/input/native-CRT tests pass. Kept the intermittent reload
+  assertion caveat rather than inventing a cause or modifying save behavior.
+  Updated public-safe renders and continuity; new visual acceptance is pending.

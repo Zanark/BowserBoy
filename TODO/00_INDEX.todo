@@ -4,8 +4,22 @@ BowserBoyAdvance workstreams
 02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.
 03_VERIFICATION_AND_DELIVERY.todo - Real-runtime evidence and documentation.
 04_DEVELOPMENT_LEDGER.todo - Decisions, failures and completion evidence.
+05_HARDWARE_UI.todo - Indigo handheld shell, clear LCD and hidden player tools.
+06_3D_TABLETOP.todo - Actual 3D pickup/inspection scene and native default CRT Geom.
+07_REFERENCE_SHAPE.todo - Correct rejected geometry using the supplied visual reference.
+08_POWER_LIFECYCLE.todo - True power off and battery-only ROM restart; separate pause.
 
-Local prototype: technically complete, with 5 unit and 6 Edge browser tests.
-GitHub Actions Pages workflow: authored; hosted execution is not yet verified.
-Delivery authority: user authorized git add, commit and push on 2026-11-04.
-User acceptance and successful GitHub Pages publication remain separate gates.
+Original prototype: accepted by user; commit 8390832 published through Pages.
+Original Actions run 41700230948: build and deploy both succeeded.
+Hardware UI revamp: locally complete, 8 unit and 9 Edge browser tests passing.
+Subsequent 3D tabletop: locally complete, 9 unit and 13 Edge browser tests passing.
+The earlier CSS artwork is superseded by original Three.js meshes.
+New visual acceptance is not claimed. User subsequently authorized deployment
+of all completed changes; verify its own release commit and Pages workflow,
+not the earlier prototype's approval or successful deployment.
+The first 3D shape was rejected by the user. Reference-based correction is
+locally complete; final 9 unit / 13 Edge browser cases pass. The Sketchfab model
+was not imported. Its mesh was unavailable for download and no reuse license
+was established. See workstream 07 for evidence and intermittent-test caveats.
+Physical power now tears down the runtime and cold boots only in-game save
+data. Final release checks: 9 unit / 16 Edge browser cases pass; see workstream 08.

@@ -1,0 +1,51 @@
+Status: DONE (local implementation); visual acceptance and publication pending
+Milestone: Hardware-style GBA interface with an unobstructed LCD
+Dependencies: 01_PLAYABLE_PROTOTYPE, 02_PROGRESS_AND_BACKUPS, 03_VERIFICATION_AND_DELIVERY
+Purpose: Replace the crowded website shell with the approved indigo handheld
+  aesthetic while preserving player functionality and existing save identity.
+
+Tasks:
+- [x] Confirm that no screen buttons means no LCD overlays, not removing shell inputs.
+- [x] Confirm existing features plus configurable keys and sound as the scope.
+- [x] Build original molded-shell CSS, silver controls, bezel and italic wordmark.
+- [x] Move ROMs, saves, backups, pause/fullscreen, help and settings into a drawer.
+- [x] Make all ten physical controls functional with keyboard, mouse and touch.
+- [x] Set Z=A, X=B and persist validated remapping, volume and mute.
+- [x] Preserve source-aware holds, pointer cancellation and safe blur release.
+- [x] Verify real-core saves, backup/resume, touch, fullscreen and failure states.
+- [x] Update public-safe screenshots, documentation and owned continuity.
+
+Acceptance criteria:
+- No application controls, native toolbar or mobile opener cover the playing LCD.
+- Physical buttons work rather than serving as decorative labels.
+- Keys can be changed without reloading; duplicates/reserved keys are rejected.
+- Sound/remapping persistence failures are explicit, not false success states.
+- Existing checkpoint schema, ROM identity and runtime compatibility stay unchanged.
+- Local evidence, user visual approval and publication remain distinct.
+
+Completion evidence:
+- 2026-11-04: npm run check PASS; npm test 8/8 PASS; clean build PASS.
+- Final real Edge browser suite: 9/9 PASS under /BowserBoyAdvance/.
+- Follow-up viewport-fit refinement: targeted shell/control/fullscreen checks
+  2/2 PASS, including 1366x768, 844x390 and 320x568 viewports.
+- Tests cover actual core input for all ten shell buttons, combined keyboard
+  and pointer sources, out-of-bounds release, touch movement, volume/mute,
+  remapping/reload/reset, persistence errors, saves/backups and fullscreen.
+- Desktop, narrow, original-demo and drawer screenshots reviewed.
+- Public build contains twelve files, including two new shared input/settings
+  modules; no commercial cartridge, documentation or private context is deployed.
+- No physical-phone, audible-output or new commercial-ROM acceptance claimed.
+
+Completion log:
+- 2026-11-04: User supplied three GBA references and a bezel wordmark reference,
+  then approved physical shell controls plus a hidden drawer and existing-feature
+  scope with remapping and sound.
+- 2026-11-04: Removed the old topbar, hero, permanent side panels and LCD actions.
+  Built the indigo console and source-aware inputs without a framework/dependency.
+- 2026-11-04: First browser suite passed, but screenshot review exposed the
+  engine's separate mobile hamburger. Verified its pinned-source class, hid it
+  explicitly, and added a regression assertion rather than trusting its parent.
+- 2026-11-04: Final suite passed after physical-control and fullscreen checks.
+  Local preview refreshed because its startup allowlist predated the new modules.
+- 2026-11-04: Constrained console size by available viewport height as well as
+  width; checked common desktop, landscape and small-phone bounds explicitly.

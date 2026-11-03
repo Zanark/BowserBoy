@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="referrer" content="no-referrer">
     <title>BowserBoyAdvance cartridge player</title>
-    <style>html,body,#game{width:100%;height:100%;margin:0;background:#111713;overflow:hidden}canvas{image-rendering:pixelated}</style>
+    <style>
+      html,body,#game{width:100%;height:100%;margin:0;background:#111713;overflow:hidden}
+      canvas{image-rendering:pixelated}
+      .ejs_menu_bar,.ejs_context_menu,.ejs_virtualGamepad_parent,.ejs_virtualGamepad_open{display:none!important}
+    </style>
     <script type="module" src="./src/player.js"></script>
   </head>
   <body><div id="game"></div></body>

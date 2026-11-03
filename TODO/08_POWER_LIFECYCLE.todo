@@ -1,0 +1,55 @@
+Status: DONE (implementation and local verification); user-authorized release
+Milestone: Physical power off and battery-only ROM boot
+Dependencies: 07_REFERENCE_SHAPE
+Purpose: Make the physical switch behave as power, not pause, while preserving
+  the cartridge's in-game save independently of instant emulator checkpoints.
+
+Tasks:
+- [x] Retain the selected ROM in memory for power on without another file prompt.
+- [x] Flush and commit battery memory separately before removing the runtime.
+- [x] Turn LCD/LED off and move the physical switch; keep power on accessible.
+- [x] Start a fresh runtime with only battery memory, never an instant state.
+- [x] Preserve old checkpoints and prevent stale resume after powered-off reload.
+- [x] Keep pause/resume as a separate Cartridges action.
+- [x] Keep the live game recoverable when battery persistence fails.
+- [x] Fix status-toast interception of the physical power target.
+- [x] Complete real-core regression verification and document the release handoff.
+
+Acceptance criteria:
+- Power off removes the iframe and live screen texture, not merely pauses it.
+- Power on boots the ROM from the beginning with its in-game save data.
+- Existing manual/automatic checkpoints are not overwritten by power off.
+- A cold boot does not call native loadState or recreate a checkpoint file.
+- Save-write failure leaves power on and backup export available.
+- Unavailable browser storage is explicitly session-only, not silently durable.
+- Evidence, visual acceptance and publication remain separate.
+
+Completion evidence:
+- Initial focused 3/3 browser cases pass: storage transactions, actual power
+  cycling/reload with original Pixel Lab SRAM, and save-write failure recovery.
+- Original demo image after cold boot matches its in-game-save position, not
+  the deliberately different checkpoint position. Old iframe is detached;
+  off texture/source are null and LED emission is zero.
+- Runtime, database version and portable-backup identities remain unchanged.
+- Final syntax/build PASS, unit suite 9/9 PASS, full Edge browser suite 16/16 PASS.
+- Battery and checkpoint transaction aborts preserve committed records; explicit
+  session-only power cycling works when the application save store is denied.
+- Globally denied IndexedDB also prevents the pinned core starting. Kept the
+  existing broad-denial reporting fixture and added a distinct app-store-only
+  fixture rather than claiming native startup works under global denial.
+- User explicitly authorized deploying all completed changes. Publication
+  must still be established by the actual release commit and Pages workflow.
+
+Completion log:
+- 2026-11-04: User explicitly requested actual off/on and restart from the
+  in-game save, not continuation from an instant state.
+- 2026-11-04: Added nullable battery-save validation and atomic record updates.
+  Optional battery/bootMode fields retain compatibility with existing records.
+- 2026-11-04: Fresh iframe loads only battery memory and uses native restart;
+  existing checkpoint restores still use the separate explicit state path.
+- 2026-11-04: First power test exposed a status toast intercepting the switch.
+  Made its noninteractive body pointer-transparent while retaining dismiss.
+  Rebuilt and repeated focused cases successfully.
+- 2026-11-04: Final 9 unit / 16 real-core browser cases pass. Public source,
+  safe screenshots and documentation are ready for the authorized release.
+  No commercial ROM was retested or bundled.

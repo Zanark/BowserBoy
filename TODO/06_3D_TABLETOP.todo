@@ -1,0 +1,62 @@
+Status: DONE (local implementation); visual acceptance and publication pending
+Milestone: Real 3D tabletop handheld with pickup, inspection and native CRT Geom
+Dependencies: 05_HARDWARE_UI
+Purpose: Replace the flat hardware illustration with an actual, playable 3D
+  model while preserving the original emulator and progress-storage contracts.
+
+Tasks:
+- [x] Confirm pickup/play/inspection/return interactions and one indigo handheld.
+- [x] Confirm warm wood and original cartridge props only; no default games yet.
+- [x] Verify the pinned runtime's exact native CRT Geom identifier and behavior.
+- [x] Prove live native framebuffer copies work; fix the initially black buffer.
+- [x] Pin/package Three.js and its MIT notice through the explicit public allowlist.
+- [x] Model front/back/edges, bevels, controls, ports, speaker and battery cover.
+- [x] Integrate the live post-shader screen texture and projected physical inputs.
+- [x] Add mouse/touch/keyboard inspection, pinch/zoom, reduced motion and failures.
+- [x] Preserve saves, remapping, sound, backup recovery and full-scene fullscreen.
+- [x] Verify original-demo gameplay and update public docs, images and continuity.
+
+Acceptance criteria:
+- Actual 3D mesh geometry and native live frames, not a photograph/CSS3D proxy.
+- Click the handheld to lift it; rotate to see its back; return it to the table.
+- The default shader is real CRT Geom from the pinned runtime, not a substitute.
+- No application or native emulator controls cover the LCD.
+- Geometry and physical targets fit desktop, landscape and narrow viewports.
+- Inspection/table keyboard gestures do not accidentally control the game.
+- Existing ROM/save/backup identities and failure reporting remain intact.
+- Local evidence is not human approval or deployment.
+
+Completion evidence:
+- 2026-11-04: syntax check PASS; unit suite 9/9 PASS; clean build PASS.
+- Final Edge browser suite 13/13 PASS under /BowserBoyAdvance/.
+- Native CRT Geom preset verified as shader0 = crt-geom.glsl; real pixel changes
+  distinguish filtered/unfiltered frames. Its retained framebuffer is the
+  actual CanvasTexture source; held A changes its pixels during live upload.
+- Mesh picking, pickup, front/back orientation, return and actual model bounds
+  checked at 1366x768, 844x390, 390x844 and 320x568.
+- Real touch events verify rotation/pinch, no accidental core input while
+  inspecting/on the table, and restored keyboard input in play view.
+- All ten shell inputs, mixed-source release, sound/remapping/reload, saved
+  progress/backups, automatic timer, failure states and fullscreen still pass.
+- Public build is seventeen allowlisted files, including two Three.js modules
+  and their license. No ROM collection, private context or full dependency tree.
+- Actual table, play, back and original-demo mobile screenshots reviewed.
+- No commercial-ROM retest, physical-phone qualification or audible test claimed.
+
+Completion log:
+- 2026-11-04: User requested real 3D on a table and default CRT Geom. Confirmed
+  lift/play/inspect/return, one indigo console and original cartridge props;
+  future default games remain explicitly out of scope.
+- 2026-11-04: A live probe proved normal WebGL buffer copies were all black.
+  Configured only the emulator canvas before native startup to retain its
+  post-shader buffer; repeated samples contained real colored pixels.
+- 2026-11-04: Built original Three.js meshes and textures, retained the hidden
+  tools drawer and moved keyboard focus to the visible scene canvas.
+- 2026-11-04: Screenshot review corrected recessed decals hidden by bevel
+  geometry, while runtime tests confirmed the core may use WebGL 1 even though
+  the parent 3D renderer requires WebGL 2.
+- 2026-11-04: Final 9 unit / 13 real Edge browser cases pass. New design remains
+  local and uncommitted; the previously published prototype is not this revision.
+- 2026-11-04: User rejected the initial 3D shape and supplied a Sketchfab model.
+  Technical test success did not establish visual acceptance. Subsequent
+  independently authored reference correction is tracked in workstream 07.

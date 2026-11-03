@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "A local-first, static browser GBA player.",
+  "dependencies": {
+    "three": "0.186.1"
+  },
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",

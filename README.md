@@ -1,12 +1,12 @@
-# BowserBoyAdvance
+# Bowser Boy Advance
 
-**Press play again.** A local-first Game Boy Advance player for the browser,
-built for static hosting on GitHub Pages.
+**A little escape, on your desk.** A local-first browser GBA player inside an
+actual 3D indigo handheld, built for static hosting on GitHub Pages.
 
-![BowserBoyAdvance desktop player](docs/images/prototype-desktop.png)
+![The 3D indigo handheld on its wooden table](docs/images/3d-table.png)
 
-*The responsive cartridge player: local ROM selection, automatic checkpoints,
-a separate quick-save slot, and portable backup controls.*
+*Original 3D geometry, a warm wooden table and decorative cartridge props.
+Click the handheld to lift it into play view. No buttons cover the LCD.*
 
 ## Play locally
 
@@ -19,27 +19,86 @@ npm ci
 npm run dev
 ```
 
-Open **http://127.0.0.1:5173**. Choose an uncompressed **`.gba`** ROM you have
-the right to use, or select **Try the original demo**. Pixel Lab is an original
-input-test cartridge: arrows move the square, **X** changes its color, and
-**Z** stores its horizontal position in emulated cartridge SRAM.
+Open **http://127.0.0.1:5173**. Click the handheld to pick it up, then open
+**Cartridges** or press **Escape** for the tools drawer. Choose an uncompressed **`.gba`**
+ROM you have the right to use, or select **Try the original demo**.
+Pixel Lab is an original input-test cartridge: arrows move the square, holding
+**Z** changes its color, and **X** stores its horizontal position in cartridge SRAM.
 
 ROM bytes are read locally, not uploaded. No account, server-side library,
 commercial ROM or BIOS is included. ROM files are not retained; reselect yours
 next time. Internet is required for the versioned EmulatorJS/mGBA runtime.
+The 3D scene requires WebGL 2. Its decorative cartridges are not supplied games.
+
+## Pick it up
+
+**Inspect** lets you drag the model to see its sides, ports and battery cover.
+Scroll or pinch to zoom; keyboard inspection supports arrows, plus/minus and
+Home to reset. **Back to play** restores the playable angle; **Put down** returns
+the handheld to the table. Reduced-motion mode skips the pickup animation.
+
+![The raised handheld in play view](docs/images/3d-handheld.png)
+
+*The LCD and bezel lettering are surfaces on the mesh, not a floating iframe
+or a flat photograph. Controls sit on the physical shell.*
+
+The revised shell uses stepped shoulders, straighter sides, a bowed lower edge,
+low-profile buttons and recessed speaker slots. Its shape was informed by the
+[user-supplied Sketchfab reference](https://sketchfab.com/3d-models/nintendo-gameboy-advance-gba-a0b6d1eb5ccb4c72a6944d77b3ac7c05);
+that model was not imported. See [asset provenance](THIRD_PARTY_NOTICES.md).
+
+<details>
+<summary>Turn it over</summary>
+
+![The back of the inspected handheld](docs/images/3d-back.png)
+
+*The rear shell, battery cover, grip and recessed screws have their own geometry.
+Rotating the model naturally hides its front-facing game display.*
+
+</details>
 
 ## Controls
 
 | Action | Keyboard |
 |---|---|
 | Move | Arrow keys |
-| A / B | X / Z |
+| A / B | Z / X |
 | L / R | A / S |
-| Start / Select | Enter / Shift |
+| Start / Select | Enter / Left Shift |
+| Cartridge and settings | Escape |
 
-Click the game for focus. The emulator menu contains audio/display settings and
-control remapping. Touch devices get on-screen controls. Controller support is
-provided by EmulatorJS; physical controller compatibility has not been tested.
+Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
+buttons work with mouse, touch and keyboard activation. The bottom-edge power
+switch turns the emulator off: the LCD goes dark and the runtime is removed.
+Turn it back on to boot the loaded ROM from the beginning with its in-game
+save data, **not an instant checkpoint**. Pause/resume remains in Cartridges.
+Rotate a phone for a
+larger handheld. Keyboard and mouse/touch gameplay controls are active in play
+view, not while inspecting or resting on the table. The game itself continues
+until paused.
+
+The hidden drawer contains ROM loading, every save/backup action, pause,
+fullscreen, key remapping, volume, mute and screen filtering. **CRT Geom** is
+the default, using the actual shader bundled with the pinned emulator, not a
+CSS imitation. Choose **Unfiltered** in the drawer if preferred.
+Click a key binding and press its
+replacement; duplicate assignments and reserved browser keys are rejected.
+Keys, sound and filter settings persist in checked local browser storage; failed writes
+explicitly apply only to the current session. Escape remains reserved for tools.
+Opening the drawer does not automatically pause gameplay.
+
+Controller support remains provided by EmulatorJS; physical controller
+compatibility has not been tested.
+
+<details>
+<summary>Inside the cartridge slot</summary>
+
+![Cartridge and settings drawer](docs/images/cartridge-drawer.png)
+
+*The drawer keeps ROMs, checkpoints, backups and controls out of the playing
+view. Scroll within it for sound settings and help.*
+
+</details>
 
 ## Keep your progress
 
@@ -70,9 +129,9 @@ in [`.github/workflows/pages.yml`](.github/workflows/pages.yml) checks, builds a
 tests the site, then publishes **only `dist`** on a push to `main` or a manual
 workflow dispatch. Pull requests run checks without deploying.
 
-Expected Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
-Configuration is not a deployment: the workflow must be committed/pushed and
-complete successfully before the new prototype is live.
+Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
+The original prototype was published successfully. Subsequent local changes
+appear there only after they are committed/pushed and the workflow succeeds.
 
 All application paths are relative. The browser suite serves the build under
 `/BowserBoyAdvance/`, rather than merely testing a domain-root development page.
@@ -83,9 +142,10 @@ npm run build
 npm run preview
 ```
 
-`dist` is generated and replaced on each build. It contains only the static
-application and generated original Pixel Lab cartridge, not dependencies,
-project documentation or private session context.
+`dist` is generated and replaced on each build. It contains the static
+application, the two required pinned Three.js modules and their MIT license,
+and the generated original Pixel Lab cartridge. The complete dependency tree,
+project documentation and private session context are not deployed.
 
 ## Development and evidence
 
@@ -112,10 +172,10 @@ cartridge, not commercial game data. See [architecture](docs/ARCHITECTURE.md),
 <details>
 <summary>Mobile layout</summary>
 
-<img src="docs/images/prototype-mobile.png" width="320" alt="The player and save panels stacked on a narrow phone-sized viewport">
+<img src="docs/images/pixel-lab-mobile.png" width="320" alt="The indigo handheld on a narrow viewport, running the original Pixel Lab cartridge without LCD overlays">
 
-*The same interface stacks the cartridge and progress panels beneath the player
-without horizontal overflow.*
+*The same handheld fits a narrow viewport without horizontal overflow. Touch
+controls are its physical shell buttons, not overlays on the game.*
 
 </details>
 

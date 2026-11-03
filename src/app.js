@@ -1,10 +1,15 @@
-import { RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot } from './cartridge.js';
+import { RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
 import { SaveStore } from './save-store.js';
+import { CONTROLS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
+import { bindKeyboard } from './keyboard.js';
+import { HandheldScene } from './scene.js';
 
 const $ = (id) => document.getElementById(id);
 const store = new SaveStore();
 let game = null;
 let record = null;
+let cartridge = null;
+let batterySave = null;
 let frame = null;
 let session = null;
 let running = false;
@@ -13,8 +18,20 @@ let storageAvailable = false;
 let autoSave = true;
 let launchCallbacks = null;
 const pending = new Map();
+const pointers = new Map();
+let preferences = defaultPreferences();
+let remappingAction = null;
+let preferenceWarning = null;
+export let view = null;
+let sceneFailure = null;
+try { preferences = readPreferences(localStorage); }
+catch (error) {
+  console.error('Player preferences:', error);
+  preferenceWarning = `${error.message} Default keys and sound are active for this session.`;
+}
 
 function notice(message, error = false) {
+  moveNotice();
   $('notice-text').textContent = message;
   $('notice').classList.toggle('error', error);
   $('notice').hidden = false;
@@ -39,12 +56,20 @@ const storageReady = store.open().then(() => {
 });
 
 function updateControls() {
-  for (const id of ['upload', 'screen-upload', 'rom-file', 'demo']) $(id).disabled = busy;
+  for (const id of ['upload', 'rom-file', 'demo', 'volume', 'mute', 'shader', 'reset-controls']) $(id).disabled = busy;
   for (const id of ['pause', 'fullscreen', 'export', 'import']) $(id).disabled = !running || busy;
+  $('hardware-power').disabled = !cartridge || busy || !view;
+  $('hardware-power').setAttribute('aria-pressed', String(running));
+  $('hardware-power').setAttribute('aria-label', `Turn power ${running ? 'off' : 'on'}`);
+  $('hardware-power').title = `Power ${running ? 'off' : 'on'}`;
+  $('load-cancel').hidden = !launchCallbacks;
+  for (const button of document.querySelectorAll('[data-control]')) button.disabled = !running;
+  for (const button of document.querySelectorAll('[data-binding]')) button.disabled = busy;
   $('save').disabled = !running || busy || !storageAvailable;
   $('restore').disabled = !running || busy || !record?.manual;
   $('autosave-toggle').disabled = !storageAvailable || busy;
   $('power-led').classList.toggle('on', running);
+  view?.setPower(running);
   if (record?.manual) $('quick-save-time').textContent = new Date(record.manual.createdAt).toLocaleString();
 }
 
@@ -62,7 +87,7 @@ async function operation(action) {
   }
 }
 
-function command(name, capture) {
+function command(name, value) {
   if (!running || !frame) return Promise.reject(new Error('Load a cartridge before using player controls.'));
   const requestId = crypto.randomUUID();
   return new Promise((resolve, reject) => {
@@ -72,12 +97,15 @@ function command(name, capture) {
     }, 10000);
     pending.set(requestId, { resolve, reject, timer });
     frame.contentWindow.postMessage({
-      type: 'bba:command', session, requestId, command: name, capture,
+      type: 'bba:command', session, requestId, command: name, value,
     }, location.origin);
   });
 }
 
 function clearPlayer() {
+  releaseHostInputs();
+  view?.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
+  for (const { id } of CONTROLS) view?.setControl(id, false);
   for (const entry of pending.values()) {
     clearTimeout(entry.timer);
     entry.reject(new Error('The cartridge session ended before the action completed.'));
@@ -89,7 +117,8 @@ function clearPlayer() {
   session = null;
   $('pause').setAttribute('aria-label', 'Pause game');
   $('pause').title = 'Pause game';
-  $('pause').textContent = '\u275a\u275a';
+  $('pause').textContent = 'Pause game';
+  for (const button of document.querySelectorAll('[data-control]')) button.classList.remove('pressed');
 }
 
 async function persist(slot, capture = null) {
@@ -107,8 +136,13 @@ async function persist(slot, capture = null) {
   return capture;
 }
 
-function launch(file, restore) {
+function launch(file, restore, battery = null) {
+  if (!view) throw new Error(sceneFailure?.message ?? 'The 3D display is not available.');
   clearPlayer();
+  view.setView('playing');
+  view.showStatus(restore ? 'RESUMING YOUR GAME' : 'READING CARTRIDGE', 'DOWNLOADING THE EMULATOR');
+  if ($('tools').open) $('tools').close();
+  $('notice').hidden = true;
   $('empty-screen').hidden = true;
   $('loading-screen').hidden = false;
   $('loading-title').textContent = restore ? 'Finding your place again...' : 'Warming up the pixels...';
@@ -119,6 +153,7 @@ function launch(file, restore) {
   frame.title = `${game.title} - GBA emulator`;
   frame.allow = 'autoplay; fullscreen; gamepad';
   frame.referrerPolicy = 'no-referrer';
+  frame.tabIndex = -1;
   frame.src = new URL('./player.html', document.baseURI).href;
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
@@ -128,9 +163,10 @@ function launch(file, restore) {
       resolve: () => { clearTimeout(timer); launchCallbacks = null; resolve(); },
       reject: (error) => { clearTimeout(timer); launchCallbacks = null; reject(error); },
     };
+    updateControls();
     frame.addEventListener('load', () => {
       frame.contentWindow.postMessage({
-        type: 'bba:init', session, rom: file, gameId: game.id, restore,
+        type: 'bba:init', session, rom: file, gameId: game.id, restore, battery, preferences,
       }, location.origin);
     }, { once: true });
     $('frame-host').replaceChildren(frame);
@@ -160,17 +196,19 @@ async function loadRom(file) {
   }
   game = identified;
   record = saved;
+  cartridge = file;
+  batterySave = validateBatterySave(record?.battery ? record.battery.sram : latestSlot(record)?.sram ?? null);
   $('game-title').textContent = game.title;
   const size = game.size < 1024 * 1024 ? `${Math.ceil(game.size / 1024)} KB` : `${(game.size / 1024 / 1024).toFixed(2)} MB`;
   $('game-meta').textContent = `GAME BOY ADVANCE / ${size} / LOCAL CARTRIDGE`;
   $('game-monogram').textContent = game.title.slice(0, 1).toUpperCase();
   $('quick-save-time').textContent = record?.manual ? new Date(record.manual.createdAt).toLocaleString() : 'Your safety net for the tricky bits.';
-  const checkpoint = latestSlot(record);
-  await launch(file, checkpoint);
+  const checkpoint = record?.bootMode === 'battery' ? null : latestSlot(record);
+  await launch(file, checkpoint, checkpoint ? null : batterySave);
   if (storageAvailable && !$('storage-badge').classList.contains('error')) {
     $('storage-badge').textContent = checkpoint ? 'RESUMED' : 'LOCAL ONLY';
     $('save-status').textContent = checkpoint ? 'Checkpoint restored. Progress is local to this browser; export a backup regularly.' :
-      'No checkpoint for this cartridge yet. Save in this browser or export a portable backup.';
+      'ROM booted from the beginning with available in-game save data. Checkpoints remain separate.';
   }
   if (checkpoint) notice('Welcome back. Your latest checkpoint has been restored.');
 }
@@ -185,18 +223,37 @@ window.addEventListener('message', (event) => {
   const data = event.data;
   switch (data.type) {
     case 'bba:started':
+      try {
+        const canvas = frame.contentDocument.querySelector('canvas[data-bba-display]');
+        const context = canvas?.getContext('webgl2') || canvas?.getContext('webgl');
+        if (!context?.getContextAttributes().preserveDrawingBuffer) {
+          throw new Error('The emulator could not retain its live 3D screen. Choose the cartridge again to retry.');
+        }
+        view.setScreen(canvas);
+      } catch (error) {
+        launchCallbacks?.reject(error);
+        break;
+      }
       running = true;
+      void command('setInputEnabled', view.mode === 'playing' && !view.transition).catch((error) => notice(error.message, true));
       $('loading-screen').hidden = true;
       $('power-label').textContent = 'CARTRIDGE IN / GOOD TIMES ON';
       launchCallbacks?.resolve();
       updateControls();
-      frame.focus();
+      view.canvas.focus({ preventScroll: true });
       break;
     case 'bba:failed':
       if (launchCallbacks) launchCallbacks.reject(new Error(data.message));
       else notice(`Emulator error: ${data.message}`, true);
       break;
     case 'bba:notice': notice(data.message); break;
+    case 'bba:tools': openTools(); break;
+    case 'bba:control':
+      if (CONTROLS.some(({ id }) => id === data.action) && typeof data.pressed === 'boolean') {
+        document.querySelector(`[data-control="${data.action}"]`).classList.toggle('pressed', data.pressed);
+        view?.setControl(data.action, data.pressed);
+      }
+      break;
     case 'bba:result': {
       const entry = pending.get(data.requestId);
       if (!entry) return;
@@ -209,7 +266,7 @@ window.addEventListener('message', (event) => {
   }
 });
 
-for (const id of ['upload', 'screen-upload']) $(id).addEventListener('click', () => $('rom-file').click());
+$('upload').addEventListener('click', () => $('rom-file').click());
 $('rom-file').addEventListener('change', (event) => {
   const file = event.target.files[0];
   event.target.value = '';
@@ -224,14 +281,44 @@ $('demo').addEventListener('click', () => {
   });
 });
 $('load-cancel').addEventListener('click', () => launchCallbacks?.reject(new Error('Launch cancelled. Choose a cartridge when you are ready.')));
-$('pause').addEventListener('click', () => void operation(async () => {
+async function togglePause() {
   const paused = await command('togglePause');
   $('pause').setAttribute('aria-label', paused ? 'Resume game' : 'Pause game');
   $('pause').title = paused ? 'Resume game' : 'Pause game';
-  $('pause').textContent = paused ? '\u25b6' : '\u275a\u275a';
+  $('pause').textContent = paused ? 'Resume game' : 'Pause game';
   $('power-label').textContent = paused ? 'TAKE YOUR TIME / GAME PAUSED' : 'CARTRIDGE IN / GOOD TIMES ON';
+}
+$('pause').addEventListener('click', () => void operation(togglePause));
+$('hardware-power').addEventListener('click', () => void operation(async () => {
+  if (!cartridge) throw new Error('Choose a cartridge before turning on the power.');
+  if (running) {
+    releaseHostInputs();
+    const sram = validateBatterySave(await command('battery'));
+    if (storageAvailable) {
+      try { record = await store.putBattery(game, sram); }
+      catch (error) {
+        storageFailure(error);
+        throw new Error('Power is still on because the in-game save could not be stored. Export a backup before trying again.');
+      }
+      $('storage-badge').textContent = sram === null ? 'POWER OFF' : 'BATTERY SAVED';
+      $('storage-badge').classList.remove('error');
+      $('save-status').textContent = 'Available in-game save data stored separately. Power on boots the ROM; checkpoints remain unchanged.';
+    }
+    batterySave = sram;
+    clearPlayer();
+    view.showPowerOff();
+    $('empty-screen').textContent = 'Power off. Turn the physical switch on to restart the loaded cartridge.';
+    $('empty-screen').hidden = false;
+    $('power-label').textContent = 'POWER OFF / CARTRIDGE RETAINED';
+    notice(storageAvailable ? 'Power off. Available in-game save data is stored; checkpoints were not changed.' :
+      'Power off. In-game save data is kept for this page session only because browser storage is unavailable. Reloading will lose it.', !storageAvailable);
+  } else {
+    await launch(cartridge, null, batterySave);
+    notice('Power on. The ROM restarted from the beginning with its in-game save, not a checkpoint.');
+  }
 }));
 $('fullscreen').addEventListener('click', () => {
+  if ($('tools').open) $('tools').close();
   const action = document.fullscreenElement ? document.exitFullscreen() : $('player').requestFullscreen?.();
   if (!action) { notice('Fullscreen is not supported here. Try rotating your device for a larger view.'); return; }
   void action.catch((error) => notice(`Fullscreen could not open: ${error.message}`, true));
@@ -317,5 +404,208 @@ document.addEventListener('drop', (event) => {
 $('help-open').addEventListener('click', () => $('help').showModal());
 $('help-close').addEventListener('click', () => $('help').close());
 $('notice-dismiss').addEventListener('click', () => { $('notice').hidden = true; });
+
+function moveNotice() {
+  const host = $($('tools').open ? 'drawer-notice-host' : 'notice-host');
+  if ($('notice').parentElement !== host) host.append($('notice'));
+}
+
+function sendInput(action, pressed, source) {
+  if (!running || !frame) return;
+  frame.contentWindow.postMessage({ type: 'bba:input', session, action, pressed, source }, location.origin);
+}
+
+function releasePointer(event) {
+  const held = pointers.get(event.pointerId);
+  if (!held) return;
+  pointers.delete(event.pointerId);
+  const release = () => sendInput(held.action, false, held.source);
+  const remaining = 40 - (performance.now() - held.pressedAt);
+  if (remaining > 0) setTimeout(release, remaining);
+  else release();
+}
+
+function releaseHostInputs() {
+  keyboard.release();
+  for (const pointerId of [...pointers.keys()]) releasePointer({ pointerId });
+}
+
+function openTools() {
+  if ($('tools').open || $('help').open) return;
+  releaseHostInputs();
+  $('tools').showModal();
+  moveNotice();
+}
+
+$('tools-open').addEventListener('click', openTools);
+$('tools-close').addEventListener('click', () => $('tools').close());
+$('tools').addEventListener('close', () => {
+  remappingAction = null;
+  $('key-status').textContent = 'Escape is reserved for this drawer.';
+  renderPreferences();
+  moveNotice();
+  view?.canvas.focus({ preventScroll: true });
+});
+
+for (const button of document.querySelectorAll('[data-control]')) {
+  button.addEventListener('pointerdown', (event) => {
+    if (!running || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    event.preventDefault();
+    button.setPointerCapture(event.pointerId);
+    const source = `host-pointer:${event.pointerId}:${crypto.randomUUID()}`;
+    pointers.set(event.pointerId, { action: button.dataset.control, source, pressedAt: performance.now() });
+    sendInput(button.dataset.control, true, source);
+  });
+  for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) button.addEventListener(event, releasePointer);
+  button.addEventListener('click', (event) => {
+    if (event.detail !== 0 || !running) return;
+    const source = `host-button:${crypto.randomUUID()}`;
+    sendInput(button.dataset.control, true, source);
+    setTimeout(() => sendInput(button.dataset.control, false, source), 100);
+  });
+}
+
+function renderPreferences() {
+  for (const { id, label } of CONTROLS) {
+    const button = document.querySelector(`[data-binding="${id}"]`);
+    button.textContent = remappingAction === id ? 'Press key' : keyLabel(preferences.controls[id]);
+    button.classList.toggle('capturing', remappingAction === id);
+    button.setAttribute('aria-label', `Change ${label} key, currently ${keyLabel(preferences.controls[id])}`);
+    document.querySelector(`[data-control="${id}"]`).title = `${label} (${keyLabel(preferences.controls[id])})`;
+  }
+  $('volume').value = preferences.volume;
+  $('volume-value').textContent = `${preferences.volume}%`;
+  $('mute').textContent = preferences.muted ? 'Unmute' : 'Mute';
+  $('mute').setAttribute('aria-pressed', String(preferences.muted));
+  $('shader').value = preferences.shader;
+}
+
+async function applyPreferences(next) {
+  next = validatePreferences(next);
+  releaseHostInputs();
+  if (running) await command('configure', next);
+  preferences = next;
+  renderPreferences();
+  try {
+    writePreferences(localStorage, preferences);
+    $('preferences-status').textContent = 'Keys, sound and display settings saved in this browser.';
+  } catch (error) {
+    console.error('Saving player preferences:', error);
+    $('preferences-status').textContent = 'Settings apply to this session only. Browser preferences could not be saved.';
+    notice(`${error.message} Your settings work now, but could not be remembered for next time.`, true);
+  }
+}
+
+for (const { id, label } of CONTROLS) {
+  const row = document.createElement('div');
+  row.className = 'key-binding';
+  const name = document.createElement('span');
+  name.textContent = label;
+  const button = document.createElement('button');
+  button.dataset.binding = id;
+  button.addEventListener('click', () => {
+    remappingAction = id;
+    renderPreferences();
+    $('key-status').textContent = `Press a new key for ${label}. Escape cancels.`;
+  });
+  row.append(name, button);
+  $('key-bindings').append(row);
+}
+
+window.addEventListener('keydown', (event) => {
+  if (!remappingAction || event.repeat) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  if (event.code === 'Escape') {
+    remappingAction = null;
+    renderPreferences();
+    $('key-status').textContent = 'Key change cancelled.';
+    return;
+  }
+  if (busy) {
+    $('key-status').textContent = 'Wait for the current player action, then press your new key.';
+    return;
+  }
+  try {
+    if (event.ctrlKey || event.altKey || event.metaKey) throw new Error('Use a single key, not a browser shortcut.');
+    const next = rebindControl(preferences, remappingAction, event.code);
+    remappingAction = null;
+    $('key-status').textContent = 'Key updated. Escape is reserved for the drawer.';
+    void operation(() => applyPreferences(next));
+  } catch (error) {
+    $('key-status').textContent = error.message;
+  }
+}, true);
+
+const keyboard = bindKeyboard(window, {
+  enabled: (event) => running && view?.mode === 'playing' && !view.transition && !$('tools').open && !$('help').open &&
+    !event.target.closest?.('button, input, select, textarea, [contenteditable="true"]'),
+  getBindings: () => preferences.controls,
+  onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
+  onMenu: () => {
+    if ($('tools').open || $('help').open) return false;
+    openTools();
+    return true;
+  },
+});
+window.addEventListener('blur', () => {
+  for (const pointerId of [...pointers.keys()]) releasePointer({ pointerId });
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') releaseHostInputs();
+});
+$('reset-controls').addEventListener('click', () => {
+  remappingAction = null;
+  $('key-status').textContent = 'Default keys restored: Z = A, X = B.';
+  void operation(() => applyPreferences({ ...preferences, controls: defaultPreferences().controls }));
+});
+$('volume').addEventListener('input', () => { $('volume-value').textContent = `${$('volume').value}%`; });
+$('volume').addEventListener('change', () => void operation(() => applyPreferences({
+  ...preferences, volume: Number($('volume').value),
+})));
+$('mute').addEventListener('click', () => void operation(() => applyPreferences({
+  ...preferences, muted: !preferences.muted,
+})));
+$('shader').addEventListener('change', () => void operation(() => applyPreferences({
+  ...preferences, shader: $('shader').value,
+})));
+
+function changeView(mode) {
+  releaseHostInputs();
+  view?.setView(mode);
+}
+$('pickup').addEventListener('click', () => changeView('playing'));
+$('inspect').addEventListener('click', () => changeView(view?.mode === 'inspecting' ? 'playing' : 'inspecting'));
+$('put-down').addEventListener('click', () => changeView('table'));
+try {
+  view = new HandheldScene($('scene'), {
+    onTools: openTools,
+    onView: (mode, moving) => {
+      releaseHostInputs();
+      $('pickup').hidden = mode !== 'table';
+      $('inspect').hidden = $('put-down').hidden = mode === 'table';
+      for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
+      $('inspect').textContent = mode === 'inspecting' ? 'Back to play' : 'Inspect';
+      $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
+      $('scene-hint').textContent = mode === 'table' ? 'A quiet moment. Click the handheld to pick it up.' :
+        mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
+          'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
+      if (running) void command('setInputEnabled', mode === 'playing' && !moving).catch((error) => notice(error.message, true));
+    },
+    onError: (error) => { console.error('3D graphics:', error); notice(error.message, true); },
+  });
+} catch (error) {
+  console.error('Creating the 3D scene:', error);
+  sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);
+  $('scene-error').textContent = `${sceneFailure.message} Try a WebGL-enabled browser with hardware acceleration.`;
+  $('scene-error').hidden = false;
+  for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = true;
+}
+$('scene').addEventListener('graphics-restored', () => notice('3D graphics recovered. Your cartridge session was retained.'));
+renderPreferences();
+if (preferenceWarning) {
+  $('preferences-status').textContent = preferenceWarning;
+  notice(preferenceWarning, true);
+}
 void storageReady.then(updateControls);
 updateControls();

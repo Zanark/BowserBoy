@@ -3,12 +3,12 @@
 ## Three different things
 
 **In-game save:** use the game's save menu. Its battery-memory bytes are included
-when the player captures a checkpoint, if the cartridge provides them. A
+when the player captures a checkpoint or switches the power off, if the cartridge provides them. A
 cartridge's own save point is not necessarily the exact current frame.
 
 **Checkpoint:** the instant emulator state plus available battery-save bytes.
 Auto-save updates one rolling slot every 15 seconds; Save checkpoint updates a
-separate manual slot. Selecting the same ROM loads the newest slot. Restore
+separate manual slot. Selecting the same ROM normally loads the newest slot. Restore
 returns to the manual slot and, with auto-save enabled, updates the rolling slot
 to the restored session.
 
@@ -21,6 +21,28 @@ when a cartridge is selected. Turning it off lasts for the current page session.
 Use manual save/export before leaving; no asynchronous final write is guaranteed
 after a tab or browser shuts down.
 
+## Physical power switch
+
+Power off flushes the cartridge's in-game battery save, commits it separately
+from instant checkpoints, removes the emulator iframe and darkens the LCD/LED.
+The ROM remains in memory for this page session. Power on creates a fresh
+runtime and boots that ROM from its beginning with only the battery save.
+Use the game's own Continue/Load menu to continue an in-game save. Unsaved
+gameplay since that save is intentionally lost, just as on a physical handheld.
+
+Existing manual/automatic checkpoints are not erased or overwritten by the
+switch. After power off, reselecting the same ROM following a page reload
+also boots from its battery save rather than reviving a pre-power-off checkpoint.
+A subsequently captured checkpoint becomes eligible for normal ROM-selection
+resume again. The physical switch always cold-boots, regardless.
+
+If the battery write fails, power stays on so a backup can still be exported.
+If application save storage was unavailable from startup but the emulator
+still runs, a power cycle retains the battery save only in memory for this
+page session; an explicit warning is shown. Globally denying IndexedDB may
+also prevent the pinned emulator itself from starting.
+The separate Pause action in Cartridges preserves the current running session.
+
 ## Continue tomorrow
 
 Open the same site in the same browser profile and select the ROM again.
@@ -28,7 +50,7 @@ SHA-256 identity ignores the filename, so a renamed copy still works.
 Patches, translations or other byte changes create a different cartridge ID;
 the application does not guess whether another ROM's save might be compatible.
 
-Only game metadata/checkpoints are retained, not a ROM collection. Selecting a
+Only game metadata, battery saves and checkpoints are retained, not a ROM collection. Selecting a
 ROM remains necessary after reopening the page.
 
 ## Move to another browser or device

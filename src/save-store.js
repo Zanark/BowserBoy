@@ -1,4 +1,4 @@
-import { RUNTIME, validateCapture } from './cartridge.js';
+import { RUNTIME, validateBatterySave, validateCapture } from './cartridge.js';
 
 export class SaveStore {
   #db;
@@ -35,13 +35,30 @@ export class SaveStore {
   async putSlot(game, slot, capture) {
     validateCapture(capture);
     if (!['automatic', 'manual'].includes(slot)) throw new Error('Unknown save slot.');
+    return this.#update(game, (record) => {
+      const createdAt = new Date().toISOString();
+      record[slot] = { ...capture, createdAt };
+      record.battery = { sram: capture.sram, createdAt };
+      record.bootMode = 'checkpoint';
+    });
+  }
+
+  async putBattery(game, sram) {
+    validateBatterySave(sram);
+    return this.#update(game, (record) => {
+      record.battery = { sram, createdAt: new Date().toISOString() };
+      record.bootMode = 'battery';
+    });
+  }
+
+  #update(game, update) {
     return this.#transaction('readwrite', (store) => {
       const request = store.get(game.id);
       request.onsuccess = () => {
         try {
           const record = request.result ?? { ...game, runtime: RUNTIME };
           if (record.runtime !== RUNTIME) throw new Error('Stored checkpoint runtime is incompatible.');
-          record[slot] = { ...capture, createdAt: new Date().toISOString() };
+          update(record);
           store.put(record);
           request.savedRecord = record;
         } catch (error) {
