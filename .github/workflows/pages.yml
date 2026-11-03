@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  verify:
+    runs-on: windows-latest
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -29,8 +29,6 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm run check
-      - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser -- --reporter=line --fully-parallel --shard=${{ matrix.shard }}/2 --global-timeout=600000
@@ -42,14 +40,27 @@ jobs:
           name: browser-failure-evidence-${{ matrix.shard }}
           path: test-results
           retention-days: 3
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v5.0.0
-        if: github.event_name != 'pull_request' && matrix.shard == 1
+        if: github.event_name != 'pull_request'
         with:
           path: dist
 
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: build
+    needs: [build, verify]
     runs-on: ubuntu-latest
     permissions:
       pages: write
