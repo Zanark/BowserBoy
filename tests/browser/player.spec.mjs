@@ -24,6 +24,7 @@ const canvas = (page) => page.locator('#scene-canvas');
 const image = async (page) => {
   const player = page.frames().find((frame) => frame.url().endsWith('player.html'));
   const png = await player.evaluate(async () => [...await window.EJS_emulator.gameManager.screenshot()]);
+  await test.info().attach('native-frame', { body: Buffer.from(png), contentType: 'image/png' });
   return hash(Buffer.from(png));
 };
 const move = async (page, key = 'ArrowRight', duration = 180) => {
@@ -60,6 +61,9 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   await page.locator('#native-open').click();
   await expect(page.locator('#frame-host')).toHaveAttribute('open', '');
   await expect(runtime.getByRole('button', { name: 'Graphics Settings', exact: true })).toBeVisible();
+  const backdropFrame = await page.evaluate(async () => (await import('./src/app.js')).view.renderer.info.render.frame);
+  await page.waitForTimeout(250);
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.renderer.info.render.frame)).toBe(backdropFrame);
   expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(true);
   await runtime.evaluate(() => {
     window.settingsInputs = [];
@@ -97,11 +101,10 @@ test('native settings keep the live runtime, persist options and leave the LCD a
 
   await page.setViewportSize({ width: 320, height: 568 });
   await page.locator('#native-open').click();
-  const fits = await page.locator('#frame-host').evaluate((element) => {
+  await expect.poll(() => page.locator('#frame-host').evaluate((element) => {
     const box = element.getBoundingClientRect();
     return box.x >= 0 && box.y >= 0 && box.right <= innerWidth && box.bottom <= innerHeight;
-  });
-  expect(fits).toBe(true);
+  })).toBe(true);
   await expect(runtime.getByRole('button', { name: /^Shaders/ })).toBeVisible();
   await page.locator('#native-close').click();
   await expect(page.locator('#native-open')).toBeEnabled();

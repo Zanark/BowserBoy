@@ -124,8 +124,8 @@ export class ScreenIllumination {
       this.sampledSource = source;
     }
     this.current.lerp(this.target, 1 - Math.exp(-delta * 18));
-    this.settled = Math.max(...['r', 'g', 'b'].map((channel) =>
-      Math.abs(this.current[channel] - this.target[channel]))) < .00001;
+    this.settled = Math.max(Math.abs(this.current.r - this.target.r),
+      Math.abs(this.current.g - this.target.g), Math.abs(this.current.b - this.target.b)) < .00001;
     if (this.settled) this.current.copy(this.target);
     const peak = Math.max(this.current.r, this.current.g, this.current.b);
     this.light.intensity = peak * 120;

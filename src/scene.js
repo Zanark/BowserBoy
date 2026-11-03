@@ -297,8 +297,10 @@ export class HandheldScene {
   }
 
   render(time) {
-    const delta = Math.min(.05, Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000));
+    const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
+    this.slowFrames = this.renderedLastFrame && delta > .05 ? (this.slowFrames ?? 0) + 1 : 0;
+    this.renderedLastFrame = false;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, this.lampOn ? .015 : .45, 4, delta);
     const exposure = this.lampOn ? .015 : .45;
@@ -343,6 +345,13 @@ export class HandheldScene {
         if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .045);
       }
     }
+    // Modal tools own interaction; keep the core running without redrawing its blurred backdrop.
+    if (document.querySelector('dialog[open]')) return;
+    if (this.slowFrames >= 6 && this.renderer.getPixelRatio() > .5) {
+      this.renderer.setPixelRatio(Math.max(.5, this.renderer.getPixelRatio() * .75));
+      this.slowFrames = 0;
+      this.changed = true;
+    }
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     if (!this.screenIllumination.failed) {
       try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, delta, !!this.source); }
@@ -358,6 +367,7 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
+    this.renderedLastFrame = true;
     this.lastPosition = this.model.root.position.clone();
     this.lastRotation = this.model.root.quaternion.clone();
     this.lastCamera = this.camera.position.clone();

@@ -76,6 +76,27 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     await page.locator('#put-down').click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   }
+  const budget = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+    view.renderer.setPixelRatio(1);
+    view.slowFrames = 0;
+    const tick = (milliseconds) => {
+      view.changed = true;
+      view.render(view.lastRender + milliseconds);
+    };
+    tick(16); tick(100); tick(16);
+    const singleStallRatio = view.renderer.getPixelRatio();
+    for (let i = 0; i < 6; i++) tick(100);
+    view.setControl('a', true);
+    tick(100);
+    return { singleStallRatio, slowRatio: view.renderer.getPixelRatio(),
+      width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
+  });
+  expect(budget.singleStallRatio).toBe(1);
+  expect(budget.slowRatio).toBeLessThan(1);
+  expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.slowRatio));
+  expect(budget.press).toBeGreaterThan(.99);
 });
 
 test('mapped inputs move real button meshes and the native LCD lights the room until power off', async ({ page }) => {
