@@ -57,7 +57,8 @@ const storageReady = store.open().then(() => {
 
 function updateControls() {
   for (const id of ['upload', 'rom-file', 'demo', 'volume', 'mute', 'shader', 'reset-controls']) $(id).disabled = busy;
-  for (const id of ['pause', 'fullscreen', 'export', 'import']) $(id).disabled = !running || busy;
+  for (const id of ['pause', 'fullscreen', 'export', 'import', 'native-open']) $(id).disabled = !running || busy;
+  $('native-close').disabled = busy;
   $('hardware-power').disabled = !cartridge || busy || !view;
   $('hardware-power').setAttribute('aria-pressed', String(running));
   $('hardware-power').setAttribute('aria-label', `Turn power ${running ? 'off' : 'on'}`);
@@ -104,6 +105,8 @@ function command(name, value) {
 
 function clearPlayer() {
   releaseHostInputs();
+  if ($('frame-host').open) $('frame-host').close();
+  $('frame-host').setAttribute('aria-hidden', 'true');
   view?.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
   for (const { id } of CONTROLS) view?.setControl(id, false);
   for (const entry of pending.values()) {
@@ -169,7 +172,7 @@ function launch(file, restore, battery = null) {
         type: 'bba:init', session, rom: file, gameId: game.id, restore, battery, preferences,
       }, location.origin);
     }, { once: true });
-    $('frame-host').replaceChildren(frame);
+    $('runtime-mount').replaceChildren(frame);
   }).catch((error) => {
     clearPlayer();
     $('loading-screen').hidden = true;
@@ -248,6 +251,7 @@ window.addEventListener('message', (event) => {
       break;
     case 'bba:notice': notice(data.message); break;
     case 'bba:tools': openTools(); break;
+    case 'bba:settings-close': void closeNativeSettings(); break;
     case 'bba:control':
       if (CONTROLS.some(({ id }) => id === data.action) && typeof data.pressed === 'boolean') {
         document.querySelector(`[data-control="${data.action}"]`).classList.toggle('pressed', data.pressed);
@@ -406,7 +410,7 @@ $('help-close').addEventListener('click', () => $('help').close());
 $('notice-dismiss').addEventListener('click', () => { $('notice').hidden = true; });
 
 function moveNotice() {
-  const host = $($('tools').open ? 'drawer-notice-host' : 'notice-host');
+  const host = $($('frame-host').open ? 'native-notice-host' : $('tools').open ? 'drawer-notice-host' : 'notice-host');
   if ($('notice').parentElement !== host) host.append($('notice'));
 }
 
@@ -431,11 +435,39 @@ function releaseHostInputs() {
 }
 
 function openTools() {
-  if ($('tools').open || $('help').open) return;
+  if ($('tools').open || $('help').open || $('frame-host').open) return;
   releaseHostInputs();
   $('tools').showModal();
   moveNotice();
 }
+
+$('native-open').addEventListener('click', () => void operation(async () => {
+  releaseHostInputs();
+  await command('settings', true);
+  $('tools').close();
+  $('frame-host').setAttribute('aria-hidden', 'false');
+  frame.tabIndex = 0;
+  $('frame-host').showModal();
+  moveNotice();
+  $('native-close').focus();
+}));
+
+function closeNativeSettings() {
+  return operation(async () => {
+    const emulatorOptions = await command('settings', false);
+    $('frame-host').close();
+    $('frame-host').setAttribute('aria-hidden', 'true');
+    frame.tabIndex = -1;
+    openTools();
+    await applyPreferences({ ...preferences, emulatorOptions });
+    $('native-open').focus();
+  });
+}
+$('native-close').addEventListener('click', () => void closeNativeSettings());
+$('frame-host').addEventListener('cancel', (event) => {
+  event.preventDefault();
+  void closeNativeSettings();
+});
 
 $('tools-open').addEventListener('click', openTools);
 $('tools-close').addEventListener('click', () => $('tools').close());
@@ -477,7 +509,15 @@ function renderPreferences() {
   $('volume-value').textContent = `${preferences.volume}%`;
   $('mute').textContent = preferences.muted ? 'Unmute' : 'Mute';
   $('mute').setAttribute('aria-pressed', String(preferences.muted));
-  $('shader').value = preferences.shader;
+  const shader = preferences.emulatorOptions?.shader ?? preferences.shader;
+  $('shader').querySelector('[data-native-shader]')?.remove();
+  if (![preferences.shader, 'disabled', 'crt-geom.glslp'].includes(shader)) {
+    const option = new Option(`EmulatorJS: ${shader}`, shader);
+    option.dataset.nativeShader = '';
+    option.disabled = true;
+    $('shader').add(option);
+  }
+  $('shader').value = shader;
 }
 
 async function applyPreferences(next) {
@@ -538,12 +578,12 @@ window.addEventListener('keydown', (event) => {
 }, true);
 
 const keyboard = bindKeyboard(window, {
-  enabled: (event) => running && view?.mode === 'playing' && !view.transition && !$('tools').open && !$('help').open &&
+  enabled: (event) => running && view?.mode === 'playing' && !view.transition && !$('tools').open && !$('help').open && !$('frame-host').open &&
     !event.target.closest?.('button, input, select, textarea, [contenteditable="true"]'),
   getBindings: () => preferences.controls,
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
   onMenu: () => {
-    if ($('tools').open || $('help').open) return false;
+    if ($('tools').open || $('help').open || $('frame-host').open) return false;
     openTools();
     return true;
   },
@@ -566,20 +606,30 @@ $('volume').addEventListener('change', () => void operation(() => applyPreferenc
 $('mute').addEventListener('click', () => void operation(() => applyPreferences({
   ...preferences, muted: !preferences.muted,
 })));
-$('shader').addEventListener('change', () => void operation(() => applyPreferences({
-  ...preferences, shader: $('shader').value,
-})));
+$('shader').addEventListener('change', () => void operation(() => {
+  const { shader: advancedShader, ...emulatorOptions } = preferences.emulatorOptions ?? {};
+  return applyPreferences({ ...preferences, shader: $('shader').value, emulatorOptions });
+}));
 
 function changeView(mode) {
   releaseHostInputs();
   view?.setView(mode);
 }
+function toggleLamp() {
+  if (!view) return;
+  view.setLamp(!view.lampOn);
+  $('lamp-toggle').setAttribute('aria-pressed', String(view.lampOn));
+  $('lamp-toggle').setAttribute('aria-label', `Turn desk lamp ${view.lampOn ? 'off' : 'on'}`);
+  $('lamp-label').textContent = view.lampOn ? 'Lamp on' : 'Lamp off';
+}
+$('lamp-toggle').addEventListener('click', toggleLamp);
 $('pickup').addEventListener('click', () => changeView('playing'));
 $('inspect').addEventListener('click', () => changeView(view?.mode === 'inspecting' ? 'playing' : 'inspecting'));
 $('put-down').addEventListener('click', () => changeView('table'));
 try {
   view = new HandheldScene($('scene'), {
     onTools: openTools,
+    onLamp: toggleLamp,
     onView: (mode, moving) => {
       releaseHostInputs();
       $('pickup').hidden = mode !== 'table';
@@ -599,7 +649,7 @@ try {
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);
   $('scene-error').textContent = `${sceneFailure.message} Try a WebGL-enabled browser with hardware acceleration.`;
   $('scene-error').hidden = false;
-  for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = true;
+  for (const id of ['pickup', 'inspect', 'put-down', 'lamp-toggle']) $(id).disabled = true;
 }
 $('scene').addEventListener('graphics-restored', () => notice('3D graphics recovered. Your cartridge session was retained.'));
 renderPreferences();

@@ -1,5 +1,23 @@
 export const PREFERENCES_KEY = 'bowser-boy-advance-preferences';
 export const CRT_GEOM = 'crt-geom.glslp';
+export const MANAGED_SETTINGS = [
+  'retroarch_core', 'ejs_threads', 'virtual-gamepad', 'menu-bar-button',
+  'virtual-gamepad-left-handed-mode', 'keyboardInput', 'altKeyboardInput',
+  'lockMouse', 'menubarBehavior', 'save-state-slot', 'save-state-location', 'save-save-interval',
+];
+
+export function validateEmulatorOptions(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length > 128) {
+    throw new Error('Advanced emulator settings are invalid.');
+  }
+  for (const [key, option] of Object.entries(value)) {
+    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(key) || ['__proto__', 'constructor', 'prototype', ...MANAGED_SETTINGS].includes(key) ||
+        typeof option !== 'string' || !option.length || option.length > 128 || /["\\\x00-\x1f]/.test(option)) {
+      throw new Error('An advanced emulator setting is invalid or managed by Cartridges.');
+    }
+  }
+  return { ...value };
+}
 export const CONTROLS = [
   { id: 'up', label: 'Up', button: 4, code: 'ArrowUp', gamepad: 'DPAD_UP' },
   { id: 'down', label: 'Down', button: 5, code: 'ArrowDown', gamepad: 'DPAD_DOWN' },
@@ -44,7 +62,9 @@ export function validatePreferences(value) {
     assigned.add(code);
     controls[id] = code;
   }
-  return { version: 1, controls, volume: value.volume, muted: value.muted, shader };
+  const result = { version: 1, controls, volume: value.volume, muted: value.muted, shader };
+  if (value.emulatorOptions !== undefined) result.emulatorOptions = validateEmulatorOptions(value.emulatorOptions);
+  return result;
 }
 
 export function rebindControl(preferences, action, code) {

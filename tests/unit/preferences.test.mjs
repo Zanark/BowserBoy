@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { CRT_GEOM, defaultPreferences, readPreferences, rebindControl, validatePreferences, writePreferences } from '../../src/preferences.js';
+import { CRT_GEOM, defaultPreferences, readPreferences, rebindControl, validateEmulatorOptions, validatePreferences, writePreferences } from '../../src/preferences.js';
 import { bindKeyboard } from '../../src/keyboard.js';
 
 test('remapping rejects duplicate and reserved keys without changing the existing mapping', () => {
@@ -58,4 +58,17 @@ test('older preferences gain CRT Geom without losing keys or sound, and filter c
   writePreferences(storage, unfiltered);
   assert.deepEqual(readPreferences(storage), unfiltered);
   assert.throws(() => validatePreferences({ ...older, shader: 'not-a-shader' }), /CRT Geom/);
+});
+
+test('native options survive preference updates without admitting managed controls or config injection', () => {
+  const emulatorOptions = { shader: 'crt-aperture.glslp', 'ff-ratio': '2.0', rewindEnabled: 'enabled' };
+  const preferences = { ...defaultPreferences(), emulatorOptions };
+  let stored;
+  const storage = { getItem: () => stored, setItem: (_, value) => { stored = value; } };
+  writePreferences(storage, rebindControl(preferences, 'a', 'KeyC'));
+  assert.deepEqual(readPreferences(storage).emulatorOptions, emulatorOptions);
+  for (const invalid of [[], null, { keyboardInput: 'enabled' }, { shader: 2 },
+    { foo: '"\nbar = 2' }, JSON.parse('{"__proto__":"bad"}')]) {
+    assert.throws(() => validateEmulatorOptions(invalid), /invalid|managed/);
+  }
 });

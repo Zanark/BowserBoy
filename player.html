@@ -9,6 +9,12 @@
       html,body,#game{width:100%;height:100%;margin:0;background:#111713;overflow:hidden}
       canvas{image-rendering:pixelated}
       .ejs_menu_bar,.ejs_context_menu,.ejs_virtualGamepad_parent,.ejs_virtualGamepad_open{display:none!important}
+      .native-settings canvas{opacity:0}
+      .native-settings .ejs_settings_parent{display:block;position:absolute!important;inset:0!important;transform:none!important;width:100%!important;height:100%!important;max-height:none!important;margin:0!important;padding:16px;box-sizing:border-box;overflow:auto!important;border-radius:0!important;background:#202326;color:#f6f7f0}
+      .native-settings .ejs_settings_transition{width:100%!important;height:auto!important;max-height:none!important}
+      .native-settings .ejs_setting_menu,.native-settings .ejs_settings_transition>div{max-height:none!important}
+      .native-settings .ejs_settings_main_bar{cursor:pointer}
+      .native-settings [role=button]:focus-visible,.native-settings button:focus-visible{outline:2px solid #c6f36b;outline-offset:-2px}
     </style>
     <script type="module" src="./src/player.js"></script>
   </head>

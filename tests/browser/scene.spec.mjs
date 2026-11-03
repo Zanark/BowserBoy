@@ -17,6 +17,185 @@ const sceneState = (page) => page.evaluate(async () => {
   };
 });
 
+const surfaceLight = (page, position) => page.evaluate(async (point) => {
+  const { view } = await import('./src/app.js');
+  const { Vector3 } = await import('three');
+  view.renderer.render(view.scene, view.camera);
+  const projected = new Vector3(...point).project(view.camera);
+  const { width, height } = view.canvas;
+  const x = Math.round((projected.x + 1) * width / 2);
+  const y = Math.round((projected.y + 1) * height / 2);
+  if (x < 2 || y < 2 || x > width - 3 || y > height - 3) throw new Error('Lighting probe is outside the actual render.');
+  const gl = view.renderer.getContext();
+  const pixels = new Uint8Array(5 * 5 * 4);
+  gl.readPixels(x - 2, y - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+  let total = 0;
+  for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
+  return total / (25 * 3);
+}, position);
+
+test('dark room has a working physical lamp, actual light falloff and a narrow accessible toolbar', async ({ page }) => {
+  await page.goto('./');
+  await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('dark');
+  const lit = await surfaceLight(page, [0, 0, 4]);
+  expect(lit).toBeGreaterThan(20);
+  await page.locator('#lamp-toggle').click();
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect.poll(() => surfaceLight(page, [0, 0, 4])).toBeLessThan(lit * .15);
+  const switchPoint = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.project(view.lamp.switchCap);
+  });
+  await page.mouse.click(switchPoint.x, switchPoint.y);
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  expect(await surfaceLight(page, [0, 0, 4])).toBeGreaterThan(lit * .9);
+  for (const [width, height] of [[320, 568], [844, 390]]) {
+    await page.setViewportSize({ width, height });
+    await page.locator('#pickup').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+    const fits = await page.locator('.scene-actions').evaluate((element) => {
+      const bounds = element.getBoundingClientRect();
+      return bounds.left >= 0 && bounds.right <= innerWidth && document.documentElement.scrollWidth <= innerWidth;
+    });
+    expect(fits).toBe(true);
+    await page.locator('#lamp-toggle').click();
+    await expect(page.locator('#lamp-toggle')).toBeVisible();
+    await page.locator('#put-down').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  }
+});
+
+test('mapped inputs move real button meshes and the native LCD lights the room until power off', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('./');
+  await page.locator('#tools-open').click();
+  await page.locator('#demo').click();
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
+  const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
+  const displacement = (id) => page.evaluate(async (action) => {
+    const { view } = await import('./src/app.js');
+    const { mesh } = view.model.controls.get(action);
+    const rest = mesh.userData.motion.restPosition;
+    return { z: rest.z - mesh.position.z, y: rest.y - mesh.position.y, pitch: mesh.rotation.x, yaw: mesh.rotation.y };
+  }, id);
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('z');
+  await expect.poll(async () => (await displacement('a')).z).toBeGreaterThan(.04);
+  expect((await displacement('b')).z).toBeLessThan(.001);
+  const a = await page.locator('[data-control="a"]').boundingBox();
+  await page.mouse.move(a.x + a.width / 2, a.y + a.height / 2);
+  await page.mouse.down();
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+  expect((await displacement('a')).z, 'Pointer release cannot cancel a held mapped key').toBeGreaterThan(.04);
+  await page.keyboard.up('z');
+  await expect.poll(async () => (await displacement('a')).z).toBeLessThan(.001);
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('ArrowUp');
+  await page.keyboard.down('ArrowRight');
+  await expect.poll(async () => (await displacement('up')).pitch).toBeLessThan(-.06);
+  await expect.poll(async () => (await displacement('up')).yaw).toBeGreaterThan(.06);
+  await page.keyboard.down('ArrowDown');
+  await expect.poll(async () => Math.abs((await displacement('up')).pitch)).toBeLessThan(.001);
+  for (const key of ['ArrowUp', 'ArrowRight', 'ArrowDown']) await page.keyboard.up(key);
+  for (const [id, key, axis, travel] of [['b', 'x', 'z', .04], ['start', 'Enter', 'z', .023],
+    ['select', 'ShiftLeft', 'z', .023], ['l', 'a', 'y', .07], ['r', 's', 'y', .07]]) {
+    await page.keyboard.down(key);
+    await expect.poll(async () => (await displacement(id))[axis]).toBeGreaterThan(travel);
+    await page.keyboard.up(key);
+    await expect.poll(async () => (await displacement(id))[axis]).toBeLessThan(.001);
+  }
+  await page.keyboard.down('z');
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expect.poll(async () => (await displacement('a')).z).toBeLessThan(.001);
+  await page.keyboard.up('z');
+  await page.locator('#tools-open').click();
+  await page.locator('[data-binding="a"]').click();
+  await page.keyboard.press('q');
+  await expect(page.locator('[data-binding="a"]')).toHaveText('Q');
+  await page.locator('#tools-close').click();
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('z');
+  await page.waitForTimeout(100);
+  expect((await displacement('a')).z).toBeLessThan(.001);
+  await page.keyboard.up('z');
+  await page.keyboard.down('q');
+  await expect.poll(async () => (await displacement('a')).z).toBeGreaterThan(.04);
+  await page.keyboard.press('Escape');
+  await expect.poll(async () => (await displacement('a')).z).toBeLessThan(.001);
+  await page.keyboard.up('q');
+  await page.locator('#tools-close').click();
+
+  await page.locator('#lamp-toggle').click();
+  expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
+  expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').hover();
+  await page.mouse.wheel(0, 350);
+  await page.waitForTimeout(300);
+  const nativeLight = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    const emitter = view.screenIllumination.light;
+    return { power: emitter.intensity, normal: new Vector3(0, 0, -1).transformDirection(emitter.matrixWorld).toArray(),
+      front: new Vector3(0, 0, 1).transformDirection(view.model.root.matrixWorld).toArray() };
+  });
+  expect(nativeLight.power).toBeGreaterThan(0);
+  for (let axis = 0; axis < 3; axis++) expect(nativeLight.normal[axis]).toBeCloseTo(nativeLight.front[axis], 5);
+  const spill = await surfaceLight(page, [0, 0, 3]);
+  expect(spill, 'The actual table receives light from the native post-shader framebuffer').toBeGreaterThan(2);
+  await page.screenshot({ path: 'docs/images/lcd-light.png' });
+  await page.locator('#tools-open').click();
+  await page.locator('#pause').click();
+  await expect(page.locator('#pause')).toHaveText('Resume game');
+  await page.locator('#tools-close').click();
+  const emission = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.screenIllumination.current.toArray();
+  });
+  for (const [r, g, b] of [[1, 0, 0], [0, 0, 1], [.5, .5, .5]]) {
+    // Controlled colors in the paused native framebuffer isolate actual color transfer.
+    await runtime.evaluate(([red, green, blue]) => {
+      const canvas = window.EJS_emulator.canvas;
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      const scissor = gl.isEnabled(gl.SCISSOR_TEST);
+      const clear = gl.getParameter(gl.COLOR_CLEAR_VALUE);
+      gl.disable(gl.SCISSOR_TEST);
+      gl.clearColor(red, green, blue, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.clearColor(...clear);
+      if (scissor) gl.enable(gl.SCISSOR_TEST);
+    }, [r, g, b]);
+    const linear = (value) => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
+    await expect.poll(async () => (await emission()).map((value, axis) =>
+      Math.abs(value - linear([r, g, b][axis]))).every((difference) => difference < .01)).toBe(true);
+  }
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.model.root.rotateY(Math.PI);
+  });
+  await expect.poll(() => surfaceLight(page, [0, 0, 3])).toBeLessThan(spill * .2);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#hardware-power').click();
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  const off = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return { emission: view.screenIllumination.light.intensity, powerX: view.model.controls.get('power').mesh.position.x };
+  });
+  expect(off.emission).toBe(0);
+  expect(off.powerX).toBe(1.45);
+  expect(await surfaceLight(page, [0, 3.5, 0]), 'Unlit body, printed logo and switched-off LCD do not glow').toBeLessThan(1);
+  await page.screenshot({ path: 'docs/images/dark-power-off.png' });
+  expect(errors).toEqual([]);
+});
+
 test('real 3D mesh picking, pickup, back inspection, return and responsive physical controls', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));

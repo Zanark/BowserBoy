@@ -1,5 +1,5 @@
 import { validateBatterySave, validateCapture } from './cartridge.js';
-import { CONTROLS, defaultPreferences, validatePreferences } from './preferences.js';
+import { CONTROLS, MANAGED_SETTINGS, defaultPreferences, validateEmulatorOptions, validatePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 
 // Version-specific internals are confined to this adapter; see docs/ARCHITECTURE.md.
@@ -7,6 +7,7 @@ const DATA_PATH = 'https://cdn.emulatorjs.org/4.2.3/data/';
 let session;
 let started = false;
 let inputEnabled = true;
+let settingsOpen = false;
 let preferences = defaultPreferences();
 const heldInputs = new Map();
 
@@ -32,7 +33,7 @@ function input(action, pressed, source) {
   if (!control || typeof pressed !== 'boolean' || typeof source !== 'string' || source.length > 64) {
     throw new Error('Invalid console input.');
   }
-  if (!inputEnabled && pressed) return;
+  if ((!inputEnabled || settingsOpen) && pressed) return;
   const sources = heldInputs.get(action) ?? new Set();
   const wasPressed = sources.size > 0;
   if (pressed) sources.add(source);
@@ -46,10 +47,10 @@ function input(action, pressed, source) {
 }
 
 const keyboard = bindKeyboard(window, {
-  enabled: () => started && inputEnabled,
+  enabled: () => started && inputEnabled && !settingsOpen,
   getBindings: () => preferences.controls,
   onInput: (action, pressed, code) => input(action, pressed, `player-key:${code}`),
-  onMenu: () => { send('tools'); return true; },
+  onMenu: () => { send(settingsOpen ? 'settings-close' : 'tools'); return true; },
   blockUnmapped: true,
 });
 document.addEventListener('visibilitychange', () => {
@@ -66,12 +67,44 @@ function configure(value) {
   const emulator = window.EJS_emulator;
   emulator.volume = preferences.muted ? 0 : preferences.volume / 100;
   emulator.setVolume(emulator.volume);
-  if (preferences.shader !== 'disabled' && !emulator.config.shaders?.[preferences.shader]) {
-    throw new Error('The pinned runtime did not provide CRT Geom. Reload to retry the runtime download.');
+  const shader = preferences.emulatorOptions?.shader ?? preferences.shader;
+  if (shader !== 'disabled' && !emulator.config.shaders?.[shader]) {
+    throw new Error('The pinned runtime did not provide the selected shader. Reload to retry the runtime download.');
   }
-  if (emulator.getSettingValue('shader') !== preferences.shader) {
-    emulator.changeSettingOption('shader', preferences.shader);
+  if (emulator.getSettingValue('shader') !== shader) {
+    emulator.changeSettingOption('shader', shader);
   }
+}
+
+function settings(open) {
+  manager();
+  if (typeof open !== 'boolean') throw new Error('Invalid settings panel mode.');
+  const emulator = window.EJS_emulator;
+  const menu = emulator.settingsMenu;
+  if (!menu) throw new Error('The pinned runtime could not create its settings menu.');
+  const options = validateEmulatorOptions({ ...preferences.emulatorOptions, ...emulator.settings });
+  setInputEnabled(inputEnabled);
+  settingsOpen = open;
+  emulator.settingsMenuOpen = open;
+  document.body.classList.toggle('native-settings', open);
+  // Move only the menu, never the running iframe or its canvas.
+  if (open) emulator.elements.parent.append(menu);
+  menu.style.display = open ? '' : 'none';
+  for (const row of menu.querySelectorAll('.ejs_settings_main_bar')) {
+    if (['Input Options', 'Save States', 'Virtual Gamepad'].includes(row.textContent)) {
+      row.remove();
+      continue;
+    }
+    if (row.hasAttribute('tabindex')) continue;
+    row.tabIndex = 0;
+    row.setAttribute('role', 'button');
+    row.addEventListener('keydown', (event) => {
+      if (event.code !== 'Enter' && event.code !== 'Space') return;
+      event.preventDefault();
+      row.click();
+    });
+  }
+  return options;
 }
 
 function setInputEnabled(enabled) {
@@ -142,9 +175,11 @@ function initialize(data) {
     EJS_language: 'en-US',
     EJS_volume: preferences.muted ? 0 : preferences.volume / 100,
     EJS_defaultOptions: {
+      ...preferences.emulatorOptions,
       'virtual-gamepad': 'disabled',
-      shader: preferences.shader,
+      shader: preferences.emulatorOptions?.shader ?? preferences.shader,
     },
+    EJS_hideSettings: MANAGED_SETTINGS,
     EJS_defaultControls: {
       0: Object.fromEntries(CONTROLS.map(({ button, gamepad }) => [button, { value: '', value2: gamepad }])),
       1: {}, 2: {}, 3: {},
@@ -221,6 +256,7 @@ window.addEventListener('message', async (event) => {
       case 'battery': result = validateBatterySave(manager().getSaveFile()); break;
       case 'restore': await restore(data.value); result = true; break;
       case 'configure': configure(data.value); result = true; break;
+      case 'settings': result = settings(data.value); break;
       case 'setInputEnabled': setInputEnabled(data.value); result = true; break;
       case 'togglePause': {
         manager();

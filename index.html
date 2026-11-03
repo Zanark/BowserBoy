@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#d7d4ca">
+    <meta name="theme-color" content="#080c12">
     <meta name="description" content="A familiar handheld, right in your browser. Local GBA cartridges, automatic resume and portable backups.">
     <title>Bowser Boy Advance</title>
     <link rel="icon" href="./assets/cartridge.svg" type="image/svg+xml">
@@ -35,6 +35,7 @@
         <button id="pickup">Pick up</button>
         <button id="inspect" aria-pressed="false" hidden>Inspect</button>
         <button id="put-down" hidden>Put down</button>
+        <button id="lamp-toggle" aria-pressed="true" aria-label="Turn desk lamp off"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z"/></svg><span id="lamp-label">Lamp on</span></button>
         <span class="action-divider" aria-hidden="true"></span>
         <button id="tools-open" aria-label="Open cartridge and settings" aria-haspopup="dialog" aria-controls="tools">Cartridges <kbd>Esc</kbd></button>
       </nav>
@@ -43,7 +44,12 @@
         <div id="loading-screen" hidden><h2 id="loading-title">Reading cartridge...</h2><p id="loading-detail">The first launch needs internet.</p></div>
         <span id="power-led"></span><span id="power-label">No cartridge loaded</span>
       </div>
-      <div id="frame-host" class="runtime-source" aria-hidden="true"></div>
+      <dialog id="frame-host" class="runtime-source" aria-hidden="true" aria-labelledby="native-title" aria-describedby="native-description">
+        <div class="native-header"><div><p class="eyebrow">UNDER THE SHELL</p><h2 id="native-title">EmulatorJS settings</h2></div><button id="native-close" class="close-button" aria-label="Close EmulatorJS settings">&times;</button></div>
+        <p id="native-description" class="fineprint">Native graphics, speed, capture and core options. Changes are remembered when you close. Options marked Requires restart apply on the next power on. Keys, sound and saves stay in Cartridges. Opening this panel does not pause the game.</p>
+        <div id="native-notice-host"></div>
+        <div id="runtime-mount"></div>
+      </dialog>
       <div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div>
       <footer>Independent player <span aria-hidden="true">&middot;</span> <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EmulatorJS</a> + <a href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a></footer>
 
@@ -83,6 +89,7 @@
         <button id="mute" class="button button-secondary" aria-pressed="false">Mute</button>
         <div class="setting-row display-setting"><label for="shader">Screen shader</label><select id="shader"><option value="crt-geom.glslp">CRT Geom</option><option value="disabled">Unfiltered</option></select></div>
         <p id="preferences-status" class="fineprint" role="status">Keys, sound and display settings are remembered in this browser.</p>
+        <button id="native-open" class="button button-secondary" aria-haspopup="dialog" aria-controls="frame-host" disabled>Advanced EmulatorJS settings</button>
       </section>
       <div class="drawer-footer"><button id="help-open" class="text-button">How it works</button><a href="https://github.com/Zanark/BowserBoyAdvance" target="_blank" rel="noopener noreferrer">View source &#8599;</a></div>
     </dialog>
@@ -94,6 +101,7 @@
       <h3>A handheld you can hold</h3><p>Click the 3D handheld on the table to pick it up. Inspect lets you drag it around to see its sides and battery cover. Use arrows to rotate, +/minus to zoom, or Home to reset while inspecting. Back to play returns it to a playable angle; Put down returns it to the table. The other cartridges are original decorative props, not supplied games.</p>
       <h3>Play, the familiar way</h3><p>Use the physical buttons, or click the 3D display for keyboard focus. Defaults: arrows to move, <strong>Z = A, X = B</strong>, A/S = L/R, Enter = Start, left Shift = Select. Remap keys in Cartridges. CRT Geom is the default screen shader; choose Unfiltered there if preferred. No buttons cover the LCD. Keyboard and mouse/touch controls are active in play view; the game keeps running on the table and while inspecting until you pause it. Connected gamepads retain their native runtime mappings.</p>
       <h3>Power and pause</h3><p>The physical switch powers the emulator off and stores available in-game save data. Turn it back on to boot the loaded ROM from the beginning, then use the game's own Continue/Load menu. Power on never restores an instant checkpoint. Pause game in Cartridges keeps the current session instead.</p>
+      <h3>Under the shell</h3><p>Advanced EmulatorJS settings in Cartridges opens the native graphics, speed, capture settings and core options without restarting the game. Close it or press Escape to return. Choices are remembered on close; options marked Requires restart apply on the next power on. Key bindings, sound and checked save/backup handling remain in Cartridges. Opening settings does not pause gameplay.</p>
       <h3>Keep your place</h3><p>Auto-save captures a rolling checkpoint every 15 seconds, including cartridge battery-save data when available. Selecting the same ROM normally resumes the newest checkpoint, even if renamed. After a deliberate power off it boots from the in-game save instead, until a new checkpoint is captured. Save checkpoint keeps a separate manual slot. Restore replaces progress since that save. Save before closing; abrupt shutdowns can lose the latest progress.</p>
       <h3>Take a backup</h3><p>Export captures the current session to a <strong>.bba-save</strong> file. Select the matching ROM before importing. Imports replace the running session and manual slot. Backups depend on the exact ROM bytes and EmulatorJS 4.2.3 / mGBA; they are not other emulators' .sav files.</p>
       <p class="help-warning">Saves belong to this browser profile and website origin. Cleared or evicted site data and private browsing can remove them. Export regularly. ROM files are not retained; reselect yours to continue.</p>

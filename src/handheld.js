@@ -53,8 +53,9 @@ function textTexture(text, color = '#bfc3ad', font = 'bold 75px Arial', aspect =
 
 function label(parent, text, width, height, x, y, z, color, font) {
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height),
-    new THREE.MeshBasicMaterial({ map: textTexture(text, color, font, width / height), transparent: true, depthWrite: false }));
+    new THREE.MeshStandardMaterial({ map: textTexture(text, color, font, width / height), transparent: true, depthWrite: false, roughness: .65 }));
   mesh.position.set(x, y, z);
+  mesh.receiveShadow = true;
   parent.add(mesh);
   return mesh;
 }
@@ -92,7 +93,8 @@ function engravedLabel(parent, text, x, y, width, height, color, angle = -.18) {
   group.rotation.z = angle;
   const shape = roundedShape(width, height, height / 2);
   shape.holes.push(roundedShape(width - .018, height - .018, height / 2 - .009));
-  const outline = new THREE.Mesh(new THREE.ShapeGeometry(shape), new THREE.MeshBasicMaterial({ color }));
+  const outline = new THREE.Mesh(new THREE.ShapeGeometry(shape), new THREE.MeshStandardMaterial({ color, roughness: .65 }));
+  outline.receiveShadow = true;
   group.add(outline);
   label(group, text, width * .73, height * .48, -.04, 0, .002, color, 'italic bold 75px Arial');
   parent.add(group);
@@ -105,7 +107,7 @@ export function createHandheld() {
   const rear = new THREE.MeshStandardMaterial({ color: '#3e396e', roughness: .63 });
   const seam = new THREE.MeshStandardMaterial({ color: '#29253e', roughness: .85 });
   const bezel = new THREE.MeshStandardMaterial({ color: '#202a29', roughness: .32 });
-  const silver = new THREE.MeshStandardMaterial({ color: '#d8d9cb', roughness: .39, metalness: .13 });
+  const silver = new THREE.MeshPhysicalMaterial({ color: '#d8d9cb', roughness: .36, metalness: 0, clearcoat: .22, clearcoatRoughness: .4 });
   const dark = new THREE.MeshStandardMaterial({ color: '#242332', roughness: .85 });
   const shell = new THREE.Shape();
   shell.moveTo(-4.1, 1.45);
@@ -163,14 +165,21 @@ export function createHandheld() {
     context.fillText('ADVANCE', width + 28, 124);
   });
   const logo = new THREE.Mesh(new THREE.PlaneGeometry(3.15, .26),
-    new THREE.MeshBasicMaterial({ map: wordmark, transparent: true, depthWrite: false }));
+    new THREE.MeshStandardMaterial({ map: wordmark, transparent: true, depthWrite: false, roughness: .65 }));
   logo.position.set(0, -1.53, .753);
+  logo.receiveShadow = true;
   root.add(logo);
   engravedLabel(root, 'BOWSER', 0, 2.08, 1.12, .25, '#625a97', 0);
 
   const controls = new Map();
   function control(id, mesh, width, height, anchor = mesh) {
     controls.set(id, { mesh, anchor, width, height, rest: mesh.position.z });
+    mesh.userData.motion ??= {
+      restPosition: mesh.position.clone(), restQuaternion: mesh.quaternion.clone(),
+      travel: new THREE.Vector3(0, ['l', 'r'].includes(id) ? -.075 : 0,
+        ['l', 'r'].includes(id) ? 0 : ['up', 'down', 'left', 'right'].includes(id) ? -.01 : ['start', 'select'].includes(id) ? -.025 : -.045),
+      press: 0, pitch: 0, yaw: 0,
+    };
   }
   const cross = new THREE.Shape();
   for (const [index, [x, y]] of [
@@ -196,9 +205,10 @@ export function createHandheld() {
     control(id, pad, .39, .39, anchor);
     const triangle = new THREE.Shape();
     triangle.moveTo(0, .055); triangle.lineTo(-.055, -.04); triangle.lineTo(.055, -.04); triangle.closePath();
-    const arrow = new THREE.Mesh(new THREE.ShapeGeometry(triangle), new THREE.MeshBasicMaterial({ color: '#a5ad9b' }));
+    const arrow = new THREE.Mesh(new THREE.ShapeGeometry(triangle), new THREE.MeshStandardMaterial({ color: '#a5ad9b', roughness: .65 }));
     arrow.position.copy(anchor.position);
     arrow.rotation.z = rotation;
+    arrow.receiveShadow = true;
     pad.add(arrow);
   }
   add(pad, 'D-pad pivot well', new THREE.CircleGeometry(.135, 32), silver, 0, 0, .03);

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { canvasTexture, createCartridge, createHandheld, createWood } from './handheld.js';
+import { createDeskLamp, ScreenIllumination } from './lighting.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -7,16 +8,17 @@ const playPosition = new THREE.Vector3(0, 3.5, 0);
 const tablePosition = new THREE.Vector3(-.6, .68, .4);
 
 export class HandheldScene {
-  constructor(host, { onTools, onView, onError }) {
+  constructor(host, { onTools, onView, onError, onLamp }) {
     this.host = host;
     this.onView = onView;
+    this.onError = onError;
     this.mode = 'table';
     this.reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.15;
+    this.renderer.toneMappingExposure = .015;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.canvas = this.renderer.domElement;
@@ -25,25 +27,17 @@ export class HandheldScene {
     this.canvas.setAttribute('aria-label', 'Interactive 3D handheld. Click to pick up. Inspect mode: drag or use arrow keys to rotate, plus and minus to zoom, Home to reset.');
     host.append(this.canvas);
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('#d4c7b1');
+    this.scene.background = new THREE.Color('#000000');
     this.camera = new THREE.PerspectiveCamera(36, 1, .1, 180);
     this.lookAt = new THREE.Vector3();
-    this.scene.add(new THREE.HemisphereLight('#fff0d3', '#6a5870', 2.2));
-    const light = new THREE.DirectionalLight('#fff1d2', 4.2);
-    light.position.set(-7, 16, 9);
-    light.castShadow = true;
-    light.shadow.mapSize.set(2048, 2048);
-    Object.assign(light.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: .5, far: 45 });
-    light.shadow.bias = -.00035;
-    light.shadow.normalBias = .025;
-    this.scene.add(light);
-    const fill = new THREE.DirectionalLight('#d1d8ff', 1.5);
-    fill.position.set(9, 7, -6);
-    this.scene.add(fill);
+    this.lamp = createDeskLamp();
+    this.scene.add(this.lamp.root);
+    this.setLamp(true);
     const table = new THREE.Mesh(new THREE.BoxGeometry(32, .75, 23),
       new THREE.MeshStandardMaterial({ map: createWood(), color: '#cfb28f', roughness: .83 }));
     table.position.y = -.375;
     table.receiveShadow = true;
+    table.name = 'Wooden tabletop';
     this.scene.add(table);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(180, 180),
       new THREE.MeshStandardMaterial({ color: '#c6bda9', roughness: 1 }));
@@ -62,10 +56,14 @@ export class HandheldScene {
       this.scene.add(cartridge);
     }
     this.model = createHandheld();
+    this.screenIllumination = new ScreenIllumination(this.model.screen);
     this.scene.add(this.model.root);
     this.model.root.position.copy(tablePosition);
     this.model.root.quaternion.copy(tableQuaternion);
     this.pressed = new Set();
+    this.controlGroups = [...new Set([...this.model.controls.values()].map(({ mesh }) => mesh))]
+      .filter((mesh) => mesh !== this.model.controls.get('power').mesh)
+      .map((mesh) => ({ mesh, ids: [...this.model.controls].filter(([, value]) => value.mesh === mesh).map(([id]) => id) }));
     this.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
     this.raycaster = new THREE.Raycaster();
     this.pointer = new THREE.Vector2();
@@ -76,6 +74,8 @@ export class HandheldScene {
     this.canvas.addEventListener('pointerdown', (event) => {
       if (event.button !== 0) return;
       this.canvas.focus({ preventScroll: true });
+      const hit = this.pick(event);
+      if (!this.transition && hit?.object.userData.lampToggle) { onLamp(); return; }
       if (this.mode === 'inspecting') {
         this.inspectionPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
         if (this.inspectionPointers.size === 1) {
@@ -87,7 +87,6 @@ export class HandheldScene {
         }
         this.canvas.setPointerCapture(event.pointerId);
       } else if (!this.transition) {
-        const hit = this.pick(event);
         if (!hit) return;
         if (this.mode === 'table') this.setView('playing');
         else if (hit.object.userData.tools) onTools();
@@ -159,7 +158,7 @@ export class HandheldScene {
     const bounds = this.canvas.getBoundingClientRect();
     this.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.raycaster.setFromCamera(this.pointer, this.camera);
-    return this.raycaster.intersectObject(this.model.root, true)[0];
+    return this.raycaster.intersectObjects([this.model.root, this.lamp.root], true)[0];
   }
 
   resize() {
@@ -180,8 +179,8 @@ export class HandheldScene {
   updateCameraTargets() {
     if (this.mode === 'table') {
       const scale = Math.max(1, 1.12 / this.camera.aspect);
-      this.cameraTarget = new THREE.Vector3(5, 11, 12).multiplyScalar(scale);
-      this.lookTarget = new THREE.Vector3(0, 0, .2);
+      this.cameraTarget = new THREE.Vector3(6, 13, 17).multiplyScalar(scale);
+      this.lookTarget = new THREE.Vector3(-1, 2, 1);
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = this.height < 500 ? 110 : 180;
@@ -220,9 +219,18 @@ export class HandheldScene {
 
   setPower(running) {
     this.model.led.material.color.set(running ? '#bce76f' : '#495537');
-    this.model.led.material.emissive.set(running ? '#75b62b' : '#000000');
-    this.model.led.material.emissiveIntensity = running ? 1.2 : 0;
+    this.model.led.material.emissive.set(running ? '#00b800' : '#000000');
+    this.model.led.material.emissiveIntensity = running ? 80 : 0;
     this.model.controls.get('power').mesh.position.x = running ? 1.65 : 1.45;
+  }
+
+  setLamp(enabled) {
+    this.lampOn = enabled;
+    this.lamp.light.visible = enabled;
+    this.lamp.bounce.visible = enabled;
+    this.lamp.diffuser.material.emissiveIntensity = enabled ? 1200 : 0;
+    this.lamp.shade.material.emissiveIntensity = enabled ? 12 : 0;
+    this.lamp.switchCap.position.y = enabled ? .34 : .37;
   }
 
   setControl(action, pressed) {
@@ -231,33 +239,34 @@ export class HandheldScene {
 
   showPowerOff() {
     this.source = null;
-    const material = this.model.screen.material;
-    const previous = material.map;
-    material.map = null;
-    material.color.set('#18201b');
-    material.needsUpdate = true;
-    previous?.dispose();
+    this.screenIllumination.clear();
+    this.setDisplay(new THREE.MeshPhysicalMaterial({
+      color: '#101713', roughness: .24, clearcoat: 1, clearcoatRoughness: .22,
+    }));
+  }
+
+  setDisplay(material) {
+    const previous = this.model.screen.material;
+    this.model.screen.material = material;
+    previous.map?.dispose();
+    previous.dispose();
   }
 
   setScreen(canvas) {
-    const previous = this.model.screen.material.map;
     this.source = canvas;
+    this.screenIllumination.clear();
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
     texture.generateMipmaps = false;
-    this.model.screen.material.map = texture;
-    this.model.screen.material.color.set('white');
-    this.model.screen.material.needsUpdate = true;
-    previous?.dispose();
+    this.setDisplay(new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
   }
 
   showStatus(title, detail) {
     this.source = null;
-    this.model.screen.material.color.set('white');
-    const previous = this.model.screen.material.map;
-    this.model.screen.material.map = canvasTexture(720, 480, (context, width, height) => {
+    this.screenIllumination.clear();
+    const map = canvasTexture(720, 480, (context, width, height) => {
       context.fillStyle = '#b1c19d';
       context.fillRect(0, 0, width, height);
       context.fillStyle = '#35513d';
@@ -271,8 +280,7 @@ export class HandheldScene {
       context.font = '16px monospace';
       context.fillText(detail, width / 2, 367, width - 40);
     });
-    this.model.screen.material.needsUpdate = true;
-    previous?.dispose();
+    this.setDisplay(new THREE.MeshBasicMaterial({ map, toneMapped: false }));
   }
 
   project(object) {
@@ -281,6 +289,10 @@ export class HandheldScene {
   }
 
   render(time) {
+    const delta = Math.min(.05, Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000));
+    this.lastRender = time;
+    this.renderer.toneMappingExposure = THREE.MathUtils.damp(
+      this.renderer.toneMappingExposure, this.lampOn ? .015 : .45, 4, delta);
     if (this.transition) {
       const transition = this.transition;
       const fraction = transition.duration ? Math.min(1, (time - transition.started) / transition.duration) : 1;
@@ -296,11 +308,30 @@ export class HandheldScene {
       }
     } else this.host.dataset.view = this.mode;
     this.camera.lookAt(this.lookAt);
-    for (const item of new Set([...this.model.controls.values()].map(({ mesh }) => mesh))) {
-      const entries = [...this.model.controls.entries()].filter(([, value]) => value.mesh === item);
-      item.position.z = entries[0][1].rest - (entries.some(([id]) => this.pressed.has(id)) ? .055 : 0);
+    for (const { mesh, ids } of this.controlGroups) {
+      const motion = mesh.userData.motion;
+      motion.press = THREE.MathUtils.damp(motion.press, ids.some((id) => this.pressed.has(id)) ? 1 : 0, 55, delta);
+      mesh.position.copy(motion.restPosition).addScaledVector(motion.travel, motion.press);
+      if (ids.includes('up')) {
+        const x = Number(this.pressed.has('down')) - Number(this.pressed.has('up'));
+        const y = Number(this.pressed.has('right')) - Number(this.pressed.has('left'));
+        motion.pitch = THREE.MathUtils.damp(motion.pitch, x * .065, 55, delta);
+        motion.yaw = THREE.MathUtils.damp(motion.yaw, y * .065, 55, delta);
+        mesh.rotation.set(motion.pitch, motion.yaw, 0);
+      } else {
+        mesh.quaternion.copy(motion.restQuaternion);
+        if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .045);
+      }
     }
     if (this.source) this.model.screen.material.map.needsUpdate = true;
+    if (!this.screenIllumination.failed) {
+      try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, delta); }
+      catch (error) {
+        this.screenIllumination.clear();
+        this.screenIllumination.failed = true;
+        this.onError(new Error(`LCD light sampling failed: ${error.message}. The game is retained; reload to retry lighting.`));
+      }
+    }
     this.renderer.render(this.scene, this.camera);
     for (const [id, control] of this.model.controls) {
       const button = id === 'power' ? document.getElementById('hardware-power') : document.querySelector(`[data-control="${id}"]`);
