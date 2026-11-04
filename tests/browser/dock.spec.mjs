@@ -441,17 +441,19 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     const markings = [
       ...['a', 'b', 'l', 'r'].map(id => {
         const cap = view.model.controls.get(id).mesh;
-        return [cap.getObjectByName(`Raised ${id.toUpperCase()} lettering`), cap.material];
+        return [cap.getObjectByName(`Raised ${id.toUpperCase()} lettering`), cap.material, id === 'a' || id === 'b'];
       }),
       ...['START', 'SELECT'].map(text =>
         [root.getObjectByName(`Raised ${text} lettering`), root.getObjectByName('Front face with speaker apertures').material]),
       ...['up', 'down', 'left', 'right'].map(id =>
-        [root.getObjectByName(`Raised ${id} arrow`), view.model.controls.get(id).mesh.material]),
-    ].map(([mesh, material]) => {
+        [root.getObjectByName(`Raised ${id} arrow`), view.model.controls.get(id).mesh.material, true]),
+    ].map(([mesh, material, darker = false]) => {
       if (!mesh) return null;
       mesh.geometry.computeBoundingBox();
+      const luminance = color => .2126 * color.r + .7152 * color.g + .0722 * color.b;
       return { geometry: mesh.geometry.type, depth: mesh.geometry.boundingBox.max.z - mesh.geometry.boundingBox.min.z,
         sameMaterial: mesh.material === material, unprinted: mesh.material.map === null,
+        darker, contrast: (luminance(material.color) + .05) / (luminance(mesh.material.color) + .05),
         castsShadow: mesh.castShadow, receivesShadow: mesh.receiveShadow };
     });
     const microLabels = [[3.38, 1.43], [-3.02, -1.95]].map(([x, y]) => {
@@ -475,7 +477,9 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     expect(marking).not.toBeNull();
     expect(marking.geometry).toBe('ExtrudeGeometry');
     expect(marking.depth).toBeGreaterThan(.008);
-    expect(marking.sameMaterial && marking.unprinted && marking.castsShadow && marking.receivesShadow).toBe(true);
+    expect(marking.sameMaterial).toBe(!marking.darker);
+    if (marking.darker) expect(marking.contrast).toBeGreaterThan(1.5);
+    expect(marking.unprinted && marking.castsShadow && marking.receivesShadow).toBe(true);
   }
   const icons = await page.locator('.scene-actions button:visible svg path').evaluateAll(paths => paths.map(path => path.getAttribute('d')));
   expect(new Set(icons).size).toBe(icons.length);

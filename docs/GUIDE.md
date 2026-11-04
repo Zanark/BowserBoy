@@ -69,7 +69,8 @@ from off to on. The chime follows volume/mute; reduced motion uses a static reve
 The supplied transparent wordmark also appears on the rear shell, idle/loading
 LCD and settings panels. The front bezel uses the supplied logo's distinctive
 lettering in monochrome, without stars; screen-only fullscreen shares that artwork.
-A/B, shoulder letters and D-pad arrows are raised in their button material;
+A/B letters and D-pad arrows retain raised rubber geometry with their earlier
+darker tones for clearer contrast. Shoulder letters retain their cap material;
 START/SELECT and the geometric **ZANARK** badge are molded in the shell's plastic.
 There is no front POWER or BBA-001 print; the power light remains.
 Normal play is slightly closer while retaining the whole handheld and clear UI;
@@ -83,9 +84,10 @@ stepped shoulders and bowed lower edge match the actual 3D shell.
 
 ![Actual public handheld with molded control lettering and stylized monochrome bezel](images/molded-controls.png)
 
-*Room lights and a slight inspection tilt reveal same-material raised letters
+*Room lights and a slight inspection tilt reveal the earlier same-material raised letters
 and their edges. The star-free bezel uses the original logo's typography;
-the front has no POWER or BBA-001 print.*
+the front has no POWER or BBA-001 print. This capture precedes the darker
+A/B and D-pad marking refinement.*
 
 ![The original power-on sequence on the handheld LCD](images/startup.png)
 

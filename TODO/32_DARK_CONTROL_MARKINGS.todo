@@ -1,0 +1,38 @@
+Status: IN_PROGRESS
+Milestone: Darker, readable A/B letters and D-pad arrows with real relief.
+Dependencies: Completed workstream 28.
+
+Purpose:
+Restore the earlier dark control markings requested by the user while retaining
+the manufactured, embossed geometry and light-responsive rubber finish.
+
+Tasks:
+- [x] Recover actual earlier A/B and arrow colors from repository history.
+- [x] Apply those colors only to material clones on the six raised markings.
+- [x] Retain cap colors, geometry, motion, roughness, bevels and shadows.
+- [x] Extend the existing manufactured-control regression with relative contrast.
+- [x] Reconcile the guide/book explanation and identify the earlier capture.
+- [ ] Complete focused checks, normal publication and independent live verification.
+
+Acceptance criteria:
+- A/B letters and all four D-pad arrows are darker than their cap surfaces.
+- Markings remain actual extruded meshes, not printed textures.
+- Other labels, colors, input behavior and the preceding play-view logo fix remain.
+- Technical checks and deployment do not imply human aesthetic acceptance.
+
+Completion evidence:
+- Actual history immediately before 7843db8 uses #a2aa99 for A/B and #a5ad9b
+  for arrows; these exact source colors are restored on rubber clones.
+- Expanded existing regression retains geometry/shadow/no-texture assertions,
+  checks the six markings' relative luminance contrast, and retains the original
+  same-material requirement for L/R and START/SELECT.
+- Syntax/build, all 11 units and three focused Edge cases pass in 1.3m.
+  The cases include contrast/relief, prior logo-view transitions, notices,
+  five-size clearance and whole-handheld/power containment.
+  Actual 1920px warm-lamp capture reviewed; darker marks retain relief.
+  Hosted deployment and independent public verification remain pending.
+
+Completion log:
+- 2026-11-04: User asks for darker A/B letters and D-pad arrows as before.
+  Recover the real historical palette rather than guess it or revert the
+  earlier requested embossed geometry. Only the six marking meshes are tinted.

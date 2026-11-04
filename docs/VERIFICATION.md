@@ -7,6 +7,20 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Darker raised control markings
+
+The actual pre-relief source palette is restored on A/B (`#a2aa99`) and the
+four D-pad arrows (`#a5ad9b`). Tinted rubber-material clones preserve roughness,
+clearcoat, raised/beveled geometry and shadows; the caps and other labels do
+not change. The existing manufactured-control case checks relative luminance
+contrast above 1.5 for those six marks and retains the same-material requirement
+for L/R and START/SELECT, plus its no-texture and real-depth assertions.
+
+Syntax/build, all 11 units and the three branding/notice/framing cases pass
+in 1.3m. This also rechecks the preceding play-only header fix. The actual
+1920px warm-lamp capture is reviewed: markings are visibly darker without
+flattening the geometry. Hosted deployment/public verification remain pending.
+
 ## Play-view header logo
 
 The top-left website wordmark is hidden only when the existing scene view is

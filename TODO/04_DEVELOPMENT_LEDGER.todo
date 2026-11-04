@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Darker manufactured controls:
+  User requests the earlier darker A/B letters and D-pad arrows. Read actual
+  pre-7843db8 source: A/B#a2aa99, arrows#a5ad9b. Restore those colors on clones
+  of the current rubber finish, retaining raised/beveled geometry and shadows.
+  Caps, L/R and shell labels are unchanged. Replace the obsolete universal
+  same-material test with targeted darker-mark contrast while preserving that
+  requirement for untouched markings. The preceding play-view logo change
+  remains in source; its normal Pages41884678705 is already in progress.
+  Syntax/build, all11units and three focused Edge cases pass1.3m; actual1920px
+  warm-lamp capture reviewed. Hosted deployment/public verification for this
+  additional request remain pending; no human aesthetic approval is inferred.
 - 2026-11-04 / Play-view header:
   User requests no top-left website logo while playing. Reuse the scene's
   existing settled data-view with visibility:hidden on only the header h1,

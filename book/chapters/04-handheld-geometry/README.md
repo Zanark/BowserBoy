@@ -14,7 +14,7 @@ flowchart TD
     A["Handheld root: position and orientation"] --> B["Shell and physical openings"]
     A --> C["LCD recess, border and display mesh"]
     A --> D["Moving control groups"]
-    D --> E["Same-material extruded markings"]
+    D --> E["Extruded markings with matched surface finish"]
     A --> F["Cartridge and insertion motion"]
     A --> G["Underside switch and projected DOM target"]
 ```
@@ -26,9 +26,15 @@ control's marking moves with its cap rather than floating over the casing.*
 
 A texture changes surface color. Relief changes surface shape and therefore
 silhouette, normals, highlights and self-occlusion. The shared polygon glyphs
-are extruded with bevels; counters preserve holes inside letters. The A/B/L/R
-markings and arrows use their cap's material. START/SELECT uses casing material.
-This lets light reveal a manufactured mark instead of a separate white decal.
+are extruded with bevels; counters preserve holes inside letters. The pinned
+source edition uses the cap's material for A/B/L/R markings and arrows;
+START/SELECT uses casing material. This lets light reveal a manufactured mark
+instead of a separate white decal.
+
+The later contrast refinement in workstream 32 restores the earlier dark A/B
+and arrow tones with tinted clones of the rubber material. The extrusion,
+bevels, shadows and shared cap motion remain; only those six markings change
+color. L/R and START/SELECT retain the original material relationship.
 
 The top Zanark mark and lower bezel serve different visual roles. Molded
 manufacturer lettering belongs to the shell. The bezel uses a star-free

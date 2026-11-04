@@ -195,6 +195,10 @@ export function createHandheld() {
   const rubber = silver.clone();
   rubber.roughness = .68;
   rubber.clearcoat = .06;
+  const buttonMark = rubber.clone();
+  buttonMark.color.set('#a2aa99');
+  const padMark = rubber.clone();
+  padMark.color.set('#a5ad9b');
   const dark = new THREE.MeshStandardMaterial({ color: '#242332', roughness: .85 });
   const shell = new THREE.Shape();
   shell.moveTo(-4.1, 1.45);
@@ -308,7 +312,7 @@ export function createHandheld() {
     control(id, pad, .39, .39, anchor);
     const triangle = new THREE.Shape();
     triangle.moveTo(0, .055); triangle.lineTo(-.055, -.04); triangle.lineTo(.055, -.04); triangle.closePath();
-    const arrow = add(pad, `Raised ${id} arrow`, solid(triangle, .008, .002), rubber, x, y, .055);
+    const arrow = add(pad, `Raised ${id} arrow`, solid(triangle, .008, .002), padMark, x, y, .055);
     arrow.rotation.z = rotation;
   }
   add(pad, 'D-pad pivot well', new THREE.CircleGeometry(.135, 32), silver, 0, 0, .03);
@@ -318,7 +322,7 @@ export function createHandheld() {
     const floor = add(root, `${name} socket`, new THREE.CircleGeometry(opening, 40), dark, x, y, .582);
     floor.castShadow = false;
     const button = add(root, `${name} button`, buttonCap(radius), rubber, x, y, z);
-    if (action) moldedText(button, id.toUpperCase(), .15, .20, .012, rubber, 0, 0, .059);
+    if (action) moldedText(button, id.toUpperCase(), .15, .20, .012, buttonMark, 0, 0, .059);
     else moldedLabel(root, id.toUpperCase(), x - .43, y + .04, 1.02, .32, purple);
     control(id, button, size, size);
   }
