@@ -156,6 +156,66 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   expect(await resumed.evaluate(() => window.EJS_emulator.getSettingValue('ff-ratio'))).toBe('2.0');
 });
 
+test('screen shader menu exposes every native CRT preset, renders each and remembers the selection', async ({ page }, testInfo) => {
+  page.on('dialog', dialog => dialog.accept());
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await openTools(page);
+  await expect(page.locator('#shader')).toHaveValue('crt-geom.glslp');
+  await startDemo(page);
+  const runtime = page.frames().find(frame => frame.url().endsWith('player.html'));
+  const identity = await runtime.evaluate(() => window.shaderIdentity = crypto.randomUUID());
+  const presets = await runtime.evaluate(() =>
+    Object.keys(window.EJS_emulator.config.shaders).filter(key => key.startsWith('crt-')).sort());
+  await openTools(page);
+  expect(await page.locator('#shader option').evaluateAll(options =>
+    options.filter(option => option.value.startsWith('crt-') && !option.disabled).map(option => option.value).sort()),
+  'Every CRT preset actually supplied by the pinned runtime must be selectable').toEqual(presets);
+  const samples = [];
+  for (const shader of presets) {
+    await page.locator('#shader').selectOption(shader);
+    await expect(page.locator('#shader')).toBeEnabled();
+    const sample = await runtime.evaluate(async (shader) => {
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const emulator = window.EJS_emulator;
+      const canvas = new OffscreenCanvas(emulator.canvas.width, emulator.canvas.height);
+      const context = canvas.getContext('2d');
+      context.drawImage(emulator.canvas, 0, 0);
+      const { data } = context.getImageData(0, 0, canvas.width, canvas.height);
+      let green = 0, hash = 2166136261;
+      for (let i = 0; i < data.length; i += 4) {
+        if (data[i + 1] > 30 && data[i + 1] > data[i] * 1.3 && data[i + 1] > data[i + 2] * 1.3) green++;
+        for (let channel = 0; channel < 3; channel++) hash = Math.imul(hash ^ data[i + channel], 16777619);
+      }
+      return { shader: emulator.getSettingValue('shader'), green, hash: hash >>> 0,
+        presetMatches: emulator.Module.FS.readFile('/shader/shader.glslp', { encoding: 'utf8' }) ===
+          emulator.config.shaders[shader].shader.value,
+        identity: window.shaderIdentity };
+    }, shader);
+    samples.push(sample);
+    expect(sample.shader).toBe(shader);
+    expect(sample.presetMatches, `The real native core loads ${shader}, not a label-only choice`).toBe(true);
+    expect(sample.green, `${shader} retains actual original-cartridge pixels`).toBeGreaterThan(5);
+    expect(sample.identity).toBe(identity);
+    expect(await page.evaluate(async () => (await import('./src/app.js')).view.screenCurved))
+      .toBe(shader === 'crt-geom.glslp');
+  }
+  await testInfo.attach('native-crt-presets', { body: JSON.stringify(samples), contentType: 'application/json' });
+  await page.locator('#shader').selectOption('crt-aperture.glslp');
+  await expect(page.locator('#shader')).toBeEnabled();
+  await page.reload();
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await openTools(page);
+  await expect(page.locator('#shader')).toHaveValue('crt-aperture.glslp');
+  const reboot = page.frames().find(frame => frame.url().endsWith('player.html'));
+  expect(await reboot.evaluate(() => window.EJS_emulator.getSettingValue('shader'))).toBe('crt-aperture.glslp');
+  await page.locator('#shader').selectOption('crt-geom.glslp');
+  await expect(page.locator('#shader')).toBeEnabled();
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.screenCurved)).toBe(true);
+  expect(errors).toEqual([]);
+});
+
 test('static shell, responsive layout, errors, keyboard help and private-file boundaries', async ({ page, request }) => {
   await page.goto('./');
   await expect(page.getByRole('heading', { name: 'Bowser Boy Advance' })).toBeVisible();

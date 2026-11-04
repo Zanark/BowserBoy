@@ -287,7 +287,7 @@ test('paper lantern gives warm light and room lights switch independently withou
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
 });
 
-test('larger LCD halves bezel gaps and the enlarged front-facing power slider works at desktop and phone sizes', async ({ page }, testInfo) => {
+test('larger LCD halves bezel gaps and the underside power slider works at desktop and phone sizes', async ({ page }, testInfo) => {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
@@ -323,7 +323,7 @@ test('larger LCD halves bezel gaps and the enlarged front-facing power slider wo
     })).toBe(true);
     const visible = await page.evaluate(async () => {
       const { view } = await import('./src/app.js');
-      const { Raycaster, Vector3 } = await import('three');
+      const { Box3, Raycaster, Vector3 } = await import('three');
       const power = view.model.controls.get('power').mesh;
       const center = power.localToWorld(new Vector3(0, 0, .055));
       const direction = center.clone().sub(view.camera.position).normalize();
@@ -338,19 +338,51 @@ test('larger LCD halves bezel gaps and the enlarged front-facing power slider wo
       const bottom = (1 - Math.min(...corners.map(p => p.y))) * view.height / 2;
       const target = document.querySelector('#hardware-power').getBoundingClientRect();
       const toolbar = document.querySelector('.scene-actions').getBoundingClientRect();
+      const inverse = view.model.root.matrixWorld.clone().invert();
+      const bounds = new Box3().setFromObject(power).applyMatrix4(inverse);
+      const normal = new Vector3(0, 0, 1).transformDirection(power.matrixWorld).transformDirection(inverse);
       return { exposed: part === power, belowLcd: target.top > bottom,
-        fits: toolbar.left >= 0 && toolbar.right <= innerWidth, point };
+        fits: toolbar.left >= 0 && toolbar.right <= innerWidth,
+        clearToolbar: target.bottom <= toolbar.top,
+        underside: bounds.max.y < -2.25 && bounds.min.z > -.4 && bounds.max.z < .4 &&
+          normal.y < -.95 && Math.abs(normal.z) < .05,
+        followsCap: Math.abs(target.left + target.width / 2 - point.x) < 1 &&
+          Math.abs(target.top + target.height / 2 - point.y) < 1 };
     });
+    expect(visible.underside, 'The actual slider sits on and faces out of the lower edge, not the front').toBe(true);
     expect(visible.exposed, 'The actual slider cap is visible from the playing camera').toBe(true);
     expect(visible.belowLcd, 'The larger hit target does not cover the LCD').toBe(true);
     expect(visible.fits).toBe(true);
+    expect(visible.clearToolbar, 'The entire underside power target stays above the dock').toBe(true);
+    expect(visible.followsCap, 'The accessible power target follows the relocated physical cap').toBe(true);
     await target.click();
     await expect(target).toHaveAttribute('aria-pressed', 'true');
     await expect(target).toBeEnabled();
+    expect(await page.evaluate(async () =>
+      (await import('./src/app.js')).view.model.controls.get('power').mesh.position.x)).toBe(.1);
     await page.screenshot({ path: testInfo.outputPath(`visible-power-${width}.png`) });
     await target.click();
     await expect(target).toHaveAttribute('aria-pressed', 'false');
+    expect(await page.evaluate(async () =>
+      (await import('./src/app.js')).view.model.controls.get('power').mesh.position.x)).toBe(-.1);
   }
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.locator('#notice-dismiss').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await expect(page.locator('#hardware-power')).toBeHidden();
+  await page.locator('#scene-canvas').focus();
+  for (let i = 0; i < 5; i++) await page.keyboard.press('ArrowUp');
+  await expect.poll(() => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    const power = view.model.controls.get('power').mesh;
+    power.updateWorldMatrix(true, false);
+    return new Vector3(0, 0, 1).transformDirection(power.matrixWorld)
+      .dot(view.camera.position.clone().sub(power.getWorldPosition(new Vector3())).normalize());
+  })).toBeGreaterThan(.5);
+  await page.locator('#room-toggle').click();
+  await page.screenshot({ path: testInfo.outputPath('underside-power-detail.png') });
 });
 
 test('pressed caps remain lit inside physical shell apertures instead of disappearing under socket lids', async ({ page }, testInfo) => {
@@ -559,7 +591,7 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
     return { emission: view.screenIllumination.light.intensity, powerX: view.model.controls.get('power').mesh.position.x };
   });
   expect(off.emission).toBe(0);
-  expect(off.powerX).toBe(1.45);
+  expect(off.powerX).toBe(-.1);
   expect(await surfaceLight(page, [0, 3.5, 0]), 'Unlit body, printed logo and switched-off LCD do not glow').toBeLessThan(1);
   await page.screenshot({ path: 'docs/images/dark-power-off.png' });
   expect(errors).toEqual([]);

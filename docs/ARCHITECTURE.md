@@ -163,8 +163,14 @@ owns keyboard focus. Replacing a cartridge disposes its old screen texture
 before removing the iframe.
 
 Native CRT Geom is `crt-geom.glslp` in the pinned distribution's `shaders.js`.
-`EJS_defaultOptions.shader` selects it at startup; validated preferences can
-switch to `disabled` through `changeSettingOption`. Missing shader resources
+`EJS_defaultOptions.shader` selects it at startup. A shared `CRT_SHADERS` catalog
+drives the host dropdown and preference validation: all nine CRT presets supplied
+by pinned 4.2.3, plus `disabled` for unfiltered output. Native IDs are preserved
+exactly; five do not have a `.glslp` suffix. Selection uses `changeSettingOption`
+without restarting the core. Explicit saved choices remain; Geom is the fresh
+and legacy default. Advanced native selections synchronize with existing options,
+while non-CRT native selections retain the separate read-only indicator.
+Missing shader resources
 fail explicitly rather than quietly substituting another CRT effect.
 The core canvas normally uses `preserveDrawingBuffer: false`; an actual probe
 produced all-black texture copies despite a working on-screen core. The adapter
@@ -195,8 +201,12 @@ bezel gaps are approximately half the previous side/top/bottom gaps. Both
 curved and rectangular geometries carry explicit `userData.viewport` dimensions:
 `ShapeGeometry.parameters` does not expose width/height. Screen illumination
 uses that metadata rather than falling back to an incorrect 10-by-10 emitter.
-The cream power cap faces forward on the lower lip with a larger dark track,
-tactile ridges and a projected minimum 44-by-44-pixel input target.
+The dark ribbed power cap, track and label share a tangent-aligned mount facing
+out of the lower underside edge, within the shell thickness, not the front face.
+The cap moves locally along that mount; its registered anchor still drives the
+minimum 44-by-44-pixel target. Short-height play framing retains the same 180px
+reserve as desktop, keeping the complete lower-edge target above the icon dock.
+Shell scale, actual power lifecycle and normal desktop framing are unchanged.
 
 ### Physical cartridge insertion
 

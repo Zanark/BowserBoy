@@ -1,5 +1,16 @@
 export const PREFERENCES_KEY = 'bowser-boy-advance-preferences';
 export const CRT_GEOM = 'crt-geom.glslp';
+export const CRT_SHADERS = [
+  { value: CRT_GEOM, label: 'CRT Geom' },
+  { value: 'crt-aperture.glslp', label: 'CRT Aperture' },
+  { value: 'crt-beam', label: 'CRT Beam' },
+  { value: 'crt-caligari', label: 'CRT Caligari' },
+  { value: 'crt-easymode.glslp', label: 'CRT Easymode' },
+  { value: 'crt-lottes', label: 'CRT Lottes' },
+  { value: 'crt-mattias.glslp', label: 'CRT Mattias' },
+  { value: 'crt-yeetron', label: 'CRT Yeetron' },
+  { value: 'crt-zfast', label: 'CRT ZFast' },
+];
 export const MANAGED_SETTINGS = [
   'retroarch_core', 'ejs_threads', 'virtual-gamepad', 'menu-bar-button',
   'virtual-gamepad-left-handed-mode', 'keyboardInput', 'altKeyboardInput',
@@ -54,7 +65,9 @@ export function validatePreferences(value) {
   }
   const controls = {};
   const shader = value.shader === undefined ? CRT_GEOM : value.shader;
-  if (![CRT_GEOM, 'disabled'].includes(shader)) throw new Error('Choose CRT Geom or an unfiltered display.');
+  if (shader !== 'disabled' && !CRT_SHADERS.some(option => option.value === shader)) {
+    throw new Error('Choose a supported CRT shader or an unfiltered display.');
+  }
   const assigned = new Set();
   for (const { id } of CONTROLS) {
     const code = value.controls[id];

@@ -1,0 +1,45 @@
+Status: IN PROGRESS
+Milestone: All pinned native CRT presets in the Screen shader dropdown.
+Dependencies: Completed workstreams 09 and 13.
+
+Purpose
+-------
+Expose every CRT preset actually supplied by EmulatorJS4.2.3 in the existing
+Screen shader menu. Keep CRT Geom the default and preserve remembered choices.
+
+Tasks
+-----
+[x] Inspect the pinned upstream/CDN shader catalog and current preference flow.
+[x] Add a regression comparing selectable options with the real runtime catalog.
+[x] Share the supported preset list between menu construction and validation.
+[x] Verify every real native preset renders, persists and preserves the runtime.
+[x] Retain unfiltered output and CRT-Geom-only fitted physical screen geometry.
+[ ] Pass normal release/public verification and update docs/owned context.
+
+Acceptance criteria
+-------------------
+All nine actual CRT presets appear with readable names, alongside Unfiltered.
+Fresh/legacy preferences default to CRT Geom; explicit saved choices survive.
+Selecting presets applies real native resources, never CSS imitations or labels
+without effects, and does not restart the live core or lose saves/controls.
+Only CRT Geom uses its fitted curved mesh; other presets keep full rectangular
+mapping. Advanced native selection remains synchronized with the host menu.
+Unsupported resources/preferences still fail explicitly.
+
+Completion evidence
+-------------------
+Verified actual4.2.3 data/src/shaders.js: nine crt- keys, including five bare
+IDs without .glslp suffixes. Current host menu exposes only Geom/Unfiltered.
+The new real-runtime catalog comparison fails before the fix, finding only
+Geom instead of nine presets. One shared catalog now drives options/validation.
+All nine actual native preset files match their configured source, retain
+original-cartridge green pixels and preserve runtime identity. Selected
+Aperture survives reload; default/legacy Geom and native settings sync remain.
+Syntax/build/11 units and four focused Edge cases pass1.5m. New all-preset
+case passes Edge12.6s and explicit Chromium/SwiftShader36.2s. Software underside
+case also passes31.2s. Publication and independent public verification pending.
+
+Completion log
+--------------
+2026-11-04: User requests all CRT options in Screen shader, with CRT Geom
+enabled by default. Existing native shader default remains appropriate.

@@ -3,6 +3,31 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
+## Underside power and all CRT presets: local verification
+
+The underside-location regression rejects the old front-mounted slider.
+The complete lower-edge assembly now faces outward within the shell thickness,
+and its projected target follows the cap. Checks at 1440x1100, 844x390,
+390x844 and 320x568 verify real cap visibility, full 44px target containment,
+dock/LCD clearance, on/off travel and actual button clicks. An initial
+landscape run finds toolbar interception; retaining 180px rather than 110px
+of short-height framing reserve fixes the actual overlap without forced clicks
+or changing console geometry/scale. The tilted underside capture was reviewed.
+
+The shader regression compares menu values against the real pinned runtime's
+complete `crt-` catalog: nine presets, not guessed filename variants. It fails
+before the change, then verifies each actual native preset file, rendered
+original-cartridge pixels and unchanged runtime. Aperture survives reload;
+default/legacy Geom, native-settings synchronization and Geom-only curved
+geometry remain. Unfiltered and unsupported-preference checks are retained.
+
+Syntax, build and 11 units pass. Four focused Edge cases pass in 1.5m;
+the all-preset case takes 12.6s and underside case 21.0s. Explicit Chromium/
+SwiftShader passes both in 1.2m (36.2s and 31.2s). Separate actual cold-power
+lifecycle and mapped-input/lighting checks also pass. These are local browser
+results, not physical-device qualification or human aesthetic approval.
+Hosted gates and independent actual public verification remain pending.
+
 ## Deployed fast-forward and fullscreen-fit correction
 
 Release `faece42da7563a74d39e1513ebeb7be543300ec0` / Pages `41841433989`

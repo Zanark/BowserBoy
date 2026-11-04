@@ -14,6 +14,23 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Underside power and complete pinned CRT menu, locally verified:
+  User marks the lower shell edge and rejects the front-face slider. Moved its
+  cap/track/grips/label together onto a tangent-aligned underside mount, keeping
+  target projection and real power lifecycle. New physical-location regression
+  fails before the fix. Real landscape clicks then expose dock interception;
+  retaining180px framing reserve fixes the entire44px target, without forced
+  clicks or changing console geometry/scale.
+  User also requests all CRT choices, Geom default. Verified actual4.2.3 catalog
+  contains nine CRT presets, five with bare native IDs. New real-catalog test
+  fails before the change. Shared options/validation now expose all nine;
+  each loads its actual native preset, renders original cartridge pixels and
+  retains runtime identity. Selection survives reload and native settings sync.
+  Syntax/build/11 units and four focused Edge cases1.5m pass; both new cases
+  also pass explicit SwiftShader1.2m. Native cold-power/lighting checks pass.
+  User explicitly scopes failure recovery to this repository: start a fresh
+  workflow run instead of retrying a failed run. No gates/permissions changed.
+  Hosted release and actual public verification remain pending.
 - 2026-11-04 / Fast-forward and fullscreen-fit correction deployed:
   Approved scheduling sourcefaece42da7563a74d39e1513ebeb7be543300ec0 /
   Pages41841433989 succeeds build/11units, every browser case13+13+12 and

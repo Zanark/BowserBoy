@@ -205,7 +205,7 @@ export class HandheldScene {
       this.lookTarget = new THREE.Vector3(-1, 5, 0);
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
-      const padding = this.height < 500 ? 110 : 180;
+      const padding = 180;
       const inserting = this.mode === 'playing' && !!this.cartridgeMotion;
       const lift = inserting ? 1.05 : 0;
       this.playTarget = playPosition.clone().add(new THREE.Vector3(0, inserting ? -.95 : 0, 0));
@@ -272,7 +272,7 @@ export class HandheldScene {
     this.model.led.material.emissive.set(running ? '#00b800' : '#000000');
     this.model.led.material.emissiveIntensity = running ? 80 : 0;
     const power = this.model.controls.get('power').mesh;
-    const x = running ? 1.65 : 1.45;
+    const x = running ? .1 : -.1;
     if (power.position.x !== x) this.changed = true;
     power.position.x = x;
   }

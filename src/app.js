@@ -1,6 +1,6 @@
 import { MANUAL_SLOTS, RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
 import { SaveStore } from './save-store.js';
-import { CONTROLS, CRT_GEOM, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
+import { CONTROLS, CRT_GEOM, CRT_SHADERS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { HandheldScene } from './scene.js';
 import { playStartup, playStartupSound } from './startup.js';
@@ -35,6 +35,8 @@ catch (error) {
   preferenceWarning = `${error.message} Default keys and sound are active for this session.`;
 }
 autoSave = preferences.autoSave;
+$('shader').replaceChildren(...CRT_SHADERS.map(({ label, value }) => new Option(label, value)),
+  new Option('Unfiltered', 'disabled'));
 for (const [id, name, label] of [
   ['pickup', 'pickup', 'Pick up handheld'], ['inspect', 'inspect', 'Inspect handheld'],
   ['put-down', 'down', 'Put down handheld'], ['lamp-toggle', 'lamp', 'Turn desk lamp off'],
@@ -709,7 +711,7 @@ function renderPreferences() {
   const shader = preferences.emulatorOptions?.shader ?? preferences.shader;
   view?.setScreenCurve(shader === CRT_GEOM);
   $('shader').querySelector('[data-native-shader]')?.remove();
-  if (![preferences.shader, 'disabled', 'crt-geom.glslp'].includes(shader)) {
+  if (![...$('shader').options].some(option => option.value === shader)) {
     const option = new Option(`EmulatorJS: ${shader}`, shader);
     option.dataset.nativeShader = '';
     option.disabled = true;

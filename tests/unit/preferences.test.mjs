@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { CRT_GEOM, defaultPreferences, readPreferences, rebindControl, validateEmulatorOptions, validatePreferences, writePreferences } from '../../src/preferences.js';
+import { CRT_GEOM, CRT_SHADERS, defaultPreferences, readPreferences, rebindControl, validateEmulatorOptions, validatePreferences, writePreferences } from '../../src/preferences.js';
 import { bindKeyboard } from '../../src/keyboard.js';
 
 test('remapping rejects duplicate and reserved keys without changing the existing mapping', () => {
@@ -52,12 +52,14 @@ test('held keyboard input releases the original action after remapping and ignor
 test('older preferences gain CRT Geom without losing keys or sound, and filter choice round-trips', () => {
   const { shader, ...older } = { ...rebindControl(defaultPreferences(), 'a', 'KeyC'), volume: 31, muted: true };
   assert.deepEqual(validatePreferences(older), { ...older, shader: CRT_GEOM });
-  const unfiltered = { ...older, shader: 'disabled' };
   let stored;
   const storage = { getItem: () => stored, setItem: (_, value) => { stored = value; } };
-  writePreferences(storage, unfiltered);
-  assert.deepEqual(readPreferences(storage), unfiltered);
-  assert.throws(() => validatePreferences({ ...older, shader: 'not-a-shader' }), /CRT Geom/);
+  for (const shader of ['disabled', ...CRT_SHADERS.map(option => option.value)]) {
+    const preference = { ...older, shader };
+    writePreferences(storage, preference);
+    assert.deepEqual(readPreferences(storage), preference);
+  }
+  assert.throws(() => validatePreferences({ ...older, shader: 'not-a-shader' }), /supported CRT/);
 });
 
 test('native options survive preference updates without admitting managed controls or config injection', () => {

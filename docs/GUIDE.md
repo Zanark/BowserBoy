@@ -42,8 +42,10 @@ orientation and colors, rather than a fixed room-wide fill.*
 ## Infinite battery
 
 The first visit starts **powered off**, with a dark LCD. Pick up the handheld
-and use its larger, visible lower-front power slider. Its projected touch target
-is at least 44 by 44 pixels without covering the LCD.
+and use its enlarged dark power slider on the **lower underside edge**, not the
+front face. Its projected touch target follows the cap and is at least 44 by 44
+pixels, clear of the LCD and bottom dock. Inspect and tilt the console to see
+the ribbed cap, track and label on that edge.
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
 The supplied transparent wordmark also appears on the rear shell, idle/loading
@@ -175,7 +177,7 @@ resume keyboard gameplay; Escape or the top-right close button returns to the de
 
 Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
 buttons work with mouse, touch and keyboard activation. Their meshes visibly
-depress: the D-pad rocks and the shoulder buttons hinge. The lower-front power
+depress: the D-pad rocks and the shoulder buttons hinge. The lower-edge power
 slider turns the emulator off: the LCD goes dark and the runtime is removed.
 Turn it back on to boot the loaded ROM from the beginning with its in-game
 save data, **not an instant checkpoint**. Pause/resume remains in Cartridges.
@@ -205,7 +207,10 @@ the presentation. Escape or the top-right close button returns.*
 The hidden drawer contains ROM loading, every save/backup action, pause,
 fullscreen, key remapping, volume, mute and screen filtering. **CRT Geom** is
 the default, using the actual shader bundled with the pinned emulator, not a
-CSS imitation. Choose **Unfiltered** in the drawer if preferred.
+CSS imitation. **Screen shader** offers all nine native CRT presets:
+Geom (default), Aperture, Beam, Caligari, Easymode, Lottes, Mattias, Yeetron
+and ZFast, plus **Unfiltered**. Choices apply without restarting the game and
+are remembered; an explicit saved choice is not overwritten by the default.
 Click a key binding and press its
 replacement; duplicate assignments and reserved browser keys are rejected.
 Keys, sound and filter settings persist in checked local browser storage; failed writes
@@ -274,6 +279,10 @@ The repository is configured to publish through **GitHub Actions**. The workflow
 in [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) checks, builds and
 tests the site, then publishes **only `dist`** on a push to `main` or a manual
 workflow dispatch. Pull requests run checks without deploying.
+If a deployment run fails, start a **fresh workflow run**, not a retry of the
+failed run: `gh workflow run pages.yml --ref main`. Keep the full build/browser
+gate intact; report permission failures rather than bypassing them. This is the
+user's recovery policy for this repository only.
 
 Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
 The icon-dock/orbital-startup release is

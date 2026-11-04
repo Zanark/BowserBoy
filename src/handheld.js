@@ -314,11 +314,17 @@ export function createHandheld() {
     floor.castShadow = false;
   }
   label(root, 'BBA-001', .6, .09, -3.02, -1.95, .63, '#81739e');
-  add(root, 'Power slider track', solid(roundedShape(1.02, .24, .055), .025, .008), dark, 1.55, -2.04, .64);
-  const power = add(root, 'Power switch', solid(roundedShape(.74, .16, .035), .16, .01), dark, 1.65, -2.04, .69);
+  const powerMount = new THREE.Group();
+  powerMount.name = 'Underside power assembly';
+  powerMount.position.set(1.55, -2.385, .12);
+  // Face out of the curved lower edge; local X follows the shell's tangent.
+  powerMount.rotation.set(Math.PI / 2, .15, 0);
+  root.add(powerMount);
+  add(powerMount, 'Power slider track', solid(roundedShape(1.02, .24, .055), .025, .008), dark);
+  const power = add(powerMount, 'Power switch', solid(roundedShape(.74, .16, .035), .16, .01), dark, .1, 0, .06);
   control('power', power, 1.08, .42);
   for (let i = 0; i < 5; i++) add(power, 'Switch grip', new THREE.BoxGeometry(.045, .085, .012), silver, -.24 + i * .12, 0, .094);
-  label(root, 'POWER', .48, .075, 1.55, -2.27, .625, '#c3b9ab', 'bold 70px Arial');
+  label(powerMount, 'POWER', .48, .075, 0, -.22, .018, '#c3b9ab', 'bold 70px Arial');
   const slot = add(root, 'Cartridge slot', box(3.05, .15, .42, .04), dark, 0, 2.28, -.12);
   slot.userData.tools = true;
   const cartridge = createCartridge('#666574', 'BBA', 'LOCAL CARTRIDGE');

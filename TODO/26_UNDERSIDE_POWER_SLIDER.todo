@@ -1,0 +1,51 @@
+Status: IN PROGRESS
+Milestone: Physical power slider mounted on the lower underside edge.
+Dependencies: Completed workstreams 08 and 17.
+
+Purpose
+-------
+Remove the slider from the front face and mount it on the lower shell edge
+marked by the user, retaining its enlarged dark ribbed design and real power.
+
+Tasks
+-----
+[x] Inspect physical geometry, projected control target and power lifecycle.
+[x] Add a regression for underside placement and the following touch target.
+[x] Move track, cap, grip and label together onto the lower edge.
+[x] Verify desktop/phone visibility, power travel and actual native teardown.
+[ ] Pass normal release gates and independently verify the public release.
+[ ] Update affected guide/figure, causal ledger and owned context.
+
+Acceptance criteria
+-------------------
+No slider, track or switch label remains on the front face. The physical
+assembly faces outward from the lower edge within the shell thickness.
+Its accessible target follows the cap, remains at least44px, stays clear of
+the LCD and works at desktop/landscape/phone sizes. On/off travel is retained.
+The same real power lifecycle preserves saves and cold-boots a fresh runtime.
+No unrelated camera, console size, emulation, lighting or fullscreen changes.
+
+Completion evidence
+-------------------
+The existing assembly is directly attached to the front atz.64-.69.
+The projected HTML power target already follows its registered mesh anchor.
+New underside regression rejects that front-mounted assembly before the fix.
+All parts now share one lower-edge tangent-aligned mount; the existing target
+follows its cap. On/off travel remains. Initial landscape run exposes dock
+overlap; retain180px framing reserve at short heights instead of110px, keeping
+the entire44px target above the toolbar rather than forcing covered clicks.
+Console geometry/scale and normal desktop framing are unchanged.
+Syntax/build/11 units pass. Four focused Edge cases pass1.5m, including all
+new presets, native settings, real game/saves and underside layout; earlier
+actual cold-power lifecycle and mapped-input/lighting cases also pass.
+Final underside case passes Edge21.0s and explicit SwiftShader31.2s.
+Reviewed actual tilted underside capture, desktop and landscape renders.
+Hosted release, public verification and published detail figure pending.
+
+Completion log
+--------------
+2026-11-04: User rejects the front-face location and marks the lower shell
+edge in the supplied image. Mounting location is explicitly superseded.
+2026-11-04: Moved the whole assembly, then corrected directly coupled landscape
+framing after real clicks exposed toolbar interception. No forced clicks,
+relaxed assertions, model scaling or lighting changes used.
