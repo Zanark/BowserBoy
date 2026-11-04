@@ -35,6 +35,10 @@ Completion evidence:
   press contract. Correct implementation to50/80; preserve every bound.
 - Corrected syntax/build/all11units and four complete local branding, original
   GPU-budget, pressed-light/response and mapped-native cases pass47.4s.
+- Corrected48b11b7/41930463880 passes build/11units/38of39cases, including
+  original100msbudget/newmotion. Actual CRT-startup trace shows CDN loader
+  net::ERR_BLOCKED_BY_ORB; Pause remains disabled90s. Full unchanged local
+  CRT case separately passes15.7s. No runtime, timeout or test bound changed.
 
 Completion log:
 - 2026-11-05: User requests less-subtle press animation. Increase physical
@@ -45,3 +49,7 @@ Completion log:
   the animation response itself to50/80 so press still exceeds99%at100ms,
   even on skipped GPU paints. Keep the new quicker-release assertion intact.
   Qualify and publish a fresh normal correction; never retry the failed job.
+- 2026-11-05: Record the corrected hosted qualification and actual external
+  loader failure, distinct from the now-fixed100msregression. Preserve the
+  hosted observation despite local CRT success. Publish substantive first
+  qualification evidence normally; no failed-job retry or dummy trigger.

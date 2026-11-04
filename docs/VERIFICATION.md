@@ -40,6 +40,18 @@ original GPU-budget, pressed-light/response and mapped-native-input cases
 pass (47.4s). Normal deployment and independent public qualification remain
 pending; no retry or weakened assertion.
 
+Corrected `48b11b7` / normal `41930463880` passes build, all 11 units and
+38 of 39 browser cases, including the original 100ms budget and every new
+motion/lighting assertion. The unchanged native CRT case fails startup:
+Pause stays disabled for 90s. Its actual retained trace shows
+`https://cdn.emulatorjs.org/4.2.3/data/loader.js` failing with
+`net::ERR_BLOCKED_BY_ORB`; the player explicitly reports that the CDN cannot
+be reached. Do not attribute this request failure to cap motion or change
+loader, CRT, timeout or test gates to conceal it. The entire unchanged local
+CRT case separately passes (15.7s), without erasing the hosted failure.
+Publish this first corrected qualification record through a fresh normal
+workflow; independent production delivery remains pending at this point.
+
 ## Recessed A/B lettering, 2026-11-05
 
 The user corrects the A/B markings: they must be inward and dark, not raised.

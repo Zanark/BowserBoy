@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Corrected button response qualifies; native CDN request blocked:
+ 48b11b7/41930463880 passes build/11units/38of39browser cases, including the
+  original100mscontract and all new motion/light assertions. The unchanged
+  CRT case cannot start: Pause disabled90s. Retained actual network trace
+  shows pinned CDNloader.js net::ERR_BLOCKED_BY_ORB and explicit player error.
+  Full unchanged local CRT case passes15.7s; this does not erase hosted
+  failure. Keep loader/CRT/gates/timeouts unchanged. Publish this first
+  corrected qualification evidence normally, not a failed-job retry/dummy
+  commit. No live claim;37 still requires normal deploy and public proof.
 - 2026-11-05 / Preserve the existing100ms button-response contract:
   Initial1864547/41928667648 passes build/11units/38of39browser cases.
   Initial40/70damping reaches.981684pressat100ms, below the unchanged>.99
