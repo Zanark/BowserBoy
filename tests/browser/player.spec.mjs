@@ -525,13 +525,14 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
 });
 
-test('supplied wordmark has a transparent background, separated words and a responsive header', async ({ page, request }) => {
+test('supplied purple orbital wordmark preserves its transparent artwork and responsive header', async ({ page, request }) => {
   await page.goto('./');
   const logo = page.locator('.desk-heading img');
   await expect(logo).toBeVisible();
   const response = await request.get('assets/logo.png');
   expect(response.status()).toBe(200);
   expect(response.headers()['content-type']).toBe('image/png');
+  expect(hash(await response.body())).toBe('de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1');
   const artwork = await logo.evaluate(async image => {
     await image.decode();
     const canvas = document.createElement('canvas');
@@ -540,36 +541,23 @@ test('supplied wordmark has a transparent background, separated words and a resp
     const context = canvas.getContext('2d');
     context.drawImage(image, 0, 0);
     const { data } = context.getImageData(0, 0, canvas.width, canvas.height);
-    const seen = new Uint8Array(canvas.width * canvas.height);
     let transparent = 0, white = 0;
-    const components = [];
-    for (let pixel = 0; pixel < seen.length; pixel++) {
+    const pixels = canvas.width * canvas.height;
+    for (let pixel = 0; pixel < pixels; pixel++) {
       if (data[pixel * 4 + 3] === 0) transparent++;
       if (data[pixel * 4 + 3] > 250 && Math.min(...data.subarray(pixel * 4, pixel * 4 + 3)) > 240) white++;
-      if (seen[pixel] || data[pixel * 4 + 3] < 128) continue;
-      const queue = [pixel];
-      seen[pixel] = 1;
-      for (let cursor = 0; cursor < queue.length; cursor++) {
-        const current = queue[cursor], x = current % canvas.width, y = Math.floor(current / canvas.width);
-        for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
-          if (x + dx < 0 || x + dx >= canvas.width || y + dy < 0 || y + dy >= canvas.height) continue;
-          const next = current + dx + dy * canvas.width;
-          if (seen[next] || data[next * 4 + 3] < 128) continue;
-          seen[next] = 1;
-          queue.push(next);
-        }
-      }
-      if (queue.length > 1000) components.push(queue.length);
     }
-    return { transparent: transparent / seen.length, white, words: components.length };
+    return { transparent: transparent / pixels, white, ratio: canvas.width / canvas.height,
+      corners: [0, canvas.width - 1, pixels - canvas.width, pixels - 1].map(pixel => data[pixel * 4 + 3]) };
   });
-  expect(artwork.transparent).toBeGreaterThan(.1);
+  expect(artwork.transparent).toBeGreaterThan(.5);
   expect(artwork.white).toBeGreaterThan(1000);
-  expect(artwork.words).toBe(2);
+  expect(artwork.corners).toEqual([0, 0, 0, 0]);
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     const bounds = await logo.boundingBox();
     const status = await page.locator('.desk-heading > span').boundingBox();
+    expect(bounds.width / bounds.height).toBeCloseTo(artwork.ratio, 2);
     expect(bounds.x).toBeGreaterThanOrEqual(0);
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(status.x - 5);
     expect(status.x + status.width).toBeLessThanOrEqual(width);
