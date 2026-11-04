@@ -33,8 +33,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .scene-actions { position: absolute; bottom: max(44px, calc(env(safe-area-inset-bottom) + 28px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; padding: 5px 8px; border: 1px solid #8997aa35; border-radius: 9px; background: #101721e8; box-shadow: 0 3px 20px #0008; backdrop-filter: blur(14px); white-space: nowrap; }
 .scene-actions button { padding: 8px 12px; min-height: 36px; border: 0; border-radius: 5px; background: transparent; color: #c6ced8; font-size: 11px; }
 .scene-actions button:hover:not(:disabled), .scene-actions button[aria-pressed=true] { background: #b7a4ee20; color: #e0d5ff; }
-#lamp-toggle { display: flex; align-items: center; gap: 5px; }
-#lamp-toggle[aria-pressed=true] { color: #efd6a1; background: #e8bc6518; }
+#lamp-toggle, #room-toggle { display: flex; align-items: center; gap: 5px; }
+#lamp-toggle[aria-pressed=true], #room-toggle[aria-pressed=true] { color: #efd6a1; background: #e8bc6518; }
 .scene-actions button:disabled { opacity: .5; }
 .action-divider { width: 1px; height: 17px; background: #8c9aaa45; margin: 0 4px; }
 kbd { margin-left: 7px; font: 8px var(--mono); border: 1px solid #78839466; border-radius: 3px; padding: 1px 4px; color: #b7becc; }
@@ -123,7 +123,7 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .desk-heading > span { max-width: 88px; text-align: right; font-size: 6px; letter-spacing: 1px; }
   .scene-actions { gap: 0; padding: 4px; }
   .scene-actions button { padding: 8px 9px; font-size: 10px; }
-  .scene-actions kbd, #lamp-label { display: none; }
+  .scene-actions kbd, #lamp-label, #room-label { display: none; }
   .scene-hint { font-size: 10px; padding: 0 12px; }
   .tools-drawer { padding: 22px; }
 }

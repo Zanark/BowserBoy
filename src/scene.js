@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, createWood } from './handheld.js';
-import { createDeskLamp, ScreenIllumination } from './lighting.js';
+import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -18,7 +18,7 @@ export class HandheldScene {
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = .015;
+    this.renderer.toneMappingExposure = .018;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.shadowMap.autoUpdate = false;
@@ -34,12 +34,21 @@ export class HandheldScene {
     this.lamp = createDeskLamp();
     this.scene.add(this.lamp.root);
     this.setLamp(true);
+    this.roomLighting = createRoomLighting();
+    this.scene.add(this.roomLighting);
+    this.setRoomLights(false);
     const table = new THREE.Mesh(new THREE.BoxGeometry(32, .75, 23),
       new THREE.MeshStandardMaterial({ map: createWood(), color: '#cfb28f', roughness: .83 }));
     table.position.y = -.375;
     table.receiveShadow = true;
     table.name = 'Wooden tabletop';
     this.scene.add(table);
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(32, 18),
+      new THREE.MeshStandardMaterial({ color: '#aa927c', roughness: 1 }));
+    wall.name = 'Warm plaster room wall';
+    wall.position.set(0, 8.5, -9);
+    wall.receiveShadow = true;
+    this.scene.add(wall);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(180, 180),
       new THREE.MeshStandardMaterial({ color: '#c6bda9', roughness: 1 }));
     floor.rotation.x = -Math.PI / 2;
@@ -49,7 +58,7 @@ export class HandheldScene {
     for (const [color, title, subtitle, x, z, angle] of [
       ['#648579', 'DAYDREAM', 'EMPTY CARTRIDGE', 4.3, -1.9, .42],
       ['#b2a7b5', 'LITTLE WORLDS', 'EMPTY CARTRIDGE', 5.6, -.2, -.16],
-      ['#aaa48b', 'BBA', 'HOME BREW', -4.8, 3.5, -.43],
+      ['#aaa48b', 'BBA', 'HOME BREW', -3.8, 4, -.43],
     ]) {
       const cartridge = createCartridge(color, title, subtitle);
       cartridge.position.set(x, .18, z);
@@ -264,10 +273,18 @@ export class HandheldScene {
     this.changed = true;
     this.lampOn = enabled;
     this.lamp.light.visible = enabled;
+    this.lamp.diffuse.visible = enabled;
     this.lamp.bounce.visible = enabled;
-    this.lamp.diffuser.material.emissiveIntensity = enabled ? 1200 : 0;
-    this.lamp.shade.material.emissiveIntensity = enabled ? 12 : 0;
+    this.lamp.diffuser.material.emissiveIntensity = enabled ? 80 : 0;
+    this.lamp.shade.material.emissiveIntensity = enabled ? 25 : 0;
     this.lamp.switchCap.position.y = enabled ? .34 : .37;
+  }
+
+  setRoomLights(enabled) {
+    this.changed = true;
+    this.roomLightsOn = enabled;
+    this.roomLighting.visible = enabled;
+    this.scene.background.set(enabled ? '#201a16' : '#000000');
   }
 
   setControl(action, pressed) {
@@ -345,9 +362,9 @@ export class HandheldScene {
       this.nextPaint = time + (delta > .05 ? Math.min(200, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
+    const exposure = this.lampOn || this.roomLightsOn ? .018 : .45;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
-      this.renderer.toneMappingExposure, this.lampOn ? .015 : .45, 4, delta);
-    const exposure = this.lampOn ? .015 : .45;
+      this.renderer.toneMappingExposure, exposure, 4, delta);
     const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
     if (!adapting) this.renderer.toneMappingExposure = exposure;
     if (this.cartridgeMotion) {
@@ -454,8 +471,9 @@ export class HandheldScene {
       const scale = this.height / (2 * Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2)) * distance);
       button.style.left = `${point.x}px`;
       button.style.top = `${point.y}px`;
-      button.style.width = `${Math.max(14, control.width * scale)}px`;
-      button.style.height = `${Math.max(14, control.height * scale)}px`;
+      const minimum = id === 'power' ? 44 : 14;
+      button.style.width = `${Math.max(minimum, control.width * scale)}px`;
+      button.style.height = `${Math.max(minimum, control.height * scale)}px`;
     }
   }
 

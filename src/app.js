@@ -679,6 +679,14 @@ function toggleLamp() {
   view.canvas.focus({ preventScroll: true });
 }
 $('lamp-toggle').addEventListener('click', toggleLamp);
+$('room-toggle').addEventListener('click', () => {
+  if (!view) return;
+  view.setRoomLights(!view.roomLightsOn);
+  $('room-toggle').setAttribute('aria-pressed', String(view.roomLightsOn));
+  $('room-toggle').setAttribute('aria-label', `Turn room lights ${view.roomLightsOn ? 'off' : 'on'}`);
+  $('room-label').textContent = view.roomLightsOn ? 'Room on' : 'Room off';
+  view.canvas.focus({ preventScroll: true });
+});
 $('pickup').addEventListener('click', () => changeView('playing'));
 $('inspect').addEventListener('click', () => changeView(view?.mode === 'inspecting' ? 'playing' : 'inspecting'));
 $('put-down').addEventListener('click', () => changeView('table'));
@@ -705,7 +713,7 @@ try {
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);
   $('scene-error').textContent = `${sceneFailure.message} Try a WebGL-enabled browser with hardware acceleration.`;
   $('scene-error').hidden = false;
-  for (const id of ['pickup', 'inspect', 'put-down', 'lamp-toggle']) $(id).disabled = true;
+  for (const id of ['pickup', 'inspect', 'put-down', 'lamp-toggle', 'room-toggle']) $(id).disabled = true;
 }
 $('scene').addEventListener('graphics-restored', () => notice('3D graphics recovered. Your cartridge session was retained.'));
 renderPreferences();

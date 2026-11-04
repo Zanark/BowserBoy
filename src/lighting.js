@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RectAreaLightUniformsLib } from '../vendor/RectAreaLightUniformsLib.js';
+import { canvasTexture, createWood } from './handheld.js';
 
 const METERS_PER_UNIT = .017;
 const linearChannel = Float32Array.from({ length: 256 }, (_, value) =>
@@ -7,9 +8,9 @@ const linearChannel = Float32Array.from({ length: 256 }, (_, value) =>
 
 export function createDeskLamp() {
   const root = new THREE.Group();
-  root.name = 'Desk lamp';
-  const enamel = new THREE.MeshStandardMaterial({ color: '#283e39', roughness: .32, metalness: .18 });
-  const brass = new THREE.MeshStandardMaterial({ color: '#a18c58', roughness: .35, metalness: .7 });
+  root.name = 'Paper lantern table lamp';
+  const wood = new THREE.MeshStandardMaterial({ map: createWood(), color: '#a17647', roughness: .72 });
+  const trim = new THREE.MeshStandardMaterial({ color: '#76512d', roughness: .85 });
   const rubber = new THREE.MeshStandardMaterial({ color: '#141a1d', roughness: .9 });
   function mesh(name, geometry, material, position) {
     const object = new THREE.Mesh(geometry, material);
@@ -20,68 +21,91 @@ export function createDeskLamp() {
     root.add(object);
     return object;
   }
-  function arm(from, to, radius) {
-    const direction = to.clone().sub(from);
-    const object = mesh('Lamp arm', new THREE.CylinderGeometry(radius, radius, direction.length(), 20),
-      brass, from.clone().add(to).multiplyScalar(.5));
-    object.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
-  }
-  const base = new THREE.Vector3(-6.3, .16, 0);
-  mesh('Weighted lamp base', new THREE.CylinderGeometry(1.05, 1.18, .32, 48), enamel, base);
-  mesh('Lamp base foot', new THREE.CylinderGeometry(1.14, 1.14, .06, 48), rubber,
+  const base = new THREE.Vector3(-6, .16, 4.8);
+  mesh('Wooden lamp base', new THREE.CylinderGeometry(1.02, 1.08, .32, 48), wood, base);
+  mesh('Lamp base foot', new THREE.CylinderGeometry(1.02, 1.02, .06, 48), rubber,
     new THREE.Vector3(base.x, .035, base.z));
-  const elbow = new THREE.Vector3(-6.7, 5.6, 1);
-  const top = new THREE.Vector3(-4.3, 8.4, 4);
-  arm(base, elbow, .13);
-  arm(elbow, top, .11);
-  mesh('Lamp hinge', new THREE.SphereGeometry(.27, 24, 16), enamel, elbow);
-  const switchCap = mesh('Lamp switch', new THREE.CylinderGeometry(.18, .18, .12, 24), brass,
+  mesh('Wooden lamp stem', new THREE.CylinderGeometry(.19, .23, 1.5, 32), wood,
+    new THREE.Vector3(base.x, 1.05, base.z));
+  const switchCap = mesh('Lamp switch', new THREE.CylinderGeometry(.18, .18, .12, 24), trim,
     new THREE.Vector3(base.x + .55, .37, base.z + .25));
-  const head = new THREE.Group();
-  head.position.copy(top);
-  const target = new THREE.Object3D();
-  target.position.set(0, 1.8, .2);
-  const direction = target.position.clone().sub(top).normalize();
-  head.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), direction);
-  root.add(head);
-  const shade = new THREE.Mesh(new THREE.CylinderGeometry(.35, .92, 1.45, 48, 1, true),
-    new THREE.MeshPhysicalMaterial({ color: '#85a990', roughness: .45, clearcoat: .6,
-      emissive: '#8db59a', emissiveIntensity: 12, side: THREE.DoubleSide }));
-  shade.name = 'Diffusing green lamp shade';
-  shade.castShadow = shade.receiveShadow = true;
-  shade.userData.lampToggle = true;
-  head.add(shade);
-  const diffuser = new THREE.Mesh(new THREE.CircleGeometry(.84, 48),
-    new THREE.MeshStandardMaterial({ color: '#f1e4c7', emissive: '#ffe2b7', emissiveIntensity: 1.5, roughness: .8 }));
-  diffuser.rotation.x = Math.PI / 2;
-  diffuser.position.y = -.73;
-  diffuser.userData.lampToggle = true;
-  head.add(diffuser);
-  const light = new THREE.SpotLight('#ffe3bd', 12 / METERS_PER_UNIT ** 2, 0, .63, .45, 2);
-  light.name = 'Lamp spotlight';
-  light.position.copy(top).addScaledVector(direction, .82);
-  light.target = target;
+  const paper = canvasTexture(256, 512, (context, width, height) => {
+    context.fillStyle = '#e6d3ad';
+    context.fillRect(0, 0, width, height);
+    let seed = 73;
+    const random = () => { seed = (1664525 * seed + 1013904223) >>> 0; return seed / 4294967296; };
+    for (let i = 0; i < 4500; i++) {
+      const x = random() * width, y = random() * height;
+      context.strokeStyle = `rgba(99,66,33,${.04 + random() * .13})`;
+      context.beginPath();
+      context.moveTo(x, y);
+      context.lineTo(x + (random() - .5) * 3, y + 2 + random() * 12);
+      context.stroke();
+    }
+  });
+  const shade = mesh('Cylindrical paper shade', new THREE.CylinderGeometry(1.12, 1.12, 3.4, 64, 1, true),
+    new THREE.MeshStandardMaterial({ color: '#ead9bc', map: paper, roughness: .95,
+      emissive: '#ffc078', emissiveMap: paper, emissiveIntensity: 25, side: THREE.DoubleSide }),
+    new THREE.Vector3(base.x, 3.25, base.z));
+  // Thin paper transmits the bulb instead of casting an opaque cylinder shadow.
+  shade.castShadow = false;
+  for (const [y, rotation] of [[1.55, Math.PI / 2], [4.95, -Math.PI / 2]]) {
+    const cover = mesh('Paper shade diffuser', new THREE.CircleGeometry(1.1, 64), shade.material,
+      new THREE.Vector3(base.x, y, base.z));
+    cover.rotation.x = rotation;
+    cover.castShadow = false;
+  }
+  for (const y of [1.55, 4.95]) {
+    const rim = mesh('Paper shade rim', new THREE.TorusGeometry(1.12, .025, 8, 64), trim,
+      new THREE.Vector3(base.x, y, base.z));
+    rim.rotation.x = Math.PI / 2;
+    rim.castShadow = false;
+  }
+  const diffuser = mesh('Lantern bulb', new THREE.SphereGeometry(.18, 16, 12),
+    new THREE.MeshStandardMaterial({ color: '#ffead0', emissive: '#ffd299', emissiveIntensity: 80 }),
+    new THREE.Vector3(base.x, 3.25, base.z));
+  diffuser.castShadow = false;
+  const light = new THREE.PointLight('#ffca8a', 3 / METERS_PER_UNIT ** 2, 0, 2);
+  light.name = 'Paper lantern bulb light';
+  light.position.copy(diffuser.position);
   light.castShadow = true;
-  light.shadow.mapSize.set(2048, 2048);
+  light.shadow.mapSize.set(1024, 1024);
   light.shadow.camera.near = .1;
   light.shadow.camera.far = 35;
   light.shadow.bias = -.00012;
   light.shadow.normalBias = .008;
-  light.shadow.radius = 2;
+  light.shadow.radius = 16;
+  const diffuse = new THREE.RectAreaLight('#ffcf95', 180, 2.1, 3.2);
+  diffuse.name = 'Transmitted paper light';
+  diffuse.position.set(base.x + .8, 3.25, base.z - .3);
+  diffuse.lookAt(0, 2, .2);
   // A finite upward patch approximates the first warm bounce off the lit wood.
-  const bounce = new THREE.RectAreaLight('#dfac7d', 8, 6, 6);
+  const bounce = new THREE.RectAreaLight('#dfac7d', 50, 6, 6);
   bounce.name = 'Lamp tabletop bounce';
   bounce.position.set(0, .025, .2);
   bounce.rotation.x = Math.PI / 2;
-  root.add(light, target, bounce);
-  return { root, light, bounce, diffuser, shade, switchCap };
+  root.add(light, diffuse, bounce);
+  return { root, light, diffuse, bounce, diffuser, shade, switchCap };
+}
+
+export function createRoomLighting() {
+  const root = new THREE.Group();
+  root.name = 'Switchable room lighting';
+  const ceiling = new THREE.RectAreaLight('#ffe5c7', 120, 14, 12);
+  ceiling.name = 'Diffuse ceiling light';
+  ceiling.position.set(0, 10, 5);
+  ceiling.lookAt(0, 0, 0);
+  const reflected = new THREE.HemisphereLight('#ffe3bf', '#654333', 20);
+  reflected.name = 'Room reflected light';
+  root.add(ceiling, reflected);
+  return root;
 }
 
 export class ScreenIllumination {
   constructor(screen) {
     RectAreaLightUniformsLib.init();
-    this.light = new THREE.RectAreaLight('white', 0,
-      screen.geometry.parameters.width, screen.geometry.parameters.height);
+    const { width, height } = screen.geometry.userData.viewport;
+    this.light = new THREE.RectAreaLight('white', 0, width, height);
     this.light.name = 'LCD area emission';
     this.light.rotation.y = Math.PI;
     screen.add(this.light);

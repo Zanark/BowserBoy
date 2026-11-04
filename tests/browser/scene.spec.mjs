@@ -18,7 +18,7 @@ const sceneState = (page) => page.evaluate(async () => {
   };
 });
 
-const surfaceLight = (page, position) => page.evaluate(async (point) => {
+const surfaceColor = (page, position) => page.evaluate(async (point) => {
   const { view } = await import('./src/app.js');
   const { Vector3 } = await import('three');
   view.renderer.render(view.scene, view.camera);
@@ -30,10 +30,11 @@ const surfaceLight = (page, position) => page.evaluate(async (point) => {
   const gl = view.renderer.getContext();
   const pixels = new Uint8Array(5 * 5 * 4);
   gl.readPixels(x - 2, y - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-  let total = 0;
-  for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
-  return total / (25 * 3);
+  const total = [0, 0, 0];
+  for (let i = 0; i < pixels.length; i += 4) for (let channel = 0; channel < 3; channel++) total[channel] += pixels[i + channel];
+  return total.map(channel => channel / 25);
 }, position);
+const surfaceLight = async (page, position) => (await surfaceColor(page, position)).reduce((a, b) => a + b) / 3;
 
 for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844 }]) {
   test(`physical cartridge slides into the top slot during real loading at ${viewport.width}px`, async ({ page }, testInfo) => {
@@ -190,6 +191,110 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(budget.press).toBeGreaterThan(.99);
 });
 
+test('paper lantern gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
+  const color = await surfaceColor(page, [0, 0, 4]);
+  expect(color[0]).toBeGreaterThan(color[1] * 1.1);
+  expect(color[1]).toBeGreaterThan(color[2] * 1.1);
+  const shape = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const shade = view.lamp.shade;
+    return { type: shade.geometry.type, top: shade.geometry.parameters.radiusTop,
+      bottom: shade.geometry.parameters.radiusBottom, wood: !!view.lamp.root.getObjectByName('Wooden lamp base') };
+  });
+  expect(shape.type).toBe('CylinderGeometry');
+  expect(shape.top).toBe(shape.bottom);
+  expect(shape.wood).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('cozy-lantern-table.png') });
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.screenshot({ path: testInfo.outputPath('cozy-lantern-playing.png') });
+  await page.locator('#lamp-toggle').click();
+  await expect.poll(() => surfaceLight(page, [0, 0, -2])).toBeLessThan(1);
+  await page.locator('#room-toggle').click();
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect.poll(() => surfaceLight(page, [0, 0, -2])).toBeGreaterThan(20);
+  await expect(page.locator('#hardware-power')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  await page.screenshot({ path: testInfo.outputPath('room-lights-on.png') });
+  await page.locator('#lamp-toggle').click();
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('#room-toggle').click();
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
+  await page.reload();
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
+});
+
+test('larger LCD halves bezel gaps and the enlarged front-facing power slider works at desktop and phone sizes', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const layout = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setScreenCurve(false);
+    const screen = view.model.screen, bezel = view.model.root.getObjectByName('Charcoal bezel');
+    screen.geometry.computeBoundingBox();
+    bezel.geometry.computeBoundingBox();
+    const s = screen.geometry.boundingBox.clone().translate(screen.position);
+    const b = bezel.geometry.boundingBox.clone().translate(bezel.position);
+    return { aspect: (s.max.x - s.min.x) / (s.max.y - s.min.y),
+      width: s.max.x - s.min.x, side: b.max.x - s.max.x,
+      top: b.max.y - s.max.y, bottom: s.min.y - b.min.y,
+      emitterWidth: view.screenIllumination.light.width, emitterHeight: view.screenIllumination.light.height };
+  });
+  expect(layout.width).toBeGreaterThan(3.68);
+  expect(layout.aspect).toBeCloseTo(1.5, 5);
+  expect(layout.side).toBeCloseTo(.37 / 2, 2);
+  expect(layout.top).toBeCloseTo(.398333 / 2, 2);
+  expect(layout.bottom).toBeCloseTo(.878333 / 2, 2);
+  expect(layout.emitterWidth).toBeCloseTo(layout.width, 5);
+  expect(layout.emitterHeight).toBeCloseTo(layout.width / 1.5, 5);
+  await page.evaluate(async () => (await import('./src/app.js')).view.setScreenCurve(true));
+  for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    const target = page.locator('#hardware-power');
+    await expect(target).toBeInViewport({ ratio: 1 });
+    await expect.poll(() => target.evaluate(element => {
+      const box = element.getBoundingClientRect();
+      return box.width >= 44 && box.height >= 44;
+    })).toBe(true);
+    const visible = await page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      const { Raycaster, Vector3 } = await import('three');
+      const power = view.model.controls.get('power').mesh;
+      const center = power.localToWorld(new Vector3(0, 0, .055));
+      const direction = center.clone().sub(view.camera.position).normalize();
+      const hit = new Raycaster(view.camera.position, direction).intersectObject(view.model.root, true)[0];
+      let part = hit?.object;
+      while (part && part !== power) part = part.parent;
+      const point = view.project(power), screen = view.model.screen;
+      screen.updateWorldMatrix(true, false);
+      const { width, height } = screen.geometry.userData.viewport;
+      const corners = [[-1, -1], [1, 1]].map(([x, y]) =>
+        screen.localToWorld(new Vector3(x * width / 2, y * height / 2, 0)).project(view.camera));
+      const bottom = (1 - Math.min(...corners.map(p => p.y))) * view.height / 2;
+      const target = document.querySelector('#hardware-power').getBoundingClientRect();
+      const toolbar = document.querySelector('.scene-actions').getBoundingClientRect();
+      return { exposed: part === power, belowLcd: target.top > bottom,
+        fits: toolbar.left >= 0 && toolbar.right <= innerWidth, point };
+    });
+    expect(visible.exposed, 'The actual slider cap is visible from the playing camera').toBe(true);
+    expect(visible.belowLcd, 'The larger hit target does not cover the LCD').toBe(true);
+    expect(visible.fits).toBe(true);
+    await target.click();
+    await expect(target).toHaveAttribute('aria-pressed', 'true');
+    await expect(target).toBeEnabled();
+    await page.screenshot({ path: testInfo.outputPath(`visible-power-${width}.png`) });
+    await target.click();
+    await expect(target).toHaveAttribute('aria-pressed', 'false');
+  }
+});
+
 test('pressed caps remain lit inside physical shell apertures instead of disappearing under socket lids', async ({ page }, testInfo) => {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
@@ -278,6 +383,11 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
   const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
+  await page.locator('#room-toggle').click();
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
+  expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
+  expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);
+  await page.locator('#room-toggle').click();
   const displacement = (id) => page.evaluate(async (action) => {
     const { view } = await import('./src/app.js');
     const { mesh } = view.model.controls.get(action);
@@ -512,7 +622,8 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
     const { Raycaster, Vector3 } = await import('three');
     const root = view.model.root;
     root.updateWorldMatrix(true, true);
-    const origin = root.localToWorld(new Vector3(-1.84, 1.48, 4));
+    const { width, height } = view.model.screen.geometry.userData.viewport;
+    const origin = root.localToWorld(new Vector3(-width / 2, view.model.screen.position.y + height / 2 + .03, 4));
     const direction = new Vector3(0, 0, -1).transformDirection(root.matrixWorld);
     return new Raycaster(origin, direction).intersectObject(root, true)[0]?.object.name;
   });
@@ -527,12 +638,13 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
     const context = canvas.getContext('2d');
     context.drawImage(view.source, 0, 0);
     const { width, height } = canvas, pixels = context.getImageData(0, 0, width, height).data;
+    const viewport = screen.geometry.userData.viewport;
     const edge = screen.geometry.parameters.shapes.getPoints(32).map(point => ({
-      x: (point.x / 3.68 + .5) * width, y: (.5 - point.y / (3.68 * 2 / 3)) * height,
+      x: (point.x / viewport.width + .5) * width, y: (.5 - point.y / viewport.height) * height,
     }));
     const direction = new Vector3(0, 0, -1).transformDirection(screen.matrixWorld);
     const hit = (x, y) => new Raycaster(screen.localToWorld(new Vector3(
-      (x / width - .5) * 3.68, (.5 - y / height) * 3.68 * 2 / 3, 1)), direction).intersectObject(screen)[0];
+      (x / width - .5) * viewport.width, (.5 - y / height) * viewport.height, 1)), direction).intersectObject(screen)[0];
     let clipped = 0, maxGap = 0, uvError = 0, samples = 0;
     for (let y = 2; y < height - 2; y += 3) {
       const lit = (x) => Math.max(...pixels.slice((y * width + x) * 4, (y * width + x) * 4 + 3)) > 8;
@@ -596,7 +708,8 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
     const { Raycaster, Vector3 } = await import('three');
     const screen = view.model.screen;
     screen.updateWorldMatrix(true, false);
-    const point = screen.localToWorld(new Vector3(-1.835, 1.22, 1));
+    const { width, height } = screen.geometry.userData.viewport;
+    const point = screen.localToWorld(new Vector3(-width / 2 + .005, height / 2 - .005, 1));
     const direction = new Vector3(0, 0, -1).transformDirection(screen.matrixWorld);
     return new Raycaster(point, direction).intersectObject(screen)[0]?.uv.toArray();
   });

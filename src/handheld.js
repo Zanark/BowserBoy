@@ -44,7 +44,7 @@ function crtShape(width, height) {
 }
 
 export function createLcdGeometries(curved) {
-  const width = 3.68, height = width * 2 / 3;
+  const width = 4.05, height = width * 2 / 3;
   const screen = curved ? new THREE.ShapeGeometry(crtShape(width, height), 32) :
     new THREE.PlaneGeometry(width, height);
   // Fit the pinned CRT edge without warping its already-filtered framebuffer again.
@@ -54,9 +54,11 @@ export function createLcdGeometries(curved) {
       uv.setXY(i, position.getX(i) / width + .5, position.getY(i) / height + .5);
     }
   }
+  screen.userData.viewport = { width, height };
   return {
     screen,
-    recess: solid(curved ? crtShape(3.8, 2.58) : roundedShape(3.8, 2.58, .025), .015, .009),
+    recess: solid(curved ? crtShape(width + .12, height + .12) :
+      roundedShape(width + .12, height + .12, .025), .015, .009),
   };
 }
 
@@ -197,8 +199,8 @@ export function createHandheld() {
   add(root, 'Rear shell', solid(shell, .36, .1), rear, 0, 0, -.26);
   add(root, 'Front shell', solid(shell, .36, .1), purple, 0, 0, .3);
   add(root, 'Front face with speaker apertures', solid(face, .04, .008), purple, 0, 0, .592);
-  add(root, 'Bezel surround', box(4.47, 3.78, .045, .3), seam, 0, -.02, .65);
-  add(root, 'Charcoal bezel', box(4.35, 3.66, .055, .27), bezel, 0, -.02, .685);
+  add(root, 'Bezel surround', box(4.47, 3.39, .045, .3), seam, 0, .1, .65);
+  add(root, 'Charcoal bezel', box(4.35, 3.27, .055, .27), bezel, 0, .1, .685);
   const lcd = createLcdGeometries(true);
   const recess = add(root, 'LCD recess', lcd.recess, dark, 0, .22, .748);
   const screen = add(root, 'Live LCD', lcd.screen,
@@ -219,9 +221,9 @@ export function createHandheld() {
     context.font = 'italic 900 102px Arial';
     context.fillText('ADVANCE', width + 28, 124);
   });
-  const logo = new THREE.Mesh(new THREE.PlaneGeometry(3.15, .26),
+  const logo = new THREE.Mesh(new THREE.PlaneGeometry(3.15, .17),
     new THREE.MeshStandardMaterial({ map: wordmark, transparent: true, depthWrite: false, roughness: .65 }));
-  logo.position.set(0, -1.53, .753);
+  logo.position.set(0, -1.35, .753);
   logo.receiveShadow = true;
   root.add(logo);
   engravedLabel(root, 'BOWSER', 0, 2.08, 1.12, .25, '#625a97', 0);
@@ -289,9 +291,11 @@ export function createHandheld() {
     floor.castShadow = false;
   }
   label(root, 'BBA-001', .6, .09, -3.02, -1.95, .63, '#81739e');
-  const power = add(root, 'Power switch', solid(roundedShape(.42, .075, .025), .16, .01), dark, 1.65, -2.37, .25);
-  control('power', power, .65, .25);
-  for (let i = 0; i < 5; i++) add(power, 'Switch grip', new THREE.BoxGeometry(.035, .04, .012), silver, -.14 + i * .07, 0, .094);
+  add(root, 'Power slider track', solid(roundedShape(1.02, .24, .055), .025, .008), dark, 1.55, -2.04, .64);
+  const power = add(root, 'Power switch', solid(roundedShape(.50, .18, .04), .075, .014), silver, 1.65, -2.04, .69);
+  control('power', power, 1.08, .42);
+  for (let i = 0; i < 5; i++) add(power, 'Switch grip', new THREE.BoxGeometry(.025, .105, .012), dark, -.12 + i * .06, 0, .057);
+  label(root, 'POWER', .48, .075, 1.55, -2.27, .625, '#c3b9ab', 'bold 70px Arial');
   const slot = add(root, 'Cartridge slot', box(3.05, .15, .42, .04), dark, 0, 2.28, -.12);
   slot.userData.tools = true;
   const cartridge = createCartridge('#666574', 'BBA', 'LOCAL CARTRIDGE');
