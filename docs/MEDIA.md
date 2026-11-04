@@ -10,8 +10,14 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 The existing README GIFs remain historical footage from the releases cited below:
 they do not yet depict the later molded controls, stylized bezel or closer play
-framing. The lighting/power-off figures are refreshed by the current local
-mapped-input regression; production provenance will follow normal publication.
+framing. `images/molded-controls.png` is an actual public room-lit, slightly
+tilted capture from `7843db880a52539d6e2050f79070f5829947a393`, after normal
+Pages `41867840972`, the full 39-case gate, independent 28-asset match and four
+actual public cases pass. The LCD-light/power-off figures are also refreshed
+by the actual public mapped-input regression. Desktop, phone and relief
+captures are reviewed; zero page errors. This is browser evidence, not a mockup
+or human aesthetic approval. The older fullscreen figure retains historical
+plain-font branding; current runtime uses the shared stylized texture.
 
 - `images/orbital-logo.gif` animates the supplied transparent purple logo and the
   supplied sparkle, glow and orbit effects on a transparent background, without

@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Molded hardware live:
+  Source7843db880a52539d6e2050f79070f5829947a393 /
+  normal Pages41867840972 passes build/11units/all39cases13+13+13/deploy.
+  Independently match28public assets; four actual public Edge cases pass1.7m,
+  including relief/shared wordmark, five-size framing/power, native input/
+  lighting and quick-actions/fullscreen/save/restart. Review actual public
+  desktop/phone/oblique captures, zero page errors. Publish a captioned actual
+  relief figure and current lighting images; retain historical GIF provenance.
+  Workstream28 complete; user aesthetic acceptance remains separate.
 - 2026-11-04 / Molded markings and closer play:
   Remove front POWER/BBA-001 printing but retain LED/underside power. Reuse
   original beveled glyphs for actual same-material cap/shell relief, including

@@ -156,8 +156,9 @@ animated table/play/inspection poses. Inspection supports dragging, touch
 rotation/pinch, wheel zoom and keyboard rotation/reset. Reduced motion skips
 the tween; unavailable/lost graphics contexts are reported explicitly.
 
-The resting camera is closer, without changing handheld geometry/root scale or
-the normal play-view framing. A 1000-by-26-unit solid wooden slab is 2.4 units
+The resting camera is closer without changing handheld geometry/root scale.
+Normal play has its separately fitted closer framing described below.
+A 1000-by-26-unit solid wooden slab is 2.4 units
 thick: top Y=0, front Z=10, darker wood on its edges. Repeated grain avoids
 stretching the texture across its width. The plaster wall spans the viewport;
 the room floor sits at Y=-35, leaving visible open space below the front edge.

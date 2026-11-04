@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Manufactured control markings, stylized monochrome bezel and closer play view.
 Dependencies: Completed workstreams 23 and 26; source artwork from 18.
 
@@ -12,8 +12,8 @@ Tasks:
 - [x] Derive a monochrome bezel wordmark from the supplied lettering, without stars.
 - [x] Bring normal play closer without scaling the console or changing insertion/inspection.
 - [x] Verify actual relief, lighting/input, five viewport sizes and cartridge clearance.
-- [ ] Review actual browser captures, publish normally and independently verify production.
-- [ ] Reconcile affected guide/architecture/verification/media and owned continuity.
+- [x] Review actual browser captures, publish normally and independently verify production.
+- [x] Reconcile affected guide/architecture/verification/media and owned continuity.
 
 Acceptance criteria:
 - No front POWER or BBA-001 printed planes remain.
@@ -34,9 +34,17 @@ Completion evidence:
 - Actual five-size, room-lit and oblique captures reviewed; zero page errors.
   Pixel equality proves physical/fullscreen wordmark parity. Existing input,
   underside power and insertion checks retained. Publication/acceptance separate.
-- Normal release and independent public verification pending.
+- Release7843db880a52539d6e2050f79070f5829947a393 /
+  Pages41867840972 passes build/11units/all39browser cases13+13+13/deploy.
+  Independent28-public-asset match and four actual public Edge cases pass1.7m,
+  covering relief/artwork, five-size framing/power, native input/lighting and
+  quick-actions/fullscreen/save/restart. Actual public captures reviewed with
+  zero page errors; current guide figure and lighting figures reflect production.
 
 Completion log:
+- 2026-11-04: Normal release and independent actual public verification succeed.
+  Final affected documentation/media provenance and owned continuity reconciled.
+  Historical README GIFs retained honestly; no human aesthetic approval inferred.
 - 2026-11-04: Replace projected empty bounding-box/header rectangles with actual
   visible vertices and logo-alpha versus projected-shell silhouettes. Retain
   original power/LCD/dock/input criteria. Ease the initial camera to9.8/5.35,

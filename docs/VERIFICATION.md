@@ -41,7 +41,14 @@ The initial camera is also made slightly less aggressive after visual review.
 Current fit uses 9.8/5.35 and -0.12 Y for normal play only; original insertion
 and inspection framing remain. These are local browser qualifications, not
 physical-device testing or user aesthetic approval. Normal release and
-independent production verification remain pending.
+independent production verification subsequently succeed:
+`7843db880a52539d6e2050f79070f5829947a393` / Pages `41867840972` passes
+build, all 11 units, all 39 browser cases (13+13+13) and deployment.
+All 28 exact public assets independently match. Four actual public Edge cases
+pass in 1.7m, covering relief/artwork parity, five-size framing/power,
+native input/lighting and quick-actions/fullscreen/save/restart. Actual public
+five-size, room-lit and oblique captures have zero page errors; reviewed desktop,
+phone and relief surfaces agree with the locally qualified result.
 
 ## Deployed underside power and all CRT presets
 

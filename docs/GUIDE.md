@@ -68,6 +68,12 @@ inspection and cartridge insertion retain their separate framing.
 The active favicon is an original indigo handheld whose
 stepped shoulders and bowed lower edge match the actual 3D shell.
 
+![Actual public handheld with molded control lettering and stylized monochrome bezel](images/molded-controls.png)
+
+*Room lights and a slight inspection tilt reveal same-material raised letters
+and their edges. The star-free bezel uses the original logo's typography;
+the front has no POWER or BBA-001 print.*
+
 ![The original power-on sequence on the handheld LCD](images/startup.png)
 
 *The supplied purple wordmark with a gentle wave, original star-orbit motion
