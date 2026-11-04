@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Hosted underside follow-through:
+  First3e29b27 run41850906571 blocks deployment. Actual trace samples show
+  the protruding underside cap crossing the tabletop during the lowered
+  cartridge-insertion hold; raise the hold0.09 without removing visible
+  lowering. At320px a snapshot reads old projected coordinates during resize;
+  poll all the same location/visibility/LCD/dock/following criteria until the
+  actual render updates. Existing invalid-file fixture must wait for scene
+  readiness before dispatching its event. Existing clock case separately
+  reports5.2706x above its unchanged5.2x upper limit. No limits/assertions
+  relaxed. Syntax/build/11units and four affected explicit SwiftShader cases
+  pass1.9m, including both actual native cartridge insertions. Follow the
+  user's fresh-run rule, never rerun failed41850906571.
 - 2026-11-04 / Underside power and complete pinned CRT menu, locally verified:
   User marks the lower shell edge and rejects the front-face slider. Moved its
   cap/track/grips/label together onto a tangent-aligned underside mount, keeping

@@ -26,7 +26,19 @@ the all-preset case takes 12.6s and underside case 21.0s. Explicit Chromium/
 SwiftShader passes both in 1.2m (36.2s and 31.2s). Separate actual cold-power
 lifecycle and mapped-input/lighting checks also pass. These are local browser
 results, not physical-device qualification or human aesthetic approval.
-Hosted gates and independent actual public verification remain pending.
+First hosted run `41850906571` correctly blocks deployment. Its actual insertion
+samples expose the newly protruding underside cap crossing the tabletop in the
+lowered loading pose. Raising that hold by 0.09 world units retains visible
+lowering and restores physical clearance. The 320px layout snapshot also reads
+an old projected target during resize; the regression now polls the same full
+placement/visibility/clearance/following criteria until the actual frame is
+updated. An existing invalid-file fixture now waits for scene readiness before
+dispatching its file event. The unchanged cartridge-clock check separately
+reports a 5.2706x ratio above its 5.2x upper bound. No timing, throughput,
+clearance or release assertion is relaxed. A fresh release run is required,
+not a retry of the failed run. Independent public verification remains pending.
+The corrected insertion/layout/invalid-file fixtures pass all four cases with
+explicit Chromium/SwiftShader in 1.9m; syntax, build and all 11 units pass again.
 
 ## Deployed fast-forward and fullscreen-fit correction
 

@@ -208,7 +208,7 @@ export class HandheldScene {
       const padding = 180;
       const inserting = this.mode === 'playing' && !!this.cartridgeMotion;
       const lift = inserting ? 1.05 : 0;
-      this.playTarget = playPosition.clone().add(new THREE.Vector3(0, inserting ? -.95 : 0, 0));
+      this.playTarget = playPosition.clone().add(new THREE.Vector3(0, inserting ? -.86 : 0, 0));
       const distance = Math.max(10.2 / this.camera.aspect, (inserting ? 8.3 : 5.55) *
         this.height / Math.max(160, this.height - padding)) / (2 * tangent);
       this.cameraTarget = new THREE.Vector3(0, this.playTarget.y + .1 + lift, distance * this.zoom);

@@ -218,6 +218,7 @@ test('screen shader menu exposes every native CRT preset, renders each and remem
 
 test('static shell, responsive layout, errors, keyboard help and private-file boundaries', async ({ page, request }) => {
   await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.getByRole('heading', { name: 'Bowser Boy Advance' })).toBeVisible();
   await expect(page.locator('#tools')).not.toBeVisible();
   await expect(page.locator('#screen button')).toHaveCount(0);

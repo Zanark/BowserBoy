@@ -321,7 +321,7 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
       const box = element.getBoundingClientRect();
       return box.width >= 44 && box.height >= 44;
     })).toBe(true);
-    const visible = await page.evaluate(async () => {
+    await expect.poll(() => page.evaluate(async () => {
       const { view } = await import('./src/app.js');
       const { Box3, Raycaster, Vector3 } = await import('three');
       const power = view.model.controls.get('power').mesh;
@@ -348,13 +348,9 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
           normal.y < -.95 && Math.abs(normal.z) < .05,
         followsCap: Math.abs(target.left + target.width / 2 - point.x) < 1 &&
           Math.abs(target.top + target.height / 2 - point.y) < 1 };
+    }), { message: `Underside placement, visible cap, LCD/dock clearance and following target at ${width}x${height}` }).toEqual({
+      underside: true, exposed: true, belowLcd: true, fits: true, clearToolbar: true, followsCap: true,
     });
-    expect(visible.underside, 'The actual slider sits on and faces out of the lower edge, not the front').toBe(true);
-    expect(visible.exposed, 'The actual slider cap is visible from the playing camera').toBe(true);
-    expect(visible.belowLcd, 'The larger hit target does not cover the LCD').toBe(true);
-    expect(visible.fits).toBe(true);
-    expect(visible.clearToolbar, 'The entire underside power target stays above the dock').toBe(true);
-    expect(visible.followsCap, 'The accessible power target follows the relocated physical cap').toBe(true);
     await target.click();
     await expect(target).toHaveAttribute('aria-pressed', 'true');
     await expect(target).toBeEnabled();

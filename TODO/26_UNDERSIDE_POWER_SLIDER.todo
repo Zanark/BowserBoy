@@ -41,6 +41,11 @@ actual cold-power lifecycle and mapped-input/lighting cases also pass.
 Final underside case passes Edge21.0s and explicit SwiftShader31.2s.
 Reviewed actual tilted underside capture, desktop and landscape renders.
 Hosted release, public verification and published detail figure pending.
+First hosted41850906571 blocks deployment: actual insertion samples reveal
+the relocated cap crossing the table in the former lowered pose. Raise that
+hold0.09, retaining visible lowering. A320px snapshot also catches stale
+projected target coordinates during resize; poll all unchanged actual geometry/
+clearance/following assertions until the rendered frame updates.
 
 Completion log
 --------------
