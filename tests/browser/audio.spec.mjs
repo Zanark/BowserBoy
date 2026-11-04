@@ -92,6 +92,8 @@ test('real native audio buffers brief stalls and smooths volume without restarti
 test('real audio output limits overloaded peaks and fades mute instead of making a hard step', async ({ page }) => {
   await page.goto('./');
   const result = await page.evaluate(async () => {
+    // Firefox does not provide cancelAndHoldAtTime.
+    AudioParam.prototype.cancelAndHoldAtTime = undefined;
     const { protectAudio } = await import('./src/audio.js');
     const render = async (mute) => {
       const audioCtx = new OfflineAudioContext(1, 24000, 48000);

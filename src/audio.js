@@ -70,7 +70,7 @@ export function protectAudio(emulator) {
     const gains = context.sources.filter(Boolean).map(source => source.gain.gain);
     setVolume(volume);
     for (const gain of gains) {
-      gain.cancelAndHoldAtTime(time);
+      gain.cancelScheduledValues(time);
       gain.setValueAtTime(previous, time);
       gain.linearRampToValueAtTime(volume, time + .015);
     }
