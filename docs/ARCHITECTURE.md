@@ -317,10 +317,13 @@ sources do **not** implement occlusion or cast shadows.
 Do not interpret orientation/falloff checks as proof
 that light can never leak through geometry.
 
-Buttons use dielectric clearcoat materials. A/B move 0.045 units inward;
-Start/Select move 0.025. The shared D-pad depresses and tilts, with opposing
-directions cancelling tilt; shoulders move and hinge. Elapsed-time damping
-drives real mesh transforms from the same input state as the actual core.
+Buttons use dielectric clearcoat materials. A/B move 0.075 units inward;
+Start/Select move 0.04. The shared D-pad depresses 0.016 units and rocks
+0.1 radians per axis, with opposing directions cancelling tilt. Shoulders
+move 0.12 units downward and hinge 0.075 radians. Elapsed-time damping uses
+40 on compression and 70 on release: more visible travel and a snappier return,
+without overshoot or scaling. These real mesh transforms follow the same input
+state as the actual core; the animation does not delay native key events.
 
 The face has actual beveled openings around A/B, Start/Select and the D-pad,
 with clearance for their motion. Shared round-control dimensions define both

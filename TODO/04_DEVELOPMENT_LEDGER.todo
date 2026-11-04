@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Stronger physical button feedback:
+  User requests less-subtle press animation. Increase actual cap travel about
+ 60%, D-pad rocking and shoulder hinging; use more deliberate compression and
+  quicker bounded release. Native input, geometry/recess/shadows and adaptive
+  scheduling stay unchanged. Stronger actual mapped-input assertions fail old
+  A travel.045against>.065. Syntax/build/11units and three complete local
+  motion/native/pressed-light/branding cases pass39.4s. Equal32ms samples also
+  verify animated compression and a quicker bounded return. Actual pressed
+  A/D-pad captures reviewed; preserve historical images.37IN_PROGRESS until
+  full normal hosted and independent production qualification.
 - 2026-11-05 / Recessed A/B lettering independently live:
   Fresh normal4b99550/41925345571 passes build/11units/all39cases/deploy.
   Independently match28actual public assets; all three complete production

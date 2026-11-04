@@ -62,6 +62,15 @@ was public when this image was recorded.*
 
 ## Coordinates become interaction targets
 
+Workstream 37 strengthens physical feedback without changing those targets
+or delaying native input. Increase cap travel by about 60%, D-pad rocking and
+shoulder hinging, then use a more deliberate compression and quicker release.
+The mesh still approaches a bounded pose: no overshoot, cap scaling or detached
+lettering. Verify actual mapped-key displacement and equal-time compression/
+release samples, not just renamed motion parameters. Recheck real pressed-cap
+illumination inside the existing openings; deeper travel must not recreate
+the socket-lid occlusion problem.
+
 `project()` converts an object's world-space position into normalized device
 coordinates through the active camera, then into CSS pixels. This allows a
 physical switch to carry a usable DOM control while the console moves. Mesh

@@ -424,8 +424,9 @@ export class HandheldScene {
     for (const { mesh, ids } of this.controlGroups) {
       const motion = mesh.userData.motion;
       const target = ids.some((id) => this.pressed.has(id)) ? 1 : 0;
+      const response = target ? 40 : 70;
       const previous = motion.press;
-      motion.press = THREE.MathUtils.damp(motion.press, target, 55, delta);
+      motion.press = THREE.MathUtils.damp(motion.press, target, response, delta);
       if (Math.abs(motion.press - target) < .00001) motion.press = target;
       buttonsMoving ||= motion.press !== previous;
       mesh.position.copy(motion.restPosition).addScaledVector(motion.travel, motion.press);
@@ -433,15 +434,15 @@ export class HandheldScene {
         const x = Number(this.pressed.has('down')) - Number(this.pressed.has('up'));
         const y = Number(this.pressed.has('right')) - Number(this.pressed.has('left'));
         const pitch = motion.pitch, yaw = motion.yaw;
-        motion.pitch = THREE.MathUtils.damp(motion.pitch, x * .065, 55, delta);
-        motion.yaw = THREE.MathUtils.damp(motion.yaw, y * .065, 55, delta);
-        if (Math.abs(motion.pitch - x * .065) < .00001) motion.pitch = x * .065;
-        if (Math.abs(motion.yaw - y * .065) < .00001) motion.yaw = y * .065;
+        motion.pitch = THREE.MathUtils.damp(motion.pitch, x * .1, response, delta);
+        motion.yaw = THREE.MathUtils.damp(motion.yaw, y * .1, response, delta);
+        if (Math.abs(motion.pitch - x * .1) < .00001) motion.pitch = x * .1;
+        if (Math.abs(motion.yaw - y * .1) < .00001) motion.yaw = y * .1;
         buttonsMoving ||= motion.pitch !== pitch || motion.yaw !== yaw;
         mesh.rotation.set(motion.pitch, motion.yaw, 0);
       } else {
         mesh.quaternion.copy(motion.restQuaternion);
-        if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .045);
+        if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .075);
       }
     }
     this.changed ||= buttonsMoving;

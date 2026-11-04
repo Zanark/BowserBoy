@@ -504,6 +504,31 @@ test('pressed caps remain lit inside physical shell apertures instead of disappe
       expect(pressed[point], `${id} pressed cap probe ${point}`).toBeGreaterThan(rest[point] * .6);
     }
   }
+  const response = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { mesh } = view.model.controls.get('a');
+    const advance = (pressed, milliseconds) => {
+      view.setControl('a', pressed);
+      view.changed = true;
+      view.nextPaint = 0;
+      view.renderedLastFrame = false;
+      view.render(view.lastRender + milliseconds);
+      return mesh.userData.motion.restPosition.z - mesh.position.z;
+    };
+    advance(false, 250);
+    const compressing = advance(true, 32);
+    const pressed = advance(true, 250);
+    const releasing = advance(false, 32);
+    const released = advance(false, 250);
+    return { compressing, pressed, releasing, released };
+  });
+  await testInfo.attach('physical-press-response', { body: JSON.stringify(response), contentType: 'application/json' });
+  expect(response.compressing, 'Compression is visible before the cap settles').toBeGreaterThan(.04);
+  expect(response.compressing).toBeLessThan(response.pressed * .9);
+  expect(response.releasing, 'Release stays inside the physical rest/pressed bounds').toBeGreaterThan(0);
+  expect((response.pressed - response.releasing) / response.pressed,
+    'Release progresses farther than compression over the same elapsed time').toBeGreaterThan(response.compressing / response.pressed + .1);
+  expect(response.released).toBeLessThan(.0001);
   await page.locator('#lamp-toggle').click();
   for (const id of ['a', 'up']) {
     expect(Math.max(...await sample(id, true)), 'An unlit cap cannot acquire artificial press illumination').toBeLessThan(5);
@@ -537,26 +562,26 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   }, id);
   await page.locator('#scene-canvas').focus();
   await page.keyboard.down('z');
-  await expect.poll(async () => (await displacement('a')).z).toBeGreaterThan(.04);
+  await expect.poll(async () => (await displacement('a')).z).toBeGreaterThan(.065);
   expect((await displacement('b')).z).toBeLessThan(.001);
   const a = await page.locator('[data-control="a"]').boundingBox();
   await page.mouse.move(a.x + a.width / 2, a.y + a.height / 2);
   await page.mouse.down();
   await page.mouse.up();
   await page.waitForTimeout(100);
-  expect((await displacement('a')).z, 'Pointer release cannot cancel a held mapped key').toBeGreaterThan(.04);
+  expect((await displacement('a')).z, 'Pointer release cannot cancel a held mapped key').toBeGreaterThan(.065);
   await page.keyboard.up('z');
   await expect.poll(async () => (await displacement('a')).z).toBeLessThan(.001);
   await page.locator('#scene-canvas').focus();
   await page.keyboard.down('ArrowUp');
   await page.keyboard.down('ArrowRight');
-  await expect.poll(async () => (await displacement('up')).pitch).toBeLessThan(-.06);
-  await expect.poll(async () => (await displacement('up')).yaw).toBeGreaterThan(.06);
+  await expect.poll(async () => (await displacement('up')).pitch).toBeLessThan(-.09);
+  await expect.poll(async () => (await displacement('up')).yaw).toBeGreaterThan(.09);
   await page.keyboard.down('ArrowDown');
   await expect.poll(async () => Math.abs((await displacement('up')).pitch)).toBeLessThan(.001);
   for (const key of ['ArrowUp', 'ArrowRight', 'ArrowDown']) await page.keyboard.up(key);
-  for (const [id, key, axis, travel] of [['b', 'x', 'z', .04], ['start', 'Enter', 'z', .023],
-    ['select', 'ShiftLeft', 'z', .023], ['l', 'a', 'y', .07], ['r', 's', 'y', .07]]) {
+  for (const [id, key, axis, travel] of [['b', 'x', 'z', .065], ['start', 'Enter', 'z', .036],
+    ['select', 'ShiftLeft', 'z', .036], ['l', 'a', 'y', .11], ['r', 's', 'y', .11]]) {
     await page.keyboard.down(key);
     await expect.poll(async () => (await displacement(id))[axis]).toBeGreaterThan(travel);
     await page.keyboard.up(key);
@@ -577,7 +602,7 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   expect((await displacement('a')).z).toBeLessThan(.001);
   await page.keyboard.up('z');
   await page.keyboard.down('q');
-  await expect.poll(async () => (await displacement('a')).z).toBeGreaterThan(.04);
+  await expect.poll(async () => (await displacement('a')).z).toBeGreaterThan(.065);
   await page.keyboard.press('Escape');
   await expect.poll(async () => (await displacement('a')).z).toBeLessThan(.001);
   await page.keyboard.up('q');

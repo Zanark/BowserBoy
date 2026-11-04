@@ -1,0 +1,38 @@
+Status: IN_PROGRESS
+Milestone: More visible physical presses and snappier releases.
+Dependencies: Completed workstreams 10, 16, 28 and 36.
+
+Purpose:
+Make every gameplay button feel more animated without changing native input,
+cap shapes, recessed lettering, illumination or emulator scheduling.
+
+Tasks:
+- [x] Increase real cap travel, shared D-pad rocking and shoulder hinging.
+- [x] Use more deliberate compression and a quicker, bounded return.
+- [x] Strengthen existing real-input displacement assertions.
+- [x] Preserve actual pressed-cap aperture lighting and recessed markings.
+- [ ] Qualify the normal hosted gate and independently verify production.
+- [ ] Publish completion evidence and reconcile owned continuity.
+
+Acceptance criteria:
+- A/B move.075units inward; Start/Select.04; shoulders.12down with.075rad hinge.
+- Shared D-pad moves.016inward and rocks.1rad; opposing inputs still cancel.
+- Time-based compression/release remains bounded, with no overshoot or scaling.
+- Held/mixed/remapped input, release and native-core timing remain unchanged.
+- Real pressed caps remain visible and lit inside their existing openings.
+- Recessed lettering, shadows, saves, audio, camera and fullscreen are preserved.
+
+Completion evidence:
+- Stronger existing actual mapped-input regression fails old A travel:
+  .04500000000000004 received, more than.065required.
+- Syntax/build/all11units pass; complete local branding, real motion/native
+  input and pressed-lighting cases pass39.4s, including actual32ms press/
+  release samples and return bounds. Actual pressed A/D-pad captures reviewed.
+- No historical documentation image or private ROM changed. Hosted/public
+  qualification remains pending; no production claim yet.
+
+Completion log:
+- 2026-11-05: User requests less-subtle press animation. Increase physical
+  displacement about60%, rock/hinge more strongly and use elapsed-time damping
+  40on compression/70on release instead of symmetric55. Do not delay native
+  input, bounce beyond the rest pose, enlarge caps or alter frame scheduling.

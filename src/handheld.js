@@ -344,8 +344,8 @@ export function createHandheld() {
     controls.set(id, { mesh, anchor, width, height, rest: mesh.position.z });
     mesh.userData.motion ??= {
       restPosition: mesh.position.clone(), restQuaternion: mesh.quaternion.clone(),
-      travel: new THREE.Vector3(0, ['l', 'r'].includes(id) ? -.075 : 0,
-        ['l', 'r'].includes(id) ? 0 : ['up', 'down', 'left', 'right'].includes(id) ? -.01 : ['start', 'select'].includes(id) ? -.025 : -.045),
+      travel: new THREE.Vector3(0, ['l', 'r'].includes(id) ? -.12 : 0,
+        ['l', 'r'].includes(id) ? 0 : ['up', 'down', 'left', 'right'].includes(id) ? -.016 : ['start', 'select'].includes(id) ? -.04 : -.075),
       press: 0, pitch: 0, yaw: 0,
     };
   }

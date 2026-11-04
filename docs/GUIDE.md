@@ -217,7 +217,9 @@ resume keyboard gameplay; Escape or the top-right close button returns to the de
 
 Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
 buttons work with mouse, touch and keyboard activation. Their meshes visibly
-depress: the D-pad rocks and the shoulder buttons hinge. The lower-edge power
+depress with deeper travel and a snappy return: the D-pad rocks more strongly
+and the shoulder buttons visibly hinge. Recessed A/B letters move with their
+caps; the animation does not delay game input. The lower-edge power
 slider turns the emulator off: the LCD goes dark and the runtime is removed.
 Turn it back on to boot the loaded ROM from the beginning with its in-game
 save data, **not an instant checkpoint**. Pause/resume remains in Cartridges.

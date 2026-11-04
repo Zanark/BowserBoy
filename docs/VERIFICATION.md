@@ -7,6 +7,28 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Stronger button feedback, 2026-11-05
+
+Workstream 37 increases actual A/B travel to .075 units, Start/Select to .04,
+shoulder travel to .12 with .075-radian hinging, and shared D-pad travel to
+.016 with .1-radian rocking. Compression/release use elapsed-time damping
+40/70 instead of symmetric 55. Native events, rest bounds, cap/recess geometry,
+lighting, camera and emulator/render scheduling are unchanged.
+
+The existing real mapped-input case now requires the larger actual mesh
+displacement, preserving held-key/mixed-pointer/remapping/blur/release and
+opposing-D-pad assertions. Old source fails at .045 travel against >.065.
+Extend the actual pressed-cap case with equal 32ms compression/release samples:
+compression is visible but incomplete, release progresses farther, and the cap
+returns within its original rest/pressed bounds. Retain every existing real
+aperture, pressed-light, unlit-cap, recess and branding assertion.
+
+Syntax/build, all 11 units and the three complete local motion/lighting/
+branding cases pass (39.4s). Actual deeper A/D-pad captures are reviewed.
+Generated native-light captures remain private; historical documentation
+images are preserved. Normal hosted and independent public qualification
+remain pending; no live claim yet.
+
 ## Recessed A/B lettering, 2026-11-05
 
 The user corrects the A/B markings: they must be inward and dark, not raised.
