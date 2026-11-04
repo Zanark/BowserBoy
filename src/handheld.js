@@ -28,6 +28,38 @@ function box(width, height, depth, radius = .08) {
   return solid(roundedShape(width, height, radius), depth);
 }
 
+function crtShape(width, height) {
+  const shape = new THREE.Shape();
+  shape.moveTo(-.451 * width, -.483 * height);
+  shape.quadraticCurveTo(0, -.521 * height, .451 * width, -.483 * height);
+  shape.quadraticCurveTo(.478 * width, -.482 * height, .480 * width, -.44 * height);
+  shape.quadraticCurveTo(.503 * width, 0, .480 * width, .44 * height);
+  shape.quadraticCurveTo(.478 * width, .482 * height, .451 * width, .483 * height);
+  shape.quadraticCurveTo(0, .521 * height, -.451 * width, .483 * height);
+  shape.quadraticCurveTo(-.478 * width, .482 * height, -.480 * width, .44 * height);
+  shape.quadraticCurveTo(-.503 * width, 0, -.480 * width, -.44 * height);
+  shape.quadraticCurveTo(-.478 * width, -.482 * height, -.451 * width, -.483 * height);
+  shape.closePath();
+  return shape;
+}
+
+export function createLcdGeometries(curved) {
+  const width = 3.68, height = width * 2 / 3;
+  const screen = curved ? new THREE.ShapeGeometry(crtShape(width, height), 32) :
+    new THREE.PlaneGeometry(width, height);
+  // Fit the pinned CRT edge without warping its already-filtered framebuffer again.
+  if (curved) {
+    const position = screen.getAttribute('position'), uv = screen.getAttribute('uv');
+    for (let i = 0; i < position.count; i++) {
+      uv.setXY(i, position.getX(i) / width + .5, position.getY(i) / height + .5);
+    }
+  }
+  return {
+    screen,
+    recess: solid(curved ? crtShape(3.8, 2.58) : roundedShape(3.8, 2.58, .025), .015, .009),
+  };
+}
+
 export function canvasTexture(width, height, paint) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
@@ -145,8 +177,9 @@ export function createHandheld() {
   add(root, 'Front face with speaker apertures', solid(face, .04, .008), purple, 0, 0, .592);
   add(root, 'Bezel surround', box(4.47, 3.78, .045, .3), seam, 0, -.02, .65);
   add(root, 'Charcoal bezel', box(4.35, 3.66, .055, .27), bezel, 0, -.02, .685);
-  add(root, 'LCD recess', solid(roundedShape(3.8, 2.58, .025), .015, .009), dark, 0, .22, .748);
-  const screen = add(root, 'Live LCD', new THREE.PlaneGeometry(3.68, 3.68 * 2 / 3),
+  const lcd = createLcdGeometries(true);
+  const recess = add(root, 'LCD recess', lcd.recess, dark, 0, .22, .748);
+  const screen = add(root, 'Live LCD', lcd.screen,
     new THREE.MeshBasicMaterial({ color: 'white', toneMapped: false }), 0, .22, .782);
   screen.castShadow = false;
   screen.receiveShadow = false;
@@ -260,7 +293,7 @@ export function createHandheld() {
     add(root, 'Screw', cylinder(.065, .035), silver, x, y, -.55);
     add(root, 'Screw slot', new THREE.BoxGeometry(.078, .015, .005), dark, x, y, -.572);
   }
-  return { root, screen, controls, led };
+  return { root, screen, recess, controls, led };
 }
 
 export function createCartridge(color, title, subtitle) {

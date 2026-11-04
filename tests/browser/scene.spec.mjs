@@ -324,7 +324,7 @@ test('real 3D mesh picking, pickup, back inspection, return and responsive physi
   expect(errors).toEqual([]);
 });
 
-test('CRT Geom is active natively and its retained live framebuffer textures the 3D LCD', async ({ page }) => {
+test('CRT Geom is active natively and its retained live framebuffer textures the 3D LCD', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
@@ -348,6 +348,59 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   expect(evidence.preset).toContain('shader0 = crt-geom.glsl');
   expect(evidence.retained).toBe(true);
   expect(evidence.sameCanvas).toBe(true);
+  const borderSurface = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Raycaster, Vector3 } = await import('three');
+    const root = view.model.root;
+    root.updateWorldMatrix(true, true);
+    const origin = root.localToWorld(new Vector3(-1.84, 1.48, 4));
+    const direction = new Vector3(0, 0, -1).transformDirection(root.matrixWorld);
+    return new Raycaster(origin, direction).intersectObject(root, true)[0]?.object.name;
+  });
+  expect(await borderSurface(), 'The raised frame must turn with the CRT corner, not retain a square lip').toBe('Charcoal bezel');
+  const outline = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Raycaster, Vector3 } = await import('three');
+    const screen = view.model.screen;
+    screen.updateWorldMatrix(true, false);
+    const canvas = document.createElement('canvas');
+    canvas.width = view.source.width; canvas.height = view.source.height;
+    const context = canvas.getContext('2d');
+    context.drawImage(view.source, 0, 0);
+    const { width, height } = canvas, pixels = context.getImageData(0, 0, width, height).data;
+    const edge = screen.geometry.parameters.shapes.getPoints(32).map(point => ({
+      x: (point.x / 3.68 + .5) * width, y: (.5 - point.y / (3.68 * 2 / 3)) * height,
+    }));
+    const direction = new Vector3(0, 0, -1).transformDirection(screen.matrixWorld);
+    const hit = (x, y) => new Raycaster(screen.localToWorld(new Vector3(
+      (x / width - .5) * 3.68, (.5 - y / height) * 3.68 * 2 / 3, 1)), direction).intersectObject(screen)[0];
+    let clipped = 0, maxGap = 0, uvError = 0, samples = 0;
+    for (let y = 2; y < height - 2; y += 3) {
+      const lit = (x) => Math.max(...pixels.slice((y * width + x) * 4, (y * width + x) * 4 + 3)) > 8;
+      const first = Array.from({ length: width }, (_, x) => x).find(lit);
+      if (first === undefined) continue;
+      const last = width - 1 - Array.from({ length: width }, (_, x) => x).find(x => lit(width - 1 - x));
+      for (const x of [first, last]) {
+        samples++;
+        const intersection = hit(x + .5, y + .5);
+        if (!intersection) { clipped++; continue; }
+        uvError = Math.max(uvError, Math.abs(intersection.uv.x - (x + .5) / width),
+          Math.abs(intersection.uv.y - (1 - (y + .5) / height)));
+        const distance = Math.min(...edge.slice(1).map((b, index) => {
+          const a = edge[index], dx = b.x - a.x, dy = b.y - a.y;
+          const t = Math.max(0, Math.min(1, ((x + .5 - a.x) * dx + (y + .5 - a.y) * dy) / (dx * dx + dy * dy)));
+          return Math.hypot(x + .5 - a.x - t * dx, y + .5 - a.y - t * dy);
+        }));
+        maxGap = Math.max(maxGap, distance);
+      }
+    }
+    return { clipped, maxGap, uvError, samples };
+  });
+  expect(outline.samples).toBeGreaterThan(200);
+  expect(outline.clipped, 'The fitted outline must retain the native CRT image on every sampled edge').toBe(0);
+  expect(outline.maxGap, 'Only a thin black keyline should separate the image from its curved border').toBeLessThan(9);
+  expect(outline.uvError, 'The border must not apply a second warp to the native CRT image').toBeLessThan(.00001);
+  await page.screenshot({ path: testInfo.outputPath('curved-lcd.png') });
   const pixelHash = () => page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const canvas = document.createElement('canvas');
@@ -378,6 +431,23 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   await expect.poll(async () => (await pixelHash()).hash).not.toBe(filtered.hash);
   const child = page.frames().find((frame) => frame.url().endsWith('player.html'));
   expect(await child.evaluate(() => window.EJS_emulator.getSettingValue('shader'))).toBe('disabled');
+  expect(await borderSurface(), 'Unfiltered mode restores the original rectangular screen surround').toBe('LCD recess');
+  const flat = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Raycaster, Vector3 } = await import('three');
+    const screen = view.model.screen;
+    screen.updateWorldMatrix(true, false);
+    const point = screen.localToWorld(new Vector3(-1.835, 1.22, 1));
+    const direction = new Vector3(0, 0, -1).transformDirection(screen.matrixWorld);
+    return new Raycaster(point, direction).intersectObject(screen)[0]?.uv.toArray();
+  });
+  expect(flat?.[0], 'Unfiltered content at the rectangular corner is not cropped').toBeLessThan(.002);
+  expect(flat?.[1]).toBeGreaterThan(.997);
+  await page.locator('#shader').selectOption('crt-geom.glslp');
+  await expect(page.locator('#shader')).toBeEnabled();
+  expect(await borderSurface()).toBe('Charcoal bezel');
+  await page.locator('#shader').selectOption('disabled');
+  await expect(page.locator('#shader')).toBeEnabled();
   await page.reload();
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#tools-open').click();

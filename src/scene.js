@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { canvasTexture, createCartridge, createHandheld, createWood } from './handheld.js';
+import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, createWood } from './handheld.js';
 import { createDeskLamp, ScreenIllumination } from './lighting.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
@@ -57,6 +57,7 @@ export class HandheldScene {
       this.scene.add(cartridge);
     }
     this.model = createHandheld();
+    this.screenCurved = true;
     this.screenIllumination = new ScreenIllumination(this.model.screen);
     this.scene.add(this.model.root);
     this.model.root.position.copy(tablePosition);
@@ -258,6 +259,17 @@ export class HandheldScene {
     this.model.screen.material = material;
     previous.map?.dispose();
     previous.dispose();
+  }
+
+  setScreenCurve(curved) {
+    if (this.screenCurved === curved) return;
+    const geometries = createLcdGeometries(curved);
+    for (const name of ['screen', 'recess']) {
+      this.model[name].geometry.dispose();
+      this.model[name].geometry = geometries[name];
+    }
+    this.screenCurved = curved;
+    this.changed = true;
   }
 
   setScreen(canvas) {

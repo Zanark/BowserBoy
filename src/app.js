@@ -1,6 +1,6 @@
 import { RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
 import { SaveStore } from './save-store.js';
-import { CONTROLS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
+import { CONTROLS, CRT_GEOM, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { HandheldScene } from './scene.js';
 import { playStartup, playStartupSound } from './startup.js';
@@ -562,6 +562,7 @@ function renderPreferences() {
   $('mute').textContent = preferences.muted ? 'Unmute' : 'Mute';
   $('mute').setAttribute('aria-pressed', String(preferences.muted));
   const shader = preferences.emulatorOptions?.shader ?? preferences.shader;
+  view?.setScreenCurve(shader === CRT_GEOM);
   $('shader').querySelector('[data-native-shader]')?.remove();
   if (![preferences.shader, 'disabled', 'crt-geom.glslp'].includes(shader)) {
     const option = new Option(`EmulatorJS: ${shader}`, shader);
