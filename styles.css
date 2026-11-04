@@ -23,8 +23,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #scene-canvas:focus { outline: none; }
 #scene:has(#scene-canvas:focus-visible) ~ .scene-hint { text-decoration: underline dotted; text-underline-offset: 4px; }
 .desk-heading { position: absolute; top: max(28px, env(safe-area-inset-top)); left: 38px; right: 38px; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
-.desk-heading h1 { margin: 0; font: italic 900 18px/1 Arial, sans-serif; text-transform: uppercase; letter-spacing: -.8px; color: #d6d9e3; }
-.desk-heading h1 em { font-size: 15px; }
+.desk-heading h1 { margin: 0; line-height: 1; }
+.desk-heading h1 img { display: block; width: clamp(184px, 23vw, 276px); height: auto; }
 .desk-heading > span { color: #a3aab5; font: 8px var(--mono); letter-spacing: 2px; }
 #hardware-targets { pointer-events: none; }
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
@@ -119,9 +119,8 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
 .desk:fullscreen { width: 100vw; height: 100dvh; }
 @media (max-width: 600px) {
   .desk-heading { top: max(23px, env(safe-area-inset-top)); left: 18px; right: 18px; }
-  .desk-heading h1 { font-size: 13px; letter-spacing: -.6px; }
-  .desk-heading h1 em { font-size: 11px; }
-  .desk-heading > span { font-size: 6px; letter-spacing: 1px; }
+  .desk-heading h1 img { width: 184px; }
+  .desk-heading > span { max-width: 88px; text-align: right; font-size: 6px; letter-spacing: 1px; }
   .scene-actions { gap: 0; padding: 4px; }
   .scene-actions button { padding: 8px 9px; font-size: 10px; }
   .scene-actions kbd, #lamp-label { display: none; }

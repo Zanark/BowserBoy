@@ -1,5 +1,12 @@
 import { expect } from '@playwright/test';
 
+export const powerOn = async (page) => {
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  if (await page.locator('#scene').getAttribute('data-power') === 'on') return;
+  if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
+  await page.locator('#hardware-power').click();
+};
+
 export const nativeFrame = (page) => page.frames().find((frame) => frame.url().endsWith('player.html')).evaluate(async () => {
   const png = await window.EJS_emulator.gameManager.screenshot();
   const bitmap = await createImageBitmap(new Blob([png], { type: 'image/png' }));

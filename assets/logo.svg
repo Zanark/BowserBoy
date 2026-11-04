@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 304 64" fill="none">
+  <path d="M17 12h30c9 0 15 7 15 16v8c0 9-6 16-15 16H17C8 52 2 45 2 36v-8c0-9 6-16 15-16Z" fill="#9682ce"/>
+  <rect x="17" y="17" width="30" height="29" rx="4" fill="#292638"/>
+  <rect x="21" y="21" width="22" height="17" rx="1" fill="#faf9ff"/>
+  <path d="M7 29h8m-4-4v8" stroke="#262435" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="53" cy="27" r="3" fill="#4a345a"/>
+  <circle cx="56" cy="35" r="3" fill="#4a345a"/>
+  <circle cx="50" cy="20" r="1.5" fill="#c6ef91"/>
+  <path d="M25 29c0-5 5-5 7 0s7 5 7 0-5-5-7 0-7 5-7 0" stroke="#7961b0" stroke-width="2"/>
+  <text x="79" y="33" fill="#eee9fa" font-family="Arial,sans-serif" font-size="29" font-style="italic" font-weight="900" letter-spacing="-1">BOWSER BOY</text>
+  <path d="M80 46h24m-26 5h24" stroke="#9682ce" stroke-width="2"/>
+  <text x="113" y="53" fill="#c1b2e3" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="5">ADVANCE</text>
+</svg>

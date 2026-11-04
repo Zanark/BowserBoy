@@ -2,11 +2,12 @@ import { test, expect } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { readFile, mkdir } from 'node:fs/promises';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
-import { nativeFrame, demoReady } from './pixel-lab.mjs';
+import { nativeFrame, demoReady, powerOn } from './pixel-lab.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const demoBytes = () => Buffer.from(createDemoRom());
 const openTools = async (page) => {
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   if (!await page.locator('#tools').isVisible()) await page.locator('#tools-open').click();
 };
 const closeTools = async (page) => {
@@ -15,11 +16,14 @@ const closeTools = async (page) => {
 const startDemo = async (page) => {
   await openTools(page);
   await page.locator('#demo').click();
+  await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
 };
 const upload = async (page, name = 'Pixel Lab.gba', bytes = demoBytes()) => {
+  await expect(page.locator('#rom-file')).toBeEnabled({ timeout: 90000 });
   await page.locator('#rom-file').setInputFiles({ name, mimeType: 'application/octet-stream', buffer: bytes });
+  await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
 };
@@ -45,7 +49,7 @@ const move = async (page, key = 'ArrowRight', duration = 180) => {
   await page.waitForTimeout(100);
 };
 const readStored = (page) => page.evaluate(() => new Promise((resolve, reject) => {
-  const request = indexedDB.open('bowser-boy-advance', 1);
+  const request = indexedDB.open('bowser-boy-advance');
   request.onerror = () => reject(request.error);
   request.onsuccess = () => {
     const db = request.result;
@@ -351,6 +355,7 @@ test('a failed runtime CDN request has a visible retryable error', async ({ page
   await page.goto('./');
   await openTools(page);
   await page.locator('#demo').click();
+  await powerOn(page);
   await expect(page.locator('#notice')).toContainText('CDN could not be reached');
   await expect(page.locator('#loading-screen')).toBeHidden();
   await expect(page.locator('#tools-open')).toBeEnabled();
@@ -511,6 +516,128 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
   expect(await frame.evaluate(() => window.EJS_emulator.paused)).toBe(false);
   await page.evaluate(() => document.exitFullscreen());
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
+});
+
+test('first visit is off, original startup plays only on the power switch, and idle power survives refresh', async ({ page, request }) => {
+  await page.addInitScript(() => {
+    window.bootEvents = [];
+    new MutationObserver((changes) => {
+      for (const change of changes) window.bootEvents.push(change.target.getAttribute('data-booting'));
+    }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-booting'] });
+  });
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  expect(await page.locator('.desk-heading img').evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
+  expect((await request.get('assets/brand-mark.svg')).status()).toBe(200);
+  await page.locator('#pickup').click();
+  await page.getByRole('button', { name: 'Turn power on', exact: true }).click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'true');
+  await expect.poll(() => page.evaluate(async () => {
+    const source = (await import('./src/app.js')).view.source;
+    const pixels = source.getContext('2d').getImageData(0, 120, 240, 25).data;
+    let ink = 0;
+    for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 2] > pixels[i] + 10) ink++;
+    return ink;
+  })).toBeGreaterThan(20);
+  await test.info().attach('original-startup', {
+    body: await page.screenshot({ path: 'docs/images/startup.png' }), contentType: 'image/png',
+  });
+  await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'false');
+  await expect(page.getByRole('button', { name: 'Turn power off', exact: true })).toBeEnabled();
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  expect(await page.evaluate(() => window.bootEvents.filter((value) => value === 'true'))).toHaveLength(1);
+  await page.reload();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'on');
+  expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
+  await page.locator('#pickup').click();
+  await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
+  await page.reload();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
+  expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
+});
+
+test('inserting a cartridge does not power on, and refresh resumes the remembered powered cartridge without another boot animation', async ({ page }) => {
+  page.on('dialog', (dialog) => dialog.accept());
+  await page.goto('./');
+  await openTools(page);
+  await page.locator('#demo').click();
+  await expect(page.locator('#hardware-power')).toBeEnabled();
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
+  await expect(page.locator('#game-title')).toHaveText('Pixel Lab');
+  await page.locator('#pickup').click();
+  await powerOn(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'true');
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  await openTools(page);
+  await page.locator('#save').click();
+  await expect(page.locator('#notice')).toContainText('Checkpoint saved.');
+  const saved = await image(page);
+  await page.addInitScript(() => {
+    window.bootEvents = [];
+    new MutationObserver((changes) => {
+      for (const change of changes) window.bootEvents.push(change.target.getAttribute('data-booting'));
+    }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-booting'] });
+  });
+  await page.reload();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'on');
+  await expect(page.locator('#pause')).toBeEnabled();
+  await expect(page.locator('#game-title')).toHaveText('Pixel Lab');
+  await expect.poll(() => image(page)).toBe(saved);
+  expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
+  await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
+  await page.reload();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
+  await expect(page.locator('#game-title')).toHaveText('Pixel Lab');
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+});
+
+test('device storage upgrades old checkpoints intact and rejects interrupted power-state writes', async ({ page }) => {
+  await page.addInitScript(() => {
+    const request = indexedDB.open('bowser-boy-advance', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('games', { keyPath: 'id' });
+    request.onsuccess = () => {
+      const db = request.result;
+      const transaction = db.transaction('games', 'readwrite');
+      transaction.objectStore('games').put({ id: 'legacy', manual: { state: new Uint8Array([9, 8, 7]) } });
+      transaction.oncomplete = () => db.close();
+    };
+  });
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  const result = await page.evaluate(async () => {
+    const { SaveStore } = await import('./src/save-store.js');
+    const store = new SaveStore();
+    await store.open();
+    await store.putDevice(true, null);
+    const put = IDBObjectStore.prototype.put;
+    let failed = false;
+    try {
+      IDBObjectStore.prototype.put = function (...args) {
+        const request = put.apply(this, args);
+        if (this.name === 'device') this.transaction.abort();
+        return request;
+      };
+      await store.putDevice(false, null);
+    } catch { failed = true; }
+    finally { IDBObjectStore.prototype.put = put; }
+    return {
+      powered: (await store.getDevice()).powered,
+      checkpoint: [...(await store.get('legacy')).manual.state],
+      failed,
+    };
+  });
+  expect(result).toEqual({ powered: true, checkpoint: [9, 8, 7], failed: true });
 });
 
 test('power switch destroys the runtime and cold boots only the in-game save, including after reload', async ({ page }) => {

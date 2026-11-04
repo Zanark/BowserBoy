@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
-import { demoReady } from './pixel-lab.mjs';
+import { demoReady, powerOn } from './pixel-lab.mjs';
 
 const sceneState = (page) => page.evaluate(async () => {
   const { view } = await import('./src/app.js');
@@ -113,6 +113,7 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await page.goto('./');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
+  await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -329,6 +330,7 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   await page.goto('./');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
+  await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -377,6 +379,7 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   const child = page.frames().find((frame) => frame.url().endsWith('player.html'));
   expect(await child.evaluate(() => window.EJS_emulator.getSettingValue('shader'))).toBe('disabled');
   await page.reload();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#tools-open').click();
   await expect(page.locator('#shader')).toHaveValue('disabled');
   expect(errors).toEqual([]);
@@ -409,7 +412,9 @@ test.describe('mobile 3D inspection', () => {
     await page.goto('./');
     await page.locator('#tools-open').tap();
     await page.locator('#demo').tap();
+    await powerOn(page);
     await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+    await demoReady(page);
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
     const child = page.frames().find((frame) => frame.url().endsWith('player.html'));
     const image = () => child.evaluate(async () => [...await window.EJS_emulator.gameManager.screenshot()]);

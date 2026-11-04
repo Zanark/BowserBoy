@@ -1,4 +1,14 @@
-import { RUNTIME, validateBatterySave, validateCapture } from './cartridge.js';
+import { MAX_ROM_BYTES, RUNTIME, validateBatterySave, validateCapture } from './cartridge.js';
+
+function validateDevice(device) {
+  const cartridge = device?.cartridge;
+  if (device?.version !== 1 || typeof device.powered !== 'boolean' ||
+      !(cartridge === null || (typeof cartridge?.name === 'string' && /\.gba$/i.test(cartridge.name) &&
+        cartridge.bytes instanceof Blob && cartridge.bytes.size >= 192 && cartridge.bytes.size <= MAX_ROM_BYTES))) {
+    throw new Error('Stored console state is invalid. Your game checkpoints are unchanged.');
+  }
+  return device;
+}
 
 export class SaveStore {
   #db;
@@ -6,13 +16,17 @@ export class SaveStore {
   async open() {
     if (!globalThis.indexedDB) throw new Error('This browser does not provide IndexedDB storage.');
     this.#db = await new Promise((resolve, reject) => {
-      const request = indexedDB.open('bowser-boy-advance', 1);
+      const request = indexedDB.open('bowser-boy-advance', 2);
       let expired = false;
       const timer = setTimeout(() => {
         expired = true;
         reject(new Error('Browser storage did not open. Close other copies of this page and try again.'));
       }, 5000);
-      request.onupgradeneeded = () => request.result.createObjectStore('games', { keyPath: 'id' });
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains('games')) db.createObjectStore('games', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('device')) db.createObjectStore('device');
+      };
       request.onerror = () => { clearTimeout(timer); reject(request.error); };
       request.onblocked = () => {
         clearTimeout(timer);
@@ -30,6 +44,18 @@ export class SaveStore {
 
   async get(id) {
     return this.#transaction('readonly', (store) => store.get(id));
+  }
+
+  async getDevice() {
+    const device = await this.#transaction('readonly', (store) => store.get('console'), false, 'device');
+    return device === undefined ? { version: 1, powered: false, cartridge: null } : validateDevice(device);
+  }
+
+  async putDevice(powered, file) {
+    const device = validateDevice({
+      version: 1, powered, cartridge: file ? { name: file.name, bytes: file } : null,
+    });
+    await this.#transaction('readwrite', (store) => store.put(device, 'console'), false, 'device');
   }
 
   async putSlot(game, slot, capture) {
@@ -70,11 +96,17 @@ export class SaveStore {
     }, true);
   }
 
-  #transaction(mode, action, saved = false) {
+  #transaction(mode, action, saved = false, storeName = 'games') {
     if (!this.#db) return Promise.reject(new Error('Browser save storage is unavailable.'));
     return new Promise((resolve, reject) => {
-      const transaction = this.#db.transaction('games', mode);
-      const request = action(transaction.objectStore('games'));
+      const transaction = this.#db.transaction(storeName, mode);
+      let request;
+      try { request = action(transaction.objectStore(storeName)); }
+      catch (error) {
+        transaction.abort();
+        reject(error);
+        return;
+      }
       transaction.oncomplete = () => resolve(saved ? request.savedRecord : request.result);
       transaction.onerror = () => reject(transaction.error ?? new Error('The browser could not save progress.'));
       transaction.onabort = () => reject(request.saveError ?? transaction.error ?? new Error('The save transaction was interrupted.'));

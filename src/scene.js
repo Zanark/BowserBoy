@@ -65,7 +65,7 @@ export class HandheldScene {
     this.controlGroups = [...new Set([...this.model.controls.values()].map(({ mesh }) => mesh))]
       .filter((mesh) => mesh !== this.model.controls.get('power').mesh)
       .map((mesh) => ({ mesh, ids: [...this.model.controls].filter(([, value]) => value.mesh === mesh).map(([id]) => id) }));
-    this.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
+    this.showPowerOff();
     this.raycaster = new THREE.Raycaster();
     this.pointer = new THREE.Vector2();
     this.zoom = 1;
@@ -275,9 +275,9 @@ export class HandheldScene {
     this.source = null;
     this.screenIllumination.clear();
     const map = canvasTexture(720, 480, (context, width, height) => {
-      context.fillStyle = '#b1c19d';
+      context.fillStyle = '#faf9ff';
       context.fillRect(0, 0, width, height);
-      context.fillStyle = '#35513d';
+      context.fillStyle = '#6140a6';
       context.textAlign = 'center';
       context.font = 'italic 900 70px Arial';
       context.fillText('BOWSER BOY', width / 2, 176);

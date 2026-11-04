@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#080c12">
     <meta name="description" content="A familiar handheld, right in your browser. Local GBA cartridges, automatic resume and portable backups.">
     <title>Bowser Boy Advance</title>
-    <link rel="icon" href="./assets/cartridge.svg" type="image/svg+xml">
+    <link rel="icon" href="./assets/brand-mark.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./styles.css">
     <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
     <script type="module" src="./src/app.js"></script>
@@ -15,7 +15,7 @@
     <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
     <main id="player" class="desk" aria-label="3D Game Boy Advance style player">
       <div id="scene" data-view="table"></div>
-      <header class="desk-heading"><h1>Bowser Boy <em>Advance</em></h1><span>NO. 001 / INDIGO</span></header>
+      <header class="desk-heading"><h1><img src="./assets/logo.svg" alt="Bowser Boy Advance" width="304" height="64"></h1><span>NO. 001 / INFINITE BATTERY</span></header>
       <p id="scene-error" role="alert" hidden></p>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
@@ -40,9 +40,9 @@
         <button id="tools-open" aria-label="Open cartridge and settings" aria-haspopup="dialog" aria-controls="tools">Cartridges <kbd>Esc</kbd></button>
       </nav>
       <div id="screen" class="sr-only" aria-live="polite">
-        <div id="empty-screen">No cartridge loaded. Open Cartridges to choose a ROM.</div>
+        <div id="empty-screen">Power off. Pick up the handheld and use its physical power switch.</div>
         <div id="loading-screen" hidden><h2 id="loading-title">Reading cartridge...</h2><p id="loading-detail">The first launch needs internet.</p></div>
-        <span id="power-led"></span><span id="power-label">No cartridge loaded</span>
+        <span id="power-led"></span><span id="power-label">POWER OFF / INFINITE BATTERY</span>
       </div>
       <dialog id="frame-host" class="runtime-source" aria-hidden="true" aria-labelledby="native-title" aria-describedby="native-description">
         <div class="native-header"><div><p class="eyebrow">UNDER THE SHELL</p><h2 id="native-title">EmulatorJS settings</h2></div><button id="native-close" class="close-button" aria-label="Close EmulatorJS settings">&times;</button></div>

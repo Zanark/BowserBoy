@@ -3,6 +3,7 @@ import { SaveStore } from './save-store.js';
 import { CONTROLS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { HandheldScene } from './scene.js';
+import { playStartup, playStartupSound } from './startup.js';
 
 const $ = (id) => document.getElementById(id);
 const store = new SaveStore();
@@ -13,7 +14,8 @@ let batterySave = null;
 let frame = null;
 let session = null;
 let running = false;
-let busy = false;
+let powered = false;
+let busy = true;
 let storageAvailable = false;
 let autoSave = true;
 let launchCallbacks = null;
@@ -59,18 +61,19 @@ function updateControls() {
   for (const id of ['upload', 'rom-file', 'demo', 'volume', 'mute', 'shader', 'reset-controls']) $(id).disabled = busy;
   for (const id of ['pause', 'fullscreen', 'export', 'import', 'native-open']) $(id).disabled = !running || busy;
   $('native-close').disabled = busy;
-  $('hardware-power').disabled = !cartridge || busy || !view;
-  $('hardware-power').setAttribute('aria-pressed', String(running));
-  $('hardware-power').setAttribute('aria-label', `Turn power ${running ? 'off' : 'on'}`);
-  $('hardware-power').title = `Power ${running ? 'off' : 'on'}`;
+  $('hardware-power').disabled = busy || !view;
+  $('hardware-power').setAttribute('aria-pressed', String(powered));
+  $('hardware-power').setAttribute('aria-label', `Turn power ${powered ? 'off' : 'on'}`);
+  $('hardware-power').title = `Power ${powered ? 'off' : 'on'}`;
+  $('scene').dataset.power = powered ? 'on' : 'off';
   $('load-cancel').hidden = !launchCallbacks;
   for (const button of document.querySelectorAll('[data-control]')) button.disabled = !running;
   for (const button of document.querySelectorAll('[data-binding]')) button.disabled = busy;
   $('save').disabled = !running || busy || !storageAvailable;
   $('restore').disabled = !running || busy || !record?.manual;
   $('autosave-toggle').disabled = !storageAvailable || busy;
-  $('power-led').classList.toggle('on', running);
-  view?.setPower(running);
+  $('power-led').classList.toggle('on', powered);
+  view?.setPower(powered);
   if (record?.manual) $('quick-save-time').textContent = new Date(record.manual.createdAt).toLocaleString();
 }
 
@@ -107,7 +110,8 @@ function clearPlayer() {
   releaseHostInputs();
   if ($('frame-host').open) $('frame-host').close();
   $('frame-host').setAttribute('aria-hidden', 'true');
-  view?.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
+  if (powered) view?.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
+  else view?.showPowerOff();
   for (const { id } of CONTROLS) view?.setControl(id, false);
   for (const entry of pending.values()) {
     clearTimeout(entry.timer);
@@ -177,13 +181,24 @@ function launch(file, restore, battery = null) {
     clearPlayer();
     $('loading-screen').hidden = true;
     $('empty-screen').hidden = false;
-    $('power-label').textContent = 'CHOOSE A CARTRIDGE TO RETRY';
+    $('empty-screen').textContent = 'Power is on. Choose a cartridge to retry loading.';
+    $('power-label').textContent = 'POWER ON / CHOOSE A CARTRIDGE TO RETRY';
     throw error;
   });
 }
 
-async function loadRom(file) {
+async function rememberDevice(nextPowered = powered, file = cartridge) {
+  if (!storageAvailable) return;
+  try { await store.putDevice(nextPowered, file); }
+  catch (error) {
+    console.error('Saving console state:', error);
+    throw new Error('The console state could not be remembered. Power and the current cartridge have not been changed. Free browser storage and try again.');
+  }
+}
+
+async function loadRom(file, { remember = true } = {}) {
   const identified = await identifyRom(file);
+  if (!view) throw new Error(sceneFailure?.message ?? 'The 3D display is not available.');
   await storageReady;
   if (running) {
     if (autoSave && storageAvailable) await persist('automatic');
@@ -197,6 +212,7 @@ async function loadRom(file) {
   if (saved && saved.runtime !== RUNTIME) {
     throw new Error('This game has saves from an incompatible emulator version. Keep your backups before changing runtime versions.');
   }
+  if (remember) await rememberDevice(powered, file);
   game = identified;
   record = saved;
   cartridge = file;
@@ -206,6 +222,17 @@ async function loadRom(file) {
   $('game-meta').textContent = `GAME BOY ADVANCE / ${size} / LOCAL CARTRIDGE`;
   $('game-monogram').textContent = game.title.slice(0, 1).toUpperCase();
   $('quick-save-time').textContent = record?.manual ? new Date(record.manual.createdAt).toLocaleString() : 'Your safety net for the tricky bits.';
+  if (!powered) {
+    if (remember) view.setView('playing');
+    if ($('tools').open) $('tools').close();
+    view.showPowerOff();
+    $('empty-screen').hidden = false;
+    $('empty-screen').textContent = 'Cartridge inserted. Turn on the physical power switch to play.';
+    $('power-label').textContent = 'POWER OFF / CARTRIDGE RETAINED';
+    if (remember) notice(storageAvailable ? 'Cartridge inserted. Use the physical power switch to turn it on.' :
+      'Cartridge inserted for this page session only. Browser storage is unavailable; refreshing cannot remember the power or cartridge.', !storageAvailable);
+    return;
+  }
   const checkpoint = record?.bootMode === 'battery' ? null : latestSlot(record);
   await launch(file, checkpoint, checkpoint ? null : batterySave);
   if (storageAvailable && !$('storage-badge').classList.contains('error')) {
@@ -294,31 +321,55 @@ async function togglePause() {
 }
 $('pause').addEventListener('click', () => void operation(togglePause));
 $('hardware-power').addEventListener('click', () => void operation(async () => {
-  if (!cartridge) throw new Error('Choose a cartridge before turning on the power.');
-  if (running) {
-    releaseHostInputs();
-    const sram = validateBatterySave(await command('battery'));
-    if (storageAvailable) {
-      try { record = await store.putBattery(game, sram); }
-      catch (error) {
-        storageFailure(error);
-        throw new Error('Power is still on because the in-game save could not be stored. Export a backup before trying again.');
+  if (powered) {
+    let sram = batterySave;
+    if (running) {
+      releaseHostInputs();
+      sram = validateBatterySave(await command('battery'));
+      if (storageAvailable) {
+        try { record = await store.putBattery(game, sram); }
+        catch (error) {
+          storageFailure(error);
+          throw new Error('Power is still on because the in-game save could not be stored. Export a backup before trying again.');
+        }
+        $('storage-badge').textContent = sram === null ? 'POWER OFF' : 'BATTERY SAVED';
+        $('storage-badge').classList.remove('error');
+        $('save-status').textContent = 'Available in-game save data stored separately. Power on boots the ROM; checkpoints remain unchanged.';
       }
-      $('storage-badge').textContent = sram === null ? 'POWER OFF' : 'BATTERY SAVED';
-      $('storage-badge').classList.remove('error');
-      $('save-status').textContent = 'Available in-game save data stored separately. Power on boots the ROM; checkpoints remain unchanged.';
     }
+    await rememberDevice(false);
     batterySave = sram;
+    powered = false;
     clearPlayer();
-    view.showPowerOff();
     $('empty-screen').textContent = 'Power off. Turn the physical switch on to restart the loaded cartridge.';
     $('empty-screen').hidden = false;
     $('power-label').textContent = 'POWER OFF / CARTRIDGE RETAINED';
     notice(storageAvailable ? 'Power off. Available in-game save data is stored; checkpoints were not changed.' :
       'Power off. In-game save data is kept for this page session only because browser storage is unavailable. Reloading will lose it.', !storageAvailable);
   } else {
-    await launch(cartridge, null, batterySave);
-    notice('Power on. The ROM restarted from the beginning with its in-game save, not a checkpoint.');
+    await rememberDevice(true);
+    powered = true;
+    updateControls();
+    view.setView('playing');
+    $('empty-screen').hidden = true;
+    $('power-label').textContent = 'STARTING / INFINITE BATTERY';
+    const sound = playStartupSound(preferences).catch((error) => {
+      console.error('Startup sound:', error);
+      return error;
+    });
+    await playStartup(view);
+    if (cartridge) await launch(cartridge, null, batterySave);
+    else {
+      view.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
+      $('empty-screen').hidden = false;
+      $('empty-screen').textContent = 'Power on. Open Cartridges to insert a ROM.';
+      $('power-label').textContent = 'POWER ON / INSERT CARTRIDGE';
+    }
+    const soundError = await sound;
+    if (soundError) notice(`Power is on, but the startup chime could not play: ${soundError.message}`, true);
+    else notice(!storageAvailable ? 'Power on for this page session only. Browser storage is unavailable; refreshing cannot remember the console.' :
+      cartridge ? 'Power on. The ROM restarted from the beginning with its in-game save, not a checkpoint.' :
+        'Power on. Insert a cartridge whenever you are ready. Infinite battery included.');
   }
 }));
 $('fullscreen').addEventListener('click', () => {
@@ -658,5 +709,27 @@ if (preferenceWarning) {
   $('preferences-status').textContent = preferenceWarning;
   notice(preferenceWarning, true);
 }
-void storageReady.then(updateControls);
+async function restoreConsole() {
+  await storageReady;
+  if (!storageAvailable) return;
+  const device = await store.getDevice();
+  powered = device.powered;
+  updateControls();
+  if (device.cartridge) {
+    const file = new File([device.cartridge.bytes], device.cartridge.name);
+    await loadRom(file, { remember: false });
+  } else if (powered) {
+    view?.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
+    $('empty-screen').textContent = 'Power on. Open Cartridges to insert a ROM.';
+    $('power-label').textContent = 'POWER ON / INSERT CARTRIDGE';
+  }
+}
+void restoreConsole().catch((error) => {
+  console.error('Restoring console:', error);
+  notice(`The console could not be restored: ${error.message}`, true);
+}).finally(() => {
+  busy = false;
+  $('scene').dataset.ready = 'true';
+  updateControls();
+});
 updateControls();
