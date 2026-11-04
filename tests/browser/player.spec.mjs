@@ -581,22 +581,21 @@ test('first visit is off, original startup plays only on the power switch, and i
   await page.addInitScript(() => {
     window.bootEvents = [];
     window.startupInk = 0;
+    const fillText = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function (...args) {
+      fillText.apply(this, args);
+      if (this.canvas !== window.startupSource) return;
+      const pixels = this.getImageData(0, 120, 240, 25).data;
+      let ink = 0;
+      for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 2] > pixels[i] + 10) ink++;
+      window.startupInk = Math.max(window.startupInk, ink);
+    };
     new MutationObserver((changes) => {
       for (const change of changes) window.bootEvents.push(change.target.getAttribute('data-booting'));
       if (!changes.some(change => change.target.getAttribute('data-booting') === 'true')) return;
       void (async () => {
         const { view } = await import('./src/app.js');
-        const sample = () => {
-          const source = view.source;
-          if (source?.getContext && document.getElementById('scene').dataset.booting === 'true') {
-            const pixels = source.getContext('2d').getImageData(0, 120, 240, 25).data;
-            let ink = 0;
-            for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 2] > pixels[i] + 10) ink++;
-            window.startupInk = Math.max(window.startupInk, ink);
-            requestAnimationFrame(sample);
-          }
-        };
-        sample();
+        window.startupSource = view.source;
       })();
     }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-booting'] });
   });

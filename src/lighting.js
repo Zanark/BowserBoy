@@ -70,11 +70,12 @@ export function createDeskLamp() {
     new THREE.MeshStandardMaterial({ color: '#ffead0', emissive: '#ffd299', emissiveIntensity: 80 }),
     new THREE.Vector3(base.x, 3.25, base.z));
   diffuser.castShadow = false;
-  const light = new THREE.PointLight('#ffca8a', 18 / METERS_PER_UNIT ** 2, 0, 2);
-  light.name = 'Paper lantern bulb light';
+  const light = new THREE.SpotLight('#ffca8a', 18 / METERS_PER_UNIT ** 2, 0, Math.PI / 3, .65, 2);
+  light.name = 'Paper lantern downward light';
   light.position.copy(diffuser.position);
+  light.target.position.set(13.5 / 7, .2 / 7, -2 / 7);
   light.castShadow = true;
-  light.shadow.mapSize.set(512, 512);
+  light.shadow.mapSize.set(1024, 1024);
   light.shadow.camera.near = .7;
   light.shadow.camera.far = 120;
   light.shadow.bias = -.00012;
@@ -90,7 +91,7 @@ export function createDeskLamp() {
   bounce.name = 'Lamp tabletop bounce';
   bounce.position.set(0, .025, .2);
   bounce.rotation.x = Math.PI / 2;
-  body.add(light, diffuse);
+  body.add(light, light.target, diffuse);
   root.add(bounce);
   return { root, light, diffuse, bounce, diffuser, shade, switchCap };
 }

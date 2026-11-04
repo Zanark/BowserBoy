@@ -131,6 +131,10 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('dark');
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
+  await expect.poll(() => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return !view.changed && !view.renderer.shadowMap.needsUpdate;
+  })).toBe(true);
   await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const render = view.renderer.render.bind(view.renderer);
