@@ -246,6 +246,26 @@ latency alone did not create real headroom, setting a future source start before
 the native time update caused invalid offsets, -1 dB compression still overshot,
 and naive overlapping gain updates produced discontinuities.
 
+## Curved LCD border follow-up, 2026-11-04
+
+The original-demo fixture samples actual native CRT image edges and raycasts
+the 3D display. Sampled visible edge pixels remain inside the curved mesh, with
+less than nine native pixels of shortest-distance clearance. Interpolated UVs
+retain the original framebuffer coordinates. A corner ray verifies the raised
+border also curves; disabling CRT restores the rectangular surround and complete
+unfiltered corner. Switching back restores the curve without another runtime.
+This fit targets the pinned CRT Geom defaults, not arbitrary shader parameters.
+
+Syntax/build passed. Four affected Edge settings/startup/3D/CRT cases passed
+in 47.9s; the explicit software-graphics CRT case passed in 30.3s.
+Source `72da407f03ddf872bdd7b3c19e4a9bba92445998` passed build, both complete
+browser shards (25 cases) and actual deployment in Pages run `41763054197`.
+Fresh live verification matched all 23 exact public assets and passed the
+native edge/UV/filter-switching case in 14.1s. Original-demo output and updated
+table/play/startup captures were visually inspected. Public documentation
+follows deployment; no commercial-ROM retest or new user approval is claimed.
+See `TODO/13_CURVED_LCD_BORDER.todo`.
+
 ## Not verified here
 
 This revamp's suite uses the original demo, not commercial ROM data. Physical

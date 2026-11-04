@@ -1,0 +1,44 @@
+Status: DONE (deployed and technically verified; new visual approval not claimed)
+Milestone: Make the physical inner border follow the native CRT outline
+Dependencies: 06_3D_TABLETOP, 07_REFERENCE_SHAPE
+Purpose: Remove the square surround around the bowed CRT image while preserving
+  the outer bezel, native filtering, complete unfiltered viewport and runtime.
+
+Tasks:
+- [x] Inspect the pinned native shader and actual original-demo edge pixels.
+- [x] Author matching curved LCD and beveled recess outlines.
+- [x] Retain rectangular framebuffer UVs instead of applying another warp.
+- [x] Restore rectangular geometry for unfiltered/other native shader presets.
+- [x] Verify actual image-edge retention, curve clearance and filter switching.
+- [x] Check startup, settings, physical inspection and software graphics.
+- [x] Deploy and verify live before final public documentation.
+
+Acceptance criteria:
+- The inner raised surround follows the bowed screen sides and corners.
+- Sampled visible native CRT edge pixels remain inside the display geometry.
+- Shortest distance from sampled image edges to the display outline is under
+  nine native pixels; this is a fitted outline, not an arbitrary-shader guarantee.
+- Display UVs retain the existing framebuffer coordinates without another warp.
+- Unfiltered rectangular corners remain visible; switching back restores curves.
+- Geometry changes do not replace the game runtime, material, texture or saves.
+- The outer charcoal bezel and existing power/lighting behavior remain intact.
+
+Completion evidence:
+- Syntax/build PASS; full hosted build includes all 10 unit cases.
+- Four affected Edge settings/startup/3D/CRT cases PASS in 47.9s.
+- Explicit software-graphics CRT case PASS in 30.3s.
+- Actual original-demo render and three updated public UI captures reviewed.
+- Source 72da407f03ddf872bdd7b3c19e4a9bba92445998 / Pages 41763054197:
+  build, both complete browser shards (25 cases) and deployment PASS.
+- Fresh live checks match all 23 exact public assets; real native CRT edge,
+  UV, unfiltered-corner and filter-switching case PASS in 14.1s.
+- No commercial-ROM test resumed or new user approval inferred.
+
+Completion log:
+- 2026-11-04: User supplies screenshot and requests a matching curved border.
+  Fit original quadratic outlines around the pinned CRT edge; keep the outer
+  bezel unchanged. Dispose replaced geometry only when effective shader changes.
+- 2026-11-04: Initial horizontal-gap measurement exaggerates distance near a
+  tangent. Measure shortest distance to the actual curve while retaining
+  image-edge/no-clipping and original-UV assertions.
+- 2026-11-04: Full release and fresh live verification precede final docs.

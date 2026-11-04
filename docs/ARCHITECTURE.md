@@ -168,6 +168,16 @@ The screen's `CanvasTexture` uploads the retained, post-shader framebuffer
 each render frame, so curvature/scanlines follow the LCD around the 3D model
 and are naturally occluded when its back faces the camera.
 
+The inner LCD/recess outlines use original quadratic curves fitted around the
+pinned CRT Geom image boundary. Both are actual mesh geometry; the outer charcoal
+bezel stays unchanged. `createLcdGeometries` keeps the original rectangular
+framebuffer UV coordinates, so the border does not warp the already-filtered
+image again. `setScreenCurve` disposes/replaces geometry only when the effective
+shader changes, retaining the mesh, material, texture and native runtime.
+Unfiltered and other native presets restore the rectangular display/surround
+rather than cropping their corners or assuming CRT Geom's fit applies to them.
+Revalidate the outline against actual native output on an engine/shader upgrade.
+
 ### Dark room and screen-colored illumination
 
 `src/lighting.js` models the lamp and its light sources. The scene has no ambient,

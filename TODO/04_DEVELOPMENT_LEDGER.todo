@@ -244,3 +244,16 @@ Completion log:
   Pages 41760601267 passes build, both complete browser shards and deployment.
   Fresh live checks match 23 exact assets and pass all three audio cases in
   23.5s. Append this evidence only after that successful deployment.
+- 2026-11-04 / Inner LCD border follows the CRT curve:
+  User screenshot shows a bowed CRT picture inside a rectangular raised border.
+  Inspect actual pinned shader/output, then author matching quadratic LCD and
+  recess outlines. Preserve original rectangular UVs: no second image warp.
+  Keep the outer bezel unchanged. Effective non-CRT selection restores the
+  complete rectangular screen and surround; replace/dispose geometry only.
+  Initial horizontal-gap measurement exaggerates distance near a tangent;
+  shortest-distance checks retain image-edge/no-clipping and UV assertions.
+  Four affected Edge cases pass (47.9s); software CRT case passes (30.3s).
+  72da407f03ddf872bdd7b3c19e4a9bba92445998 / Pages 41763054197 passes full
+  build, both 25-case shards and deployment. Fresh live checks match 23 assets
+  and pass the actual CRT-edge/filter case (14.1s). Updated original captures
+  reviewed; final documentation follows deployment, not inferred approval.

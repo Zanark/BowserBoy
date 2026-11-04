@@ -12,6 +12,7 @@ BowserBoyAdvance workstreams
 10_DARK_ROOM.todo - Switchable lamp, framebuffer lighting and real button travel.
 11_STARTUP_AND_PERSISTENT_POWER.todo - Original branding/startup and remembered infinite-battery console.
 12_AUDIO_RELIABILITY.todo - Native prebuffer, smooth volume/mute and peak protection.
+13_CURVED_LCD_BORDER.todo - Physical inner border fitted to the native CRT curve.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -45,3 +46,7 @@ Audio protection is deployed from 7cc095ff7242dc9d7af47f7c040e5a63783d92bf:
 Pages 41759530406, build, both complete browser shards (25 total) and deploy PASS.
 Fresh live checks match 23 public assets and pass three measured audio cases.
 The user's particular audible buzzing was not independently reproduced.
+Curved LCD border is deployed from 72da407f03ddf872bdd7b3c19e4a9bba92445998:
+Pages 41763054197 passes build, both complete browser shards (25) and deployment.
+Fresh live checks match 23 exact assets and pass actual native edge/UV/filter
+switching. Unfiltered mode retains its complete rectangular viewport.

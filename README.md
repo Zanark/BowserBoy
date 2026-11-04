@@ -77,7 +77,9 @@ the handheld to the table. Reduced-motion mode skips the pickup animation.
 ![The raised handheld in play view](docs/images/3d-handheld.png)
 
 *The LCD and bezel lettering are surfaces on the mesh, not a floating iframe
-or a flat photograph. Controls sit on the physical shell.*
+or a flat photograph. The inner screen border follows CRT Geom's bowed sides
+and corners; unfiltered mode restores a complete rectangular screen.
+Controls sit on the physical shell.*
 
 The revised shell uses stepped shoulders, straighter sides, a bowed lower edge,
 low-profile buttons and recessed speaker slots. Its shape was informed by the
