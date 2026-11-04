@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Smaller bezel wordmark:
+  User points to lettering below the LCD. Draw the existing monochrome crop
+  at75%width/height with equal12.5%padding in its shared texture. Preserve mesh,
+  fullscreen CSS, centering/proportions, LCD area and all other logos.
+  Add actual alpha-ink bounds rather than checking unchanged canvas dimensions;
+  old source fails left padding. Syntax/build,11units and full branding case
+  pass15.2s; existing quick-action/fullscreen/zoom case passes41.1s. Review the
+  actual local fullscreen capture with original Pixel Lab.35IN_PROGRESS until
+  normal full gate and independent public qualification; no live claim yet.
 - 2026-11-05 / Notification overlay independently live:
   Fresh normalc981388/41916735296 passes build,11units,all39browser cases and
   deployment. Match all28actual public assets, then run complete overlay and

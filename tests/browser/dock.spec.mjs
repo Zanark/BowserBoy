@@ -428,10 +428,16 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     const fullscreen = document.querySelector('#screen-focus-wordmark');
     const fullscreenPixels = fullscreen.getContext('2d').getImageData(0, 0, fullscreen.width, fullscreen.height).data;
     let ink = 0, colored = 0;
+    let minX = canvas.width, minY = canvas.height, maxX = -1, maxY = -1;
     for (let i = 0; i < pixels.length; i += 4) {
       if (!pixels[i + 3]) continue;
       ink++;
       if (pixels[i] !== pixels[i + 1] || pixels[i + 1] !== pixels[i + 2]) colored++;
+      const x = i / 4 % canvas.width, y = Math.floor(i / 4 / canvas.width);
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x);
+      maxY = Math.max(maxY, y);
     }
     const maker = view.model.root.getObjectByName('Zanark embossed maker mark');
     const letters = maker.getObjectByName('Raised Zanark lettering');
@@ -461,13 +467,21 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
         new Vector3(0, 0, -1).transformDirection(root.matrixWorld));
       return !!ray.intersectObject(root, true)[0]?.object.material.map;
     });
-    return { ink, colored, depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
+    return { ink, colored,
+      inkBounds: { left: minX / canvas.width, top: minY / canvas.height,
+        right: (maxX + 1) / canvas.width, bottom: (maxY + 1) / canvas.height },
+      depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
       samePlastic: letters.material === view.model.root.getObjectByName('Front face with speaker apertures').material,
       sameFullscreenWordmark: canvas.width === fullscreen.width && canvas.height === fullscreen.height &&
         pixels.every((value, index) => value === fullscreenPixels[index]), markings, microLabels };
   });
   expect(branding.ink).toBeGreaterThan(1000);
   expect(branding.colored).toBe(0);
+  expect(branding.inkBounds.left).toBeGreaterThanOrEqual(.12);
+  expect(branding.inkBounds.top).toBeGreaterThanOrEqual(.12);
+  expect(branding.inkBounds.right).toBeLessThanOrEqual(.88);
+  expect(branding.inkBounds.bottom).toBeLessThanOrEqual(.88);
+  expect(branding.inkBounds.right - branding.inkBounds.left).toBeGreaterThan(.65);
   expect(branding.depth).toBeGreaterThan(.018);
   expect(branding.samePlastic).toBe(true);
   expect(branding.sameFullscreenWordmark).toBe(true);

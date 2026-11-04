@@ -7,6 +7,22 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Smaller bezel wordmark, 2026-11-05
+
+The user requests smaller lettering beneath the LCD. Draw the shared
+monochrome artwork at 75% width and height with equal 12.5% padding. Both the
+physical and fullscreen bezel use that exact texture; no mesh, fullscreen CSS,
+LCD area, camera, proportions or other logo is changed.
+
+Extend the existing branding case to measure actual nontransparent pixel
+bounds, not the unchanged canvas rectangle: at least 12% padding on each edge,
+with sufficient visible lettering retained. The old artwork fails with left
+ink at .00651 instead of at least .12. Syntax/build, all 11 units and the full
+branding case pass (15.2s). The complete existing quick-action/fullscreen/zoom
+case passes (41.1s), preserving four-size fit and live LCD identity. Review the
+actual local fullscreen capture using original Pixel Lab, not a private ROM.
+Normal hosted and independent public qualification remain pending.
+
 ## Notification overlays, 2026-11-05
 
 The user explicitly permits notifications to overlap the console, superseding
