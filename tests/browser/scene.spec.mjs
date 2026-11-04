@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
+import { demoReady } from './pixel-lab.mjs';
 
 const sceneState = (page) => page.evaluate(async () => {
   const { view } = await import('./src/app.js');
@@ -81,19 +82,26 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     view.renderer.setAnimationLoop(null);
     view.renderer.setPixelRatio(1);
     view.slowFrames = 0;
+    view.renderedLastFrame = false;
+    view.nextPaint = 0;
     const tick = (milliseconds) => {
       view.changed = true;
       view.render(view.lastRender + milliseconds);
     };
-    tick(16); tick(100); tick(16);
+    tick(16);
+    const beforeRecovery = view.renderer.info.render.frame;
+    tick(100);
+    const duringRecovery = view.renderer.info.render.frame;
+    tick(201); tick(16);
     const singleStallRatio = view.renderer.getPixelRatio();
-    for (let i = 0; i < 6; i++) tick(100);
+    for (let i = 0; i < 6; i++) { tick(100); tick(201); }
     view.setControl('a', true);
     tick(100);
-    return { singleStallRatio, slowRatio: view.renderer.getPixelRatio(),
+    return { singleStallRatio, beforeRecovery, duringRecovery, slowRatio: view.renderer.getPixelRatio(),
       width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
   });
   expect(budget.singleStallRatio).toBe(1);
+  expect(budget.duringRecovery).toBe(budget.beforeRecovery);
   expect(budget.slowRatio).toBeLessThan(1);
   expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.slowRatio));
   expect(budget.press).toBeGreaterThan(.99);
@@ -106,6 +114,7 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
   const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
@@ -321,6 +330,7 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   const evidence = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
@@ -356,16 +366,14 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   const filtered = await pixelHash();
   await page.locator('#scene-canvas').click();
   await page.keyboard.down('z');
-  await page.waitForTimeout(150);
-  expect((await pixelHash()).hash).not.toBe(filtered.hash);
-  expect((await pixelHash()).version).toBeGreaterThan(filtered.version);
+  await expect.poll(async () => (await pixelHash()).hash).not.toBe(filtered.hash);
+  await expect.poll(async () => (await pixelHash()).version).toBeGreaterThan(filtered.version);
   await page.keyboard.up('z');
   await page.locator('#tools-open').click();
   await expect(page.locator('#shader')).toHaveValue('crt-geom.glslp');
   await page.locator('#shader').selectOption('disabled');
   await expect(page.locator('#shader')).toBeEnabled();
-  await page.waitForTimeout(150);
-  expect((await pixelHash()).hash).not.toBe(filtered.hash);
+  await expect.poll(async () => (await pixelHash()).hash).not.toBe(filtered.hash);
   const child = page.frames().find((frame) => frame.url().endsWith('player.html'));
   expect(await child.evaluate(() => window.EJS_emulator.getSettingValue('shader'))).toBe('disabled');
   await page.reload();

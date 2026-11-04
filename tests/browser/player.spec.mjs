@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { readFile, mkdir } from 'node:fs/promises';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
+import { nativeFrame, demoReady } from './pixel-lab.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const demoBytes = () => Buffer.from(createDemoRom());
@@ -15,10 +16,12 @@ const startDemo = async (page) => {
   await openTools(page);
   await page.locator('#demo').click();
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
 };
 const upload = async (page, name = 'Pixel Lab.gba', bytes = demoBytes()) => {
   await page.locator('#rom-file').setInputFiles({ name, mimeType: 'application/octet-stream', buffer: bytes });
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
 };
 const canvas = (page) => page.locator('#scene-canvas');
 const image = async (page) => {
@@ -30,8 +33,14 @@ const image = async (page) => {
 const move = async (page, key = 'ArrowRight', duration = 180) => {
   await closeTools(page);
   await canvas(page).click();
+  const before = await nativeFrame(page);
   await page.keyboard.down(key);
   await page.waitForTimeout(duration);
+  if (key.startsWith('Arrow')) await expect.poll(() => image(page)).not.toBe(hash(Buffer.from(before.png)));
+  if (key === 'x') {
+    const frame = page.frames().find((item) => item.url().endsWith('player.html'));
+    await expect.poll(() => frame.evaluate(() => window.EJS_emulator.gameManager.getSaveFile()?.[0])).toBe(before.left);
+  }
   await page.keyboard.up(key);
   await page.waitForTimeout(100);
 };
@@ -199,7 +208,7 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   await openTools(page);
   await page.getByRole('button', { name: 'Restore', exact: true }).click();
   await expect(page.locator('#notice')).toContainText('Quick-save checkpoint restored.');
-  expect(await image(page)).toBe(checkpointImage);
+  await expect.poll(() => image(page)).toBe(checkpointImage);
 
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export backup', exact: false }).click();
@@ -211,16 +220,16 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   await move(page, 'ArrowLeft');
   await page.locator('#backup-file').setInputFiles(backupPath);
   await expect(page.locator('#notice')).toContainText('Backup imported and stored');
-  expect(await image(page)).toBe(checkpointImage);
+  await expect.poll(() => image(page)).toBe(checkpointImage);
 
   await page.reload();
   await upload(page, 'Renamed cartridge.gba');
   await expect(page.locator('#notice')).toContainText('latest checkpoint has been restored');
-  expect(await image(page)).toBe(checkpointImage);
+  await expect.poll(() => image(page)).toBe(checkpointImage);
   await expect(page.locator('#game-title')).toHaveText('Renamed cartridge');
   // The actual automatic interval must write without pressing Save.
   const beforeAutomatic = (await readStored(page))[0]?.automatic?.createdAt;
-  await move(page, 'ArrowRight', 100);
+  await move(page, 'ArrowUp', 100);
   await expect.poll(async () => (await readStored(page))[0]?.automatic?.createdAt, { timeout: 20000 }).not.toBe(beforeAutomatic);
   const automaticImage = await image(page);
   const savedRecords = await readStored(page);
@@ -349,8 +358,13 @@ test.describe('touch layout', () => {
     const before = await image(page);
     const button = page.getByRole('button', { name: 'D-pad right', exact: true });
     await expect(button).toBeVisible();
-    await button.tap();
+    const box = await button.boundingBox();
+    const touch = await page.context().newCDPSession(page);
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchStart',
+      touchPoints: [{ x: box.x + box.width / 2, y: box.y + box.height / 2 }] });
     await expect.poll(() => image(page)).not.toBe(before);
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await touch.detach();
     await expect(player.locator('.ejs_virtualGamepad_parent')).not.toBeVisible();
     await expect(player.locator('.ejs_virtualGamepad_open')).not.toBeVisible();
     await expect(player.locator('.ejs_menu_bar')).not.toBeVisible();
@@ -366,8 +380,7 @@ test('remapped keyboard and sound preferences persist and physical inputs releas
   const original = await image(page);
   await canvas(page).click();
   await page.keyboard.down('z');
-  await page.waitForTimeout(100);
-  expect(await image(page)).not.toBe(original);
+  await expect.poll(() => image(page)).not.toBe(original);
   await page.keyboard.up('z');
   await openTools(page);
   await expect(page.locator('[data-binding="a"]')).toHaveText('Z');
@@ -391,8 +404,7 @@ test('remapped keyboard and sound preferences persist and physical inputs releas
   await move(page, 'z', 80);
   expect(await image(page)).toBe(beforeOldKey);
   await page.keyboard.down('c');
-  await page.waitForTimeout(100);
-  expect(await image(page)).not.toBe(beforeOldKey);
+  await expect.poll(() => image(page)).not.toBe(beforeOldKey);
   await page.keyboard.up('c');
   const right = page.getByRole('button', { name: 'D-pad right', exact: true });
   const box = await right.boundingBox();
@@ -481,8 +493,10 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
   expect(fits).toBe(true);
   await openTools(page);
   await page.locator('#pause').click();
+  await expect(page.locator('#pause')).toHaveText('Resume game');
   expect(await frame.evaluate(() => window.EJS_emulator.paused)).toBe(true);
   await page.locator('#pause').click();
+  await expect(page.locator('#pause')).toHaveText('Pause game');
   expect(await frame.evaluate(() => window.EJS_emulator.paused)).toBe(false);
   await page.evaluate(() => document.exitFullscreen());
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);

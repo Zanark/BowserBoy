@@ -299,7 +299,10 @@ export class HandheldScene {
   render(time) {
     const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
-    this.slowFrames = this.renderedLastFrame && delta > .05 ? (this.slowFrames ?? 0) + 1 : 0;
+    if (this.renderedLastFrame) {
+      this.slowFrames = delta > .05 ? (this.slowFrames ?? 0) + 1 : 0;
+      this.nextPaint = time + (delta > .05 ? Math.min(200, delta * 2000) : 0);
+    }
     this.renderedLastFrame = false;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, this.lampOn ? .015 : .45, 4, delta);
@@ -345,6 +348,9 @@ export class HandheldScene {
         if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .045);
       }
     }
+    this.changed ||= buttonsMoving;
+    // Leave recovery frames for emulation when software graphics cannot keep up.
+    if (time < (this.nextPaint ?? 0)) return;
     // Modal tools own interaction; keep the core running without redrawing its blurred backdrop.
     if (document.querySelector('dialog[open]')) return;
     if (this.slowFrames >= 6 && this.renderer.getPixelRatio() > .5) {
@@ -354,7 +360,8 @@ export class HandheldScene {
     }
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     if (!this.screenIllumination.failed) {
-      try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, delta, !!this.source); }
+      const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
+      try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, lightDelta, !!this.source); }
       catch (error) {
         this.screenIllumination.clear();
         this.screenIllumination.failed = true;
@@ -367,6 +374,7 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
+    this.lastPaint = time;
     this.renderedLastFrame = true;
     this.lastPosition = this.model.root.position.clone();
     this.lastRotation = this.model.root.quaternion.clone();
