@@ -111,7 +111,7 @@ function cylinder(radius, depth) {
   return geometry;
 }
 
-function buttonCap(radius) {
+function buttonCap(radius, recessed = false) {
   const geometry = new THREE.LatheGeometry([
     new THREE.Vector2(0, -.045), new THREE.Vector2(radius * .87, -.045),
     new THREE.Vector2(radius, -.025), new THREE.Vector2(radius, .005),
@@ -119,6 +119,18 @@ function buttonCap(radius) {
     new THREE.Vector2(0, .055),
   ], 40);
   geometry.rotateX(Math.PI / 2);
+  if (recessed) {
+    // Keep the original rim normals; remove only triangles closing the center dome.
+    const position = geometry.getAttribute('position'), index = geometry.getIndex();
+    const triangles = [];
+    for (let i = 0; i < index.count; i += 3) {
+      const triangle = [index.getX(i), index.getX(i + 1), index.getX(i + 2)];
+      if (triangle.some(vertex => Math.hypot(position.getX(vertex), position.getY(vertex)) < .00001 &&
+        position.getZ(vertex) > .05)) continue;
+      triangles.push(...triangle);
+    }
+    geometry.setIndex(triangles);
+  }
   return geometry;
 }
 
@@ -142,16 +154,56 @@ const moldedCounters = {
   R: [[[.22, .55], [.65, .55], [.78, .65], [.78, .72], [.65, .8], [.22, .8]]],
 };
 
-function moldedText(parent, text, width, height, depth, material, x = 0, y = 0, z = 0) {
+function moldedShapes(text, width, height) {
   const scale = width / (1 + (text.length - 1) * 1.3);
-  const shapes = [...text].map((letter, index) => {
+  return [...text].map((letter, index) => {
     const points = polygon => polygon.map(([px, py]) => new THREE.Vector2(
       ((index - (text.length - 1) / 2) * 1.3 + px - .5) * scale, (py - .5) * height));
     const shape = new THREE.Shape(points(moldedGlyphs[letter]));
     for (const hole of moldedCounters[letter] ?? []) shape.holes.push(new THREE.Path(points(hole)));
     return shape;
   });
-  return add(parent, `Raised ${text} lettering`, solid(shapes, depth, .0025), material, x, y, z);
+}
+
+function moldedText(parent, text, width, height, depth, material, x = 0, y = 0, z = 0) {
+  return add(parent, `Raised ${text} lettering`, solid(moldedShapes(text, width, height), depth, .0025), material, x, y, z);
+}
+
+function recessedLetter(button, text, radius, material) {
+  const [glyph] = moldedShapes(text, .15, .20);
+  const face = new THREE.Shape();
+  face.absarc(0, 0, radius * .6, 0, Math.PI * 2, false);
+  face.holes.push(new THREE.Path(glyph.getPoints()));
+  const top = new THREE.ShapeGeometry([
+    face, ...glyph.holes.map(hole => new THREE.Shape(hole.getPoints())),
+  ], 20);
+  // Continue the original cap dome around the cutout and its solid counter islands.
+  const surface = (x, y) => .055 - .003 * Math.hypot(x, y) / (radius * .6);
+  const position = top.getAttribute('position'), normal = top.getAttribute('normal');
+  const rimNormal = new THREE.Vector2(.02, radius * .91).normalize();
+  for (let i = 0; i < position.count; i++) {
+    const x = position.getX(i), y = position.getY(i);
+    position.setZ(i, surface(x, y));
+    normal.setXYZ(i, rimNormal.x * x / (radius * .6), rimNormal.x * y / (radius * .6), rimNormal.y);
+  }
+  add(button, `${text} recessed cap face`, top, button.material);
+  const floor = new THREE.ShapeGeometry(glyph);
+  floor.translate(0, 0, .028);
+  add(button, `Recessed ${text} lettering`, floor, material);
+
+  const vertices = [];
+  for (const contour of [glyph.getPoints(), ...glyph.holes.map(hole => hole.getPoints())]) {
+    for (let i = 0; i < contour.length; i++) {
+      const a = contour[i], b = contour[(i + 1) % contour.length];
+      vertices.push(
+        a.x, a.y, surface(a.x, a.y), a.x, a.y, .028, b.x, b.y, surface(b.x, b.y),
+        b.x, b.y, surface(b.x, b.y), a.x, a.y, .028, b.x, b.y, .028);
+    }
+  }
+  const walls = new THREE.BufferGeometry();
+  walls.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  walls.computeVertexNormals();
+  add(button, `${text} groove walls`, walls, material);
 }
 
 function moldedLabel(parent, text, x, y, width, height, material, angle = -.18) {
@@ -196,7 +248,9 @@ export function createHandheld() {
   rubber.roughness = .68;
   rubber.clearcoat = .06;
   const buttonMark = rubber.clone();
-  buttonMark.color.set('#a2aa99');
+  buttonMark.color.set('#454c40');
+  buttonMark.roughness = .85;
+  buttonMark.clearcoat = 0;
   const padMark = rubber.clone();
   padMark.color.set('#a5ad9b');
   const dark = new THREE.MeshStandardMaterial({ color: '#242332', roughness: .85 });
@@ -321,8 +375,8 @@ export function createHandheld() {
     const name = action ? id.toUpperCase() : id;
     const floor = add(root, `${name} socket`, new THREE.CircleGeometry(opening, 40), dark, x, y, .582);
     floor.castShadow = false;
-    const button = add(root, `${name} button`, buttonCap(radius), rubber, x, y, z);
-    if (action) moldedText(button, id.toUpperCase(), .15, .20, .012, buttonMark, 0, 0, .059);
+    const button = add(root, `${name} button`, buttonCap(radius, action), rubber, x, y, z);
+    if (action) recessedLetter(button, name, radius, buttonMark);
     else moldedLabel(root, id.toUpperCase(), x - .43, y + .04, 1.02, .32, purple);
     control(id, button, size, size);
   }

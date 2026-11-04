@@ -7,6 +7,25 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Recessed A/B lettering, 2026-11-05
+
+The user corrects the A/B markings: they must be inward and dark, not raised.
+Reuse the original glyph contours to perforate the cap faces. Keep enclosed
+counters at cap height, with dark floors and sidewalls below the dome. Remove
+only the old closing triangles, preserving the rim's original normals; match
+the replacement face shading so the cap does not acquire a separate center
+disk. Button silhouettes, press travel and all other markings are unchanged.
+
+The existing branding case now casts real rays through both letters. Require
+the first hit to be the groove floor, .018-.035 units below adjacent cap
+material; counters stay at cap height, walls have depth, contrast exceeds 3:1
+and no printed map is used. Retain the eight other raised markings and every
+viewport/glass/wordmark assertion. Old raised letters fail the new contract.
+Syntax/build and all 11 units pass; final complete branding/native-input cases
+pass locally (27.5s). The existing real pressed-cap aperture/lighting case
+passes (7.9s). Actual local rendering is reviewed without changing historical
+documentation images or using a private ROM. Hosted/public proof is pending.
+
 ## Smaller bezel wordmark, 2026-11-05
 
 The user requests smaller lettering beneath the LCD. Draw the shared

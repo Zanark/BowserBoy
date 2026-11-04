@@ -150,9 +150,12 @@ audio quality remain separate qualification boundaries.
 bezel, buttons, speaker, ports, battery cover and screws. Wood grain and
 decorative cartridge labels are locally drawn canvas textures, not reference
 photographs or copied manufacturer logos. Shared original polygon glyphs with
-proper counters and beveled extrusion form A/B, L/R, START/SELECT and ZANARK;
-D-pad arrows also have real depth. Cap markings share their parent's material
-and move with it; START/SELECT and their outline share the shell plastic.
+proper counters and beveled extrusion form L/R, START/SELECT and ZANARK;
+D-pad arrows also retain raised depth and darker rubber. A/B glyphs instead
+cut the cap faces: solid counter islands follow the original dome, while dark
+floors and sidewalls sit below it. Original lathe rim normals are retained and
+the face normals meet them continuously. All cap markings move with their
+parent; START/SELECT and their outline share the shell plastic.
 The cream rubber caps retain their color with rougher, less glossy surfaces.
 The front POWER/BBA-001 decals are removed, not the LED or underside label.
 

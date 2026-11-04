@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Cut A/B letters inward:
+  User corrects raised A/B relief. Reuse polygon glyphs/counters to open only
+  those cap faces, add dark recessed floors/walls, and preserve solid counter
+  islands. Keep original rim normals and continuous dome shading; retain
+  existing cap silhouettes and parented press travel. Replace only raised-A/B
+  checks with actual floor-hit/depth/contrast/counter probes; other markings
+  and all input gates remain. Syntax/build/11units pass, final branding/input
+  cases27.5s and existing pressed-lighting case7.9s. Local actual rendering
+  reviewed.36IN_PROGRESS until full normal gate and independent public proof.
 - 2026-11-05 / Smaller bezel wordmark independently live:
   Fresh normalf2d85d3/41919474092 passes build,11units,all39cases and deploy.
   Match28actual public assets; complete branding and quick-action/fullscreen/

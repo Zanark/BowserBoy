@@ -72,8 +72,9 @@ from off to on. The chime follows volume/mute; reduced motion uses a static reve
 The supplied transparent wordmark also appears on the rear shell, idle/loading
 LCD and settings panels. The front bezel uses the supplied logo's distinctive
 lettering in monochrome, without stars; screen-only fullscreen shares that artwork.
-A/B letters and D-pad arrows retain raised rubber geometry with their earlier
-darker tones for clearer contrast. Shoulder letters retain their cap material;
+A/B letters are dark grooves cut into the cap faces, with inset floors and
+sidewalls rather than raised or printed lettering. D-pad arrows retain their
+raised rubber geometry and darker tones. Shoulder letters retain their cap material;
 START/SELECT and the geometric **ZANARK** badge are molded in the shell's plastic.
 There is no front POWER or BBA-001 print; the power light remains.
 Normal play is slightly closer while retaining the whole handheld and clear UI;

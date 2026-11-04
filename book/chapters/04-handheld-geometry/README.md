@@ -36,6 +36,16 @@ and arrow tones with tinted clones of the rubber material. The extrusion,
 bevels, shadows and shared cap motion remain; only those six markings change
 color. L/R and START/SELECT retain the original material relationship.
 
+Workstream 36 supersedes the raised A/B letters only: the user wants dark
+inward grooves. Their original polygon outlines cut the cap faces, while
+counter polygons remain solid islands. Dark floors and sidewalls sit below
+the original dome and move with the cap. Preserve the lathe's original rim
+normals and blend the new face normals into them; truncating the profile
+without doing this makes the center look like a separate disk. Raycasts must
+hit the inset floor before any cap surface, and counter probes must still hit
+cap height. Merely moving a dark letter below an uncut cap cannot pass that
+test. D-pad, shoulder, shell and maker markings retain their prior relief.
+
 The top Zanark mark and lower bezel serve different visual roles. Molded
 manufacturer lettering belongs to the shell. The bezel uses a star-free
 monochrome derivative of the supplied wordmark. Saturated orbital accents are

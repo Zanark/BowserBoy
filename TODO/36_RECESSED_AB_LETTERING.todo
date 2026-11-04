@@ -1,0 +1,38 @@
+Status: IN_PROGRESS
+Milestone: Dark A/B grooves cut into the button faces.
+Dependencies: Completed workstreams 28, 32 and 35.
+
+Purpose:
+Replace the raised A/B letters with genuine inward, dark lettering as requested.
+Keep the button caps themselves and their existing physical press behavior.
+
+Tasks:
+- [x] Reuse polygon glyphs and counters for real perforated cap faces.
+- [x] Add inset dark floors and sidewalls instead of buried or painted letters.
+- [x] Preserve the original cap dome/rim normals and moving parent hierarchy.
+- [x] Replace only the superseded raised-A/B assertions with actual depth probes.
+- [x] Retain every other marking, native input and pressed-lighting check.
+- [ ] Pass normal hosted gates and independently verify the public release.
+- [ ] Publish completion evidence and reconcile owned continuity.
+
+Acceptance criteria:
+- A/B lettering is cut inward with dark, unprinted floors and visible sidewalls.
+- Front rays reach the floor at least.018units below adjacent cap material.
+- A's triangular and B's enclosed counters remain solid at cap height.
+- Cap silhouette, smooth shading, press travel and all other controls stay intact.
+- Existing audio, saves, camera, fullscreen and release gates are unchanged.
+
+Completion evidence:
+- Old raised lettering fails the new recess contract.
+- Syntax/build and all11units pass; complete branding/native-input cases
+  pass27.5s after retaining continuous original dome/rim shading.
+- Existing pressed-cap aperture/lighting case passes7.9s.
+- Actual local rendering reviewed; no private ROM or historical image changed.
+- Normal hosted/public qualification pending; no live claim yet.
+
+Completion log:
+- 2026-11-05: User wants inward dark A/B markings. Reuse shared glyph contours
+  to cut the cap surface, retain counter islands and add floors/walls below it.
+  Preserve original lathe rim normals instead of producing a separate-looking
+  center disk. Qualify actual ray hits, depth, contrast, native input and real
+  pressed/unlit cap behavior. Other raised markings remain unchanged.

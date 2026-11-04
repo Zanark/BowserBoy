@@ -444,10 +444,36 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     letters.geometry.computeBoundingBox();
     const root = view.model.root;
     root.updateWorldMatrix(true, true);
+    const luminance = color => .2126 * color.r + .7152 * color.g + .0722 * color.b;
+    const recesses = ['a', 'b'].map(id => {
+      const cap = view.model.controls.get(id).mesh;
+      const floor = cap.getObjectByName(`Recessed ${id.toUpperCase()} lettering`);
+      const walls = cap.getObjectByName(`${id.toUpperCase()} groove walls`);
+      if (!floor || !walls) return null;
+      const surface = (x, y) => {
+        const ray = new Raycaster(cap.localToWorld(new Vector3(x, y, .2)),
+          new Vector3(0, 0, -1).transformDirection(cap.matrixWorld));
+        const hit = ray.intersectObject(cap, true)[0];
+        return hit ? { mesh: hit.object, z: cap.worldToLocal(hit.point.clone()).z } : null;
+      };
+      const groove = surface(id === 'a' ? 0 : -.06, id === 'a' ? -.02 : 0);
+      const blank = surface(.12, 0);
+      const counter = surface(id === 'a' ? 0 : -.0075, id === 'a' ? .02 : .04);
+      walls.geometry.computeBoundingBox();
+      return {
+        floorReached: groove?.mesh === floor,
+        depth: groove && blank ? blank.z - groove.z : null,
+        counterAtCap: counter && blank ? Math.abs(counter.z - blank.z) < .004 && counter.mesh !== floor : false,
+        wallDepth: walls.geometry.boundingBox.max.z - walls.geometry.boundingBox.min.z,
+        contrast: (luminance(cap.material.color) + .05) / (luminance(floor.material.color) + .05),
+        unprinted: floor.material.map === null && walls.material.map === null,
+        shadowed: floor.receiveShadow && walls.castShadow && walls.receiveShadow,
+      };
+    });
     const markings = [
-      ...['a', 'b', 'l', 'r'].map(id => {
+      ...['l', 'r'].map(id => {
         const cap = view.model.controls.get(id).mesh;
-        return [cap.getObjectByName(`Raised ${id.toUpperCase()} lettering`), cap.material, id === 'a' || id === 'b'];
+        return [cap.getObjectByName(`Raised ${id.toUpperCase()} lettering`), cap.material];
       }),
       ...['START', 'SELECT'].map(text =>
         [root.getObjectByName(`Raised ${text} lettering`), root.getObjectByName('Front face with speaker apertures').material]),
@@ -456,7 +482,6 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     ].map(([mesh, material, darker = false]) => {
       if (!mesh) return null;
       mesh.geometry.computeBoundingBox();
-      const luminance = color => .2126 * color.r + .7152 * color.g + .0722 * color.b;
       return { geometry: mesh.geometry.type, depth: mesh.geometry.boundingBox.max.z - mesh.geometry.boundingBox.min.z,
         sameMaterial: mesh.material === material, unprinted: mesh.material.map === null,
         darker, contrast: (luminance(material.color) + .05) / (luminance(mesh.material.color) + .05),
@@ -473,7 +498,7 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
       depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
       samePlastic: letters.material === view.model.root.getObjectByName('Front face with speaker apertures').material,
       sameFullscreenWordmark: canvas.width === fullscreen.width && canvas.height === fullscreen.height &&
-        pixels.every((value, index) => value === fullscreenPixels[index]), markings, microLabels };
+        pixels.every((value, index) => value === fullscreenPixels[index]), recesses, markings, microLabels };
   });
   expect(branding.ink).toBeGreaterThan(1000);
   expect(branding.colored).toBe(0);
@@ -486,7 +511,18 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   expect(branding.samePlastic).toBe(true);
   expect(branding.sameFullscreenWordmark).toBe(true);
   expect(branding.microLabels).toEqual([false, false]);
-  expect(branding.markings).toHaveLength(10);
+  expect(branding.recesses).toHaveLength(2);
+  for (const recess of branding.recesses) {
+    expect(recess).not.toBeNull();
+    expect(recess.floorReached).toBe(true);
+    expect(recess.depth).toBeGreaterThan(.018);
+    expect(recess.depth).toBeLessThan(.035);
+    expect(recess.counterAtCap).toBe(true);
+    expect(recess.wallDepth).toBeGreaterThan(.018);
+    expect(recess.contrast).toBeGreaterThan(3);
+    expect(recess.unprinted && recess.shadowed).toBe(true);
+  }
+  expect(branding.markings).toHaveLength(8);
   for (const marking of branding.markings) {
     expect(marking).not.toBeNull();
     expect(marking.geometry).toBe('ExtrudeGeometry');
