@@ -335,7 +335,7 @@ $('restore').addEventListener('click', () => void operation(async () => {
   if (!record?.manual) throw new Error('There is no quick-save checkpoint for this cartridge yet.');
   if (!confirm('Restore the quick-save checkpoint? Progress since that checkpoint will be replaced.')) return;
   await command('restore', record.manual);
-  if (autoSave && storageAvailable) await persist('automatic');
+  if (autoSave && storageAvailable) await persist('automatic', record.manual);
   notice('Quick-save checkpoint restored.');
 }));
 $('export').addEventListener('click', () => void operation(async () => {
@@ -360,7 +360,7 @@ $('backup-file').addEventListener('change', (event) => {
     if (!confirm('Import this backup? It replaces the running session and this cartridge\'s quick-save slot.')) return;
     if (storageAvailable) await persist('manual', capture);
     await command('restore', capture);
-    if (autoSave && storageAvailable) await persist('automatic');
+    if (autoSave && storageAvailable) await persist('automatic', capture);
     notice(storageAvailable ? 'Backup imported and stored in this browser.' : 'Backup loaded for this session only. Browser saving is unavailable.', !storageAvailable);
   });
 });

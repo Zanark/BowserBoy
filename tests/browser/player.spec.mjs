@@ -209,6 +209,8 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   await page.getByRole('button', { name: 'Restore', exact: true }).click();
   await expect(page.locator('#notice')).toContainText('Quick-save checkpoint restored.');
   await expect.poll(() => image(page)).toBe(checkpointImage);
+  const [restoredRecord] = await readStored(page);
+  expect(Buffer.from(restoredRecord.automatic.state)).toEqual(Buffer.from(restoredRecord.manual.state));
 
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export backup', exact: false }).click();
@@ -221,6 +223,8 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   await page.locator('#backup-file').setInputFiles(backupPath);
   await expect(page.locator('#notice')).toContainText('Backup imported and stored');
   await expect.poll(() => image(page)).toBe(checkpointImage);
+  const [importedRecord] = await readStored(page);
+  expect(Buffer.from(importedRecord.automatic.state)).toEqual(Buffer.from(backup.state, 'base64'));
 
   await page.reload();
   await upload(page, 'Renamed cartridge.gba');
