@@ -27,6 +27,7 @@ BowserBoyAdvance workstreams
 25_FULLSCREEN_FIT_AND_ZOOM.todo - DONE: uncropped complete LCD/bezel, dark margins and fullscreen zoom slider.
 26_UNDERSIDE_POWER_SLIDER.todo - DONE: complete lower-edge assembly, following touch target and verified real power/table clearance.
 27_ALL_NATIVE_CRT_PRESETS.todo - DONE: all nine actual native CRT presets, retained runtime/persistence and default CRT Geom.
+28_MOLDED_MARKINGS_AND_PLAY_FRAMING.todo - IN_PROGRESS: real control relief, stylized monochrome bezel and closer uncropped play view.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.

@@ -1,0 +1,46 @@
+Status: IN_PROGRESS
+Milestone: Manufactured control markings, stylized monochrome bezel and closer play view.
+Dependencies: Completed workstreams 23 and 26; source artwork from 18.
+
+Purpose:
+Remove unwanted front micro-labels and flat printed control text. Preserve
+the whole handheld, website logo, accessible controls and genuine power/input.
+
+Tasks:
+- [x] Remove front POWER/BBA-001 decals; retain the physical LED.
+- [x] Replace button/arrow and START/SELECT printing with same-material 3D lettering.
+- [x] Derive a monochrome bezel wordmark from the supplied lettering, without stars.
+- [x] Bring normal play closer without scaling the console or changing insertion/inspection.
+- [x] Verify actual relief, lighting/input, five viewport sizes and cartridge clearance.
+- [ ] Review actual browser captures, publish normally and independently verify production.
+- [ ] Reconcile affected guide/architecture/verification/media and owned continuity.
+
+Acceptance criteria:
+- No front POWER or BBA-001 printed planes remain.
+- Control lettering has real beveled depth, normals and shadows, not a colored
+  texture. A/B/shoulder/D-pad markings move with their physical caps;
+  START/SELECT markings share the surrounding shell's plastic.
+- Bezel retains the supplied logo's distinctive lettering, monochrome and
+  star-free, without stretching or obscuring native game pixels.
+- Normal play is closer at desktop/phone/landscape sizes, with the whole
+  handheld and 44px power target clear of the header and dock.
+- Original supplied PNG, aspect ratios, native core, controls, saves, startup,
+  screen fullscreen and insertion/inspection behavior remain intact.
+
+Completion evidence:
+- Syntax/build/11units pass; six focused Edge cases pass1.2m, final five-size
+  framing28.8s, three explicit SwiftShader cases1.7m. Native quick-actions/
+  fullscreen/save/restart also passes after the shared canvas change.
+- Actual five-size, room-lit and oblique captures reviewed; zero page errors.
+  Pixel equality proves physical/fullscreen wordmark parity. Existing input,
+  underside power and insertion checks retained. Publication/acceptance separate.
+- Normal release and independent public verification pending.
+
+Completion log:
+- 2026-11-04: Replace projected empty bounding-box/header rectangles with actual
+  visible vertices and logo-alpha versus projected-shell silhouettes. Retain
+  original power/LCD/dock/input criteria. Ease the initial camera to9.8/5.35,
+  offset-.12Y, only normal play; inspection/insertion framing unchanged.
+- 2026-11-04: User rejects front micro-text and flat A/B/START/SELECT printing,
+  requests logo-like black/white bezel branding without stars and a slightly
+  closer default play view that retains the complete console and unobstructed UI.

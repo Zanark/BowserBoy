@@ -313,7 +313,7 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
   expect(layout.emitterWidth).toBeCloseTo(layout.width, 5);
   expect(layout.emitterHeight).toBeCloseTo(layout.width / 1.5, 5);
   await page.evaluate(async () => (await import('./src/app.js')).view.setScreenCurve(true));
-  for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
+  for (const [width, height] of [[1920, 1080], [1440, 1100], [844, 390], [390, 844], [320, 568]]) {
     await page.setViewportSize({ width, height });
     const target = page.locator('#hardware-power');
     await expect(target).toBeInViewport({ ratio: 1 });
@@ -338,18 +338,71 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
       const bottom = (1 - Math.min(...corners.map(p => p.y))) * view.height / 2;
       const target = document.querySelector('#hardware-power').getBoundingClientRect();
       const toolbar = document.querySelector('.scene-actions').getBoundingClientRect();
+      const headerImage = document.querySelector('.desk-heading h1 img');
+      const header = headerImage.getBoundingClientRect();
+      const mask = document.createElement('canvas');
+      mask.width = 217; mask.height = 73;
+      const context = mask.getContext('2d');
+      context.drawImage(headerImage, 0, 0, mask.width, mask.height);
+      const alpha = context.getImageData(0, 0, mask.width, mask.height).data;
+      const shell = view.model.root.getObjectByName('Front shell');
+      const viewport = [];
+      view.model.root.traverseVisible(mesh => {
+        const positions = mesh.geometry?.getAttribute('position');
+        if (!positions) return;
+        for (let i = 0; i < positions.count; i++) {
+          const point = mesh.localToWorld(new Vector3().fromBufferAttribute(positions, i)).project(view.camera);
+          viewport.push({ x: (point.x + 1) * view.width / 2, y: (1 - point.y) * view.height / 2 });
+        }
+      });
+      // Check real artwork against projected geometry, not transparent image padding.
+      context.clearRect(0, 0, mask.width, mask.height);
+      context.fillStyle = 'white';
+      for (const mesh of [shell, ...['l', 'r'].map(id => view.model.controls.get(id).mesh)]) {
+        const positions = mesh.geometry.getAttribute('position');
+        const projected = [];
+        for (let i = 0; i < positions.count; i++) {
+          const point = mesh.localToWorld(new Vector3().fromBufferAttribute(positions, i)).project(view.camera);
+          const x = (point.x + 1) * view.width / 2, y = (1 - point.y) * view.height / 2;
+          projected.push([(x - header.left) / header.width * mask.width, (y - header.top) / header.height * mask.height]);
+        }
+        const index = mesh.geometry.index;
+        const count = index?.count ?? positions.count;
+        for (let i = 0; i < count; i += 3) {
+          const triangle = [0, 1, 2].map(offset => projected[index ? index.getX(i + offset) : i + offset]);
+          if (triangle.every(([x]) => x < 0) || triangle.every(([x]) => x > mask.width) ||
+            triangle.every(([, y]) => y < 0) || triangle.every(([, y]) => y > mask.height)) continue;
+          context.beginPath();
+          context.moveTo(...triangle[0]);
+          context.lineTo(...triangle[1]);
+          context.lineTo(...triangle[2]);
+          context.closePath();
+          context.fill();
+        }
+      }
+      const coverage = context.getImageData(0, 0, mask.width, mask.height).data;
+      let clearHeader = true;
+      for (let i = 3; i < alpha.length; i += 4) {
+        if (alpha[i] > 24 && coverage[i] > 24) { clearHeader = false; break; }
+      }
+      const oldDistance = Math.max(10.2 / view.camera.aspect, 5.55 *
+        view.height / Math.max(160, view.height - 180)) / (2 * Math.tan(view.camera.fov * Math.PI / 360));
       const inverse = view.model.root.matrixWorld.clone().invert();
       const bounds = new Box3().setFromObject(power).applyMatrix4(inverse);
       const normal = new Vector3(0, 0, 1).transformDirection(power.matrixWorld).transformDirection(inverse);
       return { exposed: part === power, belowLcd: target.top > bottom,
         fits: toolbar.left >= 0 && toolbar.right <= innerWidth,
         clearToolbar: target.bottom <= toolbar.top,
+        closer: view.camera.position.z < oldDistance * .98,
+        wholeHandheld: viewport.every(p => p.x >= 4 && p.x <= innerWidth - 4 && p.y >= 4 && p.y < toolbar.top),
+        clearHeader,
         underside: bounds.max.y < -2.25 && bounds.min.z > -.4 && bounds.max.z < .4 &&
           normal.y < -.95 && Math.abs(normal.z) < .05,
         followsCap: Math.abs(target.left + target.width / 2 - point.x) < 1 &&
           Math.abs(target.top + target.height / 2 - point.y) < 1 };
     }), { message: `Underside placement, visible cap, LCD/dock clearance and following target at ${width}x${height}` }).toEqual({
       underside: true, exposed: true, belowLcd: true, fits: true, clearToolbar: true, followsCap: true,
+      closer: true, wholeHandheld: true, clearHeader: true,
     });
     await target.click();
     await expect(target).toHaveAttribute('aria-pressed', 'true');

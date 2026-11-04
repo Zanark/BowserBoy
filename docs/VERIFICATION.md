@@ -12,7 +12,36 @@ Syntax, build and all 11 units pass. Existing artwork/responsive-header and
 branding/notice browser cases pass in 13.7s, including 1440/390/320px fit.
 Actual warm, lights-off, room-lit and phone captures are reviewed against an
 unfiltered baseline with zero browser page errors. This is local browser
-qualification; normal deployment and independent public verification are pending.
+qualification. Release `59fd5628e3ada8f48660e252e6186812e4d7d936` /
+Pages `41860686680` subsequently reports success. Independent verification
+matches all 28 exact public assets, including the header glow CSS.
+
+## Molded markings and closer play framing
+
+Real beveled same-material relief replaces control printing; raycasts reject
+the removed front POWER/BBA-001 planes. The bezel's star-free monochrome
+lettering and fullscreen decorative canvas are pixel-identical. The original
+supplied PNG and native framebuffer remain unchanged.
+
+Syntax/build and all 11 units pass. Six focused Edge cases pass in 1.2m:
+branding, responsive artwork, both real cartridge insertions, pressed-cap
+lighting and mapped-input/native illumination. The final five-size framing/
+underside case passes in 28.8s. Explicit Chromium/SwiftShader passes branding,
+five-size framing and pressed-cap lighting in 1.7m. The actual native
+quick-actions/fullscreen/save/restart case also passes after the shared canvas
+change. Reviewed actual local captures cover 1920x1080, 1440x1100, 844x390,
+390x844, 320x568, room lighting and oblique relief; zero browser page errors.
+
+Initial framing assertions fail: projected axis-aligned bounding-box corners
+include empty/hidden space, and the transparent header's rectangle is not its
+visible ink. The final test projects actual visible vertices and rasterizes
+shell/shoulder triangles against actual logo alpha. It preserves all existing
+44px power-target, LCD/dock clearance, raycast, travel and input assertions.
+The initial camera is also made slightly less aggressive after visual review.
+Current fit uses 9.8/5.35 and -0.12 Y for normal play only; original insertion
+and inspection framing remain. These are local browser qualifications, not
+physical-device testing or user aesthetic approval. Normal release and
+independent production verification remain pending.
 
 ## Deployed underside power and all CRT presets
 

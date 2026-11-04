@@ -135,13 +135,22 @@ audio quality remain separate qualification boundaries.
 ## Actual 3D handheld and native CRT screen
 
 `src/handheld.js` constructs original beveled front/rear shells, a volumetric
-bezel, buttons, speaker, ports, battery cover and screws. Lettering, the wood
-grain and decorative cartridge labels are locally drawn canvas textures, not
-reference photographs, commercial artwork or copied manufacturer logos.
-The front bezel uses grayscale text on a physically lit label material, rather
-than the supplied colored orbital image. The top ZANARK maker mark uses original
-polygon glyphs, actual beveled extrusion and a chamfered frame in matching shell
-plastic. The rear battery cover retains the unchanged supplied purple artwork.
+bezel, buttons, speaker, ports, battery cover and screws. Wood grain and
+decorative cartridge labels are locally drawn canvas textures, not reference
+photographs or copied manufacturer logos. Shared original polygon glyphs with
+proper counters and beveled extrusion form A/B, L/R, START/SELECT and ZANARK;
+D-pad arrows also have real depth. Cap markings share their parent's material
+and move with it; START/SELECT and their outline share the shell plastic.
+The cream rubber caps retain their color with rougher, less glossy surfaces.
+The front POWER/BBA-001 decals are removed, not the LED or underside label.
+
+The front bezel derives a 1536x174 monochrome texture from the supplied image's
+lettering band (25,250,2115,240). Neutral-highlight alpha masking removes
+saturated orbital accents, while RGB is uniformly 220. This keeps distinctive
+letterforms without stars or modifying the source PNG. The physical label uses
+a lit transparent material; warm room illumination can tint its appearance.
+The top ZANARK maker mark retains a chamfered matching-plastic frame.
+The rear battery cover retains the unchanged supplied purple artwork.
 `src/scene.js` owns the WebGL 2 renderer, lights/shadows, raycast picking and
 animated table/play/inspection poses. Inspection supports dragging, touch
 rotation/pinch, wheel zoom and keyboard rotation/reset. Reduced motion skips
@@ -206,7 +215,11 @@ out of the lower underside edge, within the shell thickness, not the front face.
 The cap moves locally along that mount; its registered anchor still drives the
 minimum 44-by-44-pixel target. Short-height play framing retains the same 180px
 reserve as desktop, keeping the complete lower-edge target above the icon dock.
-Shell scale, actual power lifecycle and normal desktop framing are unchanged.
+Shell scale and actual power lifecycle are unchanged. Normal play alone uses
+9.8/5.35 horizontal/vertical fit envelopes instead of 10.2/5.55, with a -0.12
+world-Y camera/look offset: about four percent closer, not a model stretch.
+Inspection retains 10.2/5.55 and cartridge insertion 10.2/8.3. The 180px reserve
+remains, preserving landscape target/dock clearance.
 
 ### Physical cartridge insertion
 
@@ -328,7 +341,9 @@ tools, rather than only the source iframe.
 
 The separate screen-only fullscreen target copies the same retained post-shader
 framebuffer already feeding the LCD. A lightweight CSS bezel matches the physical
-4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and monochrome printed wordmark.
+4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and monochrome wordmark.
+At initialization its separate decorative canvas copies the exact physical
+bezel texture, avoiding divergent fonts or a second artwork transformation.
 The picture remains 3:2: a definite viewport-sized, min-size-zero flex container
 fits the bezel to both available dimensions, leaving black margins. This avoids
 the previous grid track's intrinsic canvas sizing overflowing the viewport.
@@ -563,7 +578,7 @@ asset; no alternate-color assets or switcher are shipped.
 The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
 aspect ratio. The supplied rear-shell/startup image is not recreated or recolored;
-the front bezel deliberately uses separate monochrome lettering.
+the front bezel deliberately derives star-free monochrome lettering from it.
 See supplied-artwork provenance
 in THIRD_PARTY_NOTICES.md. The active SVG favicon replaces the earlier generic
 rounded/infinity icon and subsequent star icon; relative HTML/SVG paths preserve

@@ -58,9 +58,14 @@ physical cap, track and label; this is not a mockup.*
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
 The supplied transparent wordmark also appears on the rear shell, idle/loading
-LCD and settings panels. The front bezel instead has plain monochrome printed
-lettering; an original geometric **ZANARK** badge is raised in the shell's own
-plastic above the screen. The active favicon is an original indigo handheld whose
+LCD and settings panels. The front bezel uses the supplied logo's distinctive
+lettering in monochrome, without stars; screen-only fullscreen shares that artwork.
+A/B, shoulder letters and D-pad arrows are raised in their button material;
+START/SELECT and the geometric **ZANARK** badge are molded in the shell's plastic.
+There is no front POWER or BBA-001 print; the power light remains.
+Normal play is slightly closer while retaining the whole handheld and clear UI;
+inspection and cartridge insertion retain their separate framing.
+The active favicon is an original indigo handheld whose
 stepped shoulders and bowed lower edge match the actual 3D shell.
 
 ![The original power-on sequence on the handheld LCD](images/startup.png)

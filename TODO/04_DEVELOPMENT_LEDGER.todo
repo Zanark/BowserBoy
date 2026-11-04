@@ -14,6 +14,20 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Molded markings and closer play:
+  Remove front POWER/BBA-001 printing but retain LED/underside power. Reuse
+  original beveled glyphs for actual same-material cap/shell relief, including
+  shoulders/arrows. Derive neutral star-free bezel lettering from supplied art,
+  preserving source; fullscreen copies exactly the same texture.
+  Normal camera about4%closer with full handheld/UI clear; insertion/inspection
+  unchanged. Initial projected empty-box/transparent-header rectangle proxies
+  fail; replace with visible vertices and actual ink/shell silhouettes, retaining
+  all physical target/input requirements. Also ease initial camera after review.
+  Syntax/build/11units, six focused Edge cases1.2m, final framing28.8s and three
+  SwiftShader cases1.7m pass. Native fullscreen/save/restart also passes.
+  Actual five-size/room/oblique review has no page errors. Release pending.
+  Prior header-glow release59fd562/41860686680 now succeeds and independent
+ 28-public-asset match confirms its live CSS.
 - 2026-11-04 / Main-page logo contrast:
   User finds the purple orbital artwork disconnected from the warm room and
   requests a subtle glow. Apply header-only CSS drop shadows: a tight dark

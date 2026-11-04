@@ -8,6 +8,11 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+The existing README GIFs remain historical footage from the releases cited below:
+they do not yet depict the later molded controls, stylized bezel or closer play
+framing. The lighting/power-off figures are refreshed by the current local
+mapped-input regression; production provenance will follow normal publication.
+
 - `images/orbital-logo.gif` animates the supplied transparent purple logo and the
   supplied sparkle, glow and orbit effects on a transparent background, without
   a purple rectangular backdrop or background starfield. GIF supports binary transparency, so soft

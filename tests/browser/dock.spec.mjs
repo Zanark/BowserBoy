@@ -415,15 +415,18 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
   await test.info().attach('orbital-startup-raster', { body: Buffer.from(artwork.image.split(',')[1], 'base64'), contentType: 'image/png' });
 });
 
-test('printed bezel and raised maker mark retain physical branding, and notices sit below the website logo', async ({ page }) => {
+test('molded controls and monochrome logo retain physical branding, and notices sit below the website logo', async ({ page }) => {
   await page.goto('./');
   await ready(page);
   await page.locator('#pickup').click();
   const branding = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
+    const { Raycaster, Vector3 } = await import('three');
     const bezel = view.model.root.getObjectByName('Monochrome bezel wordmark');
     const canvas = bezel.material.map.image;
     const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+    const fullscreen = document.querySelector('#screen-focus-wordmark');
+    const fullscreenPixels = fullscreen.getContext('2d').getImageData(0, 0, fullscreen.width, fullscreen.height).data;
     let ink = 0, colored = 0;
     for (let i = 0; i < pixels.length; i += 4) {
       if (!pixels[i + 3]) continue;
@@ -433,13 +436,47 @@ test('printed bezel and raised maker mark retain physical branding, and notices 
     const maker = view.model.root.getObjectByName('Zanark embossed maker mark');
     const letters = maker.getObjectByName('Raised Zanark lettering');
     letters.geometry.computeBoundingBox();
+    const root = view.model.root;
+    root.updateWorldMatrix(true, true);
+    const markings = [
+      ...['a', 'b', 'l', 'r'].map(id => {
+        const cap = view.model.controls.get(id).mesh;
+        return [cap.getObjectByName(`Raised ${id.toUpperCase()} lettering`), cap.material];
+      }),
+      ...['START', 'SELECT'].map(text =>
+        [root.getObjectByName(`Raised ${text} lettering`), root.getObjectByName('Front face with speaker apertures').material]),
+      ...['up', 'down', 'left', 'right'].map(id =>
+        [root.getObjectByName(`Raised ${id} arrow`), view.model.controls.get(id).mesh.material]),
+    ].map(([mesh, material]) => {
+      if (!mesh) return null;
+      mesh.geometry.computeBoundingBox();
+      return { geometry: mesh.geometry.type, depth: mesh.geometry.boundingBox.max.z - mesh.geometry.boundingBox.min.z,
+        sameMaterial: mesh.material === material, unprinted: mesh.material.map === null,
+        castsShadow: mesh.castShadow, receivesShadow: mesh.receiveShadow };
+    });
+    const microLabels = [[3.38, 1.43], [-3.02, -1.95]].map(([x, y]) => {
+      const ray = new Raycaster(root.localToWorld(new Vector3(x, y, 2)),
+        new Vector3(0, 0, -1).transformDirection(root.matrixWorld));
+      return !!ray.intersectObject(root, true)[0]?.object.material.map;
+    });
     return { ink, colored, depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
-      samePlastic: letters.material === view.model.root.getObjectByName('Front face with speaker apertures').material };
+      samePlastic: letters.material === view.model.root.getObjectByName('Front face with speaker apertures').material,
+      sameFullscreenWordmark: canvas.width === fullscreen.width && canvas.height === fullscreen.height &&
+        pixels.every((value, index) => value === fullscreenPixels[index]), markings, microLabels };
   });
   expect(branding.ink).toBeGreaterThan(1000);
   expect(branding.colored).toBe(0);
   expect(branding.depth).toBeGreaterThan(.018);
   expect(branding.samePlastic).toBe(true);
+  expect(branding.sameFullscreenWordmark).toBe(true);
+  expect(branding.microLabels).toEqual([false, false]);
+  expect(branding.markings).toHaveLength(10);
+  for (const marking of branding.markings) {
+    expect(marking).not.toBeNull();
+    expect(marking.geometry).toBe('ExtrudeGeometry');
+    expect(marking.depth).toBeGreaterThan(.008);
+    expect(marking.sameMaterial && marking.unprinted && marking.castsShadow && marking.receivesShadow).toBe(true);
+  }
   const icons = await page.locator('.scene-actions button:visible svg path').evaluateAll(paths => paths.map(path => path.getAttribute('d')));
   expect(new Set(icons).size).toBe(icons.length);
   await powerOn(page);

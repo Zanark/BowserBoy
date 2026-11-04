@@ -12,7 +12,7 @@ Tasks:
 - [x] Deploy through normal gates and independently verify the live result.
 - [x] Update affected provenance, documentation, ledger and owned journal afterward.
 - [x] Add a subtle header-only violet glow and dark separation shadow.
-- [ ] Review the actual warm/dark header and responsive fit; release normally.
+- [x] Review the actual warm/dark header and responsive fit; release normally.
 
 Acceptance criteria:
 - The header uses the supplied purple orbital logo, not the opaque-background
@@ -29,7 +29,8 @@ Completion evidence:
   transparency/responsive-header and branding/notice cases pass in13.7s.
   Actual default warm, lights-off, room-lit and390/320px header captures
   reviewed alongside an unfiltered baseline; zero browser page errors.
-  Normal release and independent public verification remain pending.
+  Release59fd5628e3ada8f48660e252e6186812e4d7d936 /
+  Pages41860686680 succeeds; independent28-public-asset match confirms live CSS.
 - Exact supplied PNG: 2170x725 RGBA,824013bytes, SHA256
   de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1.
 - Syntax/build pass; two Edge logo/startup cases17.1s, two software cases45.9s.

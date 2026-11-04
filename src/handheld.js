@@ -122,42 +122,56 @@ function buttonCap(radius) {
   return geometry;
 }
 
-function engravedLabel(parent, text, x, y, width, height, color, angle = -.18) {
+const moldedGlyphs = {
+  A: [[0, 0], [.35, 1], [.65, 1], [1, 0], [.78, 0], [.68, .3], [.32, .3], [.22, 0]],
+  B: [[0, 0], [0, 1], [.7, 1], [.94, .82], [.94, .62], [.78, .51], [1, .36], [1, .18], [.74, 0]],
+  C: [[1, .82], [.76, 1], [.24, 1], [0, .76], [0, .24], [.24, 0], [.76, 0], [1, .18], [.85, .35], [.66, .22], [.34, .22], [.22, .34], [.22, .66], [.34, .78], [.66, .78], [.85, .65]],
+  E: [[0, 0], [0, 1], [1, 1], [1, .78], [.22, .78], [.22, .61], [.82, .61], [.82, .39], [.22, .39], [.22, .22], [1, .22], [1, 0]],
+  L: [[0, 0], [0, 1], [.22, 1], [.22, .22], [1, .22], [1, 0]],
+  N: [[0, 0], [0, 1], [.22, 1], [.78, .32], [.78, 1], [1, 1], [1, 0], [.78, 0], [.22, .68], [.22, 0]],
+  R: [[0, 0], [0, 1], [.74, 1], [1, .78], [1, .54], [.76, .35], [1, 0], [.73, 0], [.5, .32], [.22, .32], [.22, 0]],
+  S: [[1, .82], [.76, 1], [.2, 1], [0, .8], [0, .57], [.2, .4], [.72, .4], [.78, .34], [.78, .27], [.71, .2], [.28, .2], [.13, .32], [0, .15], [.2, 0], [.8, 0], [1, .2], [1, .43], [.8, .6], [.28, .6], [.22, .66], [.22, .73], [.29, .8], [.68, .8], [.85, .68]],
+  T: [[0, .78], [0, 1], [1, 1], [1, .78], [.61, .78], [.61, 0], [.39, 0], [.39, .78]],
+  Z: [[0, 1], [1, 1], [1, .82], [.28, .18], [1, .18], [1, 0], [0, 0], [0, .18], [.72, .82], [0, .82]],
+  K: [[0, 0], [0, 1], [.22, 1], [.22, .57], [.72, 1], [1, 1], [.55, .48], [1, 0], [.7, 0], [.34, .34], [.22, .22], [.22, 0]],
+};
+const moldedCounters = {
+  A: [[[.4, .5], [.6, .5], [.5, .8]]],
+  B: [[[.22, .6], [.64, .6], [.72, .66], [.72, .73], [.63, .8], [.22, .8]],
+    [[.22, .2], [.66, .2], [.78, .28], [.78, .32], [.66, .4], [.22, .4]]],
+  R: [[[.22, .55], [.65, .55], [.78, .65], [.78, .72], [.65, .8], [.22, .8]]],
+};
+
+function moldedText(parent, text, width, height, depth, material, x = 0, y = 0, z = 0) {
+  const scale = width / (1 + (text.length - 1) * 1.3);
+  const shapes = [...text].map((letter, index) => {
+    const points = polygon => polygon.map(([px, py]) => new THREE.Vector2(
+      ((index - (text.length - 1) / 2) * 1.3 + px - .5) * scale, (py - .5) * height));
+    const shape = new THREE.Shape(points(moldedGlyphs[letter]));
+    for (const hole of moldedCounters[letter] ?? []) shape.holes.push(new THREE.Path(points(hole)));
+    return shape;
+  });
+  return add(parent, `Raised ${text} lettering`, solid(shapes, depth, .0025), material, x, y, z);
+}
+
+function moldedLabel(parent, text, x, y, width, height, material, angle = -.18) {
   const group = new THREE.Group();
+  group.name = `${text} molded shell label`;
   group.position.set(x, y, .625);
   group.rotation.z = angle;
   const shape = roundedShape(width, height, height / 2);
   shape.holes.push(roundedShape(width - .018, height - .018, height / 2 - .009));
-  const outline = new THREE.Mesh(new THREE.ShapeGeometry(shape), new THREE.MeshStandardMaterial({ color, roughness: .65 }));
-  outline.receiveShadow = true;
-  group.add(outline);
-  label(group, text, width * .73, height * .48, -.04, 0, .002, color, 'italic bold 75px Arial');
+  add(group, `${text} molded outline`, solid(shape, .008, .002), material, 0, 0, .002);
+  moldedText(group, text, width * .64, height * .43, .014, material, -.07, 0, .004);
   parent.add(group);
 }
 
 function makerMark(parent, material) {
-  const glyphs = {
-    Z: [[0, 1], [1, 1], [1, .82], [.28, .18], [1, .18], [1, 0], [0, 0], [0, .18], [.72, .82], [0, .82]],
-    A: [[0, 0], [.35, 1], [.65, 1], [1, 0], [.78, 0], [.68, .3], [.32, .3], [.22, 0]],
-    N: [[0, 0], [0, 1], [.22, 1], [.78, .32], [.78, 1], [1, 1], [1, 0], [.78, 0], [.22, .68], [.22, 0]],
-    R: [[0, 0], [0, 1], [.74, 1], [1, .78], [1, .54], [.76, .35], [1, 0], [.73, 0], [.5, .32], [.22, .32], [.22, 0]],
-    K: [[0, 0], [0, 1], [.22, 1], [.22, .57], [.72, 1], [1, 1], [.55, .48], [1, 0], [.7, 0], [.34, .34], [.22, .22], [.22, 0]],
-  };
-  const holes = {
-    A: [[.4, .5], [.6, .5], [.5, .8]],
-    R: [[.22, .55], [.65, .55], [.78, .65], [.78, .72], [.65, .8], [.22, .8]],
-  };
-  const shapes = [...'ZANARK'].map((letter, index) => {
-    const points = polygon => polygon.map(([x, y]) =>
-      new THREE.Vector2((index - 2.5) * .22 + (x - .5) * .17, (y - .5) * .24));
-    const shape = new THREE.Shape(points(glyphs[letter]));
-    if (holes[letter]) shape.holes.push(new THREE.Path(points(holes[letter])));
-    return shape;
-  });
   const badge = new THREE.Group();
   badge.name = 'Zanark embossed maker mark';
   badge.position.set(0, 2.10, .625);
-  add(badge, 'Raised Zanark lettering', solid(shapes, .018, .003), material, 0, 0, .012);
+  const letters = moldedText(badge, 'ZANARK', 1.27, .24, .018, material, 0, 0, .012);
+  letters.name = 'Raised Zanark lettering';
   const chamfer = (width, height) => [
     [-width / 2 + .09, height / 2], [width / 2 - .09, height / 2],
     [width / 2, height / 2 - .07], [width / 2, -height / 2 + .07],
@@ -178,6 +192,9 @@ export function createHandheld() {
   const seam = new THREE.MeshStandardMaterial({ color: '#29253e', roughness: .85 });
   const bezel = new THREE.MeshStandardMaterial({ color: '#202a29', roughness: .32 });
   const silver = new THREE.MeshPhysicalMaterial({ color: '#d8d9cb', roughness: .36, metalness: 0, clearcoat: .22, clearcoatRoughness: .4 });
+  const rubber = silver.clone();
+  rubber.roughness = .68;
+  rubber.clearcoat = .06;
   const dark = new THREE.MeshStandardMaterial({ color: '#242332', roughness: .85 });
   const shell = new THREE.Shape();
   shell.moveTo(-4.1, 1.45);
@@ -247,8 +264,21 @@ export function createHandheld() {
   const wordmark = canvasTexture(1024, 342, (context, width, height) => {
     context.drawImage(brandImage, 0, 0, width, height);
   });
-  const logo = label(root, 'BOWSERBOY ADVANCE', 2.65, .17, 0, -1.34, .763,
-    '#e2e2e2', 'italic 900 78px Arial');
+  const bezelWordmark = canvasTexture(1536, 174, (context, width, height) => {
+    context.drawImage(brandImage, 25, 250, 2115, 240, 0, 0, width, height);
+    const pixels = context.getImageData(0, 0, width, height);
+    // Keep neutral lettering/highlights; discard the saturated orbital accents.
+    for (let i = 0; i < pixels.data.length; i += 4) {
+      const neutral = Math.min(...pixels.data.subarray(i, i + 3));
+      pixels.data[i + 3] *= THREE.MathUtils.clamp((neutral - 95) / 70, 0, 1);
+      pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = 220;
+    }
+    context.putImageData(pixels, 0, 0);
+  });
+  const logo = add(root, 'Monochrome bezel wordmark', new THREE.PlaneGeometry(3.05, .346),
+    new THREE.MeshStandardMaterial({ map: bezelWordmark, transparent: true, depthWrite: false, roughness: .65 }),
+    0, -1.34, .763);
+  logo.castShadow = false;
   logo.name = 'Monochrome bezel wordmark';
 
   const controls = new Map();
@@ -267,7 +297,7 @@ export function createHandheld() {
   const well = new THREE.Path();
   well.absarc(0, 0, .135, 0, Math.PI * 2, true);
   padFace.holes.push(well);
-  const pad = add(root, 'D-pad', solid(padFace, .07, .015), silver, -3.2, .26, .655);
+  const pad = add(root, 'D-pad', solid(padFace, .07, .015), rubber, -3.2, .26, .655);
   for (const [id, x, y, rotation] of [
     ['up', 0, .40, 0], ['down', 0, -.40, Math.PI],
     ['left', -.40, 0, Math.PI / 2], ['right', .40, 0, -Math.PI / 2],
@@ -278,11 +308,8 @@ export function createHandheld() {
     control(id, pad, .39, .39, anchor);
     const triangle = new THREE.Shape();
     triangle.moveTo(0, .055); triangle.lineTo(-.055, -.04); triangle.lineTo(.055, -.04); triangle.closePath();
-    const arrow = new THREE.Mesh(new THREE.ShapeGeometry(triangle), new THREE.MeshStandardMaterial({ color: '#a5ad9b', roughness: .65 }));
-    arrow.position.copy(anchor.position);
+    const arrow = add(pad, `Raised ${id} arrow`, solid(triangle, .008, .002), rubber, x, y, .055);
     arrow.rotation.z = rotation;
-    arrow.receiveShadow = true;
-    pad.add(arrow);
   }
   add(pad, 'D-pad pivot well', new THREE.CircleGeometry(.135, 32), silver, 0, 0, .03);
   for (const { id, x, y, opening, radius, z, size } of roundControls) {
@@ -290,15 +317,15 @@ export function createHandheld() {
     const name = action ? id.toUpperCase() : id;
     const floor = add(root, `${name} socket`, new THREE.CircleGeometry(opening, 40), dark, x, y, .582);
     floor.castShadow = false;
-    const button = add(root, `${name} button`, buttonCap(radius), silver, x, y, z);
-    if (action) label(button, id.toUpperCase(), .25, .28, 0, -.005, .067, '#a2aa99', 'bold 95px Arial');
-    else engravedLabel(root, id.toUpperCase(), x - .43, y + .04, 1.02, .32, '#766c9f');
+    const button = add(root, `${name} button`, buttonCap(radius), rubber, x, y, z);
+    if (action) moldedText(button, id.toUpperCase(), .15, .20, .012, rubber, 0, 0, .059);
+    else moldedLabel(root, id.toUpperCase(), x - .43, y + .04, 1.02, .32, purple);
     control(id, button, size, size);
   }
   for (const [id, x] of [['l', -3.45], ['r', 3.45]]) {
     const button = add(root, `${id.toUpperCase()} shoulder`, box(1.3, .39, .7, .12), silver, x, 1.81, .15);
     button.rotation.z = id === 'l' ? .16 : -.16;
-    label(button, id.toUpperCase(), .22, .13, 0, .17, .39, '#8e9687');
+    moldedText(button, id.toUpperCase(), .095, .10, .01, silver, 0, .17, .39);
     const anchor = new THREE.Object3D();
     anchor.position.set(0, .22, .39);
     button.add(anchor);
@@ -306,14 +333,12 @@ export function createHandheld() {
   }
   const led = add(root, 'Power light', cylinder(.09, .04),
     new THREE.MeshStandardMaterial({ color: '#495537', emissive: '#000000', roughness: .25 }), 2.85, 1.43, .64);
-  label(root, 'POWER', .62, .11, 3.38, 1.43, .625, '#a99bc4', 'bold 70px Arial');
   for (const slot of speakerSlots) {
     const floor = add(root, 'Recessed speaker grille',
       new THREE.ShapeGeometry(roundedShape(slot.width, slot.height, .03)), dark, slot.x, slot.y, .581);
     floor.rotation.z = slot.angle;
     floor.castShadow = false;
   }
-  label(root, 'BBA-001', .6, .09, -3.02, -1.95, .63, '#81739e');
   const powerMount = new THREE.Group();
   powerMount.name = 'Underside power assembly';
   powerMount.position.set(1.55, -2.385, .12);
@@ -351,7 +376,7 @@ export function createHandheld() {
     add(root, 'Screw', cylinder(.065, .035), silver, x, y, -.55);
     add(root, 'Screw slot', new THREE.BoxGeometry(.078, .015, .005), dark, x, y, -.572);
   }
-  return { root, screen, recess, controls, led, cartridge };
+  return { root, screen, recess, controls, led, cartridge, wordmark: bezelWordmark };
 }
 
 export function createCartridge(color, title, subtitle) {

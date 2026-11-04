@@ -207,12 +207,14 @@ export class HandheldScene {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = 180;
       const inserting = this.mode === 'playing' && !!this.cartridgeMotion;
+      const closePlay = this.mode === 'playing' && !inserting;
       const lift = inserting ? 1.05 : 0;
       this.playTarget = playPosition.clone().add(new THREE.Vector3(0, inserting ? -.86 : 0, 0));
-      const distance = Math.max(10.2 / this.camera.aspect, (inserting ? 8.3 : 5.55) *
+      const distance = Math.max((closePlay ? 9.8 : 10.2) / this.camera.aspect, (inserting ? 8.3 : closePlay ? 5.35 : 5.55) *
         this.height / Math.max(160, this.height - padding)) / (2 * tangent);
-      this.cameraTarget = new THREE.Vector3(0, this.playTarget.y + .1 + lift, distance * this.zoom);
-      this.lookTarget = this.playTarget.clone().add(new THREE.Vector3(0, lift, 0));
+      const framingOffset = closePlay ? -.12 : 0;
+      this.cameraTarget = new THREE.Vector3(0, this.playTarget.y + .1 + lift + framingOffset, distance * this.zoom);
+      this.lookTarget = this.playTarget.clone().add(new THREE.Vector3(0, lift + framingOffset, 0));
     }
   }
 
