@@ -61,6 +61,7 @@ dialog::backdrop { background: #0009; backdrop-filter: blur(5px); }
 .close-button { width: 32px; height: 32px; flex-shrink: 0; border: 1px solid #44505f; border-radius: 50%; background: transparent; font-size: 23px; line-height: 1; }
 .close-button:hover { background: #283340; }
 .drawer-section { border-top: 1px solid var(--line); padding: 22px 0; }
+#native-open { margin-bottom: 22px; }
 .section-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
 .section-heading h3 { font-size: 15px; letter-spacing: -.3px; margin: 0; font-weight: 650; }
 .section-number { color: #9da9b7; font: 9px var(--mono); }

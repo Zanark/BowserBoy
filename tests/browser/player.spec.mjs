@@ -60,10 +60,19 @@ const readStored = (page) => page.evaluate(() => new Promise((resolve, reject) =
 test('native settings keep the live runtime, persist options and leave the LCD and power lifecycle intact', async ({ page }) => {
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
+  await openTools(page);
+  const nativeSettings = page.getByRole('button', { name: 'Advanced EmulatorJS settings', exact: true });
+  await expect(nativeSettings).toBeDisabled();
+  await expect(nativeSettings).toBeInViewport({ ratio: 1 });
+  await page.setViewportSize({ width: 320, height: 568 });
+  await expect(nativeSettings).toBeInViewport({ ratio: 1 });
+  await page.setViewportSize({ width: 1440, height: 1100 });
   await startDemo(page);
   const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
   const identity = await runtime.evaluate(() => window.settingsIdentity = crypto.randomUUID());
   await openTools(page);
+  await expect(nativeSettings).toBeEnabled();
+  await expect(nativeSettings).toBeInViewport({ ratio: 1 });
   await page.locator('#autosave-toggle').click();
   await page.locator('#pause').click();
   await expect(page.locator('#pause')).toHaveText('Resume game');

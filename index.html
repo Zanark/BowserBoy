@@ -56,6 +56,7 @@
     <dialog id="tools" class="tools-drawer" aria-labelledby="tools-title">
       <div class="drawer-header"><div><p class="eyebrow">BEHIND THE CARTRIDGE SLOT</p><h2 id="tools-title">Make yourself at home.</h2></div><button id="tools-close" class="close-button" aria-label="Close cartridge and settings">&times;</button></div>
       <div id="drawer-notice-host"></div>
+      <button id="native-open" class="button button-secondary" aria-haspopup="dialog" aria-controls="frame-host" disabled>Advanced EmulatorJS settings</button>
       <section class="drawer-section" aria-labelledby="cartridge-heading">
         <div class="section-heading"><h3 id="cartridge-heading">Cartridge</h3><span class="small-badge" id="storage-badge">CHECKING</span></div>
         <div class="game-info"><span id="game-monogram" aria-hidden="true">?</span><div><h4 id="game-title">No game loaded</h4><p id="game-meta">Choose an uncompressed .gba file, up to 32 MB.</p></div></div>
@@ -89,7 +90,6 @@
         <button id="mute" class="button button-secondary" aria-pressed="false">Mute</button>
         <div class="setting-row display-setting"><label for="shader">Screen shader</label><select id="shader"><option value="crt-geom.glslp">CRT Geom</option><option value="disabled">Unfiltered</option></select></div>
         <p id="preferences-status" class="fineprint" role="status">Keys, sound and display settings are remembered in this browser.</p>
-        <button id="native-open" class="button button-secondary" aria-haspopup="dialog" aria-controls="frame-host" disabled>Advanced EmulatorJS settings</button>
       </section>
       <div class="drawer-footer"><button id="help-open" class="text-button">How it works</button><a href="https://github.com/Zanark/BowserBoyAdvance" target="_blank" rel="noopener noreferrer">View source &#8599;</a></div>
     </dialog>
