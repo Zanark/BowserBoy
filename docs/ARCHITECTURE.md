@@ -349,6 +349,8 @@ below the notice or to its right, both above the hint/dock. It selects the
 larger possible fit, preserving model scale, aspect and native pixels.
 Moving the notice into tools, dismissal and viewport changes recompute the
 fit; without a header notice the existing close camera remains unchanged.
+Explicit inspection zoom multiplies that fitted baseline, rather than being
+silently clamped away; intentional zoom-in can crop the console as before.
 No new per-frame DOM measurement loop or emulator restart is introduced.
 
 The separate screen-only fullscreen target copies the same retained post-shader

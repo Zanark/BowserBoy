@@ -26,6 +26,15 @@ production verification remain pending. A final five-case Edge batch including
 the expanded power-target assertions, both actual insertions, native input/
 lighting and quick-actions/fullscreen/save/restart passes in 1.7m.
 
+First hosted run `41873558242` correctly blocks deployment: 37/39 cases pass.
+The fit minimum incorrectly clamps explicit inspection pinch zoom. Apply user
+zoom to the selected safe-region baseline instead; default whole-console
+clearance remains, while intentional inspection zoom retains its existing
+ability to crop. The unchanged native speed case separately reports 4.5609x
+for its 2x sample (upper bound 2.6x); no cause is inferred or threshold changed.
+Both failed cases and the expanded notice case pass explicit SwiftShader
+in 1.4m after the zoom fix. A fresh normal run follows, never a failed-run retry.
+
 ## Main-page logo contrast
 
 The header alone adds a static alpha-shaped violet glow and tight dark

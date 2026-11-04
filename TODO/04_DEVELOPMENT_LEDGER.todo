@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Hosted notification follow-through:
+  First41873558242 blocks37/39. Camera fit minimum unintentionally cancels
+  explicit inspection pinch; apply user zoom after region-baseline fitting.
+  Normal default clearance preserved; deliberate inspection zoom may crop as
+  before. Unchanged speed test separately reports4.5609x at2x, above2.6x;
+  root cause unproven, thresholds untouched. Both failures and new notices
+  pass explicit SwiftShader1.4m after the zoom correction. Fresh normal run
+  follows a real fix, not a failed-run retry or dummy commit.
 - 2026-11-04 / Frosted notices without console overlap:
   User rejects opaque green notification over the handheld. Add translucent
   themed glass, backdrop blur/highlight, warm error tint, bounded scrollable

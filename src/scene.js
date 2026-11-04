@@ -213,8 +213,9 @@ export class HandheldScene {
       this.playTarget = playPosition.clone().add(new THREE.Vector3(0, inserting ? -.86 : 0, 0));
       const envelope = inserting ? 8.3 : closePlay ? 5.35 : 5.55;
       const envelopeWidth = closePlay ? 9.8 : 10.2;
-      let distance = Math.max(envelopeWidth / this.camera.aspect, envelope *
-        this.height / Math.max(160, this.height - padding)) / (2 * tangent) * this.zoom;
+      const ordinaryDistance = Math.max(envelopeWidth / this.camera.aspect, envelope *
+        this.height / Math.max(160, this.height - padding)) / (2 * tangent);
+      let distance = ordinaryDistance * this.zoom;
       let framingOffset = closePlay ? -.12 : 0;
       let horizontalOffset = 0;
       const notice = document.getElementById('notice');
@@ -227,9 +228,9 @@ export class HandheldScene {
         const regions = [
           { left: 4, right: this.width - 4, top: bounds.bottom + 16, bottom },
           { left: bounds.right + 16, right: this.width - 4, top: 16, bottom },
-        ].map(region => ({ ...region, distance: Math.max(distance,
+        ].map(region => ({ ...region, distance: Math.max(ordinaryDistance,
           envelopeWidth * this.height / (2 * tangent * Math.max(1, region.right - region.left)),
-          envelope * this.height / (2 * tangent * Math.max(1, region.bottom - region.top))) }));
+          envelope * this.height / (2 * tangent * Math.max(1, region.bottom - region.top))) * this.zoom }));
         const region = regions.sort((a, b) => a.distance - b.distance)[0];
         distance = region.distance;
         const pixelsPerUnit = this.height / (2 * tangent * distance);

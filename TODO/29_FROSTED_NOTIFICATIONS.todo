@@ -29,9 +29,16 @@ Completion evidence:
   real invalid-file error, synthetic long text, inspection/drawer/dismissal.
   Final five-case Edge batch passes1.7m, including explicit power-target
   clearance, both insertions, native input/lighting and real fullscreen/saves.
+  First hosted41873558242 blocks at37/39: explicit pinch incorrectly clamped
+  and unchanged speed sample4.5609x at2x. Apply user zoom after safe-region
+  baseline; both failed cases plus notices pass SwiftShader1.4m. No speed
+  thresholds changed or cause fabricated; a fresh normal run is required.
   Publication and independent production verification pending.
 
 Completion log:
+- 2026-11-04: Hosted gate catches real explicit-pinch regression. Preserve
+  default clear fit while applying user zoom to that baseline, not clamping
+  away the gesture. Retain all original pinch/input and speed assertions.
 - 2026-11-04: Actual clearance catches initial vertical-shift sign error.
   Below-only first fix makes landscape too small; selecting the larger
   below/beside safe region preserves useful console size. Poll ordinary fit
