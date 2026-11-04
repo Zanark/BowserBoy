@@ -57,9 +57,12 @@ files and symbols. It is not an exhaustive source atlas. The
 [development ledger](../TODO/04_DEVELOPMENT_LEDGER.todo) preserves the causal
 history, including failed approaches.
 
-The book describes the qualified source, not a blanket claim that every feature
-is deployed. At authoring, frosted-notification source passes all hosted gates,
-but its Pages deployment is queued. See the dated evidence in
+The book describes the qualified source, with release claims supported
+separately. At initial authoring, frosted-notification source passes all hosted
+gates while deployment is queued. Before finalizing this edition, that
+deployment completes: all 28 public assets match and five actual public cases
+pass, including notices, native input/speed, fullscreen/saves and pinch.
+See the dated evidence in
 [Verification](../docs/VERIFICATION.md). Local captures are labeled in
 [Media](../docs/MEDIA.md). Desktop browser checks are not physical-phone
 qualification or user aesthetic approval.

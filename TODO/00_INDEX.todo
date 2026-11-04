@@ -28,17 +28,20 @@ BowserBoyAdvance workstreams
 26_UNDERSIDE_POWER_SLIDER.todo - DONE: complete lower-edge assembly, following touch target and verified real power/table clearance.
 27_ALL_NATIVE_CRT_PRESETS.todo - DONE: all nine actual native CRT presets, retained runtime/persistence and default CRT Geom.
 28_MOLDED_MARKINGS_AND_PLAY_FRAMING.todo - DONE: real control relief, stylized monochrome bezel and closer uncropped play independently verified live.
-29_FROSTED_NOTIFICATIONS.todo - IN_PROGRESS: frosted-glass notices below the logo, clear of the whole handheld.
-30_DOCUMENTATION_AND_ENGINEERING_BOOK.todo - IN_PROGRESS: first ten-chapter engineering book, current-build visual README and reconciled documentation.
+29_FROSTED_NOTIFICATIONS.todo - DONE: frosted-glass notices and clear handheld independently verified live.
+30_DOCUMENTATION_AND_ENGINEERING_BOOK.todo - DONE: first ten-chapter engineering book, current-build visual README and reconciled documentation.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,
 dedicated algorithms/data-structures and design-principle chapters, diagrams,
 captioned figures and worked exercises. This supersedes the older present-state
 book-incomplete note below; it does not erase that historical gap.
-Notification source ab912d5 passes the full hosted gate, but deployment remains
-pending. Refreshed README media is explicitly local-build preview evidence,
-not independent proof of production. Workstream29 remains IN_PROGRESS.
+Notification source ab912d5 /41875740589 now passes build, all39 cases and
+deployment. Independent28-asset match and five actual public cases pass2.0m;
+desktop/phone public notice captures reviewed. GIF/local capture provenance
+remains explicit; the notice figure is subsequently captured on production.
+Book/docs67e883d are published with all34changed blobs matched; actual GitHub
+README10embeds/book10chapterlinks and two SVG diagrams/rendered pages verified.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.

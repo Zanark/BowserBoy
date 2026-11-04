@@ -2,9 +2,10 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
-**Current source and pictures:** the updated pose, underside, fullscreen and
-glass-notice figures are actual local captures of qualified source `ab912d5`.
-The 39-case hosted gate passes; its notification deployment remains pending.
+**Current release and pictures:** source `ab912d5` is independently verified
+live after the full 39-case hosted gate. Most updated motion/pose/detail figures
+were captured locally before deployment; the notice and lighting/power-off
+figures are subsequently captured on the actual public release.
 See [release evidence](VERIFICATION.md#frosted-notifications-and-clear-handheld)
 and [capture origins](MEDIA.md#current-refresh---manufactured-controls-and-glass).
 
@@ -324,13 +325,13 @@ gate intact; report permission failures rather than bypassing them. This is the
 user's recovery policy for this repository only.
 
 Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
-Latest independently verified application: manufactured-control source
-`7843db880a52539d6e2050f79070f5829947a393`, Pages `41867840972`;
-its 28 public assets and four actual public cases match/pass.
-Notification source `ab912d51ecc615f7aa55a4d27f6a876673739cdf`
-passes all 39 hosted cases in fresh normal run `41875740589`, but deployment
-and independent public qualification remain pending at this documentation
-refresh. A healthy pending run is not retried or duplicated.
+Latest independently verified application: notification source
+`ab912d51ecc615f7aa55a4d27f6a876673739cdf`, fresh normal Pages `41875740589`.
+Build, 11 units, all 39 browser cases and deployment succeed. Independent
+verification matches 28 public assets; five actual public native/notice/pinch/
+fullscreen/save/input cases pass in 2.0m. Desktop/phone public notice captures
+are reviewed. The healthy deployment was allowed to finish without duplicate
+dispatches or retrying the earlier failed run.
 
 The following paragraphs retain historical release evidence. The
 icon-dock/orbital-startup release was

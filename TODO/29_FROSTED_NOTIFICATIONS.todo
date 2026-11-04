@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Readable frosted-glass notifications without handheld overlap.
 Dependencies: Completed workstreams 23 and 28.
 
@@ -12,8 +12,8 @@ Tasks:
 - [x] Verify normal/error/long notices, resize, dismissal and drawer reparenting.
 - [x] Review actual desktop/phone/landscape and bounded long-text captures.
 - [x] Pass a fresh normal full release gate without retrying the failed run.
-- [ ] Complete deployment and independently verify actual production.
-- [ ] Reconcile affected documentation, ledger and owned continuity.
+- [x] Complete deployment and independently verify actual production.
+- [x] Reconcile affected documentation, ledger and owned continuity.
 
 Acceptance criteria:
 - Normal and error messages use readable translucent glass, not opaque green.
@@ -24,6 +24,10 @@ Acceptance criteria:
 - Native gameplay, saves, input, fullscreen and cartridge behavior remain intact.
 
 Completion evidence:
+- Final normal41875740589 succeeds through deployment. Independently match
+  28public assets toab912d5; five actual public native/notice/pinch/fullscreen/
+  save/input cases pass2.0m. Public desktop/phone notice captures reviewed,
+  zero page errors. Subsequent pending observations below are historical.
 - Syntax/build/11units pass. Adaptive-lane branding/framing cases pass42.0s;
   explicit SwiftShader expanded branding passes22.5s. Actual desktop,
   short-landscape and long-error phone captures reviewed.
@@ -43,6 +47,13 @@ Completion evidence:
   docs/book and labels its actual qualified-build captures as local previews.
 
 Completion log:
+- 2026-11-04: Normal41875740589 succeeds, including deployment. Independently
+  match all28public assets toab912d51ecc615f7aa55a4d27f6a876673739cdf.
+  Five actual public native clock/speed, slots/autosave/restart/fullscreen,
+  notices/branding, mapped-input/LCD and real pinch cases pass2.0m.
+  Review actual public desktop/phone notices with zero capture page errors.
+  Final docs/media/book/TODO/owned-continuity follow verified production.
+  Earlier pending/failed observations remain historical; no retry or duplicate.
 - 2026-11-04: Fresh normal full gate passes. Keep source qualification separate
   from pending deployment; current local media cannot close the public criterion.
 - 2026-11-04: Hosted gate catches real explicit-pinch regression. Preserve

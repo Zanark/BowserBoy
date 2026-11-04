@@ -66,6 +66,12 @@ jobs but a queued deployment. There are no deployment steps establishing a
 published result. An empty pending-approval list does not identify a queue
 cause. The public asset receipt still identifies the older application.
 
+That observation is historical. Before finalizing the edition, the same healthy
+run completes successfully; all 28 public assets match and five real public
+native/notice/pinch/fullscreen/save/input cases pass in 2.0m. Desktop/phone
+public notice captures are reviewed. Waiting and verifying closes the release
+boundary; it does not change the earlier local recordings' capture origin.
+
 The repository's recovery policy is to start a fresh normal workflow after a
 failed run, never retry the failed attempt. A healthy queued deployment is not
 itself a failure and does not justify duplicate dispatches, dummy commits or

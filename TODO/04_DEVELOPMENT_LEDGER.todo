@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Publication boundary closes:
+  Book/docs67e883d publishes with34exact changed blobs independently matched.
+  Actual GitHub README decodes10image embeds and book links10chapters; index/
+  algorithm diagrams render SVG, both book pages reviewed. First browser probe
+  targets GitHub's hidden GIF clones, not visible images; await hydration and
+  inspect displayed content. This corrects the probe, not the product.
+  Meanwhile healthy Pages41875740589 finishes normally. Match28public assets
+  toab912d5 and pass five actual public native clock/speed, slots/autosave/
+  restart/fullscreen, notices, input/LCD and pinch cases2.0m. Review public
+  desktop/phone notice captures, zero page errors. Replace notice figure with
+  public capture; preserve original local capture provenance for GIFs/details.
+  Mark29/30DONE and reconcile guide/book/current status. No duplicate workflow,
+  failed-run retry, gate change, commercial ROM or human approval claim.
 - 2026-11-04 / First engineering book and current visual edition:
   User explicitly requests README, documentation, book and TODO refresh.
   Existing guides/ledger are real, but no chaptered book exists. Author the

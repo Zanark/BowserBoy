@@ -54,6 +54,35 @@ encoded temporal samples and actual desktop/phone notice/fullscreen/underside
 figures are reviewed. See [Media](MEDIA.md#current-refresh---manufactured-controls-and-glass).
 No app source, thresholds or release gates change in this documentation task.
 
+**Final release outcome, 23:25 IST:** normal run `41875740589` completes
+successfully, including deployment. Independent verification matches all
+28 exact public assets to `ab912d51ecc615f7aa55a4d27f6a876673739cdf`.
+Five actual public Edge cases pass in 2.0m: native clock/fast-forward/VSync;
+quick actions with slots/autosave/restart/fullscreen; molded branding and
+frosted notice clearance; mapped input/native LCD illumination; actual
+touch inspection/pinch without game input. Actual public desktop/phone notice
+captures are reviewed; zero capture page errors. Workstream 29 is complete.
+The pending observations above remain historical, not current release status.
+
+## Engineering book and documentation edition
+
+The first book has ten numbered chapter folders and a revision-bound source
+register, with dedicated algorithms/data-structures and design-principle
+chapters, vertical Mermaid diagrams, captioned figures and exercises/answers.
+It is a Markdown edition, not a claimed PDF or separately built reader.
+
+Documentation check covers 18 Markdown files and 130 local file/anchor links
+with zero errors. Transparent-banner bytes are unchanged. GitHub independently
+reports matching identities for all 34 changed blobs in documentation commit
+`67e883db7e5ef49a8f770568222abec18a2ed6ca`. Actual GitHub rendering decodes all
+ten README image embeds, exposes all ten chapter links and renders the book
+index and algorithm diagrams as SVG. Those two book pages are visually reviewed.
+An initial capture probe incorrectly selects GitHub's hidden animated-image
+fallbacks; the probe is corrected to await hydration and inspect displayed
+images. This is a capture-tool correction, not an application change.
+No blanket claim that every chapter was visually rendered or that a human
+approved the new edition is made.
+
 ## Main-page logo contrast
 
 The header alone adds a static alpha-shaped violet glow and tight dark

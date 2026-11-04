@@ -10,7 +10,7 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ### Current refresh - manufactured controls and glass
 
-The four interaction GIFs and the notice, underside, fullscreen, dock and
+The four interaction GIFs and the underside, fullscreen, dock and
 3D-pose figures now show qualified application source
 `ab912d51ecc615f7aa55a4d27f6a876673739cdf`. They are **actual local-build
 captures**, not captures of a newly deployed public release. The browser served
@@ -19,6 +19,16 @@ At capture, normal Pages run `41875740589` had passed build, 11 units and all
 39 browser cases, but deployment remained pending. The separate
 [verification record](VERIFICATION.md#frosted-notifications-and-clear-handheld)
 owns production status. Do not infer publication from these figures.
+
+**Subsequent production qualification:** Pages `41875740589` succeeds.
+Independent verification matches all 28 public assets to `ab912d5`; five
+actual public cases pass in 2.0m, including native clock/speed, slots/autosave/
+restart/fullscreen, notice clearance, mapped input/LCD light and real pinch.
+The notice figure is then replaced with an actual public capture; desktop
+and phone public notices are reviewed with zero page errors. The LCD-light
+and power-off figures also come from the new public native-input regression.
+The interaction GIFs and other local captures retain their original local
+provenance; release success does not retroactively change capture location.
 
 The existing capture/encoder is reused, calling only its clip encoder to
 preserve the transparent banner byte-for-byte. Edge records at 1100x850;
@@ -69,8 +79,8 @@ been replaced by the locally captured shared stylized texture described above.
 - Only the original Pixel Lab cartridge is used. No commercial ROMs, gameplay,
   private browser state or recordings are included.
 - GIFs are silent and loop. Their captions and alt text describe the motion.
-  GitHub does not expose a per-image pause control; static alternatives are
-  available in the [player guide](GUIDE.md).
+  GitHub's image player and animation preferences control presentation;
+  static alternatives are available in the [player guide](GUIDE.md).
 - Documentation images are not part of the static application's build allowlist.
 
 Earlier versions of all four interaction GIFs, and the startup/pose/dock figures, were

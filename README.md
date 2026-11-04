@@ -7,7 +7,7 @@
   &nbsp;&middot;&nbsp; <a href="book/README.md">Engineering book</a>
 </p>
 
-*Current-build preview footage; [capture origins and release status](docs/MEDIA.md#current-refresh---manufactured-controls-and-glass).*
+*Actual current-build recordings; [capture origins and release evidence](docs/MEDIA.md#current-refresh---manufactured-controls-and-glass).*
 
 ## Pick it up. Turn it over.
 
@@ -17,9 +17,9 @@
 
 ## A clearer little message.
 
-![Actual local-build power-on notice in frosted glass below the website logo, clear of the whole handheld](docs/images/frosted-notifications.png?v=molded-glass-book-20261104)
+![Actual public power-on notice in frosted glass below the website logo, clear of the whole handheld](docs/images/frosted-notifications.png?v=molded-glass-book-20261104)
 
-*Frosted glass. Room for the handheld. [Production verification pending](docs/VERIFICATION.md#frosted-notifications-and-clear-handheld).*
+*Frosted glass. Room for the handheld. [Verified live](docs/VERIFICATION.md#frosted-notifications-and-clear-handheld).*
 
 ## Power where it belongs.
 
