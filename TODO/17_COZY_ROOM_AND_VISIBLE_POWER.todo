@@ -1,0 +1,68 @@
+Status: DONE
+Milestone: Warm relaxed lighting, optional room illumination and accessible power
+Dependencies: 10_DARK_ROOM, 16_PRESSED_CONTROL_LIGHTING
+Purpose: Address the user's harsh/interrogation-room lighting feedback and
+  bottom-side power slider that is difficult to see or click.
+
+Tasks:
+- [x] Replace the articulated lamp with an original cylindrical paper-shade/
+  wooden-base model informed by the supplied reference, with warm diffuse light.
+- [x] Correct the rejected toy-sized lantern: height about four handheld widths,
+  retaining the handheld's existing dimensions and play-view framing.
+- [x] Fill the viewport with wall/table surfaces and bring the resting camera
+  closer to the handheld; the user permits the tall lantern to be clipped.
+- [x] Keep a thick wood tabletop with a visible front edge and open room space
+  below it, rather than turning the whole lower screen into a wooden floor.
+- [x] Add independent room lights, off by default, with an accessible toolbar toggle.
+- [x] Enlarge the physical power slider and bring it onto the visible lower lip.
+- [x] Keep a usable touch target without covering the LCD.
+- [x] Enlarge the LCD and halve surrounding bezel padding without stretching
+  the native 3:2 image or losing the curved border.
+- [x] Verify actual rendered light changes, switch visibility and native power behavior.
+- [x] Deploy through full normal gates and independently inspect the live result.
+- [x] Update affected documentation, causal journal and completion evidence afterward.
+
+Acceptance criteria:
+- Default lighting reads warmer and softer than the rejected harsh spotlight;
+  actual captures are reviewed, without claiming subjective user acceptance.
+- Room lights toggle independently of lamp, LCD, pause and console power.
+- Switching off both room and lamp retains LCD-only lighting and real power off.
+- The larger power cap is genuinely visible from play view and its touch target
+  fits desktop/phone viewports, stays off the LCD and operates real power state.
+- Existing saves, native settings, mapped input, inspection and cartridge behavior remain.
+- Larger LCD preserves 3:2 mapping; top/bottom/side bezel gaps are approximately
+  half their previous dimensions, with retained curved/rectangular shader switching.
+
+Completion evidence:
+- Source 4c98bc2335ab602e9c853ca31e281a06cec0d1d7 / Pages41795216070:
+  syntax, ten units, build, both full browser shards (31) and deployment PASS.
+- Independent live verification matches all23 exact public assets. Six live
+  room/power/LCD/pressed/native/CRT/startup cases pass in1.4m; three additional
+  live desktop/phone insertion and picking/inspection cases pass in45.0s.
+- Reviewed actual live table/play/room contact sheet and updated screenshots.
+  Lamp height/shell width3.9-4.1, unchanged handheld scale, desktop/phone room
+  ray coverage, closer projected handheld, thick slab/open gap, real native
+  3:2/CRT mapping and44px power targets are asserted, not inferred from CSS.
+- Public guides, provenance, TODO/index and causal ledger updated only after
+  successful deployment and live verification. New human approval is unrecorded.
+
+Completion log:
+- 2026-11-04: User rejects harsh lighting as an interrogation-room look and
+  requests cozy light, optional room illumination and a visible larger power switch.
+- 2026-11-04: User adds a larger LCD/half-padding request, then supplies a
+  cylindrical paper-shade lamp reference; supersede the articulated-lamp approach.
+- 2026-11-04: User rejects the reviewed lamp proportions; scale the physical
+  lantern to roughly four handheld widths tall without shrinking the Game Boy.
+- 2026-11-04: User rejects visible wall/table edges and the distant handheld.
+  Fill the viewport, move the resting camera closer and permit lamp clipping.
+- 2026-11-04: User clarifies the table needs thick wood and visible empty space
+  below it; retain a front edge while extending its horizontal span.
+- 2026-11-04: Earlier release gates failed without deployment:41787023852,
+  41788355821,41789943580,41791995049 and41793811180. Investigated actual
+  traces rather than dropping assertions or bypassing deployment prerequisites.
+  Corrected storage/graphics initialization order, transient startup sampling,
+  idle settling, six-face shadow cost and stall-skipped cartridge chronology.
+- 2026-11-04: Final500ms presented-frame bound preserves the early pose while
+  avoiding the cold-refresh deadline exceeded with the initial250ms bound.
+  Added early-pose coverage after actual refresh. Full gate/live checks above
+  succeed; technical evidence is not aesthetic acceptance.

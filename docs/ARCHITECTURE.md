@@ -143,6 +143,14 @@ animated table/play/inspection poses. Inspection supports dragging, touch
 rotation/pinch, wheel zoom and keyboard rotation/reset. Reduced motion skips
 the tween; unavailable/lost graphics contexts are reported explicitly.
 
+The resting camera is closer, without changing handheld geometry/root scale or
+the normal play-view framing. A 1000-by-26-unit solid wooden slab is 2.4 units
+thick: top Y=0, front Z=10, darker wood on its edges. Repeated grain avoids
+stretching the texture across its width. The plaster wall spans the viewport;
+the room floor sits at Y=-35, leaving visible open space below the front edge.
+The approximately 34.8-unit-tall lantern may be clipped by the resting frame,
+as explicitly requested; the camera no longer tries to fit its whole height.
+
 The LCD is a front-facing plane on that model, textured directly from the
 same-origin emulator canvas. It is not a CSS-transformed iframe, screenshot
 loop or simulated game image. The source iframe normally has a nonzero 720x480
@@ -178,6 +186,14 @@ Unfiltered and other native presets restore the rectangular display/surround
 rather than cropping their corners or assuming CRT Geom's fit applies to them.
 Revalidate the outline against actual native output on an engine/shader upgrade.
 
+The LCD is now 4.05 by 2.7 units, retaining native 3:2 mapping. The surrounding
+bezel gaps are approximately half the previous side/top/bottom gaps. Both
+curved and rectangular geometries carry explicit `userData.viewport` dimensions:
+`ShapeGeometry.parameters` does not expose width/height. Screen illumination
+uses that metadata rather than falling back to an incorrect 10-by-10 emitter.
+The cream power cap faces forward on the lower lip with a larger dark track,
+tactile ridges and a projected minimum 44-by-44-pixel input target.
+
 ### Physical cartridge insertion
 
 The original cartridge builder also creates one retained loaded-cartridge group
@@ -191,11 +207,16 @@ animation; selecting a cartridge while off still does not switch power on.
 Playing-view insertion briefly widens the camera and lowers the shell .95 units
 into the actual desk lamp's beam, retaining positive tabletop clearance.
 After seating, the camera and shell return over 850 ms. No ambient/fake fill
-light is added. The cartridge follows inspection/table transforms as a child;
+light is added specifically for loading. The cartridge follows inspection/table
+transforms as a child;
 errors retain it seated. A new ROM reuses its geometry instead of allocating
 another prop on every selection.
 
-Motion advances from elapsed time even when software rendering skips paints.
+Framing and insertion share a timeline advanced only after actual scene draws.
+Each step is bounded to 500 ms, smaller than the overlapping lowered/visible
+early-cartridge window. A multi-second graphics stall therefore cannot skip
+the whole slide. Fast rendering retains the 850/1350 ms choreography; slow
+rendering can lengthen the visual animation, never native loading.
 Completed motions clear their state so an idle console can stop drawing.
 Framing does not trigger a view-mode callback, pause the core or reset input.
 Native loading proceeds independently: there is no animation-based startup
@@ -203,13 +224,25 @@ delay, invented percentage or looping reinsertion during a long download.
 
 ### Dark room and screen-colored illumination
 
-`src/lighting.js` models the lamp and its light sources. The scene has no ambient,
-hemisphere or hidden fill light. One scene unit represents 0.017 meters, making
-the handheld roughly 144 mm wide. A warm spotlight uses inverse-square falloff,
-no arbitrary distance cutoff and a 2048-square shadow map. A finite upward
-6-by-6-unit rectangular patch approximates the first bounce from the wood.
-The shade/diffuser use authored emission; the lamp starts on each visit and
-its switch does not pause, power off or replace the cartridge.
+`src/lighting.js` models an original cylindrical paper shade, end diffusers,
+wooden stem/base and physical switch. Its body scale is seven, making the lamp
+roughly four handheld widths tall; the handheld itself is not scaled down.
+One scene unit represents 0.017 meters. A broad warm downward spotlight uses
+inverse-square falloff, no arbitrary distance cutoff and one 1024-square
+shadow map. This replaces the six expensive cubemap passes of the intermediate
+point-light implementation.
+
+A finite 14.7-by-22.4-unit rectangle approximates light transmitted through the
+paper. Three.js rectangular-light dimensions do not inherit parent scaling, so
+these dimensions explicitly match the enlarged shade. An upward 6-by-6-unit
+rectangle approximates the first wood bounce. Paper/bulb surfaces use authored
+emission. The lamp starts on each visit; switching it does not pause, power off
+or replace the cartridge.
+
+Optional room lights start off on every visit. Their explicit toolbar toggle
+controls a ceiling rectangle and reflected hemisphere independently of the
+lamp, LCD, pause and console power. With room lights off there is no ambient
+or hemisphere fill; with both lamp and room off the LCD is the sole source.
 
 The LCD has an attached rectangular area light matching its physical plane.
 Three.js emits along local negative Z, so the light is rotated toward the LCD's
@@ -232,11 +265,13 @@ flowchart TD
     G --> E
 ```
 
-Scene exposure gradually adapts from 0.015 with the lamp on to 0.45 with it off;
+Scene exposure gradually adapts from 0.018 with either lamp or room lights on
+to 0.45 with both off;
 the visible LCD remains unlit and is not tone-mapped. This is an authored
 real-time approximation, not path tracing or full global illumination.
-The spotlight casts shadows; rectangular LCD/bounce sources do **not** implement
-occlusion or cast shadows. Do not interpret orientation/falloff checks as proof
+The spotlight casts shadows; rectangular paper/ceiling/LCD/bounce and hemisphere
+sources do **not** implement occlusion or cast shadows.
+Do not interpret orientation/falloff checks as proof
 that light can never leak through geometry.
 
 Buttons use dielectric clearcoat materials. A/B move 0.045 units inward;
@@ -428,7 +463,7 @@ from a trusted copy of this application.
 | `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
 | `assets/logo.png`, `assets/brand-mark.svg` | Supplied transparent header wordmark and original favicon |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
-| `src/lighting.js` | Modeled lamp, shadowed spotlight, finite wood bounce and sampled LCD area light |
+| `src/lighting.js` | Paper lantern, one-map shadow source, finite paper/wood light, optional room lights and sampled LCD |
 | `src/app.js` | File selection, host lifecycle, UI and user save actions |
 | `src/player.js`, `player.html` | Pinned runtime adapter and child document |
 | `src/cartridge.js`, `src/save-store.js` | Identity, backups and checked storage |

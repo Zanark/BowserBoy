@@ -75,3 +75,9 @@ mesh or textures was established. The application instead uses independently
 authored procedural geometry informed by its visible silhouette and proportions.
 No viewer assets were extracted; the reference thumbnail, logo textures and
 boot image are not bundled or deployed.
+
+The user also supplied a cylindrical paper-shade/wooden-base lamp image on
+2026-11-04 as a visual reference. The application uses original procedural
+geometry and deterministic paper/wood textures; neither that image nor an
+external lamp model/texture is bundled. No reuse license or independent
+authorship of the reference image is claimed.

@@ -90,6 +90,13 @@ controls, malformed values and configuration-string injection.
   separated word components, plus no header/status overlap at 1440/390/320px.
 - Actual raycast depth at control gaps, rendered resting/pressed cap illumination
   for A/B/Start/Select and four D-pad directions, and lamp-off cap darkness.
+- Paper/wood lantern geometry and roughly four-handheld-width height, unchanged
+  shell scale, warm rendered wood, independent default-off room lights and no
+  console power/runtime changes when switching either light.
+- Desktop/phone viewport rays hitting actual room surfaces, closer projected
+  handheld, solid thick slab and a lower-right ray entering open room below it.
+- Half-sized bezel gaps, native 3:2 display/emitter dimensions and actual larger
+  front power control with minimum 44px targets at four viewport sizes.
 
 The original input-test ROM is generated from readable ARM instructions in
 `scripts/demo-rom.mjs`; it contains no copied Nintendo logo, BIOS or commercial
@@ -357,6 +364,40 @@ pressed-control and native input/LCD/power cases in 26.0s. The reviewed figure
 in the README crops actual deployed A/up captures. Final docs follow deployment.
 These checks do not establish photometric calibration or new human acceptance.
 See `TODO/16_PRESSED_CONTROL_LIGHTING.todo`.
+
+## Cozy paper lantern, full-width room and visible power, 2026-11-04
+
+The user rejected the initial lighting, toy-sized lamp and then distant camera.
+The final lamp is roughly four handheld widths tall; the handheld geometry,
+scale and normal play camera remain unchanged. The closer resting view can
+clip the lantern. A full-width warm wall and actual 2.4-unit wooden slab leave
+visible open space below the front edge, with the floor at Y=-35.
+The cream power slider faces forward, and the 4.05-by-2.7 LCD retains native
+mapping while approximately halving bezel gaps. Live captures were reviewed;
+technical verification does not imply the user likes the new appearance.
+
+Earlier normal release gates failed without deployment: `41787023852`,
+`41788355821`, `41789943580`, `41791995049`, `41793811180`.
+Actual traces exposed a 2.36-2.5s draw stall skipping insertion, transient
+startup-canvas reads and an idle-settling race. Corrections retain the original
+early-pose, ink, brightness and native/save assertions. Storage opens before
+expensive graphics construction, preserving the existing timeout/error path.
+Startup evidence samples real pixels inside original `fillText`; idle checks
+wait for pending redraw/shadow work. One shadow map replaces six cubemap passes.
+Insertion/framing share presented-frame time with 500ms maximum advances.
+The initial 250ms bound required too many slow paints on cold refresh; the
+final bound retains the early visible pose and existing seating deadline.
+An added assertion verifies the same early pose after actual refresh.
+
+Syntax/build, all ten units and focused Edge/explicit-software cases pass.
+Source `4c98bc2335ab602e9c853ca31e281a06cec0d1d7` passes build, both full
+browser shards (31 cases) and deployment in Pages `41795216070`.
+Independent live verification matches all 23 exact public assets. Six live
+room/power/LCD/pressed/native/CRT/startup cases pass in 1.4m; three additional
+desktop/phone insertion and picking/inspection cases pass in 45.0s.
+The live table/play/room contact sheet and refreshed public images were reviewed
+without storage warnings. Public docs/TODO/ledger follow that verified deployment.
+See `TODO/17_COZY_ROOM_AND_VISIBLE_POWER.todo`.
 
 ## Not verified here
 

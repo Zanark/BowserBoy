@@ -16,6 +16,7 @@ BowserBoyAdvance workstreams
 14_CARTRIDGE_INSERTION.todo - Visible 3D insertion during loading, retained seated cartridge.
 15_SUPPLIED_WORDMARK.todo - Supplied transparent logo with clear word spacing.
 16_PRESSED_CONTROL_LIGHTING.todo - Actual control apertures and correct pressed-cap visibility.
+17_COZY_ROOM_AND_VISIBLE_POWER.todo - DONE: large paper lantern, full-width thick table, room lights, power/LCD.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -65,3 +66,13 @@ Pressed-control lighting is deployed from 706563fe0355d6455a3c1ba1ff8fd9bafd3fa2
 Pages 41770495917 passes build, both complete browser shards (29) and deployment.
 Fresh live checks match 23 exact assets and pass real aperture/pressed-light
 and native input/LCD/power cases in 26.0s. See workstream 16.
+Cozy room/full-width thick table is deployed from
+4c98bc2335ab602e9c853ca31e281a06cec0d1d7 / Pages41795216070:
+build, both full browser shards (31) and deployment PASS. Fresh live checks
+match23 exact assets; six room/power/LCD/native/startup cases pass in1.4m,
+plus three insertion/inspection cases in45.0s. Final public docs follow that
+release. User aesthetic acceptance remains unrecorded. See workstream17.
+
+Documentation boundary: these maintained guides, TODOs and causal ledger are
+not the previously requested chaptered engineering book. That book remains
+incomplete; this UI workstream does not claim to have produced it.

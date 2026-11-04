@@ -309,3 +309,44 @@ Completion log:
   build, both browser shards (29) and deployment. Independent live checks
   match 23 assets and pass pressed-control/native lighting cases in 26.0s.
   Final workstream/docs and reviewed original live crops follow deployment.
+- 2026-11-04 / Cozy room, visible power and larger LCD:
+  User rejects interrogation-room lighting and hidden bottom power control.
+  Build an original paper/wood lantern, independent default-off room lights,
+  visible cream lower-front slider/44px targets and4.05x2.7 native3:2 LCD with
+  approximately half bezel gaps. Explicit viewport metadata also fixes the
+  old ShapeGeometry10x10 fallback used by the LCD area emitter.
+- 2026-11-04 / Rejected proportions and room framing:
+  User rejects the first toy-sized lamp and then the widened full-lamp camera.
+  Scale the lamp body7x, roughly four handheld widths tall; preserve handheld
+  geometry/root scale and normal play framing. User permits lamp clipping.
+  Move only the resting camera closer; span the viewport with wall/wood.
+  Further clarification requires a real thick tabletop and empty space below,
+  not an endless wood floor. Build a2.4-unit solid slab with darker edge,
+  repeated grain and floor35units below; ray probes verify the visible gap.
+- 2026-11-04 / Release failures and causal corrections:
+  41787023852 fails desktop early insertion;41788355821 also dereferences an
+  already-cleared startup canvas.41789943580 additionally exposes an idle
+  settling race. None deploys. Heavy graphics could trigger a false5s storage
+  timeout; await checked storage open before constructing the scene. Retain
+  actual storage denial/watchdog behavior. Sample real startup raster inside
+  original fillText, and wait for pending scene/shadow changes before idle
+  counting. Do not fabricate pixels or loosen brightness/ink assertions.
+  Explicit RectAreaLight dimensions must grow with shade scale; parent scale
+  alone drops out of Three.js rectangular-light half extents.
+- 2026-11-04 / Stall-preserved insertion:
+  Six point-shadow passes are replaced by one broad soft downward1024-square
+  source, retaining finite paper/wood contributions.41791995049 still fails
+  early insertion: exact frames jumpY3.8->1.52 through a2.36s graphics stall.
+  Shared presented-frame framing/slide time prevents skipped stages. The
+  first250ms bound passes initial insertion but41793811180 exceeds15s on
+  cold refresh. A500ms bound remains smaller than the early visible pose
+  window while needing fewer slow draws. Add the early-pose assertion after
+  refresh. Emulator loading never waits for the animation.
+- 2026-11-04 / Deployed and independently verified:
+  Source4c98bc2335ab602e9c853ca31e281a06cec0d1d7 / Pages41795216070
+  passes syntax, ten units, build, both full browser shards (31) and deploy.
+  Independent live23-asset match; six room/power/LCD/pressed/native/CRT/startup
+  cases pass in1.4m, three insertion/inspection cases in45.0s. Reviewed actual
+  live views and updated public figures/guides/provenance only afterward.
+  All prior failed gates remain recorded. No aesthetic user approval,
+  photometric calibration or completed chaptered engineering book is claimed.

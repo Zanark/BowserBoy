@@ -10,16 +10,26 @@ actual 3D indigo handheld, built for static hosting on GitHub Pages.
 
 ![The 3D indigo handheld on its wooden table](docs/images/3d-table.png)
 
-*A dark room, a switchable desk lamp and original 3D geometry on warm wood.
-Click the handheld to lift it into play view. No buttons cover the LCD.*
+*A full-width warm plaster wall and thick wooden tabletop, with open room
+below its front edge. The closer resting view keeps the handheld's physical
+size unchanged; the large paper lantern can extend beyond the frame.*
 
 ## Lights out
 
-The room starts dark with the desk lamp on. Click the modeled lamp or use the
-**Lamp** control to switch it independently of the game. The lamp casts shadows;
+The room starts with a warm paper lantern on and **Room** lights off. Click the
+modeled lamp or use **Lamp** to switch it independently of the game. **Room**
+adds optional ceiling/reflected illumination without changing console power.
+The original paper-and-wood lantern is roughly four handheld widths tall.
+Its downward light casts shadows;
 the LCD casts one-sided, screen-colored light as you lift or rotate the handheld.
 Turning the power off extinguishes its screen light. These are real-time lighting
 approximations, not a full global-illumination simulation.
+
+![Deployed lantern, enlarged handheld screen and optional room illumination](docs/images/cozy-room.png)
+
+*Left: the large clipped lantern and actual thick tabletop. Center: lantern-only
+play view, with the larger LCD and visible cream power slider. Right: lamp off,
+room lights on. The console remains off in all three views.*
 
 ![The original demo with only the LCD lighting the room](docs/images/lcd-light.png)
 
@@ -30,7 +40,9 @@ orientation and colors, rather than a fixed room-wide fill.*
 ## Infinite battery
 
 The first visit starts **powered off**, with a dark LCD. Pick up the handheld
-and use its physical bottom-edge switch. A short, original Game Boy-inspired
+and use its larger, visible lower-front power slider. Its projected touch target
+is at least 44 by 44 pixels without covering the LCD.
+A short, original Game Boy-inspired
 logo reveal and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
 The website header uses the supplied transparent wordmark. The original
@@ -97,7 +109,8 @@ the handheld to the table. Reduced-motion mode skips the pickup animation.
 *The LCD and bezel lettering are surfaces on the mesh, not a floating iframe
 or a flat photograph. The inner screen border follows CRT Geom's bowed sides
 and corners; unfiltered mode restores a complete rectangular screen.
-Controls sit on the physical shell.*
+The larger screen keeps its native 3:2 proportions while approximately halving
+the previous bezel gaps. Controls sit on the physical shell.*
 
 ![Pressed action button and D-pad on the deployed handheld](docs/images/pressed-controls.png)
 
@@ -132,8 +145,8 @@ Rotating the model naturally hides its front-facing game display.*
 
 Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
 buttons work with mouse, touch and keyboard activation. Their meshes visibly
-depress: the D-pad rocks and the shoulder buttons hinge. The bottom-edge power
-switch turns the emulator off: the LCD goes dark and the runtime is removed.
+depress: the D-pad rocks and the shoulder buttons hinge. The lower-front power
+slider turns the emulator off: the LCD goes dark and the runtime is removed.
 Turn it back on to boot the loaded ROM from the beginning with its in-game
 save data, **not an instant checkpoint**. Pause/resume remains in Cartridges.
 Rotate a phone for a
