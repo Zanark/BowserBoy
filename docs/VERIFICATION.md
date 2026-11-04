@@ -34,7 +34,14 @@ That case excludes room rendering and disables the CRT shader. No cause is
 established and no pacing code, bound or timeout is changed. The same complete
 clock case subsequently passes locally (24.0s); this does not erase the hosted
 failure. Publish this first qualification record through the normal workflow;
-independent public proof and workstream completion remain pending.
+independent public proof and workstream completion remain pending at that point.
+
+Fresh normal qualification `4b99550` / workflow `41925345571` subsequently
+passes build, all 11 units, all 39 browser cases and deployment. Independently
+match all 28 actual public assets and run the complete branding/recess-depth,
+native-input and pressed-cap lighting cases against production (35.2s).
+Workstream 36 is DONE. The native pacing code and every original release bound
+remain unchanged; no failed-job retry or new human visual acceptance is claimed.
 
 ## Smaller bezel wordmark, 2026-11-05
 

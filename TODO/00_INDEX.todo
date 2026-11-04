@@ -35,7 +35,7 @@ BowserBoyAdvance workstreams
 33_STEADY_AUDIO_RESERVE.todo - DONE: reproduced playback dropouts corrected by sustained native reserve; independently verified live.
 34_OVERLAY_NOTIFICATIONS.todo - DONE: frosted overlays without shrinking or shifting, independently verified live.
 35_SMALLER_BEZEL_WORDMARK.todo - DONE: shared normal/fullscreen lettering25%smaller, independently verified live.
-36_RECESSED_AB_LETTERING.todo - IN_PROGRESS: genuine dark A/B grooves instead of protruding letters.
+36_RECESSED_AB_LETTERING.todo - DONE: genuine dark inward A/B grooves, independently verified live.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Dark A/B grooves cut into the button faces.
 Dependencies: Completed workstreams 28, 32 and 35.
 
@@ -12,8 +12,8 @@ Tasks:
 - [x] Preserve the original cap dome/rim normals and moving parent hierarchy.
 - [x] Replace only the superseded raised-A/B assertions with actual depth probes.
 - [x] Retain every other marking, native input and pressed-lighting check.
-- [ ] Pass normal hosted gates and independently verify the public release.
-- [ ] Publish completion evidence and reconcile owned continuity.
+- [x] Pass normal hosted gates and independently verify the public release.
+- [x] Publish completion evidence and reconcile owned continuity.
 
 Acceptance criteria:
 - A/B lettering is cut inward with dark, unprinted floors and visible sidewalls.
@@ -32,7 +32,9 @@ Completion evidence:
   Recessed geometry, input and pressed-lighting cases pass. Unchanged native
   3x-clock case measures2.041516x below2.10x; deploy skipped. Its full local
   follow-up passes24.0s without changing pacing, assertions or timeouts.
-- Normal hosted/public qualification pending; no live claim yet.
+- Fresh normal4b99550/41925345571 passes build/11units/all39cases/deploy.
+- Independently match28actual public assets; all three complete actual public
+  branding/recess/input/pressed-lighting cases pass35.2s.
 
 Completion log:
 - 2026-11-05: User wants inward dark A/B markings. Reuse shared glyph contours
@@ -44,3 +46,7 @@ Completion log:
   blocker. That case excludes room GPU work; do not claim a cause. Local
   follow-up pass is separate evidence, not all-green hosted CI. Publish this
   substantive qualification record normally; no failed-job retry/dummy trigger.
+- 2026-11-05: Fresh normal full gate and deploy pass. Independently match
+  public assets and qualify all three actual public geometry/input/light cases.
+  36DONE. Preserve native pacing, original bounds and historical image provenance.
+  Publish completion records and reconcile owned continuity.
