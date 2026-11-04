@@ -14,7 +14,9 @@ and [capture origins](MEDIA.md#current-refresh---manufactured-controls-and-glass
 *The supplied transparent purple orbital logo, preserved unchanged with its
 white lettering, neon rim and orbit/star accents. On the main page, an
 alpha-shaped violet glow and tight dark shadow separate it from the warm
-room without a rectangular background or blurred lettering.*
+room without a rectangular background or blurred lettering. The top-left logo
+is hidden in play view and returns on the desk or in Inspect; notifications
+remain visible in their existing header position.*
 
 **A little escape, on your desk.** A local-first browser GBA player inside an
 actual 3D indigo handheld, built for static hosting on GitHub Pages.

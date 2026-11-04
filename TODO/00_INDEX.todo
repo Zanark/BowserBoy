@@ -30,6 +30,7 @@ BowserBoyAdvance workstreams
 28_MOLDED_MARKINGS_AND_PLAY_FRAMING.todo - DONE: real control relief, stylized monochrome bezel and closer uncropped play independently verified live.
 29_FROSTED_NOTIFICATIONS.todo - DONE: frosted-glass notices and clear handheld independently verified live.
 30_DOCUMENTATION_AND_ENGINEERING_BOOK.todo - DONE: first ten-chapter engineering book, current-build visual README and reconciled documentation.
+31_PLAY_VIEW_HEADER_LOGO.todo - IN_PROGRESS: hide the top-left wordmark only in play view, preserving notices and desk/inspection branding.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

@@ -7,6 +7,18 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Play-view header logo
+
+The top-left website wordmark is hidden only when the existing scene view is
+`playing`. Its layout box remains reserved, so the frosted notice host and
+camera clearance do not move. Desk/Inspect and startup/bezel logos are unchanged.
+
+Syntax/build, all 11 units and three focused Edge cases pass (1.0m). The existing
+responsive artwork case now checks pickup, Inspect, back-to-play and put-down
+at 1440/390/320px. The actual notice remains visible with the header logo hidden;
+five-size notice and underside-power/whole-handheld coverage still pass.
+The actual 1920px play/notice capture is reviewed. Hosted publication is pending.
+
 ## Frosted notifications and clear handheld
 
 The expanded existing branding/notice regression checks actual translucent

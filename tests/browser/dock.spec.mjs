@@ -481,6 +481,7 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   expect(new Set(icons).size).toBe(icons.length);
   await powerOn(page);
   await expect(page.locator('#notice')).toBeVisible();
+  await expect(page.locator('.desk-heading h1')).toBeHidden();
   const noticeFits = async () => {
     await expect.poll(() => page.evaluate(async () => {
       const { view } = await import('./src/app.js');

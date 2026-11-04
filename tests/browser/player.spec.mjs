@@ -586,7 +586,7 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
 });
 
-test('supplied purple orbital wordmark preserves its transparent artwork and responsive header', async ({ page, request }) => {
+test('supplied purple orbital wordmark preserves its artwork and responsive header, but hides in play view', async ({ page, request }) => {
   await page.goto('./');
   const logo = page.locator('.desk-heading img');
   await expect(logo).toBeVisible();
@@ -614,6 +614,7 @@ test('supplied purple orbital wordmark preserves its transparent artwork and res
   expect(artwork.transparent).toBeGreaterThan(.5);
   expect(artwork.white).toBeGreaterThan(1000);
   expect(artwork.corners).toEqual([0, 0, 0, 0]);
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     const bounds = await logo.boundingBox();
@@ -623,6 +624,19 @@ test('supplied purple orbital wordmark preserves its transparent artwork and res
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(status.x - 5);
     expect(status.x + status.width).toBeLessThanOrEqual(width);
     await page.locator('.desk-heading').screenshot({ path: test.info().outputPath(`logo-header-${width}.png`) });
+    await page.locator('#pickup').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+    await expect(logo).toBeHidden();
+    await expect(page.locator('.desk-heading > span')).toBeVisible();
+    await page.locator('#inspect').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+    await expect(logo).toBeVisible();
+    await page.locator('#inspect').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+    await expect(logo).toBeHidden();
+    await page.locator('#put-down').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+    await expect(logo).toBeVisible();
   }
 });
 

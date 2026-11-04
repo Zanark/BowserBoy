@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Play-view header:
+  User requests no top-left website logo while playing. Reuse the scene's
+  existing settled data-view with visibility:hidden on only the header h1,
+  retaining its layout and frosted notification host. Desk/Inspect and original
+  startup/physical/fullscreen branding are unchanged. Extend existing responsive
+  branding transitions and require the real notice to remain visible while the
+  header logo is hidden. Syntax/build, all11units and three focused Edge cases
+  pass1.0m; actual1920px play/notice capture reviewed. Hosted publication and
+  independent public verification remain pending, not inferred.
 - 2026-11-04 / Publication boundary closes:
   Book/docs67e883d publishes with34exact changed blobs independently matched.
   Actual GitHub README decodes10image embeds and book links10chapters; index/
