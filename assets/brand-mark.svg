@@ -1,10 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="2" y="12" width="60" height="40" rx="15" fill="#8473b7"/>
-  <rect x="17" y="17" width="30" height="29" rx="4" fill="#292638"/>
-  <rect x="21" y="21" width="22" height="17" rx="1" fill="#faf9ff"/>
-  <path d="M7 29h8m-4-4v8" stroke="#262435" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="53" cy="27" r="3" fill="#4a345a"/>
-  <circle cx="56" cy="35" r="3" fill="#4a345a"/>
-  <circle cx="50" cy="20" r="1.5" fill="#c6ef91"/>
-  <path d="M25 29c0-5 5-5 7 0s7 5 7 0-5-5-7 0-7 5-7 0" fill="none" stroke="#7961b0" stroke-width="2"/>
+  <title>Indigo handheld</title>
+  <defs>
+    <linearGradient id="shell" x2="0" y2="1">
+      <stop stop-color="#9589d4"/>
+      <stop offset=".45" stop-color="#61539e"/>
+      <stop offset="1" stop-color="#40366f"/>
+    </linearGradient>
+    <linearGradient id="lcd" x2="0" y2="1">
+      <stop stop-color="#d8e0bc"/>
+      <stop offset="1" stop-color="#8eaa8b"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(32 32) scale(7 -7)">
+    <!-- The same stepped shoulders and bowed lower edge as the 3D shell. -->
+    <path d="M-4.1 1.45 Q-4.07 1.73-3.78 1.8 L-3.13 1.94 Q-2.9 1.98-2.76 2.07
+      L-2.24 2.38 Q-2.18 2.42-2.08 2.42 H2.08 Q2.18 2.42 2.24 2.38
+      L2.76 2.07 Q2.9 1.98 3.13 1.94 L3.78 1.8 Q4.07 1.73 4.1 1.45
+      Q4.28 .15 4.25-1.04 Q4.25-1.55 3.66-1.72 L2.12-2.17
+      Q0-2.61-2.12-2.17 L-3.66-1.72 Q-4.25-1.55-4.25-1.04 Q-4.28 .15-4.1 1.45Z"
+      fill="url(#shell)" stroke="#29253e" stroke-width=".12" stroke-linejoin="round"/>
+    <path d="M-3.8 1.82-3.13 1.98-2.8 2.12 M3.8 1.82 3.13 1.98 2.8 2.12"
+      fill="none" stroke="#d8d9cb" stroke-width=".18" stroke-linecap="round"/>
+    <rect x="-2.34" y="-1.7" width="4.68" height="3.62" rx=".26" fill="#20252c"/>
+    <rect x="-2.025" y="-1.13" width="4.05" height="2.7" rx=".08" fill="url(#lcd)"/>
+    <path d="M-.62-1.43H.62" stroke="#bfc3ad" stroke-width=".08" stroke-linecap="round"/>
+    <path d="M-3.405 .87H-2.995V.465H-2.59V.055H-2.995V-.35H-3.405V.055H-3.81V.465H-3.405Z"
+      fill="#d8d9cb" stroke="#29253e" stroke-width=".07" stroke-linejoin="round"/>
+    <g fill="#d8d9cb" stroke="#29253e" stroke-width=".07">
+      <circle cx="3.55" cy=".5" r=".3"/>
+      <circle cx="2.76" cy="-.02" r=".3"/>
+      <circle cx="-2.64" cy="-.98" r=".155"/>
+      <circle cx="-2.7" cy="-1.5" r=".155"/>
+    </g>
+    <circle cx="2.87" cy="1.42" r=".115" fill="#b5ec7b"/>
+    <path d="m2.55-.8 .86.2 m-.86-.38 .86.2 m-.86-.38 .86.2 m-.86-.38 .86.2"
+      fill="none" stroke="#29253e" stroke-width=".075" stroke-linecap="round"/>
+  </g>
 </svg>

@@ -4,6 +4,40 @@ import { powerOn, demoReady } from './pixel-lab.mjs';
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 
+test('favicon retains the wide handheld silhouette at browser-tab sizes', async ({ page }) => {
+  await page.goto('./');
+  const icon = page.locator('link[rel="icon"]');
+  await expect(icon).toHaveAttribute('type', 'image/svg+xml');
+  const samples = await icon.evaluate(async link => {
+    const image = new Image();
+    image.src = link.href;
+    await image.decode();
+    return [16, 32, 64].map(size => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = size;
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0, size, size);
+      const { data } = context.getImageData(0, 0, size, size);
+      let left = size, right = -1, top = size, bottom = -1;
+      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+        if (data[(y * size + x) * 4 + 3] < 128) continue;
+        left = Math.min(left, x); right = Math.max(right, x);
+        top = Math.min(top, y); bottom = Math.max(bottom, y);
+      }
+      return { size, ratio: (right - left + 1) / (bottom - top + 1),
+        transparentCorner: data[3] === 0, image: canvas.toDataURL() };
+    });
+  });
+  for (const sample of samples) {
+    expect(sample.transparentCorner).toBe(true);
+    expect(sample.ratio).toBeGreaterThan(1.55);
+    expect(sample.ratio).toBeLessThan(2.1);
+    await test.info().attach(`favicon-${sample.size}`, {
+      body: Buffer.from(sample.image.split(',')[1], 'base64'), contentType: 'image/png',
+    });
+  }
+});
+
 test('icon dock fits phone and desktop, exposes named touch controls and opens the requested sections', async ({ page }) => {
   await page.goto('./');
   await ready(page);

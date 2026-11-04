@@ -3,7 +3,6 @@
 import argparse
 import json
 import math
-import random
 import shutil
 import subprocess
 from pathlib import Path
@@ -17,25 +16,14 @@ OUTPUT = ROOT / "docs" / "images"
 
 def banner():
     width, height = 1000, 340
-    background = Image.new("RGB", (width, height))
-    pixels = background.load()
-    for y in range(height):
-        for x in range(width):
-            glow = max(0, 1 - math.hypot((x - 500) / 640, (y - 175) / 240))
-            pixels[x, y] = (int(13 + glow * 20), int(9 + glow * 9), int(26 + glow * 35))
-    rng = random.Random(42)
-    stars = [(rng.randrange(width), rng.randrange(height), rng.random()) for _ in range(65)]
     logo = Image.open(ROOT / "assets" / "logo.png").convert("RGBA")
     logo.thumbnail((850, 285), Image.Resampling.LANCZOS)
     star = Image.open(ROOT / "assets" / "star.png").convert("RGBA")
     frames = []
     for frame in range(72):
         phase = frame / 72 * math.tau
-        image = background.convert("RGBA")
+        image = Image.new("RGBA", (width, height))
         draw = ImageDraw.Draw(image)
-        for x, y, offset in stars:
-            brightness = int(95 + 60 * math.sin(phase + offset * math.tau))
-            draw.ellipse((x, y, x + 1, y + 1), fill=(brightness, brightness, min(255, brightness + 55)))
         for radius, color in [(1, (116, 67, 174, 255)), (.97, (55, 33, 89, 255))]:
             draw.ellipse((500 - 466 * radius, 170 - 110 * radius,
                           500 + 466 * radius, 170 + 110 * radius), outline=color, width=1)
@@ -60,11 +48,17 @@ def banner():
         for angle, x, y in orbiters:
             if math.sin(angle) >= 0:
                 paint_star(angle, x, y)
-        frames.append(image.convert("RGB"))
-    palette = frames[0].quantize(colors=256)
-    encoded = [frame.quantize(palette=palette, dither=Image.Dither.FLOYDSTEINBERG) for frame in frames]
+        frames.append(image)
+    palette = frames[0].convert("RGB").quantize(colors=255)
+    encoded = []
+    for frame in frames:
+        indexed = frame.convert("RGB").quantize(palette=palette, dither=Image.Dither.NONE)
+        indexed = indexed.point(lambda index: index + 1)
+        indexed.putpalette([0, 0, 0] + palette.getpalette()[:765])
+        indexed.paste(0, mask=frame.getchannel("A").point(lambda alpha: 255 if alpha < 128 else 0))
+        encoded.append(indexed)
     encoded[0].save(OUTPUT / "orbital-logo.gif", save_all=True, append_images=encoded[1:],
-                    duration=70, loop=0, optimize=True, disposal=1)
+                    duration=70, loop=0, optimize=False, disposal=2, transparency=0, background=0)
 
 
 def clips(receipt, ffmpeg):

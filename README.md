@@ -1,4 +1,4 @@
-[![BowserBOY ADVANCE - animated orbital logo](docs/images/orbital-logo.gif)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY ADVANCE - transparent animated orbital logo](docs/images/orbital-logo.gif)](https://zanark.github.io/BowserBoyAdvance/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>

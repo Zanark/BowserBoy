@@ -9,8 +9,11 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 ## Sources and boundaries
 
 - `images/orbital-logo.gif` animates the supplied transparent purple logo and its
-  derived star sprite. The logo pixels are not redrawn. Its elliptical star
-  motion is an original README presentation, not a recording of the LCD boot.
+  derived star sprite on a transparent background, without a purple rectangular
+  backdrop or background starfield. GIF supports binary transparency, so soft
+  alpha edges are thresholded for encoding; the supplied source remains unchanged.
+  Its elliptical star motion is an original README presentation, not a recording
+  of the LCD boot. The separate power-on GIF retains the actual purple LCD scene.
 - The other GIFs are actual recordings of the deployed application, captured
   with Playwright/Edge at 1100 by 850 and encoded at 800 by 618, 10 fps.
   Pickup/inspection, power-on, physical insertion and lighting use actual UI
