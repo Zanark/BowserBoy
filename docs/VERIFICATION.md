@@ -88,6 +88,8 @@ controls, malformed values and configuration-string injection.
   zero reinsertion events across actual battery-only power cycles.
 - Actual supplied-logo PNG alpha, retained opaque white lettering and two
   separated word components, plus no header/status overlap at 1440/390/320px.
+- Actual raycast depth at control gaps, rendered resting/pressed cap illumination
+  for A/B/Start/Select and four D-pad directions, and lamp-off cap darkness.
 
 The original input-test ROM is generated from readable ARM instructions in
 `scripts/demo-rom.mjs`; it contains no copied Nintendo logo, BIOS or commercial
@@ -329,6 +331,32 @@ unchanged. This is technical verification, not new user visual acceptance or
 an independent authorship/license claim for the supplied artwork.
 Final provenance/docs and refreshed startup capture follow deployment.
 See `TODO/15_SUPPLIED_WORDMARK.todo`.
+
+## Pressed-control lighting, 2026-11-04
+
+Raised socket solids intersected moving caps, and the face had no button
+apertures. The fix cuts beveled openings and puts receiving floors below the
+face while preserving materials, travel, tilt and lights. The original D-pad
+fails the actual-render regression: one pressed arm probe reads 123.63 versus
+245.4 resting. The first fixture attempt accidentally triggered render recovery
+throttling; correcting its deterministic tick establishes the real baseline
+without changing production throttling.
+
+The regression raycasts the actual gaps to prove recessed surfaces, then reads
+rendered cap pixels at rest/press for all front buttons and all D-pad directions.
+It also verifies that lamp/LCD-off caps do not gain artificial press illumination.
+The existing mapped-input case retains real native input, LCD orientation/color
+transfer and power-off checks. Syntax/build and all ten units pass; focused Edge
+pairs pass in 24.4s and 15.1s. Four explicit-software scene cases, including
+inspection/responsive geometry and lamp falloff, pass in 1.4m.
+
+Source `706563fe0355d6455a3c1ba1ff8fd9bafd3fa2a4` passes build, both complete
+browser shards (29 cases) and actual deployment in Pages `41770495917`.
+Independent live verification matches all 23 exact assets and passes both
+pressed-control and native input/LCD/power cases in 26.0s. The reviewed figure
+in the README crops actual deployed A/up captures. Final docs follow deployment.
+These checks do not establish photometric calibration or new human acceptance.
+See `TODO/16_PRESSED_CONTROL_LIGHTING.todo`.
 
 ## Not verified here
 

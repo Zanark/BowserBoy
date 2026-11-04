@@ -293,3 +293,19 @@ Completion log:
   build, both browser shards (28) and deployment. Fresh live checks match all
   23 assets and pass logo/startup in 24.4s. Final public docs follow deployment;
   distinguish supplied artwork from independently authored favicon/startup.
+- 2026-11-04 / Pressed-control lighting:
+  User reports action-button press lighting and a black D-pad. Raised solid
+  socket meshes intersect the moving caps; the face has no control apertures.
+  Cut actual beveled holes and replace socket lids with recessed receiving
+  floors. Preserve existing PBR cap materials, travel, D-pad tilt and lights.
+  A first deterministic test tick trips recovery-frame throttling; fix only
+  the fixture before measuring the real failure. Original D-pad probe is
+  123.63 pressed versus 245.4 resting. New coverage checks actual raycast
+  recess depth, rendered rest/press pixels for all front buttons/directions
+  and lamp-off darkness. Native mapped input/LCD/power coverage stays intact.
+  All ten units and syntax/build pass. Edge pairs pass in 24.4s and 15.1s;
+  four explicit-software scene cases pass in 1.4m. Source
+  706563fe0355d6455a3c1ba1ff8fd9bafd3fa2a4 / Pages 41770495917 passes full
+  build, both browser shards (29) and deployment. Independent live checks
+  match 23 assets and pass pressed-control/native lighting cases in 26.0s.
+  Final workstream/docs and reviewed original live crops follow deployment.

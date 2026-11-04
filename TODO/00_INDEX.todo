@@ -15,6 +15,7 @@ BowserBoyAdvance workstreams
 13_CURVED_LCD_BORDER.todo - Physical inner border fitted to the native CRT curve.
 14_CARTRIDGE_INSERTION.todo - Visible 3D insertion during loading, retained seated cartridge.
 15_SUPPLIED_WORDMARK.todo - Supplied transparent logo with clear word spacing.
+16_PRESSED_CONTROL_LIGHTING.todo - Actual control apertures and correct pressed-cap visibility.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -60,3 +61,7 @@ Supplied wordmark is deployed from 5e8788931bc7417c11187eb5d5c28443d849edcc:
 Pages 41768657819 passes build, both complete browser shards (28) and deployment.
 Fresh live checks match 23 exact assets and pass actual transparency, word
 separation, 1440/390/320 header fit and unchanged startup in 24.4s.
+Pressed-control lighting is deployed from 706563fe0355d6455a3c1ba1ff8fd9bafd3fa2a4:
+Pages 41770495917 passes build, both complete browser shards (29) and deployment.
+Fresh live checks match 23 exact assets and pass real aperture/pressed-light
+and native input/LCD/power cases in 26.0s. See workstream 16.

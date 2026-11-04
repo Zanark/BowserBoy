@@ -244,6 +244,14 @@ Start/Select move 0.025. The shared D-pad depresses and tilts, with opposing
 directions cancelling tilt; shoulders move and hinge. Elapsed-time damping
 drives real mesh transforms from the same input state as the actual core.
 
+The face has actual beveled openings around A/B, Start/Select and the D-pad,
+with clearance for their motion. Shared round-control dimensions define both
+each opening and its cap. Dark receiving floors sit below the face rather than
+forming raised socket lids. The earlier solid sockets intersected moving caps,
+creating unnatural dark/covered regions during presses. No press-only emission,
+material color replacement or disabled cap/shell shadows conceals the problem.
+The existing lamp, screen-light and shadow invalidation paths are unchanged.
+
 ### Rendering without starving the core
 
 Unchanged shadows are cached and idle static scenes stop painting once motion

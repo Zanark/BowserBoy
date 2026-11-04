@@ -1,0 +1,45 @@
+Status: DONE (deployed and technically verified; new visual approval not claimed)
+Milestone: Keep pressed controls physically visible and naturally lit
+Dependencies: 07_REFERENCE_SHAPE, 10_DARK_ROOM
+Purpose: Correct the user's reported black D-pad and unrealistic action-button
+  press lighting without disguising the problem with artificial illumination.
+
+Tasks:
+- [x] Inspect actual moving cap/socket geometry and reproduce pressed light loss.
+- [x] Replace solid raised socket lids with beveled shell apertures.
+- [x] Put receiving floors below the face for A/B, Start/Select and D-pad.
+- [x] Preserve materials, travel, tilt, mapped input, lamp and LCD lighting.
+- [x] Verify real aperture depth and rendered rest/press pixels for all front
+  buttons and all four D-pad directions, including unlit caps.
+- [x] Deploy through normal full gates and independently verify the live site.
+- [x] Publish reviewed original live evidence and final documentation afterward.
+
+Acceptance criteria:
+- Moving caps do not disappear into raised socket lids.
+- Gaps are actual recessed shell openings, not dark discs above the face.
+- Pressed faces retain plausible illumination; no press-only glow or material
+  color swap masks occlusion. Existing lamp shadows and LCD behavior remain.
+- Native keyboard/remap/pointer behavior and physical travel stay intact.
+- Existing inspection, power, reduced motion and responsive scene checks pass.
+
+Completion evidence:
+- Original geometry fails the actual D-pad illumination regression: sampled
+  pressed brightness 123.63 versus 245.4 resting at one arm probe.
+- All ten units, syntax/build PASS; focused Edge new/input pair 24.4s and
+  expanded new/lamp pair 15.1s PASS.
+- Four explicit-software scene/input/light/geometry cases PASS in 1.4m.
+- Source 706563fe0355d6455a3c1ba1ff8fd9bafd3fa2a4 / Pages 41770495917:
+  build, both complete browser shards (29 cases) and actual deployment PASS.
+- Independent live verification matches all 23 exact assets and passes both
+  real pressed-control and native input/LCD/power cases in 26.0s.
+- Reviewed docs/images/pressed-controls.png crops actual deployed A/up captures.
+
+Completion log:
+- 2026-11-04: User reports both action-button and D-pad press lighting wrong.
+  Raised solid sockets intersect caps; the front face has no control apertures.
+  Cut openings with clearance and move socket surfaces below the face.
+- 2026-11-04: First deterministic probe fixture accidentally triggers renderer
+  recovery throttling and reads an empty frame. Correct the fixture tick, not
+  production throttling, then establish the real failing original baseline.
+- 2026-11-04: Preserve existing cap materials and motion; do not add emissive
+  light or disable cap/shell shadows. Live release precedes final documentation.

@@ -99,6 +99,12 @@ or a flat photograph. The inner screen border follows CRT Geom's bowed sides
 and corners; unfiltered mode restores a complete rectangular screen.
 Controls sit on the physical shell.*
 
+![Pressed action button and D-pad on the deployed handheld](docs/images/pressed-controls.png)
+
+*A pressed and D-pad up pressed: the caps move inside beveled shell openings.
+Recessed floors replace raised socket discs that previously intersected the
+caps and produced broken dark patches. Materials and lamp lighting stay intact.*
+
 The revised shell uses stepped shoulders, straighter sides, a bowed lower edge,
 low-profile buttons and recessed speaker slots. Its shape was informed by the
 [user-supplied Sketchfab reference](https://sketchfab.com/3d-models/nintendo-gameboy-advance-gba-a0b6d1eb5ccb4c72a6944d77b3ac7c05);
