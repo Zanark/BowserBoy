@@ -28,6 +28,7 @@ BowserBoyAdvance workstreams
 26_UNDERSIDE_POWER_SLIDER.todo - DONE: complete lower-edge assembly, following touch target and verified real power/table clearance.
 27_ALL_NATIVE_CRT_PRESETS.todo - DONE: all nine actual native CRT presets, retained runtime/persistence and default CRT Geom.
 28_MOLDED_MARKINGS_AND_PLAY_FRAMING.todo - DONE: real control relief, stylized monochrome bezel and closer uncropped play independently verified live.
+29_FROSTED_NOTIFICATIONS.todo - IN_PROGRESS: frosted-glass notices below the logo, clear of the whole handheld.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.

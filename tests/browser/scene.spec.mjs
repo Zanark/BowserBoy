@@ -315,6 +315,7 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
   await page.evaluate(async () => (await import('./src/app.js')).view.setScreenCurve(true));
   for (const [width, height] of [[1920, 1080], [1440, 1100], [844, 390], [390, 844], [320, 568]]) {
     await page.setViewportSize({ width, height });
+    if (await page.locator('#notice').isVisible()) await page.locator('#notice-dismiss').click();
     const target = page.locator('#hardware-power');
     await expect(target).toBeInViewport({ ratio: 1 });
     await expect.poll(() => target.evaluate(element => {

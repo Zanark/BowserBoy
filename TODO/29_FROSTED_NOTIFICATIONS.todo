@@ -1,0 +1,40 @@
+Status: IN_PROGRESS
+Milestone: Readable frosted-glass notifications without handheld overlap.
+Dependencies: Completed workstreams 23 and 28.
+
+Purpose:
+Replace the opaque green notice with a themed glass surface and keep messages
+below the website logo without covering the console or its controls.
+
+Tasks:
+- [x] Add translucent blur, subtle border/highlight and a 44px dismiss target.
+- [x] Reserve visible notice space in the play/inspection camera fit.
+- [x] Verify normal/error/long notices, resize, dismissal and drawer reparenting.
+- [ ] Review actual captures; release normally and independently verify production.
+- [ ] Reconcile affected documentation, ledger and owned continuity.
+
+Acceptance criteria:
+- Normal and error messages use readable translucent glass, not opaque green.
+- The notice remains below the website logo and inside the viewport.
+- The whole default handheld and power target remain clear of notice and dock
+  at desktop, phone and short landscape sizes.
+- Dismissal or moving a notice into tools restores the ordinary camera fit.
+- Native gameplay, saves, input, fullscreen and cartridge behavior remain intact.
+
+Completion evidence:
+- Syntax/build/11units pass. Adaptive-lane branding/framing cases pass42.0s;
+  explicit SwiftShader expanded branding passes22.5s. Actual desktop,
+  short-landscape and long-error phone captures reviewed.
+- Expanded existing test checks actual projected visible geometry, styling,
+  real invalid-file error, synthetic long text, inspection/drawer/dismissal.
+  Final five-case Edge batch passes1.7m, including explicit power-target
+  clearance, both insertions, native input/lighting and real fullscreen/saves.
+  Publication and independent production verification pending.
+
+Completion log:
+- 2026-11-04: Actual clearance catches initial vertical-shift sign error.
+  Below-only first fix makes landscape too small; selecting the larger
+  below/beside safe region preserves useful console size. Poll ordinary fit
+  rather than sampling a stale pre-observer camera during reparenting.
+- 2026-11-04: User rejects the opaque notification covering the handheld;
+  requests frosted glass and no console overlap.

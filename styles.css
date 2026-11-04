@@ -115,11 +115,12 @@ dialog::backdrop { background: #0009; backdrop-filter: blur(5px); }
 .display-setting { margin-top: 22px; }
 #shader, #checkpoint-slot { padding: 9px 10px; border: 1px solid #a181be66; border-radius: 8px; background: #2b2138; color: #e2d5ee; font-size: 11px; }
 .drawer-footer { display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #a8b4c1; border-top: 1px solid var(--line); padding-top: 20px; }
-.notice { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #223025; color: #d0dfbe; border: 1px solid #536a45; border-radius: 5px; padding: 10px 13px; font-size: 11px; line-height: 1.6; }
+.notice { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: linear-gradient(135deg, #ffffff18, #ffffff03), #251c327a; color: #f3edf9; border: 1px solid #dcc5ff55; border-radius: 16px; padding: 10px 12px; font-size: 11px; line-height: 1.6; box-shadow: 0 10px 28px #08051040, inset 0 1px #ffffff24; backdrop-filter: blur(18px) saturate(135%); -webkit-backdrop-filter: blur(18px) saturate(135%); pointer-events: auto; }
+#notice-text { min-width: 0; max-height: min(18dvh, 112px); overflow: auto; overflow-wrap: anywhere; }
 #notice-host { margin-top: 12px; width: 100%; pointer-events: none; }
 #notice-host .notice button { pointer-events: auto; }
-.notice.error { background: #34231e; color: #f1bba4; border-color: #96614d; }
-.notice button { border: 0; padding: 0 3px; background: none; font-size: 22px; color: inherit; }
+.notice.error { background: linear-gradient(135deg, #ffffff18, #ffffff03), #4225338c; color: #ffe4dc; border-color: #efb4a566; }
+.notice button { flex: 0 0 44px; width: 44px; height: 44px; border: 1px solid #dcc5ff26; border-radius: 10px; padding: 0; background: #ffffff08; font-size: 22px; color: inherit; }
 #drawer-notice-host .notice { margin: 0 0 20px; }
 .help-dialog { max-width: 570px; width: calc(100% - 32px); max-height: 85dvh; border-radius: 12px; padding: 35px; font-size: 12px; }
 .help-dialog .close-button { position: absolute; top: 15px; right: 15px; }

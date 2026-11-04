@@ -3,6 +3,29 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
+## Frosted notifications and clear handheld
+
+The expanded existing branding/notice regression checks actual translucent
+computed styling, 44px dismissal, five viewport sizes, normal notices,
+a real invalid-file error, an explicitly synthetic long-text fixture,
+inspection, drawer reparenting and return to the ordinary camera on dismissal.
+Projected actual visible vertices prove whole-handheld separation; the power
+target separately retains full containment and dock/message clearance.
+
+Syntax/build and 11 units pass. The final adaptive-lane branding/framing pair
+passes in 42.0s; the expanded branding case also passes explicit
+Chromium/SwiftShader in 22.5s. Actual desktop, short landscape and long-error
+phone captures are reviewed. An initial camera translation has the wrong sign;
+the real clearance test catches it. The first corrected below-only layout
+passes, but visual review finds unnecessary landscape shrinkage, so two
+safe-region candidates retain the larger fit. A software run also exposes a
+stale immediate camera read after notice reparenting; the test now polls
+against the unchanged ordinary-fit formula rather than that stale sample.
+No clearance assertions or timeouts are relaxed. Publication and independent
+production verification remain pending. A final five-case Edge batch including
+the expanded power-target assertions, both actual insertions, native input/
+lighting and quick-actions/fullscreen/save/restart passes in 1.7m.
+
 ## Main-page logo contrast
 
 The header alone adds a static alpha-shaped violet glow and tight dark

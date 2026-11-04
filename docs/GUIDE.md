@@ -65,6 +65,10 @@ START/SELECT and the geometric **ZANARK** badge are molded in the shell's plasti
 There is no front POWER or BBA-001 print; the power light remains.
 Normal play is slightly closer while retaining the whole handheld and clear UI;
 inspection and cartridge insertion retain their separate framing.
+Notifications use translucent frosted glass below the website logo. While a
+notice is visible, the handheld fits beside it on wide screens or below it on
+phones, clear of the message and toolbar. Dismiss it to restore the close view.
+Long messages scroll inside the card; errors keep a distinct warm tint.
 The active favicon is an original indigo handheld whose
 stepped shoulders and bowed lower edge match the actual 3D shell.
 

@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Frosted notices without console overlap:
+  User rejects opaque green notification over the handheld. Add translucent
+  themed glass, backdrop blur/highlight, warm error tint, bounded scrollable
+  text and44px dismiss. Observe header notice size; compare safe space below
+  versus beside it, choosing the larger camera fit without scaling geometry.
+  Dismissal/drawer reparenting restore the normal close view.
+  Actual projected vertices catch an initial vertical-translation sign error.
+  Below-only first fix looks too small in landscape, so retain larger side fit.
+  Software qualification exposes a stale test camera read after reparenting;
+  poll the original formula instead. No assertion/deadline relaxation.
+  Final focused qualification and publication recorded in workstream29.
 - 2026-11-04 / Molded hardware live:
   Source7843db880a52539d6e2050f79070f5829947a393 /
   normal Pages41867840972 passes build/11units/all39cases13+13+13/deploy.

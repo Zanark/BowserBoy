@@ -340,6 +340,17 @@ normal flow directly below the header logo or inside an open drawer. Opening too
 keys but does not pause the core. Fullscreen retains the entire scene and its
 tools, rather than only the source iframe.
 
+Notices share translucent violet glass, an 18px backdrop blur, a subtle
+highlight/border and a 44px dismiss target. Error glass has a warmer tint.
+Long text scrolls within a viewport-bounded height rather than growing over the
+scene. The scene's existing ResizeObserver also watches the header notice host.
+When a notice is visible there, camera fitting evaluates two clear rectangles:
+below the notice or to its right, both above the hint/dock. It selects the
+larger possible fit, preserving model scale, aspect and native pixels.
+Moving the notice into tools, dismissal and viewport changes recompute the
+fit; without a header notice the existing close camera remains unchanged.
+No new per-frame DOM measurement loop or emulator restart is introduced.
+
 The separate screen-only fullscreen target copies the same retained post-shader
 framebuffer already feeding the LCD. A lightweight CSS bezel matches the physical
 4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and monochrome wordmark.
