@@ -1,5 +1,10 @@
 # Bowser Boy Advance
 
+![BowserBOY ADVANCE wordmark](assets/logo.png)
+
+*The supplied purple-and-white logo, with its background removed and a clear
+gap between BowserBOY and ADVANCE.*
+
 **A little escape, on your desk.** A local-first browser GBA player inside an
 actual 3D indigo handheld, built for static hosting on GitHub Pages.
 
@@ -28,7 +33,8 @@ The first visit starts **powered off**, with a dark LCD. Pick up the handheld
 and use its physical bottom-edge switch. A short, original Game Boy-inspired
 logo reveal and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
-The website has a new original handheld/infinity logo and matching favicon.
+The website header uses the supplied transparent wordmark. The original
+handheld/infinity favicon remains.
 
 ![The original power-on sequence on the handheld LCD](docs/images/startup.png)
 

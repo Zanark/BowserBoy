@@ -49,11 +49,18 @@ claim of booting on physical retail hardware.
 Its optional audio-test variant emits an original PSG test tone, not music or
 samples taken from a game. The ordinary bundled demo remains byte-identical.
 
-The refreshed handheld/infinity logo, SVG favicon, LCD startup animation and
+The retained handheld/infinity SVG favicon, LCD startup animation and
 three-note synthesized chime are independently authored assets. The user's
 [Game Boy Advance startup reference](https://www.youtube.com/watch?v=AyP1Nj9zU3k)
 informed the white-screen/colored-letter presentation, not an imported video,
 Nintendo logo, BIOS or audio recording. None of those reference bytes is bundled.
+
+The website wordmark in `assets/logo.png` is derived from raster artwork supplied
+by the user on 2026-11-04 for this purpose. Its exterior background/shadow was
+removed, BowserBOY and ADVANCE were separated, and the white outline was rebuilt
+with antialiased edges while retaining the supplied lettering. The original full
+background image is not bundled. This wordmark is not independently authored
+application artwork; no separate upstream license or authorship claim is made.
 
 Playwright is a development/test dependency, not part of the deployed app.
 Its package and transitive packages retain their upstream license notices in

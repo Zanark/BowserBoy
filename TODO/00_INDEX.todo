@@ -14,6 +14,7 @@ BowserBoyAdvance workstreams
 12_AUDIO_RELIABILITY.todo - Native prebuffer, smooth volume/mute and peak protection.
 13_CURVED_LCD_BORDER.todo - Physical inner border fitted to the native CRT curve.
 14_CARTRIDGE_INSERTION.todo - Visible 3D insertion during loading, retained seated cartridge.
+15_SUPPLIED_WORDMARK.todo - Supplied transparent logo with clear word spacing.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -55,3 +56,7 @@ Physical cartridge insertion is deployed from 6f8d2652e6fee36d316f585f1baf242394
 Pages 41766869711 passes build, both complete browser shards (27) and deployment.
 Fresh live checks match 23 exact assets and pass desktop/phone actual insertion,
 desktop refresh and genuine native demo startup in 30.6s. See workstream 14.
+Supplied wordmark is deployed from 5e8788931bc7417c11187eb5d5c28443d849edcc:
+Pages 41768657819 passes build, both complete browser shards (28) and deployment.
+Fresh live checks match 23 exact assets and pass actual transparency, word
+separation, 1440/390/320 header fit and unchanged startup in 24.4s.

@@ -1,0 +1,43 @@
+Status: DONE (deployed and technically verified; new visual approval not claimed)
+Milestone: Use the supplied logo without its background and with separated words
+Dependencies: 11_STARTUP_AND_PERSISTENT_POWER
+Purpose: Replace the website wordmark with the user's purple-and-white artwork,
+  retaining its lettering while separating BowserBOY from ADVANCE.
+
+Tasks:
+- [x] Extract the supplied wordmark without its exterior background/shadow.
+- [x] Preserve white lettering and rebuild clean transparent white edges.
+- [x] Separate the words along a glyph-safe diagonal and add visible spacing.
+- [x] Integrate the cropped PNG into desktop and narrow phone headers.
+- [x] Include PNG in static packaging and serve it with image/png MIME.
+- [x] Verify actual alpha, retained white glyphs, word separation and header fit.
+- [x] Deploy and independently verify live before final public documentation.
+
+Acceptance criteria:
+- The header uses the supplied artwork, not a newly invented replacement.
+- The exterior is transparent; white letters and outline remain visible.
+- BowserBOY and ADVANCE have a clear gap without cutting through glyphs.
+- Header/status content fits at 1440px, 390px and 320px without overlap.
+- Original favicon, LCD startup/chime, shell lettering and emulator stay intact.
+- Public provenance distinguishes supplied artwork from independently drawn assets.
+
+Completion evidence:
+- Edited asset: assets/logo.png, RGBA 991x124, 121099 bytes.
+- Dark/light artwork previews and actual desktop/320px headers visually reviewed.
+- Syntax/build and all ten units PASS.
+- Four focused Edge logo/startup/insertion cases PASS in 39.6s.
+- Two explicit-software logo/startup cases PASS in 24.7s.
+- Source 5e8788931bc7417c11187eb5d5c28443d849edcc / Pages 41768657819:
+  build, both complete browser shards (28 total) and actual deployment PASS.
+- Fresh live checks match all 23 exact public assets and pass both actual
+  logo/startup cases in 24.4s, including alpha/spacing and three header widths.
+
+Completion log:
+- 2026-11-04: User supplies the logo and requests background removal plus space
+  between BowserBOY and ADVANCE. Process the supplied raster locally rather than
+  regenerate its lettering. Initial thresholded exterior has a noisy light fringe
+  on black; reconstruct a clean antialiased white silhouette outline instead.
+- 2026-11-04: Add 52 source pixels between the safely split words. Replace the
+  previous SVG wordmark with cropped transparent PNG; retain the original favicon.
+- 2026-11-04: Full normal release and independent live verification precede
+  final docs/provenance and the refreshed original-startup screenshot.

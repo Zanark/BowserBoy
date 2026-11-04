@@ -86,6 +86,8 @@ controls, malformed values and configuration-string injection.
   releasing it starts the real native demo. Desktop refresh repeats this path.
 - Reduced-motion immediate seating, retained cartridge on a CDN failure and
   zero reinsertion events across actual battery-only power cycles.
+- Actual supplied-logo PNG alpha, retained opaque white lettering and two
+  separated word components, plus no header/status overlap at 1440/390/320px.
 
 The original input-test ROM is generated from readable ARM instructions in
 `scripts/demo-rom.mjs`; it contains no copied Nintendo logo, BIOS or commercial
@@ -304,6 +306,29 @@ desktop/phone insertion cases in 30.6s, including desktop refresh and real nativ
 demo output. Public documentation follows deployment and live verification.
 See `TODO/14_CARTRIDGE_INSERTION.todo`. No new user approval or commercial-ROM
 test is inferred.
+
+## Supplied website wordmark, 2026-11-04
+
+The supplied raster was edited locally, not regenerated: its exterior was
+removed, its lettering retained, and its safely separated word groups given
+52 source pixels of added spacing. A clean antialiased white outline replaces
+the initial noisy extraction fringe. The final asset is 991x124 RGBA.
+Dark/light artwork previews and actual desktop/320px header captures were
+visually reviewed. A browser canvas checks real PNG alpha, preserved opaque
+white pixels and two separate substantial connected components. Actual header
+bounds establish no collision with the status label at 1440/390/320px.
+PNG packaging and image/png MIME are tested through the real static server.
+
+Syntax/build and all ten units pass. Four focused Edge logo/startup/insertion
+cases pass in 39.6s; two explicit-software logo/startup cases pass in 24.7s.
+Source `5e8788931bc7417c11187eb5d5c28443d849edcc` passed build, both complete
+browser shards (28 cases) and actual deployment in Pages `41768657819`.
+Fresh live checks matched all 23 exact assets and passed both real logo/startup
+cases in 24.4s. The original LCD startup/chime, favicon and shell lettering are
+unchanged. This is technical verification, not new user visual acceptance or
+an independent authorship/license claim for the supplied artwork.
+Final provenance/docs and refreshed startup capture follow deployment.
+See `TODO/15_SUPPLIED_WORDMARK.todo`.
 
 ## Not verified here
 

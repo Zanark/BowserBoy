@@ -418,6 +418,7 @@ from a trusted copy of this application.
 | Path | Responsibility |
 |---|---|
 | `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
+| `assets/logo.png`, `assets/brand-mark.svg` | Supplied transparent header wordmark and original favicon |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
 | `src/lighting.js` | Modeled lamp, shadowed spotlight, finite wood bounce and sampled LCD area light |
 | `src/app.js` | File selection, host lifecycle, UI and user save actions |
@@ -433,6 +434,11 @@ The server is loopback-only and serves only public allowlisted files. The
 build replaces only the generated `dist` directory and adds `.nojekyll`.
 Documentation/private context cannot enter the deployed artifact through a
 recursive repository copy.
+The supplied header wordmark is a cropped RGBA PNG with transparent exterior
+and separated word groups. The public allowlist includes PNG and the development
+server supplies image/png MIME. Responsive dimensions preserve the raster's
+aspect ratio; original favicon, LCD startup artwork and shell lettering remain
+separate assets. See the supplied-artwork provenance in THIRD_PARTY_NOTICES.md.
 Only `three.module.js`, its relative `three.core.js` dependency, the unmodified
 `RectAreaLightUniformsLib.js` / `RectAreaLightTexturesLib.js` lookup helpers and
 the exact MIT license are mapped from the pinned package to public `vendor` paths.

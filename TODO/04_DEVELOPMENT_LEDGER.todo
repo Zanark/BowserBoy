@@ -278,3 +278,18 @@ Completion log:
   both complete browser shards (27) and actual deployment. Fresh live checks
   match all 23 assets and pass desktop/phone insertion and desktop refresh in
   30.6s. Final public documentation follows deployment and live verification.
+- 2026-11-04 / Supplied transparent website wordmark:
+  User supplies purple-and-white raster artwork and requests removing the
+  background plus spacing BowserBOY from ADVANCE. Preserve its lettering rather
+  than generate a substitute. Initial threshold extraction leaves noisy light
+  edges on black; reconstruct a clean antialiased white outline. Safely split
+  the words diagonally and add 52 source pixels; cropped result is 991x124 RGBA.
+  Replace header SVG with PNG, add PNG allowlist/MIME and responsive sizing.
+  Keep original favicon, LCD startup/chime and physical shell lettering.
+  Four focused Edge cases pass (39.6s), two software cases pass (24.7s), all
+  ten units and syntax/build pass. Actual canvas alpha/white/two-component
+  checks and 1440/390/320 bounds establish the requested asset/layout behavior.
+  5e8788931bc7417c11187eb5d5c28443d849edcc / Pages 41768657819 passes full
+  build, both browser shards (28) and deployment. Fresh live checks match all
+  23 assets and pass logo/startup in 24.4s. Final public docs follow deployment;
+  distinguish supplied artwork from independently authored favicon/startup.
