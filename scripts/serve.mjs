@@ -14,7 +14,7 @@ if (!Number.isInteger(port) || port < 1 || port > 65535 || !/^\/(?:[\w-]+\/)*$/.
 const dist = args.includes('--dist');
 const files = new Set((await siteFiles()).map((file) => file.replaceAll('\\', '/')));
 files.add('assets/pixel-lab.gba');
-const types = { html: 'text/html', css: 'text/css', js: 'text/javascript', svg: 'image/svg+xml', txt: 'text/plain', gba: 'application/octet-stream' };
+const types = { html: 'text/html', css: 'text/css', js: 'text/javascript', svg: 'image/svg+xml', png: 'image/png', txt: 'text/plain', gba: 'application/octet-stream' };
 
 createServer(async (request, response) => {
   try {

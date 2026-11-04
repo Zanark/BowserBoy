@@ -17,7 +17,7 @@ export async function siteFiles() {
   const files = ['index.html', 'player.html', 'styles.css', ...vendor.keys()];
   for (const directory of ['src', 'assets']) {
     for (const file of await readdir(directory, { withFileTypes: true })) {
-      if (file.isFile() && /\.(js|svg)$/.test(file.name)) files.push(join(directory, file.name));
+      if (file.isFile() && /\.(js|svg|png)$/.test(file.name)) files.push(join(directory, file.name));
     }
   }
   return files;

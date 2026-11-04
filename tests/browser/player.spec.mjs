@@ -525,6 +525,58 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
 });
 
+test('supplied wordmark has a transparent background, separated words and a responsive header', async ({ page, request }) => {
+  await page.goto('./');
+  const logo = page.locator('.desk-heading img');
+  await expect(logo).toBeVisible();
+  const response = await request.get('assets/logo.png');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toBe('image/png');
+  const artwork = await logo.evaluate(async image => {
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    const { data } = context.getImageData(0, 0, canvas.width, canvas.height);
+    const seen = new Uint8Array(canvas.width * canvas.height);
+    let transparent = 0, white = 0;
+    const components = [];
+    for (let pixel = 0; pixel < seen.length; pixel++) {
+      if (data[pixel * 4 + 3] === 0) transparent++;
+      if (data[pixel * 4 + 3] > 250 && Math.min(...data.subarray(pixel * 4, pixel * 4 + 3)) > 240) white++;
+      if (seen[pixel] || data[pixel * 4 + 3] < 128) continue;
+      const queue = [pixel];
+      seen[pixel] = 1;
+      for (let cursor = 0; cursor < queue.length; cursor++) {
+        const current = queue[cursor], x = current % canvas.width, y = Math.floor(current / canvas.width);
+        for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+          if (x + dx < 0 || x + dx >= canvas.width || y + dy < 0 || y + dy >= canvas.height) continue;
+          const next = current + dx + dy * canvas.width;
+          if (seen[next] || data[next * 4 + 3] < 128) continue;
+          seen[next] = 1;
+          queue.push(next);
+        }
+      }
+      if (queue.length > 1000) components.push(queue.length);
+    }
+    return { transparent: transparent / seen.length, white, words: components.length };
+  });
+  expect(artwork.transparent).toBeGreaterThan(.1);
+  expect(artwork.white).toBeGreaterThan(1000);
+  expect(artwork.words).toBe(2);
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const bounds = await logo.boundingBox();
+    const status = await page.locator('.desk-heading > span').boundingBox();
+    expect(bounds.x).toBeGreaterThanOrEqual(0);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(status.x - 5);
+    expect(status.x + status.width).toBeLessThanOrEqual(width);
+    await page.locator('.desk-heading').screenshot({ path: test.info().outputPath(`logo-header-${width}.png`) });
+  }
+});
+
 test('first visit is off, original startup plays only on the power switch, and idle power survives refresh', async ({ page, request }) => {
   await page.addInitScript(() => {
     window.bootEvents = [];
