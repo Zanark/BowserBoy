@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Themed icon dock, native speed, independent checkpoint slots and orbital startup.
 Dependencies: Completed workstreams 08, 09, 11, 17 and 18.
 
@@ -14,8 +14,8 @@ Tasks
 [x] Safe battery-only physical off/on restart, not an instant-state reset.
 [x] Theme host and actual native settings; reuse transparent supplied artwork.
 [x] Larger original dark switch and finite orbiting-star LCD startup.
-[ ] Focused and complete release gates, actual visual and live verification.
-[ ] Post-deployment public guides, causal development ledger and private journal.
+[x] Focused and complete release gates, actual visual and live verification.
+[x] Post-deployment public guides, causal development ledger and private journal.
 
 Acceptance criteria
 -------------------
@@ -32,7 +32,11 @@ Final nine focused Chromium/SwiftShader cases pass5.2m, including new dock,
 storage slots, native speed,16s autosave suppression, exact paused LCD restore,
 physical restart, native settings, startup, insertion and power target geometry.
 Actual startup/native panel and desktop/320px dock images reviewed.
-Not yet deployed. Technical checks do not imply user visual approval.
+Source1785a15936b9bb7328a415bdb6fae12204c6bcdc / Pages41803699865 passes
+build,11 units, both complete browser shards35 and actual deployment.
+Fresh live26-asset identity match and eight real browser cases pass2.0m.
+Public guides/provenance/current figures and causal ledger follow deployment.
+Technical checks do not imply user visual approval. Chaptered book is still separate/incomplete.
 
 Completion log
 --------------
@@ -43,3 +47,6 @@ already-configured2x ratio is genuinely changed; read retained paused framebuffe
 instead of awaiting the native screenshot API's never-arriving paused frame.
 Visual review caught a312px max-width interaction causing an orphan icon row.
 Now all13 playing icons fit two rows at320px with44px targets.
+Deployed and independently verified before final public documentation. Backups
+retain their compatible single-session format; slot collection export is not
+claimed. Future color variants remain inactive. No commercial-ROM test was run.

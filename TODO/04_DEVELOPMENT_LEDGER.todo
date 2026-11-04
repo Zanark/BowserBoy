@@ -14,6 +14,29 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Icon dock and orbital startup:
+  User requested icon-only quick actions, full screen, native2x/3x/4x,
+  keybindings, autosave, independent slots, safe physical restart and prettier
+  host/native UI. Restored the original dark cap/silver-grip switch design at
+  larger dimensions while keeping its visible front placement and44px target.
+  Preserved legacy manual as Slot1; added manual2/manual3 without replacing
+  automatic or battery records. Backups remain compatible single-session files.
+  Reused exact transparent supplied artwork on shell/status/startup/dialogs;
+  the newest attachment was fully opaque. Derived star crop drives original
+  front/back orbit motion and favicon; no alternate colors were activated.
+  Verified pinned speed handlers call actual native ratio/toggle APIs.
+  First fixture incorrectly expected default2x ratio to be set again; changed
+  order3/4/2/1 so all changes are observed. A paused native screenshot awaited
+  a future frame forever; compare retained actual LCD instead. Fixed the
+  intermediate off-state update in restart and a max-width mismatch producing
+  an orphan third icon row at320px. No assertions/gates disabled.
+  Syntax/build/11 units; full35 Edge cases6.6m; final nine SwiftShader cases5.2m
+  PASS. Source1785a15936b9bb7328a415bdb6fae12204c6bcdc /
+  Pages41803699865 passes build, both full browser shards35 and deployment.
+  Fresh live26 exact asset match; eight real browser cases2.0m PASS.
+  Startup/native/dock and bounded current figure sheet reviewed. Public
+  guides/provenance/TODOs/figures follow deployment; private journal retained.
+  This does not claim user aesthetic approval or completion of the chaptered book.
 - 2026-11-03 / Foundation:
   Started from one README heading. Chose an established WebAssembly emulator
   rather than building a CPU emulator for a UI prototype. Pin 4.2.3 and use a

@@ -18,7 +18,7 @@ BowserBoyAdvance workstreams
 16_PRESSED_CONTROL_LIGHTING.todo - Actual control apertures and correct pressed-cap visibility.
 17_COZY_ROOM_AND_VISIBLE_POWER.todo - DONE: large paper lantern, full-width thick table, room lights, power/LCD.
 18_ORBITAL_WORDMARK.todo - DONE: supplied transparent purple orbital logo, variants inactive.
-19_COMMAND_DOCK_AND_ORBIT_STARTUP.todo - IN_PROGRESS: icon actions, speed, slots and orbital startup.
+19_COMMAND_DOCK_AND_ORBIT_STARTUP.todo - DONE: themed icon actions, native speed, slots and orbital startup.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -84,3 +84,10 @@ build, ten units, both full browser shards (31) and deployment PASS.
 Independent live23-asset match and two actual logo/startup cases26.6s.
 Supplied transparent PNG is unchanged; future variants remain inactive.
 See workstream18. Final provenance/guide/ledger updates follow deployment.
+
+Command dock/orbital startup is deployed from
+1785a15936b9bb7328a415bdb6fae12204c6bcdc / Pages41803699865:
+build,11 units, both complete browser shards35 and actual deployment PASS.
+Independent live26-asset match and eight cases2.0m verify real core speeds,
+slots/autosave/physical restart, branding, native UI and phone/power layout.
+Final guides/provenance/current figures/causal ledger follow that deployment.

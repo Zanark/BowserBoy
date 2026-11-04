@@ -49,7 +49,7 @@ claim of booting on physical retail hardware.
 Its optional audio-test variant emits an original PSG test tone, not music or
 samples taken from a game. The ordinary bundled demo remains byte-identical.
 
-The retained handheld/infinity SVG favicon, LCD startup animation and
+The unused legacy handheld/infinity SVG, original LCD animation code and
 three-note synthesized chime are independently authored assets. The user's
 [Game Boy Advance startup reference](https://www.youtube.com/watch?v=AyP1Nj9zU3k)
 informed the white-screen/colored-letter presentation, not an imported video,
@@ -69,6 +69,11 @@ accents; no background extraction, regeneration or recoloring was applied.
 The opaque-background reference and future color-variant sheet are not included
 in the static release. No alternate colors are enabled. Supplied-artwork
 provenance and the absence of an independent authorship/license claim remain.
+The same supplied PNG is now used on the shell, idle/loading LCD, orbital
+startup and settings panels. `assets/star.png` is a transparent crop/resample
+from pixel rectangle(1650,90)-(1835,280) of that supplied image, used for
+revolving sprites and the active favicon. It is not independently authored
+star artwork. The updated orbit motion and starfield are original code.
 
 Playwright is a development/test dependency, not part of the deployed app.
 Its package and transitive packages retain their upstream license notices in

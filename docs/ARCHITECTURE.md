@@ -312,6 +312,18 @@ the scene's lower UI area or inside an open drawer. Opening tools releases held
 keys but does not pause the core. Fullscreen retains the entire scene and its
 tools, rather than only the source iframe.
 
+The responsive quick dock reuses those same handlers for fullscreen, keybindings,
+checked save/load, autosave and restart. `src/icons.js` supplies consistent SVGs,
+accessible names and tooltip labels. Each button retains a 44px target; the 320px
+layout wraps into two rows. Manual slot selection opens/focuses the existing
+drawer selector rather than introducing a second save implementation.
+
+Speed choices update validated native `ff-ratio`, `fastForward` and `slowMotion`
+options through the same preference pipeline. The adapter's `changeSettingOption`
+calls reach pinned `setFastForwardRatio` and `toggleFastForward` core methods.
+They do not change Three.js timing or pretend the host can guarantee 4x throughput.
+Native-menu changes remain compatible and round-trip back into the dock.
+
 Accessible, transparent DOM hit targets are projected onto the actual physical
 mesh buttons each frame. They supply pointer capture, touch and keyboard
 activation, not the artwork. Their positions track the real camera/model;
@@ -328,6 +340,9 @@ without a shader field gain CRT Geom without losing sound/remapping.
 Preferences use localStorage key `bowser-boy-advance-preferences`. Missing data
 uses defaults; corrupt/denied reads and failed writes are reported explicitly.
 Failed writes retain active session settings without claiming persistence.
+The optional boolean `autoSave` defaults true for older preference records;
+explicit false survives refresh. Save-storage failures turn automatic captures
+off for recovery and cannot be undone accidentally by a sound preference update.
 
 `src/keyboard.js` is shared by the host and player iframe. It tracks the action
 originally pressed, ignores repeated keydowns, and releases on keyup/blur even
@@ -389,12 +404,17 @@ Only the power handler changes this intent after its checked device write.
 On first use the missing console record means off; inserting a cartridge leaves
 it off. Hydration serializes tools until the remembered console is restored.
 
-`src/startup.js` draws an original 240x160 white/indigo logo reveal into the
-same LCD texture/light path for 2.4 seconds. Reduced motion uses a static
+`src/brand.js` decodes the supplied transparent logo and derived star crop before
+constructing the scene. The same artwork is used on the bezel/battery cover,
+idle/loading status LCD, header and dialogs. Decode failures are explicit.
+`src/startup.js` draws the wordmark over a purple starfield, with three supplied
+star sprites crossing behind/in front of it along elliptical orbits, into the
+same 240x160 LCD texture/light path for 3.2 seconds. Reduced motion uses a static
 500 ms presentation. An original three-note sine-wave chime follows mute/volume;
 audio permission failures are reported without blocking gameplay indefinitely.
-No Nintendo recording, boot ROM or video is loaded. SVG header and favicon
-assets are original project artwork.
+No Nintendo recording, boot ROM or video is loaded. Animation/chime are original;
+the wordmark/star artwork is supplied, not independently authored. The active
+favicon reuses the cropped star.
 
 Only a genuine off-to-on switch action calls that presentation, then cold-boots
 the cartridge with battery save data. Refresh while already on restores the
@@ -424,7 +444,9 @@ flowchart TD
 adds a separate `device` store without deleting/replacing the existing `games`
 store or its records.
 The primary key is the ROM's SHA-256 digest. A record contains public file
-metadata, runtime identity and independent `automatic` / `manual` slots.
+metadata, runtime identity and independent `automatic`, `manual`, `manual2` and
+`manual3` slots. `manual` remains the old quick save, so no destructive schema
+migration or reinterpretation of existing binary data is needed.
 Each slot has binary `state`, optional binary `sram` and an ISO timestamp.
 Optional `battery` contains nullable `sram` and its capture timestamp. A
 `bootMode` of `battery` suppresses automatic checkpoint restoration after a
@@ -444,7 +466,9 @@ the battery first and retains the live runtime if either write fails.
 Writes read/update a record in one read-write transaction. Success is reported
 only on transaction completion, not the individual request. This prevents
 concurrent slots from erasing one another and treats aborted/quota-failed writes
-as failures. The rolling slot never replaces the manual slot.
+as failures. The rolling slot never replaces a manual slot. Selected-slot imports
+and saves preserve the other manual checkpoints. Backup format/runtime identity
+stay unchanged: each external file contains one captured session, not all slots.
 
 The engine also maintains its own Emscripten save filesystem. It is not the
 application's checkpoint-success authority. Runtime ROM/core caches and settings
@@ -461,7 +485,8 @@ from a trusted copy of this application.
 | Path | Responsibility |
 |---|---|
 | `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
-| `assets/logo.png`, `assets/brand-mark.svg` | Supplied transparent header wordmark and original favicon |
+| `assets/logo.png`, `assets/star.png`, `src/brand.js` | Shared supplied branding, derived star/favicon and checked decoding |
+| `src/icons.js` | Quick-dock SVGs, names, tooltip labels and speed badge |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
 | `src/lighting.js` | Paper lantern, one-map shadow source, finite paper/wood light, optional room lights and sampled LCD |
 | `src/app.js` | File selection, host lifecycle, UI and user save actions |
@@ -482,8 +507,9 @@ with transparent exterior. Its HTML intrinsic dimensions match that supplied
 asset; no alternate-color assets or switcher are shipped.
 The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
-aspect ratio; original favicon, LCD startup artwork and shell lettering remain
-separate assets. See the supplied-artwork provenance in THIRD_PARTY_NOTICES.md.
+aspect ratio. The same supplied image replaces the old separate shell/startup
+wordmarks; no recreation or recoloring is used. See supplied-artwork provenance
+in THIRD_PARTY_NOTICES.md. The old SVG favicon is an unused legacy asset.
 Only `three.module.js`, its relative `three.core.js` dependency, the unmodified
 `RectAreaLightUniformsLib.js` / `RectAreaLightTexturesLib.js` lookup helpers and
 the exact MIT license are mapped from the pinned package to public `vendor` paths.
@@ -504,5 +530,5 @@ test-level browser shards on Ubuntu 24.04, with one worker per runner.
 ## Deliberately not in this prototype
 
 No cloud accounts/sync, server ROM library, offline/PWA guarantee, raw `.sav`
-interchange, multiple manual slots, GB/GBC support or complete game compatibility
+interchange, GB/GBC support or complete game compatibility
 matrix. Those are future product decisions, not hidden capabilities.

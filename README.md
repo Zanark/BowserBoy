@@ -28,7 +28,7 @@ approximations, not a full global-illumination simulation.
 ![Deployed lantern, enlarged handheld screen and optional room illumination](docs/images/cozy-room.png)
 
 *Left: the large clipped lantern and actual thick tabletop. Center: lantern-only
-play view, with the larger LCD and visible cream power slider. Right: lamp off,
+play view, with the larger LCD and enlarged dark power slider. Right: lamp off,
 room lights on. The console remains off in all three views.*
 
 ![The original demo with only the LCD lighting the room](docs/images/lcd-light.png)
@@ -42,21 +42,22 @@ orientation and colors, rather than a fixed room-wide fill.*
 The first visit starts **powered off**, with a dark LCD. Pick up the handheld
 and use its larger, visible lower-front power slider. Its projected touch target
 is at least 44 by 44 pixels without covering the LCD.
-A short, original Game Boy-inspired
-logo reveal and synthesized chime play on the actual LCD only when switching
+A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
-The website header uses the supplied transparent wordmark. The original
-handheld/infinity favicon remains.
+The supplied transparent wordmark also appears on the shell, idle/loading LCD
+and settings panels. The active favicon is a star cropped from that artwork.
 
 ![The original power-on sequence on the handheld LCD](docs/images/startup.png)
 
-*An independently drawn Bowser Boy Advance startup, not a Nintendo BIOS,
-manufacturer logo or recording. Infinite battery; no automatic power-off timer.*
+*The supplied purple wordmark with original star-orbit motion and a subtle
+starfield, not a Nintendo BIOS or recording. Reduced motion keeps a static
+presentation. Infinite battery; no automatic power-off timer.*
 
 Refresh remembers the switch position and the last inserted cartridge locally.
 If it was on, the cartridge reloads using its latest committed resume point,
 **without replaying startup**. If it was off, it stays off. Inserting a cartridge
-does not turn it on. Only the physical switch changes the power state.
+does not turn it on. The physical switch and the explicit dock restart action
+are the only ways to cycle power.
 Browser refresh still creates a new emulator process; unsaved frames are not
 continuous across navigation. Save a checkpoint before refreshing.
 
@@ -135,6 +136,18 @@ Rotating the model naturally hides its front-facing game display.*
 
 ## Controls
 
+![The themed icon quick-access dock on the deployed website](docs/images/quick-controls.png)
+
+*Named, keyboard-accessible 44px icon controls, with hover/focus labels. On
+narrow phones the same actions fit two rows without covering the LCD.*
+
+The dock exposes inspection, put-down, lamp/room lighting and Cartridges, plus
+fullscreen, **1x/2x/3x/4x native speed**, keybindings, a persistent autosave toggle,
+save/load for the selected checkpoint slot, slot selection and **safe off/on
+restart**. Restart commits in-game battery data and creates a fresh runtime;
+it never restores an instant checkpoint. Actual fast-forward throughput depends
+on the browser/device. The drawer and real EmulatorJS panel share the purple theme.
+
 | Action | Keyboard |
 |---|---|
 | Move | Arrow keys |
@@ -196,13 +209,16 @@ view. Scroll within it for sound settings and help.*
 
 ## Keep your progress
 
-- **Auto-save:** one rolling checkpoint every 15 seconds while a game is loaded;
-  the newest stored checkpoint resumes when the same ROM is selected again.
-- **Save checkpoint:** a separate manual slot, unaffected by rolling auto-saves.
-  **Restore** rolls back to that slot.
+- **Auto-save:** one rolling checkpoint every 15 seconds while enabled;
+  its on/off choice is remembered across refreshes.
+  The newest stored checkpoint resumes when the same ROM is selected again.
+- **Save checkpoint:** three independent manual slots, unaffected by rolling
+  auto-saves. Original quick saves remain in **Slot 1**. Choose a slot in
+  Cartridges or through the dock's slot icon; save/load uses that selection.
 - **Export / Import backup:** carry the current session in a `.bba-save` file.
   The exact ROM content and runtime version must match; checksums detect damaged
-  backup data. Export works even if browser checkpoint writes fail.
+  backup data. Export works even if browser checkpoint writes fail. Each backup
+  contains one session, not every slot; import replaces only the selected manual slot.
 
 Checkpoints include an instant emulator state and cartridge battery-save bytes
 when the game provides them. Use the game's own save menu as usual.
@@ -224,6 +240,13 @@ tests the site, then publishes **only `dist`** on a push to `main` or a manual
 workflow dispatch. Pull requests run checks without deploying.
 
 Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
+The icon-dock/orbital-startup release is
+`1785a15936b9bb7328a415bdb6fae12204c6bcdc`, Pages run `41803699865`:
+build, 11 units, both complete browser shards (35 cases) and deployment succeeded.
+Independent production checks matched all 26 public assets and passed eight
+real dock/slot/speed/autosave/restart/native/startup/power cases before these
+documentation updates. This is technical release evidence, not user visual approval.
+
 The dark-room, 3D, native-settings and real-power redesign was deployed from
 `d551f4269b58fc31e496c4d1bc8d9d6110817f79` on 2026-11-04, following successful
 build and both browser shards (Pages run `41746728238`). A fresh live-browser

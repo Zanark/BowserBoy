@@ -7,19 +7,25 @@ when the player captures a checkpoint or switches the power off, if the cartridg
 cartridge's own save point is not necessarily the exact current frame.
 
 **Checkpoint:** the instant emulator state plus available battery-save bytes.
-Auto-save updates one rolling slot every 15 seconds; Save checkpoint updates a
-separate manual slot. Selecting the same ROM normally loads the newest slot. Restore
-returns to the manual slot and, with auto-save enabled, updates the rolling slot
+Auto-save updates one rolling slot every 15 seconds; Save checkpoint updates the
+selected one of three independent manual slots. The original manual checkpoint
+remains Slot 1; Slots 2 and 3 do not replace it. The dock's slot icon opens the
+selector; its save/load icons use that selection. Selecting the same ROM normally
+loads the newest checkpoint across all four slots. Restore
+returns to the selected manual slot and, with auto-save enabled, updates the rolling slot
 to the exact restored checkpoint bytes. Import likewise keeps its validated
 source checkpoint as the new resume point; neither immediately recaptures a
 possibly stale native frame. Subsequent normal timer captures can advance it.
 
 **Backup:** Export captures the current running session directly to a downloaded
 `.bba-save` file, independently of whether a browser checkpoint write succeeds.
-It is a portable copy, not a raw `.sav` file or a cloud upload.
+It is a portable copy of one session, not the entire slot collection, a raw
+`.sav` file or a cloud upload. Export separate restored sessions if multiple
+checkpoints need external copies.
 
 The auto-save toggle affects capture, not whether an existing checkpoint resumes
-when a cartridge is selected. Turning it off lasts for the current page session.
+when a cartridge is selected. Its on/off choice persists across refreshes, just
+like sound and keys. Failed preference writes explicitly apply only to this session.
 Use manual save/export before leaving; no asynchronous final write is guaranteed
 after a tab or browser shuts down.
 
@@ -55,6 +61,9 @@ still runs, a power cycle retains the battery save only in memory for this
 page session; an explicit warning is shown. Globally denying IndexedDB may
 also prevent the pinned emulator itself from starting.
 The separate Pause action in Cartridges preserves the current running session.
+The dock's restart icon uses this same checked off/on path, including a visible
+off interval. It does not use native reset or checkpoint restore. If either
+required persistent write fails, the action stops without discarding the live game.
 
 ## Continue tomorrow
 
@@ -78,7 +87,8 @@ along with its saves; it is not a backup or cloud synchronization.
 
 Imports check application format/version, runtime identity, ROM digest, size,
 binary encoding and state/SRAM checksums before replacing progress. Import
-overwrites the manual slot if storage is available. If storage is unavailable,
+overwrites only the selected manual slot if storage is available, preserving
+the other manual slots. If storage is unavailable,
 the session can be restored without promising persistent browser storage.
 
 These are EmulatorJS 4.2.3 / mGBA checkpoints. Other emulators and future core

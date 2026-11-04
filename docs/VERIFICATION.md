@@ -3,6 +3,30 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
+## Current command-dock release
+
+Application `1785a15936b9bb7328a415bdb6fae12204c6bcdc` is deployed by
+Pages `41803699865`: build, 11 units, both complete browser shards (18+17) and deploy
+PASS. Before publication the full Edge suite passed 35/35 in 6.6m; final focused
+Chromium/SwiftShader checks passed 9/9 in 5.2m.
+
+Independent production verification matched all 26 exact public asset hashes
+against that source and passed eight real Edge cases in 2.0m: icon accessibility/
+44px targets/two-row 320px layout/fullscreen/section shortcuts, checked independent
+slots, actual core ratio/toggle calls at 1x/2x/3x/4x, 16 seconds with autosave disabled,
+exact retained paused-LCD restoration, fresh physical restart identity, persistent
+autosave and slot data after reload, native settings, actual logo/star rendering,
+static reduced motion, supplied image identity and startup/power geometry.
+The storage-only case uses synthetic bytes; real save/restore/restart cases use
+the original Pixel Lab core. Native `screenshot()` can wait indefinitely while
+paused, so the new paused restore check reads the already retained actual LCD.
+
+`quick-controls.png` and `quick-controls-mobile.png` show the deployed icon dock;
+startup/native figures were refreshed from actual production-browser captures.
+Other refreshed geometry/lighting figures come from the complete local browser
+run against the verified source implementation. Technical/visual review is not
+human aesthetic acceptance or physical-phone qualification.
+
 ## Automated coverage
 
 `npm run check` checks application JavaScript syntax. `npm test` covers ROM
