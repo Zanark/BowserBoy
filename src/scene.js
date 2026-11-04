@@ -221,7 +221,7 @@ export class HandheldScene {
     this.model.cartridge.visible = true;
     const moving = animate && !this.reducedMotion.matches;
     this.model.cartridge.position.y = moving ? 3.8 : 1.52;
-    this.cartridgeMotion = moving ? { started: performance.now() } : null;
+    this.cartridgeMotion = moving ? { elapsed: 0, lastPaint: null } : null;
     this.host.dataset.cartridge = moving ? 'inserting' : 'seated';
     this.changed = true;
     this.reframeCartridge();
@@ -375,7 +375,7 @@ export class HandheldScene {
     const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
     if (!adapting) this.renderer.toneMappingExposure = exposure;
     if (this.cartridgeMotion) {
-      const fraction = THREE.MathUtils.clamp((time - this.cartridgeMotion.started - 850) / 1350, 0, 1);
+      const fraction = THREE.MathUtils.clamp((this.cartridgeMotion.elapsed - 850) / 1350, 0, 1);
       const ease = fraction * fraction * (3 - 2 * fraction);
       const y = THREE.MathUtils.lerp(3.8, 1.52, ease);
       this.changed ||= this.model.cartridge.position.y !== y;
@@ -402,8 +402,8 @@ export class HandheldScene {
     } else {
       this.host.dataset.view = this.mode;
       if (this.cameraMotion) {
-        const fraction = this.reducedMotion.matches ? 1 :
-          Math.min(1, (time - this.cameraMotion.started) / 850);
+        const elapsed = this.cartridgeMotion?.elapsed ?? time - this.cameraMotion.started;
+        const fraction = this.reducedMotion.matches ? 1 : Math.min(1, elapsed / 850);
         const ease = fraction * fraction * (3 - 2 * fraction);
         this.camera.position.lerpVectors(this.cameraMotion.camera, this.cameraTarget, ease);
         this.lookAt.lerpVectors(this.cameraMotion.look, this.lookTarget, ease);
@@ -458,10 +458,16 @@ export class HandheldScene {
     }
     const poseChanged = !this.lastPosition?.equals(this.model.root.position) ||
       !this.lastRotation?.equals(this.model.root.quaternion) || !this.lastCamera?.equals(this.camera.position);
-    if (!this.source && !this.changed && !poseChanged && !buttonsMoving &&
+    if (!this.source && !this.cartridgeMotion && !this.changed && !poseChanged && !buttonsMoving &&
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
+    if (this.cartridgeMotion) {
+      // Only presented frames advance insertion; a GPU stall must not skip the whole slide.
+      this.cartridgeMotion.elapsed += Math.min(250, Math.max(0,
+        time - (this.cartridgeMotion.lastPaint ?? time - 16.67)));
+      this.cartridgeMotion.lastPaint = time;
+    }
     this.lastPaint = time;
     this.renderedLastFrame = true;
     this.lastPosition = this.model.root.position.clone();
