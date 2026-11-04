@@ -21,7 +21,11 @@ ink at .00651 instead of at least .12. Syntax/build, all 11 units and the full
 branding case pass (15.2s). The complete existing quick-action/fullscreen/zoom
 case passes (41.1s), preserving four-size fit and live LCD identity. Review the
 actual local fullscreen capture using original Pixel Lab, not a private ROM.
-Normal hosted and independent public qualification remain pending.
+Fresh normal source `f2d85d3` / workflow `41919474092` passes build, all 11
+units, all 39 browser cases and deployment. Independently match all 28 actual
+public application assets, then run both complete branding and quick-action/
+fullscreen cases against production (55.7s). Workstream 35 is DONE. No
+failed-job retry, gate change or new human visual acceptance is claimed.
 
 ## Notification overlays, 2026-11-05
 

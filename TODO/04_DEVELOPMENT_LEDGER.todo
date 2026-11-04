@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Smaller bezel wordmark independently live:
+  Fresh normalf2d85d3/41919474092 passes build,11units,all39cases and deploy.
+  Match28actual public assets; complete branding and quick-action/fullscreen/
+  zoom cases pass against production55.7s.35DONE. Visible lettering is25%
+  smaller in both views, with unchanged game area/camera/CSS/mesh/other logos.
+  Reconcile guide, verification, TODO index/ledger and own continuity. No
+  unrelated code fix, changed gate, failed-job retry or human acceptance claim.
 - 2026-11-05 / Smaller bezel wordmark:
   User points to lettering below the LCD. Draw the existing monochrome crop
   at75%width/height with equal12.5%padding in its shared texture. Preserve mesh,

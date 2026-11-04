@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Smaller monochrome wordmark beneath the LCD.
 Dependencies: Completed workstreams 28 and 34.
 
@@ -11,8 +11,8 @@ Tasks:
 - [x] Preserve proportions, neutral styling and identical fullscreen texture.
 - [x] Add visible-ink bounds to the existing branding regression.
 - [x] Prove red/green and retain real fullscreen/zoom/viewport behavior.
-- [ ] Pass normal hosted gates and independently verify the public release.
-- [ ] Publish completion evidence and reconcile owned continuity.
+- [x] Pass normal hosted gates and independently verify the public release.
+- [x] Publish completion evidence and reconcile owned continuity.
 
 Acceptance criteria:
 - Visible bezel lettering is25%smaller in normal and fullscreen views.
@@ -25,10 +25,16 @@ Completion evidence:
 - Syntax/build,11units and branding case pass15.2s after the shared draw change.
 - Existing complete quick-action/fullscreen/zoom case passes41.1s.
 - Review the actual local fullscreen capture with original Pixel Lab.
-- Normal hosted/public qualification pending; no live claim yet.
+- Fresh normalf2d85d3/41919474092 passes build,11units,all39cases and deploy.
+- Independently match28actual public assets; both complete public branding/
+  quick-action/fullscreen cases pass55.7s.
 
 Completion log:
 - 2026-11-05: User requests smaller lettering beneath the LCD. Change only the
   shared texture's draw destination to75%width/height with12.5%padding. Keep
   physical geometry and fullscreen CSS untouched. Qualify actual visible ink,
   copied fullscreen pixels and unchanged four-size fullscreen/zoom behavior.
+- 2026-11-05: Fresh normal full gate and deployment pass. Independently match
+  public assets and run both complete actual public cases.35DONE; reconcile
+  guide, verification, index/ledger and own continuity. No human acceptance
+  claim, unrelated code change, gate reduction or failed-job retry.
