@@ -49,7 +49,7 @@ would reduce that dependency and needs a deliberate license/provenance review.
 
 ## Pinned compatibility adapter
 
-All version-sensitive engine access is in `src/player.js`. The runtime URL is
+Version-sensitive engine access is in `src/player.js` and `src/audio.js`. The runtime URL is
 `https://cdn.emulatorjs.org/4.2.3/data/`; this pins the release path, not the
 CDN operator's bytes with an integrity guarantee. GBA uses the `mgba` core and
 the `gba` control scheme. Threads are explicitly off.
@@ -90,6 +90,47 @@ are version-specific: do not upgrade the URL without running the live-core tests
 Current online options describe `EJS_onSaveUpdate` and
 `EJS_fixedSaveInterval`, but the 4.2.3 loader does not wire them. The application
 therefore owns its timer and checked checkpoint persistence.
+
+### Audio continuity and peak protection
+
+The pinned native runtime uses Emscripten OpenAL. Its original configuration
+requests 64 ms of audio buffering, but playback begins immediately. Increasing
+that configuration alone did not establish the measured scheduling cushion.
+`src/audio.js` configures 128 ms and a 200 ms OpenAL scheduling lookahead,
+then adds 96 ms of pre-roll when a native playing source initializes/restarts.
+This trades about 0.1 seconds of audio latency for tolerance of brief stalls.
+It is not a permanent guarantee of queued sound on a host slower than real time.
+
+The pre-roll is applied after OpenAL initializes `bufStartTime`, not before its
+time update. Pre-roll offsets are clamped to zero so future playback cannot
+produce a negative native buffer offset. The configuration hook is installed
+before the core starts; it validates the pinned configuration/API rather than
+silently ignoring an incompatible runtime.
+
+Source gains use continuous 15 ms ramps for volume/mute. An explicit envelope
+tracks overlapping changes because native AudioParam assignments do not provide
+a reliable starting point for the next ramp. Newly scheduled replacement sources
+inherit the current target volume/mute before playback instead of reverting
+to their native default gain. Native settings/UI state remain intact.
+
+The stable OpenAL master feeds a Web Audio dynamics compressor before the
+destination: -3 dB threshold, zero knee, 20:1 ratio, 3 ms attack and 80 ms release.
+This reduces overloaded peaks; it is not an absolute brick-wall ceiling or a
+classifier that can distinguish unwanted buzz from valid game audio.
+
+```mermaid
+flowchart TD
+    A[Native mGBA audio buffers] --> B[OpenAL scheduling with 96 ms pre-roll]
+    B --> C[Source volume and mute with 15 ms ramps]
+    C --> D[Stable context master]
+    D --> E[Peak compressor]
+    E --> F[Browser audio destination]
+```
+
+These are pinned-runtime hooks, not browser-wide AudioContext patches. Save
+formats, default demo bytes, game speed, pause, power and CRT selection are
+unchanged. Sustained CPU/GPU starvation, device/driver faults and subjective
+audio quality remain separate qualification boundaries.
 
 ## Actual 3D handheld and native CRT screen
 

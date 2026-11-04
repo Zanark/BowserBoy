@@ -11,6 +11,7 @@ BowserBoyAdvance workstreams
 09_NATIVE_SETTINGS.todo - Restore the actual native settings outside the LCD.
 10_DARK_ROOM.todo - Switchable lamp, framebuffer lighting and real button travel.
 11_STARTUP_AND_PERSISTENT_POWER.todo - Original branding/startup and remembered infinite-battery console.
+12_AUDIO_RELIABILITY.todo - Native prebuffer, smooth volume/mute and peak protection.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -40,3 +41,7 @@ on/off refresh behavior, cached active cartridge, prominent native settings and
 the unchanged real native-core/lighting/power paths. Public docs follow deployment.
 Final startup notice cleanup 78887d7 / Pages 41755029718 also passed the full
 gate, deployed and passed fresh live verification of all 22 exact assets.
+Audio protection is deployed from 7cc095ff7242dc9d7af47f7c040e5a63783d92bf:
+Pages 41759530406, build, both complete browser shards (25 total) and deploy PASS.
+Fresh live checks match 23 public assets and pass three measured audio cases.
+The user's particular audible buzzing was not independently reproduced.

@@ -1,0 +1,53 @@
+Status: DONE (implemented, measured and deployed; human listening not claimed)
+Milestone: Reduce brief-stall crackles, volume clicks and overloaded audio peaks
+Dependencies: 08_POWER_LIFECYCLE, 09_NATIVE_SETTINGS, 10_DARK_ROOM
+Purpose: Address reported intermittent distorted/buzzing sound without changing
+  saves, game speed, CRT defaults or the user's volume/mute preferences.
+
+Tasks:
+- [x] Inspect the actual pinned runtime's config, scheduler and source gains.
+- [x] Generate an original optional PSG tone without changing default ROM bytes.
+- [x] Compare real protected scheduling with an unprotected pinned control.
+- [x] Add bounded pre-roll and preserve valid native offsets.
+- [x] Smooth overlapping volume/mute and retain them on replacement sources.
+- [x] Add peak compression without trying to classify valid music as noise.
+- [x] Measure native PCM/recovery and actual OfflineAudioContext output.
+- [x] Preserve settings, pause, restore, power and existing full release gates.
+- [x] Deploy and verify live before final public documentation.
+
+Acceptance criteria:
+- A controlled 80 ms first-scheduling stall retains a future playback deadline.
+- The same unprotected pinned-runtime control misses its playback deadline.
+- Actual original-tone PCM recovers after forced 250 ms starvation.
+- Volume/mute transitions are continuous and do not replace the game runtime.
+- Settled overloaded test output is below full scale; this is not a universal
+  brick-wall limiter or a listening-quality guarantee.
+- Existing saves, default demo identity, input, settings, CRT and power survive.
+- Severe sustained overload/device faults and the approximately 0.1 second
+  sound-latency tradeoff are documented.
+- Technical evidence is distinct from reproducing the user's audible symptom.
+
+Completion evidence:
+- Syntax/build and all 10 unit cases PASS.
+- Intermediate complete Edge suite: 25/25 PASS in 4m.
+- Final three explicit-software audio cases PASS in 35.8s.
+- Final six affected Edge audio/settings/sound/cold-boot cases PASS in 1.3m.
+- Default demo SHA-256 unchanged:
+  f55598d6315605fc922b6f4165b71d5830bb0e846f2754075cc4991678780058.
+- 7cc095ff7242dc9d7af47f7c040e5a63783d92bf / Pages 41759530406:
+  build, both complete browser shards (25 cases) and actual deployment PASS.
+- Fresh live verification: 23 exact public assets and all three audio cases
+  PASS (22.3s). No commercial-ROM retest or subjective listening claim.
+
+Completion log:
+- 2026-11-04: User reports occasional distortion/buzzing and requests prevention
+  even if exact reproduction is unavailable. No supplied recording was tested.
+- 2026-11-04: Configured latency alone does not establish real queue headroom.
+  Add 96 ms pre-roll after native time initialization, with 128 ms config and
+  200 ms lookahead. Earlier direct future-start experiment failed offsets.
+- 2026-11-04: -1 dB compression overshot the settled test ceiling; -3 dB passes.
+  Rapid native gain assignments need an explicitly tracked 15 ms envelope.
+- 2026-11-04: Software-GPU failures exposed replaced-source observation and
+  late timing assumptions. Monitor the stable master and the actual scheduling
+  callback; retain PCM/recovery checks, not a steady-headroom claim on slow hosts.
+- 2026-11-04: Publish and perform fresh live checks before final documentation.

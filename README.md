@@ -125,6 +125,11 @@ Keys, sound and filter settings persist in checked local browser storage; failed
 explicitly apply only to the current session. Escape remains reserved for tools.
 Opening the drawer does not automatically pause gameplay.
 
+Audio automatically uses a short playback cushion, smooth volume/mute changes
+and peak compression to reduce crackles and overload distortion. The cushion
+adds about 0.1 seconds of sound latency. This cannot guarantee glitch-free sound
+under sustained system overload or fix an operating-system/audio-device problem.
+
 **Advanced EmulatorJS settings**, at the top of the sidebar, opens the actual native graphics, speed,
 screen-capture settings and backend core options in a separate panel. It keeps
 the current game and pause state intact; Escape or Close returns to Cartridges.

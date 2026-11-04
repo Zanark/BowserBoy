@@ -212,3 +212,27 @@ Completion log:
   Pages 41755029718 passes build, both complete browser shards and deployment;
   fresh live Edge repeats all 22 exact assets and actual native behaviors,
   zero page errors. Final startup capture reviewed without the stale notice.
+- 2026-11-04 / Intermittent audio distortion follow-up:
+  User reports occasional buzzing; no recording or commercial-ROM retest.
+  Inspect actual pinned OpenAL code and live runtime. Larger configured buffers
+  alone do not create scheduling headroom. Add 96 ms pre-roll after native time
+  initialization, 128 ms config and 200 ms lookahead. Clamp pre-roll offsets:
+  an earlier direct-future-start experiment failed native offset handling.
+  Retain volume/mute on replaced sources and track overlapping 15 ms envelopes.
+  Naive native gain assignments caused real discontinuities in output tests.
+  -1 dB compression overshot; a -3 dB threshold passes settled peak tests.
+- 2026-11-04 / Measured audio rather than assumed listening:
+  Original optional PSG ROM variant preserves the bundled demo's exact bytes.
+  Real native first-scheduling callback tolerates a controlled 80 ms stall;
+  the unprotected control misses its deadline. Actual PCM recovers after a
+  forced 250 ms starvation. This is not proof of uninterrupted audio on a
+  host that cannot emulate in real time, or hearing the user's exact buzz.
+  Software GPU exposed attaching to a replaced source and measuring too late;
+  observe the stable master and exact callback, retaining PCM/recovery checks.
+  Real OfflineAudioContext samples cover peak compression and rapid mute.
+- 2026-11-04 / Audio release before final docs:
+  Intermediate complete Edge 25/25 and 10 units pass. Final three software
+  audio cases pass in 35.8s; six affected Edge cases pass in 1.3m.
+  7cc095ff7242dc9d7af47f7c040e5a63783d92bf / Pages 41759530406 passes build,
+  both complete browser shards (25) and deployment. Live 23 exact assets and
+  three measured audio cases pass (22.3s). Final docs follow deployment.

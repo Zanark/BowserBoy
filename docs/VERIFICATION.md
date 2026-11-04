@@ -72,6 +72,14 @@ controls, malformed values and configuration-string injection.
   persists across refresh without creating an iframe.
 - Database v1-to-v2 upgrade preserves old game records; interrupted device writes
   retain the previously committed power state.
+- An original optional PSG tone produces actual native PCM. A controlled 80 ms
+  stall in the first scheduling callback retains a future playback deadline
+  with protection; an unprotected pinned-runtime control misses that deadline.
+- Actual native PCM recovers after forced 250 ms starvation. Mute/unmute, pause
+  and checkpoint restore retain the same runtime and valid native offsets.
+- Real OfflineAudioContext rendering reduces a deliberately overloaded tone
+  below full scale after settling, and rapid mute changes do not create a hard
+  sample step. This measures output samples, not human hearing.
 
 The original input-test ROM is generated from readable ARM instructions in
 `scripts/demo-rom.mjs`; it contains no copied Nintendo logo, BIOS or commercial
@@ -200,13 +208,43 @@ to the new power lifecycle and waits for its real completed demo frame; exact
 native pixel assertions remain intact. No empty commit, weaker gate or removed
 assertion forced either publication.
 
+## Audio reliability follow-up, 2026-11-04
+
+The user reported intermittent distortion/buzzing. No recording was supplied
+and the particular audible symptom was not independently reproduced.
+Controlled tests instead establish scheduling protection, real native signal
+and peak/volume behavior. No commercial-ROM test was restarted.
+
+An intermediate complete Edge suite passed 25/25, with syntax/build and all
+10 unit cases passing. Software graphics then exposed fixture assumptions:
+an observed source can be replaced during starvation, and outside UI sampling
+cannot assume a slow host maintains steady audio headroom. The fixture observes
+the stable master and compares the same 80 ms stall inside the real scheduling
+callback. It retains actual PCM, starvation recovery and continuity assertions.
+These changes do not prove all real-time stalls are prevented.
+
+Final three explicit-software audio cases passed in 35.8 seconds. Six directly
+affected Edge audio/settings/sound/power cases passed in 1.3 minutes.
+Source `7cc095ff7242dc9d7af47f7c040e5a63783d92bf` passed build, both complete
+browser shards (25 cases) and actual Pages deployment in run `41759530406`.
+Fresh live verification checked all 23 exact public assets and passed all three
+audio cases against the deployed site in 22.3 seconds. Public documentation
+followed that successful deployment. Default Pixel Lab ROM bytes are unchanged.
+
+Initial failed experiments are retained in the development ledger: configured
+latency alone did not create real headroom, setting a future source start before
+the native time update caused invalid offsets, -1 dB compression still overshot,
+and naive overlapping gain updates produced discontinuities.
+
 ## Not verified here
 
 This revamp's suite uses the original demo, not commercial ROM data. Physical
 gamepads, real iOS/Android devices, human hearing of audio output, exhaustive
 browser/game compatibility, storage-eviction recovery without a backup, and
-cloud synchronization are not verified by it. Sound tests check runtime volume
-configuration, not whether audio sounded correct. The Windows run uses Edge.
+cloud synchronization are not verified by it. Sound tests check runtime volume,
+scheduling and rendered samples, not whether audio sounded correct. Severe
+sustained system overload and audio-device/driver faults are not solved by
+these checks. The Windows run uses Edge.
 Lighting is not photometrically calibrated. Rectangle lights do not cast
 occlusion shadows, and authored wood bounce/exposure are not full GI.
 

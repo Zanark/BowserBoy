@@ -46,6 +46,8 @@ textures and project lettering, UI composition, and Pixel Lab
 test program were created for this project. The generated test program omits
 the Nintendo boot-logo array and is intended for emulator testing, not as a
 claim of booting on physical retail hardware.
+Its optional audio-test variant emits an original PSG test tone, not music or
+samples taken from a game. The ordinary bundled demo remains byte-identical.
 
 The refreshed handheld/infinity logo, SVG favicon, LCD startup animation and
 three-note synthesized chime are independently authored assets. The user's
