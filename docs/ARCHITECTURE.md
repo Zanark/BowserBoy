@@ -255,7 +255,8 @@ unchecked save system. Runtime, save and backup identities remain unchanged.
 
 The physical power switch is independent of pause. Power off flushes only
 battery memory, commits it, removes the iframe and clears the live LCD texture.
-The host retains the selected ROM File and battery bytes in memory. Power on
+The host retains the selected ROM File and battery bytes in memory and stores
+the last local cartridge plus power intent in a separate device record. Power on
 creates a new iframe, installs only battery memory and restarts the ROM. A
 failed persistent write leaves the old runtime on for recovery/export. If
 application save storage was unavailable initially but emulation remains
@@ -263,9 +264,48 @@ available, explicit session-only power cycling does not claim persistence.
 Globally denied IndexedDB can also prevent the pinned native runtime starting;
 the browser fixtures distinguish that boundary from denial of our save store.
 
+### Startup and remembered power
+
+Logical `powered` state is independent of native `running`: an empty cartridge
+slot or a failed CDN load does not silently flip the physical switch off.
+Only the power handler changes this intent after its checked device write.
+On first use the missing console record means off; inserting a cartridge leaves
+it off. Hydration serializes tools until the remembered console is restored.
+
+`src/startup.js` draws an original 240x160 white/indigo logo reveal into the
+same LCD texture/light path for 2.4 seconds. Reduced motion uses a static
+500 ms presentation. An original three-note sine-wave chime follows mute/volume;
+audio permission failures are reported without blocking gameplay indefinitely.
+No Nintendo recording, boot ROM or video is loaded. SVG header and favicon
+assets are original project artwork.
+
+Only a genuine off-to-on switch action calls that presentation, then cold-boots
+the cartridge with battery save data. Refresh while already on restores the
+stored ROM using normal checked resume selection, without calling startup.
+A refresh recreates the native process; it cannot promise every unsaved frame.
+An off console can retain its cartridge without creating an iframe.
+
+```mermaid
+flowchart TD
+    A[Read local console record] --> B{Remembered power?}
+    B -->|Missing or off| C[Dark LCD, retain inserted cartridge]
+    B -->|On| D[Reload cached cartridge and checked resume point]
+    C --> E[Physical power on]
+    E --> F[Commit on intent]
+    F --> G[Original LCD reveal and chime]
+    G --> H[Cold ROM boot with battery save]
+    D --> I[No startup replay]
+    H --> J[Physical power off]
+    I --> J
+    J --> K[Commit battery and off intent, then remove runtime]
+    K --> C
+```
+
 ## Persistent data
 
-`src/save-store.js` opens database `bowser-boy-advance`, version 1, store `games`.
+`src/save-store.js` opens database `bowser-boy-advance`, version 2. Upgrade
+adds a separate `device` store without deleting/replacing the existing `games`
+store or its records.
 The primary key is the ROM's SHA-256 digest. A record contains public file
 metadata, runtime identity and independent `automatic` / `manual` slots.
 Each slot has binary `state`, optional binary `sram` and an ISO timestamp.
@@ -273,8 +313,16 @@ Optional `battery` contains nullable `sram` and its capture timestamp. A
 `bootMode` of `battery` suppresses automatic checkpoint restoration after a
 deliberate power off; checkpoint writes set it back to `checkpoint` and update
 the battery copy atomically. Older records without these fields retain normal
-checkpoint-selection behavior. The version-1 object store and backup/runtime
-identities are unchanged. ROM bytes are not stored.
+checkpoint-selection behavior. The original game-record shape and backup/runtime
+identities are unchanged.
+
+The `device` store holds one `console` key: schema version 1, boolean `powered`
+and a nullable cartridge containing its name and Blob bytes. Reads validate
+shape/size; cached ROMs go through normal header validation and content hashing
+before launch. This is one locally cached active cartridge, not a ROM library
+or an upload. Device writes report success only after transaction completion.
+Aborted writes do not replace the previous switch state. Physical off flushes
+the battery first and retains the live runtime if either write fails.
 
 Writes read/update a record in one read-write transaction. Success is reported
 only on transaction completion, not the individual request. This prevents

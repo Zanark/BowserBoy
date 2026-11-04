@@ -23,22 +23,33 @@ when a cartridge is selected. Turning it off lasts for the current page session.
 Use manual save/export before leaving; no asynchronous final write is guaranteed
 after a tab or browser shuts down.
 
-## Physical power switch
+## Remembered console and physical power switch
+
+A first visit starts off. The switch works with or without a cartridge.
+Inserting a ROM while off does not turn it on. Actual off-to-on plays the
+original LCD startup and chime; refreshing or changing cartridges does not.
+
+The last cartridge and power intent are stored locally in a separate console
+record. Refresh while on automatically reloads that ROM and follows its checked
+checkpoint/battery resume policy, without another startup sequence. Refresh
+while off retains the inserted cartridge but does not create an emulator.
+This remembers a virtual switch, not a continuously running CPU across browser
+navigation. Save first: the most recent unsaved frames are not guaranteed.
 
 Power off flushes the cartridge's in-game battery save, commits it separately
 from instant checkpoints, removes the emulator iframe and darkens the LCD/LED.
-The ROM remains in memory for this page session. Power on creates a fresh
+The last ROM remains in this browser's console record. Power on creates a fresh
 runtime and boots that ROM from its beginning with only the battery save.
 Use the game's own Continue/Load menu to continue an in-game save. Unsaved
 gameplay since that save is intentionally lost, just as on a physical handheld.
 
 Existing manual/automatic checkpoints are not erased or overwritten by the
-switch. After power off, reselecting the same ROM following a page reload
-also boots from its battery save rather than reviving a pre-power-off checkpoint.
+switch. After power off and reload the console stays off; switching on
+boots from its battery save rather than reviving a pre-power-off checkpoint.
 A subsequently captured checkpoint becomes eligible for normal ROM-selection
 resume again. The physical switch always cold-boots, regardless.
 
-If the battery write fails, power stays on so a backup can still be exported.
+If the battery or console-state write fails, power stays on so a backup can still be exported.
 If application save storage was unavailable from startup but the emulator
 still runs, a power cycle retains the battery save only in memory for this
 page session; an explicit warning is shown. Globally denying IndexedDB may
@@ -47,18 +58,22 @@ The separate Pause action in Cartridges preserves the current running session.
 
 ## Continue tomorrow
 
-Open the same site in the same browser profile and select the ROM again.
+Open the same site in the same browser profile. The last inserted ROM and switch
+position return automatically. If it is off, turn it on; if it is on, it reloads
+without another startup animation. You can also choose a different ROM.
 SHA-256 identity ignores the filename, so a renamed copy still works.
 Patches, translations or other byte changes create a different cartridge ID;
 the application does not guess whether another ROM's save might be compatible.
 
-Only game metadata, battery saves and checkpoints are retained, not a ROM collection. Selecting a
-ROM remains necessary after reopening the page.
+Only the last inserted ROM is cached, not a ROM collection. Other cartridges'
+metadata, battery saves and checkpoints remain content-keyed independently.
+Clearing/evicting browser storage removes this local cartridge and power intent
+along with its saves; it is not a backup or cloud synchronization.
 
 ## Move to another browser or device
 
 1. Export backup while the session is running and keep the downloaded file.
-2. Open BowserBoyAdvance on the other device and choose the exact same ROM.
+2. Open BowserBoyAdvance on the other device, choose the exact same ROM and turn it on.
 3. Import that `.bba-save` file and confirm replacement of the current session.
 
 Imports check application format/version, runtime identity, ROM digest, size,

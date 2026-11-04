@@ -183,3 +183,32 @@ Completion log:
   is not the Linux release's LF bytes. Final high-quality Edge screenshots
   and documentation followed deployment, as requested. User visual acceptance,
   real phones/controllers and audible-output quality remain separate.
+- 2026-11-04 / Original startup and remembered infinite-battery console:
+  User requested new branding and a Game Boy-inspired startup, first visit off,
+  on/off intent surviving refresh and only explicit physical off. Drew original
+  SVG logo/favicon and LCD reveal, synthesized a separate original chime, and
+  respected mute/volume/reduced motion. No video, BIOS, logo or recording reused.
+  Separate powered from running. Add checked device store in database v2 for
+  power intent and the last local ROM; preserve all game records and backup IDs.
+  Refresh restores checked progress without startup; physical on still cold
+  boots battery data. Browser navigation is not a continuous CPU or exact
+  unsaved-frame guarantee. Persist power before changing the visible switch.
+- 2026-11-04 / Acknowledged actions, not fast local assumptions:
+  Expanded Edge initially passed 21/22; the renamed-ROM fixture bypassed a
+  disabled input during auto-restore. Await enablement; real-core case passes.
+  Hosted 41752150621 exposed closing an already closing drawer and refreshing
+  before off commit. Await physical-power availability and actual off state.
+  Seven affected explicit-software cases pass in 2.6m; retain every assertion.
+- 2026-11-04 / Startup release before final docs:
+  ab4fc8850d0b67870dd431d4a398c5a3e98ac47d / Pages 41753762933:
+  build, both complete browser shards (22 cases) and actual deployment PASS.
+  Fresh live Edge verifies all 22 exact public files plus actual original
+  startup, first off, on/off refresh, cached cartridge, exact native resume,
+  prominent native-menu continuity and retained lighting/input/cold boot.
+  Zero page errors. Final public docs follow, without inventing user approval.
+- 2026-11-04 / Final startup visual cleanup:
+  Review found an obsolete cartridge-insertion notice during the reveal.
+  78887d7007e8e6b78552811a00bd1d313769575d hides it and asserts that behavior.
+  Pages 41755029718 passes build, both complete browser shards and deployment;
+  fresh live Edge repeats all 22 exact assets and actual native behaviors,
+  zero page errors. Final startup capture reviewed without the stale notice.

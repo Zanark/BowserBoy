@@ -13,6 +13,7 @@ Tasks:
 - [x] Preserve shader choices through host sound/remapping changes.
 - [x] Exercise native options, pause, power, reload and narrow layout.
 - [x] Update usage, architecture, verification and continuity documentation.
+- [x] Keep the native-settings entry prominent at the top of the sidebar.
 
 Acceptance criteria:
 - The actual pinned settings menu is reachable only after a game starts.
@@ -41,6 +42,10 @@ Completion evidence:
 - Included in d551f4269b58fc31e496c4d1bc8d9d6110817f79, successful Pages
   run 41746728238. Fresh live Edge check preserves the same runtime through
   native-menu opening/closing. Final screenshot refreshed with Edge.
+- Follow-up moves the existing entry above Cartridge rather than burying it
+  beneath sound preferences. Desktop and 320x568 visibility require no scrolling.
+  Published with the startup release ab4fc88 / Pages 41753762933; fresh live
+  visibility and same-runtime opening/closing PASS.
 
 Completion log:
 - 2026-11-04: User paused deployment and selected native-menu restoration next.
@@ -55,3 +60,6 @@ Completion log:
 - 2026-11-04: Later user direction superseded the pause: finish autonomously
   and deploy before final documentation. Native settings deployed with the
   dark-room release; workstream 10 records the complete release gate.
+- 2026-11-04: Sidebar-only d222dc6 did not deploy because an existing mobile
+  native-frame assertion failed; rerun/dispatch permission was denied.
+  The subsequent startup revision passed the complete gate and live check.

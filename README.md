@@ -22,6 +22,26 @@ approximations, not a full global-illumination simulation.
 colored square contributes little light. The screen glow follows its actual
 orientation and colors, rather than a fixed room-wide fill.*
 
+## Infinite battery
+
+The first visit starts **powered off**, with a dark LCD. Pick up the handheld
+and use its physical bottom-edge switch. A short, original Game Boy-inspired
+logo reveal and synthesized chime play on the actual LCD only when switching
+from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
+The website has a new original handheld/infinity logo and matching favicon.
+
+![The original power-on sequence on the handheld LCD](docs/images/startup.png)
+
+*An independently drawn Bowser Boy Advance startup, not a Nintendo BIOS,
+manufacturer logo or recording. Infinite battery; no automatic power-off timer.*
+
+Refresh remembers the switch position and the last inserted cartridge locally.
+If it was on, the cartridge reloads using its latest committed resume point,
+**without replaying startup**. If it was off, it stays off. Inserting a cartridge
+does not turn it on. Only the physical switch changes the power state.
+Browser refresh still creates a new emulator process; unsaved frames are not
+continuous across navigation. Save a checkpoint before refreshing.
+
 ## Play locally
 
 Node.js 22+ is required for the development commands, not for visitors to the
@@ -35,13 +55,16 @@ npm run dev
 
 Open **http://127.0.0.1:5173**. Click the handheld to pick it up, then open
 **Cartridges** or press **Escape** for the tools drawer. Choose an uncompressed **`.gba`**
-ROM you have the right to use, or select **Try the original demo**.
+ROM you have the right to use, or select **Try the original demo**. If the
+handheld is off, use its physical power switch to start.
 Pixel Lab is an original input-test cartridge: arrows move the square, holding
 **Z** changes its color, and **X** stores its horizontal position in cartridge SRAM.
 
 ROM bytes are read locally, not uploaded. No account, server-side library,
-commercial ROM or BIOS is included. ROM files are not retained; reselect yours
-next time. Internet is required for the versioned EmulatorJS/mGBA runtime.
+commercial ROM or BIOS is included. Only the last inserted ROM is retained in
+this browser's local storage so the console can survive refresh; it is not
+uploaded or added to a server-side collection. Clearing site data removes it.
+Internet is required for the versioned EmulatorJS/mGBA runtime.
 The 3D scene requires WebGL 2. Its decorative cartridges are not supplied games.
 
 ## Pick it up
@@ -102,7 +125,7 @@ Keys, sound and filter settings persist in checked local browser storage; failed
 explicitly apply only to the current session. Escape remains reserved for tools.
 Opening the drawer does not automatically pause gameplay.
 
-**Advanced EmulatorJS settings** opens the actual native graphics, speed,
+**Advanced EmulatorJS settings**, at the top of the sidebar, opens the actual native graphics, speed,
 screen-capture settings and backend core options in a separate panel. It keeps
 the current game and pause state intact; Escape or Close returns to Cartridges.
 Selections are remembered when the panel closes, including other native shaders.
@@ -162,6 +185,14 @@ The dark-room, 3D, native-settings and real-power redesign was deployed from
 build and both browser shards (Pages run `41746728238`). A fresh live-browser
 check verified all 19 public assets and the lamp, native demo, CRT, settings,
 button travel and power lifecycle before this documentation was finalized.
+The original branding/startup and remembered-power follow-up was deployed from
+`ab4fc8850d0b67870dd431d4a398c5a3e98ac47d` in Pages run `41753762933`.
+Both complete browser shards (22 cases), build and deployment passed. A fresh
+live browser verified all 22 public asset hashes and the actual startup,
+cartridge/power refresh behavior and prominent native-settings entry before
+this follow-up documentation.
+Final startup-notice cleanup `78887d7` also passed the complete gate, deployed
+in Pages run `41755029718` and passed fresh live verification.
 
 All application paths are relative. The browser suite serves the build under
 `/BowserBoyAdvance/`, rather than merely testing a domain-root development page.

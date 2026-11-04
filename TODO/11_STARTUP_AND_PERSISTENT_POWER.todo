@@ -1,0 +1,66 @@
+Status: DONE (implemented, verified and deployed; no new user acceptance claimed)
+Milestone: Original startup branding and an infinite-battery remembered console
+Dependencies: 08_POWER_LIFECYCLE, 09_NATIVE_SETTINGS, 10_DARK_ROOM
+Purpose: Start first visits off, remember the switch and last cartridge through
+  refresh, and play a familiar but original LCD startup only on actual power-on.
+
+Tasks:
+- [x] Review the supplied video's public metadata/thumbnail as visual reference.
+- [x] Create original website logo/favicon and LCD artwork, without Nintendo assets.
+- [x] Synthesize an original chime honoring volume/mute and bounded audio errors.
+- [x] Keep first use and off-state cartridge insertion genuinely powered off.
+- [x] Make the physical switch work even with an empty cartridge slot.
+- [x] Persist checked switch intent and the last local cartridge.
+- [x] Preserve existing game records through the v2 database upgrade.
+- [x] Restore on/off intent on refresh without replaying the startup sequence.
+- [x] Preserve battery-only cold boot, checkpoints, backups and failure recovery.
+- [x] Exercise original startup, exact native resume and storage abort/migration.
+- [x] Deploy and verify the live site before final public documentation.
+
+Acceptance criteria:
+- A fresh browser profile has dark LCD/LED and no emulator iframe.
+- Inserting a cartridge while off cannot turn the switch on.
+- Only actual off-to-on calls the original startup; refresh never does.
+- Refresh retains an on console's cartridge and checked resume point.
+- Refresh retains an off console without creating an emulator.
+- Only the physical switch changes power intent; no battery/idle timeout exists.
+- Power-on cold-boots battery saves, not an instant checkpoint.
+- Aborted power persistence leaves previous state and a live game recoverable.
+- Browser denial is explicit; local persistence is not an exported backup.
+- Native settings stay at the top of the sidebar and preserve the live runtime.
+- Technical verification/publication remain distinct from human visual approval.
+
+Completion evidence:
+- Syntax/build and all 10 unit cases PASS.
+- Expanded Edge run: 21/22 PASS; renamed-ROM fixture bypassed disabled input
+  during restore. Awaiting enablement fixed it; affected real-core case PASS
+  in 34.4 seconds. No restore/image assertion removed.
+- Original startup screenshot and refreshed desktop/off logo view reviewed.
+- Initial hosted 41752150621 failed fixture action races. Waiting for insertion
+  and explicit off commit fixed all seven affected software cases (2.6m).
+- ab4fc8850d0b67870dd431d4a398c5a3e98ac47d / Pages 41753762933:
+  build, both complete browser shards (22 cases) and actual deployment PASS.
+- Fresh live Edge checks all 22 exact public asset hashes; first-use off,
+  original LCD startup, on/cartridge refresh resume with exact native pixels,
+  no startup replay, persistent off, CRT/lamp/input and native-menu identity
+  PASS, zero page errors. No commercial-ROM test was restarted.
+- Final notice cleanup 78887d7007e8e6b78552811a00bd1d313769575d /
+  Pages 41755029718: build, both complete browser shards and deployment PASS.
+  Fresh live Edge repeats 22 exact assets and native startup/refresh checks,
+  zero page errors. Reviewed final startup image has no stale insertion notice.
+
+Completion log:
+- 2026-11-04: User requested a logo change and supplied YouTube AyP1Nj9zU3k.
+  Independently authored graphics and chime; no recording/BIOS/logo reuse.
+- 2026-11-04: Separate powered intent from running core. Upgrade IndexedDB to
+  v2 by adding device store, retaining games records and runtime/backup identity.
+- 2026-11-04: Keep only the last inserted ROM locally, not a server collection.
+  A browser refresh recreates the native process and uses committed progress;
+  it cannot preserve every unsaved frame. Document that boundary explicitly.
+- 2026-11-04: fd77c97 implementation pushed; ab4fc88 synchronizes fixtures with
+  acknowledged insertion/power writes. Preserve complete qualification.
+- 2026-11-04: Successful deployment and fresh live verification precede this
+  workstream, saving/privacy guidance and public screenshot/documentation update.
+- 2026-11-04: Visual review caught a stale insertion notice during startup.
+  Hide it before the reveal; retain a browser assertion and repeat actual
+  deployment/live verification before committing final documentation.

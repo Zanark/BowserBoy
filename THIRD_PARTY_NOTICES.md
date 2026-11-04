@@ -47,6 +47,12 @@ test program were created for this project. The generated test program omits
 the Nintendo boot-logo array and is intended for emulator testing, not as a
 claim of booting on physical retail hardware.
 
+The refreshed handheld/infinity logo, SVG favicon, LCD startup animation and
+three-note synthesized chime are independently authored assets. The user's
+[Game Boy Advance startup reference](https://www.youtube.com/watch?v=AyP1Nj9zU3k)
+informed the white-screen/colored-letter presentation, not an imported video,
+Nintendo logo, BIOS or audio recording. None of those reference bytes is bundled.
+
 Playwright is a development/test dependency, not part of the deployed app.
 Its package and transitive packages retain their upstream license notices in
 the dependency installation.
