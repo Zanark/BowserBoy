@@ -236,3 +236,11 @@ Completion log:
   7cc095ff7242dc9d7af47f7c040e5a63783d92bf / Pages 41759530406 passes build,
   both complete browser shards (25) and deployment. Live 23 exact assets and
   three measured audio cases pass (22.3s). Final docs follow deployment.
+- 2026-11-04 / Final audio API compatibility correction:
+  MDN browser-compat-data confirms Firefox lacks cancelAndHoldAtTime.
+  Use broadly available cancelScheduledValues with the tracked envelope.
+  Real offline rendering passes with the optional method removed; this is
+  not an actual Firefox-browser run. f003c03e1f0f8c643a1e82a4973d6ebb515effce /
+  Pages 41760601267 passes build, both complete browser shards and deployment.
+  Fresh live checks match 23 exact assets and pass all three audio cases in
+  23.5s. Append this evidence only after that successful deployment.

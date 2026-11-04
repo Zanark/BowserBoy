@@ -231,6 +231,16 @@ Fresh live verification checked all 23 exact public assets and passed all three
 audio cases against the deployed site in 22.3 seconds. Public documentation
 followed that successful deployment. Default Pixel Lab ROM bytes are unchanged.
 
+The final compatibility correction replaces `cancelAndHoldAtTime`, which Firefox
+does not implement according to MDN browser-compat-data, with
+`cancelScheduledValues` and the explicitly tracked envelope. The real offline
+rendering fixture removes the optional method and still passes. This is not an
+actual Firefox-browser qualification.
+Source `f003c03e1f0f8c643a1e82a4973d6ebb515effce` passed build, both complete
+browser shards and actual deployment in Pages run `41760601267`. Fresh live
+verification matched all 23 exact public assets and passed all three audio
+cases in 23.5 seconds before this documentation update.
+
 Initial failed experiments are retained in the development ledger: configured
 latency alone did not create real headroom, setting a future source start before
 the native time update caused invalid offsets, -1 dB compression still overshot,

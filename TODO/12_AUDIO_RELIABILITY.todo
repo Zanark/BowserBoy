@@ -38,6 +38,11 @@ Completion evidence:
   build, both complete browser shards (25 cases) and actual deployment PASS.
 - Fresh live verification: 23 exact public assets and all three audio cases
   PASS (22.3s). No commercial-ROM retest or subjective listening claim.
+- Final compatibility source f003c03e1f0f8c643a1e82a4973d6ebb515effce /
+  Pages 41760601267: build, both complete browser shards and deployment PASS.
+  Fresh live verification: 23 exact assets and three audio cases PASS (23.5s).
+  Offline rendering also passes with cancelAndHoldAtTime absent; this does not
+  establish actual Firefox-browser qualification.
 
 Completion log:
 - 2026-11-04: User reports occasional distortion/buzzing and requests prevention
@@ -51,3 +56,6 @@ Completion log:
   late timing assumptions. Monitor the stable master and the actual scheduling
   callback; retain PCM/recovery checks, not a steady-headroom claim on slow hosts.
 - 2026-11-04: Publish and perform fresh live checks before final documentation.
+- 2026-11-04: MDN compatibility data identifies cancelAndHoldAtTime as absent
+  in Firefox. Use cancelScheduledValues with the existing explicit envelope;
+  verify the optional API is unnecessary and deploy before final evidence.
