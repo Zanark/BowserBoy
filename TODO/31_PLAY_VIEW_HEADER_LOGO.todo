@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Uncluttered play view without the top-left website logo.
 Dependencies: Completed workstreams 18 and 29.
 
@@ -11,7 +11,7 @@ Tasks:
 - [x] Preserve header layout so notifications do not jump or lose their safe fit.
 - [x] Extend responsive branding coverage with pickup/inspect/put-down transitions.
 - [x] Document the view-specific behavior and preserve the causal ledger.
-- [ ] Complete focused checks, publish normally and independently verify live.
+- [x] Complete focused checks, publish normally and independently verify live.
 
 Acceptance criteria:
 - The top-left wordmark is hidden in playing mode at desktop and phone widths.
@@ -27,9 +27,17 @@ Completion evidence:
 - Syntax/build, all 11 units and three focused Edge cases pass in 1.0m.
   Desktop/phone transitions, actual notice visibility, five-size clearance and
   whole-handheld/power containment pass. Actual 1920px play capture reviewed.
-  Hosted release and independent public verification remain pending.
+  At this local checkpoint, hosted release/public verification were pending.
+- Logo-only 73a7579 /41884678705 succeeds. Combined source
+  464f034e76d92cc15f14bae69688c3b0cc4ffd1b /41886136203 passes build/11units/
+  all39browser cases/deploy. Independently match28public assets and pass two
+  actual public branding/notice/header cases41.5s; desktop/phone reviewed.
 
 Completion log:
+- 2026-11-04: Normal full releases succeed; the combined release above is
+  independently verified live, including responsive play/Inspect/table
+  transitions, visible notices and retained whole-handheld clearance.
+  Mark DONE based on actual publication, not just local checks.
 - 2026-11-04: User requests hiding the upper-left website logo in game view.
   Add a play-only CSS rule and extend existing browser cases rather than
   remove the complete heading/notice host or alter camera/runtime behavior.

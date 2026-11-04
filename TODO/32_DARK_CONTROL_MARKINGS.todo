@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Darker, readable A/B letters and D-pad arrows with real relief.
 Dependencies: Completed workstream 28.
 
@@ -12,7 +12,7 @@ Tasks:
 - [x] Retain cap colors, geometry, motion, roughness, bevels and shadows.
 - [x] Extend the existing manufactured-control regression with relative contrast.
 - [x] Reconcile the guide/book explanation and identify the earlier capture.
-- [ ] Complete focused checks, normal publication and independent live verification.
+- [x] Complete focused checks, normal publication and independent live verification.
 
 Acceptance criteria:
 - A/B letters and all four D-pad arrows are darker than their cap surfaces.
@@ -30,9 +30,16 @@ Completion evidence:
   The cases include contrast/relief, prior logo-view transitions, notices,
   five-size clearance and whole-handheld/power containment.
   Actual 1920px warm-lamp capture reviewed; darker marks retain relief.
-  Hosted deployment and independent public verification remain pending.
+  At this local checkpoint, hosted deployment/public verification were pending.
+- Combined464f034e76d92cc15f14bae69688c3b0cc4ffd1b / Pages41886136203 passes
+  build/11units/all39browser cases/deploy. All28public assets independently
+  match; two actual public branding/notice/header cases pass41.5s.
+  Public1920px/390px captures reviewed; dark marks retain real relief.
 
 Completion log:
+- 2026-11-04: Normal combined deployment succeeds and is independently
+  verified live. Mark DONE; retain the earlier same-material figure's honest
+  provenance and do not claim human aesthetic approval or physical-device tests.
 - 2026-11-04: User asks for darker A/B letters and D-pad arrows as before.
   Recover the real historical palette rather than guess it or revert the
   earlier requested embossed geometry. Only the six marking meshes are tinted.

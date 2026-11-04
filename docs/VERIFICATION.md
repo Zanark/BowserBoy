@@ -19,7 +19,15 @@ for L/R and START/SELECT, plus its no-texture and real-depth assertions.
 Syntax/build, all 11 units and the three branding/notice/framing cases pass
 in 1.3m. This also rechecks the preceding play-only header fix. The actual
 1920px warm-lamp capture is reviewed: markings are visibly darker without
-flattening the geometry. Hosted deployment/public verification remain pending.
+flattening the geometry.
+
+Normal logo-only `73a7579` / Pages `41884678705` succeeds. Combined release
+`464f034e76d92cc15f14bae69688c3b0cc4ffd1b` / Pages `41886136203` then passes
+build, all 11 units, all 39 browser cases and deployment. Independently match
+all 28 public assets to that exact source and pass both actual public
+branding/notice and responsive logo-transition cases in 41.5s. Review the
+public 1920px desktop and 390px phone captures. Both refinements are verified
+live; this is technical evidence, not human aesthetic acceptance.
 
 ## Play-view header logo
 
@@ -31,7 +39,8 @@ Syntax/build, all 11 units and three focused Edge cases pass (1.0m). The existin
 responsive artwork case now checks pickup, Inspect, back-to-play and put-down
 at 1440/390/320px. The actual notice remains visible with the header logo hidden;
 five-size notice and underside-power/whole-handheld coverage still pass.
-The actual 1920px play/notice capture is reviewed. Hosted publication is pending.
+The actual 1920px play/notice capture is reviewed. The combined live release
+recorded above includes this fix.
 
 ## Frosted notifications and clear handheld
 

@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Both visual refinements independently live:
+  Logo-only73a7579/41884678705 succeeds without duplicate dispatch. Combined
+  464f034e76d92cc15f14bae69688c3b0cc4ffd1b/41886136203 then passes build,
+  all11units/all39browser cases/deploy. Independently match28public assets
+  and pass actual public branding/notice and responsive header transitions
+  in41.5s. Review public1920px desktop/390px phone captures: top-left logo
+  hidden in play, notices visible, A/B/arrows dark while remaining extruded.
+  Mark31/32DONE and reconcile current guide/evidence. Earlier capture origins,
+  full gates and no-human-approval boundary remain intact.
 - 2026-11-04 / Darker manufactured controls:
   User requests the earlier darker A/B letters and D-pad arrows. Read actual
   pre-7843db8 source: A/B#a2aa99, arrows#a5ad9b. Restore those colors on clones

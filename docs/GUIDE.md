@@ -2,11 +2,12 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
-**Current release and pictures:** source `ab912d5` is independently verified
-live after the full 39-case hosted gate. Most updated motion/pose/detail figures
-were captured locally before deployment; the notice and lighting/power-off
-figures are subsequently captured on the actual public release.
-See [release evidence](VERIFICATION.md#frosted-notifications-and-clear-handheld)
+**Current release and pictures:** source `464f034` is independently verified
+live after the full 39-case hosted gate, including darker A/B/D-pad markings
+and the play-only header-logo change. Most motion/pose/detail figures belong
+to the earlier `ab912d5` edition and were captured locally before its deployment;
+the notice and lighting/power-off figures were captured on that public edition.
+See [current release evidence](VERIFICATION.md#darker-raised-control-markings)
 and [capture origins](MEDIA.md#current-refresh---manufactured-controls-and-glass).
 
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
