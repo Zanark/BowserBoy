@@ -352,6 +352,7 @@ $('hardware-power').addEventListener('click', () => void operation(async () => {
     updateControls();
     view.setView('playing');
     $('empty-screen').hidden = true;
+    $('notice').hidden = true;
     $('power-label').textContent = 'STARTING / INFINITE BATTERY';
     const sound = playStartupSound(preferences).catch((error) => {
       console.error('Startup sound:', error);

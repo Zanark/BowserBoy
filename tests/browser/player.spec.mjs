@@ -576,6 +576,7 @@ test('inserting a cartridge does not power on, and refresh resumes the remembere
   await page.locator('#pickup').click();
   await powerOn(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'true');
+  await expect(page.locator('#notice')).toBeHidden();
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
   await openTools(page);
