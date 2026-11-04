@@ -63,6 +63,12 @@ now permits notices to overlap the handheld. Replace notice-separation checks
 with ordinary camera-position/look-target invariants, while retaining viewport
 fit, toolbar clearance, glass styling and dismissal checks. An intentional
 behavior change should update its specific contract, not weaken unrelated gates.
+The first hosted run then exposes a directly dependent user flow: the permitted
+power-on notice intercepts a real shoulder-button click. Dismiss it through its
+real close button before exercising every native input; retain the assertions
+and avoid forced clicks. The fresh normal workflow and both actual public
+overlay/input cases pass. A changed visual contract can require an explicit
+interaction step without justifying weaker functional coverage.
 
 ## Let failure teach the requirement
 

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Overlay notifications without changing the handheld view.
 Dependencies: Completed workstream 29; explicitly supersedes its notice separation.
 
@@ -13,8 +13,8 @@ Tasks:
 - [x] Retain full default handheld fit, dock clearance and power-target bounds.
 - [x] Dismiss the intentional overlay before the dependent physical-input case.
 - [x] Update affected guide, architecture, verification, book and development ledger.
-- [ ] Pass normal hosted gates and independently verify the public release.
-- [ ] Publish completion evidence and reconcile owned continuity.
+- [x] Pass normal hosted gates and independently verify the public release.
+- [x] Publish completion evidence and reconcile owned continuity.
 
 Acceptance criteria:
 - Normal, error and long notifications do not shift or shrink the handheld.
@@ -29,10 +29,16 @@ Completion evidence:
   case's L click is intercepted by the intentionally overlapping power-on notice.
   Deployment skipped. Explicit real dismissal preserves all native-input gates;
   overlay and complete physical-input cases pass together locally27.4s.
-- Hosted/public release remains pending; no live claim yet.
+- Fresh normalc981388/41916735296 passes build,11units,all39browser cases
+  and deployment. Independently match all28public application assets; both
+  complete actual public overlay/input cases pass28.7s.
 
 Completion log:
 - 2026-11-05: User permits console overlap. Remove only the notice-host observer
   and avoidance camera calculations. Replace the old separation invariant with
   ordinary camera/look-target checks, retaining glass/viewport/dock/power checks.
   Record local red/green qualification; await normal hosted/public delivery.
+- 2026-11-05: Explicitly dismiss the intentional overlay before native pointer
+  input; preserve all actual input assertions. Fresh full gate/deploy passes.
+  Independent public asset and two-case verification completes34; reconcile
+  guide, verification, book lesson, index/ledger and own continuity.

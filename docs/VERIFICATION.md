@@ -20,8 +20,7 @@ viewport sizes, drawer reparenting, inspection and dismissal. Whole-handheld
 viewport fit, toolbar clearance and physical power-target bounds remain checked;
 only separation from the overlapping notice is intentionally removed.
 The old avoidance implementation fails the new framing assertion. Syntax/build,
-all 11 units and the corrected focused case pass locally (15.0s). Hosted release
-and independent public verification remain pending.
+all 11 units and the corrected focused case pass locally (15.0s).
 
 Source `3668bb0` starts normal workflow `41915188399`: build and two browser
 shards pass, but the physical-input case times out because the intentionally
@@ -30,8 +29,14 @@ skipped. Update that dependent case to visibly dismiss the notice through its
 real close button before exercising every shell control. Keep every native
 press/release, mixed-input, pause and fullscreen assertion; do not force clicks
 or change timeouts. Both the overlay and physical-input cases then pass locally
-together (27.4s). A fresh normal source publication must still pass hosted gates
-and independent public qualification.
+together (27.4s).
+
+Fresh normal source `c981388` / workflow `41916735296` passes build, all 11
+units, all 39 browser cases and deployment. Independently match all 28 actual
+public application assets to that source, then run both complete overlay and
+physical-input cases against the real public site (28.7s). Workstream 34 is
+DONE. No failed-job retry, forced click, timeout increase or unrelated
+application change is needed; no new human visual acceptance is claimed.
 
 ## Sustained audio reserve, 2026-11-05
 

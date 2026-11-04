@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Notification overlay independently live:
+  Fresh normalc981388/41916735296 passes build,11units,all39browser cases and
+  deployment. Match all28actual public assets, then run complete overlay and
+  native-input/mixed-release/fullscreen/pause cases against production28.7s.
+  Workstream34DONE. Keep original glass, scroll/dismissal and ordinary fit;
+  no unrelated app change, forced input, timeout increase or failed-job retry.
+  Preserve historical documentation images rather than silently replacing
+  them with the input test's generated capture. Reconcile release records/
+  guide/book/index/ledger and own continuity; no new human acceptance claim.
 - 2026-11-05 / Exercise physical input after intentionally overlapping notices:
   Source3668bb0/41915188399 passes build and two browser shards. The remaining
   shell-input case times out at L: the power-on notice intercepts its real
