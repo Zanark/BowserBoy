@@ -652,7 +652,18 @@ test('device storage upgrades old checkpoints intact and rejects interrupted pow
 
 test('power switch destroys the runtime and cold boots only the in-game save, including after reload', async ({ page }) => {
   await page.goto('./');
+  await openTools(page);
+  // The timer has its own test; keep its disabled-control window out of power-switch gestures.
+  await page.locator('#autosave-toggle').click();
+  await closeTools(page);
   await startDemo(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+  await page.evaluate(() => {
+    window.reinsertions = 0;
+    new MutationObserver(changes => {
+      if (changes.some(change => change.target.dataset.cartridge === 'inserting')) window.reinsertions++;
+    }).observe(document.getElementById('scene'), { attributes: true, attributeFilter: ['data-cartridge'] });
+  });
   await move(page, 'ArrowRight');
   await move(page, 'x', 60);
   const batteryImage = await image(page);
@@ -689,6 +700,8 @@ test('power switch destroys the runtime and cold boots only the in-game save, in
   expect(await restartedFrame.evaluate(() => window.EJS_emulator.Module.FS.analyzePath('/game.state').exists)).toBe(false);
   await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
   await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  expect(await page.evaluate(() => window.reinsertions)).toBe(0);
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
   await page.reload();
   await upload(page, 'Renamed cartridge.gba');
   await expect.poll(() => image(page)).toBe(batteryImage);
