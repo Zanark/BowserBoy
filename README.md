@@ -42,6 +42,18 @@ does not turn it on. Only the physical switch changes the power state.
 Browser refresh still creates a new emulator process; unsaved frames are not
 continuous across navigation. Save a checkpoint before refreshing.
 
+## Slot it in
+
+A 3D cartridge slides into the top slot while the emulator loads, then stays
+seated during play and inspection. The loading view briefly widens and lowers
+the handheld into the lamp's light before returning to its normal position.
+
+![An original cartridge entering the handheld during loading](docs/images/cartridge-inserting.png)
+
+*The original BBA cartridge is part of the 3D scene, not an LCD overlay.
+Reduced motion seats it immediately. Power cycling an already-loaded cartridge
+does not replay insertion, and the animation never delays the emulator.*
+
 ## Play locally
 
 Node.js 22+ is required for the development commands, not for visitors to the

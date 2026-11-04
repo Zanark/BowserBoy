@@ -1,0 +1,48 @@
+Status: DONE (deployed and technically verified; new visual approval not claimed)
+Milestone: Show physical cartridge insertion during emulator loading
+Dependencies: 06_3D_TABLETOP, 08_POWER_LIFECYCLE, 10_DARK_ROOM, 11_STARTUP_AND_PERSISTENT_POWER
+Purpose: Make loading visible as an original cartridge entering the handheld's
+  top slot, without delaying native startup or changing power/save semantics.
+
+Tasks:
+- [x] Reuse original cartridge geometry as a retained child of the handheld.
+- [x] Animate one downward insertion when a different cartridge is loaded.
+- [x] Frame and light the insertion while keeping the shell above the tabletop.
+- [x] Retain the seated cartridge during play, inspection, errors and power cycles.
+- [x] Respect reduced motion and restore an off console with its cartridge seated.
+- [x] Verify desktop/phone real loading, refresh, physical motion and camera return.
+- [x] Deploy and independently verify live before final public documentation.
+
+Acceptance criteria:
+- A visible 3D cartridge slides downward into the top slot during real loading.
+- The cartridge remains attached after seating and follows the handheld.
+- The loading pose fits desktop/phone viewports and clears the actual tabletop.
+- Camera and handheld return to the ordinary held pose after insertion.
+- Already-seated power cycles do not fabricate removal/reinsertion.
+- Reduced motion seats immediately. Insertion does not switch the console on.
+- Long downloads do not loop insertion or display fabricated download progress.
+- Native startup is not delayed to wait for the physical animation.
+- Existing battery-only power boot, checkpoints, CRT and settings remain intact.
+
+Completion evidence:
+- Syntax/build and all ten units PASS.
+- Final explicit-software CDN, cold-boot and desktop/phone insertion cases:
+  four PASS in 1.5m, retaining exact battery/checkpoint assertions.
+- Source 6f8d2652e6fee36d316f585f1baf242394540227 / Pages 41766869711:
+  build, both complete browser shards (27 total) and actual deployment PASS.
+- Fresh live checks match all 23 exact public assets and pass both real loading
+  insertion cases in 30.6s, including desktop refresh and real native demo output.
+- Original live desktop capture reviewed; no commercial-ROM testing resumed.
+
+Completion log:
+- 2026-11-04: First raised-only cartridge was outside useful lamp illumination.
+  Lower the loading pose into the actual beam instead of adding hidden fill.
+  A larger lowering intersected the table; final .95-unit lowering preserves
+  positive mesh/table clearance. Slide local Y=3.8 to 1.52 once, then stay seated.
+- 2026-11-04: Pages 41765659405 passed 26/27 cases, including both new insertion
+  cases, but failed a second power-off click; deployment was skipped.
+  Its trace shows autosave disabling the switch between actionability checking
+  and click dispatch. Isolate that separately tested timer through normal UI in
+  the cold-boot fixture; retain every save assertion and add no-reinsertion checks.
+- 2026-11-04: Corrected full release and fresh live verification succeed before
+  final documentation. Technical completion is not inferred human approval.

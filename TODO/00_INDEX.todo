@@ -13,6 +13,7 @@ BowserBoyAdvance workstreams
 11_STARTUP_AND_PERSISTENT_POWER.todo - Original branding/startup and remembered infinite-battery console.
 12_AUDIO_RELIABILITY.todo - Native prebuffer, smooth volume/mute and peak protection.
 13_CURVED_LCD_BORDER.todo - Physical inner border fitted to the native CRT curve.
+14_CARTRIDGE_INSERTION.todo - Visible 3D insertion during loading, retained seated cartridge.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -50,3 +51,7 @@ Curved LCD border is deployed from 72da407f03ddf872bdd7b3c19e4a9bba92445998:
 Pages 41763054197 passes build, both complete browser shards (25) and deployment.
 Fresh live checks match 23 exact assets and pass actual native edge/UV/filter
 switching. Unfiltered mode retains its complete rectangular viewport.
+Physical cartridge insertion is deployed from 6f8d2652e6fee36d316f585f1baf242394540227:
+Pages 41766869711 passes build, both complete browser shards (27) and deployment.
+Fresh live checks match 23 exact assets and pass desktop/phone actual insertion,
+desktop refresh and genuine native demo startup in 30.6s. See workstream 14.

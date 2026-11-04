@@ -178,6 +178,29 @@ Unfiltered and other native presets restore the rectangular display/surround
 rather than cropping their corners or assuming CRT Geom's fit applies to them.
 Revalidate the outline against actual native output on an engine/shader upgrade.
 
+### Physical cartridge insertion
+
+The original cartridge builder also creates one retained loaded-cartridge group
+under the handheld root. `insertCartridge` uses the validated content identity:
+a different cartridge starts a one-shot insertion; an already-seated identity
+does not reinsert on power cycling or retry. It moves along local Y from 3.8
+to 1.52, with an 850 ms framing interval and a 1350 ms smooth downward slide.
+Reduced motion seats immediately. Restoring an off console also seats without
+animation; selecting a cartridge while off still does not switch power on.
+
+Playing-view insertion briefly widens the camera and lowers the shell .95 units
+into the actual desk lamp's beam, retaining positive tabletop clearance.
+After seating, the camera and shell return over 850 ms. No ambient/fake fill
+light is added. The cartridge follows inspection/table transforms as a child;
+errors retain it seated. A new ROM reuses its geometry instead of allocating
+another prop on every selection.
+
+Motion advances from elapsed time even when software rendering skips paints.
+Completed motions clear their state so an idle console can stop drawing.
+Framing does not trigger a view-mode callback, pause the core or reset input.
+Native loading proceeds independently: there is no animation-based startup
+delay, invented percentage or looping reinsertion during a long download.
+
 ### Dark room and screen-colored illumination
 
 `src/lighting.js` models the lamp and its light sources. The scene has no ambient,

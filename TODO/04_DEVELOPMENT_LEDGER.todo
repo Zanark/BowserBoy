@@ -257,3 +257,24 @@ Completion log:
   build, both 25-case shards and deployment. Fresh live checks match 23 assets
   and pass the actual CRT-edge/filter case (14.1s). Updated original captures
   reviewed; final documentation follows deployment, not inferred approval.
+- 2026-11-04 / Physical cartridge loading:
+  Attach one original BBA cartridge mesh to the handheld and animate it down
+  into the top slot during native loading. Keep it seated through inspection,
+  failure/retry and power cycling. Reduced motion seats immediately; off-console
+  insertion stays off. No fabricated percentage, repeated loading loop or
+  emulator delay. Frame wider, lower into the actual lamp beam, then return.
+  Initial raised-only pose was almost invisible; excessive lowering intersected
+  the table. Final .95-unit lowering retains positive actual tabletop clearance.
+  Held genuine CDN loader fixtures check travel, viewport fit, monotonic movement,
+  clearance, camera return and real native demo after the request is released.
+- 2026-11-04 / Hosted power fixture race and successful cartridge release:
+  Pages 41765659405 passed 26/27 cases, including both new insertion cases.
+  The existing second power-off click was lost because autosave disabled the
+  switch between actionability checking and dispatch, proven by trace snapshots.
+  Disable that separately tested timer through the normal UI in this cold-boot
+  fixture, retaining exact save/iframe assertions and adding zero-reinsertion
+  observation across power cycles. Four final software cases pass in 1.5m.
+  6f8d2652e6fee36d316f585f1baf242394540227 / Pages 41766869711 passes build,
+  both complete browser shards (27) and actual deployment. Fresh live checks
+  match all 23 assets and pass desktop/phone insertion and desktop refresh in
+  30.6s. Final public documentation follows deployment and live verification.
