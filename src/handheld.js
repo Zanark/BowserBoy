@@ -135,6 +135,41 @@ function engravedLabel(parent, text, x, y, width, height, color, angle = -.18) {
   parent.add(group);
 }
 
+function makerMark(parent, material) {
+  const glyphs = {
+    Z: [[0, 1], [1, 1], [1, .82], [.28, .18], [1, .18], [1, 0], [0, 0], [0, .18], [.72, .82], [0, .82]],
+    A: [[0, 0], [.35, 1], [.65, 1], [1, 0], [.78, 0], [.68, .3], [.32, .3], [.22, 0]],
+    N: [[0, 0], [0, 1], [.22, 1], [.78, .32], [.78, 1], [1, 1], [1, 0], [.78, 0], [.22, .68], [.22, 0]],
+    R: [[0, 0], [0, 1], [.74, 1], [1, .78], [1, .54], [.76, .35], [1, 0], [.73, 0], [.5, .32], [.22, .32], [.22, 0]],
+    K: [[0, 0], [0, 1], [.22, 1], [.22, .57], [.72, 1], [1, 1], [.55, .48], [1, 0], [.7, 0], [.34, .34], [.22, .22], [.22, 0]],
+  };
+  const holes = {
+    A: [[.4, .5], [.6, .5], [.5, .8]],
+    R: [[.22, .55], [.65, .55], [.78, .65], [.78, .72], [.65, .8], [.22, .8]],
+  };
+  const shapes = [...'ZANARK'].map((letter, index) => {
+    const points = polygon => polygon.map(([x, y]) =>
+      new THREE.Vector2((index - 2.5) * .22 + (x - .5) * .17, (y - .5) * .24));
+    const shape = new THREE.Shape(points(glyphs[letter]));
+    if (holes[letter]) shape.holes.push(new THREE.Path(points(holes[letter])));
+    return shape;
+  });
+  const badge = new THREE.Group();
+  badge.name = 'Zanark embossed maker mark';
+  badge.position.set(0, 2.10, .625);
+  add(badge, 'Raised Zanark lettering', solid(shapes, .018, .003), material, 0, 0, .012);
+  const chamfer = (width, height) => [
+    [-width / 2 + .09, height / 2], [width / 2 - .09, height / 2],
+    [width / 2, height / 2 - .07], [width / 2, -height / 2 + .07],
+    [width / 2 - .09, -height / 2], [-width / 2 + .09, -height / 2],
+    [-width / 2, -height / 2 + .07], [-width / 2, height / 2 - .07],
+  ].map(([x, y]) => new THREE.Vector2(x, y));
+  const frame = new THREE.Shape(chamfer(1.58, .38));
+  frame.holes.push(new THREE.Path(chamfer(1.55, .35)));
+  add(badge, 'Chamfered maker frame', solid(frame, .010, .002), material, 0, 0, .006);
+  parent.add(badge);
+}
+
 export function createHandheld() {
   const root = new THREE.Group();
   root.name = 'Indigo handheld';
@@ -200,6 +235,7 @@ export function createHandheld() {
   add(root, 'Rear shell', solid(shell, .36, .1), rear, 0, 0, -.26);
   add(root, 'Front shell', solid(shell, .36, .1), purple, 0, 0, .3);
   add(root, 'Front face with speaker apertures', solid(face, .04, .008), purple, 0, 0, .592);
+  makerMark(root, purple);
   add(root, 'Bezel surround', box(4.47, 3.39, .045, .3), seam, 0, .1, .65);
   add(root, 'Charcoal bezel', box(4.35, 3.27, .055, .27), bezel, 0, .1, .685);
   const lcd = createLcdGeometries(true);
@@ -211,12 +247,9 @@ export function createHandheld() {
   const wordmark = canvasTexture(1024, 342, (context, width, height) => {
     context.drawImage(brandImage, 0, 0, width, height);
   });
-  const logo = new THREE.Mesh(new THREE.PlaneGeometry(1.05, .35),
-    new THREE.MeshBasicMaterial({ map: wordmark, transparent: true, depthWrite: false, toneMapped: false }));
-  logo.name = 'Orbital bezel logo';
-  logo.position.set(0, -1.44, .763);
-  logo.receiveShadow = true;
-  root.add(logo);
+  const logo = label(root, 'BOWSERBOY ADVANCE', 2.65, .17, 0, -1.34, .763,
+    '#e2e2e2', 'italic 900 78px Arial');
+  logo.name = 'Monochrome bezel wordmark';
 
   const controls = new Map();
   function control(id, mesh, width, height, anchor = mesh) {
@@ -300,7 +333,8 @@ export function createHandheld() {
   headphone.rotation.x = Math.PI / 2;
   const cover = add(root, 'Battery cover', box(3.65, 2.9, .06, .2), rear, 0, -.2, -.57);
   for (let i = 0; i < 4; i++) add(cover, 'Battery thumb grip', box(.58, .035, .025, .01), purple, 0, .85 - i * .12, -.065);
-  const backLabel = logo.clone();
+  const backLabel = new THREE.Mesh(new THREE.PlaneGeometry(1.05, .35),
+    new THREE.MeshBasicMaterial({ map: wordmark, transparent: true, depthWrite: false, toneMapped: false }));
   backLabel.name = 'Orbital battery-cover logo';
   backLabel.scale.setScalar(2);
   backLabel.position.set(0, -.55, -.645);

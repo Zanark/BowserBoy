@@ -22,6 +22,7 @@ BowserBoyAdvance workstreams
 20_VISUAL_README.todo - DONE: animated logo, real interaction GIFs and linked detailed guide.
 21_FAVICON_AND_TRANSPARENT_BANNER.todo - DONE: actual shell-outline favicon and transparent moving banner.
 22_COMPLETE_ORBITAL_SPRITES.todo - DONE: complete supplied effects, spacious centered logo and verified live startup.
+23_HARDWARE_BRANDING_AND_SCREEN_FOCUS.todo - IN_PROGRESS: printed/embossed branding, clear icons, header notices and sharp LCD focus.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.

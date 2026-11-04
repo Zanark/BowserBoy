@@ -360,6 +360,11 @@ export class HandheldScene {
   }
 
   render(time) {
+    if (document.fullscreenElement?.id === 'screen-focus') {
+      this.lastRender = time;
+      this.renderedLastFrame = false;
+      return;
+    }
     const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
     if (this.renderedLastFrame) {

@@ -573,7 +573,10 @@ test('first visit is off, original startup plays only on the power switch, and i
     CanvasRenderingContext2D.prototype.drawImage = function (...args) {
       drawImage.apply(this, args);
       if (this.canvas !== window.startupSource || !args[0]?.src?.endsWith('/assets/logo.png')) return;
-      const pixels = this.getImageData(0, 30, 240, 90).data;
+      if (args.length === 9 && args[1] + args[3] < args[0].width - .01) return;
+      const probe = new OffscreenCanvas(240, 160).getContext('2d');
+      probe.drawImage(this.canvas, 0, 0, 240, 160);
+      const pixels = probe.getImageData(0, 30, 240, 90).data;
       let ink = 0;
       for (let i = 0; i < pixels.length; i += 4) if (pixels[i] > 170 && pixels[i + 1] > 150 && pixels[i + 2] > 180) ink++;
       window.startupInk = Math.max(window.startupInk, ink);
@@ -597,6 +600,7 @@ test('first visit is off, original startup plays only on the power switch, and i
   await page.getByRole('button', { name: 'Turn power on', exact: true }).click();
   await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'true');
   await expect.poll(() => page.evaluate(() => window.startupInk)).toBeGreaterThan(100);
+  expect(await page.evaluate(() => [window.startupSource.width, window.startupSource.height])).toEqual([960, 640]);
   await test.info().attach('original-startup', {
     body: await page.screenshot({ path: 'docs/images/startup.png' }), contentType: 'image/png',
   });

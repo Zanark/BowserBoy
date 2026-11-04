@@ -14,6 +14,20 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Physical branding and LCD focus, locally verified:
+  Replaced the front orbital sticker with grayscale printed lettering; retained
+  supplied purple artwork on the rear, website and LCD. Original extruded
+  ZANARK glyphs/chamfered frame share the shell material. Notices now flow below
+  the header logo and dock icons distinguish hardware/slots/settings actions.
+  Separate LCD fullscreen mirrors the actual retained native framebuffer,
+  suspending hidden room rendering without moving/restarting the live iframe.
+  Existing controls work even from table mode; Escape/close restore that view.
+  Diagnosed enlarged240x160 startup plus8px extra blur; now960x640 with a
+  gentle cropped-strip logo wave, unchanged game pixels, timing and static
+  reduced motion. Syntax/build/11 units pass; five focused Edge cases1.1m and
+  explicit SwiftShader2.2m pass. Expanded recovery/live-update/both-exit check
+  passes Edge46.3s. Actual captures reviewed. Hosted deployment still pending;
+  no new user acceptance or completed chaptered book is claimed.
 - 2026-11-04 / Explicit README refresh:
   Updated the actual README after the latest deployed startup/media changes,
   retaining GIFs and minimal text. Startup heading, alt text and caption now

@@ -1,0 +1,54 @@
+Status: IN_PROGRESS
+Milestone: Physical branding, intuitive dock and sharp waving startup with screen-only fullscreen.
+Dependencies: Completed workstreams 19 and 22.
+
+Purpose
+-------
+Make the hardware markings look manufactured rather than like colored stickers,
+clarify toolbar actions, position notifications below the website wordmark and
+provide a sharp animated startup plus a genuine live LCD-only fullscreen mode.
+
+Tasks
+-----
+[x] Replace only the front bezel logo with monochrome printed text.
+[x] Add an original raised geometric ZANARK maker badge in matching shell plastic.
+[x] Place scene notifications directly below the website logo; retain modal notices.
+[x] Distinguish put-down/cartridge/save/slots/restart and inspection-return icons.
+[x] Add screen-only fullscreen preserving the current native framebuffer and keyboard input.
+[x] Raise startup raster resolution and animate a gentle wordmark wave.
+[x] Complete focused browser and visual review, including reduced motion and error recovery.
+[ ] Pass normal release gates and verify actual production behavior.
+[ ] Refresh affected guides/images/visual README and record final evidence.
+
+Acceptance criteria
+-------------------
+Front bezel has grayscale text only, not a purple orbital sticker.
+Top maker mark has real raised geometry and an original non-Nintendo treatment.
+Notifications align below the header logo without blocking scene input.
+Named icons have distinct shapes and retain usable 44px targets at phone sizes.
+LCD-only fullscreen shows actual running frames, accepts existing controls and
+returns without a new runtime, reset, checkpoint restore or changed power intent.
+Startup uses a 960x640 raster with unchanged 3:2 logical composition, contained
+orbit and gentle wordmark wave; reduced motion is static and timing is retained.
+
+Completion evidence
+-------------------
+Syntax, build and 11 units pass. Five focused actual Edge cases pass in1.1m,
+and the same five pass with explicit Chromium/SwiftShader in2.2m.
+Final expanded quick-actions case passes Edge46.3s: simulated request refusal
+recovers visibly, live fullscreen pixels match the native framebuffer before
+and after actual input, both Escape and exit button preserve runtime identity.
+Existing autosave/slots/restart checks remain. Reviewed actual startup,
+monochrome print, raised maker mark, 320px notices/dock and fullscreen captures.
+This is technical/visual review, not new user aesthetic acceptance.
+Normal hosted release and production verification remain pending.
+Observed blur sources: startup was drawn at native 240x160 and magnified with
+linear texture sampling, with an additional 8px logo shadow on that small raster.
+Native gameplay resolution/shader are not changed by the startup raster fix.
+
+Completion log
+--------------
+2026-11-04: User supplied physical-console examples and requested monochrome
+bezel lettering, an original embossed Zanark mark, header notifications,
+unambiguous icons, LCD-only fullscreen and a sharper waving startup wordmark.
+Original supplied purple art remains unchanged for website/back/startup branding.

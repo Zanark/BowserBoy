@@ -40,6 +40,7 @@ for (const [id, name, label] of [
   ['put-down', 'down', 'Put down handheld'], ['lamp-toggle', 'lamp', 'Turn desk lamp off'],
   ['room-toggle', 'room', 'Turn room lights on'], ['tools-open', 'cartridge', 'Open cartridge and settings'],
   ['quick-fullscreen', 'fullscreen', 'Fullscreen player'], ['quick-controls', 'keys', 'Change control keybindings'],
+  ['quick-screen-fullscreen', 'screen', 'Fullscreen game screen'], ['screen-focus-close', 'close', 'Exit screen fullscreen'],
   ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
 ]) icon($(id), name, label);
 
@@ -114,6 +115,7 @@ function updateControls() {
   $('quick-load').disabled = $('restore').disabled;
   $('quick-autosave').disabled = $('autosave-toggle').disabled;
   for (const id of ['quick-speed', 'quick-restart']) $(id).disabled = !running || busy;
+  $('quick-screen-fullscreen').disabled = !running || busy;
   for (const id of ['quick-controls', 'quick-slots', 'quick-fullscreen']) $(id).disabled = busy;
   $('power-led').classList.toggle('on', powered);
   view?.setPower(powered);
@@ -433,6 +435,63 @@ function fullscreen() {
 }
 $('fullscreen').addEventListener('click', fullscreen);
 $('quick-fullscreen').addEventListener('click', fullscreen);
+let screenFrame = null;
+function paintFullscreenScreen() {
+  if (document.fullscreenElement !== $('screen-focus')) return;
+  try {
+    const source = view?.source ?? view?.model.screen.material.map?.image;
+    if (!source) throw new Error('The live LCD is unavailable. Return to the desk to retry.');
+    const canvas = $('screen-focus-canvas');
+    if (canvas.width !== source.width || canvas.height !== source.height) {
+      canvas.width = source.width;
+      canvas.height = source.height;
+    }
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('The browser could not create the fullscreen display.');
+    context.imageSmoothingEnabled = false;
+    context.drawImage(source, 0, 0);
+    screenFrame = requestAnimationFrame(paintFullscreenScreen);
+  } catch (error) {
+    console.error('Screen fullscreen:', error);
+    notice(error.message, true);
+    void document.exitFullscreen().catch(failure => notice(`Fullscreen could not close: ${failure.message}`, true));
+  }
+}
+function closeScreenFullscreen() {
+  if (document.fullscreenElement !== $('screen-focus')) return;
+  void document.exitFullscreen().catch(error => notice(`Fullscreen could not close: ${error.message}`, true));
+}
+$('quick-screen-fullscreen').addEventListener('click', () => {
+  if (!running || busy) return;
+  if (!$('screen-focus').requestFullscreen) {
+    notice('Screen fullscreen is not supported by this browser.', true);
+    return;
+  }
+  $('screen-focus').hidden = false;
+  void $('screen-focus').requestFullscreen().catch(error => {
+    $('screen-focus').hidden = true;
+    notice(`Screen fullscreen could not open: ${error.message}`, true);
+  });
+});
+$('screen-focus-close').addEventListener('click', closeScreenFullscreen);
+document.addEventListener('fullscreenchange', () => {
+  const focused = document.fullscreenElement === $('screen-focus');
+  $('quick-screen-fullscreen').setAttribute('aria-pressed', String(focused));
+  if (focused) {
+    releaseHostInputs();
+    $('screen-focus-canvas').focus({ preventScroll: true });
+    paintFullscreenScreen();
+  } else if (!$('screen-focus').hidden) {
+    cancelAnimationFrame(screenFrame);
+    screenFrame = null;
+    $('screen-focus').hidden = true;
+    releaseHostInputs();
+    if (view) view.changed = true;
+    $('quick-screen-fullscreen').focus({ preventScroll: true });
+  }
+  if (running) void command('setInputEnabled', focused || (view?.mode === 'playing' && !view.transition))
+    .catch(error => notice(error.message, true));
+});
 function saveCheckpoint() {
   return operation(async () => {
     await persist(selectedSlot);
@@ -713,11 +772,12 @@ window.addEventListener('keydown', (event) => {
 }, true);
 
 const keyboard = bindKeyboard(window, {
-  enabled: (event) => running && view?.mode === 'playing' && !view.transition && !$('tools').open && !$('help').open && !$('frame-host').open &&
+  enabled: (event) => running && (document.fullscreenElement === $('screen-focus') || (view?.mode === 'playing' && !view.transition)) && !$('tools').open && !$('help').open && !$('frame-host').open &&
     !event.target.closest?.('button, input, select, textarea, [contenteditable="true"]'),
   getBindings: () => preferences.controls,
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
   onMenu: () => {
+    if (document.fullscreenElement === $('screen-focus')) { closeScreenFullscreen(); return true; }
     if ($('tools').open || $('help').open || $('frame-host').open) return false;
     openTools();
     return true;
@@ -781,12 +841,12 @@ try {
       $('pickup').hidden = mode !== 'table';
       $('inspect').hidden = $('put-down').hidden = mode === 'table';
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
-      icon($('inspect'), 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
+      icon($('inspect'), mode === 'inspecting' ? 'back' : 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
       $('scene-hint').textContent = mode === 'table' ? 'A quiet moment. Click the handheld to pick it up.' :
         mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
           'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
-      if (running) void command('setInputEnabled', mode === 'playing' && !moving).catch((error) => notice(error.message, true));
+      if (running) void command('setInputEnabled', document.fullscreenElement === $('screen-focus') || (mode === 'playing' && !moving)).catch((error) => notice(error.message, true));
     },
     onError: (error) => { console.error('3D graphics:', error); notice(error.message, true); },
   });

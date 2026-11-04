@@ -15,7 +15,7 @@
     <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
     <main id="player" class="desk" aria-label="3D Game Boy Advance style player">
       <div id="scene" data-view="table"></div>
-      <header class="desk-heading"><h1><img src="./assets/logo.png" alt="Bowser Boy Advance" width="2170" height="725"></h1><span>NO. 001 / INFINITE BATTERY</span></header>
+      <header class="desk-heading"><div class="desk-brand"><h1><img src="./assets/logo.png" alt="Bowser Boy Advance" width="2170" height="725"></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div><span>NO. 001 / INFINITE BATTERY</span></header>
       <p id="scene-error" role="alert" hidden></p>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
@@ -38,6 +38,7 @@
         <button id="lamp-toggle" aria-pressed="true" aria-label="Turn desk lamp off"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z"/></svg><span id="lamp-label">Lamp on</span></button>
         <button id="room-toggle" aria-pressed="false" aria-label="Turn room lights on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2v3M6 5h12l3 6H3zM6 16l-2 3m8-3v5m6-5 2 3"/></svg><span id="room-label">Room off</span></button>
         <button id="quick-fullscreen"></button>
+        <button id="quick-screen-fullscreen"></button>
         <button id="quick-speed" popovertarget="speed-menu" aria-haspopup="dialog"></button>
         <button id="quick-controls"></button>
         <button id="quick-autosave" aria-pressed="true"></button>
@@ -65,7 +66,10 @@
         <div id="native-notice-host"></div>
         <div id="runtime-mount"></div>
       </dialog>
-      <div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div>
+      <div id="screen-focus" role="region" hidden aria-label="Fullscreen game screen">
+        <canvas id="screen-focus-canvas" tabindex="0" aria-label="Live game screen. Use your configured keyboard controls. Escape exits fullscreen."></canvas>
+        <button id="screen-focus-close" aria-label="Exit screen fullscreen"></button>
+      </div>
       <footer>Independent player <span aria-hidden="true">&middot;</span> <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EmulatorJS</a> + <a href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a></footer>
 
     <dialog id="tools" class="tools-drawer" aria-labelledby="tools-title">
@@ -118,7 +122,7 @@
       <h3>A handheld you can hold</h3><p>Click the 3D handheld on the table to pick it up. Inspect lets you drag it around to see its sides and battery cover. Use arrows to rotate, +/minus to zoom, or Home to reset while inspecting. Back to play returns it to a playable angle; Put down returns it to the table. The other cartridges are original decorative props, not supplied games.</p>
       <h3>Play, the familiar way</h3><p>Use the physical buttons, or click the 3D display for keyboard focus. Defaults: arrows to move, <strong>Z = A, X = B</strong>, A/S = L/R, Enter = Start, left Shift = Select. Remap keys in Cartridges. CRT Geom is the default screen shader; choose Unfiltered there if preferred. No buttons cover the LCD. Keyboard and mouse/touch controls are active in play view; the game keeps running on the table and while inspecting until you pause it. Connected gamepads retain their native runtime mappings.</p>
       <h3>Power and pause</h3><p>The physical switch powers the emulator off and stores available in-game save data. Turn it back on to boot the loaded ROM from the beginning, then use the game's own Continue/Load menu. The dock's power-cycle icon safely switches off, then on; it is not checkpoint restore. Power on never restores an instant checkpoint. Pause game in Cartridges keeps the current session instead.</p>
-      <h3>Quick controls</h3><p>The icon dock offers fullscreen, control remapping, autosave, checkpoint save/load and slot selection. Hover or focus an icon for its label. The fast-forward icon offers 1x, 2x, 3x and 4x native emulation speeds; actual throughput depends on your device. Speed and autosave choices are remembered.</p>
+      <h3>Quick controls</h3><p>The icon dock offers whole-player fullscreen and a separate screen-only fullscreen view, control remapping, autosave, checkpoint save/load and slot selection. Screen-only mode displays the current live LCD without the handheld or room; keyboard controls keep working and Escape returns to the desk without restarting the game. Hover or focus an icon for its label. The fast-forward icon offers 1x, 2x, 3x and 4x native emulation speeds; actual throughput depends on your device. Speed and autosave choices are remembered.</p>
       <h3>Under the shell</h3><p>Advanced EmulatorJS settings in Cartridges opens the native graphics, speed, capture settings and core options without restarting the game. Close it or press Escape to return. Choices are remembered on close; options marked Requires restart apply on the next power on. Key bindings, sound and checked save/backup handling remain in Cartridges. Opening settings does not pause gameplay.</p>
       <h3>Keep your place</h3><p>Auto-save captures a rolling checkpoint every 15 seconds, including cartridge battery-save data when available. It can be disabled independently of manual checkpoints. Selecting the same ROM normally resumes the newest checkpoint across all slots, even if renamed. After a deliberate power off it boots from the in-game save instead, until a new checkpoint is captured. Three manual slots keep independent checkpoints; your original quick save is Slot 1. Save and load icons use the selected slot. Restore replaces progress since that save. Save before closing; abrupt shutdowns can lose the latest progress.</p>
       <h3>Take a backup</h3><p>Export captures the current session, not the entire slot collection, to a <strong>.bba-save</strong> file. Select the matching ROM before importing. Imports replace the running session and selected manual slot, leaving other manual slots intact. Backups depend on the exact ROM bytes and EmulatorJS 4.2.3 / mGBA; they are not other emulators' .sav files.</p>

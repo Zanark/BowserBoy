@@ -22,7 +22,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #scene-canvas { display: block; width: 100%; height: 100%; touch-action: none; outline-offset: -5px; }
 #scene-canvas:focus { outline: none; }
 #scene:has(#scene-canvas:focus-visible) ~ .scene-hint { text-decoration: underline dotted; text-underline-offset: 4px; }
-.desk-heading { position: absolute; top: max(28px, env(safe-area-inset-top)); left: 38px; right: 38px; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
+.desk-heading { position: absolute; top: max(28px, env(safe-area-inset-top)); left: 38px; right: 38px; display: flex; align-items: flex-start; justify-content: space-between; pointer-events: none; z-index: 3; }
+.desk-brand { width: clamp(220px, 32vw, 420px); }
 .desk-heading h1 { margin: 0; line-height: 1; }
 .desk-heading h1 img { display: block; width: clamp(220px, 32vw, 420px); height: auto; }
 .desk-heading > span { color: #a3aab5; font: 8px var(--mono); letter-spacing: 2px; }
@@ -115,7 +116,7 @@ dialog::backdrop { background: #0009; backdrop-filter: blur(5px); }
 #shader, #checkpoint-slot { padding: 9px 10px; border: 1px solid #a181be66; border-radius: 8px; background: #2b2138; color: #e2d5ee; font-size: 11px; }
 .drawer-footer { display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #a8b4c1; border-top: 1px solid var(--line); padding-top: 20px; }
 .notice { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #223025; color: #d0dfbe; border: 1px solid #536a45; border-radius: 5px; padding: 10px 13px; font-size: 11px; line-height: 1.6; }
-#notice-host { position: absolute; bottom: 150px; left: 50%; transform: translateX(-50%); width: min(640px, calc(100% - 32px)); pointer-events: none; }
+#notice-host { margin-top: 12px; width: 100%; pointer-events: none; }
 #notice-host .notice button { pointer-events: auto; }
 .notice.error { background: #34231e; color: #f1bba4; border-color: #96614d; }
 .notice button { border: 0; padding: 0 3px; background: none; font-size: 22px; color: inherit; }
@@ -128,9 +129,14 @@ dialog::backdrop { background: #0009; backdrop-filter: blur(5px); }
 .help-warning { border-left: 3px solid #7f946c; background: #253026; padding: 12px 15px; margin-top: 20px; }
 body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; }
 .desk:fullscreen { width: 100vw; height: 100dvh; }
+#screen-focus { position: fixed; inset: 0; z-index: 10; background: #000; display: grid; place-items: center; }
+#screen-focus-canvas { display: block; width: 100%; height: 100%; object-fit: contain; outline-offset: -4px; }
+#screen-focus-close { position: absolute; top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #b18bd84d; border-radius: 12px; background: #20192ed9; color: #ede2ff; }
+#screen-focus-close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 600px) {
   .desk-heading { top: max(23px, env(safe-area-inset-top)); left: 18px; right: 18px; }
   .desk-heading h1 img { width: min(244px, calc(100vw - 130px)); }
+  .desk-brand { width: min(244px, calc(100vw - 130px)); }
   .desk-heading > span { max-width: 88px; text-align: right; font-size: 6px; letter-spacing: 1px; }
   .scene-actions { width: min(356px,calc(100vw - 4px)); max-width: calc(100vw - 4px); gap: 0; padding: 2px; }
   .scene-actions button { width: 44px; height: 44px; padding: 10px; }
@@ -138,7 +144,6 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .speed-menu { bottom: max(156px,calc(env(safe-area-inset-bottom) + 140px)); }
   .scene-actions kbd, #lamp-label, #room-label { display: none; }
   .scene-hint { bottom: max(154px,calc(env(safe-area-inset-bottom) + 138px)); font-size: 10px; padding: 0 12px; }
-  #notice-host { bottom: 190px; }
   .tools-drawer { padding: 22px; }
 }
 @media (max-height: 500px) {
@@ -146,6 +151,5 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .scene-actions { bottom: 16px; }
   .scene-hint { display: none; }
   footer { display: none; }
-  #notice-host { bottom: 100px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }

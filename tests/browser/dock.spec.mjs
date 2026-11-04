@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { powerOn, demoReady } from './pixel-lab.mjs';
+import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
@@ -137,6 +137,54 @@ test('quick actions reach real core speed, persist autosave off, restore selecte
   const calls = await frame.evaluate(() => window.speedCalls);
   for (const speed of [2, 3, 4]) expect(calls).toContainEqual(['setFastForwardRatio', speed]);
   expect(calls).toContainEqual(['toggleFastForward', 0]);
+  await page.evaluate(() => {
+    document.getElementById('screen-focus').requestFullscreen = () => Promise.reject(new Error('Simulated fullscreen refusal'));
+  });
+  try {
+    await page.locator('#quick-screen-fullscreen').click();
+    await expect(page.locator('#notice')).toContainText('Screen fullscreen could not open: Simulated fullscreen refusal');
+    await expect(page.locator('#screen-focus')).toBeHidden();
+    expect(await page.evaluate(() => document.fullscreenElement)).toBeNull();
+  } finally {
+    await page.evaluate(() => delete document.getElementById('screen-focus').requestFullscreen);
+  }
+  await page.locator('#put-down').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await page.locator('#quick-screen-fullscreen').click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement?.id)).toBe('screen-focus');
+  await expect(page.locator('#screen-focus-canvas')).toBeFocused();
+  const matchesLiveLcd = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const actual = document.getElementById('screen-focus-canvas');
+    const reference = new OffscreenCanvas(view.source.width, view.source.height);
+    const context = reference.getContext('2d');
+    context.drawImage(view.source, 0, 0);
+    if (actual.width !== reference.width || actual.height !== reference.height) return false;
+    const expected = context.getImageData(0, 0, reference.width, reference.height).data;
+    const pixels = actual.getContext('2d').getImageData(0, 0, actual.width, actual.height).data;
+    return expected.some((value, index) => index % 4 !== 3 && value > 100) &&
+      pixels.every((value, index) => value === expected[index]);
+  });
+  await expect.poll(matchesLiveLcd).toBe(true);
+  const before = await nativeFrame(page);
+  await page.keyboard.down('ArrowRight');
+  try { await expect.poll(async () => (await nativeFrame(page)).left).toBeGreaterThan(before.left); }
+  finally { await page.keyboard.up('ArrowRight'); }
+  await expect.poll(matchesLiveLcd).toBe(true);
+  expect(await frame.evaluate(() => window.runtimeIdentity)).toBe(identity);
+  await page.screenshot({ path: test.info().outputPath('screen-only-fullscreen.png') });
+  await page.keyboard.press('Escape');
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();
+  await expect(page.locator('#tools')).not.toBeVisible();
+  await expect(page.locator('#screen-focus')).toBeHidden();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await page.locator('#quick-screen-fullscreen').click();
+  await expect(page.locator('#screen-focus-canvas')).toBeFocused();
+  await page.locator('#screen-focus-close').click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();
+  await expect(page.locator('#screen-focus')).toBeHidden();
+  expect(await frame.evaluate(() => window.runtimeIdentity)).toBe(identity);
+  await page.locator('#pickup').click();
   await page.locator('#quick-slots').click();
   await page.locator('#checkpoint-slot').selectOption('manual2');
   await page.locator('#pause').click();
@@ -183,33 +231,45 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
   const artwork = await page.evaluate(async () => {
     const { drawStartup } = await import('./src/startup.js');
     const canvas = document.createElement('canvas');
-    canvas.width = 240; canvas.height = 160;
+    canvas.width = 960; canvas.height = 640;
     const context = canvas.getContext('2d');
     const images = [], starBounds = [], logoBounds = [];
+    let columns = [];
     const draw = context.drawImage.bind(context);
     context.drawImage = (image, ...args) => {
       const name = image.src.split('/').pop();
       images.push(name);
       if (name === 'logo.png') {
-        const [x, y, width, height] = args;
-        logoBounds.push({ x, y, width, height });
+        const [x, y, width, height] = args.length === 8 ? args.slice(4) : args;
+        columns.push({ x, y, width, height, blur: context.shadowBlur });
       }
       if (name === 'star.png') {
         const [x, y, width, height] = args;
         const transform = context.getTransform();
         starBounds.push(...[[x, y], [x + width, y], [x, y + height], [x + width, y + height]]
           .map(([px, py]) => new DOMPoint(px, py).matrixTransform(transform))
-          .map(point => ({ x: point.x, y: point.y })));
+          .map(point => ({ x: point.x / 4, y: point.y / 4 })));
       }
       draw(image, ...args);
     };
-    drawStartup(canvas, 1200);
+    const render = (elapsed, reduced = false) => {
+      columns = [];
+      drawStartup(canvas, elapsed, reduced);
+      const left = Math.min(...columns.map(column => column.x));
+      const right = Math.max(...columns.map(column => column.x + column.width));
+      const width = right - left;
+      logoBounds.push({ x: left, width,
+        centerY: columns.reduce((sum, column) => sum + (column.y + column.height / 2) * column.width, 0) / width,
+        wave: Math.max(...columns.map(column => column.y)) - Math.min(...columns.map(column => column.y)),
+        blur: Math.max(...columns.map(column => column.blur)), reduced });
+    };
+    render(1200);
     const first = canvas.toDataURL();
-    drawStartup(canvas, 1800);
+    render(1800);
     const moved = canvas.toDataURL() !== first;
-    drawStartup(canvas, 0, true);
+    render(0, true);
     const reduced = canvas.toDataURL();
-    drawStartup(canvas, 2000, true);
+    render(2000, true);
     const stable = canvas.toDataURL() === reduced;
     const renderedImages = [...images];
     const { starImage } = await import('./src/brand.js');
@@ -222,7 +282,7 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
       return (x >= 16 && x < sprite.width - 16 && y >= 16 && y < sprite.height - 16) ||
         data[pixel * 4 + 3] === 0;
     }).every(Boolean);
-    for (let elapsed = 0; elapsed <= 3200; elapsed += 100) drawStartup(canvas, elapsed);
+    for (let elapsed = 0; elapsed <= 3200; elapsed += 100) render(elapsed);
     return { images: renderedImages, moved, stable, image: reduced, padded, starBounds, logoBounds };
   });
   expect(artwork.images).toContain('logo.png');
@@ -236,7 +296,52 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
   for (const logo of artwork.logoBounds) {
     expect(logo.width).toBeLessThan(226 * .75);
     expect(logo.x + logo.width / 2).toBeCloseTo(120);
-    expect(logo.y + logo.height / 2).toBeCloseTo(78);
+    expect(logo.centerY).toBeCloseTo(78);
+    expect(logo.blur).toBe(0);
   }
+  expect(artwork.logoBounds[0].wave).toBeGreaterThan(5);
+  expect(artwork.logoBounds.filter(logo => logo.reduced).every(logo => logo.wave === 0)).toBe(true);
   await test.info().attach('orbital-startup-raster', { body: Buffer.from(artwork.image.split(',')[1], 'base64'), contentType: 'image/png' });
+});
+
+test('printed bezel and raised maker mark retain physical branding, and notices sit below the website logo', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  await page.locator('#pickup').click();
+  const branding = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const bezel = view.model.root.getObjectByName('Monochrome bezel wordmark');
+    const canvas = bezel.material.map.image;
+    const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+    let ink = 0, colored = 0;
+    for (let i = 0; i < pixels.length; i += 4) {
+      if (!pixels[i + 3]) continue;
+      ink++;
+      if (pixels[i] !== pixels[i + 1] || pixels[i + 1] !== pixels[i + 2]) colored++;
+    }
+    const maker = view.model.root.getObjectByName('Zanark embossed maker mark');
+    const letters = maker.getObjectByName('Raised Zanark lettering');
+    letters.geometry.computeBoundingBox();
+    return { ink, colored, depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
+      samePlastic: letters.material === view.model.root.getObjectByName('Front face with speaker apertures').material };
+  });
+  expect(branding.ink).toBeGreaterThan(1000);
+  expect(branding.colored).toBe(0);
+  expect(branding.depth).toBeGreaterThan(.018);
+  expect(branding.samePlastic).toBe(true);
+  const icons = await page.locator('.scene-actions button:visible svg path').evaluateAll(paths => paths.map(path => path.getAttribute('d')));
+  expect(new Set(icons).size).toBe(icons.length);
+  await powerOn(page);
+  await expect(page.locator('#notice')).toBeVisible();
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const logo = await page.locator('.desk-heading h1').boundingBox();
+    const notice = await page.locator('#notice').boundingBox();
+    expect(notice.y).toBeGreaterThanOrEqual(logo.y + logo.height);
+    expect(notice.x).toBeCloseTo(logo.x);
+    expect(notice.x + notice.width).toBeLessThanOrEqual(width);
+    await page.screenshot({ path: test.info().outputPath(`printed-maker-notice-${width}.png`) });
+  }
+  await page.locator('#notice-dismiss').click();
+  await expect(page.locator('#notice')).toBeHidden();
 });
