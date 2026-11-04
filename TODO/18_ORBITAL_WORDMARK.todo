@@ -1,4 +1,4 @@
-Status: DONE (deployed and technically verified; new visual approval not claimed)
+Status: IN_PROGRESS (original release complete; header contrast follow-up)
 Milestone: Supplied purple orbital wordmark without a background
 Dependencies: 15_SUPPLIED_WORDMARK
 Purpose: Replace the current header logo with the user's new transparent
@@ -11,6 +11,8 @@ Tasks:
 - [x] Verify actual alpha, supplied asset identity and responsive header fit.
 - [x] Deploy through normal gates and independently verify the live result.
 - [x] Update affected provenance, documentation, ledger and owned journal afterward.
+- [x] Add a subtle header-only violet glow and dark separation shadow.
+- [ ] Review the actual warm/dark header and responsive fit; release normally.
 
 Acceptance criteria:
 - The header uses the supplied purple orbital logo, not the opaque-background
@@ -19,8 +21,15 @@ Acceptance criteria:
 - Artwork is not stretched and header/status do not overlap at desktop/phone widths.
 - Favicon, physical shell branding, original LCD startup and runtime remain unchanged.
 - Future variants are retained as reference only, with no switcher or recoloring.
+- Header contrast follows the artwork's alpha rather than adding a rectangular
+  background; source pixels, startup, physical branding and panel logos stay unchanged.
 
 Completion evidence:
+- Header contrast follow-up: syntax/build and all11 units pass; existing
+  transparency/responsive-header and branding/notice cases pass in13.7s.
+  Actual default warm, lights-off, room-lit and390/320px header captures
+  reviewed alongside an unfiltered baseline; zero browser page errors.
+  Normal release and independent public verification remain pending.
 - Exact supplied PNG: 2170x725 RGBA,824013bytes, SHA256
   de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1.
 - Syntax/build pass; two Edge logo/startup cases17.1s, two software cases45.9s.
@@ -32,6 +41,10 @@ Completion evidence:
   deployment/live verification. Variants remain private, inactive and unpublished.
 
 Completion log:
+- 2026-11-04: User requests subtle main-page glow because the supplied purple
+  artwork feels disconnected from the warm yellow/brown room. Try an alpha-shaped
+  violet halo with a tight dark separation shadow, without blurring the source
+  lettering, adding a card or changing the room palette.
 - 2026-11-04: User supplies the replacement, its transparent version and a
   future-only variant sheet. The transparent file has genuine alpha; the
   variant sheet has an opaque raster checkerboard, not transparent pixels.

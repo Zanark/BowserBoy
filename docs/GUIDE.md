@@ -5,7 +5,9 @@
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
 
 *The supplied transparent purple orbital logo, preserved unchanged with its
-white lettering, neon rim and orbit/star accents.*
+white lettering, neon rim and orbit/star accents. On the main page, an
+alpha-shaped violet glow and tight dark shadow separate it from the warm
+room without a rectangular background or blurred lettering.*
 
 **A little escape, on your desk.** A local-first browser GBA player inside an
 actual 3D indigo handheld, built for static hosting on GitHub Pages.

@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Main-page logo contrast:
+  User finds the purple orbital artwork disconnected from the warm room and
+  requests a subtle glow. Apply header-only CSS drop shadows: a tight dark
+  separation edge plus a soft violet halo following the actual image alpha.
+  Preserve crisp lettering, supplied PNG, transparent exterior, source aspect,
+  panel/physical/startup logos and room lighting; no card, recoloring or pulse.
+  Syntax/build/11units pass; two existing artwork/layout/notice cases pass13.7s.
+  Review actual warm, dark, room-lit and390/320px captures beside an unfiltered
+  baseline; zero browser errors. Normal release/public verification pending.
 - 2026-11-04 / Current visual README:
   User requests README refresh after underside/CRT release. Earlier807da8e
   interaction GIFs still depict front-mounted power, so record all four actual

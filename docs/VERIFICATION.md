@@ -3,6 +3,17 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
+## Main-page logo contrast
+
+The header alone adds a static alpha-shaped violet glow and tight dark
+separation shadow. The supplied PNG bytes, intrinsic aspect ratio, transparent
+corners, startup, physical branding and panel logos remain unchanged.
+Syntax, build and all 11 units pass. Existing artwork/responsive-header and
+branding/notice browser cases pass in 13.7s, including 1440/390/320px fit.
+Actual warm, lights-off, room-lit and phone captures are reviewed against an
+unfiltered baseline with zero browser page errors. This is local browser
+qualification; normal deployment and independent public verification are pending.
+
 ## Deployed underside power and all CRT presets
 
 Corrected release `ba49d559688713d485d2c27b593faed9692913ae` / fresh Pages
