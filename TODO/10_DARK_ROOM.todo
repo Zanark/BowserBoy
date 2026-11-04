@@ -1,0 +1,62 @@
+Status: DONE (implemented, verified and deployed)
+Milestone: Dark tabletop room, independently switchable lamp and tactile controls
+Dependencies: 06_3D_TABLETOP, 08_POWER_LIFECYCLE, 09_NATIVE_SETTINGS
+Purpose: Match the requested unlit-room presentation while preserving actual
+  cartridge play, native settings, checked saves and genuine power semantics.
+
+Tasks:
+- [x] Make the UI/room dark by default and construct a switchable physical lamp.
+- [x] Add inverse-square spotlight shadows and finite authored wood bounce.
+- [x] Attach one-sided, framebuffer-colored area illumination to the LCD.
+- [x] Clear screen emission on power off without changing lamp state.
+- [x] Add realistic material response and mapped mesh depression/rocking/hinges.
+- [x] Bound idle shadows/readbacks and recover scheduling on software graphics.
+- [x] Qualify real native input, persistence, shaders, controls and power.
+- [x] Deploy successfully before final public documentation.
+- [x] Verify live bytes/gameplay, refresh screenshots and reconcile documentation.
+
+Acceptance criteria:
+- Default room is dark; lamp and cartridge power operate independently.
+- LCD illumination uses actual post-shader colors and follows its model pose.
+- Physical power off destroys the runtime and extinguishes LCD area emission.
+- Keyboard/remapped/pointer inputs move actual meshes and still reach the core.
+- No gameplay buttons or toolbars cover the LCD.
+- All normal build/browser publication gates pass; no assertions are skipped.
+- Lighting approximations, technical evidence and human acceptance stay distinct.
+- No private context, reference viewer assets or commercial ROM bytes are published.
+
+Completion evidence:
+- Syntax/build PASS, unit suite 10/10 PASS.
+- Full local Chromium suite 19/19 PASS; full explicit SwiftShader suite 19/19
+  PASS in 4.9 minutes. Subsequent fixture-only focused software cases 2/2 PASS.
+- Pages run 41746728238 for d551f4269b58fc31e496c4d1bc8d9d6110817f79:
+  both complete browser shards, build and actual deployment PASS.
+- Fresh live Edge verification: 19 public assets match exact committed Git
+  blobs/generated demo/vendor bytes; default dark scheme, original native demo,
+  CRT Geom, independent lamp, button travel, LCD emission, same native-settings
+  runtime, power-off light cleanup and new-runtime power-on all PASS.
+- Additional final Edge captures: five focused cases PASS in 48.7 seconds.
+  Reviewed a single ten-image contact sheet of final public UI captures.
+- README, architecture, saving/verification guides, notices, index and ledger
+  reconciled after successful deployment. No human acceptance is inferred.
+
+Completion log:
+- 2026-11-04: User requested darkness, switchable lamp, screen lighting and
+  realistic pressed buttons, then authorized autonomous deploy-before-docs.
+- 2026-11-04: Implemented finite real-time sources, physical controls and clear
+  power cleanup. Rectangular-light occlusion/GI and measured hardware luminance
+  are not implemented; spotlight shadows and LCD orientation are real.
+- 2026-11-04: Hosted software graphics exposed repeated readback starvation.
+  Cache unchanged shadows/static sources, stop idle/modal backdrop paints,
+  adapt backing resolution and leave recovery intervals after slow paints.
+- 2026-11-04: Native PNG evidence exposed incomplete ROM startup and inputs
+  ending before core polling. Wait for the real 8x8 demo frame and actual
+  input/SRAM/pause responses instead of assuming wall-clock sleeps suffice.
+- 2026-11-04: Preserve exact restored bytes in the newest resume slot instead
+  of immediately recapturing a possibly stale native state. Keep exact native
+  reload assertions; mutable automatic-slot comparisons cannot assume a real
+  subsequent timer save has not occurred. Remapping tests isolate that timer.
+- 2026-11-04: Final hosted release and live native verification succeeded.
+  Windows CRLF checkout bytes differ from Pages' LF checkout; live comparison
+  uses exact committed Git blobs, not a weakened normalized-hash comparison.
+- 2026-11-04: Final documentation/screenshot update follows verified deployment.

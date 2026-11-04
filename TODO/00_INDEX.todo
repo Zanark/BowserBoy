@@ -8,6 +8,8 @@ BowserBoyAdvance workstreams
 06_3D_TABLETOP.todo - Actual 3D pickup/inspection scene and native default CRT Geom.
 07_REFERENCE_SHAPE.todo - Correct rejected geometry using the supplied visual reference.
 08_POWER_LIFECYCLE.todo - True power off and battery-only ROM restart; separate pause.
+09_NATIVE_SETTINGS.todo - Restore the actual native settings outside the LCD.
+10_DARK_ROOM.todo - Switchable lamp, framebuffer lighting and real button travel.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -23,3 +25,10 @@ was not imported. Its mesh was unavailable for download and no reuse license
 was established. See workstream 07 for evidence and intermittent-test caveats.
 Physical power now tears down the runtime and cold boots only in-game save
 data. Final release checks: 9 unit / 16 Edge browser cases pass; see workstream 08.
+Native settings and dark-room work are complete and deployed. The earlier pause
+was superseded by explicit deploy-first authorization. Release d551f4269b58fc31e496c4d1bc8d9d6110817f79,
+Pages run 41746728238: build, both browser shards (19 total) and deployment PASS.
+Fresh live Edge checks verified all 19 public asset hashes and actual demo,
+lamp, CRT, native settings, mapped button travel and power behavior.
+Final public documentation follows that successful deployment. This is technical
+release evidence, not new human visual acceptance or physical-device qualification.

@@ -131,3 +131,55 @@ Completion log:
   for session-only power-cycle coverage. Final syntax/build, 9 units and
   16 browser cases pass. User then explicitly authorized deploying everything;
   publish all completed public work, never private context or ROM bytes.
+- 2026-11-04 / Native settings, without disturbing the cartridge:
+  User paused deployment and chose restoring the EmulatorJS extras next.
+  The original menu was nested beneath the deliberately hidden toolbar.
+  Moving a live iframe risks replacing its browsing context, so keep its DOM
+  position and use a native dialog top layer. A direct probe verified unchanged
+  window identity and nonzero closed layout; explicit display:block preserves
+  rendering when the dialog is closed. Move only native menu nodes inside the
+  child document, retaining native handlers and applying responsive menu CSS.
+  Add category keyboard semantics and gate GBA keys while the panel is open.
+  Checked native options are saved on close and feed next-launch defaults;
+  verified rewind takes effect only on fresh power on. Preserve native shader
+  overrides through host sound/remapping, but let the simple selector clear them.
+  Exclude host-managed native input/save/runtime controls rather than introducing
+  a second save authority. Final syntax/build, 10 units and 17 Edge browser cases
+  pass; actual native-menu screenshot reviewed. New work remains local, with
+  deployment paused and no commercial ROM test restarted.
+- 2026-11-04 / Dark room and tactile controls:
+  Later user direction resumed publication and required deployment before final
+  documentation. Built an original desk lamp with inverse-square spotlight
+  shadows and finite authored wood bounce; no ambient/fill light. Average actual
+  retained post-shader pixels in linear RGB for an attached one-sided LCD area
+  light. Exposure adapts gradually; power-off clears emission. Button meshes
+  depress/rock/hinge using the same input state as gameplay. Rectangular-source
+  occlusion and full GI remain explicit limits, not promised physical accuracy.
+- 2026-11-04 / Hosted graphics evidence changed the design:
+  Multiple hosted gates failed despite local passes. Trace readback stalls led
+  to cached shadows/static source sampling, idle render suppression and no
+  modal-backdrop painting. Sustained slow paints reduce backing resolution;
+  recovery intervals leave scheduling time for emulation. Windows-hosted browser
+  qualification and disabling trace screencasts did not solve the pressure.
+  Retain complete two-shard browser qualification on Ubuntu 24.04.
+- 2026-11-04 / Native frames, not synthetic timing:
+  Raw PNGs showed incomplete initial VRAM and key gestures ending before a core
+  input poll. Require the real completed 8x8 original-demo square and hold
+  inputs until native pixels/SRAM respond; await pause acknowledgement.
+  Keep exact restore hashes. An initial-versus-moved inequality alone could
+  accidentally measure startup rather than input.
+  Later exact reload evidence showed an actual square-position mismatch.
+  Restore/import now preserve their exact validated source as the newest slot,
+  rather than immediately recapturing a potentially stale core frame.
+  Removed newly added byte comparisons that raced a legitimate later timer save;
+  actual exact native reload assertions remain. Isolate that independent timer
+  during remapping, which correctly rejects keys while another action is busy.
+- 2026-11-04 / Deployed before documentation:
+  d551f4269b58fc31e496c4d1bc8d9d6110817f79 passed both full browser shards,
+  the build and actual Pages deployment in run 41746728238. Fresh live Edge
+  verified all 19 public files, original-demo gameplay/CRT, independent lamp,
+  actual button travel, settings runtime continuity and off/on cleanup.
+  Compare published source against Git blobs because Windows checkout CRLF
+  is not the Linux release's LF bytes. Final high-quality Edge screenshots
+  and documentation followed deployment, as requested. User visual acceptance,
+  real phones/controllers and audible-output quality remain separate.

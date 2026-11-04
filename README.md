@@ -5,8 +5,22 @@ actual 3D indigo handheld, built for static hosting on GitHub Pages.
 
 ![The 3D indigo handheld on its wooden table](docs/images/3d-table.png)
 
-*Original 3D geometry, a warm wooden table and decorative cartridge props.
+*A dark room, a switchable desk lamp and original 3D geometry on warm wood.
 Click the handheld to lift it into play view. No buttons cover the LCD.*
+
+## Lights out
+
+The room starts dark with the desk lamp on. Click the modeled lamp or use the
+**Lamp** control to switch it independently of the game. The lamp casts shadows;
+the LCD casts one-sided, screen-colored light as you lift or rotate the handheld.
+Turning the power off extinguishes its screen light. These are real-time lighting
+approximations, not a full global-illumination simulation.
+
+![The original demo with only the LCD lighting the room](docs/images/lcd-light.png)
+
+*Lamp off: the original Pixel Lab framebuffer is mostly dark, so its tiny
+colored square contributes little light. The screen glow follows its actual
+orientation and colors, rather than a fixed room-wide fill.*
 
 ## Play locally
 
@@ -68,7 +82,8 @@ Rotating the model naturally hides its front-facing game display.*
 | Cartridge and settings | Escape |
 
 Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
-buttons work with mouse, touch and keyboard activation. The bottom-edge power
+buttons work with mouse, touch and keyboard activation. Their meshes visibly
+depress: the D-pad rocks and the shoulder buttons hinge. The bottom-edge power
 switch turns the emulator off: the LCD goes dark and the runtime is removed.
 Turn it back on to boot the loaded ROM from the beginning with its in-game
 save data, **not an instant checkpoint**. Pause/resume remains in Cartridges.
@@ -86,6 +101,18 @@ replacement; duplicate assignments and reserved browser keys are rejected.
 Keys, sound and filter settings persist in checked local browser storage; failed writes
 explicitly apply only to the current session. Escape remains reserved for tools.
 Opening the drawer does not automatically pause gameplay.
+
+**Advanced EmulatorJS settings** opens the actual native graphics, speed,
+screen-capture settings and backend core options in a separate panel. It keeps
+the current game and pause state intact; Escape or Close returns to Cartridges.
+Selections are remembered when the panel closes, including other native shaders.
+Options marked **Requires restart** apply on the next power on. Keys, sound,
+save handling and the uncluttered LCD remain owned by this application.
+
+![Native EmulatorJS options in a separate panel](docs/images/native-settings.png)
+
+*The original native menu is accessible without showing a toolbar on the LCD
+or replacing the running cartridge.*
 
 Controller support remains provided by EmulatorJS; physical controller
 compatibility has not been tested.
@@ -130,8 +157,11 @@ tests the site, then publishes **only `dist`** on a push to `main` or a manual
 workflow dispatch. Pull requests run checks without deploying.
 
 Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
-The original prototype was published successfully. Subsequent local changes
-appear there only after they are committed/pushed and the workflow succeeds.
+The dark-room, 3D, native-settings and real-power redesign was deployed from
+`d551f4269b58fc31e496c4d1bc8d9d6110817f79` on 2026-11-04, following successful
+build and both browser shards (Pages run `41746728238`). A fresh live-browser
+check verified all 19 public assets and the lamp, native demo, CRT, settings,
+button travel and power lifecycle before this documentation was finalized.
 
 All application paths are relative. The browser suite serves the build under
 `/BowserBoyAdvance/`, rather than merely testing a domain-root development page.
@@ -143,7 +173,8 @@ npm run preview
 ```
 
 `dist` is generated and replaced on each build. It contains the static
-application, the two required pinned Three.js modules and their MIT license,
+application, the two pinned Three.js build modules, two rectangular-light
+lookup helpers and their MIT license,
 and the generated original Pixel Lab cartridge. The complete dependency tree,
 project documentation and private session context are not deployed.
 

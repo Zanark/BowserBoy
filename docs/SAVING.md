@@ -10,7 +10,9 @@ cartridge's own save point is not necessarily the exact current frame.
 Auto-save updates one rolling slot every 15 seconds; Save checkpoint updates a
 separate manual slot. Selecting the same ROM normally loads the newest slot. Restore
 returns to the manual slot and, with auto-save enabled, updates the rolling slot
-to the restored session.
+to the exact restored checkpoint bytes. Import likewise keeps its validated
+source checkpoint as the new resume point; neither immediately recaptures a
+possibly stale native frame. Subsequent normal timer captures can advance it.
 
 **Backup:** Export captures the current running session directly to a downloaded
 `.bba-save` file, independently of whether a browser checkpoint write succeeds.

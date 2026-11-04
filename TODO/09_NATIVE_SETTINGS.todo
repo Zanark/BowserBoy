@@ -1,0 +1,57 @@
+Status: DONE (implemented, verified and deployed)
+Milestone: Native EmulatorJS settings behind Cartridges, with a clear LCD
+Dependencies: 08_POWER_LIFECYCLE
+Purpose: Restore the real native settings without recreating the live core,
+  exposing LCD buttons or replacing checked host-owned controls and saves.
+
+Tasks:
+- [x] Inspect pinned menu construction, settings and resize contracts.
+- [x] Expose the same runtime through a responsive native modal dialog.
+- [x] Reuse native menu DOM and handlers; retain the hidden rendering layout.
+- [x] Gate gameplay keys, provide keyboard navigation and handle Escape.
+- [x] Persist validated native options, including next-boot restart settings.
+- [x] Preserve shader choices through host sound/remapping changes.
+- [x] Exercise native options, pause, power, reload and narrow layout.
+- [x] Update usage, architecture, verification and continuity documentation.
+
+Acceptance criteria:
+- The actual pinned settings menu is reachable only after a game starts.
+- Opening/closing does not reload, detach or replace the active runtime.
+- The LCD remains free of toolbars, virtual controls and menu buttons.
+- Current pause state is preserved and menu keys do not trigger GBA input.
+- Options are remembered on close; failed storage remains explicitly session-only.
+- Restart-required options apply at the next genuine power-on boot.
+- Keys, sound, save authority, runtime identity and backups remain compatible.
+- Local completion does not imply user visual acceptance or publication.
+
+Completion evidence:
+- Dialog probe verified retained iframe window identity and 720x480 layout
+  before/after opening, including when the dialog is closed.
+- Focused actual-core native menu case passed, then expanded coverage passed.
+- Final syntax/build PASS, unit suite 10/10 PASS, Edge browser suite 17/17 PASS.
+- Native speed ratio and alternate CRT shader changed through actual UI.
+  Sound changes preserve the shader; the simple selector clears its override.
+- Runtime identity and pause state survive opening/closing. Keyboard Enter
+  navigates a native category without simulateInput calls.
+- Rewind remains disabled until power on, then is enabled on the new runtime.
+  Ratio persists across power and reload; old power/checkpoint cases still pass.
+- 320x568 panel bounds fit; closing restores the hidden source width to 720.
+- docs/images/native-settings.png reviewed: native categories are visible in
+  a separate panel, with no blank host-owned input/save categories.
+- Included in d551f4269b58fc31e496c4d1bc8d9d6110817f79, successful Pages
+  run 41746728238. Fresh live Edge check preserves the same runtime through
+  native-menu opening/closing. Final screenshot refreshed with Edge.
+
+Completion log:
+- 2026-11-04: User paused deployment and selected native-menu restoration next.
+- 2026-11-04: Rejected moving/reparenting a live iframe. Expose its original
+  dialog in the top layer; move only the native menu inside the child document.
+- 2026-11-04: Keep closed-dialog rendering explicitly nonzero instead of using
+  display:none. Native modal behavior supplies focus/inertness.
+- 2026-11-04: Checked optional native preferences feed EJS_defaultOptions on
+  launch; hide host-owned native alternatives rather than split save authority.
+- 2026-11-04: Actual Pixel Lab-only local suite and screenshot review complete.
+  No commercial ROM retest, new publication, or resumed deployment monitoring.
+- 2026-11-04: Later user direction superseded the pause: finish autonomously
+  and deploy before final documentation. Native settings deployed with the
+  dark-room release; workstream 10 records the complete release gate.

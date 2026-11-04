@@ -33,13 +33,15 @@ do not assume this page replaces those obligations.
 **Three.js 0.186.1**, Copyright 2010-2026 Three.js Authors, is MIT licensed.
 [Source](https://github.com/mrdoob/three.js),
 [pinned npm package](https://www.npmjs.com/package/three/v/0.186.1).
-The static build copies only the unmodified `three.module.js`, `three.core.js`
-and full package license to `dist/vendor/THREE-LICENSE.txt`. That notice is
+The static build copies the unmodified `three.module.js`, `three.core.js`,
+`RectAreaLightUniformsLib.js` and `RectAreaLightTexturesLib.js` from that pinned
+package. The latter two supply the rectangular-light LTC lookup resources.
+It also copies the full package license to `dist/vendor/THREE-LICENSE.txt`. That notice is
 included in the deployed artifact. No other dependency files are exposed.
 
 ## Original prototype assets
 
-The cartridge icon, procedural handheld/table/cartridge geometry, canvas
+The cartridge icon, procedural handheld/table/cartridge/lamp geometry, canvas
 textures and project lettering, UI composition, and Pixel Lab
 test program were created for this project. The generated test program omits
 the Nintendo boot-logo array and is intended for emulator testing, not as a
