@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Physical branding, intuitive dock and sharp waving startup with screen-only fullscreen.
 Dependencies: Completed workstreams 19 and 22.
 
@@ -17,8 +17,8 @@ Tasks
 [x] Add screen-only fullscreen preserving the current native framebuffer and keyboard input.
 [x] Raise startup raster resolution and animate a gentle wordmark wave.
 [x] Complete focused browser and visual review, including reduced motion and error recovery.
-[ ] Pass normal release gates and verify actual production behavior.
-[ ] Refresh affected guides/images/visual README and record final evidence.
+[x] Pass normal release gates and verify actual production behavior.
+[x] Refresh affected guides/images/visual README and record final evidence.
 
 Acceptance criteria
 -------------------
@@ -41,7 +41,23 @@ and after actual input, both Escape and exit button preserve runtime identity.
 Existing autosave/slots/restart checks remain. Reviewed actual startup,
 monochrome print, raised maker mark, 320px notices/dock and fullscreen captures.
 This is technical/visual review, not new user aesthetic acceptance.
-Normal hosted release and production verification remain pending.
+Source807da8ef42594d3e0b2f8b788f66bed894483d21 is pushed.
+Pages41819504285: build and first full19-case shard pass; second shard passes
+17 cases but reaches its unchanged600-second global limit before the last
+mobile-inspection case can complete. Deploy skipped. That remaining case passes
+independently with local explicit SwiftShader in29.5s, not a hosted-gate pass.
+GitHub refuses the normal failed-job retry: repository administrator required.
+No permission workaround or gate/coverage/timeout change was attempted.
+User reran the failed job in GitHub. Authorized attempt2 SUCCEEDS: build,
+both complete browser shards19+18 and actual deployment of unchanged807da8e.
+Independent28-asset match passes. Five actual production Edge cases pass1.2m;
+two additional real lighting/pressed-cap capture cases pass16.3s.
+Fresh actual public four-clip footage has zero page errors. Reviewed sampled
+encoded beginnings/middles/endings and current back/lighting/control figures.
+Refreshed four interaction GIFs, startup/pose/dock/comparison figures, and added
+actual native LCD fullscreen figure. Transparent orbital banner is unchanged.
+README stays visual-first with versioned current GIFs and minimal captions.
+Linked guide/architecture/provenance/media/verification and causal ledger agree.
 Observed blur sources: startup was drawn at native 240x160 and magnified with
 linear texture sampling, with an additional 8px logo shadow on that small raster.
 Native gameplay resolution/shader are not changed by the startup raster fix.
@@ -52,3 +68,6 @@ Completion log
 bezel lettering, an original embossed Zanark mark, header notifications,
 unambiguous icons, LCD-only fullscreen and a sharper waving startup wordmark.
 Original supplied purple art remains unchanged for website/back/startup branding.
+2026-11-04: Verified807da8e / Pages41819504285 authorized attempt2 deployed.
+Final current media/docs follow actual live verification, without claiming
+new user aesthetic approval or completion of the separate chaptered book.

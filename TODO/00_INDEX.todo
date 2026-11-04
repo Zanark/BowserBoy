@@ -22,7 +22,7 @@ BowserBoyAdvance workstreams
 20_VISUAL_README.todo - DONE: animated logo, real interaction GIFs and linked detailed guide.
 21_FAVICON_AND_TRANSPARENT_BANNER.todo - DONE: actual shell-outline favicon and transparent moving banner.
 22_COMPLETE_ORBITAL_SPRITES.todo - DONE: complete supplied effects, spacious centered logo and verified live startup.
-23_HARDWARE_BRANDING_AND_SCREEN_FOCUS.todo - IN_PROGRESS: printed/embossed branding, clear icons, header notices and sharp LCD focus.
+23_HARDWARE_BRANDING_AND_SCREEN_FOCUS.todo - DONE: printed/embossed branding, clear icons/header notices, sharp waving startup and live LCD fullscreen.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -105,3 +105,13 @@ Actual public boot GIF/startup still refreshed and reviewed after deployment.
 Earlier876990a andc888c4c failed their normal gates; no deployment was claimed.
 Corrected only the pre-launch autosave test setup; no product behavior,
 assertions, coverage or workflow gates/limits were weakened. See workstream22.
+
+Hardware branding and screen-only fullscreen are deployed from
+807da8ef42594d3e0b2f8b788f66bed894483d21 / Pages41819504285 authorized attempt2:
+build,11 units, full37-case browser gate and deployment PASS. First attempt
+passed19+17 but hit600s before its last mobile case; normal rerun required
+admin, so the user performed it. No permission workaround/gate change.
+Independent28-asset match, five actual live cases1.2m and two lighting/control
+capture cases16.3s pass. Current public GIFs/figures/README and linked docs
+follow that successful deployment. See workstream23; aesthetic approval and
+the requested chaptered book remain separate, not implied by release evidence.

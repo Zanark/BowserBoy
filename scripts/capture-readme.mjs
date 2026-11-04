@@ -26,6 +26,7 @@ try {
   await page.goto(baseURL);
   await expect(scene).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await wait(1200);
+  await page.screenshot({ path: resolve(output, '3d-table.png') });
   begin('pickup-inspect');
   await wait(700);
   const screen = await page.evaluate(async () => {
@@ -35,6 +36,7 @@ try {
   await page.mouse.click(screen.x, screen.y);
   await expect(scene).toHaveAttribute('data-view', 'playing');
   await wait(1100);
+  await page.screenshot({ path: resolve(output, '3d-handheld.png') });
   await page.locator('#inspect').click();
   await expect(scene).toHaveAttribute('data-view', 'inspecting');
   const bounds = await page.locator('#scene-canvas').boundingBox();
@@ -48,6 +50,7 @@ try {
   }
   await page.mouse.up();
   await wait(900);
+  await page.screenshot({ path: resolve(output, '3d-back.png') });
   await page.locator('#scene-canvas').focus();
   await page.keyboard.press('Home');
   await page.locator('#inspect').click();

@@ -69,8 +69,12 @@ accents; no background extraction, regeneration or recoloring was applied.
 The opaque-background reference and future color-variant sheet are not included
 in the static release. No alternate colors are enabled. Supplied-artwork
 provenance and the absence of an independent authorship/license claim remain.
-The same supplied PNG is now used on the shell, idle/loading LCD, orbital
-startup and settings panels. The earlier `assets/star.png` was a crop from
+The same supplied PNG is used on the rear shell, idle/loading LCD, orbital
+startup and settings panels. The front bezel instead has original monochrome
+printed text; the top ZANARK maker badge uses original geometric glyphs,
+extrusion and a chamfered frame, not a manufacturer logo or imported font asset.
+The startup's gentle wordmark wave is original animation code and does not
+modify the supplied PNG. The earlier `assets/star.png` was a crop from
 pixel rectangle(1650,90)-(1835,280) of that supplied logo; it included unwanted
 orbit fragments and hard cutoffs, and has been superseded.
 

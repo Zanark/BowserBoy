@@ -46,14 +46,18 @@ and use its larger, visible lower-front power slider. Its projected touch target
 is at least 44 by 44 pixels without covering the LCD.
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
-The supplied transparent wordmark also appears on the shell, idle/loading LCD
-and settings panels. The active favicon is an original indigo handheld whose
+The supplied transparent wordmark also appears on the rear shell, idle/loading
+LCD and settings panels. The front bezel instead has plain monochrome printed
+lettering; an original geometric **ZANARK** badge is raised in the shell's own
+plastic above the screen. The active favicon is an original indigo handheld whose
 stepped shoulders and bowed lower edge match the actual 3D shell.
 
 ![The original power-on sequence on the handheld LCD](images/startup.png)
 
-*The supplied purple wordmark with original star-orbit motion and a subtle
-starfield, not a Nintendo BIOS or recording. Reduced motion keeps a static
+*The supplied purple wordmark with a gentle wave, original star-orbit motion
+and a subtle starfield, not a Nintendo BIOS or recording. The startup renders
+at 960x640 without the earlier added logo blur; game pixels are unchanged.
+Reduced motion keeps a static
 presentation. Infinite battery; no automatic power-off timer.*
 
 Refresh remembers the switch position and the last inserted cartridge locally.
@@ -145,7 +149,8 @@ Rotating the model naturally hides its front-facing game display.*
 narrow phones the same actions fit two rows without covering the LCD.*
 
 The dock exposes inspection, put-down, lamp/room lighting and Cartridges, plus
-fullscreen, **1x/2x/3x/4x native speed**, keybindings, a persistent autosave toggle,
+whole-desk fullscreen, separate **Screen fullscreen**, **1x/2x/3x/4x native speed**,
+keybindings, a persistent autosave toggle,
 save/load for the selected checkpoint slot, slot selection and **safe off/on
 restart**. Restart commits in-game battery data and creates a fresh runtime;
 it never restores an instant checkpoint. Actual fast-forward throughput depends
@@ -157,7 +162,7 @@ on the browser/device. The drawer and real EmulatorJS panel share the purple the
 | A / B | Z / X |
 | L / R | A / S |
 | Start / Select | Enter / Left Shift |
-| Cartridge and settings | Escape |
+| Cartridge and settings / exit screen fullscreen | Escape |
 
 Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
 buttons work with mouse, touch and keyboard activation. Their meshes visibly
@@ -167,8 +172,23 @@ Turn it back on to boot the loaded ROM from the beginning with its in-game
 save data, **not an instant checkpoint**. Pause/resume remains in Cartridges.
 Rotate a phone for a
 larger handheld. Keyboard and mouse/touch gameplay controls are active in play
-view, not while inspecting or resting on the table. The game itself continues
+view, not while inspecting or resting on the table. Screen fullscreen is the
+exception: existing keyboard controls work there even from table view.
+The game itself continues
 until paused.
+
+**Screen fullscreen** enlarges only the live game image, preserving its aspect
+ratio and current filter. It hides the shell's touch controls; use your keyboard.
+Escape or the top-right close button returns to the same desk view and running
+cartridge, without a reset. Browser fullscreen support is required; unavailable
+or refused requests display an explicit notice.
+Scene notices appear directly below the website logo; open tools retain notices
+inside their own panel.
+
+![Only the actual native Pixel Lab framebuffer in fullscreen](images/screen-fullscreen.png)
+
+*The original demo's square on the actual native CRT output: no handheld
+overlay, second emulator or reset. Escape or the top-right close button returns.*
 
 The hidden drawer contains ROM loading, every save/backup action, pause,
 fullscreen, key remapping, volume, mute and screen filtering. **CRT Geom** is
@@ -177,7 +197,8 @@ CSS imitation. Choose **Unfiltered** in the drawer if preferred.
 Click a key binding and press its
 replacement; duplicate assignments and reserved browser keys are rejected.
 Keys, sound and filter settings persist in checked local browser storage; failed writes
-explicitly apply only to the current session. Escape remains reserved for tools.
+explicitly apply only to the current session. Escape remains reserved for tools
+or exiting screen fullscreen.
 Opening the drawer does not automatically pause gameplay.
 
 Audio automatically uses a short playback cushion, smooth volume/mute changes

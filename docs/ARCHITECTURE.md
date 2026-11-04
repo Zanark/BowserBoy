@@ -138,6 +138,10 @@ audio quality remain separate qualification boundaries.
 bezel, buttons, speaker, ports, battery cover and screws. Lettering, the wood
 grain and decorative cartridge labels are locally drawn canvas textures, not
 reference photographs, commercial artwork or copied manufacturer logos.
+The front bezel uses grayscale text on a physically lit label material, rather
+than the supplied colored orbital image. The top ZANARK maker mark uses original
+polygon glyphs, actual beveled extrusion and a chamfered frame in matching shell
+plastic. The rear battery cover retains the unchanged supplied purple artwork.
 `src/scene.js` owns the WebGL 2 renderer, lights/shadows, raycast picking and
 animated table/play/inspection poses. Inspection supports dragging, touch
 rotation/pinch, wheel zoom and keyboard rotation/reset. Reduced motion skips
@@ -308,9 +312,18 @@ gamepad wrapper, so hiding that wrapper alone leaves an unwanted LCD overlay.
 Cartridges, the modeled top slot and Escape open a modal tools drawer. ROMs,
 saves, backups, pause/fullscreen, key bindings, sound and shader choice live
 there; the playing LCD contains no application buttons. Notices appear in
-the scene's lower UI area or inside an open drawer. Opening tools releases held
+normal flow directly below the header logo or inside an open drawer. Opening tools releases held
 keys but does not pause the core. Fullscreen retains the entire scene and its
 tools, rather than only the source iframe.
+
+The separate screen-only fullscreen target is a black, aspect-preserving canvas
+that copies the same retained post-shader framebuffer already feeding the LCD.
+It never reparents the live iframe, starts a second runtime or changes saved power
+intent. Its animation loop continues while the unseen room renderer skips work.
+Mapped host input is enabled independently of table/inspection mode, with held
+input released on entry/exit. Fullscreen changes restore the original mode's
+input gating and dock focus; Escape or the named exit button closes the mirror.
+Unsupported/refused requests and copy/exit failures report explicit errors.
 
 The responsive quick dock reuses those same handlers for fullscreen, keybindings,
 checked save/load, autosave and restart. `src/icons.js` supplies consistent SVGs,
@@ -329,7 +342,8 @@ mesh buttons each frame. They supply pointer capture, touch and keyboard
 activation, not the artwork. Their positions track the real camera/model;
 they are hidden during transitions, table view and inspection. The child
 `setInputEnabled` command releases held sources and gates keyboard/host input
-outside play view. The game continues and native gamepad mappings remain.
+outside play view, except while the screen-only fullscreen target is active.
+The game continues and native gamepad mappings remain.
 
 `src/preferences.js` defines the ten GBA controls, libretro button identifiers,
 default physical key codes (Z=A, X=B), validation and versioned preference
@@ -405,12 +419,17 @@ On first use the missing console record means off; inserting a cartridge leaves
 it off. Hydration serializes tools until the remembered console is restored.
 
 `src/brand.js` decodes the supplied transparent logo and complete padded
-sparkle/glow/orbit sprites before constructing the scene. The same artwork is used on the bezel/battery cover,
+sparkle/glow/orbit sprites before constructing the scene. The same artwork is used on the rear battery cover,
 idle/loading status LCD, header and dialogs. Decode failures are explicit.
 `src/startup.js` draws the wordmark over a purple starfield, with three supplied
 star sprites crossing behind/in front of it along elliptical orbits, with the
-supplied ring and pulsing glow, into the same 240x160 LCD texture/light path for
-3.2 seconds. Reduced motion uses a static
+supplied ring and pulsing glow, into a 960x640 canvas using the same logical
+240x160 composition and LCD texture/light path for 3.2 seconds. High-quality
+source scaling and removal of the earlier extra logo shadow address startup
+blur without changing native game resolution or its shader. Narrow source
+strips displace the central wordmark by a gentle two-cycle sine wave; the outer
+orbit and composition remain centered. Reduced motion draws the whole image
+without displacement in a static
 500 ms presentation. An original three-note sine-wave chime follows mute/volume;
 audio permission failures are reported without blocking gameplay indefinitely.
 No Nintendo recording, boot ROM or video is loaded. Animation/chime are original;
@@ -517,8 +536,9 @@ with transparent exterior. Its HTML intrinsic dimensions match that supplied
 asset; no alternate-color assets or switcher are shipped.
 The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
-aspect ratio. The same supplied image replaces the old separate shell/startup
-wordmarks; no recreation or recoloring is used. See supplied-artwork provenance
+aspect ratio. The supplied rear-shell/startup image is not recreated or recolored;
+the front bezel deliberately uses separate monochrome lettering.
+See supplied-artwork provenance
 in THIRD_PARTY_NOTICES.md. The active SVG favicon replaces the earlier generic
 rounded/infinity icon and subsequent star icon; relative HTML/SVG paths preserve
 GitHub Pages subpath hosting.

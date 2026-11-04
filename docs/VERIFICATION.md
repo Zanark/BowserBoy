@@ -3,7 +3,40 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
-## Current command-dock release
+## Current hardware branding and screen-focus release
+
+Source `807da8ef42594d3e0b2f8b788f66bed894483d21` passes syntax, build and
+11 units. Five focused actual Edge cases pass in 1.1m and the same five pass
+with explicit Chromium/SwiftShader in 2.2m. Expanded fullscreen refusal,
+continuously updated native pixels, real input and both exit paths pass in
+46.3s, retaining all original autosave/slots/restart checks.
+
+Checks cover true monochrome bezel pixels, raised matching-plastic maker
+geometry, distinct named icons, 44px two-row phone layout, header-aligned
+notices, 960x640 startup sampling, centered/contained orbits and a real wordmark
+wave with a static reduced-motion alternative. Actual captures were reviewed.
+These are technical checks, not user aesthetic approval or physical-device tests.
+
+The first Pages `41819504285` attempt passes build and the complete 19-case
+first shard. The second passes 17/18 but hits its unchanged 600-second global
+limit before the final mobile-inspection case completes; deployment is skipped.
+That exact remaining case independently passes local explicit SwiftShader in
+29.5s, not a hosted-gate substitute. GitHub refuses the credential's normal retry
+because administrator rights are required. The user manually reran it.
+Authorized attempt 2 succeeds: build, both complete browser shards (19+18)
+and actual deployment, with unchanged coverage, gates, limits and source.
+
+Independent production verification matches all 28 exact public assets against
+that source. Five actual Edge cases pass in 1.2m, including live fullscreen
+pixels before/after real native input, both exits, refused-request recovery,
+unchanged runtime, slots/autosave/restart, physical branding, header notices,
+responsive controls, sharp waving startup and remembered power. Actual public
+pickup/inspection, startup, insertion and lighting footage is refreshed with
+only the original Pixel Lab cartridge. The unchanged transparent banner remains.
+Two additional production lighting/pressed-cap cases pass in 16.3s, providing
+current comparison figures without changing the existing physical assertions.
+
+## Previous command-dock release
 
 Application `1785a15936b9bb7328a415bdb6fae12204c6bcdc` is deployed by
 Pages `41803699865`: build, 11 units, both complete browser shards (18+17) and deploy

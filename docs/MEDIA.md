@@ -29,11 +29,17 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
   available in the [player guide](GUIDE.md).
 - Documentation images are not part of the static application's build allowlist.
 
-The power-on GIF and startup still were refreshed from deployed source
-`a0445eeda7836b24f2f1449427d2381bab7bad52`, after independently matching all
-28 public assets and checking the actual startup. Its final clip boundary was
-shortened after encoded review to exclude the following drawer action, without
-retiming motion. Other interaction GIFs retain their previously reviewed footage.
+All four interaction GIFs and the current startup, pose and dock figures were
+refreshed from deployed source `807da8ef42594d3e0b2f8b788f66bed894483d21`,
+after independently matching all 28 public assets and passing five actual
+production cases. The new footage shows monochrome bezel print, raised ZANARK
+lettering, header notices, distinct icons and the sharp waving startup.
+Sampled encoded beginning/middle/end frames were reviewed: pickup reaches the
+back and returns, boot ends on the idle LCD rather than the next drawer action,
+the original cartridge visibly seats, and independent lights actually change.
+No retiming or commercial game footage is used. The existing transparent logo
+banner is unchanged. The fullscreen figure is the same actual native framebuffer
+checked before/after real input, not a second emulator or 3D scene screenshot.
 The updated README banner and power-on embeds use media-revision query
 parameters so replacements have distinct image URLs without duplicating assets.
 
@@ -84,7 +90,8 @@ Use the actual supplied sheet and FFmpeg executable paths on your machine.
 Set `BBA_CAPTURE_URL` to record a different running build, or `BROWSER_CHANNEL` to select an installed
 Playwright browser channel. The default capture URL is the public website.
 The capture writes an original WebM and a receipt of clip timings; the encoder
-writes the five GIFs to `docs\images`. Running only
+writes the five GIFs to `docs\images`. The capture also saves table/play/rear
+pose PNGs in the scratch output directory. Running only
 `python scripts\render-readme.py` regenerates the logo banner without FFmpeg.
 
 Review the encoded motion before replacing public assets. A successful encoder

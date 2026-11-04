@@ -14,6 +14,33 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Hardware branding and native LCD fullscreen deployed:
+  The user manually reran the failed job; API confirms actual attempt2 on
+  unchanged807da8ef42594d3e0b2f8b788f66bed894483d21. Pages41819504285
+  SUCCEEDS build/11units, both full browser shards19+18 and actual deployment.
+  Exact28 public assets match; five actual Edge production cases1.2m verify
+  physical print/embossing, header notices, responsive distinct controls,
+  sharp waving/static-reduced startup, actual native fullscreen input/pixels,
+  refusal recovery, both exits and retained autosave/slots/restart/power.
+  Two actual lighting/pressed-cap capture cases16.3s pass. Recorded fresh
+  public pickup/back/put-down, startup, insertion and lights with original
+  Pixel Lab only, zero page errors. Reviewed sampled encoded boundaries and
+  current physical figures; boot ends on idle LCD, not the next drawer action.
+  All four interaction GIFs, startup/pose/dock/comparison stills and an actual
+  LCD fullscreen figure now match the release. Transparent banner unchanged.
+  README retains minimal text/current revisioned media; detailed explanation
+  and provenance stay in linked guides. New aesthetic approval and a completed
+  chaptered engineering book are not inferred.
+- 2026-11-04 / Hardware source pushed; hosted deadline blocks deployment:
+  Source807da8ef42594d3e0b2f8b788f66bed894483d21 is pushed normally after
+  one GitHub500 and an unchanged-remote check. Pages41819504285 passes build
+  and complete19-case shard1. Shard2 passes17/18 before its600-second global
+  timeout; no assertion failed, but the last mobile case did not complete.
+  That exact real native mobile case independently passes local explicit
+  SwiftShader29.5s. It does not substitute for the failed hosted gate.
+  GitHub rejects normal failed-job rerun because repository admin is required.
+  No alternate permission route, dummy change, timeout/coverage relaxation or
+  deployment bypass attempted. Final production captures/publication pending.
 - 2026-11-04 / Physical branding and LCD focus, locally verified:
   Replaced the front orbital sticker with grayscale printed lettering; retained
   supplied purple artwork on the rear, website and LCD. Original extruded
