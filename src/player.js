@@ -1,6 +1,7 @@
 import { validateBatterySave, validateCapture } from './cartridge.js';
 import { CONTROLS, MANAGED_SETTINGS, defaultPreferences, validateEmulatorOptions, validatePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
+import { configureAudioBuffer, protectAudio } from './audio.js';
 
 // Version-specific internals are confined to this adapter; see docs/ARCHITECTURE.md.
 const DATA_PATH = 'https://cdn.emulatorjs.org/4.2.3/data/';
@@ -192,6 +193,7 @@ function initialize(data) {
     },
     EJS_ready: () => {
       const emulator = window.EJS_emulator;
+      configureAudioBuffer(window.EJS_GameManager);
       // Only this core's canvas retains its post-shader framebuffer for the 3D LCD.
       const getContext = emulator.canvas.getContext.bind(emulator.canvas);
       emulator.canvas.getContext = (type, options) => getContext(type,
@@ -210,6 +212,7 @@ function initialize(data) {
       try {
         started = true;
         window.EJS_emulator.canvas.dataset.bbaDisplay = 'true';
+        protectAudio(window.EJS_emulator);
         configure(preferences);
         URL.revokeObjectURL(romUrl);
         if (data.restore) await restore(data.restore);

@@ -1,5 +1,5 @@
 // Original ARM7TDMI input-test cartridge. No Nintendo logo, BIOS or third-party ROM bytes.
-export function createDemoRom() {
+export function createDemoRom({ tone = false } = {}) {
   const words = [];
   const labels = new Map();
   const branches = [];
@@ -46,6 +46,13 @@ export function createDemoRom() {
   literal(0, 0x04000000);
   literal(1, 0x0403);
   emit(0xe1c010b0); // strh r1, [r0]: mode 3, BG2 enabled
+  if (tone) {
+    // Original 440 Hz, half-volume PSG square for real-core audio regression.
+    for (const [offset, value] of [[0x84, 0x80], [0x80, 0x1177], [0x82, 2], [0x62, 0x8080], [0x64, 0x86d6]]) {
+      literal(1, value);
+      emit(0xe1c010b0 | ((offset & 0xf0) << 4) | (offset & 15));
+    }
+  }
   literal(10, 0x06000000);
   literal(11, 0x04000130);
   literal(12, 0x0e000000);
