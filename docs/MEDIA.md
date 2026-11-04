@@ -38,10 +38,17 @@ Sampled encoded beginning/middle/end frames were reviewed: pickup reaches the
 back and returns, boot ends on the idle LCD rather than the next drawer action,
 the original cartridge visibly seats, and independent lights actually change.
 No retiming or commercial game footage is used. The existing transparent logo
-banner is unchanged. The fullscreen figure is the same actual native framebuffer
-checked before/after real input, not a second emulator or 3D scene screenshot.
+banner is unchanged.
 The updated README banner and power-on embeds use media-revision query
 parameters so replacements have distinct image URLs without duplicating assets.
+
+The fullscreen figure was subsequently refreshed from actual deployed source
+`faece42da7563a74d39e1513ebeb7be543300ec0`, after the complete 38-case release
+gate, independent 28-asset match and four real public-browser cases passed.
+It shows the complete native framebuffer, proportional CSS bezel and bottom-right
+50-100% zoom. Actual pixels are checked before/after real input; this is not
+a second emulator or another rendering of the 3D room. The capture was reviewed.
+Only this affected figure changed; the interaction GIFs above remain unchanged.
 
 ## Complete effects, not logo fragments
 

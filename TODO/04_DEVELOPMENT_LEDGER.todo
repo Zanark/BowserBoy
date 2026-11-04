@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Fast-forward and fullscreen-fit correction deployed:
+  Approved scheduling sourcefaece42da7563a74d39e1513ebeb7be543300ec0 /
+  Pages41841433989 succeeds build/11units, every browser case13+13+12 and
+  actual deployment. All38 cases run exactly once; existing assertions and
+  limits remain. Independent verification matches28 exact public assets.
+  Four real public Edge cases1.6m pass: actual cartridge-clock acceleration/
+  native VSync recovery, native audio protection and full quick-action
+  fullscreen fit/zoom/pixels/input/exits/slots/autosave/restart behavior.
+  Refreshed only the current fullscreen guide figure from that actual live
+  case; reviewed its complete bezel/LCD and bottom-right zoom. README GIFs,
+  commercial-ROM boundary and the separate incomplete book are unchanged.
 - 2026-11-04 / User-authorized CI scheduling correction:
   Both normal41830585258 attempts pass build, all19 first-shard cases and
   18/19 second-shard cases, then600s expires during the final existing mobile

@@ -196,7 +196,7 @@ or refused requests display an explicit notice.
 Scene notices appear directly below the website logo; open tools retain notices
 inside their own panel.
 
-![Complete native Pixel Lab picture and bezel fitted in fullscreen with a bottom-right zoom slider](images/screen-fullscreen.png)
+![Complete native Pixel Lab picture and bezel fitted in fullscreen with a bottom-right zoom slider](images/screen-fullscreen.png?v=fullscreen-fit-20261104)
 
 *The original demo on the actual native CRT output, surrounded by the matching
 black bezel and monochrome print. No second emulator or reset; zoom only changes

@@ -3,7 +3,20 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
-## Fast-forward and fullscreen-fit correction: local verification
+## Deployed fast-forward and fullscreen-fit correction
+
+Release `faece42da7563a74d39e1513ebeb7be543300ec0` / Pages `41841433989`
+passes build, 11 units, all 38 browser cases (13+13+12) and actual deployment.
+Independent production verification matches all 28 exact public assets.
+Four actual public Edge cases pass in 1.6m: cartridge-clock acceleration and
+VSync recovery, native audio buffering/volume, offline peak/mute rendering and
+the expanded real quick-action/fullscreen/save/restart case. The latter checks
+the complete bezel/picture, all four viewport sizes, 50-100% keyboard zoom,
+actual pixels/input, refusal recovery, both exits and retained runtime.
+The guide figure is refreshed from this actual public fullscreen capture;
+unrelated README GIFs are unchanged.
+
+### Diagnosis and local qualification
 
 The original cartridge's own SRAM VBlank clock reproduces the VSync conflict:
 the dock says 4x but the clock advances at only 1.016x baseline before the fix.
@@ -41,13 +54,14 @@ the final existing mobile-inspection case; no assertion fails, deploy skips.
 That exact case independently passes local SwiftShader in 26.4s, not a hosted
 gate substitute. The user manually reruns failed jobs; API confirms actual
 attempt 2 on unchanged source. It also passes build/19+18 cases but reaches
-the same deadline during the last mobile case; deployment remains blocked.
+the same deadline during the last mobile case; that attempt does not deploy.
 The user explicitly authorizes three browser shards instead of two. This
 changes scheduling only: all 38 tests, assertions, the 600-second per-shard
 deadline, 15-minute job deadline and required build/verify deployment
-dependencies are retained. The next normal gated release uses that schedule.
+dependencies are retained. CLI discovery proves all 38 tests assigned exactly
+once, 13+13+12. The next normal gated release succeeds as recorded above.
 
-## Current hardware branding and screen-focus release
+## Previous hardware branding and screen-focus release
 
 Source `807da8ef42594d3e0b2f8b788f66bed894483d21` passes syntax, build and
 11 units. Five focused actual Edge cases pass in 1.1m and the same five pass

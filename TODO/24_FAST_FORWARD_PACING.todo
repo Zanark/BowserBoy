@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: Genuine cartridge-clock acceleration at 2x, 3x and 4x.
 Dependencies: Completed workstreams 12, 19 and 23.
 
@@ -14,8 +14,8 @@ Tasks
 [x] Demonstrate the failure using an original test cartridge's own VBlank clock.
 [x] Restore the requested native pacing without changing saved VSync preferences.
 [x] Verify all speeds, return to 1x, runtime identity and existing audio protections.
-[ ] Pass ordinary release gates and independently verify the public deployment.
-[ ] Update affected guides, causal ledger and owned context.
+[x] Pass ordinary release gates and independently verify the public deployment.
+[x] Update affected guides, causal ledger and owned context.
 
 Acceptance criteria
 -------------------
@@ -56,11 +56,16 @@ shard2 passes18/19 but reaches its unchanged600s global deadline during the
 last existing mobile-inspection case. No assertion fails; deployment skips.
 That exact remaining case independently passes local SwiftShader26.4s,
 not a substitute for the full hosted gate. User manually reruns failed jobs;
-API confirms actual attempt2 on unchanged2183578. Deployment/live checks await it.
+API confirms actual attempt2 on unchanged2183578.
 Attempt2 also passes build/19+18 but hits the same final-case deadline.
 User explicitly authorizes "Use three test shards and deploy".
 Three shards retain all38 cases, assertions,600s per-shard deadline,15-minute
 job deadline and build/verify dependencies. Application bytes are unchanged.
+Releasefaece42da7563a74d39e1513ebeb7be543300ec0 / Pages41841433989
+passes build,11 units, all38 browser cases13+13+12 and actual deployment.
+Independent verification matches all28 public assets. Four actual public
+Edge cases pass1.6m, including the genuine cartridge-clock/VSync regression,
+native audio and retained fullscreen/input/slots/autosave/restart checks.
 
 Completion log
 --------------
@@ -74,3 +79,6 @@ User confirms "I've rerun the failed job in GitHub"; actual attempt2 is verified
 No permission workaround, dummy push, gate relaxation or timeout change.
 2026-11-04: Authorized retry also reaches the final-case deadline. User
 explicitly approves three-way scheduling, preserving full coverage and limits.
+2026-11-04: Complete three-shard gate succeeds, followed by independent actual
+public asset and native-runtime verification. Guides, ledger and owned context
+record the deployed result; no commercial ROM or user aesthetic approval used.

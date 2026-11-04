@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: Complete bezel and uncropped 3:2 game picture with fullscreen zoom.
 Dependencies: Completed workstream 23.
 
@@ -14,8 +14,8 @@ Tasks
 [x] Fit both viewport dimensions and reserve space for close and zoom controls.
 [x] Add a themed accessible 50-100% zoom slider; 100% is the largest uncropped fit.
 [x] Verify complete native pixels, input, zoom, landscape/portrait/phone fit and exits.
-[ ] Pass ordinary release gates and verify the actual public release.
-[ ] Update affected guides, current fullscreen figure, ledger and owned context.
+[x] Pass ordinary release gates and verify the actual public release.
+[x] Update affected guides, current fullscreen figure, ledger and owned context.
 
 Acceptance criteria
 -------------------
@@ -43,12 +43,20 @@ Reviewed actual desktop/phone/50% captures. No new user aesthetic approval
 or physical-device qualification is inferred.
 Source2183578 / Pages41830585258 first attempt passes build and37/38 cases,
 but600s expires during the final existing mobile case. Authorized attempt2
-is running on the same source after the user's manual failed-job retry.
+uses the same source after the user's manual failed-job retry.
 No deployment claimed before the full gate succeeds.
 Attempt2 also expires at the same final existing mobile case. User authorizes
 three-way test scheduling; all38 cases/limits/deployment dependencies remain.
+Releasefaece42da7563a74d39e1513ebeb7be543300ec0 / Pages41841433989
+passes build,11 units, full38-case gate13+13+12 and actual deployment.
+All28 exact public assets match independently. Four actual public Edge cases
+pass1.6m, retaining all fit/zoom/pixel/input/exits/runtime/save checks.
+The guide's fullscreen figure is refreshed from that actual deployed case
+and reviewed; unrelated README GIFs remain unchanged.
 
 Completion log
 --------------
 2026-11-04: User supplied cropped-fullscreen examples and highlighted the entire
 LCD/bezel. Requested correct aspect ratio, dark margins and bottom-right zoom.
+2026-11-04: Full normal release gate and independent public verification pass.
+Published current fullscreen figure/provenance and completed affected docs.
