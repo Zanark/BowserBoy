@@ -580,8 +580,24 @@ test('supplied wordmark has a transparent background, separated words and a resp
 test('first visit is off, original startup plays only on the power switch, and idle power survives refresh', async ({ page, request }) => {
   await page.addInitScript(() => {
     window.bootEvents = [];
+    window.startupInk = 0;
     new MutationObserver((changes) => {
       for (const change of changes) window.bootEvents.push(change.target.getAttribute('data-booting'));
+      if (!changes.some(change => change.target.getAttribute('data-booting') === 'true')) return;
+      void (async () => {
+        const { view } = await import('./src/app.js');
+        const sample = () => {
+          const source = view.source;
+          if (source?.getContext && document.getElementById('scene').dataset.booting === 'true') {
+            const pixels = source.getContext('2d').getImageData(0, 120, 240, 25).data;
+            let ink = 0;
+            for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 2] > pixels[i] + 10) ink++;
+            window.startupInk = Math.max(window.startupInk, ink);
+            requestAnimationFrame(sample);
+          }
+        };
+        sample();
+      })();
     }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-booting'] });
   });
   await page.goto('./');
@@ -593,13 +609,7 @@ test('first visit is off, original startup plays only on the power switch, and i
   await page.locator('#pickup').click();
   await page.getByRole('button', { name: 'Turn power on', exact: true }).click();
   await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'true');
-  await expect.poll(() => page.evaluate(async () => {
-    const source = (await import('./src/app.js')).view.source;
-    const pixels = source.getContext('2d').getImageData(0, 120, 240, 25).data;
-    let ink = 0;
-    for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 2] > pixels[i] + 10) ink++;
-    return ink;
-  })).toBeGreaterThan(20);
+  await expect.poll(() => page.evaluate(() => window.startupInk)).toBeGreaterThan(20);
   await test.info().attach('original-startup', {
     body: await page.screenshot({ path: 'docs/images/startup.png' }), contentType: 'image/png',
   });

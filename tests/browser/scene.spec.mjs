@@ -53,6 +53,7 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
             points.push(new Vector3(x, y, z).project(view.camera));
           }
           window.cartridgeSamples.push({
+            time: performance.now(),
             y: cartridge.position.y, visible: cartridge.visible,
             fits: points.every(point => Math.abs(point.x) < 1 && Math.abs(point.y) < .9),
             lowered: view.model.root.position.y < 2.65,
@@ -80,8 +81,14 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
       await page.locator('#demo').click();
       await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'inserting');
       await expect(page.locator('#loading-screen')).toHaveJSProperty('hidden', false);
-      await expect.poll(() => page.evaluate(() => window.cartridgeSamples.some(sample =>
-        sample.visible && sample.fits && sample.lowered && sample.y > 3))).toBe(true);
+      try {
+        await expect.poll(() => page.evaluate(() => window.cartridgeSamples.some(sample =>
+          sample.visible && sample.fits && sample.lowered && sample.y > 3))).toBe(true);
+      } finally {
+        await testInfo.attach('cartridge-motion-samples', {
+          body: JSON.stringify(await page.evaluate(() => window.cartridgeSamples)), contentType: 'application/json',
+        });
+      }
       await page.screenshot({ path: testInfo.outputPath('cartridge-inserting.png') });
       await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
       const positions = await page.evaluate(() => window.cartridgeSamples.map(sample => sample.y));
@@ -221,18 +228,41 @@ test('paper lantern gives warm light and room lights switch independently withou
     await page.setViewportSize({ width, height });
     await expect.poll(() => page.evaluate(async () => {
       const { view } = await import('./src/app.js');
-      const { Box3, Vector3 } = await import('three');
-      const box = new Box3().setFromObject(view.lamp.root);
-      return [box.min.x, box.max.x].every(x => [box.min.y, box.max.y].every(y =>
-        [box.min.z, box.max.z].every(z => {
-          const point = new Vector3(x, y, z).project(view.camera);
-          return Math.abs(point.x) < 1 && Math.abs(point.y) < 1 && Math.abs(point.z) < 1;
-        })));
-    })).toBe(true);
+      const { Box3, Raycaster, Vector2, Vector3 } = await import('three');
+      const surfaces = ['Wooden tabletop', 'Warm plaster room wall', 'Room floor'].map(name => view.scene.getObjectByName(name));
+      const ray = new Raycaster();
+      const covered = [-.99, -.5, 0, .5, .99].every(x => [-.99, -.5, 0, .5, .99].every(y => {
+        ray.setFromCamera(new Vector2(x, y), view.camera);
+        return ray.intersectObjects(surfaces).length > 0;
+      }));
+      const box = new Box3().setFromObject(view.model.root), points = [];
+      for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) {
+        for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z).project(view.camera).x);
+      }
+      const handheldWidth = (Math.max(...points) - Math.min(...points)) / 2;
+      const table = surfaces[0], floor = surfaces[2];
+      ray.setFromCamera(new Vector2(.9, -.95), view.camera);
+      const below = ray.intersectObjects(surfaces)[0];
+      const thickTable = table.geometry.parameters.height >= 2 &&
+        table.position.y - table.geometry.parameters.height / 2 > floor.position.y + 20;
+      const openBelow = below && below.object !== table && below.point.y < -2.4;
+      return { covered, closerHandheld: handheldWidth > .18, thickTable, openBelow: !!openBelow };
+    })).toEqual({ covered: true, closerHandheld: true, thickTable: true, openBelow: true });
   }
   await page.screenshot({ path: testInfo.outputPath('cozy-lantern-table.png') });
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const playSurround = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Raycaster, Vector2 } = await import('three');
+    const surfaces = ['Wooden tabletop', 'Warm plaster room wall', 'Room floor'].map(name => view.scene.getObjectByName(name));
+    const ray = new Raycaster();
+    return [-.99, .99].every(x => [-.99, 0, .99].every(y => {
+      ray.setFromCamera(new Vector2(x, y), view.camera);
+      return ray.intersectObjects(surfaces).length > 0;
+    }));
+  });
+  expect(playSurround).toBe(true);
   await page.screenshot({ path: testInfo.outputPath('cozy-lantern-playing.png') });
   await page.locator('#lamp-toggle').click();
   await expect.poll(() => surfaceLight(page, [0, 0, -2])).toBeLessThan(1);

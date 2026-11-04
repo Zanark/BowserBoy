@@ -37,22 +37,29 @@ export class HandheldScene {
     this.roomLighting = createRoomLighting();
     this.scene.add(this.roomLighting);
     this.setRoomLights(false);
-    const table = new THREE.Mesh(new THREE.BoxGeometry(44, .75, 32),
-      new THREE.MeshStandardMaterial({ map: createWood(), color: '#cfb28f', roughness: .83 }));
-    table.position.y = -.375;
-    table.receiveShadow = true;
+    const tableWood = createWood();
+    tableWood.repeat.set(1000 / 16, 26 / 11.5);
+    const edgeWood = createWood();
+    edgeWood.repeat.set(1000 / 16, 2.4 / 11.5);
+    const tabletop = new THREE.MeshStandardMaterial({ map: tableWood, color: '#cfb28f', roughness: .83 });
+    const edge = new THREE.MeshStandardMaterial({ map: edgeWood, color: '#8d5734', roughness: .88 });
+    const table = new THREE.Mesh(new THREE.BoxGeometry(1000, 2.4, 26),
+      [edge, edge, tabletop, edge, edge, edge]);
+    table.position.set(0, -1.2, -3);
+    table.castShadow = table.receiveShadow = true;
     table.name = 'Wooden tabletop';
     this.scene.add(table);
-    const wall = new THREE.Mesh(new THREE.PlaneGeometry(44, 50),
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000),
       new THREE.MeshStandardMaterial({ color: '#aa927c', roughness: 1 }));
     wall.name = 'Warm plaster room wall';
-    wall.position.set(0, 24.5, -16);
+    wall.position.set(0, 464.5, -16);
     wall.receiveShadow = true;
     this.scene.add(wall);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(180, 180),
       new THREE.MeshStandardMaterial({ color: '#c6bda9', roughness: 1 }));
     floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -1;
+    floor.position.y = -35;
+    floor.name = 'Room floor';
     floor.receiveShadow = true;
     this.scene.add(floor);
     for (const [color, title, subtitle, x, z, angle] of [
@@ -193,8 +200,8 @@ export class HandheldScene {
   updateCameraTargets() {
     if (this.mode === 'table') {
       const scale = Math.max(1, .8 / this.camera.aspect);
-      this.cameraTarget = new THREE.Vector3(14, 42, 70).multiplyScalar(scale);
-      this.lookTarget = new THREE.Vector3(-5, 16, 0);
+      this.cameraTarget = new THREE.Vector3(2, 27, 42).multiplyScalar(scale);
+      this.lookTarget = new THREE.Vector3(-1, 5, 0);
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = this.height < 500 ? 110 : 180;

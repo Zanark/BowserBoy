@@ -690,6 +690,7 @@ $('room-toggle').addEventListener('click', () => {
 $('pickup').addEventListener('click', () => changeView('playing'));
 $('inspect').addEventListener('click', () => changeView(view?.mode === 'inspecting' ? 'playing' : 'inspecting'));
 $('put-down').addEventListener('click', () => changeView('table'));
+await storageReady;
 try {
   view = new HandheldScene($('scene'), {
     onTools: openTools,

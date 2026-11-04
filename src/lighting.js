@@ -74,7 +74,7 @@ export function createDeskLamp() {
   light.name = 'Paper lantern bulb light';
   light.position.copy(diffuser.position);
   light.castShadow = true;
-  light.shadow.mapSize.set(1024, 1024);
+  light.shadow.mapSize.set(512, 512);
   light.shadow.camera.near = .7;
   light.shadow.camera.far = 120;
   light.shadow.bias = -.00012;
