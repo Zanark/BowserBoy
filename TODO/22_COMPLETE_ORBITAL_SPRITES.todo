@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Complete supplied sparkle/glow/orbit effects in README and LCD startup.
 Dependencies: Completed workstreams 19, 20 and 21.
 
@@ -17,8 +17,8 @@ Tasks
 [x] Verify reduced motion, power/refresh behavior, GIF transparency and motion.
 [x] Shrink and center the wordmark to leave substantial room inside the outer orbit.
 [x] Make autosave suppression setup independent of hosted native startup time.
-[ ] Complete normal deployment and independent live identity/browser checks.
-[ ] Refresh actual README boot clip and reconcile docs/provenance/journals.
+[x] Complete normal deployment and independent live identity/browser checks.
+[x] Refresh actual README boot clip and reconcile docs/provenance/journals.
 
 Acceptance criteria
 -------------------
@@ -51,7 +51,20 @@ Move the real quick-action toggle before cartridge launch; keep all existing
 manual-slot,16-second suppression, persistence and restart assertions intact.
 Focused corrected case passes Edge43.8s and explicit SwiftShader Chromium1.4m.
 No application autosave semantics, assertions or workflow gates changed.
-Deployment and final public capture remain pending.
+Spacing releasec888c4c / Pages41812573611 failed the same old autosave
+precondition and600-second shard2 deadline; deployment was also skipped.
+Final sourcea0445eeda7836b24f2f1449427d2381bab7bad52 /
+Pages41813609958 PASSES build,11 units, both complete browser shards
+(18cases7.4m +18cases5.8m) and actual deployment. All gates remain unchanged.
+Fresh independent live28-asset identity check passes; its first attempt received
+one503, then the complete retry matched every asset. Three production Edge
+favicon/startup/first-visit persistent-power cases pass31.3s.
+Recaptured actual production boot with zero browser errors, original Pixel Lab
+only. Reviewed temporal frames and actual startup still. Trimmed the final boot
+boundary to exclude the following drawer action without retiming motion.
+Other interaction GIFs and the transparent banner remain unchanged.
+Public media/architecture/provenance/index/causal ledger reconciled afterward.
+Technical evidence is not new user aesthetic approval or completed book work.
 
 Completion log
 --------------
@@ -71,3 +84,8 @@ Disable autosave through the actual quick-action UI before loading the demo,
 instead of incorrectly expecting earlier automatic records to disappear.
 The unrelated shard timeout remains an observed release failure, not a reason
 to increase limits or relax coverage.
+2026-11-04: Final normal gate and actual deployment succeed at a0445ee.
+Independent public identity/browser checks pass before fresh production
+recording. Initial encoded boot included the following drawer at its end;
+shortened that clip boundary and checked the final frame remains the idle LCD.
+Published documentation follows the actual verified release, not a local mock.

@@ -14,12 +14,12 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
-- 2026-11-04 / Complete orbital effects and wider logo clearance, release pending:
+- 2026-11-04 / Complete orbital effects and wider logo clearance, deployed:
   Replaced clipped logo-derived stars with complete padded supplied sparkle,
   glow and orbit effects. Kept the transparent1000x340 README canvas and960px
   ring, reducing centered artwork850 to620px. Actual LCD artwork218 to160px
   sits inside226px ring; original wordmark source stays unchanged. Exact public
-  banner bytes matchc888c4c; LCD deployment is not yet established.
+  banner bytes matchc888c4c; original wordmark source remains unchanged.
   Release876990a / Pages41811505549 passed build but failed normal browser
   gates: quick-action setup disabled autosave only after native readiness,
   allowing a legitimate earlier automatic save on slow hosted runs; the other
@@ -27,8 +27,18 @@ Completion log:
   Moved the actual autosave toggle before cartridge launch, preserving all
   suppression/manual-slot/persistence/restart assertions. Focused corrected
   case passes Edge43.8s and explicit SwiftShader Chromium1.4m. No production
-  autosave behavior, assertions or deployment gates changed. Final application
-  deployment, independent live checks and refreshed boot media remain pending.
+  autosave behavior, assertions or deployment gates changed. Supersededc888c4c
+  also failed the old precondition and shard2 deadline; deploy skipped.
+  Finala0445eeda7836b24f2f1449427d2381bab7bad52 / Pages41813609958 passes
+  build,11 units, both complete36-case shards7.4m/5.8m and actual deployment.
+  Fresh live28-asset identity check passes after one503 on its first attempt;
+  three real production Edge favicon/startup/persistent-power cases pass31.3s.
+  Recorded fresh actual public boot with zero browser errors. Reviewed sampled
+  encoded motion and native startup still; initial end frame included the next
+  drawer action, so trimmed the boundary and verified the final idle LCD frame.
+  Original animation speed and other README GIFs remain unchanged. Final
+  media/architecture/provenance/index updates follow actual deployment.
+  New user aesthetic approval and chaptered-book completion are not implied.
 - 2026-11-04 / Handheld silhouette and transparent banner:
   Replaced the active star favicon with original SVG using the actual 3D shell's
   stepped shoulders, wide sides and bowed lower outline, retaining indigo

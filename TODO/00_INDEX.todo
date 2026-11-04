@@ -21,7 +21,7 @@ BowserBoyAdvance workstreams
 19_COMMAND_DOCK_AND_ORBIT_STARTUP.todo - DONE: themed icon actions, native speed, slots and orbital startup.
 20_VISUAL_README.todo - DONE: animated logo, real interaction GIFs and linked detailed guide.
 21_FAVICON_AND_TRANSPARENT_BANNER.todo - DONE: actual shell-outline favicon and transparent moving banner.
-22_COMPLETE_ORBITAL_SPRITES.todo - IN_PROGRESS: clean supplied sparkle/glow/orbit effects without clipping.
+22_COMPLETE_ORBITAL_SPRITES.todo - DONE: complete supplied effects, spacious centered logo and verified live startup.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -94,3 +94,13 @@ build,11 units, both complete browser shards35 and actual deployment PASS.
 Independent live26-asset match and eight cases2.0m verify real core speeds,
 slots/autosave/physical restart, branding, native UI and phone/power layout.
 Final guides/provenance/current figures/causal ledger follow that deployment.
+Favicon/transparent banner and complete orbital effects are now deployed in
+a0445eeda7836b24f2f1449427d2381bab7bad52 / Pages41813609958:
+build,11 units, both complete browser shards36 and actual deployment PASS.
+Independent28-asset match and three live cases31.3s confirm favicon, complete
+contained sprites, centered160px wordmark inside226px ring and persistent power.
+README uses620px centered artwork inside960px orbit, still transparent.
+Actual public boot GIF/startup still refreshed and reviewed after deployment.
+Earlier876990a andc888c4c failed their normal gates; no deployment was claimed.
+Corrected only the pre-launch autosave test setup; no product behavior,
+assertions, coverage or workflow gates/limits were weakened. See workstream22.

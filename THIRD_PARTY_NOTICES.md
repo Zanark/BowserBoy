@@ -70,10 +70,17 @@ The opaque-background reference and future color-variant sheet are not included
 in the static release. No alternate colors are enabled. Supplied-artwork
 provenance and the absence of an independent authorship/license claim remain.
 The same supplied PNG is now used on the shell, idle/loading LCD, orbital
-startup and settings panels. `assets/star.png` is a transparent crop/resample
-from pixel rectangle(1650,90)-(1835,280) of that supplied image, used for
-revolving sprites. It is not independently authored
-star artwork. The updated orbit motion and starfield are original code.
+startup and settings panels. The earlier `assets/star.png` was a crop from
+pixel rectangle(1650,90)-(1835,280) of that supplied logo; it included unwanted
+orbit fragments and hard cutoffs, and has been superseded.
+
+The current `assets/star.png`, `assets/glow.png` and `assets/orbit.png` derive
+from the user's separately supplied **Purple Neon Sparkle and Orbital Sprite
+Sheet**, a 2172x724 transparent RGBA PNG. Complete isolated effects are trimmed
+only of alpha<=1 noise and centered on transparent padded canvases. No
+independent authorship or separate upstream license is claimed for this supplied
+artwork. Exact source identity, crop rectangles and reproduction appear in
+[media provenance](docs/MEDIA.md). The orbit motion and starfield are original code.
 
 The active `assets/brand-mark.svg` favicon is original vector artwork using
 the procedural 3D handheld's shell outline and simplified physical controls.
@@ -81,8 +88,9 @@ It replaces the earlier generic rounded/infinity artwork and supplied-star
 tab icon, without importing a manufacturer's logo or reference image.
 
 The README's transparent animated orbital banner derives from that same supplied
-logo and star crop, with original animation code. Its interaction GIFs record this
-application and the original Pixel Lab demo, not commercial game footage.
+logo and the separately supplied effect sprites, with original animation code.
+Its interaction GIFs record this application and the original Pixel Lab demo,
+not commercial game footage.
 See [media provenance and reproduction](docs/MEDIA.md).
 
 Playwright is a development/test dependency, not part of the deployed app.

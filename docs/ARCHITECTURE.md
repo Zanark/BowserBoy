@@ -404,12 +404,13 @@ Only the power handler changes this intent after its checked device write.
 On first use the missing console record means off; inserting a cartridge leaves
 it off. Hydration serializes tools until the remembered console is restored.
 
-`src/brand.js` decodes the supplied transparent logo and derived star crop before
-constructing the scene. The same artwork is used on the bezel/battery cover,
+`src/brand.js` decodes the supplied transparent logo and complete padded
+sparkle/glow/orbit sprites before constructing the scene. The same artwork is used on the bezel/battery cover,
 idle/loading status LCD, header and dialogs. Decode failures are explicit.
 `src/startup.js` draws the wordmark over a purple starfield, with three supplied
-star sprites crossing behind/in front of it along elliptical orbits, into the
-same 240x160 LCD texture/light path for 3.2 seconds. Reduced motion uses a static
+star sprites crossing behind/in front of it along elliptical orbits, with the
+supplied ring and pulsing glow, into the same 240x160 LCD texture/light path for
+3.2 seconds. Reduced motion uses a static
 500 ms presentation. An original three-note sine-wave chime follows mute/volume;
 audio permission failures are reported without blocking gameplay indefinitely.
 No Nintendo recording, boot ROM or video is loaded. Animation/chime are original;
@@ -418,6 +419,11 @@ SVG favicon uses the original 3D shell's exact outline with simplified LCD,
 D-pad, diagonal A/B buttons and speaker slots. Its transparent square canvas
 retains the landscape silhouette at16/32/64px; the supplied star remains an
 animation sprite, not the browser-tab icon.
+The effects come from isolated regions of the supplied sprite sheet, not logo
+fragments. Transparent margins and a 98px horizontal orbit radius keep rotated
+stars inside the LCD for the full reveal; tests sample all corners every100ms.
+The centered wordmark is 160px wide inside the 226px supplied ring, leaving
+substantial clearance without enlarging the framebuffer or clipping the orbit.
 
 Only a genuine off-to-on switch action calls that presentation, then cold-boots
 the cartridge with battery save data. Refresh while already on restores the
@@ -488,7 +494,7 @@ from a trusted copy of this application.
 | Path | Responsibility |
 |---|---|
 | `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
-| `assets/logo.png`, `assets/star.png`, `src/brand.js` | Shared supplied branding, derived animation star and checked decoding |
+| `assets/logo.png`, `assets/star.png`, `assets/orbit.png`, `assets/glow.png`, `src/brand.js` | Supplied branding/effects, padded sprites and checked decoding |
 | `assets/brand-mark.svg` | Original transparent handheld favicon, matching the actual shell outline |
 | `src/icons.js` | Quick-dock SVGs, names, tooltip labels and speed badge |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |

@@ -8,17 +8,17 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
-- `images/orbital-logo.gif` animates the supplied transparent purple logo and its
-  derived star sprite on a transparent background, without a purple rectangular
-  backdrop or background starfield. GIF supports binary transparency, so soft
+- `images/orbital-logo.gif` animates the supplied transparent purple logo and the
+  supplied sparkle, glow and orbit effects on a transparent background, without
+  a purple rectangular backdrop or background starfield. GIF supports binary transparency, so soft
   alpha edges are thresholded for encoding; the supplied source remains unchanged.
   Its elliptical star motion is an original README presentation, not a recording
   of the LCD boot. The separate power-on GIF retains the actual purple LCD scene.
 - The other GIFs are actual recordings of the deployed application, captured
   with Playwright/Edge at 1100 by 850 and encoded at 800 by 618, 10 fps.
   Pickup/inspection, power-on, physical insertion and lighting use actual UI
-  actions, not rendered mockups or artificial interpolation. The last half-second
-  of each trailing idle hold is trimmed; clip timings are not performance metrics.
+  actions, not rendered mockups or artificial interpolation. Trailing idle holds
+  are trimmed; clip timings are not performance metrics.
 - Insertion deliberately holds the native loader download until the cartridge
   seats, making the real download-phase motion visible. It is not a measurement
   of normal network loading time.
@@ -29,6 +29,41 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
   available in the [player guide](GUIDE.md).
 - Documentation images are not part of the static application's build allowlist.
 
+The power-on GIF and startup still were refreshed from deployed source
+`a0445eeda7836b24f2f1449427d2381bab7bad52`, after independently matching all
+28 public assets and checking the actual startup. Its final clip boundary was
+shortened after encoded review to exclude the following drawer action, without
+retiming motion. Other interaction GIFs retain their previously reviewed footage.
+
+## Complete effects, not logo fragments
+
+The earlier moving star was cropped from the logo, leaving neighboring orbit
+segments and hard-cut arms. Its replacement comes from the user's **Purple Neon
+Sparkle and Orbital Sprite Sheet**, supplied on 2026-11-04: 2172x724 RGBA,
+SHA-256 `1233f8ee8981b4e85869f672e2361b9c80f39b34762d70730174a11da4c67542`.
+
+| Output | Source rectangle, exclusive right/bottom | Transparent output |
+|---|---|---|
+| `assets/star.png` | `(690,100)-(875,302)` | 256x256 |
+| `assets/glow.png` | `(1640,138)-(1768,267)` | 160x160 |
+| `assets/orbit.png` | `(0,512)-(640,724)` | 660x240 |
+
+`scripts/extract-orbital-sprites.py` removes only near-invisible alpha<=1 noise,
+rejects crops touching visible content, preserves the remaining colors/alpha,
+and centers each complete effect with transparent padding. The supplied source
+and logo stay unchanged. Natural passing behind the wordmark is intentional
+occlusion, not a crop cutoff.
+
+The LCD orbit is inset far enough to contain every rotated sparkle throughout
+the reveal. Browser checks cover the full 3200ms animation at 100ms steps,
+transparent sprite margins and the unchanged static reduced-motion presentation.
+Every encoded README banner frame also clears an 8px outer canvas margin.
+The centered banner artwork is 620px wide inside a 960px outer orbit on the
+1000x340 canvas. The LCD uses 160px artwork inside a 226px ring. This leaves
+clear breathing room instead of stretching the wordmark against the orbit.
+Browser checks also retain centered placement and logo width below 75% of the
+ring throughout the startup reveal.
+
 ## Reproduce
 
 The existing Node dependencies provide Playwright. Install Edge, Python with
@@ -38,12 +73,13 @@ requirements for playing or building the website.
 From the repository root, provide your own scratch output directory:
 
 ```powershell
+python scripts\extract-orbital-sprites.py "C:\art\Purple Neon Sparkle and Orbital Sprite Sheet.png"
 node scripts\capture-readme.mjs C:\scratch\bba-readme
 python scripts\render-readme.py --capture C:\scratch\bba-readme\capture.json --ffmpeg C:\tools\ffmpeg.exe
 ```
 
-Use the actual FFmpeg executable path on your machine. Set `BBA_CAPTURE_URL` to
-record a different running build, or `BROWSER_CHANNEL` to select an installed
+Use the actual supplied sheet and FFmpeg executable paths on your machine.
+Set `BBA_CAPTURE_URL` to record a different running build, or `BROWSER_CHANNEL` to select an installed
 Playwright browser channel. The default capture URL is the public website.
 The capture writes an original WebM and a receipt of clip timings; the encoder
 writes the five GIFs to `docs\images`. Running only
