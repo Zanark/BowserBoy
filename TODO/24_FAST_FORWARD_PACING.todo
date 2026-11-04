@@ -32,8 +32,8 @@ Initial public Edge measurements: original demo native-loop progression is
 about 60/s at 1x and 174-239/s at 4x depending on room rendering/load.
 The native VSync API reproducibly returns it to about 55-60/s while the
 fast-forward flag and 4x label remain active. Reselecting 4x does not recover.
-These initial values count native loop iterations, not independently verified
-cartridge frames. The new test-only original VBlank clock will qualify that.
+These initial values count native loop iterations; the later original-cartridge
+VBlank clock check below independently qualifies actual game progression.
 The real-cartridge regression fails before the fix: requested 4x advances
 the SRAM VBlank clock at just 1.016x baseline after native VSync is enabled.
 With explicit native VSync coordination, all 2x/3x/4x clock checks, return
@@ -50,7 +50,17 @@ case58.6s with unchanged throughput assertions. The CRT/software baseline
 was31.68 frames/s, so this clock test explicitly selects unfiltered output
 and opens the tools drawer to isolate native pacing from GPU shader/room cost.
 No product shader/scene/audio behavior, gate or deadline was changed.
-Hosted release and independent public verification are pending.
+Source21835788bf29c97e4050a6d0e34bb7c7824fc4c3 is pushed.
+Pages41830585258 attempt1 passes build and complete19-case shard1;
+shard2 passes18/19 but reaches its unchanged600s global deadline during the
+last existing mobile-inspection case. No assertion fails; deployment skips.
+That exact remaining case independently passes local SwiftShader26.4s,
+not a substitute for the full hosted gate. User manually reruns failed jobs;
+API confirms actual attempt2 on unchanged2183578. Deployment/live checks await it.
+Attempt2 also passes build/19+18 but hits the same final-case deadline.
+User explicitly authorizes "Use three test shards and deploy".
+Three shards retain all38 cases, assertions,600s per-shard deadline,15-minute
+job deadline and build/verify dependencies. Application bytes are unchanged.
 
 Completion log
 --------------
@@ -59,3 +69,8 @@ published original demo does accelerate initially; did not blame caching or
 claim the user's specific cartridge/browser was reproduced.
 2026-11-04: Isolated a real native VSync/fast-forward conflict. Added a focused
 original-cartridge clock regression before changing production pacing.
+2026-11-04: First normal gate expires on its last existing mobile case.
+User confirms "I've rerun the failed job in GitHub"; actual attempt2 is verified.
+No permission workaround, dummy push, gate relaxation or timeout change.
+2026-11-04: Authorized retry also reaches the final-case deadline. User
+explicitly approves three-way scheduling, preserving full coverage and limits.

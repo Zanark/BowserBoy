@@ -41,6 +41,12 @@ Fit and zoom checked at1920x1080,844x390,390x844,320x568: full bezel above
 controls,3:2 LCD, correct50% width/height and keyboard range changes.
 Reviewed actual desktop/phone/50% captures. No new user aesthetic approval
 or physical-device qualification is inferred.
+Source2183578 / Pages41830585258 first attempt passes build and37/38 cases,
+but600s expires during the final existing mobile case. Authorized attempt2
+is running on the same source after the user's manual failed-job retry.
+No deployment claimed before the full gate succeeds.
+Attempt2 also expires at the same final existing mobile case. User authorizes
+three-way test scheduling; all38 cases/limits/deployment dependencies remain.
 
 Completion log
 --------------

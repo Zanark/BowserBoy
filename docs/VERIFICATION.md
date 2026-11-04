@@ -34,7 +34,18 @@ phone or user aesthetic acceptance. An existing audio fixture initially selected
 its ROM before scene readiness; an explicit scene-ready precondition fixes that
 setup race without changing audio assertions.
 
-Normal hosted release and independent public verification remain pending.
+Source `21835788bf29c97e4050a6d0e34bb7c7824fc4c3` is pushed.
+Pages `41830585258` attempt 1 passes build and all 19 first-shard cases.
+Shard 2 passes 18/19 but reaches the unchanged 600-second global limit during
+the final existing mobile-inspection case; no assertion fails, deploy skips.
+That exact case independently passes local SwiftShader in 26.4s, not a hosted
+gate substitute. The user manually reruns failed jobs; API confirms actual
+attempt 2 on unchanged source. It also passes build/19+18 cases but reaches
+the same deadline during the last mobile case; deployment remains blocked.
+The user explicitly authorizes three browser shards instead of two. This
+changes scheduling only: all 38 tests, assertions, the 600-second per-shard
+deadline, 15-minute job deadline and required build/verify deployment
+dependencies are retained. The next normal gated release uses that schedule.
 
 ## Current hardware branding and screen-focus release
 

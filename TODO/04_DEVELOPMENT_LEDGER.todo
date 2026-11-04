@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / User-authorized CI scheduling correction:
+  Both normal41830585258 attempts pass build, all19 first-shard cases and
+  18/19 second-shard cases, then600s expires during the final existing mobile
+  case. No assertion fails; that exact case independently passes local
+  SwiftShader26.4s, not a gate substitute. Rather than another blind retry,
+  asked for a scheduling decision. User selects "Use three test shards and
+  deploy". Change only the matrix and shard denominator; retain all38 cases,
+  every assertion,600s per shard,15-minute job deadline and required complete
+  build/verify dependencies. Application bytes remain unchanged from2183578.
 - 2026-11-04 / Fast-forward pacing and fullscreen fit correction:
   Initial current-site demo acceleration worked, so did not blame caching or
   invent a universal failure. Reproduced a native VSync cap while fast-forward

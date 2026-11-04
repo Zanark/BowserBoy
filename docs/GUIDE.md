@@ -186,18 +186,21 @@ exception: existing keyboard controls work there even from table view.
 The game itself continues
 until paused.
 
-**Screen fullscreen** enlarges only the live game image, preserving its aspect
-ratio and current filter. It hides the shell's touch controls; use your keyboard.
+**Screen fullscreen** fits the complete live game picture and its black bezel,
+preserving the 3:2 picture and current filter. The surrounding space stays dark;
+use the bottom-right **Zoom** slider to shrink the whole frame without cropping.
+It hides the shell's touch controls; use your keyboard.
 Escape or the top-right close button returns to the same desk view and running
 cartridge, without a reset. Browser fullscreen support is required; unavailable
 or refused requests display an explicit notice.
 Scene notices appear directly below the website logo; open tools retain notices
 inside their own panel.
 
-![Only the actual native Pixel Lab framebuffer in fullscreen](images/screen-fullscreen.png)
+![Complete native Pixel Lab picture and bezel fitted in fullscreen with a bottom-right zoom slider](images/screen-fullscreen.png)
 
-*The original demo's square on the actual native CRT output: no handheld
-overlay, second emulator or reset. Escape or the top-right close button returns.*
+*The original demo on the actual native CRT output, surrounded by the matching
+black bezel and monochrome print. No second emulator or reset; zoom only changes
+the presentation. Escape or the top-right close button returns.*
 
 The hidden drawer contains ROM loading, every save/backup action, pause,
 fullscreen, key remapping, volume, mute and screen filtering. **CRT Geom** is
