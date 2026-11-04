@@ -554,6 +554,7 @@ test('first visit is off, original startup plays only on the power switch, and i
   expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
   await page.locator('#pickup').click();
   await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await page.reload();
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
@@ -595,6 +596,7 @@ test('inserting a cartridge does not power on, and refresh resumes the remembere
   await expect.poll(() => image(page)).toBe(saved);
   expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
   await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await page.reload();
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');

@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 
 export const powerOn = async (page) => {
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await expect(page.locator('#hardware-power')).toBeEnabled({ timeout: 90000 });
   if (await page.locator('#scene').getAttribute('data-power') === 'on') return;
   if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
   await page.locator('#hardware-power').click();
