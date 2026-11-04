@@ -354,14 +354,12 @@ tools, rather than only the source iframe.
 
 Notices share translucent violet glass, an 18px backdrop blur, a subtle
 highlight/border and a 44px dismiss target. Error glass has a warmer tint.
-Long text scrolls within a viewport-bounded height rather than growing over the
-scene. The scene's existing ResizeObserver also watches the header notice host.
-When a notice is visible there, camera fitting evaluates two clear rectangles:
-below the notice or to its right, both above the hint/dock. It selects the
-larger possible fit, preserving model scale, aspect and native pixels.
-Moving the notice into tools, dismissal and viewport changes recompute the
-fit; without a header notice the existing close camera remains unchanged.
-Explicit inspection zoom multiplies that fitted baseline, rather than being
+Long text scrolls within a viewport-bounded card. At the user's request,
+header notices may overlap the console: showing, changing, moving or dismissing
+a notice does not shrink or shift the handheld. The scene ResizeObserver watches
+only the scene host, not the notice host; ordinary viewport fitting still
+preserves the complete default handheld and toolbar clearance.
+Explicit inspection zoom multiplies that ordinary baseline, rather than being
 silently clamped away; intentional zoom-in can crop the console as before.
 No new per-frame DOM measurement loop or emulator restart is introduced.
 

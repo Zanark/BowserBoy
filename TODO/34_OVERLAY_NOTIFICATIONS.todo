@@ -1,0 +1,33 @@
+Status: IN_PROGRESS
+Milestone: Overlay notifications without changing the handheld view.
+Dependencies: Completed workstream 29; explicitly supersedes its notice separation.
+
+Purpose:
+Honor the user's permission for notifications to overlap the console without
+shrinking or shifting its normal view.
+
+Tasks:
+- [x] Remove notice-dependent camera fitting and the notice-host resize observer.
+- [x] Preserve frosted glass, errors, bounded scrolling, dismissal and panel placement.
+- [x] Update the existing regression for ordinary camera position and look target.
+- [x] Retain full default handheld fit, dock clearance and power-target bounds.
+- [x] Update affected guide, architecture, verification, book and development ledger.
+- [ ] Pass normal hosted gates and independently verify the public release.
+- [ ] Publish completion evidence and reconcile owned continuity.
+
+Acceptance criteria:
+- Normal, error and long notifications do not shift or shrink the handheld.
+- Notices may overlap the console; glass and accessible dismissal remain.
+- Five-size play framing, inspection, drawer reparenting and dismissal remain valid.
+- No emulator, audio, saves, fullscreen or unrelated test gates are changed.
+
+Completion evidence:
+- New framing regression fails the old notice-avoidance camera.
+- Syntax/build, all11units and the focused actual browser case pass15.0s.
+- Hosted/public release remains pending; no live claim yet.
+
+Completion log:
+- 2026-11-05: User permits console overlap. Remove only the notice-host observer
+  and avoidance camera calculations. Replace the old separation invariant with
+  ordinary camera/look-target checks, retaining glass/viewport/dock/power checks.
+  Record local red/green qualification; await normal hosted/public delivery.

@@ -7,6 +7,22 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Notification overlays, 2026-11-05
+
+The user explicitly permits notifications to overlap the console, superseding
+workstream 29's separate-message clearance requirement. Remove the notice-host
+resize observer and notice-dependent camera fit. Frosted styling, scroll bounds,
+44px dismissal, error tint and drawer/native-panel placement are unchanged.
+
+The existing branding/notice regression now requires the ordinary camera
+position and look target with visible normal/error/long notices, all five
+viewport sizes, drawer reparenting, inspection and dismissal. Whole-handheld
+viewport fit, toolbar clearance and physical power-target bounds remain checked;
+only separation from the overlapping notice is intentionally removed.
+The old avoidance implementation fails the new framing assertion. Syntax/build,
+all 11 units and the corrected focused case pass locally (15.0s). Hosted release
+and independent public verification remain pending.
+
 ## Sustained audio reserve, 2026-11-05
 
 The user reports recurring distortion and explicitly authorizes a local ROM

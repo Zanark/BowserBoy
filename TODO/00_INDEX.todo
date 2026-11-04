@@ -33,6 +33,7 @@ BowserBoyAdvance workstreams
 31_PLAY_VIEW_HEADER_LOGO.todo - DONE: play-only header hiding with retained notices and desk/Inspect branding independently verified live.
 32_DARK_CONTROL_MARKINGS.todo - DONE: earlier dark A/B and D-pad tones with retained relief independently verified live.
 33_STEADY_AUDIO_RESERVE.todo - DONE: reproduced playback dropouts corrected by sustained native reserve; independently verified live.
+34_OVERLAY_NOTIFICATIONS.todo - IN_PROGRESS: allow frosted notices to overlap without shrinking or shifting the console.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

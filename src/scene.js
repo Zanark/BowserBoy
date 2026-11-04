@@ -167,7 +167,6 @@ export class HandheldScene {
     });
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(host);
-    this.observer.observe(document.getElementById('notice-host'));
     this.resize();
     this.camera.position.copy(this.cameraTarget);
     this.lookAt.copy(this.lookTarget);
@@ -215,34 +214,10 @@ export class HandheldScene {
       const envelopeWidth = closePlay ? 9.8 : 10.2;
       const ordinaryDistance = Math.max(envelopeWidth / this.camera.aspect, envelope *
         this.height / Math.max(160, this.height - padding)) / (2 * tangent);
-      let distance = ordinaryDistance * this.zoom;
-      let framingOffset = closePlay ? -.12 : 0;
-      let horizontalOffset = 0;
-      const notice = document.getElementById('notice');
-      if (!notice.hidden && notice.parentElement.id === 'notice-host') {
-        const bounds = notice.getBoundingClientRect();
-        const hint = document.querySelector('.scene-hint').getBoundingClientRect();
-        const dock = document.querySelector('.scene-actions').getBoundingClientRect();
-        const bottom = Math.min(dock.top, hint.height ? hint.top : dock.top) - 8;
-        // Keep the larger fit: beside the notice on wide screens, below on phones.
-        const regions = [
-          { left: 4, right: this.width - 4, top: bounds.bottom + 16, bottom },
-          { left: bounds.right + 16, right: this.width - 4, top: 16, bottom },
-        ].map(region => ({ ...region, distance: Math.max(ordinaryDistance,
-          envelopeWidth * this.height / (2 * tangent * Math.max(1, region.right - region.left)),
-          envelope * this.height / (2 * tangent * Math.max(1, region.bottom - region.top))) * this.zoom }));
-        const region = regions.sort((a, b) => a.distance - b.distance)[0];
-        distance = region.distance;
-        const pixelsPerUnit = this.height / (2 * tangent * distance);
-        const centerX = THREE.MathUtils.clamp(this.width / 2,
-          region.left + envelopeWidth * pixelsPerUnit / 2, region.right - envelopeWidth * pixelsPerUnit / 2);
-        const centerY = THREE.MathUtils.clamp(this.height / 2,
-          region.top + envelope * pixelsPerUnit / 2, region.bottom - envelope * pixelsPerUnit / 2);
-        horizontalOffset = -(centerX - this.width / 2) / pixelsPerUnit;
-        framingOffset += (centerY - this.height / 2) / pixelsPerUnit;
-      }
-      this.cameraTarget = new THREE.Vector3(horizontalOffset, this.playTarget.y + .1 + lift + framingOffset, distance);
-      this.lookTarget = this.playTarget.clone().add(new THREE.Vector3(horizontalOffset, lift + framingOffset, 0));
+      const distance = ordinaryDistance * this.zoom;
+      const framingOffset = closePlay ? -.12 : 0;
+      this.cameraTarget = new THREE.Vector3(0, this.playTarget.y + .1 + lift + framingOffset, distance);
+      this.lookTarget = this.playTarget.clone().add(new THREE.Vector3(0, lift + framingOffset, 0));
     }
   }
 

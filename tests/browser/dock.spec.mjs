@@ -415,7 +415,7 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
   await test.info().attach('orbital-startup-raster', { body: Buffer.from(artwork.image.split(',')[1], 'base64'), contentType: 'image/png' });
 });
 
-test('molded controls and monochrome logo retain physical branding, and frosted notices stay clear of the handheld', async ({ page }) => {
+test('molded controls and monochrome logo retain physical branding, and frosted notices overlay without reframing the handheld', async ({ page }) => {
   await page.goto('./');
   await ready(page);
   await page.locator('#pickup').click();
@@ -486,11 +486,10 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   await powerOn(page);
   await expect(page.locator('#notice')).toBeVisible();
   await expect(page.locator('.desk-heading h1')).toBeHidden();
-  const noticeFits = async () => {
+  const ordinaryFit = async () => {
     await expect.poll(() => page.evaluate(async () => {
       const { view } = await import('./src/app.js');
       const { Vector3 } = await import('three');
-      const notice = document.querySelector('#notice').getBoundingClientRect();
       const dock = document.querySelector('.scene-actions').getBoundingClientRect();
       const power = document.querySelector('#hardware-power');
       const target = power.getBoundingClientRect();
@@ -503,16 +502,27 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
           points.push({ x: (point.x + 1) * view.width / 2, y: (1 - point.y) * view.height / 2 });
         }
       });
+      const inserting = view.mode === 'playing' && !!view.cartridgeMotion;
+      const closePlay = view.mode === 'playing' && !inserting;
+      const distance = Math.max((closePlay ? 9.8 : 10.2) / view.camera.aspect,
+        (inserting ? 8.3 : closePlay ? 5.35 : 5.55) * view.height / Math.max(160, view.height - 180)) /
+        (2 * Math.tan(view.camera.fov * Math.PI / 360)) * view.zoom;
+      const targetY = view.playTarget.y + (inserting ? 1.05 : 0) + (closePlay ? -.12 : 0);
       return {
         sides: points.every(p => p.x >= 4 && p.x <= innerWidth - 4),
-        notice: points.every(p => p.y >= notice.bottom + 8) || points.every(p => p.x >= notice.right + 8),
+        top: points.every(p => p.y >= 4),
         dock: points.every(p => p.y < dock.top),
         power: power.hidden || (target.width >= 44 && target.height >= 44 && target.left >= 0 &&
-          target.right <= innerWidth && target.bottom <= dock.top &&
-          (target.top >= notice.bottom || target.left >= notice.right)),
+          target.right <= innerWidth && target.bottom <= dock.top),
+        framing: Math.abs(view.camera.position.x) < 1e-5 &&
+          Math.abs(view.camera.position.y - targetY - .1) < 1e-5 &&
+          Math.abs(view.camera.position.z - distance) < 1e-5 &&
+          Math.abs(view.lookAt.x - view.playTarget.x) < 1e-5 &&
+          Math.abs(view.lookAt.y - targetY) < 1e-5 &&
+          Math.abs(view.lookAt.z - view.playTarget.z) < 1e-5,
       };
-    }), { message: 'Whole visible handheld stays clear of the notice and above the dock' })
-      .toEqual({ sides: true, notice: true, dock: true, power: true });
+    }), { message: 'Overlay notices preserve ordinary handheld framing, viewport fit and dock clearance' })
+      .toEqual({ sides: true, top: true, dock: true, power: true, framing: true });
   };
   for (const [width, height] of [[1920, 1080], [1440, 1100], [844, 390], [390, 844], [320, 568]]) {
     await page.setViewportSize({ width, height });
@@ -521,7 +531,7 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     expect(notice.y).toBeGreaterThanOrEqual(logo.y + logo.height);
     expect(notice.x).toBeCloseTo(logo.x);
     expect(notice.x + notice.width).toBeLessThanOrEqual(width);
-    await noticeFits();
+    await ordinaryFit();
     await page.screenshot({ path: test.info().outputPath(`frosted-notice-${width}.png`) });
   }
   const glass = await page.locator('#notice').evaluate(element => {
@@ -534,11 +544,11 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   await expect(page.locator('#notice')).toHaveClass('notice error');
   await page.evaluate(() => {
     document.querySelector('#notice-text').textContent =
-      'This long notification fixture checks wrapping and scrolling without covering the handheld. '.repeat(12);
+      'This long notification fixture checks wrapping and scrolling without reframing the handheld. '.repeat(12);
   });
   for (const [width, height] of [[844, 390], [320, 568]]) {
     await page.setViewportSize({ width, height });
-    await noticeFits();
+    await ordinaryFit();
     await expect(page.locator('#notice-dismiss')).toBeInViewport({ ratio: 1 });
     await page.screenshot({ path: test.info().outputPath(`frosted-long-error-${width}.png`) });
   }
@@ -553,10 +563,10 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.camera.position.z))
     .toBeCloseTo(ordinaryDistance, 5);
   await page.locator('#tools-close').click();
-  await noticeFits();
+  await ordinaryFit();
   await page.locator('#inspect').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
-  await noticeFits();
+  await ordinaryFit();
   await page.locator('#inspect').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await page.locator('#notice-dismiss').click();

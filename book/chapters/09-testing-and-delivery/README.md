@@ -58,6 +58,12 @@ block size instead. The unchanged capacity bound still rejects the old source.
 Distinguish reserved capacity, currently populated data and scheduled playback
 headroom; those are three different quantities.
 
+Workstream 34 deliberately reverses an earlier product requirement: the user
+now permits notices to overlap the handheld. Replace notice-separation checks
+with ordinary camera-position/look-target invariants, while retaining viewport
+fit, toolbar clearance, glass styling and dismissal checks. An intentional
+behavior change should update its specific contract, not weaken unrelated gates.
+
 ## Let failure teach the requirement
 
 The initial camera shift had the wrong vertical sign. Clearance tests caught

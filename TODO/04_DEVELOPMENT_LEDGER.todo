@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / User permits notification overlap:
+  Supersede workstream29's no-overlap requirement. Remove the notice-host resize
+  observer and below/beside camera-fit calculations; retain ordinary play/
+  inspection framing, frosted glass, scroll bounds,44px dismissal and errors.
+  Existing five-size notice test now checks ordinary camera and look target
+  instead of notice separation, retaining whole-handheld/dock/power boundaries.
+  Old implementation fails framing; syntax/build,11units and focused case
+  pass15.0s after correction. No audio/save/fullscreen or unrelated gate change.
+  Workstream34IN_PROGRESS; hosted/public verification pending.
 - 2026-11-05 / Audio independently live; correct the capacity measurement:
   Fresh evidence run41895909034/995d2fa passes build/11units/all39cases, then
   fails400 because previous deployment remains in progress; exact old status
