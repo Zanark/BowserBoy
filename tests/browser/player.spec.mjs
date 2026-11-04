@@ -533,6 +533,9 @@ test('blocked preference writes explicitly retain session-only controls and soun
 test('all shell buttons reach the core, mixed input releases safely, and fullscreen retains the console', async ({ page }) => {
   await page.goto('./');
   await startDemo(page);
+  await expect(page.locator('#notice')).toBeVisible();
+  await page.locator('#notice-dismiss').click();
+  await expect(page.locator('#notice')).toBeHidden();
   const frame = page.frames().find((item) => item.url().endsWith('player.html'));
   await frame.evaluate(() => {
     const manager = window.EJS_emulator.gameManager;

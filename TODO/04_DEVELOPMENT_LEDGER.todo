@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Exercise physical input after intentionally overlapping notices:
+  Source3668bb0/41915188399 passes build and two browser shards. The remaining
+  shell-input case times out at L: the power-on notice intercepts its real
+  click. This is the newly permitted overlap, not an unexplained runner issue.
+  Update only that dependent case to dismiss through the real44px close button
+  and assert hidden before exercising all native inputs. No force-click,
+  timeout, assertion or gate reduction. Overlay and complete physical-input/
+  mixed-input/fullscreen/pause cases pass together locally27.4s. Await fresh
+  normal publication; do not retry failed jobs or claim the change live.
 - 2026-11-05 / User permits notification overlap:
   Supersede workstream29's no-overlap requirement. Remove the notice-host resize
   observer and below/beside camera-fit calculations; retain ordinary play/

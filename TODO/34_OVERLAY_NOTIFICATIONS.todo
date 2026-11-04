@@ -11,6 +11,7 @@ Tasks:
 - [x] Preserve frosted glass, errors, bounded scrolling, dismissal and panel placement.
 - [x] Update the existing regression for ordinary camera position and look target.
 - [x] Retain full default handheld fit, dock clearance and power-target bounds.
+- [x] Dismiss the intentional overlay before the dependent physical-input case.
 - [x] Update affected guide, architecture, verification, book and development ledger.
 - [ ] Pass normal hosted gates and independently verify the public release.
 - [ ] Publish completion evidence and reconcile owned continuity.
@@ -24,6 +25,10 @@ Acceptance criteria:
 Completion evidence:
 - New framing regression fails the old notice-avoidance camera.
 - Syntax/build, all11units and the focused actual browser case pass15.0s.
+- Normal3668bb0/41915188399 passes build and two browser shards; the remaining
+  case's L click is intercepted by the intentionally overlapping power-on notice.
+  Deployment skipped. Explicit real dismissal preserves all native-input gates;
+  overlay and complete physical-input cases pass together locally27.4s.
 - Hosted/public release remains pending; no live claim yet.
 
 Completion log:

@@ -23,6 +23,16 @@ The old avoidance implementation fails the new framing assertion. Syntax/build,
 all 11 units and the corrected focused case pass locally (15.0s). Hosted release
 and independent public verification remain pending.
 
+Source `3668bb0` starts normal workflow `41915188399`: build and two browser
+shards pass, but the physical-input case times out because the intentionally
+overlapping power-on notice intercepts its L-shoulder click. Deployment is
+skipped. Update that dependent case to visibly dismiss the notice through its
+real close button before exercising every shell control. Keep every native
+press/release, mixed-input, pause and fullscreen assertion; do not force clicks
+or change timeouts. Both the overlay and physical-input cases then pass locally
+together (27.4s). A fresh normal source publication must still pass hosted gates
+and independent public qualification.
+
 ## Sustained audio reserve, 2026-11-05
 
 The user reports recurring distortion and explicitly authorizes a local ROM
