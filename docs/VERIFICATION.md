@@ -41,7 +41,18 @@ pause/save/restore and unchanged-speed assertions remain intact.
 The trade-off is additional audio latency; the configured budget is not an
 end-to-end latency measurement. This does not qualify every ROM, physical audio
 device, browser, fast-forward sound quality or arbitrary sustained host overload.
-Normal hosted release and independent public verification remain pending.
+Normal source run `41892670295` / `ca2ad94` passes build, all 11 units and
+all 39 browser cases. Its deployment then remains `updating_pages` until the
+Pages action times out and cancels that deployment. This is a publication
+failure after successful verification, not an audio-test failure.
+
+The requested fresh `workflow_dispatch` is rejected with HTTP 403 requiring
+repository admin rights. No failed attempt is retried and no permissions,
+workflow, deadline or gate are changed. An independent public-asset check
+still finds the previous `src/audio.js`; the correction is not live.
+Publish this actual qualification/failure evidence through the normal
+documentation workflow; a subsequent release still needs its own successful
+deployment and independent public identity/behavior verification.
 
 ## Darker raised control markings
 

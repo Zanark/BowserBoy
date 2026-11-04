@@ -47,6 +47,11 @@ Completion evidence:
   peaks, pause/save/restore and game-clock bounds remain unchanged.
 - Native256ms capacity trades additional audio latency, not a new startup delay;
   no guarantee against arbitrary sustained host overload is claimed.
+- Sourceca2ad94 / Pages41892670295 passes build/11units/all39browser cases.
+  Deploy stays updating_pages and times out; the action cancels it. Direct fresh
+  workflow_dispatch is rejected403 requiring repository admin rights.
+  Public identity check still finds the old audio.js, so this is not live.
+  No retry, dummy commit, permission change, timeout extension or gate bypass.
 
 Completion log:
 - 2026-11-05: User reports immersion-breaking recurring audio distortion and
@@ -58,3 +63,8 @@ Completion log:
 - 2026-11-05: Final actual-source180s run and targeted four-case suite pass.
   Document actual evidence, its latency trade-off and the earlier startup-only
   fixture's limit. Hosted release and independent public evidence remain pending.
+- 2026-11-05: All39hosted cases pass but Pages publication times out. Inspect
+  actual logs, attempt the requested fresh normal workflow and record its403
+  admin-rights rejection. Independently confirm the public correction is absent.
+  Publish this substantive verification/failure record normally; retain the
+  application correction and all gates. No live result is inferred.

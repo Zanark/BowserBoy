@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Audio gate passes, publication fails:
+  Sourceca2ad94 /41892670295 passes build,11units and all39browser cases.
+  Pages then reports updating_pages until its action timeout and cancellation.
+  Direct fresh workflow_dispatch is rejected403 requiring repo admin rights.
+  Do not retry the failed attempt or alter permissions, gates or timeouts.
+  Independent public-asset verification fails at audio.js: the old source is
+  still served, so the correction is not live. Publish the actual full-suite
+  qualification and failed-publication evidence normally, not an empty kickoff
+  commit; any following release still needs independent completion/identity.
 - 2026-11-05 / Sustained audio investigation:
   User reports recurring distortion and explicitly authorizes a local test ROM.
   Keep its bytes/PCM private. Instrument real source deadlines, post-limiter
