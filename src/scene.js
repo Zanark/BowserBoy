@@ -174,8 +174,10 @@ export class HandheldScene {
     this.camera.updateProjectionMatrix();
     this.updateCameraTargets();
     if (!this.transition) {
+      this.cameraMotion = null;
       this.camera.position.copy(this.cameraTarget);
       this.lookAt.copy(this.lookTarget);
+      if (this.mode === 'playing') this.model.root.position.copy(this.playTarget);
     }
   }
 
@@ -187,10 +189,36 @@ export class HandheldScene {
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = this.height < 500 ? 110 : 180;
-      const distance = Math.max(10.2 / this.camera.aspect, 5.55 * this.height / Math.max(160, this.height - padding)) / (2 * tangent);
-      this.cameraTarget = new THREE.Vector3(0, playPosition.y + .1, distance * this.zoom);
-      this.lookTarget = playPosition.clone();
+      const inserting = this.mode === 'playing' && !!this.cartridgeMotion;
+      const lift = inserting ? 1.05 : 0;
+      this.playTarget = playPosition.clone().add(new THREE.Vector3(0, inserting ? -.95 : 0, 0));
+      const distance = Math.max(10.2 / this.camera.aspect, (inserting ? 8.3 : 5.55) *
+        this.height / Math.max(160, this.height - padding)) / (2 * tangent);
+      this.cameraTarget = new THREE.Vector3(0, this.playTarget.y + .1 + lift, distance * this.zoom);
+      this.lookTarget = this.playTarget.clone().add(new THREE.Vector3(0, lift, 0));
     }
+  }
+
+  insertCartridge(id, animate = true) {
+    if (this.cartridgeId === id) return;
+    this.cartridgeId = id;
+    this.model.cartridge.visible = true;
+    const moving = animate && !this.reducedMotion.matches;
+    this.model.cartridge.position.y = moving ? 3.8 : 1.52;
+    this.cartridgeMotion = moving ? { started: performance.now() } : null;
+    this.host.dataset.cartridge = moving ? 'inserting' : 'seated';
+    this.changed = true;
+    this.reframeCartridge();
+  }
+
+  reframeCartridge() {
+    if (this.mode !== 'playing') return;
+    this.updateCameraTargets();
+    if (this.transition) this.transition.targetPosition = this.playTarget;
+    this.cameraMotion = {
+      started: performance.now(), camera: this.camera.position.clone(), look: this.lookAt.clone(),
+      position: this.model.root.position.clone(), targetPosition: this.playTarget.clone(),
+    };
   }
 
   setZoom(value) {
@@ -207,13 +235,14 @@ export class HandheldScene {
     this.inspectionPointers.clear();
     this.pinch = null;
     this.mode = mode;
+    this.cameraMotion = null;
     this.zoom = 1;
     this.updateCameraTargets();
     this.transition = {
       started: performance.now(), duration: this.reducedMotion.matches ? 0 : 850,
       position: this.model.root.position.clone(), rotation: this.model.root.quaternion.clone(),
       camera: this.camera.position.clone(), look: this.lookAt.clone(),
-      targetPosition: mode === 'table' ? tablePosition : playPosition,
+      targetPosition: mode === 'table' ? tablePosition : this.playTarget,
       targetRotation: mode === 'table' ? tableQuaternion : playQuaternion,
     };
     this.host.dataset.view = 'moving';
@@ -321,6 +350,18 @@ export class HandheldScene {
     const exposure = this.lampOn ? .015 : .45;
     const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
     if (!adapting) this.renderer.toneMappingExposure = exposure;
+    if (this.cartridgeMotion) {
+      const fraction = THREE.MathUtils.clamp((time - this.cartridgeMotion.started - 850) / 1350, 0, 1);
+      const ease = fraction * fraction * (3 - 2 * fraction);
+      const y = THREE.MathUtils.lerp(3.8, 1.52, ease);
+      this.changed ||= this.model.cartridge.position.y !== y;
+      this.model.cartridge.position.y = y;
+      if (fraction === 1) {
+        this.cartridgeMotion = null;
+        this.host.dataset.cartridge = 'seated';
+        this.reframeCartridge();
+      }
+    }
     if (this.transition) {
       const transition = this.transition;
       const fraction = transition.duration ? Math.min(1, (time - transition.started) / transition.duration) : 1;
@@ -334,7 +375,18 @@ export class HandheldScene {
         this.host.dataset.view = this.mode;
         this.onView(this.mode, false);
       }
-    } else this.host.dataset.view = this.mode;
+    } else {
+      this.host.dataset.view = this.mode;
+      if (this.cameraMotion) {
+        const fraction = this.reducedMotion.matches ? 1 :
+          Math.min(1, (time - this.cameraMotion.started) / 850);
+        const ease = fraction * fraction * (3 - 2 * fraction);
+        this.camera.position.lerpVectors(this.cameraMotion.camera, this.cameraTarget, ease);
+        this.lookAt.lerpVectors(this.cameraMotion.look, this.lookTarget, ease);
+        this.model.root.position.lerpVectors(this.cameraMotion.position, this.cameraMotion.targetPosition, ease);
+        if (fraction === 1) this.cameraMotion = null;
+      }
+    }
     this.camera.lookAt(this.lookAt);
     let buttonsMoving = false;
     for (const { mesh, ids } of this.controlGroups) {

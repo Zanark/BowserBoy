@@ -351,15 +351,22 @@ test('unavailable app save storage keeps power-cycle battery data explicitly ses
 });
 
 test('a failed runtime CDN request has a visible retryable error', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.route('https://cdn.emulatorjs.org/**', (route) => route.abort('failed'));
   await page.goto('./');
   await openTools(page);
   await page.locator('#demo').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+  expect(await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return { moving: !!view.cartridgeMotion, visible: view.model.cartridge.visible, y: view.model.cartridge.position.y };
+  })).toEqual({ moving: false, visible: true, y: 1.52 });
   await powerOn(page);
   await expect(page.locator('#notice')).toContainText('CDN could not be reached');
   await expect(page.locator('#loading-screen')).toBeHidden();
   await expect(page.locator('#tools-open')).toBeEnabled();
   await expect(page.locator('#save')).toBeDisabled();
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
 });
 
 test.describe('touch layout', () => {

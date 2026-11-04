@@ -279,8 +279,15 @@ export function createHandheld() {
   const power = add(root, 'Power switch', solid(roundedShape(.42, .075, .025), .16, .01), dark, 1.65, -2.37, .25);
   control('power', power, .65, .25);
   for (let i = 0; i < 5; i++) add(power, 'Switch grip', new THREE.BoxGeometry(.035, .04, .012), silver, -.14 + i * .07, 0, .094);
-  const cartridge = add(root, 'Cartridge slot', box(3.05, .15, .42, .04), dark, 0, 2.28, -.12);
-  cartridge.userData.tools = true;
+  const slot = add(root, 'Cartridge slot', box(3.05, .15, .42, .04), dark, 0, 2.28, -.12);
+  slot.userData.tools = true;
+  const cartridge = createCartridge('#666574', 'BBA', 'LOCAL CARTRIDGE');
+  cartridge.name = 'Loaded cartridge';
+  cartridge.scale.set(1.9, 1.9, 1);
+  cartridge.position.set(0, 1.52, -.3);
+  cartridge.visible = false;
+  cartridge.traverse(object => { object.userData.tools = true; });
+  root.add(cartridge);
   add(root, 'Link port', new THREE.BoxGeometry(.8, .12, .14), dark, 0, 2.38, .33);
   const headphone = add(root, 'Headphone socket', cylinder(.12, .08), dark, -1.6, -2.21, -.12);
   headphone.rotation.x = Math.PI / 2;
@@ -293,7 +300,7 @@ export function createHandheld() {
     add(root, 'Screw', cylinder(.065, .035), silver, x, y, -.55);
     add(root, 'Screw slot', new THREE.BoxGeometry(.078, .015, .005), dark, x, y, -.572);
   }
-  return { root, screen, recess, controls, led };
+  return { root, screen, recess, controls, led, cartridge };
 }
 
 export function createCartridge(color, title, subtitle) {

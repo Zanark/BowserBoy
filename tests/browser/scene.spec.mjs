@@ -35,6 +35,89 @@ const surfaceLight = (page, position) => page.evaluate(async (point) => {
   return total / (25 * 3);
 }, position);
 
+for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844 }]) {
+  test(`physical cartridge slides into the top slot during real loading at ${viewport.width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize(viewport);
+    await page.addInitScript(() => {
+      window.cartridgeSamples = [];
+      new MutationObserver(async changes => {
+        if (!changes.some(change => change.target.dataset.cartridge === 'inserting')) return;
+        const { view } = await import('./src/app.js');
+        const { Box3, Vector3 } = await import('three');
+        const sample = () => {
+          const cartridge = view.model.cartridge;
+          cartridge.updateWorldMatrix(true, true);
+          const box = new Box3().setFromObject(cartridge), points = [];
+          for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
+            points.push(new Vector3(x, y, z).project(view.camera));
+          }
+          window.cartridgeSamples.push({
+            y: cartridge.position.y, visible: cartridge.visible,
+            fits: points.every(point => Math.abs(point.x) < 1 && Math.abs(point.y) < .9),
+            lowered: view.model.root.position.y < 2.65,
+            clearsTable: new Box3().setFromObject(view.model.root).min.y > 0,
+          });
+          if (view.cartridgeMotion) requestAnimationFrame(sample);
+        };
+        sample();
+      }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-cartridge'] });
+    });
+    let release;
+    let download = new Promise(resolve => { release = resolve; });
+    await page.route('https://cdn.emulatorjs.org/4.2.3/data/loader.js', async route => {
+      await download;
+      await route.continue();
+    });
+    try {
+      await page.goto('./');
+      await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+      await page.locator('#pickup').click();
+      await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+      await powerOn(page);
+      await expect(page.locator('#hardware-power')).toBeEnabled();
+      await page.locator('#tools-open').click();
+      await page.locator('#demo').click();
+      await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'inserting');
+      await expect(page.locator('#loading-screen')).toHaveJSProperty('hidden', false);
+      await expect.poll(() => page.evaluate(() => window.cartridgeSamples.some(sample =>
+        sample.visible && sample.fits && sample.lowered && sample.y > 3))).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath('cartridge-inserting.png') });
+      await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+      const positions = await page.evaluate(() => window.cartridgeSamples.map(sample => sample.y));
+      expect(Math.max(...positions) - Math.min(...positions)).toBeGreaterThan(2);
+      expect(positions.every((value, index) => !index || value <= positions[index - 1])).toBe(true);
+      expect(await page.evaluate(() => window.cartridgeSamples.every(sample => sample.clearsTable))).toBe(true);
+      await expect(page.locator('#pause')).toBeDisabled();
+      await expect(page.locator('#loading-screen')).toHaveJSProperty('hidden', false);
+      release();
+      await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+      await demoReady(page);
+      const attached = await page.evaluate(async () => {
+        const { view } = await import('./src/app.js');
+        return view.model.cartridge.visible && view.model.cartridge.parent === view.model.root &&
+          view.cartridgeMotion === null;
+      });
+      expect(attached).toBe(true);
+      await expect.poll(() => page.evaluate(async () => {
+        const { view } = await import('./src/app.js');
+        return !view.cameraMotion && view.model.root.position.y === 3.5;
+      })).toBe(true);
+      if (viewport.width === 1440) {
+        page.on('dialog', dialog => dialog.accept());
+        download = new Promise(resolve => { release = resolve; });
+        await page.reload();
+        await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'inserting');
+        await expect(page.locator('#scene')).not.toHaveAttribute('data-booting', 'true');
+        await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+        await expect(page.locator('#loading-screen')).toHaveJSProperty('hidden', false);
+        release();
+        await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+        await demoReady(page);
+      }
+    } finally { release(); }
+  });
+}
+
 test('dark room has a working physical lamp, actual light falloff and a narrow accessible toolbar', async ({ page }) => {
   await page.goto('./');
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);

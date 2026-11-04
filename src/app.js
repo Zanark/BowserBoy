@@ -146,6 +146,7 @@ async function persist(slot, capture = null) {
 function launch(file, restore, battery = null) {
   if (!view) throw new Error(sceneFailure?.message ?? 'The 3D display is not available.');
   clearPlayer();
+  view.insertCartridge(game.id);
   view.setView('playing');
   view.showStatus(restore ? 'RESUMING YOUR GAME' : 'READING CARTRIDGE', 'DOWNLOADING THE EMULATOR');
   if ($('tools').open) $('tools').close();
@@ -223,6 +224,7 @@ async function loadRom(file, { remember = true } = {}) {
   $('game-monogram').textContent = game.title.slice(0, 1).toUpperCase();
   $('quick-save-time').textContent = record?.manual ? new Date(record.manual.createdAt).toLocaleString() : 'Your safety net for the tricky bits.';
   if (!powered) {
+    view.insertCartridge(game.id, remember);
     if (remember) view.setView('playing');
     if ($('tools').open) $('tools').close();
     view.showPowerOff();
