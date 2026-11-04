@@ -75,6 +75,11 @@ from pixel rectangle(1650,90)-(1835,280) of that supplied image, used for
 revolving sprites and the active favicon. It is not independently authored
 star artwork. The updated orbit motion and starfield are original code.
 
+The README's animated orbital banner derives from that same supplied logo and
+star crop, with original animation code. Its interaction GIFs record this
+application and the original Pixel Lab demo, not commercial game footage.
+See [media provenance and reproduction](docs/MEDIA.md).
+
 Playwright is a development/test dependency, not part of the deployed app.
 Its package and transitive packages retain their upstream license notices in
 the dependency installation.

@@ -14,6 +14,24 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Visual-first README:
+  User requested an animated logo banner and actual pickup/other demonstration
+  GIFs, with minimal front-page text and detailed guides elsewhere. Clarified
+  that this policy applies only to this repository. Preserved previous detailed
+  README content in docs/GUIDE.md with repaired relative image/navigation links.
+  Added a supplied-artwork orbital banner and actual hosted Edge recordings of
+  pickup/rear inspection/put-down, LCD power-on, top-slot insertion and room/
+  lantern controls. Only original Pixel Lab appears; no commercial ROM is used.
+  Loader download is deliberately held during the genuine insertion path,
+  disclosed in docs/MEDIA.md; footage is not a network-performance measurement.
+  Initial13.2MiB pickup encode was unsuitable for a light front page. Switched
+  to800px/128-color ordered palettes at10fps: largest output5.27MiB. Trimmed
+  trailing idle holds to keep the boot clip clear of the following drawer action.
+  Reviewed final temporal sheets for all five actual GIFs. Local image/guide
+  links, capture syntax and encoder syntax pass; recording has zero page errors.
+  Capture/encode helpers preserve reproducibility without publishing raw video
+  or changing the application/build allowlist. No new app deployment or human
+  aesthetic approval is implied. Chaptered engineering book remains incomplete.
 - 2026-11-04 / Icon dock and orbital startup:
   User requested icon-only quick actions, full screen, native2x/3x/4x,
   keybindings, autosave, independent slots, safe physical restart and prettier

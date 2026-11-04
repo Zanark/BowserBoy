@@ -19,6 +19,7 @@ BowserBoyAdvance workstreams
 17_COZY_ROOM_AND_VISIBLE_POWER.todo - DONE: large paper lantern, full-width thick table, room lights, power/LCD.
 18_ORBITAL_WORDMARK.todo - DONE: supplied transparent purple orbital logo, variants inactive.
 19_COMMAND_DOCK_AND_ORBIT_STARTUP.todo - DONE: themed icon actions, native speed, slots and orbital startup.
+20_VISUAL_README.todo - DONE: animated logo, real interaction GIFs and linked detailed guide.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.

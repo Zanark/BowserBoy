@@ -1,0 +1,48 @@
+Status: DONE
+Milestone: Animated, visual-first README with real interaction demonstrations.
+Dependencies: Completed workstream 19.
+
+Purpose
+-------
+Show the actual handheld experience in motion without making the front page a
+technical manual. Retain detailed instructions in discoverable linked guides.
+
+Tasks
+-----
+[x] Animate the supplied orbital logo without replacing its artwork.
+[x] Record real pickup/inspection, power-on, insertion and room-light actions.
+[x] Use only the original Pixel Lab cartridge; no commercial ROM capture.
+[x] Replace README prose with GIFs, short captions and guide links.
+[x] Preserve player/development details and media provenance in linked guides.
+[x] Review encoded motion, links and scope; update ledger/private continuity.
+
+Acceptance criteria
+-------------------
+GitHub-compatible animated GIF banner and multiple actual interaction GIFs.
+No fake emulator/handheld footage, ROM upload or application behavior change.
+Minimal README prose; detailed setup, controls, storage limits and evidence linked.
+Supplied art is retained; generated media stays out of the website's dist payload.
+
+Completion evidence
+-------------------
+Real hosted Edge capture completes with zero page errors, using the existing
+1785a15 application and original demo. Supplied-logo banner:72 frames/5.04s.
+Pickup/inspection:105 frames/10.5s; actual power-on:44 frames/4.4s;
+insertion:30 frames/3s; independent lights:47 frames/4.7s.
+Reviewed sampled temporal contact sheets of all five final GIFs, including rear
+inspection and actual LCD boot. Largest GIF5.27MiB; each remains below10MiB.
+Checked all local README/GUIDE/MEDIA image/navigation links, capture JavaScript
+syntax and encoder Python syntax. Capture and encoder both ran successfully.
+App/runtime/build allowlist unchanged; README detail preserved in docs/GUIDE.md.
+No new application deployment, performance measurement or human approval claimed.
+
+Completion log
+--------------
+2026-11-04: User requested an animated README banner and demo GIFs, with detailed
+text in separate files. Clarified that this visual-first policy is repository-only.
+2026-11-04: Captured real actions and preserved original WebM/timing receipt as
+local working artifacts. Initial full-color dithering produced a13.2MiB pickup
+GIF; switched to an800px/128-color ordered palette, retaining10fps motion while
+reducing it to5.27MiB. Trimmed final half-second idle holds so the boot GIF does
+not include the next drawer action. Added reusable capture/encoding commands
+and public provenance; kept originals and review sheets out of publication.
