@@ -2,12 +2,12 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
-**Current release and pictures:** source `464f034` is independently verified
-live after the full 39-case hosted gate, including darker A/B/D-pad markings
-and the play-only header-logo change. Most motion/pose/detail figures belong
+**Current release and pictures:** source `995d2fa` is independently verified
+live after the full 39-case hosted gate, including sustained audio buffering,
+darker A/B/D-pad markings and the play-only header-logo change. Most motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
-See [current release evidence](VERIFICATION.md#darker-raised-control-markings)
+See [current release evidence](VERIFICATION.md#sustained-audio-reserve-2026-11-05)
 and [capture origins](MEDIA.md#current-refresh---manufactured-controls-and-glass).
 
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
@@ -254,9 +254,10 @@ explicitly apply only to the current session. Escape remains reserved for tools
 or exiting screen fullscreen.
 Opening the drawer does not automatically pause gameplay.
 
-Audio automatically uses a short playback cushion, smooth volume/mute changes
-and peak compression to reduce crackles and overload distortion. The cushion
-adds about 0.1 seconds of sound latency. This cannot guarantee glitch-free sound
+Audio automatically uses a larger native playback reserve, a short startup
+cushion, smooth volume/mute changes and peak compression to reduce dropouts and
+overload distortion. More buffering trades additional audio latency for stability;
+the 256 ms native budget is not a measured end-to-end delay. This cannot guarantee glitch-free sound
 under sustained system overload or fix an operating-system/audio-device problem.
 
 **Advanced EmulatorJS settings**, at the top of the sidebar, opens the actual native graphics, speed,

@@ -45,11 +45,18 @@ The later workstream 33 audio investigation shows a similar coverage gap.
 Surviving one startup stall did not prove sustained buffering: actual private
 playback exposed repeated roughly 100 ms underrun/restart gaps as the startup
 cushion drained. The correction increases native buffer capacity, not speaker
-volume or game speed. Its regression checks real initialized PCM capacity as
+volume or game speed. Its regression checks real allocated PCM budget as
 well as the requested setting, and extended playback measures scheduling gaps.
 Keep that later evidence separate from this book's pinned source edition.
 Neither PCM measurements nor a green test establish human hearing quality on
 every audio device; a larger reserve also trades additional audio latency.
+
+The first public follow-up also catches a measurement mistake: allocated native
+slots receive PCM lazily, so summing populated buffers can understate capacity
+even after a bounded wait. Check the actual slot count and uniform positive
+block size instead. The unchanged capacity bound still rejects the old source.
+Distinguish reserved capacity, currently populated data and scheduled playback
+headroom; those are three different quantities.
 
 ## Let failure teach the requirement
 

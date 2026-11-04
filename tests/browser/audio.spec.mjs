@@ -48,6 +48,9 @@ test('real native audio buffers brief stalls and smooths volume without restarti
     const samples = new Float32Array(analyser.fftSize);
     await new Promise(resolve => setTimeout(resolve, 500));
     analyser.getFloatTimeDomainData(samples);
+    const buffers = Object.values(emulator.Module.AL.buffers)
+      .filter(buffer => buffer.deviceId === ctx.deviceId);
+    const durations = buffers.filter(buffer => buffer.audioBuf).map(buffer => buffer.audioBuf.duration);
     return {
       state: ctx.audioCtx.state,
       peak: Math.max(...samples.map(Math.abs)),
@@ -55,9 +58,9 @@ test('real native audio buffers brief stalls and smooths volume without restarti
         .match(/^audio_latency = "(\d+)"$/m)?.[1],
       lead: window.audioSchedule.tail - ctx.audioCtx.currentTime,
       initialStall: window.audioSchedule.initialStall,
-      capacity: Object.values(emulator.Module.AL.buffers)
-        .filter(buffer => buffer.audioBuf && buffer.deviceId === ctx.deviceId)
-        .reduce((seconds, buffer) => seconds + buffer.audioBuf.duration, 0),
+      bufferCount: buffers.length,
+      blockDurations: [...new Set(durations)],
+      filledCapacity: durations.reduce((seconds, duration) => seconds + duration, 0),
     };
   });
   await test.info().attach('native-audio', { body: JSON.stringify(audio), contentType: 'application/json' });
@@ -68,7 +71,11 @@ test('real native audio buffers brief stalls and smooths volume without restarti
     analyser.getFloatTimeDomainData(samples);
     return Math.max(...samples.map(Math.abs));
   })).toBeGreaterThan(.01);
-  expect(audio.capacity, 'Native PCM capacity must cover sustained scheduling jitter, not only startup').toBeGreaterThanOrEqual(.24);
+  // The native pool uses uniform blocks; some allocated slots have not received PCM yet.
+  expect(audio.blockDurations).toHaveLength(1);
+  expect(audio.blockDurations[0]).toBeGreaterThan(0);
+  expect(audio.bufferCount * audio.blockDurations[0],
+    'Native allocated PCM budget must cover sustained scheduling jitter, not only startup').toBeGreaterThanOrEqual(.24);
   expect(audio.latency).toBe('256');
   expect(audio.initialStall.lead).toBeGreaterThan(.09);
   expect(audio.initialStall.remaining).toBeGreaterThan(0);

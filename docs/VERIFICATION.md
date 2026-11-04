@@ -31,8 +31,8 @@ scheduled buffers: zero gaps above 1 ms, zero native restarts, no clipped source
 samples, and no page errors. Recorded post-limiter peak is 0.870; authored
 musical silence is not counted as an underrun.
 
-The actual native regression fails the old source at 121.9 ms of initialized
-PCM capacity. It now requires at least 240 ms, allowing native block rounding,
+The actual native regression fails the old source at 121.9 ms of allocated
+PCM budget. It requires at least 240 ms, allowing native block rounding,
 as well as checking the requested setting. Syntax/build, all 11 units and the
 three audio cases plus actual cartridge-clock/fast-forward case pass in 45.5s.
 Existing 80 ms startup-stall, deliberate 250 ms starvation/recovery, peak/mute,
@@ -49,10 +49,34 @@ failure after successful verification, not an audio-test failure.
 The requested fresh `workflow_dispatch` is rejected with HTTP 403 requiring
 repository admin rights. No failed attempt is retried and no permissions,
 workflow, deadline or gate are changed. An independent public-asset check
-still finds the previous `src/audio.js`; the correction is not live.
-Publish this actual qualification/failure evidence through the normal
-documentation workflow; a subsequent release still needs its own successful
-deployment and independent public identity/behavior verification.
+still finds the previous `src/audio.js` at that stage. Evidence-only `995d2fa`
+starts a normal push workflow `41895909034`; its full gate also passes, but
+Pages rejects deployment because the previous build is still in progress.
+The exact previous deployment's status subsequently says `deployment_cancelled`.
+No backend cause or cleared lock is inferred from that conflicting evidence.
+
+The user starts a fresh normal workflow `41907629546` at
+`995d2fa66bfc29bce51705fcc8c548e9a0d45599`. Build, all 11 units, all 39 browser
+cases and deployment succeed. Independently match all 28 actual public assets.
+The corrected application is now live, not merely present on the main branch.
+
+The first public native case exposes a measurement error: summing only slots
+already populated with PCM reports 191.6 ms even though the native pool has
+allocated 43 slots. A bounded diagnostic observes 43 allocated slots with only
+23 populated initially, then all 43 populated. A trial bounded poll is also
+insufficient: some slots can remain unused during steady playback. Filled data
+is not the pool's reserved capacity.
+
+The regression now verifies uniform positive native block durations and
+multiplies that observed size by the actual allocated slot count. This gives
+249.6 ms for the 43-slot corrected pool; the 21-slot old source still fails at
+121.9 ms. The 240 ms requirement, configured 256 ms check and all existing
+stall/recovery, peak/mute, lifecycle and clock assertions are unchanged.
+Local native case passes in 16.3s; all four actual public audio/clock cases
+pass in 53.9s. The test/record follow-up does not alter any application asset.
+All five temporary private PCM captures are removed; timing metadata and the
+user's original ROM are retained. Technical evidence is not human listening
+approval or a guarantee about every device.
 
 ## Darker raised control markings
 

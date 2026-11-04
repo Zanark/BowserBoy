@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Sustained native audio reserve against intermittent playback dropouts.
 Dependencies: Completed workstream 12 and its compatibility follow-up.
 
@@ -13,8 +13,8 @@ Tasks:
 - [x] Add an actual native PCM-capacity regression that fails on the old adapter.
 - [x] Increase native reserve without altering startup delay, gain or game pacing.
 - [x] Qualify the correction with extended local playback and existing audio/clock cases.
-- [ ] Pass normal hosted gates, independently verify live and publish evidence.
-- [ ] Reconcile affected documentation and owned continuity.
+- [x] Pass normal hosted gates, independently verify live and publish evidence.
+- [x] Reconcile affected documentation and owned continuity.
 
 Acceptance criteria:
 - Sustained playback retains more real native reserve, not just a larger config label.
@@ -35,9 +35,9 @@ Completion evidence:
 - Candidate changes only native audio_latency128->256. Startup96ms pre-roll,
   lookahead200ms, volume/mute envelopes and limiter are unchanged.
 - Real native regression fails the old source at121.9ms allocated PCM capacity.
-  The new check requires at least240ms actual initialized native PCM, allowing
+  The new check requires at least240ms actual allocated native PCM budget, allowing
   native block rounding; not merely the requested256ms configuration string.
-- Full correction qualification and hosted/public evidence remain pending.
+- Full correction qualification and hosted/public evidence are recorded below.
 - Final corrected-source run:180s/31,048scheduled buffers, zero >1ms gaps,
   zero native restarts, no clipped source samples, no page errors. Auto-save
   stays enabled; actual40ms mid-game hitch retains46.8ms remaining headroom.
@@ -50,8 +50,22 @@ Completion evidence:
 - Sourceca2ad94 / Pages41892670295 passes build/11units/all39browser cases.
   Deploy stays updating_pages and times out; the action cancels it. Direct fresh
   workflow_dispatch is rejected403 requiring repository admin rights.
-  Public identity check still finds the old audio.js, so this is not live.
+  Public identity check still finds the old audio.js at that stage.
   No retry, dummy commit, permission change, timeout extension or gate bypass.
+- Fresh normal evidence run41895909034/995d2fa also passes all gates, then
+  fails deployment400 because the previous deployment is in progress. Its status
+  GET later says deployment_cancelled; no deeper backend cause is established.
+- User starts fresh normal41907629546 at995d2fa66bfc29bce51705fcc8c548e9a0d45599:
+  build/11units/all39browser cases/deployment pass. All28public assets match.
+- Public capacity snapshot undercounts lazy PCM population. Observe43allocated
+  slots with23populated, later43populated; a bounded wait can still miss unused
+  slots. Check uniform positive block duration times actual native slot count:
+  new43slots249.6ms; old21slots121.9ms still fails the unchanged240ms bound.
+  Keep requested256ms and all other audio/lifecycle/clock assertions intact.
+- Local corrected native case passes16.3s. Actual public four audio/clock cases
+  pass53.9s. Application assets are unchanged by this test/record follow-up.
+- Remove all five exact temporary private PCM captures; retain timing metadata
+  and original ROM. Update guide, verification, book09, TODOs/ledger and own store.
 
 Completion log:
 - 2026-11-05: User reports immersion-breaking recurring audio distortion and
@@ -68,3 +82,10 @@ Completion log:
   admin-rights rejection. Independently confirm the public correction is absent.
   Publish this substantive verification/failure record normally; retain the
   application correction and all gates. No live result is inferred.
+- 2026-11-05: Record the second Pages conflict, respect403 and ask for an authorized
+  fresh workflow. User starts41907629546; its full gate and deployment succeed.
+  Independently match28assets. Diagnose lazy-population measurement failure,
+  reject an insufficient polling approach, and check actual native allocation
+  without lowering the240ms bound. Reprove red old source, green corrected
+  source and all four actual public cases. Mark DONE on technical evidence,
+  not human listening approval; application995d2fa is independently verified live.

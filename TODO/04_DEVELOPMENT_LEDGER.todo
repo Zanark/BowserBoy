@@ -14,6 +14,21 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Audio independently live; correct the capacity measurement:
+  Fresh evidence run41895909034/995d2fa passes build/11units/all39cases, then
+  fails400 because previous deployment remains in progress; exact old status
+  subsequently says deployment_cancelled. Respect dispatch403; do not retry
+  failed jobs or alter gates. User starts fresh normal41907629546/995d2fa:
+  full gate and deploy pass, independently match all28public assets.
+  First public capacity snapshot sees191.6ms populated data, not full reserved
+  pool. Diagnostic observes43allocated slots,23then43populated; bounded polling
+  is not reliable because unused slots can remain unpopulated. Check actual
+  slot count times observed uniform positive block duration:43slots249.6ms,
+  old21slots121.9ms still fails the unchanged240ms bound. All existing audio/
+  lifecycle/clock assertions retained. Local native case passes16.3s, actual
+  public four cases53.9s. No application asset change in test/record follow-up.
+  Remove five owned raw PCM files, retain metadata/user ROM, reconcile docs/
+  book/TODO33DONE and own continuity. No human hearing/device/all-ROM claim.
 - 2026-11-05 / Audio gate passes, publication fails:
   Sourceca2ad94 /41892670295 passes build,11units and all39browser cases.
   Pages then reports updating_pages until its action timeout and cancellation.
