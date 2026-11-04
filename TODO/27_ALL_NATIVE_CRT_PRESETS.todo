@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: All pinned native CRT presets in the Screen shader dropdown.
 Dependencies: Completed workstreams 09 and 13.
 
@@ -14,7 +14,7 @@ Tasks
 [x] Share the supported preset list between menu construction and validation.
 [x] Verify every real native preset renders, persists and preserves the runtime.
 [x] Retain unfiltered output and CRT-Geom-only fitted physical screen geometry.
-[ ] Pass normal release/public verification and update docs/owned context.
+[x] Pass normal release/public verification and update docs/owned context.
 
 Acceptance criteria
 -------------------
@@ -29,7 +29,7 @@ Unsupported resources/preferences still fail explicitly.
 Completion evidence
 -------------------
 Verified actual4.2.3 data/src/shaders.js: nine crt- keys, including five bare
-IDs without .glslp suffixes. Current host menu exposes only Geom/Unfiltered.
+IDs without .glslp suffixes. Former host menu exposed only Geom/Unfiltered.
 The new real-runtime catalog comparison fails before the fix, finding only
 Geom instead of nine presets. One shared catalog now drives options/validation.
 All nine actual native preset files match their configured source, retain
@@ -37,9 +37,17 @@ original-cartridge green pixels and preserve runtime identity. Selected
 Aperture survives reload; default/legacy Geom and native settings sync remain.
 Syntax/build/11 units and four focused Edge cases pass1.5m. New all-preset
 case passes Edge12.6s and explicit Chromium/SwiftShader36.2s. Software underside
-case also passes31.2s. Publication and independent public verification pending.
+case also passes31.2s.
+Corrected sourceba49d559688713d485d2c27b593faed9692913ae /
+fresh Pages41853556614 passes build/11units/all39 cases13+13+13/deployment.
+Independently match all28 exact public assets. Actual public all-preset/native
+settings cases pass, including each real resource, native pixels, retained
+runtime, selection persistence and return to default Geom. Eight public cases
+are verified across the initial seven passes and a corrected lighting fixture.
+No commercial ROM, gate relaxation or physical-device performance claim.
 
 Completion log
 --------------
 2026-11-04: User requests all CRT options in Screen shader, with CRT Geom
 enabled by default. Existing native shader default remains appropriate.
+2026-11-04: All nine choices independently verified on the actual public site.

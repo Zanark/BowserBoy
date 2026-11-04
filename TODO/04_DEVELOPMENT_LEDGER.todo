@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Underside and complete CRT choices live:
+  Correctedba49d559688713d485d2c27b593faed9692913ae /
+  fresh Pages41853556614 passes build/11units/all39 cases13+13+13/deploy.
+  Independent28-public-asset match succeeds. Seven actual public cases pass,
+  including all9 native presets, retained settings/runtime, physical target,
+  both insertions and native cold-power saves. Remaining lighting fixture
+  prematurely clicks Demo before scene readiness; same explicit ready
+  precondition fixes setup, actual public case passes29.0s. Not falsely
+  reported as an eight-pass first run. Reviewed/published actual underside
+  detail and refreshed five affected figures, preserving historical GIF
+  provenance and separate human/device/book boundaries. No failed-run retry.
 - 2026-11-04 / Hosted underside follow-through:
   First3e29b27 run41850906571 blocks deployment. Actual trace samples show
   the protruding underside cap crossing the tabletop during the lowered

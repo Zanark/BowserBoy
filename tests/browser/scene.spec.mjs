@@ -461,6 +461,7 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);

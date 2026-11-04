@@ -29,7 +29,7 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
   available in the [player guide](GUIDE.md).
 - Documentation images are not part of the static application's build allowlist.
 
-All four interaction GIFs and the current startup, pose and dock figures were
+All four interaction GIFs and the earlier startup, pose and dock figures were
 refreshed from deployed source `807da8ef42594d3e0b2f8b788f66bed894483d21`,
 after independently matching all 28 public assets and passing five actual
 production cases. The new footage shows monochrome bezel print, raised ZANARK
@@ -49,6 +49,21 @@ It shows the complete native framebuffer, proportional CSS bezel and bottom-righ
 50-100% zoom. Actual pixels are checked before/after real input; this is not
 a second emulator or another rendering of the 3D room. The capture was reviewed.
 Only this affected figure changed; the interaction GIFs above remain unchanged.
+
+The underside detail and affected desktop/mobile, native-settings and
+LCD-light/power-off figures were subsequently refreshed from actual public
+source `ba49d559688713d485d2c27b593faed9692913ae`, after fresh Pages
+`41853556614` passed build, 11 units, all 39 browser cases and deployment,
+and all 28 exact public assets independently matched. Seven public cases
+passed in the first batch; its lighting fixture clicked before scene readiness.
+After correcting that setup, the actual public lighting case passed in 29.0s.
+The underside detail uses actual Inspect/keyboard tilt and Room lights to
+show the complete physical assembly on the lower shell edge. It and the five
+refreshed figures were reviewed. Both actual native insertion cases also
+verify that the newly protruding cap clears the tabletop while lowered.
+Earlier interaction GIFs/startup/dock footage above predates this relocation;
+it remains historical interaction footage, not evidence of the current switch
+position. No unrelated GIFs were recaptured.
 
 ## Complete effects, not logo fragments
 

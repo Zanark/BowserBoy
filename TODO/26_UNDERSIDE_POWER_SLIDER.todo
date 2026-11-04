@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: Physical power slider mounted on the lower underside edge.
 Dependencies: Completed workstreams 08 and 17.
 
@@ -13,8 +13,8 @@ Tasks
 [x] Add a regression for underside placement and the following touch target.
 [x] Move track, cap, grip and label together onto the lower edge.
 [x] Verify desktop/phone visibility, power travel and actual native teardown.
-[ ] Pass normal release gates and independently verify the public release.
-[ ] Update affected guide/figure, causal ledger and owned context.
+[x] Pass normal release gates and independently verify the public release.
+[x] Update affected guide/figure, causal ledger and owned context.
 
 Acceptance criteria
 -------------------
@@ -27,7 +27,7 @@ No unrelated camera, console size, emulation, lighting or fullscreen changes.
 
 Completion evidence
 -------------------
-The existing assembly is directly attached to the front atz.64-.69.
+The former assembly was directly attached to the front atz.64-.69.
 The projected HTML power target already follows its registered mesh anchor.
 New underside regression rejects that front-mounted assembly before the fix.
 All parts now share one lower-edge tangent-aligned mount; the existing target
@@ -40,12 +40,19 @@ new presets, native settings, real game/saves and underside layout; earlier
 actual cold-power lifecycle and mapped-input/lighting cases also pass.
 Final underside case passes Edge21.0s and explicit SwiftShader31.2s.
 Reviewed actual tilted underside capture, desktop and landscape renders.
-Hosted release, public verification and published detail figure pending.
 First hosted41850906571 blocks deployment: actual insertion samples reveal
 the relocated cap crossing the table in the former lowered pose. Raise that
 hold0.09, retaining visible lowering. A320px snapshot also catches stale
 projected target coordinates during resize; poll all unchanged actual geometry/
 clearance/following assertions until the rendered frame updates.
+Corrected sourceba49d559688713d485d2c27b593faed9692913ae /
+fresh Pages41853556614 passes build/11units/all39 cases13+13+13/deployment.
+Independently match28 exact public assets. Seven public cases pass initially,
+including underside target, both insertions and cold-power lifecycle. Correct
+the remaining lighting fixture's premature demo click with scene readiness;
+that actual public case passes29.0s. Actual underside detail reviewed/published
+with caption and affected guide/native/lighting/prototype figures refreshed.
+Browser evidence is not physical-device qualification or human aesthetic approval.
 
 Completion log
 --------------
@@ -54,3 +61,6 @@ edge in the supplied image. Mounting location is explicitly superseded.
 2026-11-04: Moved the whole assembly, then corrected directly coupled landscape
 framing after real clicks exposed toolbar interception. No forced clicks,
 relaxed assertions, model scaling or lighting changes used.
+2026-11-04: Fresh corrected release deployed and independently verified.
+Both native insertions clear the actual table; public detail shows lower-edge
+cap/track/label and a clear front face. Failed run was not retried.

@@ -46,6 +46,13 @@ and use its enlarged dark power slider on the **lower underside edge**, not the
 front face. Its projected touch target follows the cap and is at least 44 by 44
 pixels, clear of the LCD and bottom dock. Inspect and tilt the console to see
 the ribbed cap, track and label on that edge.
+
+![Actual underside power slider, with the console tilted and room lights enabled](images/underside-power.png)
+
+*The actual public handheld in Inspect mode: the dark ribbed slider is on the
+lower shell edge, with no switch on the front face. Room lights reveal its
+physical cap, track and label; this is not a mockup.*
+
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
 The supplied transparent wordmark also appears on the rear shell, idle/loading

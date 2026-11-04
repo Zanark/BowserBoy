@@ -3,7 +3,26 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
-## Underside power and all CRT presets: local verification
+## Deployed underside power and all CRT presets
+
+Corrected release `ba49d559688713d485d2c27b593faed9692913ae` / fresh Pages
+`41853556614` passes build, all 11 units, all 39 browser cases (13+13+13)
+and actual deployment. All 28 exact public assets independently match.
+Seven actual public Edge cases pass in the initial batch, covering all nine
+native presets, native settings/persistence, responsive shell/invalid files,
+cold-power saves, both physical insertions and the underside target. The last
+lighting fixture clicks Demo before scene readiness and leaves the console in
+table view; it times out on the correctly hidden power target. Adding the same
+scene-ready setup precondition makes that actual public case pass in 29.0s.
+Thus all eight public behaviors are verified, not an eight-pass initial run.
+No production behavior or timeout is changed for that fixture correction.
+
+The actual public tilted underside detail and five directly affected guide
+figures are reviewed and refreshed, with source provenance in [MEDIA.md](MEDIA.md).
+These remain browser evidence, not physical-device qualification or aesthetic
+acceptance. Earlier README interaction GIFs predate the hardware relocation.
+
+### Diagnosis and local qualification
 
 The underside-location regression rejects the old front-mounted slider.
 The complete lower-edge assembly now faces outward within the shell thickness,
@@ -35,8 +54,8 @@ placement/visibility/clearance/following criteria until the actual frame is
 updated. An existing invalid-file fixture now waits for scene readiness before
 dispatching its file event. The unchanged cartridge-clock check separately
 reports a 5.2706x ratio above its 5.2x upper bound. No timing, throughput,
-clearance or release assertion is relaxed. A fresh release run is required,
-not a retry of the failed run. Independent public verification remains pending.
+clearance or release assertion is relaxed. Corrected source starts a fresh
+normal release run, not a retry of the failed run; its success is recorded above.
 The corrected insertion/layout/invalid-file fixtures pass all four cases with
 explicit Chromium/SwiftShader in 1.9m; syntax, build and all 11 units pass again.
 

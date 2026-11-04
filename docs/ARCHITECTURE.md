@@ -218,7 +218,7 @@ to 1.52, with an 850 ms framing interval and a 1350 ms smooth downward slide.
 Reduced motion seats immediately. Restoring an off console also seats without
 animation; selecting a cartridge while off still does not switch power on.
 
-Playing-view insertion briefly widens the camera and lowers the shell .95 units
+Playing-view insertion briefly widens the camera and lowers the shell .86 units
 into the actual desk lamp's beam, retaining positive tabletop clearance.
 After seating, the camera and shell return over 850 ms. No ambient/fake fill
 light is added specifically for loading. The cartridge follows inspection/table

@@ -25,8 +25,8 @@ BowserBoyAdvance workstreams
 23_HARDWARE_BRANDING_AND_SCREEN_FOCUS.todo - DONE: printed/embossed branding, clear icons/header notices, sharp waving startup and live LCD fullscreen.
 24_FAST_FORWARD_PACING.todo - DONE: measured cartridge-clock acceleration and native VSync conflict recovery.
 25_FULLSCREEN_FIT_AND_ZOOM.todo - DONE: uncropped complete LCD/bezel, dark margins and fullscreen zoom slider.
-26_UNDERSIDE_POWER_SLIDER.todo - IN PROGRESS: move the complete power slider from the front face onto the lower edge.
-27_ALL_NATIVE_CRT_PRESETS.todo - IN PROGRESS: expose all nine pinned CRT presets, retaining default CRT Geom.
+26_UNDERSIDE_POWER_SLIDER.todo - DONE: complete lower-edge assembly, following touch target and verified real power/table clearance.
+27_ALL_NATIVE_CRT_PRESETS.todo - DONE: all nine actual native CRT presets, retained runtime/persistence and default CRT Geom.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
