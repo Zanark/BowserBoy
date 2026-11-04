@@ -108,6 +108,10 @@ test('quick actions reach real core speed, persist autosave off, restore selecte
   page.on('dialog', dialog => dialog.accept());
   await page.goto('./');
   await ready(page);
+  await page.locator('#pickup').click();
+  // A slow native startup can legitimately auto-save before demoReady resolves.
+  await page.locator('#quick-autosave').click();
+  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);
@@ -115,8 +119,6 @@ test('quick actions reach real core speed, persist autosave off, restore selecte
   await demoReady(page);
   let frame = runtime(page);
   const identity = await frame.evaluate(() => window.runtimeIdentity = crypto.randomUUID());
-  await page.locator('#quick-autosave').click();
-  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
   await frame.evaluate(() => {
     window.speedCalls = [];
     const game = window.EJS_emulator.gameManager;

@@ -16,6 +16,7 @@ Tasks
 [x] Keep all rotated LCD sparkle bounds inside240x160 over the complete reveal.
 [x] Verify reduced motion, power/refresh behavior, GIF transparency and motion.
 [x] Shrink and center the wordmark to leave substantial room inside the outer orbit.
+[x] Make autosave suppression setup independent of hosted native startup time.
 [ ] Complete normal deployment and independent live identity/browser checks.
 [ ] Refresh actual README boot clip and reconcile docs/provenance/journals.
 
@@ -43,6 +44,13 @@ Reviewed actual isolated source effects and final light/dark banner frames.
 Spacing refinement: syntax/build and two real startup/persistent-power cases
 pass16.5s, including explicit centered-logo and orbit-clearance regression checks.
 Reviewed updated620px-center/960px-orbit banner on both light/dark surfaces.
+Release876990a / Pages41811505549 built successfully but failed normal browser
+gates: an automatic save existed before the quick-action test disabled autosave,
+and the other shard reached its600-second global timeout. Deployment was skipped.
+Move the real quick-action toggle before cartridge launch; keep all existing
+manual-slot,16-second suppression, persistence and restart assertions intact.
+Focused corrected case passes Edge43.8s and explicit SwiftShader Chromium1.4m.
+No application autosave semantics, assertions or workflow gates changed.
 Deployment and final public capture remain pending.
 
 Completion log
@@ -57,3 +65,9 @@ motion. Existing static wordmark artwork remains unchanged.
 Kept the outer orbit/frame size and reduced only the centered artwork from
 850 to620px in the transparent banner and218 to160px in the actual LCD reveal.
 Original source logo remains unchanged; surrounding canvas/clear margins remain.
+2026-11-04: Normal hosted gates exposed a test-precondition race: a slow native
+startup can legitimately create an automatic slot before demoReady resolves.
+Disable autosave through the actual quick-action UI before loading the demo,
+instead of incorrectly expecting earlier automatic records to disappear.
+The unrelated shard timeout remains an observed release failure, not a reason
+to increase limits or relax coverage.

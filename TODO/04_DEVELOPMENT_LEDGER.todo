@@ -14,6 +14,21 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Complete orbital effects and wider logo clearance, release pending:
+  Replaced clipped logo-derived stars with complete padded supplied sparkle,
+  glow and orbit effects. Kept the transparent1000x340 README canvas and960px
+  ring, reducing centered artwork850 to620px. Actual LCD artwork218 to160px
+  sits inside226px ring; original wordmark source stays unchanged. Exact public
+  banner bytes matchc888c4c; LCD deployment is not yet established.
+  Release876990a / Pages41811505549 passed build but failed normal browser
+  gates: quick-action setup disabled autosave only after native readiness,
+  allowing a legitimate earlier automatic save on slow hosted runs; the other
+  shard reached the600-second global timeout. Deploy was skipped.
+  Moved the actual autosave toggle before cartridge launch, preserving all
+  suppression/manual-slot/persistence/restart assertions. Focused corrected
+  case passes Edge43.8s and explicit SwiftShader Chromium1.4m. No production
+  autosave behavior, assertions or deployment gates changed. Final application
+  deployment, independent live checks and refreshed boot media remain pending.
 - 2026-11-04 / Handheld silhouette and transparent banner:
   Replaced the active star favicon with original SVG using the actual 3D shell's
   stepped shoulders, wide sides and bowed lower outline, retaining indigo
