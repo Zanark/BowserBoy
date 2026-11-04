@@ -29,7 +29,7 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
   available in the [player guide](GUIDE.md).
 - Documentation images are not part of the static application's build allowlist.
 
-All four interaction GIFs and the earlier startup, pose and dock figures were
+Earlier versions of all four interaction GIFs, and the startup/pose/dock figures, were
 refreshed from deployed source `807da8ef42594d3e0b2f8b788f66bed894483d21`,
 after independently matching all 28 public assets and passing five actual
 production cases. The new footage shows monochrome bezel print, raised ZANARK
@@ -61,9 +61,35 @@ The underside detail uses actual Inspect/keyboard tilt and Room lights to
 show the complete physical assembly on the lower shell edge. It and the five
 refreshed figures were reviewed. Both actual native insertion cases also
 verify that the newly protruding cap clears the tabletop while lowered.
-Earlier interaction GIFs/startup/dock footage above predates this relocation;
-it remains historical interaction footage, not evidence of the current switch
-position. No unrelated GIFs were recaptured.
+At that milestone the interaction GIFs still predated the relocation. The
+explicit README refresh below subsequently replaces all four and the dock;
+earlier static startup/pose figures retain their original provenance.
+
+## Current README refresh
+
+The four interaction GIFs now show the actual current public application,
+including the underside power assembly, rather than the earlier front switch.
+The original recording and timing receipt were captured on 2026-11-04 at
+15:26:45 UTC from the public URL. Application bytes correspond to the verified
+`ba49d559688713d485d2c27b593faed9692913ae` release above; subsequent
+documentation/test-fixture-only source `6580a34` leaves those bytes unchanged.
+The original Pixel Lab is the only cartridge, and the capture reports zero
+page errors.
+
+The new encoded clips contain 109 pickup/inspection frames, 44 power-on frames,
+27 insertion frames and 54 lighting frames at 10 fps. Largest output is
+5.19 MiB; every GIF remains below 10 MiB. Sampled beginning/middle/end frames
+were reviewed, with additional rear-hold and lights-off samples where the
+midpoint alone was ambiguous. Inspection visibly reaches the battery cover
+and returns; boot ends at the idle LCD, insertion seats, and lights switch
+independently. Clip timings are still not performance measurements.
+
+The new `crt-presets.png` captures the actual open host selector: all nine
+native presets, Unfiltered and selected CRT Geom. `quick-controls.png` is a
+fresh actual live dock capture. The README also reuses the already-reviewed
+actual underside detail and complete fullscreen/zoom figure described above.
+The transparent animated banner is deliberately unchanged. Media-revision
+URLs refresh the replaced embeds; detailed prose stays in linked guides.
 
 ## Complete effects, not logo fragments
 

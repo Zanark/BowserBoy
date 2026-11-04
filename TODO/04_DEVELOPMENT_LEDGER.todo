@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Current visual README:
+  User requests README refresh after underside/CRT release. Earlier807da8e
+  interaction GIFs still depict front-mounted power, so record all four actual
+  public actions again with original Pixel Lab, not mockups/commercial ROMs.
+  Encode only those clips, preserving transparent animated logo bytes.
+  Capture actual open all-nine CRT menu and current live dock; reuse reviewed
+  actual underside/fullscreen figures. Review encoded temporal samples,
+  additionally checking rear hold/lights-off where midpoint is ambiguous.
+  No browser page errors; all GIFs below10MiB, largest5.19MiB. Keep README
+  image/GIF-first with brief captions, leaving technical detail/provenance
+  in linked guides. Application, dependencies and build allowlist unchanged.
 - 2026-11-04 / Underside and complete CRT choices live:
   Correctedba49d559688713d485d2c27b593faed9692913ae /
   fresh Pages41853556614 passes build/11units/all39 cases13+13+13/deploy.

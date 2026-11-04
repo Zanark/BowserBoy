@@ -51,3 +51,12 @@ Updated startup heading/alt text/short caption for the deployed roomier orbit
 and complete sparkles. Added media-revision query parameters to banner and boot
 embeds, giving their already-published replacements distinct image URLs.
 Preserved visual-first layout, actual demonstrations and linked detailed guides.
+2026-11-04: User requests another README update after underside/CRT release.
+Refresh all four real public interaction GIFs so none still shows the former
+front switch. New actual public dock and open shader-menu figures; menu shows
+all nine CRT presets, Unfiltered and default Geom. Reuse reviewed actual public
+underside/fullscreen figures. Preserve transparent animated banner unchanged.
+Encoded frames:pickup109, boot44, insertion27, lights54; largest5.19MiB.
+Reviewed sampled beginning/middle/end plus actual rear hold and lights-off
+moments. Original Pixel Lab only; capture zero page errors. Minimal captions,
+current media-revision URLs and detailed provenance remain in linked docs.
