@@ -34,6 +34,8 @@ The power-on GIF and startup still were refreshed from deployed source
 28 public assets and checking the actual startup. Its final clip boundary was
 shortened after encoded review to exclude the following drawer action, without
 retiming motion. Other interaction GIFs retain their previously reviewed footage.
+The updated README banner and power-on embeds use media-revision query
+parameters so replacements have distinct image URLs without duplicating assets.
 
 ## Complete effects, not logo fragments
 

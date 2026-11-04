@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Explicit README refresh:
+  Updated the actual README after the latest deployed startup/media changes,
+  retaining GIFs and minimal text. Startup heading, alt text and caption now
+  describe the smaller centered logo, complete sparkles and roomier orbit.
+  Banner/boot references use media-revision query parameters for distinct
+  updated image URLs; no duplicate media, recapture or app behavior change.
+  Detailed provenance remains in the linked media guide.
 - 2026-11-04 / Complete orbital effects and wider logo clearance, deployed:
   Replaced clipped logo-derived stars with complete padded supplied sparkle,
   glow and orbit effects. Kept the transparent1000x340 README canvas and960px

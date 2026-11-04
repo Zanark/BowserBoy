@@ -46,3 +46,8 @@ GIF; switched to an800px/128-color ordered palette, retaining10fps motion while
 reducing it to5.27MiB. Trimmed final half-second idle holds so the boot GIF does
 not include the next drawer action. Added reusable capture/encoding commands
 and public provenance; kept originals and review sheets out of publication.
+2026-11-04: User explicitly requested a README refresh after workstream22.
+Updated startup heading/alt text/short caption for the deployed roomier orbit
+and complete sparkles. Added media-revision query parameters to banner and boot
+embeds, giving their already-published replacements distinct image URLs.
+Preserved visual-first layout, actual demonstrations and linked detailed guides.

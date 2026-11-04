@@ -1,4 +1,4 @@
-[![BowserBOY ADVANCE - transparent animated orbital logo](docs/images/orbital-logo.gif)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY ADVANCE - transparent animated logo with a spacious outer orbit and complete sparkles](docs/images/orbital-logo.gif?v=bcbc38a)](https://zanark.github.io/BowserBoyAdvance/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>
@@ -12,11 +12,11 @@
 
 *A real 3D handheld, right down to the battery cover.*
 
-## Infinite battery. A little stardust.
+## Power on. Let the stars orbit.
 
-![Actual power-on animation with the supplied logo and stars orbiting on the LCD](docs/images/power-on.gif)
+![Actual deployed LCD startup with a smaller centered logo, complete sparkles and a roomier glowing orbit](docs/images/power-on.gif?v=bcbc38a)
 
-*Off on your first visit. Your power setting survives refresh.*
+*A little stardust. A roomier orbit. Power remembered between visits.*
 
 ## Slot it in.
 
