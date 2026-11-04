@@ -18,6 +18,7 @@ BowserBoyAdvance workstreams
 16_PRESSED_CONTROL_LIGHTING.todo - Actual control apertures and correct pressed-cap visibility.
 17_COZY_ROOM_AND_VISIBLE_POWER.todo - DONE: large paper lantern, full-width thick table, room lights, power/LCD.
 18_ORBITAL_WORDMARK.todo - DONE: supplied transparent purple orbital logo, variants inactive.
+19_COMMAND_DOCK_AND_ORBIT_STARTUP.todo - IN_PROGRESS: icon actions, speed, slots and orbital startup.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.

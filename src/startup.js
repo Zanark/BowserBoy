@@ -1,37 +1,72 @@
-export const STARTUP_DURATION = 2400;
+import { brandImage, starImage, loadBrand } from './brand.js';
+
+export const STARTUP_DURATION = 3200;
 
 export function drawStartup(canvas, elapsed, reducedMotion = false) {
   const context = canvas.getContext('2d');
   if (!context) throw new Error('The startup screen requires a 2D canvas.');
-  const progress = reducedMotion ? 1 : Math.min(1, Math.max(0, (elapsed - 100) / 1100));
+  const progress = reducedMotion ? 1 : Math.min(1, Math.max(0, elapsed / 1000));
   const settle = 1 - (1 - progress) ** 3;
-  context.fillStyle = '#faf9ff';
+  const time = reducedMotion ? 2.4 : elapsed / 1000;
+  context.fillStyle = '#100a20';
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.save();
-  context.textAlign = 'center';
-  context.font = 'italic 900 25px Arial';
-  context.translate(120, 74 - (1 - settle) * 18);
-  context.beginPath();
-  context.rect(-120, -40, 240 * progress, 60);
-  context.clip();
-  const ink = context.createLinearGradient(-95, 0, 95, 0);
-  ink.addColorStop(0, '#a546db');
-  ink.addColorStop(.45, '#6140c6');
-  ink.addColorStop(1, '#283ba4');
-  context.fillStyle = ink;
-  context.fillText('BOWSER BOY', 0, 0, 216);
-  context.font = 'bold 11px Arial';
-  context.fillText('A D V A N C E', 0, 18);
+  const glow = context.createRadialGradient(120, 77, 5, 120, 77, 125);
+  glow.addColorStop(0, '#7735ac80');
+  glow.addColorStop(1, '#100a2000');
+  context.fillStyle = glow;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < 38; i++) {
+    const x = (i * 73 + 19) % 240, y = (i * 47 + 11) % 160;
+    context.globalAlpha = .15 + (Math.sin(i + time * 1.8) + 1) * .22;
+    context.fillStyle = i % 3 ? '#dac8ff' : '#ffc99d';
+    context.fillRect(x, y, 1, 1);
+  }
+  context.globalAlpha = progress;
+  context.strokeStyle = '#bc7aff50';
+  context.lineWidth = .7;
+  for (let trail = 0; trail < 3; trail++) {
+    context.beginPath();
+    context.ellipse(120, 78, 105 + trail * 3, 35 + trail * 2, -.15, 0, Math.PI * 2);
+    context.stroke();
+  }
+  const orbit = (front) => {
+    for (let index = 0; index < 3; index++) {
+      const angle = time * 2.3 + index * Math.PI * 2 / 3;
+      if ((Math.sin(angle) >= 0) !== front) continue;
+      const x = 120 + Math.cos(angle) * 106;
+      const y = 78 + Math.sin(angle) * 37 - Math.cos(angle) * 12;
+      const size = 10 + (Math.sin(angle) + 1) * 5;
+      context.save();
+      context.translate(x, y);
+      context.rotate(angle * .4);
+      context.shadowColor = '#cf8cff';
+      context.shadowBlur = 10;
+      context.drawImage(starImage, -size / 2, -size / 2, size, size);
+      context.restore();
+    }
+  };
+  orbit(false);
+  const width = 218 * (.82 + settle * .18);
+  const height = width * brandImage.height / brandImage.width;
+  context.shadowColor = '#b657ff';
+  context.shadowBlur = 8 * progress;
+  context.drawImage(brandImage, (240 - width) / 2, 78 - height / 2, width, height);
+  context.shadowBlur = 0;
+  orbit(true);
   context.restore();
-  context.globalAlpha = reducedMotion ? 1 : Math.max(0, Math.min(1, (elapsed - 1200) / 300));
+  context.globalAlpha = reducedMotion ? 1 : Math.max(0, Math.min(1, (elapsed - 900) / 500));
   context.textAlign = 'center';
-  context.fillStyle = '#78718d';
-  context.font = '7px monospace';
+  context.fillStyle = '#c9b4ec';
+  context.font = '6px monospace';
   context.fillText('INFINITE BATTERY. ENDLESS PLAY.', 120, 134);
+  context.fillStyle = '#bc85ff';
+  context.fillRect(83, 145, reducedMotion ? 74 : 74 * Math.min(1, elapsed / STARTUP_DURATION), 1);
   context.globalAlpha = 1;
 }
 
 export async function playStartup(view) {
+  await loadBrand();
   const canvas = document.createElement('canvas');
   canvas.width = 240;
   canvas.height = 160;

@@ -2,6 +2,7 @@ export const RUNTIME = 'emulatorjs-4.2.3-mgba';
 export const MAX_ROM_BYTES = 32 * 1024 * 1024;
 export const MAX_STATE_BYTES = 16 * 1024 * 1024;
 export const MAX_BACKUP_BYTES = 24 * 1024 * 1024;
+export const MANUAL_SLOTS = ['manual', 'manual2', 'manual3'];
 
 export async function digest(bytes) {
   const hash = await crypto.subtle.digest('SHA-256', bytes);
@@ -28,7 +29,7 @@ export async function identifyRom(file) {
 }
 
 export function latestSlot(record) {
-  return [record?.automatic, record?.manual].filter(Boolean)
+  return [record?.automatic, ...MANUAL_SLOTS.map(slot => record?.[slot])].filter(Boolean)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0] ?? null;
 }
 

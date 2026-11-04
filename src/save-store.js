@@ -1,4 +1,4 @@
-import { MAX_ROM_BYTES, RUNTIME, validateBatterySave, validateCapture } from './cartridge.js';
+import { MANUAL_SLOTS, MAX_ROM_BYTES, RUNTIME, validateBatterySave, validateCapture } from './cartridge.js';
 
 function validateDevice(device) {
   const cartridge = device?.cartridge;
@@ -60,7 +60,7 @@ export class SaveStore {
 
   async putSlot(game, slot, capture) {
     validateCapture(capture);
-    if (!['automatic', 'manual'].includes(slot)) throw new Error('Unknown save slot.');
+    if (!['automatic', ...MANUAL_SLOTS].includes(slot)) throw new Error('Unknown save slot.');
     return this.#update(game, (record) => {
       const createdAt = new Date().toISOString();
       record[slot] = { ...capture, createdAt };

@@ -54,4 +54,8 @@ test('newest manual or automatic checkpoint is selected without assuming a slot 
   const manual = { createdAt: '2026-01-01T11:00:00.000Z' };
   assert.equal(latestSlot({ automatic, manual }), manual);
   assert.equal(latestSlot({ automatic }), automatic);
+  const manual2 = { createdAt: '2026-01-01T12:00:00.000Z' };
+  const manual3 = { createdAt: '2026-01-01T13:00:00.000Z' };
+  assert.equal(latestSlot({ automatic, manual, manual2 }), manual2);
+  assert.equal(latestSlot({ automatic, manual, manual2, manual3 }), manual3);
 });

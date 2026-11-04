@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, createWood } from './handheld.js';
 import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
+import { brandImage } from './brand.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -340,14 +341,11 @@ export class HandheldScene {
     this.source = null;
     this.screenIllumination.clear();
     const map = canvasTexture(720, 480, (context, width, height) => {
-      context.fillStyle = '#faf9ff';
+      context.fillStyle = '#100a20';
       context.fillRect(0, 0, width, height);
-      context.fillStyle = '#6140a6';
+      context.fillStyle = '#c9b4ec';
       context.textAlign = 'center';
-      context.font = 'italic 900 70px Arial';
-      context.fillText('BOWSER BOY', width / 2, 176);
-      context.font = 'italic 900 48px Arial';
-      context.fillText('ADVANCE', width / 2, 227);
+      context.drawImage(brandImage, 38, 90, width - 76, (width - 76) * brandImage.height / brandImage.width);
       context.font = 'bold 22px monospace';
       context.fillText(title, width / 2, 324, width - 40);
       context.font = '16px monospace';

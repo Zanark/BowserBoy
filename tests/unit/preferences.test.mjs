@@ -72,3 +72,14 @@ test('native options survive preference updates without admitting managed contro
     assert.throws(() => validateEmulatorOptions(invalid), /invalid|managed/);
   }
 });
+
+test('autosave defaults on for legacy preferences and remembers an explicit off choice', () => {
+  const { autoSave, ...legacy } = defaultPreferences();
+  assert.equal(validatePreferences(legacy).autoSave, true);
+  let stored;
+  const storage = { getItem: () => stored, setItem: (_, value) => { stored = value; } };
+  writePreferences(storage, { ...legacy, autoSave: false });
+  assert.equal(readPreferences(storage).autoSave, false);
+  assert.throws(() => validatePreferences({ ...legacy, autoSave: 'false' }), /checkpoint preference/);
+  assert.throws(() => validatePreferences({ ...legacy, autoSave: null }), /checkpoint preference/);
+});

@@ -37,6 +37,7 @@ export function defaultPreferences() {
     controls: Object.fromEntries(CONTROLS.map(({ id, code }) => [id, code])),
     volume: 60,
     muted: false,
+    autoSave: true,
     shader: CRT_GEOM,
   };
 }
@@ -62,7 +63,9 @@ export function validatePreferences(value) {
     assigned.add(code);
     controls[id] = code;
   }
-  const result = { version: 1, controls, volume: value.volume, muted: value.muted, shader };
+  const autoSave = value.autoSave === undefined ? true : value.autoSave;
+  if (typeof autoSave !== 'boolean') throw new Error('Automatic checkpoint preference is invalid.');
+  const result = { version: 1, controls, volume: value.volume, muted: value.muted, shader, autoSave };
   if (value.emulatorOptions !== undefined) result.emulatorOptions = validateEmulatorOptions(value.emulatorOptions);
   return result;
 }

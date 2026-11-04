@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { brandImage } from './brand.js';
 
 function roundedShape(width, height, radius) {
   const x = -width / 2, y = -height / 2;
@@ -207,26 +208,15 @@ export function createHandheld() {
     new THREE.MeshBasicMaterial({ color: 'white', toneMapped: false }), 0, .22, .782);
   screen.castShadow = false;
   screen.receiveShadow = false;
-  const wordmark = canvasTexture(1536, 160, (context) => {
-    context.fillStyle = '#e0e3db';
-    context.font = 'italic 900 122px Arial';
-    const first = 'BOWSER BOY';
-    const width = context.measureText(first).width;
-    context.font = 'italic 900 102px Arial';
-    const total = width + 28 + context.measureText('ADVANCE').width;
-    context.translate((1536 - total * .95) / 2, 0);
-    context.scale(.95, 1);
-    context.font = 'italic 900 122px Arial';
-    context.fillText(first, 0, 124);
-    context.font = 'italic 900 102px Arial';
-    context.fillText('ADVANCE', width + 28, 124);
+  const wordmark = canvasTexture(1024, 342, (context, width, height) => {
+    context.drawImage(brandImage, 0, 0, width, height);
   });
-  const logo = new THREE.Mesh(new THREE.PlaneGeometry(3.15, .17),
-    new THREE.MeshStandardMaterial({ map: wordmark, transparent: true, depthWrite: false, roughness: .65 }));
-  logo.position.set(0, -1.35, .753);
+  const logo = new THREE.Mesh(new THREE.PlaneGeometry(1.05, .35),
+    new THREE.MeshBasicMaterial({ map: wordmark, transparent: true, depthWrite: false, toneMapped: false }));
+  logo.name = 'Orbital bezel logo';
+  logo.position.set(0, -1.44, .763);
   logo.receiveShadow = true;
   root.add(logo);
-  engravedLabel(root, 'BOWSER', 0, 2.08, 1.12, .25, '#625a97', 0);
 
   const controls = new Map();
   function control(id, mesh, width, height, anchor = mesh) {
@@ -292,9 +282,9 @@ export function createHandheld() {
   }
   label(root, 'BBA-001', .6, .09, -3.02, -1.95, .63, '#81739e');
   add(root, 'Power slider track', solid(roundedShape(1.02, .24, .055), .025, .008), dark, 1.55, -2.04, .64);
-  const power = add(root, 'Power switch', solid(roundedShape(.50, .18, .04), .075, .014), silver, 1.65, -2.04, .69);
+  const power = add(root, 'Power switch', solid(roundedShape(.74, .16, .035), .16, .01), dark, 1.65, -2.04, .69);
   control('power', power, 1.08, .42);
-  for (let i = 0; i < 5; i++) add(power, 'Switch grip', new THREE.BoxGeometry(.025, .105, .012), dark, -.12 + i * .06, 0, .057);
+  for (let i = 0; i < 5; i++) add(power, 'Switch grip', new THREE.BoxGeometry(.045, .085, .012), silver, -.24 + i * .12, 0, .094);
   label(root, 'POWER', .48, .075, 1.55, -2.27, .625, '#c3b9ab', 'bold 70px Arial');
   const slot = add(root, 'Cartridge slot', box(3.05, .15, .42, .04), dark, 0, 2.28, -.12);
   slot.userData.tools = true;
@@ -310,8 +300,12 @@ export function createHandheld() {
   headphone.rotation.x = Math.PI / 2;
   const cover = add(root, 'Battery cover', box(3.65, 2.9, .06, .2), rear, 0, -.2, -.57);
   for (let i = 0; i < 4; i++) add(cover, 'Battery thumb grip', box(.58, .035, .025, .01), purple, 0, .85 - i * .12, -.065);
-  const backLabel = label(root, 'BOWSER BOY ADVANCE  /  BBA-001', 2.6, .18, 0, -.55, -.645, '#a79ac5', 'bold 55px Arial');
+  const backLabel = logo.clone();
+  backLabel.name = 'Orbital battery-cover logo';
+  backLabel.scale.setScalar(2);
+  backLabel.position.set(0, -.55, -.645);
   backLabel.rotation.y = Math.PI;
+  root.add(backLabel);
   for (const [x, y] of [[-3.62, .92], [3.62, .92], [-3.16, -1.68], [3.16, -1.68], [0, 1.83]]) {
     add(root, 'Recessed screw socket', cylinder(.11, .03), dark, x, y, -.53);
     add(root, 'Screw', cylinder(.065, .035), silver, x, y, -.55);

@@ -75,6 +75,10 @@ function configure(value) {
   if (emulator.getSettingValue('shader') !== shader) {
     emulator.changeSettingOption('shader', shader);
   }
+  for (const [option, fallback] of [['ff-ratio', '2.0'], ['fastForward', 'disabled'], ['slowMotion', 'disabled']]) {
+    const value = preferences.emulatorOptions?.[option] ?? fallback;
+    if (emulator.getSettingValue(option) !== value) emulator.changeSettingOption(option, value);
+  }
 }
 
 function settings(open) {
@@ -166,8 +170,8 @@ function initialize(data) {
     EJS_gameUrl: romUrl,
     EJS_gameName: `bba-${data.gameId}`,
     EJS_pathtodata: DATA_PATH,
-    EJS_color: '#c6f36b',
-    EJS_backgroundColor: '#111713',
+    EJS_color: '#bd9cff',
+    EJS_backgroundColor: '#15101f',
     EJS_startOnLoaded: false,
     EJS_threads: false,
     EJS_disableDatabases: true,

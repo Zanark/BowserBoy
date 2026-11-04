@@ -1,9 +1,11 @@
-import { RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
+import { MANUAL_SLOTS, RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
 import { SaveStore } from './save-store.js';
 import { CONTROLS, CRT_GEOM, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { HandheldScene } from './scene.js';
 import { playStartup, playStartupSound } from './startup.js';
+import { icon } from './icons.js';
+import { loadBrand } from './brand.js';
 
 const $ = (id) => document.getElementById(id);
 const store = new SaveStore();
@@ -18,6 +20,7 @@ let powered = false;
 let busy = true;
 let storageAvailable = false;
 let autoSave = true;
+let selectedSlot = 'manual';
 let launchCallbacks = null;
 const pending = new Map();
 const pointers = new Map();
@@ -31,6 +34,38 @@ catch (error) {
   console.error('Player preferences:', error);
   preferenceWarning = `${error.message} Default keys and sound are active for this session.`;
 }
+autoSave = preferences.autoSave;
+for (const [id, name, label] of [
+  ['pickup', 'pickup', 'Pick up handheld'], ['inspect', 'inspect', 'Inspect handheld'],
+  ['put-down', 'down', 'Put down handheld'], ['lamp-toggle', 'lamp', 'Turn desk lamp off'],
+  ['room-toggle', 'room', 'Turn room lights on'], ['tools-open', 'cartridge', 'Open cartridge and settings'],
+  ['quick-fullscreen', 'fullscreen', 'Fullscreen player'], ['quick-controls', 'keys', 'Change control keybindings'],
+  ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
+]) icon($(id), name, label);
+
+function renderQuickControls() {
+  const number = MANUAL_SLOTS.indexOf(selectedSlot) + 1;
+  const saved = record?.[selectedSlot];
+  icon($('quick-save'), 'save', `Save checkpoint to slot ${number}`);
+  icon($('quick-load'), 'load', `Load last checkpoint from slot ${number}`);
+  icon($('quick-autosave'), 'autosave', `Turn automatic checkpoints ${autoSave ? 'off' : 'on'}`);
+  $('quick-autosave').setAttribute('aria-pressed', String(autoSave));
+  $('autosave-toggle').setAttribute('aria-pressed', String(autoSave));
+  $('autosave-description').textContent = autoSave ? 'A checkpoint every 15 seconds.' : 'Off. Use Save checkpoint before leaving.';
+  $('quick-save-time').textContent = saved ? new Date(saved.createdAt).toLocaleString() : `Slot ${number} is empty.`;
+  for (const [index, slot] of MANUAL_SLOTS.entries()) {
+    $('checkpoint-slot').options[index].textContent = `Slot ${index + 1}${record?.[slot] ? ' / saved' : ' / empty'}`;
+  }
+  const options = preferences.emulatorOptions;
+  const speed = options?.fastForward === 'enabled' ? options['ff-ratio'] ?? '2.0' : '1';
+  const label = speed === 'unlimited' ? 'MAX' : `${Number(speed)}x`;
+  icon($('quick-speed'), 'speed', `Emulation speed: ${label}`, label);
+  $('quick-speed').setAttribute('aria-pressed', String(speed !== '1'));
+  for (const button of document.querySelectorAll('[data-speed]')) {
+    button.disabled = !running || busy;
+    button.setAttribute('aria-pressed', String(Number(button.dataset.speed) === Number(speed)));
+  }
+}
 
 function notice(message, error = false) {
   moveNotice();
@@ -42,8 +77,10 @@ function notice(message, error = false) {
 function storageFailure(error) {
   console.error('Browser progress storage:', error);
   autoSave = false;
+  preferences = { ...preferences, autoSave: false };
   $('autosave-toggle').setAttribute('aria-pressed', 'false');
   $('autosave-description').textContent = 'Off. Export a backup to protect this session.';
+  renderQuickControls();
   $('storage-badge').textContent = 'SAVE ERROR';
   $('storage-badge').classList.add('error');
   $('save-status').textContent = 'Browser saving failed. Export a backup now; reload the page to retry storage.';
@@ -70,11 +107,17 @@ function updateControls() {
   for (const button of document.querySelectorAll('[data-control]')) button.disabled = !running;
   for (const button of document.querySelectorAll('[data-binding]')) button.disabled = busy;
   $('save').disabled = !running || busy || !storageAvailable;
-  $('restore').disabled = !running || busy || !record?.manual;
+  $('restore').disabled = !running || busy || !record?.[selectedSlot];
   $('autosave-toggle').disabled = !storageAvailable || busy;
+  $('checkpoint-slot').disabled = busy;
+  $('quick-save').disabled = $('save').disabled;
+  $('quick-load').disabled = $('restore').disabled;
+  $('quick-autosave').disabled = $('autosave-toggle').disabled;
+  for (const id of ['quick-speed', 'quick-restart']) $(id).disabled = !running || busy;
+  for (const id of ['quick-controls', 'quick-slots', 'quick-fullscreen']) $(id).disabled = busy;
   $('power-led').classList.toggle('on', powered);
   view?.setPower(powered);
-  if (record?.manual) $('quick-save-time').textContent = new Date(record.manual.createdAt).toLocaleString();
+  renderQuickControls();
 }
 
 async function operation(action) {
@@ -322,7 +365,7 @@ async function togglePause() {
   $('power-label').textContent = paused ? 'TAKE YOUR TIME / GAME PAUSED' : 'CARTRIDGE IN / GOOD TIMES ON';
 }
 $('pause').addEventListener('click', () => void operation(togglePause));
-$('hardware-power').addEventListener('click', () => void operation(async () => {
+async function togglePower() {
   if (powered) {
     let sram = batterySave;
     if (running) {
@@ -374,24 +417,44 @@ $('hardware-power').addEventListener('click', () => void operation(async () => {
       cartridge ? 'Power on. The ROM restarted from the beginning with its in-game save, not a checkpoint.' :
         'Power on. Insert a cartridge whenever you are ready. Infinite battery included.');
   }
+}
+$('hardware-power').addEventListener('click', () => void operation(togglePower));
+$('quick-restart').addEventListener('click', () => void operation(async () => {
+  await togglePower();
+  updateControls();
+  await new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 350)));
+  await togglePower();
 }));
-$('fullscreen').addEventListener('click', () => {
+function fullscreen() {
   if ($('tools').open) $('tools').close();
   const action = document.fullscreenElement ? document.exitFullscreen() : $('player').requestFullscreen?.();
   if (!action) { notice('Fullscreen is not supported here. Try rotating your device for a larger view.'); return; }
   void action.catch((error) => notice(`Fullscreen could not open: ${error.message}`, true));
+}
+$('fullscreen').addEventListener('click', fullscreen);
+$('quick-fullscreen').addEventListener('click', fullscreen);
+function saveCheckpoint() {
+  return operation(async () => {
+    await persist(selectedSlot);
+    notice(`Checkpoint saved. Slot ${MANUAL_SLOTS.indexOf(selectedSlot) + 1} is ready to restore.`);
+  });
+}
+function restoreCheckpoint() {
+  return operation(async () => {
+    const saved = record?.[selectedSlot];
+    if (!saved) throw new Error('There is no checkpoint in the selected slot yet.');
+    if (!confirm('Restore the quick-save checkpoint? Progress since that checkpoint will be replaced.')) return;
+    await command('restore', saved);
+    if (autoSave && storageAvailable) await persist('automatic', saved);
+    notice('Quick-save checkpoint restored.');
+  });
+}
+for (const id of ['save', 'quick-save']) $(id).addEventListener('click', () => void saveCheckpoint());
+for (const id of ['restore', 'quick-load']) $(id).addEventListener('click', () => void restoreCheckpoint());
+$('checkpoint-slot').addEventListener('change', () => {
+  selectedSlot = $('checkpoint-slot').value;
+  updateControls();
 });
-$('save').addEventListener('click', () => void operation(async () => {
-  await persist('manual');
-  notice('Checkpoint saved. You can restore this quick-save slot whenever you need it.');
-}));
-$('restore').addEventListener('click', () => void operation(async () => {
-  if (!record?.manual) throw new Error('There is no quick-save checkpoint for this cartridge yet.');
-  if (!confirm('Restore the quick-save checkpoint? Progress since that checkpoint will be replaced.')) return;
-  await command('restore', record.manual);
-  if (autoSave && storageAvailable) await persist('automatic', record.manual);
-  notice('Quick-save checkpoint restored.');
-}));
 $('export').addEventListener('click', () => void operation(async () => {
   const capture = await command('capture');
   const backup = await encodeBackup(game, capture);
@@ -411,17 +474,25 @@ $('backup-file').addEventListener('change', (event) => {
   void operation(async () => {
     if (!running) throw new Error('Load the matching cartridge before importing a backup.');
     const capture = await decodeBackup(file, game.id);
-    if (!confirm('Import this backup? It replaces the running session and this cartridge\'s quick-save slot.')) return;
-    if (storageAvailable) await persist('manual', capture);
+    if (!confirm('Import this backup? It replaces the running session and the selected checkpoint slot.')) return;
+    if (storageAvailable) await persist(selectedSlot, capture);
     await command('restore', capture);
     if (autoSave && storageAvailable) await persist('automatic', capture);
     notice(storageAvailable ? 'Backup imported and stored in this browser.' : 'Backup loaded for this session only. Browser saving is unavailable.', !storageAvailable);
   });
 });
-$('autosave-toggle').addEventListener('click', () => {
-  autoSave = !autoSave;
-  $('autosave-toggle').setAttribute('aria-pressed', String(autoSave));
-  $('autosave-description').textContent = autoSave ? 'A checkpoint every 15 seconds.' : 'Off. Use Save checkpoint before leaving.';
+for (const id of ['autosave-toggle', 'quick-autosave']) $(id).addEventListener('click', () => {
+  void operation(() => applyPreferences({ ...preferences, autoSave: !autoSave }));
+});
+for (const button of document.querySelectorAll('[data-speed]')) button.addEventListener('click', () => {
+  void operation(async () => {
+    const speed = Number(button.dataset.speed);
+    await applyPreferences({ ...preferences, emulatorOptions: {
+      ...preferences.emulatorOptions, 'ff-ratio': `${speed}.0`,
+      fastForward: speed > 1 ? 'enabled' : 'disabled', slowMotion: 'disabled',
+    } });
+    $('speed-menu').hidePopover();
+  });
 });
 
 async function automaticCheckpoint() {
@@ -524,6 +595,14 @@ $('frame-host').addEventListener('cancel', (event) => {
 });
 
 $('tools-open').addEventListener('click', openTools);
+for (const [id, target] of [['quick-controls', 'controls-heading'], ['quick-slots', 'checkpoint-slot']]) {
+  $(id).addEventListener('click', () => {
+    openTools();
+    $(target).scrollIntoView({ block: 'center', behavior: 'instant' });
+    if (target === 'checkpoint-slot') $(target).focus();
+    else document.querySelector('[data-binding]').focus({ preventScroll: true });
+  });
+}
 $('tools-close').addEventListener('click', () => $('tools').close());
 $('tools').addEventListener('close', () => {
   remappingAction = null;
@@ -580,6 +659,7 @@ async function applyPreferences(next) {
   releaseHostInputs();
   if (running) await command('configure', next);
   preferences = next;
+  autoSave = next.autoSave && storageAvailable;
   renderPreferences();
   try {
     writePreferences(localStorage, preferences);
@@ -675,7 +755,7 @@ function toggleLamp() {
   view.setLamp(!view.lampOn);
   $('lamp-toggle').setAttribute('aria-pressed', String(view.lampOn));
   $('lamp-toggle').setAttribute('aria-label', `Turn desk lamp ${view.lampOn ? 'off' : 'on'}`);
-  $('lamp-label').textContent = view.lampOn ? 'Lamp on' : 'Lamp off';
+  icon($('lamp-toggle'), 'lamp', `Turn desk lamp ${view.lampOn ? 'off' : 'on'}`);
   view.canvas.focus({ preventScroll: true });
 }
 $('lamp-toggle').addEventListener('click', toggleLamp);
@@ -684,7 +764,7 @@ $('room-toggle').addEventListener('click', () => {
   view.setRoomLights(!view.roomLightsOn);
   $('room-toggle').setAttribute('aria-pressed', String(view.roomLightsOn));
   $('room-toggle').setAttribute('aria-label', `Turn room lights ${view.roomLightsOn ? 'off' : 'on'}`);
-  $('room-label').textContent = view.roomLightsOn ? 'Room on' : 'Room off';
+  icon($('room-toggle'), 'room', `Turn room lights ${view.roomLightsOn ? 'off' : 'on'}`);
   view.canvas.focus({ preventScroll: true });
 });
 $('pickup').addEventListener('click', () => changeView('playing'));
@@ -692,6 +772,7 @@ $('inspect').addEventListener('click', () => changeView(view?.mode === 'inspecti
 $('put-down').addEventListener('click', () => changeView('table'));
 await storageReady;
 try {
+  await loadBrand();
   view = new HandheldScene($('scene'), {
     onTools: openTools,
     onLamp: toggleLamp,
@@ -700,7 +781,7 @@ try {
       $('pickup').hidden = mode !== 'table';
       $('inspect').hidden = $('put-down').hidden = mode === 'table';
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
-      $('inspect').textContent = mode === 'inspecting' ? 'Back to play' : 'Inspect';
+      icon($('inspect'), 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
       $('scene-hint').textContent = mode === 'table' ? 'A quiet moment. Click the handheld to pick it up.' :
         mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :

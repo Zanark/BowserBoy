@@ -1,0 +1,45 @@
+Status: IN_PROGRESS
+Milestone: Themed icon dock, native speed, independent checkpoint slots and orbital startup.
+Dependencies: Completed workstreams 08, 09, 11, 17 and 18.
+
+Purpose
+-------
+Expose common actions without opening the drawer, preserve actual core/save/power
+semantics, unify supplied branding and restore the earlier dark switch design.
+
+Tasks
+-----
+[x] Accessible responsive icon dock and native 1x/2x/3x/4x controls.
+[x] Persist autosave choice and retain three independent manual checkpoint slots.
+[x] Safe battery-only physical off/on restart, not an instant-state reset.
+[x] Theme host and actual native settings; reuse transparent supplied artwork.
+[x] Larger original dark switch and finite orbiting-star LCD startup.
+[ ] Focused and complete release gates, actual visual and live verification.
+[ ] Post-deployment public guides, causal development ledger and private journal.
+
+Acceptance criteria
+-------------------
+Existing manual/automatic/battery data survives; slots do not overwrite siblings.
+Icons retain names/focus/touch targets and fit 320px and desktop layouts.
+Speed reaches actual pinned core APIs; autosave off suppresses automatic writes.
+Restart replaces the runtime only after checked battery/device persistence.
+Startup appears only on actual power-on; refresh and reduced motion stay correct.
+
+Completion evidence
+-------------------
+Syntax/build and11 units pass. Complete35-case Edge suite passes6.6m.
+Final nine focused Chromium/SwiftShader cases pass5.2m, including new dock,
+storage slots, native speed,16s autosave suppression, exact paused LCD restore,
+physical restart, native settings, startup, insertion and power target geometry.
+Actual startup/native panel and desktop/320px dock images reviewed.
+Not yet deployed. Technical checks do not imply user visual approval.
+
+Completion log
+--------------
+2026-11-04: Started following user request. Latest logo attachment is fully opaque;
+retain the already supplied genuine transparent version of the same purple artwork.
+Local fixtures corrected without disabling gates: choose3/4/2/1 so the initial
+already-configured2x ratio is genuinely changed; read retained paused framebuffer
+instead of awaiting the native screenshot API's never-arriving paused frame.
+Visual review caught a312px max-width interaction causing an orphan icon row.
+Now all13 playing icons fit two rows at320px with44px targets.
