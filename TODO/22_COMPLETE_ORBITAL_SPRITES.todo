@@ -1,0 +1,49 @@
+Status: IN_PROGRESS
+Milestone: Complete supplied sparkle/glow/orbit effects in README and LCD startup.
+Dependencies: Completed workstreams 19, 20 and 21.
+
+Purpose
+-------
+Remove hard cutoffs and orbit-line fragments from the old logo-derived star.
+Use complete, padded effects from the user's supplied transparent sprite sheet.
+
+Tasks
+-----
+[x] Inspect actual old crop and supplied2172x724 RGBA sheet.
+[x] Select complete isolated sparkle, glow and orbit effects; preserve source alpha.
+[x] Add transparent padding and refuse crop rectangles touching visible content.
+[x] Update both transparent README motion and actual LCD startup.
+[x] Keep all rotated LCD sparkle bounds inside240x160 over the complete reveal.
+[x] Verify reduced motion, power/refresh behavior, GIF transparency and motion.
+[ ] Complete normal deployment and independent live identity/browser checks.
+[ ] Refresh actual README boot clip and reconcile docs/provenance/journals.
+
+Acceptance criteria
+-------------------
+No flat crop edges, neighboring ring fragments or clipped animated star tips.
+Every decoded sparkle has transparent padding; no rotated startup sprite goes
+outside the framebuffer. All README animation frames clear the outer canvas.
+Banner stays transparent; actual LCD keeps its separate purple startup scene.
+Power lifecycle, reveal duration, chime, refresh and reduced motion stay intact.
+
+Completion evidence
+-------------------
+Original crop visibly includes orbit fragments and hard cutoffs.
+New helper checks complete nonempty source bounds, removes only alpha<=1 noise
+and pads output. Source2172x724 RGBA hash:
+1233f8ee8981b4e85869f672e2361b9c80f39b34762d70730174a11da4c67542.
+Local syntax/build/11 units pass; three actual Edge favicon/startup/persistent-
+power cases pass19.6s. Startup test checks padded raster, supplied glow/ring,
+rotated corners every100ms across the3200ms reveal, and stable reduced motion.
+All72 banner frames clear outer8px and have72 distinct motion rasters.
+Reviewed actual isolated source effects and final light/dark banner frames.
+Deployment and final public capture remain pending.
+
+Completion log
+--------------
+2026-11-04: User reported clipped stars and supplied a complete effects sheet.
+The oldstar.png is a logo crop containing two intersecting orbit segments and
+cutoff arms. Extracted an isolated complete star, glow and ring from the new
+sheet, with checked bounds and real transparent margins. Reduced LCD orbit
+radius98 and increased padded sprite draw size preserve readable, contained
+motion. Existing static wordmark artwork remains unchanged.

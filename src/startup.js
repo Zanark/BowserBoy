@@ -1,4 +1,4 @@
-import { brandImage, starImage, loadBrand } from './brand.js';
+import { brandImage, starImage, orbitImage, glowImage, loadBrand } from './brand.js';
 
 export const STARTUP_DURATION = 3200;
 
@@ -23,25 +23,21 @@ export function drawStartup(canvas, elapsed, reducedMotion = false) {
     context.fillRect(x, y, 1, 1);
   }
   context.globalAlpha = progress;
-  context.strokeStyle = '#bc7aff50';
-  context.lineWidth = .7;
-  for (let trail = 0; trail < 3; trail++) {
-    context.beginPath();
-    context.ellipse(120, 78, 105 + trail * 3, 35 + trail * 2, -.15, 0, Math.PI * 2);
-    context.stroke();
-  }
+  context.globalAlpha = progress * .65;
+  context.drawImage(orbitImage, 7, 37, 226, 82);
+  context.globalAlpha = progress;
   const orbit = (front) => {
     for (let index = 0; index < 3; index++) {
       const angle = time * 2.3 + index * Math.PI * 2 / 3;
       if ((Math.sin(angle) >= 0) !== front) continue;
-      const x = 120 + Math.cos(angle) * 106;
-      const y = 78 + Math.sin(angle) * 37 - Math.cos(angle) * 12;
-      const size = 10 + (Math.sin(angle) + 1) * 5;
+      const x = 120 + Math.cos(angle) * 98;
+      const y = 78 + Math.sin(angle) * 33 - Math.cos(angle) * 9;
+      const size = 16 + (Math.sin(angle) + 1) * 5;
       context.save();
       context.translate(x, y);
       context.rotate(angle * .4);
-      context.shadowColor = '#cf8cff';
-      context.shadowBlur = 10;
+      const glowSize = size * (1.1 + Math.sin(time * 2 + index) * .1);
+      context.drawImage(glowImage, -glowSize / 2, -glowSize / 2, glowSize, glowSize);
       context.drawImage(starImage, -size / 2, -size / 2, size, size);
       context.restore();
     }

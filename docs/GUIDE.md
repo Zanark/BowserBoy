@@ -47,7 +47,8 @@ is at least 44 by 44 pixels without covering the LCD.
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
 The supplied transparent wordmark also appears on the shell, idle/loading LCD
-and settings panels. The active favicon is a star cropped from that artwork.
+and settings panels. The active favicon is an original indigo handheld whose
+stepped shoulders and bowed lower edge match the actual 3D shell.
 
 ![The original power-on sequence on the handheld LCD](images/startup.png)
 

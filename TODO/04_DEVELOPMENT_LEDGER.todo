@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Handheld silhouette and transparent banner:
+  Replaced the active star favicon with original SVG using the actual 3D shell's
+  stepped shoulders, wide sides and bowed lower outline, retaining indigo
+  color, centered3:2 LCD and diagonal physical controls. User then requested
+  the animated README banner without its purple backdrop. Removed its matte/
+  starfield, reserving a transparent GIF palette entry with clear-frame disposal;
+  actual purple LCD boot remains a separate clip. Checked all72 banner frames
+  and light/dark compositing; moving stars and looping remain.
+  Local syntax/build/11 units and two Edge favicon/startup cases pass7.8s.
+  Source5a2744e / Pages41809966871 passes both full browser shards, build and
+  actual deployment. Fresh exact public index/SVG match plus live Edge raster
+  case8.6s confirm16/32/64px silhouette and transparent corners.
+  Earlier docs-only41806190672 and41809024964 failed their normal gates; they
+  were never claimed deployed. No test assertions or workflow gates weakened.
+  Final favicon guide/provenance updates follow actual deployment. A subsequent
+  supplied-sheet star-crop correction is separate workstream22.
 - 2026-11-04 / Visual-first README:
   User requested an animated logo banner and actual pickup/other demonstration
   GIFs, with minimal front-page text and detailed guides elsewhere. Clarified

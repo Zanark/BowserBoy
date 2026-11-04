@@ -49,7 +49,7 @@ claim of booting on physical retail hardware.
 Its optional audio-test variant emits an original PSG test tone, not music or
 samples taken from a game. The ordinary bundled demo remains byte-identical.
 
-The unused legacy handheld/infinity SVG, original LCD animation code and
+The original handheld SVG favicon, original LCD animation code and
 three-note synthesized chime are independently authored assets. The user's
 [Game Boy Advance startup reference](https://www.youtube.com/watch?v=AyP1Nj9zU3k)
 informed the white-screen/colored-letter presentation, not an imported video,
@@ -72,11 +72,16 @@ provenance and the absence of an independent authorship/license claim remain.
 The same supplied PNG is now used on the shell, idle/loading LCD, orbital
 startup and settings panels. `assets/star.png` is a transparent crop/resample
 from pixel rectangle(1650,90)-(1835,280) of that supplied image, used for
-revolving sprites and the active favicon. It is not independently authored
+revolving sprites. It is not independently authored
 star artwork. The updated orbit motion and starfield are original code.
 
-The README's animated orbital banner derives from that same supplied logo and
-star crop, with original animation code. Its interaction GIFs record this
+The active `assets/brand-mark.svg` favicon is original vector artwork using
+the procedural 3D handheld's shell outline and simplified physical controls.
+It replaces the earlier generic rounded/infinity artwork and supplied-star
+tab icon, without importing a manufacturer's logo or reference image.
+
+The README's transparent animated orbital banner derives from that same supplied
+logo and star crop, with original animation code. Its interaction GIFs record this
 application and the original Pixel Lab demo, not commercial game footage.
 See [media provenance and reproduction](docs/MEDIA.md).
 

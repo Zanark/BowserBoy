@@ -1,0 +1,50 @@
+Status: DONE
+Milestone: Recognizable handheld favicon and transparent animated README banner.
+Dependencies: Completed workstreams 19 and 20.
+
+Purpose
+-------
+Match the tab icon to the actual landscape GBA shell instead of a star or
+rounded rectangle. Preserve the README's animated logo without a purple box.
+
+Tasks
+-----
+[x] Reuse the 3D shell's stepped shoulders, wide sides and bowed lower outline.
+[x] Keep the indigo shell, centered LCD, D-pad and diagonal A/B controls legible.
+[x] Decode/rasterize the actual favicon at16/32/64px in a browser.
+[x] Encode transparent GIF frames with moving stars and unchanged supplied source.
+[x] Keep the real purple-background power-on GIF in its own README section.
+[x] Complete normal deployment and independent live favicon verification.
+[x] Reconcile public provenance/guide/ledger and owned continuity.
+
+Acceptance criteria
+-------------------
+Root/subpath pages resolve the SVG favicon from the static build.
+Actual raster has transparent corners and the wide handheld silhouette at tab sizes.
+All banner frames have transparent canvas and still animate; no purple matte.
+The existing boot-demo clip remains separate and unchanged.
+No application lifecycle, startup motion, runtime, ROM or save behavior changes.
+
+Completion evidence
+-------------------
+Local syntax,11 units and static build pass. Two actual Edge cases pass7.8s:
+favicon raster/outline at16/32/64px and unchanged orbital/reduced-motion startup.
+Actual icon reviewed on white/dark surfaces. All72 new banner frames retain
+transparent outer canvas; public light/dark compositing reviewed.
+Source5a2744eb90aa617a4f1957f70d427444ed291425 / Pages41809966871 passes
+build, both complete browser shards and actual deployment. Fresh exact deployed
+index/SVG identity matches; real live Edge tab-size case passes8.6s.
+Transparent README/banner commit bytes also match their public GitHub copies.
+
+Completion log
+--------------
+2026-11-04: Started following user requests for correct handheld silhouette,
+then transparent animated README banner while favicon verification ran.
+Replaced unused legacy rounded/infinity artwork with the actual 3D shell path.
+SVG retains native3:2 LCD and diagonal physical control layout; no official logo.
+GIF uses reserved transparent palette entry and clear-frame disposal, avoiding
+a background rectangle and old star trails. Source alpha artwork is untouched.
+2026-11-04: Normal application gate and deployment succeeded. Independently
+verified actual public favicon path/bytes and16/32/64px browser raster. The
+user subsequently supplied a clean effects sheet to replace the earlier
+logo-derived star crop; that separate correction is tracked in workstream22.

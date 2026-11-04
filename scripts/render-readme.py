@@ -7,7 +7,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,26 +19,25 @@ def banner():
     logo = Image.open(ROOT / "assets" / "logo.png").convert("RGBA")
     logo.thumbnail((850, 285), Image.Resampling.LANCZOS)
     star = Image.open(ROOT / "assets" / "star.png").convert("RGBA")
+    glow = Image.open(ROOT / "assets" / "glow.png").convert("RGBA")
+    ring = Image.open(ROOT / "assets" / "orbit.png").convert("RGBA")
+    ring = ring.resize((960, 280), Image.Resampling.LANCZOS)
     frames = []
     for frame in range(72):
         phase = frame / 72 * math.tau
         image = Image.new("RGBA", (width, height))
-        draw = ImageDraw.Draw(image)
-        for radius, color in [(1, (116, 67, 174, 255)), (.97, (55, 33, 89, 255))]:
-            draw.ellipse((500 - 466 * radius, 170 - 110 * radius,
-                          500 + 466 * radius, 170 + 110 * radius), outline=color, width=1)
+        image.alpha_composite(ring, (20, 30))
         orbiters = []
         for number in range(3):
             angle = phase + number * math.tau / 3
-            orbiters.append((angle, 500 + 466 * math.cos(angle), 170 + 110 * math.sin(angle)))
+            orbiters.append((angle, 500 + 440 * math.cos(angle), 170 + 92 * math.sin(angle)))
 
         def paint_star(angle, x, y):
-            size = int(29 + 10 * (math.sin(angle) + 1))
+            size = int(42 + 10 * (math.sin(angle) + 1))
             sprite = star.resize((size, size), Image.Resampling.LANCZOS)
-            halo = Image.new("RGBA", image.size)
-            ImageDraw.Draw(halo).ellipse((x - size / 2, y - size / 2, x + size / 2, y + size / 2),
-                                        fill=(158, 69, 255, 110))
-            image.alpha_composite(halo.filter(ImageFilter.GaussianBlur(12)))
+            pulse = int(size * (1.1 + .1 * math.sin(phase * 2 + angle)))
+            halo = glow.resize((pulse, pulse), Image.Resampling.LANCZOS)
+            image.alpha_composite(halo, (round(x - pulse / 2), round(y - pulse / 2)))
             image.alpha_composite(sprite, (round(x - size / 2), round(y - size / 2)))
 
         for angle, x, y in orbiters:

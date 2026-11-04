@@ -414,7 +414,10 @@ same 240x160 LCD texture/light path for 3.2 seconds. Reduced motion uses a stati
 audio permission failures are reported without blocking gameplay indefinitely.
 No Nintendo recording, boot ROM or video is loaded. Animation/chime are original;
 the wordmark/star artwork is supplied, not independently authored. The active
-favicon reuses the cropped star.
+SVG favicon uses the original 3D shell's exact outline with simplified LCD,
+D-pad, diagonal A/B buttons and speaker slots. Its transparent square canvas
+retains the landscape silhouette at16/32/64px; the supplied star remains an
+animation sprite, not the browser-tab icon.
 
 Only a genuine off-to-on switch action calls that presentation, then cold-boots
 the cartridge with battery save data. Refresh while already on restores the
@@ -485,7 +488,8 @@ from a trusted copy of this application.
 | Path | Responsibility |
 |---|---|
 | `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
-| `assets/logo.png`, `assets/star.png`, `src/brand.js` | Shared supplied branding, derived star/favicon and checked decoding |
+| `assets/logo.png`, `assets/star.png`, `src/brand.js` | Shared supplied branding, derived animation star and checked decoding |
+| `assets/brand-mark.svg` | Original transparent handheld favicon, matching the actual shell outline |
 | `src/icons.js` | Quick-dock SVGs, names, tooltip labels and speed badge |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
 | `src/lighting.js` | Paper lantern, one-map shadow source, finite paper/wood light, optional room lights and sampled LCD |
@@ -509,7 +513,9 @@ The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
 aspect ratio. The same supplied image replaces the old separate shell/startup
 wordmarks; no recreation or recoloring is used. See supplied-artwork provenance
-in THIRD_PARTY_NOTICES.md. The old SVG favicon is an unused legacy asset.
+in THIRD_PARTY_NOTICES.md. The active SVG favicon replaces the earlier generic
+rounded/infinity icon and subsequent star icon; relative HTML/SVG paths preserve
+GitHub Pages subpath hosting.
 Only `three.module.js`, its relative `three.core.js` dependency, the unmodified
 `RectAreaLightUniformsLib.js` / `RectAreaLightTexturesLib.js` lookup helpers and
 the exact MIT license are mapped from the pinned package to public `vendor` paths.
