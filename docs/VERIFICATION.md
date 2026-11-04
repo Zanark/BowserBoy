@@ -24,7 +24,17 @@ viewport/glass/wordmark assertion. Old raised letters fail the new contract.
 Syntax/build and all 11 units pass; final complete branding/native-input cases
 pass locally (27.5s). The existing real pressed-cap aperture/lighting case
 passes (7.9s). Actual local rendering is reviewed without changing historical
-documentation images or using a private ROM. Hosted/public proof is pending.
+documentation images or using a private ROM.
+
+Source `27932fd` / normal workflow `41923251679` passes build, all 11 units
+and 38 of 39 browser cases, including the recessed geometry, native input and
+pressed-lighting checks. The unchanged native cartridge-clock case measures
+2.041516x at 3x, below its unchanged 2.10x minimum; deployment is skipped.
+That case excludes room rendering and disables the CRT shader. No cause is
+established and no pacing code, bound or timeout is changed. The same complete
+clock case subsequently passes locally (24.0s); this does not erase the hosted
+failure. Publish this first qualification record through the normal workflow;
+independent public proof and workstream completion remain pending.
 
 ## Smaller bezel wordmark, 2026-11-05
 

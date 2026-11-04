@@ -28,6 +28,10 @@ Completion evidence:
   pass27.5s after retaining continuous original dome/rim shading.
 - Existing pressed-cap aperture/lighting case passes7.9s.
 - Actual local rendering reviewed; no private ROM or historical image changed.
+- Normal27932fd/41923251679 passes build/11units/38of39browser cases.
+  Recessed geometry, input and pressed-lighting cases pass. Unchanged native
+  3x-clock case measures2.041516x below2.10x; deploy skipped. Its full local
+  follow-up passes24.0s without changing pacing, assertions or timeouts.
 - Normal hosted/public qualification pending; no live claim yet.
 
 Completion log:
@@ -36,3 +40,7 @@ Completion log:
   Preserve original lathe rim normals instead of producing a separate-looking
   center disk. Qualify actual ray hits, depth, contrast, native input and real
   pressed/unlit cap behavior. Other raised markings remain unchanged.
+- 2026-11-05: Record the first hosted qualification and exact native-clock
+  blocker. That case excludes room GPU work; do not claim a cause. Local
+  follow-up pass is separate evidence, not all-green hosted CI. Publish this
+  substantive qualification record normally; no failed-job retry/dummy trigger.

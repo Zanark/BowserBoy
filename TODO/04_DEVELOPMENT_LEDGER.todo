@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / First recessed-lettering hosted qualification:
+ 27932fd/41923251679 passes build/11units/38of39browser cases, including
+  actual recess, native input and pressed-lighting assertions. Unchanged 3x
+  cartridge-clock case measures2.041516x below2.10x; deploy skipped. It
+  excludes room rendering and CRT cost; no cause established. Full unchanged
+  local clock case passes24.0s. Keep pacing code/bounds/timeouts intact.
+  Publish this first actual qualification record normally; no retry or dummy
+  trigger, no public/live claim, no repetitive failure-only publications.
 - 2026-11-05 / Cut A/B letters inward:
   User corrects raised A/B relief. Reuse polygon glyphs/counters to open only
   those cap faces, add dark recessed floors/walls, and preserve solid counter
