@@ -464,7 +464,7 @@ export class HandheldScene {
     this.renderer.render(this.scene, this.camera);
     if (this.cartridgeMotion) {
       // Only presented frames advance insertion; a GPU stall must not skip the whole slide.
-      this.cartridgeMotion.elapsed += Math.min(250, Math.max(0,
+      this.cartridgeMotion.elapsed += Math.min(500, Math.max(0,
         time - (this.cartridgeMotion.lastPaint ?? time - 16.67)));
       this.cartridgeMotion.lastPaint = time;
     }

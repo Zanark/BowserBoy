@@ -117,6 +117,8 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
         await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'inserting');
         await expect(page.locator('#scene')).not.toHaveAttribute('data-booting', 'true');
         await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+        expect(await page.evaluate(() => window.cartridgeSamples.some(sample =>
+          sample.visible && sample.fits && sample.lowered && sample.y > 3))).toBe(true);
         await expect(page.locator('#loading-screen')).toHaveJSProperty('hidden', false);
         release();
         await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
