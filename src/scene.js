@@ -29,7 +29,7 @@ export class HandheldScene {
     host.append(this.canvas);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#000000');
-    this.camera = new THREE.PerspectiveCamera(36, 1, .1, 180);
+    this.camera = new THREE.PerspectiveCamera(36, 1, .1, 500);
     this.lookAt = new THREE.Vector3();
     this.lamp = createDeskLamp();
     this.scene.add(this.lamp.root);
@@ -37,16 +37,16 @@ export class HandheldScene {
     this.roomLighting = createRoomLighting();
     this.scene.add(this.roomLighting);
     this.setRoomLights(false);
-    const table = new THREE.Mesh(new THREE.BoxGeometry(32, .75, 23),
+    const table = new THREE.Mesh(new THREE.BoxGeometry(44, .75, 32),
       new THREE.MeshStandardMaterial({ map: createWood(), color: '#cfb28f', roughness: .83 }));
     table.position.y = -.375;
     table.receiveShadow = true;
     table.name = 'Wooden tabletop';
     this.scene.add(table);
-    const wall = new THREE.Mesh(new THREE.PlaneGeometry(32, 18),
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(44, 50),
       new THREE.MeshStandardMaterial({ color: '#aa927c', roughness: 1 }));
     wall.name = 'Warm plaster room wall';
-    wall.position.set(0, 8.5, -9);
+    wall.position.set(0, 24.5, -16);
     wall.receiveShadow = true;
     this.scene.add(wall);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(180, 180),
@@ -192,9 +192,9 @@ export class HandheldScene {
 
   updateCameraTargets() {
     if (this.mode === 'table') {
-      const scale = Math.max(1, 1.12 / this.camera.aspect);
-      this.cameraTarget = new THREE.Vector3(6, 13, 17).multiplyScalar(scale);
-      this.lookTarget = new THREE.Vector3(-1, 2, 1);
+      const scale = Math.max(1, .8 / this.camera.aspect);
+      this.cameraTarget = new THREE.Vector3(14, 42, 70).multiplyScalar(scale);
+      this.lookTarget = new THREE.Vector3(-5, 16, 0);
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = this.height < 500 ? 110 : 180;

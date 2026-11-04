@@ -9,6 +9,11 @@ const linearChannel = Float32Array.from({ length: 256 }, (_, value) =>
 export function createDeskLamp() {
   const root = new THREE.Group();
   root.name = 'Paper lantern table lamp';
+  const body = new THREE.Group();
+  body.name = 'Full-size lantern';
+  body.scale.setScalar(7);
+  body.position.set(-13.5, 0, 2);
+  root.add(body);
   const wood = new THREE.MeshStandardMaterial({ map: createWood(), color: '#a17647', roughness: .72 });
   const trim = new THREE.MeshStandardMaterial({ color: '#76512d', roughness: .85 });
   const rubber = new THREE.MeshStandardMaterial({ color: '#141a1d', roughness: .9 });
@@ -18,17 +23,17 @@ export function createDeskLamp() {
     object.position.copy(position);
     object.castShadow = object.receiveShadow = true;
     object.userData.lampToggle = true;
-    root.add(object);
+    body.add(object);
     return object;
   }
-  const base = new THREE.Vector3(-6, .16, 4.8);
+  const base = new THREE.Vector3(0, .16, 0);
   mesh('Wooden lamp base', new THREE.CylinderGeometry(1.02, 1.08, .32, 48), wood, base);
   mesh('Lamp base foot', new THREE.CylinderGeometry(1.02, 1.02, .06, 48), rubber,
     new THREE.Vector3(base.x, .035, base.z));
   mesh('Wooden lamp stem', new THREE.CylinderGeometry(.19, .23, 1.5, 32), wood,
     new THREE.Vector3(base.x, 1.05, base.z));
   const switchCap = mesh('Lamp switch', new THREE.CylinderGeometry(.18, .18, .12, 24), trim,
-    new THREE.Vector3(base.x + .55, .37, base.z + .25));
+    new THREE.Vector3(base.x + .95, .37, base.z + .2));
   const paper = canvasTexture(256, 512, (context, width, height) => {
     context.fillStyle = '#e6d3ad';
     context.fillRect(0, 0, width, height);
@@ -65,26 +70,28 @@ export function createDeskLamp() {
     new THREE.MeshStandardMaterial({ color: '#ffead0', emissive: '#ffd299', emissiveIntensity: 80 }),
     new THREE.Vector3(base.x, 3.25, base.z));
   diffuser.castShadow = false;
-  const light = new THREE.PointLight('#ffca8a', 3 / METERS_PER_UNIT ** 2, 0, 2);
+  const light = new THREE.PointLight('#ffca8a', 18 / METERS_PER_UNIT ** 2, 0, 2);
   light.name = 'Paper lantern bulb light';
   light.position.copy(diffuser.position);
   light.castShadow = true;
   light.shadow.mapSize.set(1024, 1024);
-  light.shadow.camera.near = .1;
-  light.shadow.camera.far = 35;
+  light.shadow.camera.near = .7;
+  light.shadow.camera.far = 120;
   light.shadow.bias = -.00012;
   light.shadow.normalBias = .008;
   light.shadow.radius = 16;
-  const diffuse = new THREE.RectAreaLight('#ffcf95', 180, 2.1, 3.2);
+  // RectAreaLight dimensions do not inherit its parent's scale.
+  const diffuse = new THREE.RectAreaLight('#ffcf95', 180, 14.7, 22.4);
   diffuse.name = 'Transmitted paper light';
-  diffuse.position.set(base.x + .8, 3.25, base.z - .3);
-  diffuse.lookAt(0, 2, .2);
+  diffuse.position.set(base.x + .8, 3.25, base.z + .8);
+  diffuse.lookAt(13.5 / 7, 2 / 7, -1.8 / 7);
   // A finite upward patch approximates the first warm bounce off the lit wood.
   const bounce = new THREE.RectAreaLight('#dfac7d', 50, 6, 6);
   bounce.name = 'Lamp tabletop bounce';
   bounce.position.set(0, .025, .2);
   bounce.rotation.x = Math.PI / 2;
-  root.add(light, diffuse, bounce);
+  body.add(light, diffuse);
+  root.add(bounce);
   return { root, light, diffuse, bounce, diffuser, shade, switchCap };
 }
 

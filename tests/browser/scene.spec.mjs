@@ -201,13 +201,35 @@ test('paper lantern gives warm light and room lights switch independently withou
   expect(color[1]).toBeGreaterThan(color[2] * 1.1);
   const shape = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
+    const { Box3, Vector3 } = await import('three');
     const shade = view.lamp.shade;
+    const lampSize = new Box3().setFromObject(view.lamp.root).getSize(new Vector3());
+    const shell = view.model.root.getObjectByName('Front shell');
+    shell.geometry.computeBoundingBox();
+    const shellSize = shell.geometry.boundingBox.getSize(new Vector3());
     return { type: shade.geometry.type, top: shade.geometry.parameters.radiusTop,
-      bottom: shade.geometry.parameters.radiusBottom, wood: !!view.lamp.root.getObjectByName('Wooden lamp base') };
+      bottom: shade.geometry.parameters.radiusBottom, wood: !!view.lamp.root.getObjectByName('Wooden lamp base'),
+      heightRatio: lampSize.y / shellSize.x, handheldScale: view.model.root.scale.toArray() };
   });
   expect(shape.type).toBe('CylinderGeometry');
   expect(shape.top).toBe(shape.bottom);
   expect(shape.wood).toBe(true);
+  expect(shape.heightRatio).toBeGreaterThan(3.9);
+  expect(shape.heightRatio).toBeLessThan(4.1);
+  expect(shape.handheldScale).toEqual([1, 1, 1]);
+  for (const [width, height] of [[390, 844], [1440, 1100]]) {
+    await page.setViewportSize({ width, height });
+    await expect.poll(() => page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      const { Box3, Vector3 } = await import('three');
+      const box = new Box3().setFromObject(view.lamp.root);
+      return [box.min.x, box.max.x].every(x => [box.min.y, box.max.y].every(y =>
+        [box.min.z, box.max.z].every(z => {
+          const point = new Vector3(x, y, z).project(view.camera);
+          return Math.abs(point.x) < 1 && Math.abs(point.y) < 1 && Math.abs(point.z) < 1;
+        })));
+    })).toBe(true);
+  }
   await page.screenshot({ path: testInfo.outputPath('cozy-lantern-table.png') });
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
