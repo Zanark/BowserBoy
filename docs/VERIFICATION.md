@@ -12,7 +12,7 @@ record or constitute fresh execution of historical tests.
 Workstream 37 increases actual A/B travel to .075 units, Start/Select to .04,
 shoulder travel to .12 with .075-radian hinging, and shared D-pad travel to
 .016 with .1-radian rocking. Compression/release use elapsed-time damping
-40/70 instead of symmetric 55. Native events, rest bounds, cap/recess geometry,
+50/80 instead of symmetric 55. Native events, rest bounds, cap/recess geometry,
 lighting, camera and emulator/render scheduling are unchanged.
 
 The existing real mapped-input case now requires the larger actual mesh
@@ -26,8 +26,19 @@ aperture, pressed-light, unlit-cap, recess and branding assertion.
 Syntax/build, all 11 units and the three complete local motion/lighting/
 branding cases pass (39.4s). Actual deeper A/D-pad captures are reviewed.
 Generated native-light captures remain private; historical documentation
-images are preserved. Normal hosted and independent public qualification
-remain pending; no live claim yet.
+images are preserved.
+
+Initial `1864547` / normal `41928667648` passes build, all 11 units and 38 of
+39 browser cases, including the stronger-input, pressed-light and transient
+response cases. Its initial 40/70 damping fails the unchanged adaptive-GPU
+budget case: a 100ms update reaches .981684 press, below the existing >.99
+requirement. This is a directly coupled timing regression, not an unexplained
+runner failure. Change only compression/release to 50/80, preserving both the
+100ms/>.99 contract and the new equal-time release contrast assertions.
+Corrected syntax/build, all 11 units and all four complete local branding,
+original GPU-budget, pressed-light/response and mapped-native-input cases
+pass (47.4s). Normal deployment and independent public qualification remain
+pending; no retry or weakened assertion.
 
 ## Recessed A/B lettering, 2026-11-05
 

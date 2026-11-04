@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Preserve the existing100ms button-response contract:
+  Initial1864547/41928667648 passes build/11units/38of39browser cases.
+  Initial40/70damping reaches.981684pressat100ms, below the unchanged>.99
+  adaptive-GPU budget assertion. This is caused by the new compression rate.
+  Correct the implementation to50/80, not the existing100ms bound or the new
+  equal-time release contrast. No unrelated fix, timeout change or flake claim.
+  Corrected syntax/build/11units and all four complete local branding,
+  original-budget, pressed-light/response and mapped-native cases pass47.4s.
+  Normal corrected/public qualification remains pending;37IN_PROGRESS.
 - 2026-11-05 / Stronger physical button feedback:
   User requests less-subtle press animation. Increase actual cap travel about
  60%, D-pad rocking and shoulder hinging; use more deliberate compression and

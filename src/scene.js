@@ -424,7 +424,7 @@ export class HandheldScene {
     for (const { mesh, ids } of this.controlGroups) {
       const motion = mesh.userData.motion;
       const target = ids.some((id) => this.pressed.has(id)) ? 1 : 0;
-      const response = target ? 40 : 70;
+      const response = target ? 50 : 80;
       const previous = motion.press;
       motion.press = THREE.MathUtils.damp(motion.press, target, response, delta);
       if (Math.abs(motion.press - target) < .00001) motion.press = target;

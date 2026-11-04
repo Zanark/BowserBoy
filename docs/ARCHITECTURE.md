@@ -321,7 +321,7 @@ Buttons use dielectric clearcoat materials. A/B move 0.075 units inward;
 Start/Select move 0.04. The shared D-pad depresses 0.016 units and rocks
 0.1 radians per axis, with opposing directions cancelling tilt. Shoulders
 move 0.12 units downward and hinge 0.075 radians. Elapsed-time damping uses
-40 on compression and 70 on release: more visible travel and a snappier return,
+50 on compression and 80 on release: more visible travel and a snappier return,
 without overshoot or scaling. These real mesh transforms follow the same input
 state as the actual core; the animation does not delay native key events.
 

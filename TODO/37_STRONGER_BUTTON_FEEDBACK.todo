@@ -30,9 +30,18 @@ Completion evidence:
   release samples and return bounds. Actual pressed A/D-pad captures reviewed.
 - No historical documentation image or private ROM changed. Hosted/public
   qualification remains pending; no production claim yet.
+- First1864547/41928667648 passes build/11units/38of39cases. Initial40/70
+  damping reaches.981684at100ms, failing the unchanged adaptive-GPU>.99
+  press contract. Correct implementation to50/80; preserve every bound.
+- Corrected syntax/build/all11units and four complete local branding, original
+  GPU-budget, pressed-light/response and mapped-native cases pass47.4s.
 
 Completion log:
 - 2026-11-05: User requests less-subtle press animation. Increase physical
   displacement about60%, rock/hinge more strongly and use elapsed-time damping
   40on compression/70on release instead of symmetric55. Do not delay native
   input, bounce beyond the rest pose, enlarge caps or alter frame scheduling.
+- 2026-11-05: Read actual hosted failure and full existing budget test. Correct
+  the animation response itself to50/80 so press still exceeds99%at100ms,
+  even on skipped GPU paints. Keep the new quicker-release assertion intact.
+  Qualify and publish a fresh normal correction; never retry the failed job.
