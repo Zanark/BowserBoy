@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Stronger button feedback independently live:
+  Fresh normal2cc1a58/41932265544 passes build/11units/all39browser cases and
+  deployment. Independently match28actual public assets; all four complete
+  branding/original100msbudget/pressed-light/response/mapped-native cases pass
+ 53.3s. Actual32ms A compression.05985776of.075;32msrelease leaves.00579786
+  and settles exactly to rest.37DONE. Preserve native timing, original bounds,
+  recessed markings and historical image provenance. Publish completion
+  records; no failed-job retry or new human acceptance claim.
 - 2026-11-05 / Corrected button response qualifies; native CDN request blocked:
  48b11b7/41930463880 passes build/11units/38of39browser cases, including the
   original100mscontract and all new motion/light assertions. The unchanged

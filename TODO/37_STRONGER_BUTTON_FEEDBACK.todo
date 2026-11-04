@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: More visible physical presses and snappier releases.
 Dependencies: Completed workstreams 10, 16, 28 and 36.
 
@@ -11,13 +11,14 @@ Tasks:
 - [x] Use more deliberate compression and a quicker, bounded return.
 - [x] Strengthen existing real-input displacement assertions.
 - [x] Preserve actual pressed-cap aperture lighting and recessed markings.
-- [ ] Qualify the normal hosted gate and independently verify production.
-- [ ] Publish completion evidence and reconcile owned continuity.
+- [x] Qualify the normal hosted gate and independently verify production.
+- [x] Publish completion evidence and reconcile owned continuity.
 
 Acceptance criteria:
 - A/B move.075units inward; Start/Select.04; shoulders.12down with.075rad hinge.
 - Shared D-pad moves.016inward and rocks.1rad; opposing inputs still cancel.
 - Time-based compression/release remains bounded, with no overshoot or scaling.
+- Compression still exceeds99%at100ms, including skipped GPU paints.
 - Held/mixed/remapped input, release and native-core timing remain unchanged.
 - Real pressed caps remain visible and lit inside their existing openings.
 - Recessed lettering, shadows, saves, audio, camera and fullscreen are preserved.
@@ -28,8 +29,7 @@ Completion evidence:
 - Syntax/build/all11units pass; complete local branding, real motion/native
   input and pressed-lighting cases pass39.4s, including actual32ms press/
   release samples and return bounds. Actual pressed A/D-pad captures reviewed.
-- No historical documentation image or private ROM changed. Hosted/public
-  qualification remains pending; no production claim yet.
+- No historical documentation image or private ROM changed.
 - First1864547/41928667648 passes build/11units/38of39cases. Initial40/70
   damping reaches.981684at100ms, failing the unchanged adaptive-GPU>.99
   press contract. Correct implementation to50/80; preserve every bound.
@@ -39,6 +39,11 @@ Completion evidence:
   original100msbudget/newmotion. Actual CRT-startup trace shows CDN loader
   net::ERR_BLOCKED_BY_ORB; Pause remains disabled90s. Full unchanged local
   CRT case separately passes15.7s. No runtime, timeout or test bound changed.
+- Fresh normal2cc1a58/41932265544 passes build/11units/all39cases/deploy.
+- Independently match28actual public assets. All four complete actual public
+  branding/original-budget/pressed-light/response/mapped-native cases pass53.3s.
+- Actual public A travel after32ms is.05985776, settled.075; after32msrelease
+  .00579786remains, then returns exactly to rest. No overshoot or input delay.
 
 Completion log:
 - 2026-11-05: User requests less-subtle press animation. Increase physical
@@ -53,3 +58,8 @@ Completion log:
   loader failure, distinct from the now-fixed100msregression. Preserve the
   hosted observation despite local CRT success. Publish substantive first
   qualification evidence normally; no failed-job retry or dummy trigger.
+- 2026-11-05: Fresh normal full gate and deploy pass. Independently qualify
+  exact production assets and all four real dependent cases.37DONE. Retain
+  original gates, native timing, recessed lettering and historical media.
+  Publish completion records and reconcile owned continuity; no new human
+  aesthetic acceptance or arbitrary-device guarantee is implied.

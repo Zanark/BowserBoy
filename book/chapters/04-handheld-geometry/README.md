@@ -71,6 +71,11 @@ release samples, not just renamed motion parameters. Recheck real pressed-cap
 illumination inside the existing openings; deeper travel must not recreate
 the socket-lid occlusion problem.
 
+The existing adaptive-render contract still requires more than 99% compression
+within 100ms, even while GPU paints are skipped. The first slower response
+missed that bound. Correct the actual compression/release rates to 50/80,
+not the deadline or assertions; stronger feedback must not become sluggish input.
+
 `project()` converts an object's world-space position into normalized device
 coordinates through the active camera, then into CSS pixels. This allows a
 physical switch to carry a usable DOM control while the console moves. Mesh

@@ -36,7 +36,7 @@ BowserBoyAdvance workstreams
 34_OVERLAY_NOTIFICATIONS.todo - DONE: frosted overlays without shrinking or shifting, independently verified live.
 35_SMALLER_BEZEL_WORDMARK.todo - DONE: shared normal/fullscreen lettering25%smaller, independently verified live.
 36_RECESSED_AB_LETTERING.todo - DONE: genuine dark inward A/B grooves, independently verified live.
-37_STRONGER_BUTTON_FEEDBACK.todo - IN_PROGRESS: deeper presses, stronger rocking/hinging and snappier releases.
+37_STRONGER_BUTTON_FEEDBACK.todo - DONE: deeper presses, stronger rocking/hinging and snappier releases independently verified live.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

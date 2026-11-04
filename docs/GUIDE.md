@@ -2,15 +2,16 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
-**Current release and pictures:** source `4b99550` is independently verified
-live after the full 39-case hosted gate, including dark recessed A/B lettering,
+**Current release and pictures:** source `2cc1a58` is independently verified
+live after the full 39-case hosted gate, including deeper presses, stronger
+D-pad/shoulder movement and snappier returns, dark recessed A/B lettering,
 the 25% smaller, centered
 bezel wordmark in both views and frosted notification overlays
 without camera movement, sustained audio buffering, darker A/B/D-pad markings
 and the play-only header-logo change. Most motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
-See [current release evidence](VERIFICATION.md#recessed-ab-lettering-2026-11-05)
+See [current release evidence](VERIFICATION.md#stronger-button-feedback-2026-11-05)
 and [capture origins](MEDIA.md#current-refresh---manufactured-controls-and-glass).
 
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)

@@ -52,6 +52,16 @@ CRT case separately passes (15.7s), without erasing the hosted failure.
 Publish this first corrected qualification record through a fresh normal
 workflow; independent production delivery remains pending at this point.
 
+Fresh normal `2cc1a58` / workflow `41932265544` subsequently passes build,
+all 11 units, all 39 browser cases and deployment. Independently match all
+28 actual public assets and run all four complete production branding,
+original GPU-budget, pressed-light/response and mapped-native-input cases
+(53.3s). Actual A travel is .05985776 after 32ms and .075 settled; 32ms of
+release leaves .00579786, then returns exactly to rest. Workstream 37 is DONE.
+Preserve native timing, every release bound, recessed lettering and historical
+documentation images. No failed-job retry or new human aesthetic acceptance
+is implied; the earlier timing regression and CDN observation remain recorded.
+
 ## Recessed A/B lettering, 2026-11-05
 
 The user corrects the A/B markings: they must be inward and dark, not raised.
