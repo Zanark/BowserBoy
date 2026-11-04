@@ -477,8 +477,10 @@ The server is loopback-only and serves only public allowlisted files. The
 build replaces only the generated `dist` directory and adds `.nojekyll`.
 Documentation/private context cannot enter the deployed artifact through a
 recursive repository copy.
-The supplied header wordmark is a cropped RGBA PNG with transparent exterior
-and separated word groups. The public allowlist includes PNG and the development
+The supplied header wordmark is the unchanged 2170x725 RGBA purple orbital PNG
+with transparent exterior. Its HTML intrinsic dimensions match that supplied
+asset; no alternate-color assets or switcher are shipped.
+The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
 aspect ratio; original favicon, LCD startup artwork and shell lettering remain
 separate assets. See the supplied-artwork provenance in THIRD_PARTY_NOTICES.md.

@@ -86,8 +86,9 @@ controls, malformed values and configuration-string injection.
   releasing it starts the real native demo. Desktop refresh repeats this path.
 - Reduced-motion immediate seating, retained cartridge on a CDN failure and
   zero reinsertion events across actual battery-only power cycles.
-- Actual supplied-logo PNG alpha, retained opaque white lettering and two
-  separated word components, plus no header/status overlap at 1440/390/320px.
+- Exact supplied purple orbital PNG identity, actual alpha/transparent corners,
+  retained opaque white lettering and natural aspect ratio, plus no header/status
+  overlap at 1440/390/320px.
 - Actual raycast depth at control gaps, rendered resting/pressed cap illumination
   for A/B/Start/Select and four D-pad directions, and lamp-off cap darkness.
 - Paper/wood lantern geometry and roughly four-handheld-width height, unchanged
@@ -398,6 +399,28 @@ desktop/phone insertion and picking/inspection cases pass in 45.0s.
 The live table/play/room contact sheet and refreshed public images were reviewed
 without storage warnings. Public docs/TODO/ledger follow that verified deployment.
 See `TODO/17_COZY_ROOM_AND_VISIBLE_POWER.todo`.
+
+## Supplied purple orbital wordmark, 2026-11-04
+
+The later supplied transparent logo replaces the first extracted wordmark.
+Its exact 2170x725 RGBA file is retained byte-for-byte, SHA-256
+`de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1`.
+HTML intrinsic dimensions change; responsive CSS and all scene/runtime/startup
+sources remain unchanged. The earlier two-disconnected-components assertion
+does not describe the new intentionally connected orbit. The replacement check
+verifies exact supplied file identity, real alpha, four transparent corners,
+white glyph pixels, natural aspect and the same three actual header widths.
+Future color variants are not enabled or included in the static build.
+
+Syntax/build pass; two focused Edge logo/startup cases pass in 17.1s, and two
+explicit-software cases in 45.9s. Source
+`9ccc3a6dcb603c52c5d7fefe201aa5546ebafbe0` passes build, all ten units, both
+complete browser shards (31 cases) and deployment in Pages `41798303662`.
+Independent live verification matches all 23 exact public assets and passes
+both actual logo/startup cases in 26.6s. Deployed desktop/320px headers were
+visually reviewed. Final provenance/TODO/ledger and refreshed startup figure
+follow that deployment, without claiming new user visual acceptance.
+See `TODO/18_ORBITAL_WORDMARK.todo`.
 
 ## Not verified here
 

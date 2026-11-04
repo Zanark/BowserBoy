@@ -350,3 +350,19 @@ Completion log:
   live views and updated public figures/guides/provenance only afterward.
   All prior failed gates remain recorded. No aesthetic user approval,
   photometric calibration or completed chaptered engineering book is claimed.
+- 2026-11-04 / Supplied orbital wordmark:
+  User replaces the first extracted logo with new purple orbital artwork and
+  provides a genuinely transparent version. Use its2170x725 RGBA PNG unchanged,
+  SHA256de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1.
+  Update HTML intrinsic dimensions; responsive CSS needs no change. Preserve
+  favicon, LCD startup/chime, physical shell branding and emulator sources.
+  Future-only color sheet is retained privately, not deployed or enabled.
+  The old two-disconnected-word assertion is superseded because this orbit
+  connects the artwork. Verify exact supplied identity, actual alpha/corners,
+  retained white pixels, native aspect and unchanged three-width fit checks.
+  Syntax/build, two Edge cases17.1s and two software cases45.9s pass.
+  Source9ccc3a6dcb603c52c5d7fefe201aa5546ebafbe0 / Pages41798303662
+  passes build, ten units, both full browser shards (31) and deploy.
+  Independent live23-asset match plus two logo/startup cases26.6s; actual
+  deployed desktop/320px headers reviewed. Final documentation and refreshed
+  startup screenshot follow deployment, without inventing aesthetic approval.

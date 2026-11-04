@@ -2,8 +2,8 @@
 
 ![BowserBOY ADVANCE wordmark](assets/logo.png)
 
-*The supplied purple-and-white logo, with its background removed and a clear
-gap between BowserBOY and ADVANCE.*
+*The supplied transparent purple orbital logo, preserved unchanged with its
+white lettering, neon rim and orbit/star accents.*
 
 **A little escape, on your desk.** A local-first browser GBA player inside an
 actual 3D indigo handheld, built for static hosting on GitHub Pages.

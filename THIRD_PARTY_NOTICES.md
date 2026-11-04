@@ -55,12 +55,20 @@ three-note synthesized chime are independently authored assets. The user's
 informed the white-screen/colored-letter presentation, not an imported video,
 Nintendo logo, BIOS or audio recording. None of those reference bytes is bundled.
 
-The website wordmark in `assets/logo.png` is derived from raster artwork supplied
+The first supplied website wordmark was derived from raster artwork supplied
 by the user on 2026-11-04 for this purpose. Its exterior background/shadow was
 removed, BowserBOY and ADVANCE were separated, and the white outline was rebuilt
 with antialiased edges while retaining the supplied lettering. The original full
 background image is not bundled. This wordmark is not independently authored
 application artwork; no separate upstream license or authorship claim is made.
+
+The current `assets/logo.png` supersedes that first edition with the user's
+later transparent purple orbital wordmark. The supplied 2170x725 RGBA PNG is
+used byte-for-byte, including its white lettering, purple rim and orbit/star
+accents; no background extraction, regeneration or recoloring was applied.
+The opaque-background reference and future color-variant sheet are not included
+in the static release. No alternate colors are enabled. Supplied-artwork
+provenance and the absence of an independent authorship/license claim remain.
 
 Playwright is a development/test dependency, not part of the deployed app.
 Its package and transitive packages retain their upstream license notices in

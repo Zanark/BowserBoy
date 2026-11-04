@@ -17,6 +17,7 @@ BowserBoyAdvance workstreams
 15_SUPPLIED_WORDMARK.todo - Supplied transparent logo with clear word spacing.
 16_PRESSED_CONTROL_LIGHTING.todo - Actual control apertures and correct pressed-cap visibility.
 17_COZY_ROOM_AND_VISIBLE_POWER.todo - DONE: large paper lantern, full-width thick table, room lights, power/LCD.
+18_ORBITAL_WORDMARK.todo - DONE: supplied transparent purple orbital logo, variants inactive.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
@@ -76,3 +77,9 @@ release. User aesthetic acceptance remains unrecorded. See workstream17.
 Documentation boundary: these maintained guides, TODOs and causal ledger are
 not the previously requested chaptered engineering book. That book remains
 incomplete; this UI workstream does not claim to have produced it.
+Current purple orbital logo is deployed from
+9ccc3a6dcb603c52c5d7fefe201aa5546ebafbe0 / Pages41798303662:
+build, ten units, both full browser shards (31) and deployment PASS.
+Independent live23-asset match and two actual logo/startup cases26.6s.
+Supplied transparent PNG is unchanged; future variants remain inactive.
+See workstream18. Final provenance/guide/ledger updates follow deployment.
