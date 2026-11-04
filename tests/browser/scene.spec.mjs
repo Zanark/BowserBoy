@@ -190,6 +190,82 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(budget.press).toBeGreaterThan(.99);
 });
 
+test('pressed caps remain lit inside physical shell apertures instead of disappearing under socket lids', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+    view.renderer.setPixelRatio(1);
+  });
+  const openings = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Raycaster, Vector3 } = await import('three');
+    const root = view.model.root, face = root.getObjectByName('Front face with speaker apertures');
+    face.geometry.computeBoundingBox();
+    root.updateWorldMatrix(true, true);
+    const top = face.position.z + face.geometry.boundingBox.max.z;
+    return [['a', .304, 0], ['b', .304, 0], ['start', .17, 0], ['select', .17, 0], ['up', .644, 0]]
+      .map(([id, x, y]) => {
+        const mesh = view.model.controls.get(id).mesh;
+        const origin = root.localToWorld(new Vector3(mesh.position.x + x, mesh.position.y + y, 2));
+        const direction = new Vector3(0, 0, -1).transformDirection(root.matrixWorld);
+        const hit = new Raycaster(origin, direction).intersectObject(root, true)[0];
+        return { id, recessed: !!hit && root.worldToLocal(hit.point.clone()).z < top - .015 };
+      });
+  });
+  for (const { id, recessed } of openings) expect(recessed, `${id} has a recessed opening, not a raised socket lid`).toBe(true);
+  const sample = (id, pressed) => page.evaluate(async ({ id, pressed }) => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    view.setControl(id, pressed);
+    view.changed = true;
+    view.nextPaint = 0;
+    view.renderedLastFrame = false;
+    view.render(view.lastRender + 250);
+    const mesh = view.model.controls.get(id).mesh;
+    const points = ['up', 'down', 'left', 'right'].includes(id) ?
+      [[0, .48, .05], [0, -.48, .05], [-.48, 0, .05], [.48, 0, .05]] :
+      ['start', 'select'].includes(id) ?
+        [[-.05, .04, .05], [.05, .04, .05], [-.05, -.04, .05], [.05, -.04, .05]] :
+        [[-.11, .10, .05], [.11, .10, .05], [-.11, -.10, .05], [.11, -.10, .05]];
+    const gl = view.renderer.getContext(), values = [];
+    for (const point of points) {
+      const projected = mesh.localToWorld(new Vector3(...point)).project(view.camera);
+      const x = Math.round((projected.x + 1) * view.canvas.width / 2);
+      const y = Math.round((projected.y + 1) * view.canvas.height / 2);
+      const pixels = new Uint8Array(5 * 5 * 4);
+      gl.readPixels(x - 2, y - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      let total = 0;
+      for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
+      values.push(total / 75);
+    }
+    return values;
+  }, { id, pressed });
+  const readings = [];
+  for (const id of ['a', 'b', 'up', 'down', 'left', 'right', 'start', 'select']) {
+    const rest = await sample(id, false);
+    const pressed = await sample(id, true);
+    readings.push({ id, rest, pressed });
+    if (['a', 'up'].includes(id)) await page.screenshot({ path: testInfo.outputPath(`${id}-pressed.png`) });
+    await sample(id, false);
+  }
+  await testInfo.attach('pressed-light-readings', { body: JSON.stringify(readings), contentType: 'application/json' });
+  for (const { id, rest, pressed } of readings) {
+    for (let point = 0; point < rest.length; point++) {
+      expect(rest[point], `${id} resting cap probe ${point}`).toBeGreaterThan(60);
+      expect(pressed[point], `${id} pressed cap probe ${point}`).toBeGreaterThan(rest[point] * .6);
+    }
+  }
+  await page.locator('#lamp-toggle').click();
+  for (const id of ['a', 'up']) {
+    expect(Math.max(...await sample(id, true)), 'An unlit cap cannot acquire artificial press illumination').toBeLessThan(5);
+    await sample(id, false);
+  }
+});
+
 test('mapped inputs move real button meshes and the native LCD lights the room until power off', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));

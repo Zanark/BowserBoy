@@ -165,7 +165,29 @@ export function createHandheld() {
   const speakerSlots = Array.from({ length: 6 }, (_, index) => ({
     x: 3.02, y: -.79 - index * .16, width: 1.02, height: .065, angle: .23,
   }));
+  const cross = new THREE.Shape();
+  for (const [index, [x, y]] of [
+    [-.205, .61], [.205, .61], [.205, .205], [.61, .205], [.61, -.205], [.205, -.205],
+    [.205, -.61], [-.205, -.61], [-.205, -.205], [-.61, -.205], [-.61, .205], [-.205, .205],
+  ].entries()) {
+    if (index === 0) cross.moveTo(x, y); else cross.lineTo(x, y);
+  }
+  cross.closePath();
+  const padOpening = new THREE.Path(cross.getPoints().map(point =>
+    point.multiplyScalar(1.09).add(new THREE.Vector2(-3.2, .26))));
+  const roundControls = [
+    { id: 'a', x: 3.55, y: .50, opening: .315, radius: .29, z: .653, size: .65 },
+    { id: 'b', x: 2.76, y: -.02, opening: .315, radius: .29, z: .653, size: .65 },
+    { id: 'start', x: -2.64, y: -.98, opening: .18, radius: .155, z: .65, size: .38 },
+    { id: 'select', x: -2.70, y: -1.5, opening: .18, radius: .155, z: .65, size: .38 },
+  ];
   const face = shell.clone();
+  face.holes.push(padOpening);
+  for (const { x, y, opening } of roundControls) {
+    const hole = new THREE.Path();
+    hole.absarc(x, y, opening, 0, Math.PI * 2, true);
+    face.holes.push(hole);
+  }
   for (const slot of speakerSlots) {
     const points = roundedShape(slot.width, slot.height, .03).getPoints(10).map((point) =>
       point.rotateAround(new THREE.Vector2(), slot.angle).add(new THREE.Vector2(slot.x, slot.y)));
@@ -214,15 +236,8 @@ export function createHandheld() {
       press: 0, pitch: 0, yaw: 0,
     };
   }
-  const cross = new THREE.Shape();
-  for (const [index, [x, y]] of [
-    [-.205, .61], [.205, .61], [.205, .205], [.61, .205], [.61, -.205], [.205, -.205],
-    [.205, -.61], [-.205, -.61], [-.205, -.205], [-.61, -.205], [-.61, .205], [-.205, .205],
-  ].entries()) {
-    if (index === 0) cross.moveTo(x, y); else cross.lineTo(x, y);
-  }
-  cross.closePath();
-  add(root, 'D-pad socket', solid(cross, .01, .04), dark, -3.2, .26, .63);
+  const padFloor = add(root, 'D-pad socket', new THREE.ShapeGeometry(new THREE.Shape(padOpening.getPoints())), dark, 0, 0, .582);
+  padFloor.castShadow = false;
   const padFace = cross.clone();
   const well = new THREE.Path();
   well.absarc(0, 0, .135, 0, Math.PI * 2, true);
@@ -245,17 +260,15 @@ export function createHandheld() {
     pad.add(arrow);
   }
   add(pad, 'D-pad pivot well', new THREE.CircleGeometry(.135, 32), silver, 0, 0, .03);
-  for (const [id, x, y] of [['a', 3.55, .50], ['b', 2.76, -.02]]) {
-    add(root, `${id.toUpperCase()} socket`, cylinder(.325, .018), seam, x, y, .629);
-    const button = add(root, `${id.toUpperCase()} button`, buttonCap(.29), silver, x, y, .653);
-    label(button, id.toUpperCase(), .25, .28, 0, -.005, .067, '#a2aa99', 'bold 95px Arial');
-    control(id, button, .65, .65);
-  }
-  for (const [id, x, y] of [['start', -2.64, -.98], ['select', -2.70, -1.5]]) {
-    engravedLabel(root, id.toUpperCase(), x - .43, y + .04, 1.02, .32, '#766c9f');
-    add(root, `${id} socket`, cylinder(.19, .018), seam, x, y, .629);
-    const button = add(root, `${id} button`, buttonCap(.155), silver, x, y, .65);
-    control(id, button, .38, .38);
+  for (const { id, x, y, opening, radius, z, size } of roundControls) {
+    const action = id === 'a' || id === 'b';
+    const name = action ? id.toUpperCase() : id;
+    const floor = add(root, `${name} socket`, new THREE.CircleGeometry(opening, 40), dark, x, y, .582);
+    floor.castShadow = false;
+    const button = add(root, `${name} button`, buttonCap(radius), silver, x, y, z);
+    if (action) label(button, id.toUpperCase(), .25, .28, 0, -.005, .067, '#a2aa99', 'bold 95px Arial');
+    else engravedLabel(root, id.toUpperCase(), x - .43, y + .04, 1.02, .32, '#766c9f');
+    control(id, button, size, size);
   }
   for (const [id, x] of [['l', -3.45], ['r', 3.45]]) {
     const button = add(root, `${id.toUpperCase()} shoulder`, box(1.3, .39, .7, .12), silver, x, 1.81, .15);
