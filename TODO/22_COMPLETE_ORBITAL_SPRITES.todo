@@ -15,6 +15,7 @@ Tasks
 [x] Update both transparent README motion and actual LCD startup.
 [x] Keep all rotated LCD sparkle bounds inside240x160 over the complete reveal.
 [x] Verify reduced motion, power/refresh behavior, GIF transparency and motion.
+[x] Shrink and center the wordmark to leave substantial room inside the outer orbit.
 [ ] Complete normal deployment and independent live identity/browser checks.
 [ ] Refresh actual README boot clip and reconcile docs/provenance/journals.
 
@@ -24,6 +25,8 @@ No flat crop edges, neighboring ring fragments or clipped animated star tips.
 Every decoded sparkle has transparent padding; no rotated startup sprite goes
 outside the framebuffer. All README animation frames clear the outer canvas.
 Banner stays transparent; actual LCD keeps its separate purple startup scene.
+Central artwork stays centered and visibly separated from the outer orbit:
+620px against960px in the README,160px against226px in the LCD.
 Power lifecycle, reveal duration, chime, refresh and reduced motion stay intact.
 
 Completion evidence
@@ -37,6 +40,9 @@ power cases pass19.6s. Startup test checks padded raster, supplied glow/ring,
 rotated corners every100ms across the3200ms reveal, and stable reduced motion.
 All72 banner frames clear outer8px and have72 distinct motion rasters.
 Reviewed actual isolated source effects and final light/dark banner frames.
+Spacing refinement: syntax/build and two real startup/persistent-power cases
+pass16.5s, including explicit centered-logo and orbit-clearance regression checks.
+Reviewed updated620px-center/960px-orbit banner on both light/dark surfaces.
 Deployment and final public capture remain pending.
 
 Completion log
@@ -47,3 +53,7 @@ cutoff arms. Extracted an isolated complete star, glow and ring from the new
 sheet, with checked bounds and real transparent margins. Reduced LCD orbit
 radius98 and increased padded sprite draw size preserve readable, contained
 motion. Existing static wordmark artwork remains unchanged.
+2026-11-04: User reported the outer orbit felt cluttered against the main text.
+Kept the outer orbit/frame size and reduced only the centered artwork from
+850 to620px in the transparent banner and218 to160px in the actual LCD reveal.
+Original source logo remains unchanged; surrounding canvas/clear margins remain.

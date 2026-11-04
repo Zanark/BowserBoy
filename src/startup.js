@@ -43,7 +43,7 @@ export function drawStartup(canvas, elapsed, reducedMotion = false) {
     }
   };
   orbit(false);
-  const width = 218 * (.82 + settle * .18);
+  const width = 160 * (.82 + settle * .18);
   const height = width * brandImage.height / brandImage.width;
   context.shadowColor = '#b657ff';
   context.shadowBlur = 8 * progress;

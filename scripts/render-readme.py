@@ -17,7 +17,7 @@ OUTPUT = ROOT / "docs" / "images"
 def banner():
     width, height = 1000, 340
     logo = Image.open(ROOT / "assets" / "logo.png").convert("RGBA")
-    logo.thumbnail((850, 285), Image.Resampling.LANCZOS)
+    logo.thumbnail((620, 220), Image.Resampling.LANCZOS)
     star = Image.open(ROOT / "assets" / "star.png").convert("RGBA")
     glow = Image.open(ROOT / "assets" / "glow.png").convert("RGBA")
     ring = Image.open(ROOT / "assets" / "orbit.png").convert("RGBA")

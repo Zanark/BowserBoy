@@ -183,11 +183,15 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
     const canvas = document.createElement('canvas');
     canvas.width = 240; canvas.height = 160;
     const context = canvas.getContext('2d');
-    const images = [], starBounds = [];
+    const images = [], starBounds = [], logoBounds = [];
     const draw = context.drawImage.bind(context);
     context.drawImage = (image, ...args) => {
       const name = image.src.split('/').pop();
       images.push(name);
+      if (name === 'logo.png') {
+        const [x, y, width, height] = args;
+        logoBounds.push({ x, y, width, height });
+      }
       if (name === 'star.png') {
         const [x, y, width, height] = args;
         const transform = context.getTransform();
@@ -217,7 +221,7 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
         data[pixel * 4 + 3] === 0;
     }).every(Boolean);
     for (let elapsed = 0; elapsed <= 3200; elapsed += 100) drawStartup(canvas, elapsed);
-    return { images: renderedImages, moved, stable, image: reduced, padded, starBounds };
+    return { images: renderedImages, moved, stable, image: reduced, padded, starBounds, logoBounds };
   });
   expect(artwork.images).toContain('logo.png');
   expect(artwork.images).toContain('orbit.png');
@@ -227,5 +231,10 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
   expect(artwork.stable).toBe(true);
   expect(artwork.padded).toBe(true);
   expect(artwork.starBounds.every(point => point.x >= 0 && point.x <= 240 && point.y >= 0 && point.y <= 160)).toBe(true);
+  for (const logo of artwork.logoBounds) {
+    expect(logo.width).toBeLessThan(226 * .75);
+    expect(logo.x + logo.width / 2).toBeCloseTo(120);
+    expect(logo.y + logo.height / 2).toBeCloseTo(78);
+  }
   await test.info().attach('orbital-startup-raster', { body: Buffer.from(artwork.image.split(',')[1], 'base64'), contentType: 'image/png' });
 });
