@@ -316,8 +316,16 @@ normal flow directly below the header logo or inside an open drawer. Opening too
 keys but does not pause the core. Fullscreen retains the entire scene and its
 tools, rather than only the source iframe.
 
-The separate screen-only fullscreen target is a black, aspect-preserving canvas
-that copies the same retained post-shader framebuffer already feeding the LCD.
+The separate screen-only fullscreen target copies the same retained post-shader
+framebuffer already feeding the LCD. A lightweight CSS bezel matches the physical
+4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and monochrome printed wordmark.
+The picture remains 3:2: a definite viewport-sized, min-size-zero flex container
+fits the bezel to both available dimensions, leaving black margins. This avoids
+the previous grid track's intrinsic canvas sizing overflowing the viewport.
+Safe-area padding reserves space for exit and bottom-right zoom controls.
+The accessible 50-100% slider scales the complete centered bezel/picture together;
+100% is the largest uncropped fit, not a crop-to-fill mode. Container-relative
+sizing follows orientation changes without restarting or resizing the native core.
 It never reparents the live iframe, starts a second runtime or changes saved power
 intent. Its animation loop continues while the unseen room renderer skips work.
 Mapped host input is enabled independently of table/inspection mode, with held
@@ -334,6 +342,14 @@ drawer selector rather than introducing a second save implementation.
 Speed choices update validated native `ff-ratio`, `fastForward` and `slowMotion`
 options through the same preference pipeline. The adapter's `changeSettingOption`
 calls reach pinned `setFastForwardRatio` and `toggleFastForward` core methods.
+After applying speed options, the adapter explicitly disables native VSync while
+fast-forward is active and restores the selected native VSync preference at 1x.
+This does not rewrite that preference: the native menu can re-enable rAF pacing
+without clearing its fast-forward flag, and reselecting an unchanged ratio used
+to skip all native calls, leaving a 4x label with normal-speed emulation.
+The regression uses an optional original Pixel Lab VBlank counter in SRAM
+bytes 4-5, measuring actual cartridge frames against wall time. It does not infer
+acceleration from the dock, API arguments or native-loop iteration counts.
 They do not change Three.js timing or pretend the host can guarantee 4x throughput.
 Native-menu changes remain compatible and round-trip back into the dock.
 

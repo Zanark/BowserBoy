@@ -79,6 +79,8 @@ function configure(value) {
     const value = preferences.emulatorOptions?.[option] ?? fallback;
     if (emulator.getSettingValue(option) !== value) emulator.changeSettingOption(option, value);
   }
+  // Native VSync can re-cap the loop even while the fast-forward flag stays set.
+  emulator.gameManager.setVSync(!emulator.isFastForward && emulator.getSettingValue('vsync') === 'enabled');
 }
 
 function settings(open) {

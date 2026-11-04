@@ -474,6 +474,11 @@ $('quick-screen-fullscreen').addEventListener('click', () => {
   });
 });
 $('screen-focus-close').addEventListener('click', closeScreenFullscreen);
+$('screen-focus-zoom').addEventListener('input', () => {
+  const zoom = $('screen-focus-zoom').valueAsNumber;
+  $('screen-focus').style.setProperty('--screen-zoom', zoom / 100);
+  $('screen-focus-zoom-value').value = `${zoom}%`;
+});
 document.addEventListener('fullscreenchange', () => {
   const focused = document.fullscreenElement === $('screen-focus');
   $('quick-screen-fullscreen').setAttribute('aria-pressed', String(focused));

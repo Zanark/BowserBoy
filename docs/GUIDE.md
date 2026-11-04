@@ -154,7 +154,16 @@ keybindings, a persistent autosave toggle,
 save/load for the selected checkpoint slot, slot selection and **safe off/on
 restart**. Restart commits in-game battery data and creates a fresh runtime;
 it never restores an instant checkpoint. Actual fast-forward throughput depends
-on the browser/device. The drawer and real EmulatorJS panel share the purple theme.
+on the browser/device. Fast-forward temporarily releases native VSync's timing
+cap; returning to 1x restores your selected VSync preference.
+The drawer and real EmulatorJS panel share the purple theme.
+
+**Screen fullscreen** fits the complete game picture and black bezel, including
+the printed wordmark, without cropping or stretching. Unused space stays black.
+Use **Zoom** at the bottom right to shrink the whole screen to 50-100%;
+100% is the largest fit that keeps everything visible. Keyboard users can focus
+the slider and use arrow keys, Home (50%) or End (100%). Click the picture to
+resume keyboard gameplay; Escape or the top-right close button returns to the desk.
 
 | Action | Keyboard |
 |---|---|

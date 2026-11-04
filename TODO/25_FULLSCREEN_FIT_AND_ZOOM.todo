@@ -1,0 +1,48 @@
+Status: IN PROGRESS
+Milestone: Complete bezel and uncropped 3:2 game picture with fullscreen zoom.
+Dependencies: Completed workstream 23.
+
+Purpose
+-------
+Fit the user's highlighted LCD-and-bezel area, not an enlarged cropped picture.
+Keep dark surrounding space and provide a bottom-right zoom-away control.
+
+Tasks
+-----
+[x] Inspect the existing fullscreen mirror, physical bezel proportions and input gating.
+[x] Add a proportional bezel presentation containing the unchanged native framebuffer.
+[x] Fit both viewport dimensions and reserve space for close and zoom controls.
+[x] Add a themed accessible 50-100% zoom slider; 100% is the largest uncropped fit.
+[x] Verify complete native pixels, input, zoom, landscape/portrait/phone fit and exits.
+[ ] Pass ordinary release gates and verify the actual public release.
+[ ] Update affected guides, current fullscreen figure, ledger and owned context.
+
+Acceptance criteria
+-------------------
+The entire 3:2 game picture and surrounding black bezel/monochrome wordmark fit
+at 100%, with dark unused space. Shrinking retains both aspect ratios and does
+not move, restart, pause or restore the native runtime. Controls remain visible
+outside the bezel; the slider accepts keyboard/touch/pointer input without
+stealing game controls when the actual LCD is focused. Escape and close work.
+
+Completion evidence
+-------------------
+Existing fullscreen used a full-size canvas inside an intrinsic grid track,
+which could exceed its container height. Replaced that layout with a definite
+viewport-sized, min-size-zero flex container and a proportional fitted stage.
+The fullscreen bezel is a lightweight CSS presentation matching physical
+surround/LCD proportions; it is not a second rendering of the whole 3D room.
+The actual native framebuffer remains copied in full, without ROM-specific
+cropping, and the original runtime/3D desk remain in place.
+Expanded actual native quick-action case passes Edge44.1s and explicit
+Chromium/SwiftShader1.4m, including exact live pixels/input, refusal recovery,
+both exits and unchanged runtime/save/autosave/restart checks.
+Fit and zoom checked at1920x1080,844x390,390x844,320x568: full bezel above
+controls,3:2 LCD, correct50% width/height and keyboard range changes.
+Reviewed actual desktop/phone/50% captures. No new user aesthetic approval
+or physical-device qualification is inferred.
+
+Completion log
+--------------
+2026-11-04: User supplied cropped-fullscreen examples and highlighted the entire
+LCD/bezel. Requested correct aspect ratio, dark margins and bottom-right zoom.

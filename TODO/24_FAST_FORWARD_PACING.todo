@@ -1,0 +1,61 @@
+Status: IN PROGRESS
+Milestone: Genuine cartridge-clock acceleration at 2x, 3x and 4x.
+Dependencies: Completed workstreams 12, 19 and 23.
+
+Purpose
+-------
+Fix native pacing conflicts that leave the fast-forward flag active without
+accelerating the game. Verify actual emulated VBlanks, not just UI/API state.
+
+Tasks
+-----
+[x] Inspect pinned speed settings and measure current public native loop progress.
+[x] Reproduce native VSync overriding fast-forward pacing without changing its flag.
+[x] Demonstrate the failure using an original test cartridge's own VBlank clock.
+[x] Restore the requested native pacing without changing saved VSync preferences.
+[x] Verify all speeds, return to 1x, runtime identity and existing audio protections.
+[ ] Pass ordinary release gates and independently verify the public deployment.
+[ ] Update affected guides, causal ledger and owned context.
+
+Acceptance criteria
+-------------------
+Reselecting fast-forward after native VSync changes accelerates the actual
+cartridge. All three requested ratios advance the original cartridge clock
+proportionally on the qualified test system. Returning to 1x restores preferred
+VSync. No core restart, save deletion, shader substitution or removed audio guard.
+Default bundled Pixel Lab bytes are unchanged; only the test variant has a clock.
+Record device-dependent throughput separately from functional timing correctness.
+
+Completion evidence
+-------------------
+Initial public Edge measurements: original demo native-loop progression is
+about 60/s at 1x and 174-239/s at 4x depending on room rendering/load.
+The native VSync API reproducibly returns it to about 55-60/s while the
+fast-forward flag and 4x label remain active. Reselecting 4x does not recover.
+These initial values count native loop iterations, not independently verified
+cartridge frames. The new test-only original VBlank clock will qualify that.
+The real-cartridge regression fails before the fix: requested 4x advances
+the SRAM VBlank clock at just 1.016x baseline after native VSync is enabled.
+With explicit native VSync coordination, all 2x/3x/4x clock checks, return
+to 1x, saved enabled/disabled VSync choices and unchanged runtime pass in21.8s.
+Default and tone-only demo bytes independently match their original generator.
+An existing audio case twice times out before power-on: trace shows ROM input
+occurred before the scene/app was ready, leaving no selected cartridge.
+Added an explicit existing scene-ready precondition, without weakening its
+audio assertions or deadline. Final four-case Edge run passes1.4m.
+Final shader-independent clock case passes Edge27.0s: baseline59.81 frames/s,
+2x119.49, 3x179.89, 4x243.12 and restored1x60.33.
+Explicit SwiftShader passes the other three cases, then the isolated clock
+case58.6s with unchanged throughput assertions. The CRT/software baseline
+was31.68 frames/s, so this clock test explicitly selects unfiltered output
+and opens the tools drawer to isolate native pacing from GPU shader/room cost.
+No product shader/scene/audio behavior, gate or deadline was changed.
+Hosted release and independent public verification are pending.
+
+Completion log
+--------------
+2026-11-04: User reports fast-forward is not accelerating emulation. Current
+published original demo does accelerate initially; did not blame caching or
+claim the user's specific cartridge/browser was reproduced.
+2026-11-04: Isolated a real native VSync/fast-forward conflict. Added a focused
+original-cartridge clock regression before changing production pacing.

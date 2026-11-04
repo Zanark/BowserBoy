@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { createDemoRom } from '../../scripts/demo-rom.mjs';
 import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
@@ -104,6 +105,76 @@ test('three checkpoint slots stay independent and reject invalid slots without c
   expect(result).toEqual({ slots: [[1], [2], [3], [4]], error: 'Unknown save slot.', coldBoot: 'battery', retained: [2], battery: [99] });
 });
 
+test('fast-forward advances the cartridge clock after native VSync changes and returns to normal speed', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  await page.locator('#quick-autosave').click();
+  await page.locator('#rom-file').setInputFiles({
+    name: 'Pixel Lab Clock.gba', mimeType: 'application/octet-stream',
+    buffer: Buffer.from(createDemoRom({ tone: true, frameClock: true })),
+  });
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  const frame = runtime(page);
+  const identity = await frame.evaluate(() => {
+    window.speedVSyncCalls = [];
+    const game = window.EJS_emulator.gameManager;
+    const original = game.setVSync.bind(game);
+    game.setVSync = value => { window.speedVSyncCalls.push(value); return original(value); };
+    return window.speedIdentity = crypto.randomUUID();
+  });
+  const select = async speed => {
+    if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
+    await page.locator('#quick-speed').click();
+    await page.locator(`[data-speed="${speed}"]`).click();
+    // Exclude the room's GPU cost from this native pacing regression.
+    await page.locator('#tools-open').click();
+  };
+  const measure = () => frame.evaluate(async () => {
+    const game = window.EJS_emulator.gameManager;
+    await new Promise(resolve => setTimeout(resolve, 250));
+    const read = () => {
+      const sram = game.getSaveFile();
+      return sram[4] | sram[5] << 8;
+    };
+    const start = read(), time = performance.now();
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const end = read(), elapsed = performance.now() - time;
+    return { frames: (end - start + 65536) % 65536, elapsed,
+      fps: ((end - start + 65536) % 65536) * 1000 / elapsed };
+  });
+  await select(1);
+  // Measure core pacing independently of the CRT shader's software-GPU cost.
+  await page.locator('#shader').selectOption('disabled');
+  await expect.poll(() => frame.evaluate(() => window.EJS_emulator.getSettingValue('shader'))).toBe('disabled');
+  const baseline = await measure();
+  expect(baseline.fps).toBeGreaterThan(45);
+  expect(baseline.fps).toBeLessThan(70);
+  await select(4);
+  // A real native setting can restore rAF pacing while isFastForward stays true.
+  await frame.evaluate(() => window.EJS_emulator.changeSettingOption('vsync', 'enabled'));
+  const samples = [];
+  for (const speed of [4, 2, 3, 1]) {
+    await select(speed);
+    const sample = await measure();
+    samples.push({ speed, ...sample, multiplier: sample.fps / baseline.fps });
+    await test.info().attach(`cartridge-clock-${speed}x`, {
+      body: JSON.stringify({ baseline, samples }), contentType: 'application/json',
+    });
+    expect(sample.fps / baseline.fps).toBeGreaterThan(speed * .7);
+    expect(sample.fps / baseline.fps).toBeLessThan(speed * 1.3);
+    expect(await frame.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('enabled');
+    expect(await frame.evaluate(() => window.speedVSyncCalls.at(-1))).toBe(speed === 1);
+    expect(await frame.evaluate(() => window.speedIdentity)).toBe(identity);
+  }
+  await frame.evaluate(() => window.EJS_emulator.changeSettingOption('vsync', 'disabled'));
+  await select(2);
+  await select(1);
+  expect(await frame.evaluate(() => window.speedVSyncCalls.at(-1))).toBe(false);
+  expect(await frame.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('disabled');
+});
+
 test('quick actions reach real core speed, persist autosave off, restore selected slots and perform a safe physical restart', async ({ page }) => {
   page.on('dialog', dialog => dialog.accept());
   await page.goto('./');
@@ -172,6 +243,46 @@ test('quick actions reach real core speed, persist autosave off, restore selecte
   finally { await page.keyboard.up('ArrowRight'); }
   await expect.poll(matchesLiveLcd).toBe(true);
   expect(await frame.evaluate(() => window.runtimeIdentity)).toBe(identity);
+  for (const [width, height] of [[1920, 1080], [844, 390], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    const bounds = () => page.evaluate(() => {
+      const rect = id => {
+        const { x, y, width, height, bottom, right } = document.getElementById(id).getBoundingClientRect();
+        return { x, y, width, height, bottom, right };
+      };
+      return { bezel: rect('screen-focus-bezel'), lcd: rect('screen-focus-canvas'),
+        zoom: document.querySelector('.screen-focus-zoom').getBoundingClientRect().top };
+    });
+    await page.locator('#screen-focus-zoom').focus();
+    await page.keyboard.press('End');
+    await expect(page.locator('#screen-focus-zoom-value')).toHaveText('100%');
+    const fitted = await bounds();
+    expect(fitted.lcd.width / fitted.lcd.height).toBeCloseTo(1.5, 2);
+    expect(fitted.bezel.width / fitted.bezel.height).toBeCloseTo(447 / 339, 2);
+    expect(fitted.bezel.x).toBeGreaterThanOrEqual(0);
+    expect(fitted.bezel.y).toBeGreaterThanOrEqual(0);
+    expect(fitted.bezel.right).toBeLessThanOrEqual(width);
+    expect(fitted.bezel.bottom).toBeLessThanOrEqual(fitted.zoom);
+    expect(fitted.lcd.y).toBeGreaterThan(fitted.bezel.y);
+    expect(fitted.lcd.bottom).toBeLessThan(fitted.bezel.bottom);
+    await page.keyboard.press('Home');
+    await expect(page.locator('#screen-focus-zoom-value')).toHaveText('50%');
+    const smaller = await bounds();
+    expect(smaller.lcd.width / fitted.lcd.width).toBeCloseTo(.5, 2);
+    expect(smaller.lcd.height / fitted.lcd.height).toBeCloseTo(.5, 2);
+    expect(smaller.bezel.width / fitted.bezel.width).toBeCloseTo(.5, 2);
+    await expect.poll(matchesLiveLcd).toBe(true);
+    if (width === 1920) {
+      await page.screenshot({ path: test.info().outputPath('screen-fullscreen-zoom-50.png') });
+      expect(fitted.bezel.x).toBeGreaterThan(width * .1);
+    }
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#screen-focus-zoom')).toHaveValue('51');
+    await page.keyboard.press('End');
+    await expect(page.locator('.screen-focus-wordmark')).toBeVisible();
+    await page.screenshot({ path: test.info().outputPath(`screen-fullscreen-fit-${width}.png`) });
+  }
+  await page.setViewportSize({ width: 1440, height: 1100 });
   await page.screenshot({ path: test.info().outputPath('screen-only-fullscreen.png') });
   await page.keyboard.press('Escape');
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();

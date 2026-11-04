@@ -1,5 +1,5 @@
 // Original ARM7TDMI input-test cartridge. No Nintendo logo, BIOS or third-party ROM bytes.
-export function createDemoRom({ tone = false } = {}) {
+export function createDemoRom({ tone = false, frameClock = false } = {}) {
   const words = [];
   const labels = new Map();
   const branches = [];
@@ -75,6 +75,13 @@ export function createDemoRom({ tone = false } = {}) {
   emit(0xe1d010b6);
   compare(1, 160);
   branch('vblank', 11);
+  if (frameClock) {
+    // Test-only VBlank clock, independent of host rendering or requested speed.
+    add(2, 1);
+    emit(0xe5cc2004);
+    emit(0xe1a01422);
+    emit(0xe5cc1005);
+  }
   literal(3, 0x18a5);
   square('erase');
   emit(0xe1db60b0); // ldrh r6, [r11]: active-low key input

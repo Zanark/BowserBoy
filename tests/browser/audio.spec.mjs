@@ -21,6 +21,7 @@ test('real native audio buffers brief stalls and smooths volume without restarti
     };
   });
   await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await expect(page.locator('#rom-file')).toBeEnabled();
   await page.locator('#rom-file').setInputFiles({
     name: 'Pixel Lab Audio.gba', mimeType: 'application/octet-stream',

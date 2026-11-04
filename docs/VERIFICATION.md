@@ -3,6 +3,39 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
+## Fast-forward and fullscreen-fit correction: local verification
+
+The original cartridge's own SRAM VBlank clock reproduces the VSync conflict:
+the dock says 4x but the clock advances at only 1.016x baseline before the fix.
+With explicit native VSync coordination, final Edge measurements are 59.81
+cartridge frames/s at 1x, 119.49 at 2x, 179.89 at 3x and 243.12 at 4x,
+returning to 60.33 at 1x. The same runtime and saved enabled/disabled VSync
+preferences are retained. The test-only clock leaves default/tone-only ROM
+bytes unchanged. Native-loop counters and UI flags are not clock evidence.
+
+Four focused Edge cases pass in 1.4m: native audio buffering/volume, actual
+offline peak/mute rendering, cartridge-clock acceleration and expanded real
+quick actions/fullscreen/save/restart. Final clock isolation passes Edge in
+27.0s and explicit Chromium/SwiftShader in 58.6s. The software run also passes
+the other three cases, including fullscreen in 1.4m and native audio in 28.3s.
+The speed fixture explicitly selects the unfiltered native display and suppresses
+the 3D backdrop to isolate core pacing from software CRT rendering cost;
+gameplay's default shader is unchanged and remains exercised by quick actions.
+The initial CRT/software baseline was only 31.68 frames/s, not a timing failure
+or evidence of full-speed hardware qualification. No throughput assertions,
+timeouts or release gates were relaxed.
+
+Fullscreen checks preserve exact native framebuffer pixels before/after real
+input, all exits/refused-request recovery and runtime identity. At 1920x1080,
+844x390, 390x844 and 320x568 the complete bezel fits above the bottom-right
+controls, the LCD stays 3:2 and both dimensions halve at 50% zoom. Actual
+desktop/phone/50% captures were reviewed. These are browser checks, not physical
+phone or user aesthetic acceptance. An existing audio fixture initially selected
+its ROM before scene readiness; an explicit scene-ready precondition fixes that
+setup race without changing audio assertions.
+
+Normal hosted release and independent public verification remain pending.
+
 ## Current hardware branding and screen-focus release
 
 Source `807da8ef42594d3e0b2f8b788f66bed894483d21` passes syntax, build and

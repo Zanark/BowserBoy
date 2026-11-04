@@ -14,6 +14,21 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / Fast-forward pacing and fullscreen fit correction:
+  Initial current-site demo acceleration worked, so did not blame caching or
+  invent a universal failure. Reproduced a native VSync cap while fast-forward
+  stayed active; a new original-cartridge VBlank counter proves requested4x
+  runs at1.016x before the fix. Explicitly release native VSync while fast
+  forward is active and restore its unchanged saved preference at1x. The
+  cartridge-clock regression passes all speeds and both VSync choices locally.
+  Default/audio-only demo bytes remain unchanged; no audio hooks were removed.
+  User then supplied cropped-fullscreen examples. Replaced intrinsic grid
+  sizing with a bounded proportional LCD/bezel stage, black margins and a
+  themed accessible zoom-away slider. The native picture is still copied in
+  full without moving/restarting the iframe. Existing audio validation exposed
+  a fixture readiness race before ROM selection/power-on; added its actual
+  scene-ready precondition rather than relaxing assertions or timeouts.
+  Combined verification and ordinary deployment remain pending.
 - 2026-11-04 / Hardware branding and native LCD fullscreen deployed:
   The user manually reran the failed job; API confirms actual attempt2 on
   unchanged807da8ef42594d3e0b2f8b788f66bed894483d21. Pages41819504285

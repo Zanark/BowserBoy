@@ -67,8 +67,16 @@
         <div id="runtime-mount"></div>
       </dialog>
       <div id="screen-focus" role="region" hidden aria-label="Fullscreen game screen">
-        <canvas id="screen-focus-canvas" tabindex="0" aria-label="Live game screen. Use your configured keyboard controls. Escape exits fullscreen."></canvas>
+        <div id="screen-focus-bezel">
+          <canvas id="screen-focus-canvas" tabindex="0" aria-label="Live game screen. Use your configured keyboard controls. Escape exits fullscreen."></canvas>
+          <span class="screen-focus-wordmark" aria-hidden="true">BOWSERBOY ADVANCE</span>
+        </div>
         <button id="screen-focus-close" aria-label="Exit screen fullscreen"></button>
+        <div class="screen-focus-zoom">
+          <label for="screen-focus-zoom">Zoom</label>
+          <input id="screen-focus-zoom" type="range" min="50" max="100" step="1" value="100" aria-label="Fullscreen screen zoom">
+          <output id="screen-focus-zoom-value" for="screen-focus-zoom">100%</output>
+        </div>
       </div>
       <footer>Independent player <span aria-hidden="true">&middot;</span> <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EmulatorJS</a> + <a href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a></footer>
 

@@ -129,8 +129,14 @@ dialog::backdrop { background: #0009; backdrop-filter: blur(5px); }
 .help-warning { border-left: 3px solid #7f946c; background: #253026; padding: 12px 15px; margin-top: 20px; }
 body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; }
 .desk:fullscreen { width: 100vw; height: 100dvh; }
-#screen-focus { position: fixed; inset: 0; z-index: 10; background: #000; display: grid; place-items: center; }
-#screen-focus-canvas { display: block; width: 100%; height: 100%; object-fit: contain; outline-offset: -4px; }
+#screen-focus { position: fixed; inset: 0; z-index: 10; width: 100vw; height: 100dvh; min-width: 0; min-height: 0; padding: max(56px, calc(env(safe-area-inset-top) + 52px)) max(16px, env(safe-area-inset-right)) max(72px, calc(env(safe-area-inset-bottom) + 68px)) max(16px, env(safe-area-inset-left)); background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; container-type: size; }
+#screen-focus-bezel { position: relative; flex: none; width: min(100cqw, calc(100cqh * 447 / 339)); aspect-ratio: 447 / 339; min-width: 0; min-height: 0; border-radius: 6.7% / 8.8%; background: linear-gradient(150deg, #242522, #090a09 18%, #111210 85%, #242522); box-shadow: inset 0 0 0 2px #4c4837, inset 0 0 0 7px #090a09, 0 0 30px #000; transform: scale(var(--screen-zoom, 1)); container-type: inline-size; }
+/* Match the physical bezel's 4.47 x 3.39 surround and complete 4.05 x 2.7 LCD. */
+#screen-focus-canvas { position: absolute; left: 4.69799%; top: 6.63717%; display: block; width: 90.60403%; height: auto; aspect-ratio: 3 / 2; outline-offset: -4px; }
+.screen-focus-wordmark { position: absolute; bottom: 4.5%; left: 0; width: 100%; text-align: center; color: #d3d3d3; font: italic 900 2.7cqw/1 Arial, sans-serif; }
+.screen-focus-zoom { position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 10px; min-height: 48px; max-width: calc(100% - 32px); padding: 8px 12px; border: 1px solid #b18bd84d; border-radius: 14px; background: linear-gradient(150deg, #2c2139ef, #14121eee); box-shadow: 0 0 24px #a763e51a; font: 11px var(--mono); }
+#screen-focus-zoom { width: min(140px, 35vw); height: 30px; margin: 0; accent-color: #bf99ed; cursor: pointer; }
+#screen-focus-zoom-value { min-width: 4ch; text-align: right; color: #ede2ff; }
 #screen-focus-close { position: absolute; top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #b18bd84d; border-radius: 12px; background: #20192ed9; color: #ede2ff; }
 #screen-focus-close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 600px) {

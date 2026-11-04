@@ -23,6 +23,8 @@ BowserBoyAdvance workstreams
 21_FAVICON_AND_TRANSPARENT_BANNER.todo - DONE: actual shell-outline favicon and transparent moving banner.
 22_COMPLETE_ORBITAL_SPRITES.todo - DONE: complete supplied effects, spacious centered logo and verified live startup.
 23_HARDWARE_BRANDING_AND_SCREEN_FOCUS.todo - DONE: printed/embossed branding, clear icons/header notices, sharp waving startup and live LCD fullscreen.
+24_FAST_FORWARD_PACING.todo - IN PROGRESS: measured cartridge-clock acceleration and native VSync conflict recovery.
+25_FULLSCREEN_FIT_AND_ZOOM.todo - IN PROGRESS: uncropped complete LCD/bezel, dark margins and fullscreen zoom slider.
 
 Original prototype: accepted by user; commit 8390832 published through Pages.
 Original Actions run 41700230948: build and deploy both succeeded.
