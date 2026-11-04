@@ -14,6 +14,24 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-04 / First engineering book and current visual edition:
+  User explicitly requests README, documentation, book and TODO refresh.
+  Existing guides/ledger are real, but no chaptered book exists. Author the
+  first ten-chapter Markdown edition instead of pretending an old book was
+  updated: runtime ownership, power, storage, actual geometry, pixels/light,
+  input, algorithms/data structures, principles, delivery and documentation.
+  Add pinned source register, vertical diagrams, captioned figures and
+  exercises with answers. No invented PDF, exhaustive atlas or human approval.
+  Reuse actual Edge capture/encoder with original Pixel Lab. Replace historical
+  interaction/pose/underside/fullscreen/dock media; add real glass notice.
+  Preserve transparent banner bytes. Review temporal samples plus actual rear,
+  lights-off, desktop/phone notice, fullscreen and underside views.
+  Both capture sessions report zero page errors. Four GIFs109/44/27/51frames,
+  largest6,378,084bytes. No app/runtime/test/build changes.
+  Sourceab912d5 passes build/11units/all39 hosted cases, but deployment remains
+  pending. Label all new media actual local-build previews, preserve historical
+  provenance and leave workstream29 open for independent public verification.
+  Navigation/publication/owned-continuity completion belongs to workstream30.
 - 2026-11-04 / Hosted notification follow-through:
   First41873558242 blocks37/39. Camera fit minimum unintentionally cancels
   explicit inspection pinch; apply user zoom after region-baseline fitting.

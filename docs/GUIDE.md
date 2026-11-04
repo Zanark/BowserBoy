@@ -1,6 +1,12 @@
 # Player and developer guide
 
-[Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/)
+[Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
+
+**Current source and pictures:** the updated pose, underside, fullscreen and
+glass-notice figures are actual local captures of qualified source `ab912d5`.
+The 39-case hosted gate passes; its notification deployment remains pending.
+See [release evidence](VERIFICATION.md#frosted-notifications-and-clear-handheld)
+and [capture origins](MEDIA.md#current-refresh---manufactured-controls-and-glass).
 
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
 
@@ -222,7 +228,7 @@ or refused requests display an explicit notice.
 Scene notices appear directly below the website logo; open tools retain notices
 inside their own panel.
 
-![Complete native Pixel Lab picture and bezel fitted in fullscreen with a bottom-right zoom slider](images/screen-fullscreen.png?v=fullscreen-fit-20261104)
+![Complete native Pixel Lab picture and shared stylized bezel fitted in fullscreen with a bottom-right zoom slider](images/screen-fullscreen.png?v=molded-glass-book-20261104)
 
 *The original demo on the actual native CRT output, surrounded by the matching
 black bezel and monochrome print. No second emulator or reset; zoom only changes
@@ -297,6 +303,15 @@ Renaming the ROM does not lose progress because identity is based on SHA-256.
 
 See [the saving guide](SAVING.md) for recovery and limitations.
 
+## Learning the implementation
+
+The [first chaptered engineering book](../book/README.md) explains the static
+runtime boundary, cartridge/power lifecycle, save transactions, original 3D
+geometry, native pixels and lighting, input ownership, actual algorithms/data
+structures, design trade-offs and delivery evidence. Its ten numbered chapters
+include diagrams, source references and worked exercises. This is a Markdown
+edition, not a separately built PDF or Pages reader.
+
 ## GitHub Pages
 
 The repository is configured to publish through **GitHub Actions**. The workflow
@@ -309,7 +324,16 @@ gate intact; report permission failures rather than bypassing them. This is the
 user's recovery policy for this repository only.
 
 Pages address: **https://zanark.github.io/BowserBoyAdvance/**.
-The icon-dock/orbital-startup release is
+Latest independently verified application: manufactured-control source
+`7843db880a52539d6e2050f79070f5829947a393`, Pages `41867840972`;
+its 28 public assets and four actual public cases match/pass.
+Notification source `ab912d51ecc615f7aa55a4d27f6a876673739cdf`
+passes all 39 hosted cases in fresh normal run `41875740589`, but deployment
+and independent public qualification remain pending at this documentation
+refresh. A healthy pending run is not retried or duplicated.
+
+The following paragraphs retain historical release evidence. The
+icon-dock/orbital-startup release was
 `1785a15936b9bb7328a415bdb6fae12204c6bcdc`, Pages run `41803699865`:
 build, 11 units, both complete browser shards (35 cases) and deployment succeeded.
 Independent production checks matched all 26 public assets and passed eight

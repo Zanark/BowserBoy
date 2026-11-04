@@ -1,0 +1,44 @@
+Status: IN_PROGRESS
+Milestone: Current visual README, reconciled guides and first actual chaptered book.
+Dependencies: Completed workstream 28; qualified source from workstream 29.
+
+Purpose:
+Fulfill the explicit README/documentation/book/TODO refresh without presenting
+local previews as public deployment or maintained guides as a pre-existing book.
+
+Tasks:
+- [x] Read the actual lifecycle, storage, input, rendering and packaging mechanisms.
+- [x] Author a navigable first Markdown book with numbered chapter folders.
+- [x] Explain algorithms/data structures and design principles in dedicated chapters.
+- [x] Add source-bound references, vertical diagrams, captioned figures and exercises.
+- [x] Refresh affected actual-build README media and record its local/public origin.
+- [x] Reconcile guide, architecture, verification, media, TODO index and causal ledger.
+- [ ] Check navigation/content/media, commit and verify repository publication.
+- [ ] Update owned private continuity without exporting private context.
+
+Acceptance criteria:
+- The visual README remains concise and retains the transparent animated banner.
+- New interaction figures show the current manufactured-control source.
+- The book teaches actual mechanisms with examples and explicit failure boundaries;
+  no PDF, exhaustive atlas, physical-device qualification or human approval is claimed.
+- Source completion, hosted gates and actual public deployment remain distinct.
+- Every new chapter and affected guide is reachable from repository navigation.
+- All eight workstream fields, evidence and causal history remain intact.
+
+Completion evidence:
+- Source edition: ab912d51ecc615f7aa55a4d27f6a876673739cdf.
+- At authoring, notification run 41875740589 has successful build/11 units/
+  39 browser cases; deployment remains queued. Workstream 29 stays IN_PROGRESS.
+- Further navigation, capture and publication receipts follow actual execution.
+- Navigation check: 18 Markdown files, 130 local file/anchor links, zero errors.
+  Book: 12 Markdown files and ten chapters; all diagrams retain editable source.
+  Four actual Edge clips and real notice/fullscreen/underside capture succeed
+  with zero page errors. GIFs109/44/27/51frames, each below10MiB; temporal,
+  back/dark/detail/desktop/phone views reviewed. Original banner SHA256 remains
+  458eabe14a77710f4be88106c4b1c65ceb054a6a9bda9b6d76c89b226dbc4257.
+  git diff --check passes. No app/runtime/tests/workflow/build changes.
+
+Completion log:
+- 2026-11-04: User explicitly requests README, documentation, book and TODO updates.
+  No earlier chaptered book exists. Create the first actual Markdown edition,
+  preserve the older incomplete-book note as history, and label capture origins.

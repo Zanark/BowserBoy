@@ -1,5 +1,13 @@
 # Architecture
 
+[Engineering book](../book/README.md) | [Player guide](GUIDE.md) | [Verification](VERIFICATION.md)
+
+This is the concise implementation reference. The first
+[chaptered book](../book/README.md) adds diagram-first explanations, worked
+examples, dedicated algorithms/data-structures and design-principle chapters,
+and revision-bound source references. It describes qualified source; release
+status remains a separate verification claim.
+
 ## One static site, one active cartridge
 
 The application is vanilla HTML, CSS and JavaScript modules, with pinned

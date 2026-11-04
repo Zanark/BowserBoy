@@ -10,7 +10,9 @@ Tasks:
 - [x] Add translucent blur, subtle border/highlight and a 44px dismiss target.
 - [x] Reserve visible notice space in the play/inspection camera fit.
 - [x] Verify normal/error/long notices, resize, dismissal and drawer reparenting.
-- [ ] Review actual captures; release normally and independently verify production.
+- [x] Review actual desktop/phone/landscape and bounded long-text captures.
+- [x] Pass a fresh normal full release gate without retrying the failed run.
+- [ ] Complete deployment and independently verify actual production.
 - [ ] Reconcile affected documentation, ledger and owned continuity.
 
 Acceptance criteria:
@@ -33,9 +35,16 @@ Completion evidence:
   and unchanged speed sample4.5609x at2x. Apply user zoom after safe-region
   baseline; both failed cases plus notices pass SwiftShader1.4m. No speed
   thresholds changed or cause fabricated; a fresh normal run is required.
-  Publication and independent production verification pending.
+  Corrected source ab912d51ecc615f7aa55a4d27f6a876673739cdf then passes
+  build/11 units/all39 browser cases in fresh normal run41875740589.
+  At23:14IST deployment remains pending (queued then waiting), so publication
+  and independent production verification remain pending. No duplicate
+  dispatch or inference about platform cause. Workstream30 updates visual
+  docs/book and labels its actual qualified-build captures as local previews.
 
 Completion log:
+- 2026-11-04: Fresh normal full gate passes. Keep source qualification separate
+  from pending deployment; current local media cannot close the public criterion.
 - 2026-11-04: Hosted gate catches real explicit-pinch regression. Preserve
   default clear fit while applying user zoom to that baseline, not clamping
   away the gesture. Retain all original pinch/input and speed assertions.

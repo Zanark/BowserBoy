@@ -3,6 +3,10 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
+The [engineering book](../book/README.md) explains the mechanisms and failure
+lessons. Its source edition and local preview media do not replace this release
+record or constitute fresh execution of historical tests.
+
 ## Frosted notifications and clear handheld
 
 The expanded existing branding/notice regression checks actual translucent
@@ -34,6 +38,21 @@ ability to crop. The unchanged native speed case separately reports 4.5609x
 for its 2x sample (upper bound 2.6x); no cause is inferred or threshold changed.
 Both failed cases and the expanded notice case pass explicit SwiftShader
 in 1.4m after the zoom fix. A fresh normal run follows, never a failed-run retry.
+
+**Qualified source:** `ab912d51ecc615f7aa55a4d27f6a876673739cdf`.
+Fresh normal run `41875740589` passes build, all 11 units and all 39 browser
+cases (13+13+13). Its deployment remains pending at the documentation refresh
+(23:14 IST; status moves from queued to waiting). No completed deployment steps
+or new public-asset match are claimed. The last independently verified public
+application is the manufactured-control source `7843db8`; the actual public CSS
+still identifies the older build at the earlier independent check.
+
+The README's refreshed interactions and notice/fullscreen/underside figures
+are actual local captures of this qualified source, not a purported public
+capture. Both capture sessions report zero page errors. Recorded UI actions,
+encoded temporal samples and actual desktop/phone notice/fullscreen/underside
+figures are reviewed. See [Media](MEDIA.md#current-refresh---manufactured-controls-and-glass).
+No app source, thresholds or release gates change in this documentation task.
 
 ## Main-page logo contrast
 

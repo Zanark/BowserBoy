@@ -1,6 +1,6 @@
 # README media
 
-[Visual showcase](../README.md) | [Player and developer guide](GUIDE.md)
+[Visual showcase](../README.md) | [Player and developer guide](GUIDE.md) | [Engineering book](../book/README.md)
 
 The README is a visual front page: animation, images and short captions.
 Setup, controls, limitations and release history belong in the linked guides.
@@ -8,16 +8,49 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
-The existing README GIFs remain historical footage from the releases cited below:
-they do not yet depict the later molded controls, stylized bezel or closer play
-framing. `images/molded-controls.png` is an actual public room-lit, slightly
+### Current refresh - manufactured controls and glass
+
+The four interaction GIFs and the notice, underside, fullscreen, dock and
+3D-pose figures now show qualified application source
+`ab912d51ecc615f7aa55a4d27f6a876673739cdf`. They are **actual local-build
+captures**, not captures of a newly deployed public release. The browser served
+the same built application under `http://127.0.0.1:5175/BowserBoyAdvance/`.
+At capture, normal Pages run `41875740589` had passed build, 11 units and all
+39 browser cases, but deployment remained pending. The separate
+[verification record](VERIFICATION.md#frosted-notifications-and-clear-handheld)
+owns production status. Do not infer publication from these figures.
+
+The existing capture/encoder is reused, calling only its clip encoder to
+preserve the transparent banner byte-for-byte. Edge records at 1100x850;
+GIFs are 800x618 at 10 fps. The four outputs contain 109/44/27/51 frames
+(pickup/startup/insertion/lights), respectively; the largest is 6,378,084 bytes.
+Capture receipts report no page errors. Reviewed beginning/middle/end encoded
+frames, the actual back capture and an additional lights-off frame establish
+the demonstrated actions. Fullscreen, underside and actual desktop/phone notice
+captures are also visually inspected.
+
+The notice is the real no-cartridge power-on message, not synthetic product UI.
+The underside detail sets the actual model's inspection rotation to reveal the
+switch; it does not fabricate geometry or change application source. Fullscreen
+uses the native original Pixel Lab output and the shared star-free bezel.
+Insertion still deliberately holds the real loader download during its actual
+animation; these timings are not performance measurements.
+
+This refresh replaces the previously historical interaction/fullscreen figures.
+The historical provenance below remains a record of earlier media editions,
+not the source identity of today's replacement bytes. The unchanged nine-CRT
+menu figure retains its earlier cited origin; its options remain current.
+
+### Retained public and historical evidence
+
+`images/molded-controls.png` remains an actual public room-lit, slightly
 tilted capture from `7843db880a52539d6e2050f79070f5829947a393`, after normal
 Pages `41867840972`, the full 39-case gate, independent 28-asset match and four
 actual public cases pass. The LCD-light/power-off figures are also refreshed
 by the actual public mapped-input regression. Desktop, phone and relief
 captures are reviewed; zero page errors. This is browser evidence, not a mockup
-or human aesthetic approval. The older fullscreen figure retains historical
-plain-font branding; current runtime uses the shared stylized texture.
+or human aesthetic approval. The older plain-font fullscreen edition has now
+been replaced by the locally captured shared stylized texture described above.
 
 - `images/orbital-logo.gif` animates the supplied transparent purple logo and the
   supplied sparkle, glow and orbit effects on a transparent background, without
@@ -25,7 +58,7 @@ plain-font branding; current runtime uses the shared stylized texture.
   alpha edges are thresholded for encoding; the supplied source remains unchanged.
   Its elliptical star motion is an original README presentation, not a recording
   of the LCD boot. The separate power-on GIF retains the actual purple LCD scene.
-- The other GIFs are actual recordings of the deployed application, captured
+- The other GIFs are actual recordings of the application, captured
   with Playwright/Edge at 1100 by 850 and encoded at 800 by 618, 10 fps.
   Pickup/inspection, power-on, physical insertion and lighting use actual UI
   actions, not rendered mockups or artificial interpolation. Trailing idle holds

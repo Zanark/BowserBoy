@@ -1,5 +1,7 @@
 # Progress, backups and recovery
 
+[Player guide](GUIDE.md) | [Book chapter: saves and recovery](../book/chapters/03-saves-and-recovery/README.md)
+
 ## Three different things
 
 **In-game save:** use the game's save menu. Its battery-memory bytes are included
