@@ -41,6 +41,16 @@ restoration. It includes five viewport shapes, a real invalid-file error and
 an explicitly synthetic long-text fixture. Synthetic text proves wrapping and
 bounded scrolling, not that a real native error produced that wording.
 
+The later workstream 33 audio investigation shows a similar coverage gap.
+Surviving one startup stall did not prove sustained buffering: actual private
+playback exposed repeated roughly 100 ms underrun/restart gaps as the startup
+cushion drained. The correction increases native buffer capacity, not speaker
+volume or game speed. Its regression checks real initialized PCM capacity as
+well as the requested setting, and extended playback measures scheduling gaps.
+Keep that later evidence separate from this book's pinned source edition.
+Neither PCM measurements nor a green test establish human hearing quality on
+every audio device; a larger reserve also trades additional audio latency.
+
 ## Let failure teach the requirement
 
 The initial camera shift had the wrong vertical sign. Clearance tests caught

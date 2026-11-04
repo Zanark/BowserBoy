@@ -55,6 +55,9 @@ test('real native audio buffers brief stalls and smooths volume without restarti
         .match(/^audio_latency = "(\d+)"$/m)?.[1],
       lead: window.audioSchedule.tail - ctx.audioCtx.currentTime,
       initialStall: window.audioSchedule.initialStall,
+      capacity: Object.values(emulator.Module.AL.buffers)
+        .filter(buffer => buffer.audioBuf && buffer.deviceId === ctx.deviceId)
+        .reduce((seconds, buffer) => seconds + buffer.audioBuf.duration, 0),
     };
   });
   await test.info().attach('native-audio', { body: JSON.stringify(audio), contentType: 'application/json' });
@@ -65,7 +68,8 @@ test('real native audio buffers brief stalls and smooths volume without restarti
     analyser.getFloatTimeDomainData(samples);
     return Math.max(...samples.map(Math.abs));
   })).toBeGreaterThan(.01);
-  expect(audio.latency).toBe('128');
+  expect(audio.capacity, 'Native PCM capacity must cover sustained scheduling jitter, not only startup').toBeGreaterThanOrEqual(.24);
+  expect(audio.latency).toBe('256');
   expect(audio.initialStall.lead).toBeGreaterThan(.09);
   expect(audio.initialStall.remaining).toBeGreaterThan(0);
   await page.locator('#native-close').click();

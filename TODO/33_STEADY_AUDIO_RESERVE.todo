@@ -1,0 +1,60 @@
+Status: IN_PROGRESS
+Milestone: Sustained native audio reserve against intermittent playback dropouts.
+Dependencies: Completed workstream 12 and its compatibility follow-up.
+
+Purpose:
+Address the user's recurring distortion with measured actual output, rather
+than assume the earlier startup-only stall fixture proves continuous playback.
+
+Tasks:
+- [x] Use the explicitly supplied ROM locally only; never stage/upload its bytes.
+- [x] Capture actual scheduler events, post-limiter PCM, source state and save timing.
+- [x] Reproduce underruns without clipping and compare controlled native budgets.
+- [x] Add an actual native PCM-capacity regression that fails on the old adapter.
+- [x] Increase native reserve without altering startup delay, gain or game pacing.
+- [x] Qualify the correction with extended local playback and existing audio/clock cases.
+- [ ] Pass normal hosted gates, independently verify live and publish evidence.
+- [ ] Reconcile affected documentation and owned continuity.
+
+Acceptance criteria:
+- Sustained playback retains more real native reserve, not just a larger config label.
+- Reproduced scheduling gaps are absent in the documented corrected test windows.
+- Existing startup-stall, starvation recovery, smooth volume/mute, peak and game-clock
+  assertions remain intact. Auto-save and game audio are not disabled to hide failures.
+- No copyrighted ROM/PCM or private local paths are published in repository artifacts.
+- Evidence distinguishes output-sample/timing measurements from human listening,
+  physical-device qualification and a guarantee against arbitrary system overload.
+
+Completion evidence:
+- Authorized private 90s baseline: one100.5ms gap, raw peak0.75, no clipped samples.
+- Repeated70s control: five98.1-112.6ms gaps and corresponding native stop/restart
+  transitions. Candidate90s and70s windows: zero >1ms scheduling gaps; no source
+  restart transitions in the instrumented70s candidate.
+- Both70s runs include the same40ms hitch after45s; automatic saves remain enabled.
+  Their measured save calls take roughly1-3ms; do not claim auto-save caused the gaps.
+- Candidate changes only native audio_latency128->256. Startup96ms pre-roll,
+  lookahead200ms, volume/mute envelopes and limiter are unchanged.
+- Real native regression fails the old source at121.9ms allocated PCM capacity.
+  The new check requires at least240ms actual initialized native PCM, allowing
+  native block rounding; not merely the requested256ms configuration string.
+- Full correction qualification and hosted/public evidence remain pending.
+- Final corrected-source run:180s/31,048scheduled buffers, zero >1ms gaps,
+  zero native restarts, no clipped source samples, no page errors. Auto-save
+  stays enabled; actual40ms mid-game hitch retains46.8ms remaining headroom.
+  Post-limiter peak0.870. This is measured output, not human listening.
+- Syntax/build,11units/three audio cases plus actual clock/fast-forward case
+  pass45.5s. Existing80ms startup,250ms starvation recovery, volume/mute,
+  peaks, pause/save/restore and game-clock bounds remain unchanged.
+- Native256ms capacity trades additional audio latency, not a new startup delay;
+  no guarantee against arbitrary sustained host overload is claimed.
+
+Completion log:
+- 2026-11-05: User reports immersion-breaking recurring audio distortion and
+  explicitly authorizes one locally supplied ROM for testing. Use only a bounded
+  private playback probe; its PCM and source traces stay outside the repository.
+  Measure real roughly100ms missing output and draining buffer lead rather than
+  claim to hear the sound or blame the cartridge, auto-save, GPU or audio device.
+  A256ms native budget removes the observed gaps in both candidate windows.
+- 2026-11-05: Final actual-source180s run and targeted four-case suite pass.
+  Document actual evidence, its latency trade-off and the earlier startup-only
+  fixture's limit. Hosted release and independent public evidence remain pending.

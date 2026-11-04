@@ -104,9 +104,13 @@ therefore owns its timer and checked checkpoint persistence.
 The pinned native runtime uses Emscripten OpenAL. Its original configuration
 requests 64 ms of audio buffering, but playback begins immediately. Increasing
 that configuration alone did not establish the measured scheduling cushion.
-`src/audio.js` configures 128 ms and a 200 ms OpenAL scheduling lookahead,
+`src/audio.js` configures a 256 ms native buffer budget and a 200 ms OpenAL scheduling lookahead,
 then adds 96 ms of pre-roll when a native playing source initializes/restarts.
-This trades about 0.1 seconds of audio latency for tolerance of brief stalls.
+The original 128 ms budget's startup cushion drained during sustained play:
+instrumented local playback exposed repeated roughly 100 ms underrun/restart
+gaps. The larger native allocation increases the steady-state reserve instead
+of adding another startup delay. It also trades additional audio latency for
+tolerance of brief stalls; configured capacity is not measured end-to-end delay.
 It is not a permanent guarantee of queued sound on a host slower than real time.
 
 The pre-roll is applied after OpenAL initializes `bufStartTime`, not before its

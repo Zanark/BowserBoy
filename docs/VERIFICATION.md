@@ -7,6 +7,42 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Sustained audio reserve, 2026-11-05
+
+The user reports recurring distortion and explicitly authorizes a local ROM
+for diagnosis. A bounded private Edge probe advances with A while measuring
+native deadlines, source stop/restart transitions, real post-limiter output,
+and state/battery capture timing. ROM bytes, PCM and private paths stay outside
+the repository and deployed payload. This is signal analysis, not a claim to
+have heard the user's speakers.
+
+The old 128 ms native budget produces one 100.5 ms scheduling gap in 90s,
+then five 98.1-112.6 ms gaps in a repeated 70s run. Source samples do not clip;
+the gaps coincide with native underrun/restart transitions. The 96 ms startup
+cushion drains during normal playback. Capture calls take roughly 1-3 ms;
+these observations do not establish that auto-save caused the gaps.
+
+The correction requests 256 ms of native buffer capacity, retaining the
+existing startup pre-roll, lookahead, limiter, volume/mute ramps and game speed.
+Two candidate runs of 90s/70s have zero scheduling gaps above 1 ms. The two
+70s control/candidate runs include the same 40 ms mid-game hitch with auto-save
+enabled. A final run of the actual corrected source covers 180s and 31,048
+scheduled buffers: zero gaps above 1 ms, zero native restarts, no clipped source
+samples, and no page errors. Recorded post-limiter peak is 0.870; authored
+musical silence is not counted as an underrun.
+
+The actual native regression fails the old source at 121.9 ms of initialized
+PCM capacity. It now requires at least 240 ms, allowing native block rounding,
+as well as checking the requested setting. Syntax/build, all 11 units and the
+three audio cases plus actual cartridge-clock/fast-forward case pass in 45.5s.
+Existing 80 ms startup-stall, deliberate 250 ms starvation/recovery, peak/mute,
+pause/save/restore and unchanged-speed assertions remain intact.
+
+The trade-off is additional audio latency; the configured budget is not an
+end-to-end latency measurement. This does not qualify every ROM, physical audio
+device, browser, fast-forward sound quality or arbitrary sustained host overload.
+Normal hosted release and independent public verification remain pending.
+
 ## Darker raised control markings
 
 The actual pre-relief source palette is restored on A/B (`#a2aa99`) and the

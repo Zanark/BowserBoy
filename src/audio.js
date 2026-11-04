@@ -26,7 +26,8 @@ export function configureAudioBuffer(GameManager) {
       };
       configuredSchedulers.add(al);
     }
-    return config.replace(/^audio_latency = 64$/m, 'audio_latency = 128');
+    // Native rate control drains startup pre-roll; reserve must survive steady playback.
+    return config.replace(/^audio_latency = 64$/m, 'audio_latency = 256');
   };
 }
 

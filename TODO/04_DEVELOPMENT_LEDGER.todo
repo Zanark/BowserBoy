@@ -14,6 +14,27 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Sustained audio investigation:
+  User reports recurring distortion and explicitly authorizes a local test ROM.
+  Keep its bytes/PCM private. Instrument real source deadlines, post-limiter
+  samples, state changes and capture durations while advancing with A.
+  The earlier startup-only80ms fixture misses steady reserve decay. Native128ms
+  budget gives one100.5ms gap in90s and five98.1-112.6ms gaps in a repeated70s
+  run, with actual stop/restart transitions and no clipped source samples.
+  Candidate256ms budget has zero >1ms gaps in90s/70s; both70s runs include
+  an identical40ms mid-game hitch with auto-save enabled. Save calls1-3ms
+  do not establish an auto-save cause. Add actual native PCM-capacity regression:
+  old source fails at121.9ms. Increase native budget only, leaving startup delay,
+  volume, limiter, saves and speed unchanged. Extended/hosted qualification pending.
+- 2026-11-05 / Audio source qualified:
+  Final corrected-source180s run schedules31,048buffers with zero >1ms gaps,
+  zero native restarts, no clipped source samples/page errors and auto-save on.
+  The controlled40ms hitch retains46.8ms headroom. Post-limiter peak0.870.
+  Syntax/build,all11units and three audio cases plus real clock/fast-forward
+  pass45.5s. Keep existing80ms startup/250ms recovery/peak/mute/clock assertions;
+  new reserve check measures actual PCM allocation, not only a config label.
+  Larger reserve trades extra audio latency; physical-device hearing and
+  arbitrary host overload remain unqualified. Hosted/public release pending.
 - 2026-11-04 / Both visual refinements independently live:
   Logo-only73a7579/41884678705 succeeds without duplicate dispatch. Combined
   464f034e76d92cc15f14bae69688c3b0cc4ffd1b/41886136203 then passes build,
