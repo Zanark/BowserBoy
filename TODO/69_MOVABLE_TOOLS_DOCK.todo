@@ -37,8 +37,17 @@ Shift-Tab order. Final drag/reset case repeats twice. Syntax/build/12 units pass
 Local source6fb1890 filmed with noROM; movableGIF71frames/7.1s/1,770,317bytes,
 800x618/10fps/infinite; actual movement/collapse/expand/Home reviewed.
 Public release/qualification pending.
+Monitored42088695154doesnotdeploy: stale projectedpowercoordinates afterresize,
+reloadinsertionpose synchronization, combinedquick-action120sbudget and
+third-shard600sdeadline. Preserve allactualassertions/deadlines; pollclearance,
+awaitreloadearlypose, splitindependentnativeflows anddistribute53cases
+exactlyonce overfive unchanged single-worker verificationjobs.
+Corrected sixcaseactualSwiftShadersuite passes4.1m; syntax/12units/whitespace
+pass. Bothnativeflowspreserveallchecks; hosted/publicqualificationstillpending.
 
 Completion log
 --------------
 2026-11-06: User requests movable/collapsible dock and a README GIF, then
 explicitly resumes monitoring/fixing issues for this deployment.
+2026-11-06: Diagnose actual failed gate and retain logs/traces. Local and hosted
+qualification of the corrective test/scheduling change remain separate.

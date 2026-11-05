@@ -28,7 +28,36 @@ Actual local source `6fb1890` is filmed with no ROM loaded. Two encoded GIFs and
 five affected stills are refreshed; bounded encoded frames and the centered
 drawer are reviewed. This is not an audio/performance or human-approval claim.
 The user explicitly resumes monitoring/fixing this deployment. The normal
-source push will trigger its unchanged full gate; live qualification is pending.
+source push triggered the full gate; live qualification is pending.
+
+### Monitored gate recovery
+
+Run `42088695154` did not deploy. The dock-fit assertion read the previous
+viewport's projected power target before the resized WebGL frame. It now polls
+the same physical-clearance condition, rather than treating stale coordinates
+as settled layout. The cartridge reload case now awaits its existing visible
+early pose before checking seating, matching the first-load sequence. The
+presented-frame animation and its 500ms maximum steps are unchanged.
+
+The cancelled second job's log also records the combined native quick-action
+case exhausting its 120-second test budget near the final reload. Speed/LCD
+fullscreen and checkpoint/autosave/restart are now independent cases with the
+same real-core, pixel, persistence and lifecycle assertions. The shader,
+application behavior, ROM fixture and all deadlines remain unchanged.
+
+The former third shard reached its 600-second suite deadline with five cases
+unrun. Five test-level shards replace three; CLI discovery accounts for all
+53 current cases exactly once, distributed 11/11/11/10/10. Each still uses one
+worker, no retries, 15-second expectations, 120-second tests, a 600-second
+suite deadline and a 15-minute job deadline. Deployment still requires build
+and every verification job. This scheduling check is not a successful hosted
+gate or deployed-site claim.
+
+The six affected cases pass locally with explicit SwiftShader WebGL in 4.1
+minutes, including both split real-native flows, both insertion viewports,
+responsive dock clearance and the existing adaptive-rendering check. Syntax,
+all 12 unit tests and whitespace checks pass. These local results do not
+replace the next normal hosted gate or subsequent public-site qualification.
 
 ## Complete README refresh, 2026-11-05
 

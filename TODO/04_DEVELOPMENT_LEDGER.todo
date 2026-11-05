@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Monitored dock gate recovery:
+  Run42088695154fails anddeployskips. Actualtrace exposes old powercoordinates
+  read immediatelyafter320pxresize; poll the same clearance against a rendered
+  pose. Reload insertion nowawaits the same earlyvisiblepose beforeseating
+  as firstload, retainingpresented-frame timing. Cancelledshard2logalso
+  recordsquick-actiontest120sdeadline nearfinalreload; split speed/fullscreen
+  fromslots/autosave/restart, retaining allreal-core/pixel/persistence checks.
+  Shard3hits600s withfiveunrun. Fiveway CLIinventoryaccountsfor53current
+  casesexactlyonce11/11/11/10/10. Noassertion/test/suite/jobdeadlinechange,
+  no retries/skips, no application/artwork/ROM change; hostedqualificationpending.
+  Corrected sixcaseexplicitSwiftShader suite passes4.1m, including bothsplit
+  nativeflows, desktop/phoneinsertion, powerclearance andadaptivegraphics.
+  Syntax/12units/whitespace pass; localresults do not substitute fornormalCI.
 - 2026-11-06 / Movable tools and inspection identity:
   User requests dockdrag/collapse, actualREADMEGIF and monitoreddeployment;
   later adds purple animatedconsoleheader inInspect and centeredsettingslogo.

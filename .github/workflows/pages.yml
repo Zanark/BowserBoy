@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3]
+        shard: [1, 2, 3, 4, 5]
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
@@ -31,7 +31,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --reporter=line --fully-parallel --shard=${{ matrix.shard }}/3 --global-timeout=600000
+      - run: npm run test:browser -- --reporter=line --fully-parallel --shard=${{ matrix.shard }}/5 --global-timeout=600000
         env:
           BROWSER_CHANNEL: chromium
       - uses: actions/upload-artifact@v7.0.2

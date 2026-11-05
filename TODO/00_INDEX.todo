@@ -68,7 +68,7 @@ BowserBOY workstreams
 66_SETTINGS_BACKDROP_DISMISS.todo - IN_PROGRESS: outside-click drawer dismissal locally qualified; inside interactions and existing close paths preserved.
 67_PLAY_ZOOM_BASELINE.todo - IN_PROGRESS: existing ordinary framing is now default50%;100% moves twice closer. Locally qualified; deployment monitoring belongs to the user.
 68_COMPLETE_README_REFRESH.todo - DONE: nine current GIFs/nine stills, reconciled README/captions/provenance;18embeds/30links locally checked. Normal push triggers publication; user monitors.
-69_MOVABLE_TOOLS_DOCK.todo - IN_PROGRESS: drag/collapse/keyboard movement and real touch/resize locally qualified; README GIF and monitored release pending.
+69_MOVABLE_TOOLS_DOCK.todo - IN_PROGRESS: dock locally qualified and README GIF published; monitored gate recovery and live qualification pending.
 70_INSPECTION_BRANDING.todo - IN_PROGRESS: approved animated purple Inspect logo/static reduced-motion fallback; centered chrome drawer logo. Local browser cases pass; live pending.
 
 Current documentation edition: book/README.md now provides the first actual

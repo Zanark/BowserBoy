@@ -5,6 +5,21 @@ import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 
+const demoWithAutosaveOff = async page => {
+  page.on('dialog', dialog => dialog.accept());
+  await page.goto('./');
+  await ready(page);
+  await page.locator('#pickup').click();
+  // A slow native startup can legitimately auto-save before demoReady resolves.
+  await page.locator('#quick-autosave').click();
+  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
+  await page.locator('#tools-open').click();
+  await page.locator('#demo').click();
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+};
+
 test('tools dock drags, collapses, cancels and resets without firing its actions', async ({ page }) => {
   await page.goto('./');
   await ready(page);
@@ -433,8 +448,11 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
       const dock = await page.locator('.scene-actions').boundingBox();
       expect(dock.height, 'Two rows on phones; three on 320px with the two new dock controls')
         .toBeLessThan(width <= 360 ? 150 : 100);
-      const power = await page.locator('#hardware-power').boundingBox();
-      expect(power.y + power.height, 'Default dock leaves the physical power target reachable').toBeLessThan(dock.y);
+      await expect.poll(async () => {
+        const power = await page.locator('#hardware-power').boundingBox();
+        const currentDock = await page.locator('.scene-actions').boundingBox();
+        return power.y + power.height - currentDock.y;
+      }, { message: 'Default dock leaves the physical power target reachable after the resized frame' }).toBeLessThan(0);
     }
     await page.screenshot({ path: test.info().outputPath(`icon-dock-${width}.png`) });
   }
@@ -756,20 +774,9 @@ test('fast-forward advances the cartridge clock after native VSync changes and r
   expect(await frame.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('disabled');
 });
 
-test('quick actions reach real core speed, persist autosave off, restore selected slots and perform a safe physical restart', async ({ page }) => {
-  page.on('dialog', dialog => dialog.accept());
-  await page.goto('./');
-  await ready(page);
-  await page.locator('#pickup').click();
-  // A slow native startup can legitimately auto-save before demoReady resolves.
-  await page.locator('#quick-autosave').click();
-  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
-  await page.locator('#tools-open').click();
-  await page.locator('#demo').click();
-  await powerOn(page);
-  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
-  await demoReady(page);
-  let frame = runtime(page);
+test('quick actions reach real core speed and retain the live LCD through screen fullscreen', async ({ page }) => {
+  await demoWithAutosaveOff(page);
+  const frame = runtime(page);
   const identity = await frame.evaluate(() => window.runtimeIdentity = crypto.randomUUID());
   await frame.evaluate(() => {
     window.speedCalls = [];
@@ -876,7 +883,12 @@ test('quick actions reach real core speed, persist autosave off, restore selecte
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();
   await expect(page.locator('#screen-focus')).toBeHidden();
   expect(await frame.evaluate(() => window.runtimeIdentity)).toBe(identity);
-  await page.locator('#pickup').click();
+});
+
+test('quick actions persist autosave off, restore selected slots and perform a safe physical restart', async ({ page }) => {
+  await demoWithAutosaveOff(page);
+  let frame = runtime(page);
+  const identity = await frame.evaluate(() => window.runtimeIdentity = crypto.randomUUID());
   await page.locator('#quick-slots').click();
   await page.locator('#checkpoint-slot').selectOption('manual2');
   await page.locator('#pause').click();

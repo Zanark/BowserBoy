@@ -768,8 +768,10 @@ Only `three.module.js`, its relative `three.core.js` dependency, the unmodified
 the exact MIT license are mapped from the pinned package to public `vendor` paths.
 An import map resolves `three` relative to the document, preserving nested
 GitHub Pages hosting. No `node_modules` directory is publicly served.
-Pages deployment requires the separate syntax/unit/build job and both complete
-test-level browser shards on Ubuntu 24.04, with one worker per runner.
+Pages deployment requires the separate syntax/unit/build job and all five
+complete test-level browser shards on Ubuntu 24.04, with one worker per runner.
+Sharding changes scheduling, not coverage or the existing assertion, test,
+suite and job deadlines.
 
 ## Upstream receipts
 
