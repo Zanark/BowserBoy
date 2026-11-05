@@ -63,7 +63,7 @@ BowserBOY workstreams
 61_SUPPLIED_DEMO_ASSETS.todo - DONE: supplied ROM/box art published ad5bfa2; both actual public downloads match. Media only, no testing without explicit request.
 62_CHIP_STARTUP_SOUND.todo - IN_PROGRESS: crisper original square-wave power-on arpeggio with stepped envelopes and existing mute/volume.
 63_THREE_SECOND_README_SHIMMER.todo - DONE: published24910fd; exact3000ms loop, unchanged pixels and actual public native animation verified.
-64_README_DEMO_PRESENTATION.todo - IN_PROGRESS: remove named supplied-game/box-art feature from main README; use ROM for GIF footage instead.
+64_README_DEMO_PRESENTATION.todo - DONE: named game/box-art section removed and actual public README verified a56844f; ROM retained for GIF footage.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

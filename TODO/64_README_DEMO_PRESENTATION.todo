@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Keep the supplied game out of the main README's named showcase.
 Dependencies: 61_SUPPLIED_DEMO_ASSETS.todo.
 
@@ -12,7 +12,7 @@ Tasks
 [x] Remove the featured-game heading, box-art embed, named caption and download.
 [x] Keep the existing console showcase, shimmer and current GIFs unchanged.
 [x] Preserve uploaded assets and their credits; no deletion was requested.
-[ ] Publish and verify the actual public README.
+[x] Publish and verify the actual public README.
 
 Acceptance criteria
 -------------------
@@ -24,6 +24,9 @@ Completion evidence
 -------------------
 Removed the six-line featured-demo block. Existing asset files/credits remain.
 Earlier61publication is historical; this supersedes only main README placement.
+Published a56844f9f948f9bf7da5ef01d5bcef2615e4d376. Actual public README
+contains no supplied-game name, box-art reference or demo-directory link;
+the versioned three-second shimmer remains.
 
 Completion log
 --------------
