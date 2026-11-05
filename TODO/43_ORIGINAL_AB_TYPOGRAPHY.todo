@@ -1,0 +1,45 @@
+Status: IN_PROGRESS
+Milestone: Original soft A/B typography in genuine inward engraving.
+Dependencies: Existing A/B recesses; retain all other controls and markings.
+
+Purpose:
+The user rejects42's custom rounded shapes and supplies an older reference.
+They explicitly choose "keep inward grooves and get the original soft A/B text".
+Recover the original typography rather than inventing another approximation.
+
+Tasks:
+- [x] Trace the older source's actual A/B font, scale and baseline.
+- [x] Convert that antialiased glyph boundary into cutouts and solid counters.
+- [x] Soften only A/B engraving depth to avoid hard, occluding deep walls.
+- [x] Verify original-font silhouette fidelity and actual inward geometry.
+- [x] Review bounded reference/deep/shallow actual-render comparisons.
+- [ ] Qualify normal delivery and independent public behavior.
+
+Acceptance criteria:
+- Original bold95pxArial shapes, .25x.28label footprint and -.005baseline
+  placement are recovered; no changed shared molded font or bundled font file.
+- Each actual floor silhouette overlaps its browser's original glyph >94%.
+- Floors are genuinely inward by .004-.012, with solid cap-height counters.
+- Cap materials/shapes, groove shade, other markings, bezel and motion stay.
+- Existing native, lighting, framing and delivery gates stay intact.
+
+Completion evidence:
+- Historical807da8esource uses bold95pxArial on a .25x.28plane at y=-.005.
+- Current custom42shape fails original-glyph overlap at .603481 versus >.94.
+- Half-alpha marching contours preserve the original browser-selected glyph,
+  outer shape and counters. Initial actual A/B floor overlap .985935/.991902.
+- Initial deep-wall render remains visibly harsh. Raise only A/B floor local
+  z=.028to.047, retaining actual cutouts/walls and measurable shallow depth.
+- Original B stem is narrower: move its floor probe x=-.06to-.045; do not
+  remove floor-first-hit, counter, shadow or material assertions.
+- Syntax/build/all11units pass. Final complete branding/real recess/framing/
+  fullscreen and pressed-light cases pass20.5s. Bounded actual reference/deep/
+  shallow comparisons reviewed. Delivery and human acceptance remain pending.
+
+Completion log:
+- 2026-11-05: User rejects the custom approximation and confirms original text
+  with real inward grooves. Supersede42's bespoke width/corner requirements
+  with original-font silhouette fidelity; supersede deep engraving bounds
+  only for A/B with actual shallow .004-.012depth checks.
+- 2026-11-05:43locally qualified; normal/public qualification pending.
+  Continued audio distortion remains open awaiting the recording; no audio edits.

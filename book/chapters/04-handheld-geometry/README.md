@@ -61,6 +61,23 @@ remain cap-height islands. Test actual floor width and a rounded B corner next
 to its straight stem; mesh names alone cannot prove either visual property.
 Existing depth, contrast, lighting and press requirements remain in force.
 
+The user then rejects that approximation in workstream 43. The earlier soft
+lettering was actually `bold 95px Arial`, not the shared polygon font or a new
+rounded alphabet. Reuse its original .25x.28 label footprint and -.005 vertical
+placement. March the antialiased mask's half-alpha boundary, stitch its closed
+contours, and distinguish the outer contour from counter islands. The cut,
+floor and walls share those recovered contours; this remains geometry, not a
+texture printed over an uncut cap.
+
+Deep walls still harden the apparent font through shadow and occlusion. Make
+only those engravings shallow, with floors at local z=.047 and actual depth
+between .004 and .012. The earlier deep-groove bounds and bespoke 42 width/
+corner tests are intentionally superseded, not silently removed: real inward
+rays/counters remain, and the actual triangulated floor must overlap an
+independently rendered original glyph by more than 94%. Preserve the shared
+font and all other controls. Browser/system font selection is still an original
+platform dependency; contour recovery does not license or bundle Arial.
+
 The top Zanark mark and lower bezel serve different visual roles. Molded
 manufacturer lettering belongs to the shell. The bezel uses a star-free
 monochrome derivative of the supplied wordmark. Saturated orbital accents are

@@ -7,7 +7,36 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Original soft A/B typography, 2026-11-05
+
+The user rejects the custom rounded shapes from workstream 42 and explicitly
+chooses original soft A/B text **with inward grooves**. Historical `807da8e`
+uses `bold 95px Arial`, a .25x.28 label plane and y=-.005. The current browser's
+same text renderer supplies the glyph mask. Interpolate half-alpha contours
+into actual cap cuts, floors/walls and solid counter islands. No font file is
+bundled; system font selection has the same platform dependency as the original.
+
+Rasterize the actual triangulated floors back into the original label frame
+and compare alpha intersection/union against an independently rendered original
+glyph. The rejected custom font scores 0.603481 (required >0.94); recovered A/B
+floor silhouettes initially score 0.985935/0.991902. This deliberately replaces
+42's custom width/corner assertions with source-reference typography fidelity.
+The narrower original B stem needs its floor probe at x=-.045 rather than -.06;
+floor-first-hit and solid counter semantics remain.
+
+Actual reference/deep/shallow render comparisons show that the old deep walls
+still make the font look harsh. Only A/B floors move from local z=.028 to .047.
+Require genuine inward depth and wall height between .004 and .012, replacing
+the earlier deep-engraving bounds for these letters only. Preserve cap shapes,
+materials, groove shade, counters, shadows, other markings, bezel and motion.
+Syntax/build/all11units pass. Final complete branding/recess/framing/fullscreen
+and pressed-cap lighting cases pass20.5s locally. Normal/public delivery and
+human aesthetic acceptance remain pending at this stage. Audio stays open.
+
 ## Rounded, heavier A/B grooves, 2026-11-05
+
+**Superseded visually:** technically delivered, but the user rejects these
+custom shapes and requests the original soft typography in workstream 43.
 
 The user requests softer letter edges and thicker A strokes, not another cap
 or color change. Dedicated action-button outlines and counters use quadratic/

@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Original reference A/B typography:
+  User rejects42's visual result and explicitly keeps inward grooves while
+  requesting original soft A/B text. Historical807da8eused bold95pxArial,
+  .25x.28plane and y=-.005. Trace its half-alpha contours into actual cutouts,
+  floors/walls and counter islands, not another hand-drawn font. Old custom
+  overlap.603481fails>.94; actual Arial floor overlap.985935/.991902.
+  Deep walls still look harsh; only A/B floor z=.047replaces.028for shallow
+  actual .004-.012engraving. Original B stem requires x=-.045probe instead
+  of-.06. Retain all other physical/color/framing/native gates. Syntax/build/
+  11units pass; final branding/pressed-light cases20.5s pass and bounded actual
+  reference/deep/shallow crops reviewed.43delivery pending; audio stays open.
 - 2026-11-05 / Rounded action-button grooves independently live:
   350cdc6/41996723564passes build/11units/all39browser cases/deployment.
   Independently match28actual public assets; complete actual public branding/

@@ -42,6 +42,7 @@ BowserBoyAdvance workstreams
 40_CURRENT_VISUAL_README.todo - DONE: fresh actual motion/UI media and captions published and verified on GitHub.
 41_OUTLINE_FREE_BEZEL.todo - DONE: shared bezel contour removed, independently verified live.
 42_ROUNDED_AB_GROOVES.todo - DONE: round A/B contours and thicken A strokes, independently verified live.
+43_ORIGINAL_AB_TYPOGRAPHY.todo - IN_PROGRESS: recover reference Arial A/B with softer inward engraving;42's visual result rejected.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

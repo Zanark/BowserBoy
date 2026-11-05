@@ -456,18 +456,43 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
         const hit = ray.intersectObject(cap, true)[0];
         return hit ? { mesh: hit.object, z: cap.worldToLocal(hit.point.clone()).z } : null;
       };
-      const groove = surface(id === 'a' ? 0 : -.06, id === 'a' ? -.02 : 0);
+      const groove = surface(id === 'a' ? 0 : -.045, id === 'a' ? -.02 : 0);
       const blank = surface(.12, 0);
       const counter = surface(id === 'a' ? 0 : -.0075, id === 'a' ? .02 : .04);
-      floor.geometry.computeBoundingBox();
-      const bounds = floor.geometry.boundingBox;
-      const corner = surface(bounds.min.x + .0015, bounds.max.y - .0015);
-      const stem = surface(bounds.min.x + .0015, bounds.max.y - .018);
-      const stroke = [];
-      if (id === 'a') {
-        for (let x = -.1; x < 0; x += .001) {
-          if (surface(x, .01)?.mesh === floor) stroke.push(x);
+      const reference = document.createElement('canvas');
+      reference.width = Math.ceil(128 * .25 / .28);
+      reference.height = 128;
+      const expected = reference.getContext('2d');
+      expected.font = 'bold 95px Arial';
+      expected.fillStyle = '#fff';
+      expected.textAlign = 'center';
+      expected.textBaseline = 'middle';
+      expected.fillText(id.toUpperCase(), reference.width / 2, reference.height / 2, reference.width - 18);
+      const actual = document.createElement('canvas');
+      actual.width = reference.width;
+      actual.height = reference.height;
+      const raster = actual.getContext('2d');
+      const positions = floor.geometry.getAttribute('position');
+      const indices = floor.geometry.getIndex();
+      raster.beginPath();
+      for (let i = 0; i < indices.count; i += 3) {
+        for (let j = 0; j < 3; j++) {
+          const index = indices.getX(i + j);
+          const x = (positions.getX(index) / .25 + .5) * actual.width;
+          const y = (.5 - (positions.getY(index) + .005) / .28) * actual.height;
+          if (j === 0) raster.moveTo(x, y);
+          else raster.lineTo(x, y);
         }
+        raster.closePath();
+      }
+      raster.fillStyle = '#fff';
+      raster.fill();
+      const expectedPixels = expected.getImageData(0, 0, reference.width, reference.height).data;
+      const actualPixels = raster.getImageData(0, 0, actual.width, actual.height).data;
+      let intersection = 0, union = 0;
+      for (let i = 3; i < expectedPixels.length; i += 4) {
+        intersection += Math.min(expectedPixels[i], actualPixels[i]);
+        union += Math.max(expectedPixels[i], actualPixels[i]);
       }
       walls.geometry.computeBoundingBox();
       return {
@@ -478,9 +503,7 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
         contrast: (luminance(cap.material.color) + .05) / (luminance(floor.material.color) + .05),
         unprinted: floor.material.map === null && walls.material.map === null,
         shadowed: floor.receiveShadow && walls.castShadow && walls.receiveShadow,
-        strokeWidth: stroke.length ? stroke.at(-1) - stroke[0] : null,
-        roundedCornerAtCap: corner && blank ? Math.abs(corner.z - blank.z) < .004 && corner.mesh !== floor : false,
-        nearbyStemFloor: stem?.mesh === floor,
+        referenceTypographyOverlap: intersection / union,
       };
     });
     const markings = [
@@ -528,18 +551,17 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   for (const recess of branding.recesses) {
     expect(recess).not.toBeNull();
     expect(recess.floorReached).toBe(true);
-    expect(recess.depth).toBeGreaterThan(.018);
-    expect(recess.depth).toBeLessThan(.035);
+    expect(recess.depth).toBeGreaterThan(.004);
+    expect(recess.depth).toBeLessThan(.012);
     expect(recess.counterAtCap).toBe(true);
-    expect(recess.wallDepth).toBeGreaterThan(.018);
+    expect(recess.wallDepth).toBeGreaterThan(.004);
+    expect(recess.wallDepth).toBeLessThan(.012);
     expect(recess.contrast).toBeGreaterThan(1.5);
     expect(recess.contrast).toBeLessThan(2.5);
     expect(recess.unprinted && recess.shadowed).toBe(true);
+    expect(recess.referenceTypographyOverlap).toBeGreaterThan(.94);
   }
   expect(branding.markings).toHaveLength(8);
-  expect(branding.recesses[0].strokeWidth).toBeGreaterThan(.039);
-  expect(branding.recesses[1].roundedCornerAtCap).toBe(true);
-  expect(branding.recesses[1].nearbyStemFloor).toBe(true);
   for (const marking of branding.markings) {
     expect(marking).not.toBeNull();
     expect(marking.geometry).toBe('ExtrudeGeometry');

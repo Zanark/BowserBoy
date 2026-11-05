@@ -64,6 +64,10 @@ The subsequent rounded/heavier A/B contour refinement also postdates these
 recordings. Existing GIFs/stills retain their source edition; current shape
 qualification belongs to the [verification record](VERIFICATION.md#rounded-heavier-ab-grooves-2026-11-05).
 
+The later [original A/B typography](VERIFICATION.md#original-soft-ab-typography-2026-11-05)
+also postdates these recordings. The user's supplied reference and private
+comparison sheets are not project-authored public media and are not published.
+
 ### Current refresh - manufactured controls and glass
 
 **Previous edition:** retained for its historical evidence and existing links.
