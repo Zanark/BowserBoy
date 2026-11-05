@@ -7,6 +7,29 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Deeper rear engraving, 2026-11-05
+
+The rear artwork frame increases from2.95to3.45units, another17%wider,
+and colored floors move from .006to.024units below the surrounding plastic.
+The existing cutout topology, nested plastic islands, original cover perimeter/
+thickness/grips and exact bright purple texture/material remain unchanged.
+Only the two geometry parameters change; no fake dark overlay or new bevel
+algorithm is introduced.
+
+The tightened integrated regression fails the old2.8686635-unit ink width.
+The new measured ink spans3.3548777units. Eight opaque floor rays and groove
+walls pass .02-.028-unit depth bounds; a blank ray at x1.75 stays outside the
+enlarged ink. Original RGBA, unattenuated material and all unrelated control,
+bezel, fullscreen, notification and framing assertions remain in place.
+Syntax/build/all11units and the affected actual browser case pass (17.1s).
+Matched straight/angled public-baseline/local-candidate inspection crops are
+reviewed; cover bounds/color and141424render triangles remain unchanged.
+The static triangle observation is not a performance benchmark.
+
+Normal hosted qualification, actual public delivery and final records are
+pending. No private-ROM/audio/video replay or human aesthetic acceptance is
+claimed. Earlier public rear figures retain their original capture provenance.
+
 ## Website header shimmer, 2026-11-05
 
 The public header already serves the supplied chrome BowserBOY asset, not the

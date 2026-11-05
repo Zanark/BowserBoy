@@ -104,15 +104,16 @@ The supplied purple console wordmark also appears on the rear shell and
 idle/loading LCD. Website tools/settings panels use the separate chrome logo.
 The front bezel uses the purple logo's distinctive
 lettering with a metallic chroma finish, without stars; screen-only fullscreen shares that artwork.
-The rear logo is about40%larger and inset into the battery-cover plastic with
-shallow engraved edges. Its original purple color and bright lettering are
+The rear logo is now another17%wider, with four-times-deeper cutouts inset
+into the battery-cover plastic. Its original purple color and bright lettering are
 preserved, not darkened to imply engraving; see
-[current qualification](VERIFICATION.md#larger-etched-rear-logo-2026-11-05).
+[current qualification](VERIFICATION.md#deeper-rear-engraving-2026-11-05).
 
 ![Actual current public rear inspection, with separate chrome website and purple console logos](images/readme-back.png?v=bowserboy-public-20261105)
 
 *The purple artwork belongs to this console; the chrome header belongs to the
-website. The larger rear logo sits in shallow cutouts in the battery cover.*
+website. This capture shows the previous rear engraving; the latest geometry
+enlarges it again and deepens the cutouts without changing the cover or artwork.*
 
 A/B letters are softer gray grooves cut into the unchanged cap faces, with inset floors and
 sidewalls rather than raised or printed lettering. D-pad arrows retain their

@@ -25,7 +25,7 @@
 
 ![Actual public rear inspection showing the larger purple logo in the battery cover and the separate chrome website header](docs/images/readme-back.png?v=bowserboy-public-20261105)
 
-*Larger rear artwork. Shallow etched edges. Original purple color and bright lettering preserved.*
+*Original purple color and bright lettering preserved. The rear engraving is now larger and deeper than this capture.*
 
 ## Press. Rock. Release.
 

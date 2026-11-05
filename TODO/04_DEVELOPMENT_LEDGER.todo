@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Deeper rear engraving:
+  User requests another enlargement and more pronounced etching. Retain the
+  existing nested cutout topology, original colored floors and plastic walls;
+  change only frame width2.95to3.45and floor depth.006to.024. Actual ink spans
+  3.3548777units inside the unchanged cover; depth is four times greater.
+  New integrated regression rejects old2.8686635width. Move blank-plastic ray
+  to x1.75 outside new art; preserve all unrelated physical/clock/framing gates.
+  Syntax/build/11units pass; full affected branding case17.1s passes, including
+  eight inset floor hits, wall depth and exact RGBA/unattenuated material.
+  Matched actual straight/angled public-baseline/local-candidate crops reviewed.
+  Plastic color, projected cover bounds and141424render triangles unchanged;
+  not a performance benchmark. No new bevel algorithm or artificial darkening.
+  Normal hosted gate, independent public delivery and final records pending.
 - 2026-11-05 / Website logo shimmer:
   User screenshot shows older purple website header. Independently fetched
   public HTML already points to chrome website-logo.png; do not infer a cache

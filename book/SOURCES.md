@@ -41,6 +41,11 @@ artwork on real inset floors. The
 separates local qualification, actual delivery and aesthetic acceptance.
 Historical rear-view figures keep their original provenance.
 
+Workstream51further enlarges the frame to3.45units and deepens the same
+colored cavities to.024units without changing the artwork or cover. Its
+[separate verification record](../docs/VERIFICATION.md#deeper-rear-engraving-2026-11-05)
+tracks this later parameter change; the original edition and46source stay pinned.
+
 ## Later website identity delta
 
 Workstream47separates chrome website identity

@@ -251,8 +251,8 @@ function actionButtonGlyph(text) {
 }
 
 function engraveRearLogo(cover, texture) {
-  const width = 2.95, height = width * texture.image.height / texture.image.width;
-  const depth = .006, centerY = -.35;
+  const width = 3.45, height = width * texture.image.height / texture.image.width;
+  const depth = .024, centerY = -.35;
   const mask = canvasTexture(512, 171, (context, w, h) => context.drawImage(texture.image, 0, 0, w, h));
   const pixels = mask.image.getContext('2d').getImageData(0, 0, 512, 171).data;
   const contours = alphaContours(pixels, 512, 171, (px, py) =>

@@ -1,0 +1,45 @@
+Status: IN_PROGRESS
+Milestone: Larger purple rear artwork with more pronounced physical engraving.
+Dependencies: 46_LARGER_ETCHED_REAR_LOGO.todo.
+
+Purpose:
+Enlarge the rear logo again and deepen its real cutouts without dimming the
+original supplied purple artwork or altering the battery cover itself.
+
+Tasks:
+- [x] Inspect the existing cover, nested cutouts and original texture material.
+- [x] Make the intended larger/deeper geometry regression fail the old model.
+- [x] Enlarge the artwork frame from2.95to3.45units and deepen cuts .006to.024.
+- [x] Preserve original artwork, plastic islands, cover perimeter and thumb grips.
+- [x] Review matched actual rear and angled old/new inspection crops.
+- [x] Pass syntax/build/units and affected integrated physical-branding test.
+- [ ] Pass the normal complete hosted gate and independently verify production.
+- [ ] Record final delivery and owned continuity.
+
+Acceptance criteria:
+- Ink spans more than3.25and less than3.5units inside the unchanged cover.
+- Eight opaque artwork samples hit actual colored floors .02to.028units
+  below adjacent blank plastic; actual groove walls have the same depth.
+- Original RGBA texture, white untone-mapped basic material and brightness stay.
+- No outer-cover, grip, A/B glyph, bezel, fullscreen, framing or runtime change.
+- Existing original-artwork, control relief and notification tests remain strict.
+- Technical verification and human aesthetic acceptance remain separate.
+
+Completion evidence:
+- New integrated regression rejects old ink width2.8686635; blank reference
+  moves to x1.75, outside the enlarged artwork and inside the retained cap.
+- Only two production parameters change. Measured ink width3.3548777; cuts
+  are four times deeper and remain inside the original cover thickness.
+- Syntax/build/all11units pass; actual integrated branding case passes17.1s.
+  Eight floor rays, actual wall depth, source pixels and bright material pass.
+- Matched straight/angled actual pickup/Inspect crops reviewed. Cover bounds,
+  plastic color3e396e and measured render triangles141424 stay unchanged;
+  that static count is not a performance benchmark. No new bevel topology,
+  fake dark overlay, texture edit or recurring rendering work.
+- Normal hosted gate, actual public checks and final records remain pending.
+- No private-ROM/audio/video replay or fresh human aesthetic acceptance.
+
+Completion log:
+- 2026-11-05: User requests another larger and more deeply etched rear logo.
+  Keep the original colored floors and increase only frame width/cavity depth;
+  preserve prior evidence by capturing this comparison into separate folders.

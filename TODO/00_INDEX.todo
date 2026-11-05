@@ -50,6 +50,7 @@ BowserBOY workstreams
 48_CURRENT_BRAND_DOCUMENTATION.todo - DONE: fresh public README recordings/stills and reconciled guides/book. All25published files match; actual GitHub README renders14embeds. No app changes or repo rename.
 49_VSYNC_AUDIO_WARNING.todo - DONE: warning independently live; 42hosted cases,29public assets and real public native-menu regression pass. Enabled choices/default-off/speed retained.
 50_WEBSITE_LOGO_SHIMMER.todo - DONE: chrome header/six-second shimmer independently live;43hosted cases,29public assets and two public identity/shimmer cases pass.
+51_DEEPER_REAR_ENGRAVING.todo - IN_PROGRESS: another17%wider rear logo and four-times-deeper cutouts locally verified; normal hosted/public qualification pending.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

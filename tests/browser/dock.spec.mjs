@@ -543,7 +543,7 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
     originalLogo.drawImage(brandImage, 0, 0, backImage.width, backImage.height);
     const originalPixels = originalLogo.getImageData(0, 0, backImage.width, backImage.height).data;
     const towardBack = new Vector3(0, 0, 1).transformDirection(cover.matrixWorld);
-    const blank = new Raycaster(cover.localToWorld(new Vector3(1.65, -.35, -1)), towardBack)
+    const blank = new Raycaster(cover.localToWorld(new Vector3(1.75, -.35, -1)), towardBack)
       .intersectObject(root, true)[0];
     const backPositions = back.geometry.getAttribute('position');
     const backUv = back.geometry.getAttribute('uv');
@@ -679,18 +679,18 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
   expect(branding.depth).toBeGreaterThan(.018);
   expect(branding.samePlastic).toBe(true);
   expect(branding.sameFullscreenWordmark).toBe(true);
-  expect(branding.rear.width).toBeGreaterThan(2.5);
-  expect(branding.rear.width).toBeLessThan(3.3);
+  expect(branding.rear.width).toBeGreaterThan(3.25);
+  expect(branding.rear.width).toBeLessThan(3.5);
   expect(branding.rear.parented && branding.rear.originalPixels && branding.rear.unattenuated).toBe(true);
   expect(branding.rear.blank).toBe('Engraved battery-cover face');
   expect(branding.rear.depths).toHaveLength(8);
   expect(branding.rear.floorHits.every(Boolean)).toBe(true);
   for (const depth of branding.rear.depths) {
-    expect(depth).toBeGreaterThan(.004);
-    expect(depth).toBeLessThan(.01);
+    expect(depth).toBeGreaterThan(.02);
+    expect(depth).toBeLessThan(.028);
   }
-  expect(branding.rear.wallDepth).toBeGreaterThan(.004);
-  expect(branding.rear.wallDepth).toBeLessThan(.01);
+  expect(branding.rear.wallDepth).toBeGreaterThan(.02);
+  expect(branding.rear.wallDepth).toBeLessThan(.028);
   expect(branding.microLabels).toEqual([false, false]);
   expect(branding.recesses).toHaveLength(2);
   for (const recess of branding.recesses) {
