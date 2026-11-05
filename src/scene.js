@@ -14,6 +14,7 @@ export class HandheldScene {
     this.onView = onView;
     this.onError = onError;
     this.mode = 'table';
+    this.nativeBusy = false;
     this.reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -396,7 +397,7 @@ export class HandheldScene {
       this.nextPaint = time + (delta > .05 ? Math.min(recoveryLimit, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
-    const paintDue = time >= (this.nextPaint ?? 0) && !document.querySelector('dialog[open]');
+    const paintDue = time >= (this.nextPaint ?? 0) && !this.nativeBusy && !document.querySelector('dialog[open]');
     const cartridgeMotion = this.cartridgeMotion;
     // Present the next capped clock step; commit it only after an actual paint.
     const cartridgeStep = cartridgeMotion && paintDue ? Math.min(500, Math.max(0,

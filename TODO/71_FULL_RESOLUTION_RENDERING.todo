@@ -17,6 +17,7 @@ Tasks
 [x] Reserve native-core recovery time after costly full-resolution playing draws.
 [x] Check playing-mode recovery and isolate native speed timing from room draws.
 [x] Present the insertion clock's finishing pose in the same actual paint.
+[x] Prioritize pending live-native operations over expensive room paints.
 [ ] Publish through the full normal gate and verify actual public sharpness.
 
 Acceptance criteria
@@ -45,6 +46,11 @@ failsoldsource1.63472vsseated1.52; presentnextcappedstep andcommitonlyafterdraw.
 Keep500mscap/firstpose/intermediatestages/fullresolution. Fourcorrectedcases
 pass2.9m: renderer/bothinsertions includingreload/originalnativeflow.
 Build/syntax/12units pass; hosted/publicproof stillpending.
+42113008812 passes52/53; automatic checkpoint timestamp wait fails20s.
+No storageerror/autosaveoff; trace database calls block6.0-6.8s. Yieldroom
+paints duringrunning&&busy, retainingcore/input/startupinsertion. Actual2x
+regression failsoldsource's busy paint; correctedfiveSwiftShadercasespass4.4m.
+Build/syntax/12units pass; all deadlines retained, hosted/publicproofpending.
 
 Completion log
 --------------
@@ -54,3 +60,5 @@ adaptive-resolution tradeoff entirely; no human acceptance is presumed.
 recovery scheduling. Correct native-only performance fixture isolation.
 2026-11-06: Correct the insertion's one-presented-frame lag and synthetic
 transition timestamp without bypassing the full-resolution release gate.
+2026-11-06: Prioritize pending native operations without changing resolution,
+emulation, input, or startup insertion.

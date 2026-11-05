@@ -261,6 +261,22 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(insertion.presented.at(-1), 'The finishing paint must present the seated pose, not the previous clock step').toBe(1.52);
   expect(insertion.state).toBe('seated');
   expect(insertion.ratio).toBe(2);
+  const nativeOperation = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const before = view.renderer.info.render.frame;
+    view.nativeBusy = true;
+    view.changed = true;
+    view.renderedLastFrame = false;
+    view.nextPaint = 0;
+    view.render(view.lastRender + 16);
+    const during = view.renderer.info.render.frame;
+    view.nativeBusy = false;
+    view.render(view.lastRender + 16);
+    return { before, during, after: view.renderer.info.render.frame, ratio: view.renderer.getPixelRatio() };
+  });
+  expect(nativeOperation.during, 'Room paints must yield while a native operation is pending').toBe(nativeOperation.before);
+  expect(nativeOperation.after).toBeGreaterThan(nativeOperation.before);
+  expect(nativeOperation.ratio).toBe(2);
 });
 
 test('paper lantern gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {

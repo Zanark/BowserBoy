@@ -86,6 +86,23 @@ four explicit SwiftShader cases in 2.9 minutes. Build, syntax and all 12 units
 pass. No deadline, multiplier bound, feature, geometry or artwork is removed.
 The follow-up normal hosted gate and public sharpness proof remain pending.
 
+Run `42113008812` passes 52/53, including insertion and renderer regressions.
+The remaining original native flow times out waiting for an automatic
+checkpoint timestamp to change within its existing 20-second poll. Its
+snapshot has autosave enabled, controls enabled and no storage error; trace
+database evaluations take 6.0-6.8 seconds. Their serialized result is only
+961 bytes, disproving the investigated large-checkpoint-transfer explanation.
+
+Room paints now yield while the existing operation lifecycle is busy on an
+already-running native core. The core/input continue; startup without a live
+core still animates insertion. An actual 2x renderer regression fails the old
+source's extra paint while busy, then verifies suppressed draws, resumed
+painting and unchanged density. Five corrected SwiftShader cases pass in
+4.4 minutes: the renderer, original native autosave/import/isolation flow,
+both insertion viewports and native speed/fullscreen retained-LCD flow.
+Build, syntax and all 12 units pass. All polling, capture and release deadlines
+remain unchanged. Hosted gate and public qualification are still pending.
+
 ## Movable dock and inspection branding, 2026-11-06
 
 The dock has a dedicated pointer/touch grip, collapse/expand, keyboard arrows

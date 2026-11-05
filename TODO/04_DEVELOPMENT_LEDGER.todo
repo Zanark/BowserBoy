@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Native-operation priority without quality reduction:
+  Run42113008812 passes52/53, includinginsertion/rendererregressions. Only
+  originalnativeautosavetimestamp20spoll fails; snapshotautosaveon/controls
+  enabled/noerrors. TracedDBcallsblocked6.0-6.8s, resultonly961bytes disproves
+  guessedlargecheckpointCDPtransfercause. Suspendroompaintswhileexisting
+  operationbusyANDnativerunning, notcore/input/startupinsertion. Actual2x
+  regression failsoldsource'sextrapaint; correctedfiveSwiftShadercasespass
+  4.4m(renderer/nativeautosave-import-isolation/bothinsertions/fullscreenLCD).
+  Build/syntax/12units pass. No deadlines/gates/quality relaxed; hosted/public
+  qualification remains pending.
 - 2026-11-06 / Present the insertion clock's current capped step:
   Follow-up42110569140 passes51/53, includingallthreepriornativefailures.
   Desktopreloadinsertion15s andnewplayingfixture fail. Rebasefaketime when

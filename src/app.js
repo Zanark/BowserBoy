@@ -208,6 +208,7 @@ function updateControls() {
   $('quick-screen-fullscreen').disabled = !running || busy;
   for (const id of ['quick-controls', 'quick-slots', 'quick-fullscreen']) $(id).disabled = busy;
   $('power-led').classList.toggle('on', powered);
+  if (view) view.nativeBusy = running && busy;
   view?.setPower(powered);
   renderQuickControls();
 }

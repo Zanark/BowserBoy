@@ -423,6 +423,11 @@ Unchanged shadows are cached and idle static scenes stop painting once motion
 and illumination settle. Model, lamp, power, resize and button changes invalidate
 the relevant state. Modal tools suspend 3D uploads/readbacks and painting behind
 their blurred backdrop, **not** the native game.
+Pending operations on an already-running native core also suspend room paints.
+`updateControls` synchronizes `view.nativeBusy` with `running && busy`; the
+existing operation lifecycle clears it on success or error. This gives
+captures, restores and storage writes priority without pausing emulation or
+input. Startup without a running core still presents cartridge insertion.
 
 Handheld sharpness is mandatory. The backing pixel ratio stays at its original
 device-aware setting, `min(devicePixelRatio, 2)`: slow frames and scheduling
