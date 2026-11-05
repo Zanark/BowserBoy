@@ -5,7 +5,7 @@
 ## Website and console names
 
 **BowserBOY** is the website/table, using the supplied chrome sparkle logo
-in its header and tools/settings panels. **BowserBOY ADVANCED** is the first
+on the table and in tools/settings panels. **BowserBOY ADVANCED** is the first
 console: the current GBA handheld. Its original purple artwork still reads
 BowserBOY ADVANCE and stays unchanged on its rear and idle/loading/startup LCD.
 The physical bezel lettering also stays unchanged. Additional consoles on the
@@ -25,7 +25,7 @@ another 20% smaller in both views, now without the exterior light contour.
 Frosted overlays do not move the camera;
 sustained audio buffering, darker D-pad arrows and play-only header hiding remain.
 The README's current interaction recordings and dedicated stills are actual
-public-site captures of this qualified application, including the chrome
+local-build captures, with their actual source editions recorded in Media, including the chrome
 website header, original A/B contours, metallic bezel and larger etched rear
 logo. Earlier `8a1d6a3` local recordings remain documented as a previous edition.
 Most inherited guide motion/pose/detail figures belong
@@ -48,8 +48,10 @@ is separate from historical pictures explicitly labeled below.
 
 *The supplied transparent chrome website logo, preserved byte-for-byte.
 A restrained neutral shadow separates it from the warm room without tinting
-the silver artwork purple. It is hidden in play view and returns on the desk
-or in Inspect; notifications retain their existing header position. A soft
+the silver artwork purple. It is hidden in play view and returns on the desk.
+Inspect instead shows the approved purple console logo with orbiting stars;
+reduced motion uses static purple artwork. Notifications retain their existing
+header position. A soft
 silver highlight and glow sweep left to right for 1.8 seconds every six seconds.
 The shimmer pauses while hidden and is disabled for reduced-motion users.*
 
@@ -119,8 +121,8 @@ preserved, not darkened to imply engraving; see
 
 ![Current-build rear inspection with the larger, deeper engraving](images/readme-back.png?v=readme-refresh-20261105)
 
-*The purple artwork belongs to this console; the chrome header belongs to the
-website. This refreshed local capture includes the enlarged, deeper cutouts,
+*The purple artwork belongs to this console, including its animated inspection
+header; chrome remains the table identity. The local capture includes the enlarged, deeper cutouts,
 without changing the cover or artwork.*
 
 A/B letters are softer gray grooves cut into the unchanged cap faces, with inset floors and
@@ -247,7 +249,15 @@ Rotating the model naturally hides its front-facing game display.*
 ![The themed icon quick-access dock on the deployed website](images/quick-controls.png)
 
 *Named, keyboard-accessible 44px icon controls, with hover/focus labels. On
-narrow phones the same actions fit two rows without covering the LCD.*
+phones the same actions fit two rows; 320px uses three after adding dock controls.*
+
+Drag the dotted grip with mouse or touch to move the dock. Its arrow collapses
+the actions into a small movable grip/expander; click again to restore them.
+Focus the grip and use arrows to move, Shift for larger steps, or Home to
+restore the default position. Escape cancels an active drag instead of opening
+settings. Position and collapse last for this page session, not across reloads.
+Expansion, resize and fullscreen changes keep the dock within the player.
+The settings drawer's chrome logo is centered independently of this position.
 
 The dock exposes inspection, put-down, lamp/room lighting and Cartridges, plus
 whole-desk fullscreen, separate **Screen fullscreen**, **1x/2x/3x/4x native speed**,

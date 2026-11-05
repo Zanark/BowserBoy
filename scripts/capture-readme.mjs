@@ -187,6 +187,29 @@ try {
   await wait(1000);
   end('settings-backdrop');
 
+  begin('movable-dock');
+  await wait(700);
+  let grip = await page.locator('#dock-drag').boundingBox();
+  await page.mouse.move(grip.x + 22, grip.y + 22);
+  await page.mouse.down();
+  await page.mouse.move(grip.x - 48, grip.y - 98, { steps: 24 });
+  await page.mouse.up();
+  await wait(800);
+  await page.locator('#dock-toggle').click();
+  await wait(800);
+  grip = await page.locator('#dock-drag').boundingBox();
+  await page.mouse.move(grip.x + 22, grip.y + 22);
+  await page.mouse.down();
+  await page.mouse.move(900, 260, { steps: 30 });
+  await page.mouse.up();
+  await wait(800);
+  await page.locator('#dock-toggle').click();
+  await wait(800);
+  await page.locator('#dock-drag').press('Home');
+  await page.mouse.move(10, 10);
+  await wait(800);
+  end('movable-dock');
+
   await page.mouse.move(10, 10);
   await page.locator('.scene-actions').screenshot({ path: resolve(output, 'readme-dock.png') });
   await page.locator('#tools-open').click();

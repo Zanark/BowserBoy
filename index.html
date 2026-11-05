@@ -15,7 +15,7 @@
     <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
     <main id="player" class="desk" aria-label="BowserBOY console table: BowserBOY ADVANCED GBA player">
       <div id="scene" data-view="table"></div>
-      <header class="desk-heading"><div class="desk-brand"><h1><img src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732"></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div><span>NO. 001 / INFINITE BATTERY</span></header>
+      <header class="desk-heading"><div class="desk-brand"><h1><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/website-logo.png"><img src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732"></picture></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div><span>NO. 001 / INFINITE BATTERY</span></header>
       <p id="scene-error" role="alert" hidden></p>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
@@ -31,7 +31,11 @@
         <button id="hardware-power" aria-label="Turn power on" aria-pressed="false" title="Power on" disabled hidden></button>
       </div>
       <p id="scene-hint" class="scene-hint" aria-live="polite">A quiet moment. Click the handheld to pick it up.</p>
-      <nav class="scene-actions" aria-label="Handheld and cartridge tools">
+      <nav id="action-dock" class="scene-actions" aria-label="Handheld and cartridge tools">
+        <button id="dock-drag" aria-describedby="dock-help"></button>
+        <button id="dock-toggle" aria-expanded="true" aria-controls="dock-actions"></button>
+        <span id="dock-help" class="sr-only">Drag to move the dock, or use arrow keys while focused. Home resets its position. Escape cancels a drag.</span>
+        <div id="dock-actions" class="dock-actions">
         <button id="pickup">Pick up</button>
         <button id="inspect" aria-pressed="false" hidden>Inspect</button>
         <button id="put-down" hidden>Put down</button>
@@ -48,6 +52,7 @@
         <button id="quick-restart"></button>
         <span class="action-divider" aria-hidden="true"></span>
         <button id="tools-open" aria-label="Open cartridge and settings" aria-haspopup="dialog" aria-controls="tools">Cartridges <kbd>Esc</kbd></button>
+        </div>
       </nav>
       <div id="speed-menu" popover role="dialog" aria-label="Emulation speed" class="speed-menu">
         <p class="eyebrow">PICK YOUR PACE</p>

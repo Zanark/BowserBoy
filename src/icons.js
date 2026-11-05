@@ -1,4 +1,7 @@
 const paths = {
+  drag: 'M8 5h.01M16 5h.01M8 12h.01M16 12h.01M8 19h.01M16 19h.01',
+  collapse: 'm6 9 6 6 6-6',
+  expand: 'm6 15 6-6 6 6',
   pickup: 'M8 13V6a2 2 0 0 1 4 0v6m0-4a2 2 0 0 1 4 0v4m0-2a2 2 0 0 1 4 0v5l-4 5H9l-6-8a2 2 0 0 1 3-2l2 2',
   inspect: 'M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm6-2 6 6M6 10h8m-4-4v8',
   down: 'M3 18h18M5 18v3m14-3v3M7 6h10l3 8H4l3-8zm1 3v3m-1-1h2m6-1h.01m2 1h.01',

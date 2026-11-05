@@ -1,0 +1,39 @@
+Status: IN_PROGRESS
+Milestone: Animated console identity in Inspect and centered settings branding.
+Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo,53_README_LOGO_GLOWS.todo.
+
+Purpose
+-------
+Show the requested purple console artwork and revolving stars while inspecting
+that console, without replacing the chrome website/table identity.
+
+Tasks
+-----
+[x] Reuse the approved 72-frame animated console PNG without regenerating art.
+[x] Copy only that explicit asset into the static build via site-files mapping.
+[x] Show it only in Inspect; restore chrome on table and hide heading in play.
+[x] Disable the chrome shimmer overlay on the purple console image.
+[x] Honor reduced motion with the original static purple console artwork.
+[x] Center only the cartridge/settings drawer's chrome logo.
+[x] Check actual browser animation/static fallback, mode returns and phone fit.
+[ ] Refresh affected inspection footage/stills and qualify the normal release.
+
+Acceptance criteria
+-------------------
+Exact approved artwork, visible revolving stars in ordinary motion, no new
+render loop or emulator change. Original panel art remains chrome and centered.
+Public build includes no general docs directory or user ROM.
+
+Completion evidence
+-------------------
+Actual Edge logo screenshots change across280ms; reduced-motion screenshots
+remain identical. Mode/table/play and1440/390/320width checks pass. Header CSS
+does not layer neutral shimmer over console art. Source PNG1080x420,72frames,
+infinite loop,8,969,021bytes. Centering allows one physical pixel for the
+drawer's asymmetric border rather than treating half-pixel rounding as failure.
+Existing chrome separation/shimmer tests pass. No supplied ROM execution.
+
+Completion log
+--------------
+2026-11-06: User adds inspection-brand and settings-logo-centering requests
+during the movable-dock release. Local implementation qualified; live pending.

@@ -45,7 +45,93 @@ for (const [id, name, label] of [
   ['quick-fullscreen', 'fullscreen', 'Fullscreen player'], ['quick-controls', 'keys', 'Change control keybindings'],
   ['quick-screen-fullscreen', 'screen', 'Fullscreen game screen'], ['screen-focus-close', 'close', 'Exit screen fullscreen'],
   ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
+  ['dock-drag', 'drag', 'Move tools dock'], ['dock-toggle', 'collapse', 'Collapse tools dock'],
 ]) icon($(id), name, label);
+
+const dock = $('action-dock');
+const dockHandle = $('dock-drag');
+let dockPosition = null;
+let dockDrag = null;
+function positionDock(x, y) {
+  const bounds = $('player').getBoundingClientRect();
+  const margin = Math.min(8, Math.max(0, (bounds.width - dock.offsetWidth) / 2));
+  dockPosition = {
+    x: Math.max(margin, Math.min(bounds.width - dock.offsetWidth - margin, x)),
+    y: Math.max(8, Math.min(bounds.height - dock.offsetHeight - 8, y)),
+  };
+  dock.dataset.moved = '';
+  dock.style.setProperty('--dock-x', `${dockPosition.x}px`);
+  dock.style.setProperty('--dock-y', `${dockPosition.y}px`);
+}
+function finishDockDrag(event) {
+  if (!dockDrag || (event && event.pointerId !== dockDrag.id)) return;
+  const { id } = dockDrag;
+  dockDrag = null;
+  delete dock.dataset.dragging;
+  if (dockHandle.hasPointerCapture(id)) dockHandle.releasePointerCapture(id);
+}
+function resetDockPosition() {
+  finishDockDrag();
+  dockPosition = null;
+  delete dock.dataset.moved;
+}
+function closeSpeedMenu() {
+  if ($('speed-menu').matches(':popover-open')) $('speed-menu').hidePopover();
+}
+dockHandle.addEventListener('pointerdown', (event) => {
+  if (!event.isPrimary || event.button !== 0 || dockDrag) return;
+  event.preventDefault();
+  closeSpeedMenu();
+  const box = dock.getBoundingClientRect();
+  const bounds = $('player').getBoundingClientRect();
+  dockDrag = { id: event.pointerId, x: event.clientX, y: event.clientY,
+    left: box.left - bounds.left, top: box.top - bounds.top, previous: dockPosition };
+  dock.dataset.dragging = '';
+  dockHandle.focus({ preventScroll: true });
+  dockHandle.setPointerCapture(event.pointerId);
+});
+dockHandle.addEventListener('pointermove', (event) => {
+  if (dockDrag?.id !== event.pointerId) return;
+  positionDock(dockDrag.left + event.clientX - dockDrag.x, dockDrag.top + event.clientY - dockDrag.y);
+});
+for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) dockHandle.addEventListener(name, finishDockDrag);
+dockHandle.addEventListener('keydown', (event) => {
+  const directions = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+  if (!directions[event.code] && event.code !== 'Home') return;
+  if (event.altKey || event.ctrlKey || event.metaKey) return;
+  event.preventDefault();
+  event.stopPropagation();
+  closeSpeedMenu();
+  if (event.code === 'Home') resetDockPosition();
+  else {
+    finishDockDrag();
+    const box = dock.getBoundingClientRect();
+    const bounds = $('player').getBoundingClientRect();
+    const [x, y] = directions[event.code];
+    const step = event.shiftKey ? 40 : 10;
+    positionDock(box.left - bounds.left + x * step, box.top - bounds.top + y * step);
+  }
+});
+$('dock-toggle').addEventListener('click', () => {
+  finishDockDrag();
+  closeSpeedMenu();
+  const collapsed = !$('dock-actions').hidden;
+  $('dock-actions').hidden = collapsed;
+  dock.toggleAttribute('data-collapsed', collapsed);
+  $('dock-toggle').setAttribute('aria-expanded', String(!collapsed));
+  icon($('dock-toggle'), collapsed ? 'expand' : 'collapse', `${collapsed ? 'Expand' : 'Collapse'} tools dock`);
+});
+document.querySelector('.skip-link').addEventListener('click', () => {
+  if ($('dock-actions').hidden) $('dock-toggle').click();
+});
+function fitDock() {
+  finishDockDrag();
+  if (dockPosition) positionDock(dockPosition.x, dockPosition.y);
+}
+new ResizeObserver(fitDock).observe(dock);
+window.addEventListener('resize', fitDock);
+window.addEventListener('blur', () => finishDockDrag());
+document.addEventListener('fullscreenchange', fitDock);
 
 function renderQuickControls() {
   const number = MANUAL_SLOTS.indexOf(selectedSlot) + 1;
@@ -821,6 +907,12 @@ const keyboard = bindKeyboard(window, {
   getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
   onMenu: () => {
+    if (dockDrag) {
+      const previous = dockDrag.previous;
+      resetDockPosition();
+      if (previous) positionDock(previous.x, previous.y);
+      return true;
+    }
     if (document.fullscreenElement === $('screen-focus')) { closeScreenFullscreen(); return true; }
     if ($('tools').open || $('help').open || $('frame-host').open) return false;
     openTools();
@@ -882,6 +974,15 @@ try {
     onLamp: toggleLamp,
     onView: (mode, moving) => {
       releaseHostInputs();
+      const heading = document.querySelector('.desk-heading h1');
+      const consoleBrand = mode === 'inspecting';
+      heading.toggleAttribute('data-console', consoleBrand);
+      const image = heading.querySelector('img');
+      image.setAttribute('src', consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
+      image.alt = consoleBrand ? 'BowserBOYADVANCED' : 'BowserBOY';
+      image.width = consoleBrand ? 1080 : 2148;
+      image.height = consoleBrand ? 420 : 732;
+      heading.querySelector('source').srcset = consoleBrand ? './assets/logo.png' : './assets/website-logo.png';
       $('pickup').hidden = mode !== 'table';
       $('inspect').hidden = $('put-down').hidden = mode === 'table';
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;

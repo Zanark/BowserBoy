@@ -16,7 +16,8 @@ still reads ADVANCE. That artwork is not the website's chrome logo.
 
 | Surface | Asset or implementation | Current ownership |
 |---|---|---|
-| Website header, tools/settings panels, README lead | `assets/website-logo.png` | BowserBOY chrome identity |
+| Table header, tools/settings panels, README lead | `assets/website-logo.png` | BowserBOY chrome identity |
+| Inspection header | `assets/inspection-logo.png`, explicitly copied from the approved README APNG | Purple console identity with orbiting stars; static `assets/logo.png` under reduced motion |
 | GBA rear shell and idle/loading/startup LCD | `assets/logo.png` through `src/brand.js` | Original purple console identity |
 | GBA bezel and LCD-fullscreen bezel | Letter-only metallic texture | Console presentation, not website branding |
 
@@ -493,7 +494,15 @@ Unsupported/refused requests and copy/exit failures report explicit errors.
 The responsive quick dock reuses those same handlers for fullscreen, keybindings,
 checked save/load, autosave and restart. `src/icons.js` supplies consistent SVGs,
 accessible names and tooltip labels. Each button retains a 44px target; the 320px
-layout wraps into two rows. Manual slot selection opens/focuses the existing
+layout wraps into three rows with the two added dock controls (two at390px).
+The dotted grip captures only its own primary pointer; ordinary action buttons
+retain their original handlers. Position is player-relative and clamped after
+drag, expansion, resize and fullscreen. ResizeObserver observes only dock size,
+not every animation frame. A separate hidden content wrapper removes collapsed
+actions from focus order. Grip arrows/Shift/Home provide keyboard movement/reset.
+The existing capture-phase Escape menu handler cancels a drag before opening
+settings; pointer cancel/lost capture/blur end movement. State is page-local.
+Manual slot selection opens/focuses the existing
 drawer selector rather than introducing a second save implementation.
 
 Speed choices update validated native `ff-ratio`, `fastForward` and `slowMotion`
@@ -729,7 +738,7 @@ The server is loopback-only and serves only public allowlisted files. The
 build replaces only the generated `dist` directory and adds `.nojekyll`.
 Documentation/private context cannot enter the deployed artifact through a
 recursive repository copy.
-The website's BowserBOY header and both panel logos use the supplied2148x732
+The website's table header and both panel logos use the supplied2148x732
 RGBA chrome orbit and sparkle artwork in `assets/website-logo.png`; intrinsic HTML dimensions
 match it. A neutral header shadow replaces the previous violet glow.
 The header adds a CSS-only left-to-right shimmer every six seconds: a duplicate

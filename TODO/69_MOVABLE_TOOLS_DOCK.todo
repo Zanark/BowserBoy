@@ -1,0 +1,41 @@
+Status: IN_PROGRESS
+Milestone: Movable, collapsible tools with an actual README demonstration.
+Dependencies: 66_SETTINGS_BACKDROP_DISMISS.todo,68_COMPLETE_README_REFRESH.todo.
+
+Purpose
+-------
+Let the user reposition or hide the bottom action strip without losing tools.
+
+Tasks
+-----
+[x] Add a dedicated mouse/touch grip and accessible collapse/expand control.
+[x] Clamp to player bounds after moving, expanding, resizing and fullscreen.
+[x] Support arrow-key movement, Shift for larger steps and Home to reset.
+[x] Preserve actions and skip-link access; Escape cancels a drag before menus.
+[x] Exercise real touch cancellation, desktop movement and small-phone fit.
+[ ] Record and review actual movement/collapse GIF; add it to the README.
+[ ] Publish and monitor this deployment under the user's renewed authorization.
+
+Acceptance criteria
+-------------------
+No accidental game action from dragging. Hidden actions leave the focus order.
+The collapsed grip/expander remain reachable. Moving/resize never strands the
+dock offscreen. Existing handlers, 44px targets and power-switch clearance stay.
+Default position/collapse are page-session state, not new stored preferences.
+README demonstration is actual footage, not a mockup or supplied-ROM test.
+
+Completion evidence
+-------------------
+Desktop movement/collapse/expand/cancel/Home and real CDP touch movement/cancel
+pass locally. Responsive existing test retains all controls and power clearance;
+390px uses two rows, 320px uses three with the two new controls.
+First Escape attempt exposed the existing capture-phase menu handler; resolve
+cancellation in that existing handler, not a competing target-only listener.
+Initial CLI backslash test-file expression matched no tests; use dock.spec.mjs.
+Skip-link test activates the actual focused link rather than assuming browser
+Shift-Tab order. Syntax/build/12 units pass; capture/public release pending.
+
+Completion log
+--------------
+2026-11-06: User requests movable/collapsible dock and a README GIF, then
+explicitly resumes monitoring/fixing issues for this deployment.

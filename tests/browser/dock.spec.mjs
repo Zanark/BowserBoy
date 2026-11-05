@@ -5,6 +5,113 @@ import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 
+test('tools dock drags, collapses, cancels and resets without firing its actions', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  const dock = page.locator('#action-dock');
+  const handle = page.getByRole('button', { name: 'Move tools dock', exact: true });
+  const toggle = page.locator('#dock-toggle');
+  const original = await dock.boundingBox();
+  const grip = await handle.boundingBox();
+  await page.mouse.move(grip.x + 22, grip.y + 22);
+  await page.mouse.down();
+  await page.mouse.move(grip.x + 122, grip.y - 178, { steps: 8 });
+  await page.mouse.up();
+  const moved = await dock.boundingBox();
+  expect(moved.x).toBeCloseTo(original.x + 100, 0);
+  expect(moved.y).toBeCloseTo(original.y - 200, 0);
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await expect(page.locator('#tools')).toBeHidden();
+  await page.locator('#room-toggle').click();
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(toggle).toHaveAccessibleName('Expand tools dock');
+  await expect(page.locator('#dock-actions')).toBeHidden();
+  expect((await dock.boundingBox()).width).toBeLessThan(120);
+  await expect(handle).toBeVisible();
+  const collapsedGrip = await handle.boundingBox();
+  await page.mouse.move(collapsedGrip.x + 22, collapsedGrip.y + 22);
+  await page.mouse.down();
+  await page.mouse.move(1438, 1098, { steps: 6 });
+  await page.mouse.up();
+  await toggle.click();
+  const expanded = await dock.boundingBox();
+  expect(expanded.x + expanded.width).toBeLessThanOrEqual(1432);
+  expect(expanded.y + expanded.height).toBeLessThanOrEqual(1092);
+  await page.locator('#quick-controls').click();
+  await expect(page.locator('#tools')).toBeVisible();
+  await page.locator('#tools-close').click();
+  await handle.focus();
+  const beforeKey = await dock.boundingBox();
+  await handle.press('Shift+ArrowUp');
+  expect((await dock.boundingBox()).y).toBeCloseTo(beforeKey.y - 40, 0);
+  const beforeCancel = await dock.boundingBox();
+  const nextGrip = await handle.boundingBox();
+  await page.mouse.move(nextGrip.x + 22, nextGrip.y + 22);
+  await page.mouse.down();
+  await page.mouse.move(30, 30, { steps: 6 });
+  await page.keyboard.press('Escape');
+  await page.mouse.up();
+  expect((await dock.boundingBox()).x).toBeCloseTo(beforeCancel.x, 0);
+  expect((await dock.boundingBox()).y).toBeCloseTo(beforeCancel.y, 0);
+  await expect(page.locator('#tools')).toBeHidden();
+  await handle.press('Home');
+  expect((await dock.boundingBox()).x).toBeCloseTo(original.x, 0);
+  expect((await dock.boundingBox()).y).toBeCloseTo(original.y, 0);
+  await toggle.click();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#tools')).toBeVisible();
+  await page.locator('#tools-close').click();
+  await expect(page.locator('#scene-canvas')).toBeFocused();
+  await page.locator('.skip-link').press('Enter');
+  await expect(page.locator('#dock-actions')).toBeVisible();
+  await expect(page.locator('#tools-open')).toBeFocused();
+  await page.screenshot({ path: test.info().outputPath('movable-dock-desktop.png') });
+});
+
+test('tools dock supports real touch dragging and stays reachable after cancellation and resize', async ({ browser }) => {
+  const context = await browser.newContext({
+    baseURL: test.info().project.use.baseURL, viewport: { width: 390, height: 844 }, hasTouch: true,
+  });
+  try {
+    const page = await context.newPage();
+    await page.goto('./');
+    await ready(page);
+    const dock = page.locator('#action-dock');
+    const handle = page.locator('#dock-drag');
+    const touch = await context.newCDPSession(page);
+    const grip = await handle.boundingBox();
+    const original = await dock.boundingBox();
+    const x = grip.x + 22, y = grip.y + 22;
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: y - 180 }] });
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    expect((await dock.boundingBox()).y).toBeCloseTo(original.y - 180, 0);
+    await page.locator('#dock-toggle').tap();
+    const collapsed = await handle.boundingBox();
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchStart',
+      touchPoints: [{ x: collapsed.x + 22, y: collapsed.y + 22 }] });
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 388, y: 842 }] });
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchCancel', touchPoints: [] });
+    await expect(dock).not.toHaveAttribute('data-dragging', '');
+    const cancelled = await dock.boundingBox();
+    await page.mouse.move(50, 50);
+    expect((await dock.boundingBox()).y).toBeCloseTo(cancelled.y, 0);
+    for (const [width, height] of [[320, 568], [844, 390], [390, 844]]) {
+      await page.setViewportSize({ width, height });
+      await page.locator('#dock-toggle').tap();
+      await expect.poll(async () => {
+        const box = await dock.boundingBox();
+        return box.x >= 0 && box.y >= 0 && box.x + box.width <= width && box.y + box.height <= height;
+      }).toBe(true);
+      await page.locator('#dock-toggle').tap();
+    }
+    await page.locator('#dock-toggle').tap();
+    await page.screenshot({ path: test.info().outputPath('movable-dock-phone.png') });
+  } finally { await context.close(); }
+});
+
 test('settings drawer closes on a backdrop click but not inside clicks or drags from inside', async ({ page }) => {
   await page.goto('./');
   await ready(page);
@@ -12,6 +119,9 @@ test('settings drawer closes on a backdrop click but not inside clicks or drags 
   for (const [width, height] of [[1440, 1100], [844, 390]]) {
     await page.setViewportSize({ width, height });
     await page.locator('#tools-open').click();
+    const logo = await drawer.locator('.panel-logo').boundingBox();
+    const panel = await drawer.boundingBox();
+    expect(Math.abs(logo.x + logo.width / 2 - panel.x - panel.width / 2)).toBeLessThanOrEqual(1);
     const box = await drawer.boundingBox();
     const outside = { x: box.x / 2, y: height / 2 };
     const inside = { x: box.x + 5, y: 60 };
@@ -35,6 +145,48 @@ test('settings drawer closes on a backdrop click but not inside clicks or drags 
     await page.keyboard.press('Escape');
     await expect(drawer).toBeHidden();
   }
+});
+
+test('inspection shows the animated purple console logo, with static reduced-motion and separate table branding', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('./');
+  await ready(page);
+  const heading = page.locator('.desk-heading h1');
+  const image = heading.locator('img');
+  await expect(image).toHaveAttribute('src', './assets/website-logo.png');
+  await page.locator('#pickup').click();
+  await expect(heading).toBeHidden();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await expect(image).toHaveAttribute('src', './assets/inspection-logo.png');
+  await expect(image).toHaveAttribute('alt', 'BowserBOYADVANCED');
+  expect(await image.evaluate(async image => {
+    await image.decode();
+    return [image.naturalWidth, image.naturalHeight];
+  })).toEqual([1080, 420]);
+  expect(await heading.evaluate(element => getComputedStyle(element, '::after').display)).toBe('none');
+  const first = await image.screenshot();
+  await page.waitForTimeout(280);
+  expect((await image.screenshot()).equals(first)).toBe(false);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => image.evaluate(image => new URL(image.currentSrc).pathname)).toMatch(/\/assets\/logo\.png$/);
+  await image.evaluate(image => image.decode());
+  const still = await image.screenshot();
+  await page.waitForTimeout(280);
+  expect((await image.screenshot()).equals(still)).toBe(true);
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  for (const [width, height] of [[1440, 1100], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    const box = await image.boundingBox();
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(width);
+  }
+  await page.screenshot({ path: test.info().outputPath('animated-inspection-logo-phone.png') });
+  await page.locator('#inspect').click();
+  await expect(heading).toBeHidden();
+  await page.locator('#put-down').click();
+  await expect(image).toBeVisible();
+  await expect(image).toHaveAttribute('src', './assets/website-logo.png');
 });
 
 test('BowserBOY website branding is separate from the purple GBA console artwork', async ({ page }) => {
@@ -260,6 +412,7 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
   await page.goto('./');
   await ready(page);
   await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
     await page.setViewportSize({ width, height });
     const controls = await page.locator('.scene-actions button:visible').evaluateAll(buttons => buttons.map(button => {
@@ -278,7 +431,10 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
     }
     if (width <= 390) {
       const dock = await page.locator('.scene-actions').boundingBox();
-      expect(dock.height, 'Compact two-row dock, not a trailing orphan icon row').toBeLessThan(100);
+      expect(dock.height, 'Two rows on phones; three on 320px with the two new dock controls')
+        .toBeLessThan(width <= 360 ? 150 : 100);
+      const power = await page.locator('#hardware-power').boundingBox();
+      expect(power.y + power.height, 'Default dock leaves the physical power target reachable').toBeLessThan(dock.y);
     }
     await page.screenshot({ path: test.info().outputPath(`icon-dock-${width}.png`) });
   }

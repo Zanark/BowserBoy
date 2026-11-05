@@ -29,6 +29,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .desk-heading h1 img { display: block; width: clamp(220px, 32vw, 420px); height: auto; filter: drop-shadow(0 1px 2px #080c12d9) drop-shadow(0 0 9px #dce5ef45); }
 .desk-heading h1::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("./assets/website-logo.png") center / 100% 100% no-repeat; filter: brightness(1.7) drop-shadow(0 0 5px #f4fbff) drop-shadow(0 0 11px #cee8ffb3); mask-image: linear-gradient(90deg, transparent 42%, #000 50%, transparent 58%); mask-size: 300% 100%; mask-repeat: no-repeat; animation: website-logo-shimmer 6s linear infinite; }
 #scene[data-view="playing"] ~ .desk-heading h1::after { animation-play-state: paused; }
+.desk-heading h1[data-console]::after { display: none; }
+.desk-heading h1[data-console] img { filter: none; }
 @keyframes website-logo-shimmer {
   0%, 65% { mask-position: 100% 0; }
   95%, 100% { mask-position: 0% 0; }
@@ -45,12 +47,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .scene-actions button:hover::after, .scene-actions button:focus-visible::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 15px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 210px; white-space: normal; padding: 7px 10px; border: 1px solid #b18bd84d; border-radius: 8px; background: #20192ef5; color: #ede2ff; font: 11px/1.5 var(--sans); pointer-events: none; box-shadow: 0 5px 20px #0006; }
 .icon-badge { position: absolute; right: 3px; bottom: 1px; color: #f0d7ff; font: 8px var(--mono); background: #20172d; border-radius: 4px; padding: 1px 3px; }
 .scene-actions { width: max-content; max-width: calc(100vw - 8px); flex-wrap: wrap; }
+.dock-actions { display: contents; }
+.scene-actions[data-moved] { left: var(--dock-x); top: var(--dock-y); bottom: auto; transform: none; }
+.scene-actions[data-collapsed] { width: max-content; }
+#dock-drag { cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.scene-actions[data-dragging] #dock-drag { cursor: grabbing; }
 .runtime-source[open] > .panel-logo { width: 170px; margin: -4px 0 -8px; }
 .speed-menu { position: fixed; inset: auto 0 max(112px,calc(env(safe-area-inset-bottom) + 96px)); margin: 0 auto; width: min(310px,calc(100vw - 24px)); padding: 18px; border: 1px solid #b18bd84d; border-radius: 18px; color: var(--ink); background: #20192ef5; box-shadow: 0 15px 50px #0008; }
 .speed-options { display: flex; gap: 8px; }
 .speed-options button { flex: 1; min-height: 44px; border: 1px solid #9975bd55; border-radius: 10px; background: #33263f; font: 14px var(--mono); }
 .speed-options button[aria-pressed=true] { border-color: #bf99ed; background: #664688; box-shadow: 0 0 18px #aa66dd26; }
 .panel-logo { display: block; width: 240px; max-width: 80%; height: auto; margin: -4px 0 18px; }
+.tools-drawer > .panel-logo { margin-left: auto; margin-right: auto; }
 .scene-actions button:hover:not(:disabled), .scene-actions button[aria-pressed=true] { background: #b7a4ee20; color: #e0d5ff; }
 #lamp-toggle, #room-toggle { display: grid; }
 #lamp-toggle[aria-pressed=true], #room-toggle[aria-pressed=true] { color: #efd6a1; background: #e8bc6518; }
@@ -157,13 +165,16 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .desk-heading h1 img { width: min(244px, calc(100vw - 130px)); }
   .desk-brand { width: min(244px, calc(100vw - 130px)); }
   .desk-heading > span { max-width: 88px; text-align: right; font-size: 6px; letter-spacing: 1px; }
-  .scene-actions { width: min(356px,calc(100vw - 4px)); max-width: calc(100vw - 4px); gap: 0; padding: 2px; }
+  .scene-actions { width: min(386px,calc(100vw - 4px)); max-width: calc(100vw - 4px); gap: 0; padding: 2px; }
   .scene-actions button { width: 44px; height: 44px; padding: 10px; }
   .action-divider { display: none; }
   .speed-menu { bottom: max(156px,calc(env(safe-area-inset-bottom) + 140px)); }
   .scene-actions kbd, #lamp-label, #room-label { display: none; }
   .scene-hint { bottom: max(154px,calc(env(safe-area-inset-bottom) + 138px)); font-size: 10px; padding: 0 12px; }
   .tools-drawer { padding: 22px; }
+}
+@media (max-width: 360px) {
+  .scene-hint { bottom: max(198px, calc(env(safe-area-inset-bottom) + 182px)); }
 }
 @media (max-height: 500px) {
   .desk-heading { top: 16px; }
