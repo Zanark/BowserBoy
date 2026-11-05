@@ -25,7 +25,13 @@ and record that failure rather than changing timing or relaxing the gate.
 The final three focused warning/native-settings/speed cases pass in 59.1s.
 Syntax/build and all 11 unit cases pass, and the actual warning crop is reviewed.
 No new private-ROM/audio qualification or human acceptance is claimed.
-Hosted delivery remains pending until separately recorded.
+Qualified source `b4be9946a42c630a3be902ccb671c5c44598e367`, normal workflow
+`42028435186`: build, 11 units, all 42 hosted browser cases (14+14+14) and
+deployment pass. Independently fetched all 29 actual public application assets
+match that source. The actual public native-menu regression passes in22.7s,
+without failures, retries or skips, including immediate warning, persisted
+enabled choice after reload, reopening, disabling and re-enabling. The public
+warning crop is inspected; this is technical delivery, not human acceptance.
 
 ## Documentation and public-media refresh, 2026-11-05
 

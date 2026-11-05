@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Warn when VSync is enabled without overriding the user's preference.
 Dependencies: 44_AUDIO_PACED_DEFAULT.todo.
 
@@ -12,8 +12,8 @@ Tasks:
 - [x] Re-warn when opening settings with an explicitly saved enabled preference.
 - [x] Keep native method behavior, choice and preference persistence intact.
 - [x] Complete focused browser qualification and inspect the actual warning.
-- [ ] Publish through the normal hosted gate and independently verify delivery.
-- [ ] Update affected documentation, final evidence and owned continuity.
+- [x] Publish through the normal hosted gate and independently verify delivery.
+- [x] Update affected documentation, final evidence and owned continuity.
 
 Acceptance criteria:
 - The actual native VSync menu shows the warning immediately upon enabling.
@@ -39,7 +39,14 @@ Completion evidence:
   persistence/reopening/disable/re-enable, existing native lifecycle/settings,
   and fast-forward/native VSync cartridge-clock coordination.
 - Syntax/build and all 11 unit cases pass; actual warning crop visually inspected.
-- Remaining browser, publication and human acceptance are not implied.
+- Source b4be9946a42c630a3be902ccb671c5c44598e367 / normal run42028435186:
+  build, 11 units, all 42 hosted browser cases (14+14+14) and deployment pass.
+- Independently match all 29 actual public assets. The new actual public native
+  VSync case passes in22.7s with no failures, skips or retries: immediate warning,
+  preference persistence/reload, enabled-panel warning, disable and re-enable.
+- Actual public warning crop inspected. Human aesthetic acceptance remains open.
 
 Completion log:
 - 2026-11-05: User requests a notification explaining what enabling VSync risks.
+- 2026-11-05: Complete normal hosted gate and independent public qualification
+  pass. Warning is live; default-off and explicitly enabled choices are retained.

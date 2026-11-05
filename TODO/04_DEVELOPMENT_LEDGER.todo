@@ -26,6 +26,10 @@ Completion log:
   sample reads3.84x at selected2x; keep bounds and record failure. Final three
   focused cases pass59.1s; syntax/build/11units pass; warning crop inspected.
   No new private-ROM/audio test or human acceptance. Normal release pending.
+  Source b4be9946a42c630a3be902ccb671c5c44598e367 / normal42028435186
+  passes build/11units/all42browser cases (14+14+14)/deployment. Independently
+  match29public assets and pass actual public native-menu case22.7s without
+  failures/retries/skips. Actual public warning crop reviewed;49DONE.
 - 2026-11-05 / Current BowserBOY README and documentation:
   User requests refresh after website/console split. Re-record five realpublic
   interactions and eightstills at1100x850withoriginalPixelLab; zeroerrors.
