@@ -68,6 +68,11 @@ The later [original A/B typography](VERIFICATION.md#original-soft-ab-typography-
 also postdates these recordings. The user's supplied reference and private
 comparison sheets are not project-authored public media and are not published.
 
+The later [metallic chroma lettering](VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
+also postdates these recordings and the historical monochrome guide/book figures.
+Bounded actual rendering comparisons qualify that text-only finish; existing
+GIFs and images retain their original capture identities.
+
 ### Current refresh - manufactured controls and glass
 
 **Previous edition:** retained for its historical evidence and existing links.

@@ -22,6 +22,13 @@ and [capture origins](MEDIA.md#current-refresh---recessed-controls-and-smaller-b
 Normal playback now defaults to audio-paced timing to address reproduced
 intermittent dropouts; bounded measurements are not a guarantee for every device.
 
+The bezel letters now have a metallic chroma finish: light/dark chrome bands
+with restrained iridescent color, not an animated RGB glow. Their original
+shape, smaller size and borderless silhouette stay unchanged; the bezel and
+other logos are untouched. Fullscreen shares the exact lettering canvas.
+Current [qualification](VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
+is separate from the older pictures below.
+
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
 
 *The supplied transparent purple orbital logo, preserved unchanged with its
@@ -81,7 +88,7 @@ A short orbital-logo reveal, revolving stars and synthesized chime play on the a
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
 The supplied transparent wordmark also appears on the rear shell, idle/loading
 LCD and settings panels. The front bezel uses the supplied logo's distinctive
-lettering in monochrome, without stars; screen-only fullscreen shares that artwork.
+lettering with a metallic chroma finish, without stars; screen-only fullscreen shares that artwork.
 A/B letters are softer gray grooves cut into the unchanged cap faces, with inset floors and
 sidewalls rather than raised or printed lettering. D-pad arrows retain their
 raised rubber geometry and darker tones. Shoulder letters retain their cap material;

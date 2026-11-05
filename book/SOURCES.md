@@ -21,6 +21,16 @@ so later documentation-only commits do not silently change the cited source.
 | S-12 | [`.github/workflows/pages.yml`](https://github.com/Zanark/BowserBoyAdvance/blob/ab912d51ecc615f7aa55a4d27f6a876673739cdf/.github/workflows/pages.yml) | Full build/browser gates before Pages deployment |
 | S-13 | [`scripts/capture-readme.mjs`](https://github.com/Zanark/BowserBoyAdvance/blob/ab912d51ecc615f7aa55a4d27f6a876673739cdf/scripts/capture-readme.mjs), [`scripts/render-readme.py`](https://github.com/Zanark/BowserBoyAdvance/blob/ab912d51ecc615f7aa55a4d27f6a876673739cdf/scripts/render-readme.py) | Actual browser recording, timing receipts, GIF encoding and separate banner generation |
 
+## Later lettering delta
+
+Workstream45's metallic chroma follow-up is a deliberate update beyond the
+pinned first edition above. Current [`createHandheld`](../src/handheld.js)
+paints static chrome bands/tint inside the retained letter alpha;
+[`app.js`](../src/app.js) shares that exact canvas with the fullscreen DOM.
+The [verification record](../docs/VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
+identifies qualification and delivery. The original source links and historical
+monochrome screenshots are not silently relabeled as this later edition.
+
 ## Evidence is narrower than explanation
 
 Current release records live in [Verification](../docs/VERIFICATION.md);

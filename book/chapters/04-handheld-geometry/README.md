@@ -80,11 +80,11 @@ platform dependency; contour recovery does not license or bundle Arial.
 
 The top Zanark mark and lower bezel serve different visual roles. Molded
 manufacturer lettering belongs to the shell. The bezel uses a star-free
-monochrome derivative of the supplied wordmark. Saturated orbital accents are
+derivative of the supplied wordmark. Saturated orbital accents are
 removed in the derived texture; the original supplied PNG remains unchanged.
-Fullscreen copies that same bezel texture rather than substituting a generic
-font. A warm lamp can tint a neutral surface without making its source ink
-colored.
+Fullscreen uses that same bezel texture rather than substituting a generic
+font. The first edition's neutral ink could look gold under the warm lamp;
+the later metallic chroma finish deliberately adds source color.
 
 Workstreams 35 and 39 progressively reduce only that shared artwork: first to
 75%, then to 60% of the unchanged canvas. The latter is another 20% reduction,
@@ -97,6 +97,16 @@ threshold damages the supplied letter gradients, so use solid alpha cores
 and flood-fill their original connected pixels instead. The seed filter only
 chooses components; it must not erode the reconstructed glyph edges or counters.
 The shared size, neutral shade and original purple artwork remain unchanged.
+
+Workstream 45 supersedes only that neutral shade. Once the original alpha is
+reconstructed, source-in chrome bands and source-atop iridescent tint color only
+the letters. A lit material keeps the result part of the room: roughness .4,
+metalness .1, no emissive glow or new global environment. These are baked
+stylized reflections, not animated RGB or physically simulated thin-film color.
+The same canvas now lives in the decorative fullscreen DOM and supplies the
+Three.js texture. Reusing the bitmap avoids the one-channel rounding found when
+copying colored antialiased edges, while preserving exact RGBA equality.
+See the [current source/evidence delta](../../SOURCES.md#later-lettering-delta).
 
 ![Actual oblique manufactured-control view](../../../docs/images/molded-controls.png)
 

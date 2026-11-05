@@ -450,12 +450,29 @@ export function createHandheld() {
       if (!lettering[i]) pixels.data[i * 4 + 3] = 0;
     }
     context.putImageData(pixels, 0, 0);
+    const chrome = context.createLinearGradient(0, height * .2, 0, height * .8);
+    for (const [stop, color] of [
+      [0, '#f4f8ff'], [.2, '#91cce9'], [.37, '#e9c8f5'], [.44, '#fbffff'],
+      [.49, '#697796'], [.55, '#849bbf'], [.72, '#d7f0e2'], [.86, '#d6a5cb'], [1, '#f4f7ff'],
+    ]) chrome.addColorStop(stop, color);
+    // Clip the reflected chrome bands and iridescent tint to the existing letter alpha.
+    context.globalCompositeOperation = 'source-in';
+    context.fillStyle = chrome;
+    context.fillRect(0, 0, width, height);
+    const tint = context.createLinearGradient(width * .2, 0, width * .8, 0);
+    tint.addColorStop(0, 'rgba(91,220,255,.18)');
+    tint.addColorStop(.35, 'rgba(211,153,255,.18)');
+    tint.addColorStop(.7, 'rgba(255,215,164,.16)');
+    tint.addColorStop(1, 'rgba(130,236,215,.18)');
+    context.globalCompositeOperation = 'source-atop';
+    context.fillStyle = tint;
+    context.fillRect(0, 0, width, height);
+    context.globalCompositeOperation = 'source-over';
   });
-  const logo = add(root, 'Monochrome bezel wordmark', new THREE.PlaneGeometry(3.05, .346),
-    new THREE.MeshStandardMaterial({ map: bezelWordmark, transparent: true, depthWrite: false, roughness: .65 }),
+  const logo = add(root, 'Metallic chroma bezel wordmark', new THREE.PlaneGeometry(3.05, .346),
+    new THREE.MeshStandardMaterial({ map: bezelWordmark, transparent: true, depthWrite: false, roughness: .4, metalness: .1 }),
     0, -1.34, .763);
   logo.castShadow = false;
-  logo.name = 'Monochrome bezel wordmark';
 
   const controls = new Map();
   function control(id, mesh, width, height, anchor = mesh) {

@@ -415,24 +415,29 @@ test('orbital startup draws supplied image and moving stars, with a stable reduc
   await test.info().attach('orbital-startup-raster', { body: Buffer.from(artwork.image.split(',')[1], 'base64'), contentType: 'image/png' });
 });
 
-test('molded controls and monochrome logo retain physical branding, and frosted notices overlay without reframing the handheld', async ({ page }) => {
+test('molded controls and metallic chroma logo retain physical branding, and frosted notices overlay without reframing the handheld', async ({ page }) => {
   await page.goto('./');
   await ready(page);
   await page.locator('#pickup').click();
   const branding = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const { Raycaster, Vector3 } = await import('three');
-    const bezel = view.model.root.getObjectByName('Monochrome bezel wordmark');
+    const bezel = view.model.root.getObjectByName('Metallic chroma bezel wordmark');
     const canvas = bezel.material.map.image;
     const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
     const fullscreen = document.querySelector('#screen-focus-wordmark');
     const fullscreenPixels = fullscreen.getContext('2d').getImageData(0, 0, fullscreen.width, fullscreen.height).data;
-    let ink = 0, colored = 0;
+    let ink = 0, colored = 0, darkest = 255, brightest = 0;
     let minX = canvas.width, minY = canvas.height, maxX = -1, maxY = -1;
     for (let i = 0; i < pixels.length; i += 4) {
       if (!pixels[i + 3]) continue;
       ink++;
       if (pixels[i] !== pixels[i + 1] || pixels[i + 1] !== pixels[i + 2]) colored++;
+      if (pixels[i + 3] > 200) {
+        const brightness = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+        darkest = Math.min(darkest, brightness);
+        brightest = Math.max(brightest, brightness);
+      }
       const x = i / 4 % canvas.width, y = Math.floor(i / 4 / canvas.width);
       minX = Math.min(minX, x);
       minY = Math.min(minY, y);
@@ -528,7 +533,7 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
         new Vector3(0, 0, -1).transformDirection(root.matrixWorld));
       return !!ray.intersectObject(root, true)[0]?.object.material.map;
     });
-    return { ink, colored,
+    return { ink, colored, chromeRange: brightest - darkest,
       inkBounds: { left: minX / canvas.width, top: minY / canvas.height,
         right: (maxX + 1) / canvas.width, bottom: (maxY + 1) / canvas.height },
       depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
@@ -537,7 +542,8 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
         pixels.every((value, index) => value === fullscreenPixels[index]), recesses, markings, microLabels };
   });
   expect(branding.ink).toBeGreaterThan(1000);
-  expect(branding.colored).toBe(0);
+  expect(branding.colored).toBeGreaterThan(branding.ink * .8);
+  expect(branding.chromeRange).toBeGreaterThan(100);
   expect(branding.inkBounds.left).toBeGreaterThanOrEqual(.21);
   expect(branding.inkBounds.top).toBeGreaterThanOrEqual(.26);
   expect(branding.inkBounds.right).toBeLessThanOrEqual(.79);

@@ -857,12 +857,11 @@ try {
     },
     onError: (error) => { console.error('3D graphics:', error); notice(error.message, true); },
   });
-  const wordmark = $('screen-focus-wordmark');
-  wordmark.width = view.model.wordmark.image.width;
-  wordmark.height = view.model.wordmark.image.height;
-  const wordmarkContext = wordmark.getContext('2d');
-  if (!wordmarkContext) throw new Error('Canvas drawing is unavailable. The fullscreen bezel could not be created.');
-  wordmarkContext.drawImage(view.model.wordmark.image, 0, 0);
+  const wordmark = view.model.wordmark.image;
+  wordmark.id = 'screen-focus-wordmark';
+  wordmark.className = 'screen-focus-wordmark';
+  wordmark.setAttribute('aria-hidden', 'true');
+  $('screen-focus-wordmark').replaceWith(wordmark);
 } catch (error) {
   console.error('Creating the 3D scene:', error);
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);

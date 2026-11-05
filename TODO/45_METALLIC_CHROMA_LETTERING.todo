@@ -1,0 +1,46 @@
+Status: IN_PROGRESS
+Milestone: Metallic chroma finish on the bezel lettering only.
+Dependencies: 39_SMALLER_BEZEL_AGAIN.todo; 41_OUTLINE_FREE_BEZEL.todo.
+
+Purpose:
+Apply the requested metallic chroma appearance to the existing BowserBoy Advance
+letters, not the bezel, A/B engravings, other logos or surrounding scene.
+
+Tasks:
+- [x] Preserve the exact existing letter alpha, size and placement.
+- [x] Add static chrome reflection bands with a restrained iridescent tint.
+- [x] Keep the lit material responsive to the existing room illumination.
+- [x] Share the actual texture canvas with fullscreen instead of copying it.
+- [x] Replace only the superseded monochrome assertion; retain physical gates.
+- [x] Inspect actual rendered lettering and qualify the local branding case.
+- [ ] Pass the normal complete hosted gate and independently verify production.
+- [x] Update affected guides, book explanation, ledger and owned continuity.
+
+Acceptance criteria:
+- Only the bezel lettering changes color/finish; the original supplied PNG,
+  glyph alpha, 60% centered size, borderless silhouette and geometry stay.
+- Existing controls, shallow Arial A/B grooves, framing, notices, native timing,
+  saves and audio protection remain unchanged.
+- Chrome bands and chroma are baked once; no animation, glow, environment-map
+  subsystem, global-lighting change or recurring rendering work is added.
+- Fullscreen and the physical texture retain exact RGBA identity.
+- Local rendering and remote deployment are distinguished from user approval.
+
+Completion evidence:
+- Actual old texture has zero colored ink pixels and fails the new color gate.
+- Final alpha comparison: 25,931 ink pixels, zero original/candidate mismatches.
+  Bezel color remains202a29; projected lettering rectangle is unchanged.
+- First material is too dark in the actual lamp-lit crop. Lower metalness from
+  .3 to .1, use roughness .4 and lift the narrow dark band; inspect actual result.
+  The finish remains warm under the lamp, not an unlit neon label.
+- Copying the composited canvas changes16 antialiased pixels by at most1RGB,
+  with identical alpha. getImageData/putImageData copying does not eliminate it.
+  Reuse the original canvas in the decorative fullscreen DOM; preserve the exact
+  existing equality assertion rather than weakening it.
+- Syntax/build/all11units pass. Complete actual branding/control/recess/notice/
+  framing/fullscreen identity case passes21.2s. Normal/public delivery pending.
+
+Completion log:
+- 2026-11-05: User clarifies metallic chroma, not animated RGB or chromatic fringes.
+  Supersede the old monochrome color contract only for the bezel lettering.
+  Preserve the outline-free mask and original controls; user acceptance unrecorded.

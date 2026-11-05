@@ -179,9 +179,9 @@ The cream rubber caps retain their color with rougher, less glossy surfaces.
 Only A/B floor/wall tint changes to `#999d98`; the cap and lighting stay unchanged.
 The front POWER/BBA-001 decals are removed, not the LED or underside label.
 
-The front bezel derives a 1536x174 monochrome texture from the supplied image's
+The front bezel derives a 1536x174 letter mask from the supplied image's
 lettering band (25,250,2115,240). Neutral-highlight alpha masking removes
-saturated orbital accents, while RGB is uniformly 220. This keeps distinctive
+saturated orbital accents. This keeps distinctive
 letterforms without stars or modifying the source PNG. The physical label uses
 a lit transparent material; warm room illumination can tint its appearance.
 Solid 7x7 alpha cores seed an eight-neighbor reconstruction of the original
@@ -190,7 +190,11 @@ the original glyph edges and counters are not eroded. This removes the exterior
 light frame/underline while leaving every other use of the source PNG unchanged.
 The lettering is centered at 60% of the existing canvas width and height:
 another 20% reduction from the preceding 75% edition, not a smaller LCD or plane.
-Fullscreen copies the same resulting pixels.
+Static vertical chrome bands and a subtle horizontal iridescent tint are clipped
+to that unchanged alpha. Only this label uses the metallic finish; its lit
+standard material has roughness .4 and metalness .1, so warm illumination still
+warms it. No animation, emission, environment map or per-frame update is added.
+Fullscreen uses the same canvas object, not another rasterization or copy.
 The top ZANARK maker mark retains a chamfered matching-plastic frame.
 The rear battery cover retains the unchanged supplied purple artwork.
 `src/scene.js` owns the WebGL 2 renderer, lights/shadows, raycast picking and
@@ -398,9 +402,12 @@ No new per-frame DOM measurement loop or emulator restart is introduced.
 
 The separate screen-only fullscreen target copies the same retained post-shader
 framebuffer already feeding the LCD. A lightweight CSS bezel matches the physical
-4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and monochrome wordmark.
-At initialization its separate decorative canvas copies the exact physical
-bezel texture, avoiding divergent fonts or a second artwork transformation.
+4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and metallic chroma wordmark.
+At initialization the physical texture's canvas replaces the decorative
+fullscreen placeholder, retaining its ID, class and accessibility attributes.
+Sharing the bitmap avoids divergent fonts and antialiased-edge rounding from
+an additional canvas copy. Only the decorative artwork is shared this way;
+the live game retains its existing framebuffer presentation.
 The picture remains 3:2: a definite viewport-sized, min-size-zero flex container
 fits the bezel to both available dimensions, leaving black margins. This avoids
 the previous grid track's intrinsic canvas sizing overflowing the viewport.
@@ -635,7 +642,7 @@ asset; no alternate-color assets or switcher are shipped.
 The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
 aspect ratio. The supplied rear-shell/startup image is not recreated or recolored;
-the front bezel deliberately derives star-free monochrome lettering from it.
+the front bezel deliberately derives star-free metallic chroma lettering from it.
 See supplied-artwork provenance
 in THIRD_PARTY_NOTICES.md. The active SVG favicon replaces the earlier generic
 rounded/infinity icon and subsequent star icon; relative HTML/SVG paths preserve

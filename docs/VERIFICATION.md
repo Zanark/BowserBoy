@@ -7,6 +7,34 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Metallic chroma lettering, 2026-11-05
+
+The user clarifies **metallic chroma**, applied to the bezel text only.
+Keep the outline-free source mask, original glyph edges/counters, centered 60%
+size and physical placement. Bake vertical chrome reflection bands and a subtle
+horizontal iridescent tint once, clipped to that alpha. Use a lit standard
+material with roughness .4 and metalness .1; the warm lamp still warms the finish.
+This is stylized static chrome, not animated RGB, emission or a thin-film simulation.
+No global lighting, environment map, A/B, bezel material, audio or native timing
+change is introduced.
+
+Actual old texture fails the new chromaticity gate with zero colored pixels.
+Replace only that superseded monochrome expectation and add chrome contrast;
+retain all existing inset, fullscreen equality, original Arial groove, other
+control, framing and notice requirements. Original/candidate alpha comparison
+has zero mismatches across 25,931 ink pixels; bezel color and projected bounds
+stay unchanged. Actual old/new lamp-lit crops are inspected. The first metallic
+material is too dark, so the final material reduces metalness and lifts its dark
+band rather than changing the lamp.
+
+An extra canvas copy produces16 antialiased pixels differing by at most1RGB,
+with identical alpha. Explicit getImageData/putImageData transfer still differs.
+Attach the actual texture canvas as the decorative fullscreen element instead,
+preserving exact RGBA identity without a tolerance or extra copy.
+Syntax/build/all11units pass; the complete actual branding/control/recess/
+framing/overlay/fullscreen case passes21.2s. Hosted/public qualification is
+pending; technical evidence is not user aesthetic approval.
+
 ## Audio-paced default, 2026-11-05
 
 The user supplies a recording and authorizes private-ROM audio testing. Extract
