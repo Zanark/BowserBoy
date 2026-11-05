@@ -46,6 +46,13 @@ Completion evidence:
   no clipped source samples/page errors; output peak .6843. Live headroom
   141-206ms;40ms mid-game hitch leaves163.2ms. Auto-save stays on; captures <=2ms.
 - Normal/public delivery remains pending.
+- First normal71123d4/42006670563passes build/11units/38of40browser cases,
+  blocks deployment. Isolate multi-second software-GPU draws from the new40ms
+  audio fixture using the existing native speed-test setup; all bounds stay.
+  Isolated old VSync-on control still fails actual54.7ms reserve against>80ms.
+  Separate power fixture excludes its independently tested autosave lock,
+  matching adjacent prior art; all lifecycle assertions remain. Both34.3s pass.
+  No application bytes, workflow or deadlines change in this qualification follow-up.
 
 Completion log:
 - 2026-11-05: Recording supplied; analyze only its audio. Native VSync pacing

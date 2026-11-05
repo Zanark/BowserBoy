@@ -42,6 +42,20 @@ at most 2ms. Normal/public delivery remains pending.
 Physical audio devices, subjective quality and arbitrary host overload are not
 qualified by these measurements.
 
+First normal `71123d4` / `42006670563` passes build/11units and 38 of 40
+browser cases; deployment is correctly blocked. The new bounded-stall fixture
+instead encounters multi-second software-GPU draws. Like the existing native
+speed regression, open tools and select an unfiltered native display to isolate
+the requested 40ms audio hitch. Keep every gap/reserve/hitch/clock bound.
+The isolated VSync-on control still fails actual minimum reserve at 54.7ms
+against the unchanged >80ms requirement; corrected playback passes.
+
+The separate remembered-power fixture also misses its final physical gesture.
+Its trace shows a 2.3s click window; isolate the separately tested autosave lock,
+matching the adjacent existing power fixture, without removing lifecycle assertions.
+These two corrected cases pass locally in 34.3s. No application bytes, workflow,
+timeouts or assertion bounds change; fresh normal/public qualification follows.
+
 ## Original soft A/B typography, 2026-11-05
 
 The user rejects the custom rounded shapes from workstream 42 and explicitly

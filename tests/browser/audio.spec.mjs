@@ -34,6 +34,11 @@ test('audio-paced default retains live PCM reserve and normal cartridge speed th
   await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   const frame = await audioReady(page);
+  // Isolate bounded audio stalls from multi-second software-GPU draws.
+  await page.locator('#tools-open').click();
+  await page.locator('#shader').selectOption('disabled');
+  await expect.poll(() => frame.evaluate(() =>
+    window.EJS_emulator.getSettingValue('shader'))).toBe('disabled');
   const result = await frame.evaluate(async () => {
     const emulator = window.EJS_emulator, audio = emulator.Module.AL.currentCtx.audioCtx;
     const probe = window.continuity;

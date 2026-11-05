@@ -703,6 +703,8 @@ test('inserting a cartridge does not power on, and refresh resumes the remembere
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
   await openTools(page);
+  // Keep the separately tested autosave lock out of the physical power gesture.
+  await page.locator('#autosave-toggle').click();
   await page.locator('#demo').click();
   await expect(page.locator('#hardware-power')).toBeEnabled();
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');

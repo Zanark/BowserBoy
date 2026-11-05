@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Audio gate isolation, no weaker assertions:
+  First71123d4/42006670563passes build/11units/38of40cases; deploymentblocked.
+  New40ms-stall fixture instead receives1-2.5s software-GPU draws. Follow the
+  existing native clock setup:toolsopen/unfiltered, same gap/reserve/clock bounds.
+  Isolated old control fails54.7msminimum against>80ms; corrected passes.
+  Separate remembered-power trace has2.3s click window; disable the independently
+  tested autosave lock as adjacent power fixture already does. Preserve every
+  lifecycle assertion. Both cases34.3s pass; app bytes and all gates unchanged.
 - 2026-11-05 / Recorded audio dropouts and native pacing:
   Extract only audio from the supplied recording; repeated quiet intervals,
   no full-scale clipping. Actual private90s baseline reproduces18 scheduling

@@ -67,6 +67,12 @@ retaining explicit VSync choices. A new original-ROM regression measures real
 scheduled gaps, steady-state hitch tolerance and the SRAM cartridge clock.
 Four audio cases no longer need framebuffer screenshots for readiness. This
 extends the earlier evidence rather than retroactively erasing its limits.
+The added case makes the later suite 40 cases. Its first hosted run encounters
+multi-second software-GPU draws rather than the intended bounded 40ms hitch.
+Isolate graphics cost as the existing native clock regression does, retaining
+all audio bounds; the old clock still fails measured reserve. Full-view private
+playback remains separate evidence rather than claiming this isolated fixture
+qualifies an arbitrarily slow renderer.
 
 Workstream 34 deliberately reverses an earlier product requirement: the user
 now permits notices to overlap the handheld. Replace notice-separation checks
