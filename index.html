@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#080c12">
-    <meta name="description" content="A familiar handheld, right in your browser. Local GBA cartridges, automatic resume and portable backups.">
-    <title>Bowser Boy Advance</title>
+    <meta name="description" content="BowserBOY: a little escape, on your desk. Play local GBA cartridges on BowserBOY ADVANCED, with automatic resume and portable backups.">
+    <title>BowserBOY</title>
     <link rel="icon" href="./assets/brand-mark.svg" type="image/svg+xml" sizes="any">
     <link rel="stylesheet" href="./styles.css">
     <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
@@ -13,9 +13,9 @@
   </head>
   <body>
     <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
-    <main id="player" class="desk" aria-label="3D Game Boy Advance style player">
+    <main id="player" class="desk" aria-label="BowserBOY console table: BowserBOY ADVANCED GBA player">
       <div id="scene" data-view="table"></div>
-      <header class="desk-heading"><div class="desk-brand"><h1><img src="./assets/logo.png" alt="Bowser Boy Advance" width="2170" height="725"></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div><span>NO. 001 / INFINITE BATTERY</span></header>
+      <header class="desk-heading"><div class="desk-brand"><h1><img src="./assets/website-logo.png" alt="BowserBOY" width="2151" height="731"></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div><span>NO. 001 / INFINITE BATTERY</span></header>
       <p id="scene-error" role="alert" hidden></p>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
@@ -60,7 +60,7 @@
         <span id="power-led"></span><span id="power-label">POWER OFF / INFINITE BATTERY</span>
       </div>
       <dialog id="frame-host" class="runtime-source" aria-hidden="true" aria-labelledby="native-title" aria-describedby="native-description">
-        <img class="panel-logo" src="./assets/logo.png" alt="Bowser Boy Advance" width="2170" height="725">
+        <img class="panel-logo" src="./assets/website-logo.png" alt="BowserBOY" width="2151" height="731">
         <div class="native-header"><div><p class="eyebrow">UNDER THE SHELL</p><h2 id="native-title">EmulatorJS settings</h2></div><button id="native-close" class="close-button" aria-label="Close EmulatorJS settings">&times;</button></div>
         <p id="native-description" class="fineprint">Native graphics, speed, capture and core options. Changes are remembered when you close. Options marked Requires restart apply on the next power on. Keys, sound and saves stay in Cartridges. Opening this panel does not pause the game.</p>
         <div id="native-notice-host"></div>
@@ -81,7 +81,7 @@
       <footer>Independent player <span aria-hidden="true">&middot;</span> <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EmulatorJS</a> + <a href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a></footer>
 
     <dialog id="tools" class="tools-drawer" aria-labelledby="tools-title">
-      <img class="panel-logo" src="./assets/logo.png" alt="Bowser Boy Advance" width="2170" height="725">
+      <img class="panel-logo" src="./assets/website-logo.png" alt="BowserBOY" width="2151" height="731">
       <div class="drawer-header"><div><p class="eyebrow">BEHIND THE CARTRIDGE SLOT</p><h2 id="tools-title">Make yourself at home.</h2></div><button id="tools-close" class="close-button" aria-label="Close cartridge and settings">&times;</button></div>
       <div id="drawer-notice-host"></div>
       <button id="native-open" class="button button-secondary" aria-haspopup="dialog" aria-controls="frame-host" disabled>Advanced EmulatorJS settings</button>

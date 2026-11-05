@@ -629,7 +629,8 @@ from a trusted copy of this application.
 | Path | Responsibility |
 |---|---|
 | `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
-| `assets/logo.png`, `assets/star.png`, `assets/orbit.png`, `assets/glow.png`, `src/brand.js` | Supplied branding/effects, padded sprites and checked decoding |
+| `assets/website-logo.png` | Supplied chrome BowserBOY website header/dialog identity; separate from console art |
+| `assets/logo.png`, `assets/star.png`, `assets/orbit.png`, `assets/glow.png`, `src/brand.js` | Purple GBA console branding/effects, padded sprites and checked decoding |
 | `assets/brand-mark.svg` | Original transparent handheld favicon, matching the actual shell outline |
 | `src/icons.js` | Quick-dock SVGs, names, tooltip labels and speed badge |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
@@ -647,9 +648,17 @@ The server is loopback-only and serves only public allowlisted files. The
 build replaces only the generated `dist` directory and adds `.nojekyll`.
 Documentation/private context cannot enter the deployed artifact through a
 recursive repository copy.
-The supplied header wordmark is the unchanged 2170x725 RGBA purple orbital PNG
-with transparent exterior. Its HTML intrinsic dimensions match that supplied
-asset; no alternate-color assets or switcher are shipped.
+The website's BowserBOY header and both panel logos use the unchanged2151x731
+RGBA chrome artwork in `assets/website-logo.png`; intrinsic HTML dimensions
+match it. A neutral header shadow replaces the previous violet glow.
+The2170x725purple `assets/logo.png` remains exclusively console artwork.
+`src/brand.js` still loads it for the existing GBA handheld's rear and LCD
+idle/loading/startup; the bezel retains its metallic lettering. There is no
+new shared branding abstraction, console selector or second emulator.
+BowserBOY ADVANCED is the user's name for that first console; its supplied
+artwork still reads ADVANCE. Future consoles on the table are product direction,
+not runtime support. Repository rename is owner-managed; storage keys, saves,
+relative URLs and current Pages prefix remain unchanged by this update.
 The public allowlist includes PNG and the development
 server supplies image/png MIME. Responsive dimensions preserve the raster's
 aspect ratio. The supplied rear-shell/startup image is not recreated or recolored;

@@ -1,4 +1,4 @@
-[![BowserBOY ADVANCE - transparent animated logo with a spacious outer orbit and complete sparkles](docs/images/orbital-logo.gif?v=bcbc38a)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY - supplied chrome sparkle logo](assets/website-logo.png)](https://zanark.github.io/BowserBoyAdvance/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>
@@ -8,6 +8,8 @@
 </p>
 
 *Actual browser recordings and UI captures; [origins and release evidence](docs/MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).*
+
+*BowserBOY is the website. BowserBOY ADVANCED is its first console: the purple GBA handheld. More consoles on the table are planned, not available yet.*
 
 ## Pick it up. Turn it over.
 

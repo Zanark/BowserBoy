@@ -7,6 +7,28 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## BowserBOY website brand separation, 2026-11-05
+
+The supplied chrome website logo is copied unchanged to`assets/website-logo.png`
+(2151x731RGBA; SHA256
+`804b1a96494dbecc9fa732e2772e8f2d23c9eb21bcd8286d9dc00b1fbf46c808`).
+Website title, description, accessible table name and three header/panel images
+now identify BowserBOY. Neutral header shadows do not recolor the artwork purple.
+The original2170x725purple console PNG remains unchanged, as do the console
+brand loader, startup/effects, rear engraving, bezel, saves and native runtime.
+
+The new regression fails the old website title. Syntax/build/all11units and
+four actual browser cases pass32.9s: website identity and responsive fit,
+orbital startup drawing, complete physical branding/recess/framing/fullscreen
+and first-visit/startup/persistent-power lifecycle. Actual desktop and320px
+header crops are reviewed. Keep the existing play-only header hiding and
+Inspect restoration; tools/settings images share the chrome website asset.
+Normal complete hosted/public delivery is pending, not implied by local checks.
+
+The owner explicitly elects to rename the GitHub repository themselves.
+This update leaves repository/Pages paths unchanged. Future consoles are a
+recorded product direction, not implemented functionality or an acceptance claim.
+
 ## Larger etched rear logo, 2026-11-05
 
 The user requests a larger rear logo etched into the plastic, retaining its

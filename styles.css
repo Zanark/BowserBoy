@@ -26,7 +26,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .desk-brand { width: clamp(220px, 32vw, 420px); }
 .desk-heading h1 { margin: 0; line-height: 1; }
 #scene[data-view="playing"] ~ .desk-heading h1 { visibility: hidden; }
-.desk-heading h1 img { display: block; width: clamp(220px, 32vw, 420px); height: auto; filter: drop-shadow(0 1px 2px #0e061cd9) drop-shadow(0 0 9px #b075f070); }
+.desk-heading h1 img { display: block; width: clamp(220px, 32vw, 420px); height: auto; filter: drop-shadow(0 1px 2px #080c12d9) drop-shadow(0 0 9px #dce5ef45); }
 .desk-heading > span { color: #a3aab5; font: 8px var(--mono); letter-spacing: 2px; }
 #hardware-targets { pointer-events: none; }
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }

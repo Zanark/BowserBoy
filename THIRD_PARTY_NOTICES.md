@@ -62,7 +62,7 @@ with antialiased edges while retaining the supplied lettering. The original full
 background image is not bundled. This wordmark is not independently authored
 application artwork; no separate upstream license or authorship claim is made.
 
-The current `assets/logo.png` supersedes that first edition with the user's
+The console's `assets/logo.png` supersedes that first edition with the user's
 later transparent purple orbital wordmark. The supplied 2170x725 RGBA PNG is
 used byte-for-byte, including its white lettering, purple rim and orbit/star
 accents; no background extraction, regeneration or recoloring was applied.
@@ -70,13 +70,21 @@ The opaque-background reference and future color-variant sheet are not included
 in the static release. No alternate colors are enabled. Supplied-artwork
 provenance and the absence of an independent authorship/license claim remain.
 The same supplied PNG is used on the rear shell, idle/loading LCD, orbital
-startup and settings panels. The front bezel instead has original monochrome
-printed text; the top ZANARK maker badge uses original geometric glyphs,
+startup. The front bezel derives metallic chroma lettering from the supplied
+wordmark; the top ZANARK maker badge uses original geometric glyphs,
 extrusion and a chamfered frame, not a manufacturer logo or imported font asset.
 The startup's gentle wordmark wave is original animation code and does not
 modify the supplied PNG. The earlier `assets/star.png` was a crop from
 pixel rectangle(1650,90)-(1835,280) of that supplied logo; it included unwanted
 orbit fragments and hard cutoffs, and has been superseded.
+
+The website's `assets/website-logo.png` is the separately supplied **BOWSERBOY
+Chrome Sparkle Logo**, received2026-11-05. Its2151x731transparent RGBA PNG is
+copied byte-for-byte, with SHA-256
+`804b1a96494dbecc9fa732e2772e8f2d23c9eb21bcd8286d9dc00b1fbf46c808`.
+It appears in the website header, tools/settings panels and README lead image,
+not on the GBA console. No regeneration, background removal, recoloring,
+independent authorship or separate upstream license claim is made.
 
 The current `assets/star.png`, `assets/glow.png` and `assets/orbit.png` derive
 from the user's separately supplied **Purple Neon Sparkle and Orbital Sprite

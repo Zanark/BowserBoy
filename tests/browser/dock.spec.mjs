@@ -5,6 +5,48 @@ import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 
+test('BowserBOY website branding is separate from the purple GBA console artwork', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  await expect(page).toHaveTitle('BowserBOY');
+  const logos = page.locator('.desk-heading h1 img, .panel-logo');
+  await expect(logos).toHaveCount(3);
+  for (const logo of await logos.all()) {
+    await expect(logo).toHaveAttribute('src', './assets/website-logo.png');
+    await expect(logo).toHaveAttribute('alt', 'BowserBOY');
+    expect(await logo.evaluate(async image => {
+      await image.decode();
+      return { width: image.naturalWidth, height: image.naturalHeight };
+    })).toEqual({ width: 2151, height: 731 });
+  }
+  const consoleBrand = await page.evaluate(async () => {
+    const { brandImage } = await import('./src/brand.js');
+    const header = document.querySelector('.desk-heading h1 img');
+    return { path: new URL(brandImage.src).pathname.split('/').pop(),
+      width: brandImage.naturalWidth, height: brandImage.naturalHeight,
+      separate: brandImage.src !== header.src, filter: getComputedStyle(header).filter };
+  });
+  expect(consoleBrand).toMatchObject({ path: 'logo.png', width: 2170, height: 725, separate: true });
+  expect(consoleBrand.filter).not.toContain('176, 117, 240');
+  for (const [width, height] of [[1440, 1100], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    await expect(page.locator('.desk-heading h1')).toBeVisible();
+    const box = await page.locator('.desk-heading h1 img').boundingBox();
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(width);
+    expect(box.width / box.height).toBeCloseTo(2151 / 731, 2);
+    await page.locator('.desk-heading h1 img').screenshot({ path: test.info().outputPath(`website-logo-${width}.png`) });
+  }
+  await page.locator('#tools-open').click();
+  await expect(page.locator('#tools .panel-logo')).toBeVisible();
+  await page.locator('#tools-close').click();
+  await page.locator('#pickup').click();
+  await expect(page.locator('.desk-heading h1')).toBeHidden();
+  await expect(page.locator('#inspect')).toBeEnabled();
+  await page.locator('#inspect').click();
+  await expect(page.locator('.desk-heading h1')).toBeVisible();
+});
+
 test('favicon retains the wide handheld silhouette at browser-tab sizes', async ({ page }) => {
   await page.goto('./');
   const icon = page.locator('link[rel="icon"]');

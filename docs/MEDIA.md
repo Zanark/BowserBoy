@@ -76,6 +76,18 @@ Pages `42013383789` passes the full gate;28actual public assets match and two
 public cases pass62.2s. Its actual public lamp-lit text crop is separately
 inspected, not substituted into earlier GIFs or figures.
 
+### Website identity - chrome BowserBOY
+
+The supplied2151x731chrome sparkle PNG is preserved byte-for-byte as
+`assets/website-logo.png` and becomes the website/README identity. Its SHA-256
+is`804b1a96494dbecc9fa732e2772e8f2d23c9eb21bcd8286d9dc00b1fbf46c808`.
+The original purple2170x725`assets/logo.png` stays with the GBA console, now
+named BowserBOY ADVANCED by the user; no existing console artwork is regenerated.
+Older captures and the preserved orbital banner GIF show the previous website
+identity. They are historical footage, not chrome-header captures.
+Actual local desktop/mobile header crops are reviewed separately; that is not
+a recapture of existing GIFs or proof of public deployment.
+
 ### Current refresh - manufactured controls and glass
 
 The later [larger etched rear logo](VERIFICATION.md#larger-etched-rear-logo-2026-11-05)

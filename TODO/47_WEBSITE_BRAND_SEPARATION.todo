@@ -1,0 +1,40 @@
+Status: IN_PROGRESS
+Milestone: BowserBOY website identity separate from its first console.
+Dependencies: 46_LARGER_ETCHED_REAR_LOGO.todo.
+
+Purpose:
+Use the supplied chrome BowserBOY artwork for the website. Retain the purple
+BowserBOY ADVANCE artwork exclusively for the current GBA console, which the
+user calls BowserBOY ADVANCED. More consoles on the table are future direction,
+not part of this implementation.
+
+Tasks:
+- [x] Copy the supplied transparent logo unchanged as assets/website-logo.png.
+- [x] Update website title, description, accessible name and header/panel logos.
+- [x] Keep console brand loader, startup, rear engraving and bezel unchanged.
+- [x] Preserve saves, storage keys, runtime and existing relative URLs.
+- [x] Qualify desktop/phone header fit and retained play/Inspect visibility.
+- [x] Update README, affected docs, source register and owned continuity.
+- [ ] Pass the normal complete hosted gate and independently verify production.
+
+Acceptance criteria:
+- Website uses the exact2151x731chrome RGBA artwork without purple tint.
+- Console retains original2170x725purple artwork, startup/effects and geometry.
+- Website chrome logo never replaces console art through the shared brand loader.
+- No extra console, selector, routing/storage migration or repository rename.
+- Owner explicitly chooses to perform the GitHub repository rename themselves.
+- Local evidence, public delivery and human aesthetic approval stay separate.
+
+Completion evidence:
+- Source/copy SHA256804b1a96494dbecc9fa732e2772e8f2d23c9eb21bcd8286d9dc00b1fbf46c808.
+- Original purple PNG remainsde93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1.
+- New regression fails old title "Bowser Boy Advance".
+- Syntax/build/all11units pass. Four actual browser cases pass32.9s:
+  website identity/fit/visibility, orbital drawing, complete physical branding/
+  recess/fullscreen/framing and power/startup/persistent-power lifecycle.
+- Actual desktop/320px chrome header crops reviewed; source alpha retained.
+- Normal/public qualification pending; no private-ROM or audio/video replay.
+
+Completion log:
+- 2026-11-05: User supplies the chrome BowserBOY logo and establishes website/
+  console identity. Clarification: update branding only; owner renames repo.

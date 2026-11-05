@@ -43,6 +43,13 @@ Historical rear-view figures keep their original provenance.
 
 ## Evidence is narrower than explanation
 
+Workstream47separates chrome website identity (`index.html`,
+`assets/website-logo.png`, header shadows in`styles.css`) from the unchanged
+purple console loader in`src/brand.js`. Its
+[verification record](../docs/VERIFICATION.md#bowserboy-website-brand-separation-2026-11-05)
+tracks local checks and public delivery separately. Additional consoles and
+the owner's repository rename are not implemented by that branding change.
+
 Current release records live in [Verification](../docs/VERIFICATION.md);
 capture origins and historical figures live in [Media](../docs/MEDIA.md).
 Those records distinguish local, software-rendered, hosted and actual public

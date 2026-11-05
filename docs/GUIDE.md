@@ -2,6 +2,19 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
+## Website and console names
+
+**BowserBOY** is the website/table, using the supplied chrome sparkle logo
+in its header and tools/settings panels. **BowserBOY ADVANCED** is the first
+console: the current GBA handheld. Its original purple artwork still reads
+BowserBOY ADVANCE and stays unchanged on its rear and idle/loading/startup LCD.
+The physical bezel lettering also stays unchanged. Additional consoles on the
+table are planned, not implemented or selectable.
+
+The owner will rename the GitHub repository separately. Until then the existing
+repository and Pages URLs remain valid; this branding change does not rename
+storage, modify saves, or move the local checkout.
+
 **Current release and pictures:** source `a7a07fc` is independently verified
 live after the full 40-case hosted gate and exact 28-public-asset match.
 It recovers the original soft Arial A/B shapes, size and placement with shallow
@@ -13,7 +26,7 @@ Frosted overlays do not move the camera;
 sustained audio buffering, darker D-pad arrows and play-only header hiding remain.
 README footage/stills retain their local `8a1d6a3` capture origin; the later
 borderless-bezel, later A/B refinements, metallic finish and enlarged rear
-engraving postdate those recordings.
+engraving and chrome website header postdate those recordings.
 Most inherited guide motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
@@ -30,14 +43,12 @@ other logos are untouched. Fullscreen shares the exact lettering canvas.
 Current [qualification](VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
 is separate from the older pictures below.
 
-![BowserBOY ADVANCE wordmark](../assets/logo.png)
+![BowserBOY chrome website wordmark](../assets/website-logo.png)
 
-*The supplied transparent purple orbital logo, preserved unchanged with its
-white lettering, neon rim and orbit/star accents. On the main page, an
-alpha-shaped violet glow and tight dark shadow separate it from the warm
-room without a rectangular background or blurred lettering. The top-left logo
-is hidden in play view and returns on the desk or in Inspect; notifications
-remain visible in their existing header position.*
+*The supplied transparent chrome website logo, preserved byte-for-byte.
+A restrained neutral shadow separates it from the warm room without tinting
+the silver artwork purple. It is hidden in play view and returns on the desk
+or in Inspect; notifications retain their existing header position.*
 
 **A little escape, on your desk.** A local-first browser GBA player inside an
 actual 3D indigo handheld, built for static hosting on GitHub Pages.

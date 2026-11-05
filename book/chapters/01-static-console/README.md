@@ -29,6 +29,22 @@ owns the emulator instance. Three.js owns presentation, not CPU emulation.
 Keeping these responsibilities separate lets a change in desk lighting leave
 the game untouched.
 
+## Later website and console identity
+
+Workstream47separates the umbrella website from its first console. BowserBOY
+uses the supplied chrome `assets/website-logo.png` in the HTML header and
+settings panels. BowserBOY ADVANCED is the user's name for the existing GBA
+console; its supplied purple `assets/logo.png`, LCD startup, rear engraving
+and bezel stay unchanged. Naming the future collection does not implement a
+console registry, additional cores, selection or save migration.
+
+Keeping these assets separate is enough for the current requirement. Replacing
+the console loader's shared image would accidentally rebrand the handheld too;
+adding a generalized multi-console runtime would exceed the request.
+The owner retains responsibility for renaming the GitHub repository. Relative
+asset paths are preserved, but a future hosting-path change still requires
+actual deployment verification rather than a blanket compatibility promise.
+
 ## Walk through the actual package
 
 `siteFiles()` starts with named HTML/CSS and vendor entries, then selects

@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Website and console brand separation:
+  User establishes BowserBOY as website and BowserBOY ADVANCED as first console.
+  Copy supplied2151x731chrome RGBA byte-for-byte towebsite-logo.png; change
+  header/dialog logos, website title/description and accessible table name.
+  Replace only header's violet glow with neutral chrome-friendly separation.
+  Preserve original purple2170x725PNG and console loader/startup/rear/bezel.
+  README lead image uses chrome; old recordings retain capture provenance.
+  Owner explicitly elects to rename GitHub repo themselves; no remote/path/
+  save/runtime migration or speculative multi-console implementation.
+  Old title fails new regression. Syntax/build/11units/fourbrowsercases32.9s
+  pass; actual desktop/mobile chrome crops reviewed. Hosted/public pending.
 - 2026-11-05 / Larger rear engraving46independently live:
   a7a07fc0b143d531a662e8ecc7c7b5dce68c07b6 /42018059319passes build,
   11units,all40browser cases(actual14+13+13) and deployment. Independently
