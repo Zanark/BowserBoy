@@ -21,6 +21,8 @@ Completion log:
   Keep the ROM out of the static build, player defaults and test fixtures.
   Media capture is authorized; testing still requires an explicit request.
   No game execution or new footage is performed for the upload.
+  Published ad5bfa204d37ce22883a14beca9c4579c726988f; both actual public
+  downloads match supplied byte counts/SHA-256. No Pages-status claim.
 - 2026-11-05 / Experimental LCD control spill:
   User wants all-lights-off controls barely visible from the screen, with easy
   removal if disliked. Add one weak reverse-facing area fill to existing

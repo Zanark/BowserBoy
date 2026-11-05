@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Publish the supplied demo ROM and box art on GitHub.
 Dependencies: User upload authorization and redistribution confirmation.
 
@@ -13,7 +13,7 @@ Tasks
 [x] Preserve supplied ROM and box-art bytes in a dedicated demo directory.
 [x] Document credits, exact file identities and the no-testing boundary.
 [x] Add a captioned README showcase and direct ROM download.
-[ ] Commit/push the actual assets and verify their public GitHub identities.
+[x] Commit/push the actual assets and verify their public GitHub identities.
 
 Acceptance criteria
 -------------------
@@ -32,8 +32,14 @@ Only the exact demos/celias-game/celias-game.gba path is exempted from *.gba.
 Existing runtime, tests, static build and earlier media remain unchanged.
 Both copied SHA-256 values match the supplied originals. A private-example.gba
 remains ignored while the single authorized ROM is not ignored.
+Published source ad5bfa204d37ce22883a14beca9c4579c726988f. Both actual public
+raw GitHub downloads match the original byte counts and SHA-256 values.
+No game execution, manual/automated ROM test or new footage was performed.
+GitHub repository publication is complete; no Pages-deployment claim is made.
 
 Completion log
 --------------
 2026-11-05: Upload authorized after explicit redistribution clarification;
 supplied-artwork showcase and media-only boundary documented.
+2026-11-05: ROM/box art committed/pushed and independently downloaded from
+the exact public revision; both identities match. No ROM execution.
