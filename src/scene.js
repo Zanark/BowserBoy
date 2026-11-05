@@ -392,7 +392,7 @@ export class HandheldScene {
     const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
     if (this.renderedLastFrame) {
-      this.slowFrames = delta > .05 ? (this.slowFrames ?? 0) + 1 : 0;
+      this.slowFrames = delta > .5 ? 6 : delta > .05 ? (this.slowFrames ?? 0) + 1 : 0;
       this.nextPaint = time + (delta > .05 ? Math.min(200, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;

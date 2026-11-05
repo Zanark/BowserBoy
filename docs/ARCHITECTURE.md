@@ -421,8 +421,11 @@ the relevant state. Modal tools suspend 3D uploads/readbacks and painting behind
 their blurred backdrop, **not** the native game.
 
 After six sustained painted frames slower than 50 ms, the renderer reduces only
-its backing pixel ratio by a factor of 0.75, down to 0.5. CSS controls and native
-core resolution do not change. A slow paint also leaves up to 200 ms of recovery
+its backing pixel ratio by a factor of 0.75, down to 0.5. A gap above 500ms after
+a painted frame reaches that threshold immediately, rather than waiting through
+six multi-second stalls before adapting. An isolated 100ms stall still does not
+reduce quality. CSS controls and native core resolution do not change.
+A slow paint also leaves up to 200 ms of recovery
 before the next 3D paint, giving native emulation scheduling headroom. Cheap
 pose/button calculations still advance and retain dirty shadows across skipped
 paints. Light damping uses elapsed time since the actual previous paint.

@@ -59,6 +59,27 @@ responsive dock clearance and the existing adaptive-rendering check. Syntax,
 all 12 unit tests and whitespace checks pass. These local results do not
 replace the next normal hosted gate or subsequent public-site qualification.
 
+Run `42093791775` completes all 53 cases: 51 pass, including the corrected dock
+clearance and both split quick-action flows. Deployment still skips: reload
+insertion again exceeds its seating expectation, and the original combined
+native save/import/isolation case exceeds 120 seconds. Awaiting the early
+pose alone did not resolve the slow renderer.
+
+The retained traces show repeated multi-second main-thread stalls. Adaptive
+quality previously waited for six slow painted frames, so it could wait through
+many seconds of blocking before reducing resolution. A post-paint gap above
+500ms now reaches that existing threshold immediately. The same 0.75 reduction,
+0.5 floor, recovery scheduling, insertion clock and native resolution remain.
+The existing actual-render budget regression now checks this severe-stall case
+in addition to isolated 100ms and sustained moderate stalls; its new assertion
+fails against the previous source (`1` rather than a reduced ratio).
+
+The corrected source passes nine focused cases with actual SwiftShader WebGL
+in 5.4 minutes: the complete native save/import/isolation flow, both insertion
+viewports, both native quick-action flows, dock clearance, adaptive rendering,
+pressed-control visibility and LCD control-spill lighting. Build, syntax and all
+12 units pass. Hosted and public qualification remain pending.
+
 ## Complete README refresh, 2026-11-05
 
 Nine interaction GIFs and nine stills are refreshed from local application

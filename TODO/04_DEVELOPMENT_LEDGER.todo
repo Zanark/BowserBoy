@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Severe renderer stall response:
+  Follow-on42093791775executesall53:51pass, including dockclearance andboth
+  splitnativequickflows. Remainingfailures are reloadinsertion15s andoriginal
+  nativesave/import/isolation120s; deployskips. Earlyposesyncalone insufficient.
+  Actualtraces repeatedlyblockmainthread2-3s. Existingadaptivequality waits
+  sixslowpaintedframes, delayingrelief throughmanysecondsofblocking.
+  A post-paintgapover500ms nowreaches theexistingqualitythreshold immediately,
+  retaining0.75factor/0.5floor/recovery/cappedinsertion/native resolution.
+  Newseverestallbranch inexistingactual-render regression failsoldsource
+  withratio1; no deadlines/assertions removed orweakened. Qualificationpending.
+  CorrectedninecaseSwiftShader suitepasses5.4m: complete nativesave/import/
+  isolation, bothinsertionviewports, bothquickflows, dock/adaptive, pressedcap
+  pixels andLCDspill. Build/syntax/12units/whitespacepass; normalCIpending.
 - 2026-11-06 / Monitored dock gate recovery:
   Run42088695154fails anddeployskips. Actualtrace exposes old powercoordinates
   read immediatelyafter320pxresize; poll the same clearance against a rendered

@@ -196,13 +196,19 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     const duringRecovery = view.renderer.info.render.frame;
     tick(201); tick(16);
     const singleStallRatio = view.renderer.getPixelRatio();
+    tick(1000); tick(201);
+    const severeStallRatio = view.renderer.getPixelRatio();
+    view.renderer.setPixelRatio(1);
+    view.slowFrames = 0;
+    view.nextPaint = 0;
     for (let i = 0; i < 6; i++) { tick(100); tick(201); }
     view.setControl('a', true);
     tick(100);
-    return { singleStallRatio, beforeRecovery, duringRecovery, slowRatio: view.renderer.getPixelRatio(),
+    return { singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, slowRatio: view.renderer.getPixelRatio(),
       width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
   });
   expect(budget.singleStallRatio).toBe(1);
+  expect(budget.severeStallRatio).toBeLessThan(1);
   expect(budget.duringRecovery).toBe(budget.beforeRecovery);
   expect(budget.slowRatio).toBeLessThan(1);
   expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.slowRatio));
