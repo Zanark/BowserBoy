@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Current BowserBOY visual README and reconciled public documentation.
 Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo.
 
@@ -14,8 +14,8 @@ Tasks:
 - [x] Correct stale settings-logo/fullscreen descriptions and saving guidance.
 - [x] Update book entry and documentation chapter without repinning first edition.
 - [x] Check Markdown paths/anchors, image decoding and unchanged source artwork.
-- [ ] Publish and independently verify changed public documents/media.
-- [ ] Complete owned continuity and final delivery record.
+- [x] Publish and independently verify changed public documents/media.
+- [x] Record owned continuity and final delivery evidence.
 
 Acceptance criteria:
 - README stays visual-first, with short captions and no invented future feature.
@@ -36,8 +36,17 @@ Completion evidence:
   frame reviewed. Current stills use readme-*; historical figures unchanged.
 - 152 local Markdown paths/anchors across 19 documents resolve. All 14 README
   image embeds decode; supplied chrome PNG hash remains exact; diff check passes.
-- Public publication/receipt pending. No new runtime/audio test or human approval.
+- Published c7fb6828262f176ca61eebfae18be81453cdb25e: independently match all
+  25 changed files to exact committed blobs. Actual GitHub-rendered README
+  includes 14 expected image embeds and updated guide navigation.
+- Initial byte receipt compares CRLF worktree to LF publication. Use committed
+  Git blobs as the exact reference; no normalization or relaxed assertion.
+- Owned STATE/MEMORY/JOURNAL updated; significant episodic ep_1004 persisted
+  and read back. No new runtime/audio test or human approval.
 
 Completion log:
 - 2026-11-05: User explicitly requests README and documentation refresh.
   Extend the brand split into current media, book entry and recovery guidance.
+- 2026-11-05: Documentation/media published and independently verified; no
+  application changes, repository rename or historical image overwrites.
+- 2026-11-05: Delivery evidence and owned continuity recorded; workstream done.

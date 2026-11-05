@@ -26,7 +26,15 @@ The five encoded loops have 107/44/29/52/51 frames at 800x618/10 fps. Bounded
 contact/still review includes a separate LCD-only sample; current media is not
 validated by file existence alone. All local links/anchors in 19 Markdown
 documents and all 14 README image embeds resolve/decode; supplied chrome-logo
-bytes stay exact. Public documentation publication is recorded separately.
+bytes stay exact.
+
+Documentation/media publication `c7fb6828262f176ca61eebfae18be81453cdb25e`
+is independently verified: all 25 changed public files match exact committed
+blobs; the actual GitHub-rendered README includes 14 image embeds and current
+navigation. The final local navigation count is 152 paths/anchors. Initial
+working-tree byte comparison encountered CRLF versus committed LF; the receipt
+uses canonical Git blobs, not newline-normalized network output. Application
+bytes remain unchanged from the previously qualified public source.
 
 ## BowserBOY website brand separation, 2026-11-05
 

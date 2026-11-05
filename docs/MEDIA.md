@@ -44,6 +44,13 @@ eight-still contact sheets are reviewed, plus an actual LCD-only dark interval.
 The 14 README embeds decode and all local Markdown links/anchors across the
 19 public Markdown documents resolve. These checks do not imply human approval.
 
+Published as `c7fb6828262f176ca61eebfae18be81453cdb25e`: all 25 changed
+documents/media/tracking files independently match their committed Git blobs.
+GitHub's actual rendered README includes all 14 expected image embeds and the
+updated navigation. The first receipt attempt compared CRLF working-tree text
+with LF publication bytes; comparing exact committed blobs corrected that
+verification input without normalizing or relaxing the public-byte check.
+
 ### Current refresh - recessed controls and smaller bezel
 
 **Previous local media edition.** These origins describe the earlier images
