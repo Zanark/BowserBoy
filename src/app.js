@@ -496,6 +496,7 @@ $('play-zoom').addEventListener('input', () => {
 });
 document.addEventListener('fullscreenchange', () => {
   const focused = document.fullscreenElement === $('screen-focus');
+  view?.setScreenFullscreen(focused);
   $('play-zoom-control').hidden = focused || view?.mode !== 'playing' || !!view?.transition;
   $('quick-screen-fullscreen').setAttribute('aria-pressed', String(focused));
   if (focused) {
@@ -507,7 +508,6 @@ document.addEventListener('fullscreenchange', () => {
     screenFrame = null;
     $('screen-focus').hidden = true;
     releaseHostInputs();
-    if (view) view.changed = true;
     $('quick-screen-fullscreen').focus({ preventScroll: true });
   }
   if (running) void command('setInputEnabled', focused || (view?.mode === 'playing' && !view.transition))

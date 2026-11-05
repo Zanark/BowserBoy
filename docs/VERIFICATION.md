@@ -7,6 +7,24 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Main-view LCD after screen fullscreen, 2026-11-05
+
+The room renderer now explicitly stops on screen fullscreen entry and restarts
+with reset frame timing on exit. The fullscreen mirror and native emulator
+continue independently; no cartridge, runtime, texture or save reload is used.
+
+The reported spontaneous freeze did not reproduce in local headless/headed Edge
+or with ordinary browser background throttling. A deterministic suspended-room-
+loop fixture fails old source with fixed `lastPaint`, then passes the explicit
+resume lifecycle. This is fault injection, not proof of the user's exact cause.
+The regression reads actual automatically rendered GPU LCD pixels after both
+Escape and close-button exits and after subsequent main-view input. It does not
+manually render the room or call native screenshots after fullscreen entry,
+which could mask a stale presentation. The native runtime identity is retained.
+Syntax/build/12 units and the new resume, ordinary zoom, held-Space and full
+quick-actions cases pass 4/4 in 1.6m. Public release qualification is pending.
+No new private-ROM/audio test or human acceptance is claimed.
+
 ## Default hold-Space fast-forward, 2026-11-05
 
 The exact pinned EmulatorJS 4.2.3 source provides native fast-forward ratio/

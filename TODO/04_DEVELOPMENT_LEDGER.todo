@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Main-view LCD after screen fullscreen:
+  User reports return view frozen at the fullscreen-entry frame. Existing local
+  headless/headed/normal-throttling returns pass, so do not claim exact spontaneous
+  reproduction. Explicit suspended-loop fixture fails old source with fixed
+  lastPaint. Stop only room rendering on fullscreen entry; explicitly restart it
+  with cleared room-frame timing on exit, retaining native core/source/texture.
+  Actual GPU LCD readback, not native screenshots/manual rendering, verifies
+  Escape and close-button returns plus subsequent main-view input. Syntax/build/
+  12units and four affected cases pass1.6m; source publication pending.
 - 2026-11-05 / Default hold-Space native fast-forward:
   User requests Space hold2x/release1x by default and checks EmulatorJS support.
   Exact4.2.3GameManager source exposes native toggle/ratio and momentary input27.

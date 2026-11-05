@@ -1,0 +1,51 @@
+Status: IN_PROGRESS
+Milestone: Explicit room-renderer restart after screen fullscreen locally qualified.
+Dependencies: Existing screen fullscreen; completed native framebuffer integration.
+
+Purpose
+-------
+Return from screen-only fullscreen to a live main-view LCD, not its entry frame.
+
+Tasks
+-----
+[x] Trace fullscreen lifecycle, live texture uploads and room animation pacing.
+[x] Explicitly stop room rendering on screen fullscreen entry and restart on exit.
+[x] Reset stale room-frame timing without replacing the native runtime or texture.
+[x] Verify actual rendered LCD pixels change after Escape and close-button exits.
+[x] Cover a suspended room animation loop and subsequent main-view game input.
+[x] Preserve ordinary zoom, held fast-forward and full native quick-actions.
+[ ] Publish through the unchanged full gate and independently verify public behavior.
+[x] Update affected architecture, verification and causal records.
+
+Acceptance criteria
+-------------------
+Screen fullscreen retains its live independent canvas. Both exit routes resume
+ongoing Three rendering and current LCD pixels, including after a suspended
+room loop. Subsequent main-view input changes visible LCD pixels. Keep the
+same native emulator, cartridge and save state; do not restart or reload it.
+
+Completion evidence
+-------------------
+Source previously skipped Three painting during screen fullscreen but relied
+on its existing animation callback resuming automatically. Add an explicit
+HandheldScene.setScreenFullscreen lifecycle: stop only the room animation loop
+on entry; reset lastRender/nextPaint/renderedLastFrame and mark changed before
+restarting on exit. Native core and fullscreen canvas loops remain independent.
+Existing local fullscreen returns passed in headless/headed Edge and with normal
+background-throttling flags; the user's spontaneous freeze was NOT reproduced.
+Regression explicitly suspends the room loop during its second fullscreen
+cycle. Old source then fails because lastPaint remains fixed; this is fault
+injection, not proof of the user's exact browser-level cause.
+Actual automatic scene.onAfterRender GPU readback hashes the projected LCD,
+without manually rendering or invoking native screenshots after fullscreen.
+Verify both exit routes, advancing paints, changed LCD pixels after fullscreen
+movement and subsequent main-view input, and retained runtime identity.
+Syntax/build/12units and four affected actual-browser cases pass in1.6m:
+ordinary zoom19.1s, fullscreen resume11.5s, heldSpace20.1s, quickactions40.8s.
+No new private-ROM/audio test, video inspection or user acceptance is claimed.
+Publication and actual public browser qualification remain pending.
+
+Completion log
+--------------
+2026-11-05: User reports main-view LCD frozen at the fullscreen-entry frame
+after returning from screen fullscreen. Add explicit renderer resume lifecycle.

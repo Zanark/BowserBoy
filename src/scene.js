@@ -171,7 +171,17 @@ export class HandheldScene {
     this.resize();
     this.camera.position.copy(this.cameraTarget);
     this.lookAt.copy(this.lookTarget);
-    this.renderer.setAnimationLoop((time) => this.render(time));
+    this.setScreenFullscreen(false);
+  }
+
+  setScreenFullscreen(focused) {
+    if (!focused) {
+      this.lastRender = null;
+      this.nextPaint = 0;
+      this.renderedLastFrame = false;
+      this.changed = true;
+    }
+    this.renderer.setAnimationLoop(focused ? null : (time) => this.render(time));
   }
 
   pick(event) {

@@ -287,6 +287,79 @@ test('three checkpoint slots stay independent and reject invalid slots without c
   expect(result).toEqual({ slots: [[1], [2], [3], [4]], error: 'Unknown save slot.', coldBoot: 'battery', retained: [2], battery: [99] });
 });
 
+test('screen fullscreen returns to an advancing main-view LCD without replacing the runtime', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  await page.locator('#quick-autosave').click();
+  await page.locator('#tools-open').click();
+  await page.locator('#demo').click();
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+  const frame = runtime(page);
+  await frame.evaluate(() => { window.fullscreenRuntime = window.EJS_emulator; });
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Box3, Vector3 } = await import('three');
+    view.scene.onAfterRender = () => {
+      if (!window.captureReturnedLcd) return;
+      window.captureReturnedLcd = false;
+      const box = new Box3().setFromObject(view.model.screen);
+      const corners = [];
+      for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) {
+        for (const z of [box.min.z, box.max.z]) corners.push(new Vector3(x, y, z).project(view.camera));
+      }
+      const { width, height } = view.canvas;
+      const left = Math.max(0, Math.floor((Math.min(...corners.map(p => p.x)) + 1) * width / 2));
+      const bottom = Math.max(0, Math.floor((Math.min(...corners.map(p => p.y)) + 1) * height / 2));
+      const w = Math.min(width - left, Math.ceil((Math.max(...corners.map(p => p.x)) + 1) * width / 2) - left);
+      const h = Math.min(height - bottom, Math.ceil((Math.max(...corners.map(p => p.y)) + 1) * height / 2) - bottom);
+      const pixels = new Uint8Array(w * h * 4);
+      const gl = view.renderer.getContext();
+      gl.readPixels(left, bottom, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      let hash = 2166136261;
+      for (const value of pixels) hash = Math.imul(hash ^ value, 16777619);
+      window.returnedLcd = { hash, nonzero: pixels.some((value, index) => index % 4 !== 3 && value > 0) };
+    };
+  });
+  const lcd = async () => {
+    await page.evaluate(() => { window.returnedLcd = null; window.captureReturnedLcd = true; });
+    await expect.poll(() => page.evaluate(() => window.returnedLcd)).not.toBeNull();
+    return page.evaluate(() => window.returnedLcd);
+  };
+  const painted = () => page.evaluate(async () => (await import('./src/app.js')).view.lastPaint);
+  for (const exit of ['Escape', 'button']) {
+    const original = await lcd();
+    expect(original.nonzero).toBe(true);
+    const before = await painted();
+    await page.locator('#quick-screen-fullscreen').click();
+    await expect.poll(() => page.evaluate(() => document.fullscreenElement?.id)).toBe('screen-focus');
+    if (exit === 'button') await page.evaluate(async () => {
+      // Reproduce a room animation loop suspended while its canvas is covered.
+      (await import('./src/app.js')).view.renderer.setAnimationLoop(null);
+    });
+    const fullscreenPixels = () => page.locator('#screen-focus-canvas').evaluate(canvas => canvas.toDataURL());
+    const start = await fullscreenPixels();
+    await page.keyboard.down('ArrowRight');
+    try { await expect.poll(fullscreenPixels).not.toBe(start); }
+    finally { await page.keyboard.up('ArrowRight'); }
+    if (exit === 'Escape') await page.keyboard.press('Escape');
+    else await page.locator('#screen-focus-close').click();
+    await expect(page.locator('#screen-focus')).toBeHidden();
+    await expect.poll(painted).toBeGreaterThan(before);
+    const resumed = await painted();
+    await expect.poll(painted).toBeGreaterThan(resumed);
+    await expect.poll(async () => (await lcd()).hash).not.toBe(original.hash);
+    const returned = await lcd();
+    await page.locator('#scene-canvas').focus();
+    await page.keyboard.down('ArrowLeft');
+    try { await expect.poll(async () => (await lcd()).hash).not.toBe(returned.hash); }
+    finally { await page.keyboard.up('ArrowLeft'); }
+    expect(await frame.evaluate(() => window.fullscreenRuntime === window.EJS_emulator)).toBe(true);
+  }
+});
+
 test('holding Space runs the native cartridge at 2x and release or lost input restores 1x by default', async ({ page }) => {
   await page.goto('./');
   await ready(page);

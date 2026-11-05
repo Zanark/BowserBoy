@@ -462,7 +462,11 @@ The accessible 50-100% slider scales the complete centered bezel/picture togethe
 100% is the largest uncropped fit, not a crop-to-fill mode. Container-relative
 sizing follows orientation changes without restarting or resizing the native core.
 It never reparents the live iframe, starts a second runtime or changes saved power
-intent. Its animation loop continues while the unseen room renderer skips work.
+intent. Its animation loop continues while `HandheldScene.setScreenFullscreen`
+explicitly stops the unseen room's Three animation loop. On exit it resets the
+room's frame timing/recovery deadline, marks the view dirty and starts a fresh
+animation callback. This does not depend on a covered canvas's old callback
+resuming automatically, recreate the live texture or restart the native core.
 Mapped host input is enabled independently of table/inspection mode, with held
 input released on entry/exit. Fullscreen changes restore the original mode's
 input gating and dock focus; Escape or the named exit button closes the mirror.
