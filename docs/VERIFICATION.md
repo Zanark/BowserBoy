@@ -110,6 +110,28 @@ working-tree byte comparison encountered CRLF versus committed LF; the receipt
 uses canonical Git blobs, not newline-normalized network output. Application
 bytes remain unchanged from the previously qualified public source.
 
+## Updated chrome orbit and sparkle logo, 2026-11-05
+
+The replacement supplied PNG is byte-identical at `assets/website-logo.png`
+(2148x732 RGBA; SHA-256
+`5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300`).
+All three intrinsic HTML dimensions and the source identity regression are
+updated together. The original purple console PNG and animated README banner
+remain unchanged. Only the umbrella README glow is regenerated with the
+existing helper; opaque ink and transparent corners are preserved.
+
+The new source has 589,657 fully transparent pixels out of 1,572,336 (37.502%).
+The older test's more-than-half-transparent assumption belongs to the previous
+artwork and correctly fails on this replacement. Compare the exact new
+transparent fraction instead; retain exact source hashes, corner transparency,
+white-ink, aspect, viewport bounds, play/Inspect and shimmer assertions.
+
+Syntax/build, all11unit tests and three focused actual-browser cases pass30.3s:
+website/console separation, exact artwork/responsive layout/play/Inspect and
+periodic shimmer/reduced motion. Actual desktop/320px header crops and the
+light/dark README glow sheet are reviewed. Purple console PNG/GIF/APNG match
+prior committed bytes. Publication results are recorded in workstream54.
+
 ## BowserBOY website brand separation, 2026-11-05
 
 The supplied chrome website logo is copied unchanged to`assets/website-logo.png`

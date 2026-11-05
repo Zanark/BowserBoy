@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Updated chrome orbit and sparkle logo:
+  User supplies revised umbrella artwork. Copy its original PNG bytes to the
+  existing website path, update all three intrinsic dimensions and regenerate
+  only the README umbrella halo through the existing helper. Keep purple console
+  artwork, its animated banner, existing gameplay media and CSS shimmer exact.
+  New source2148x732/SHA256 5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300.
+  Derived halo2320x904/1491439bytes preserves opaque ink and transparent corners.
+  Light/dark sheet reviewed. Two initial browser cases pass; the third exposes
+  the old artwork's >50%transparency assumption. New source has589657transparent
+  pixels/1572336total; compare its exact fraction instead of an obsolete bound,
+  retaining all hash/corner/layout/visibility assertions. Syntax/build/11units
+  and all three focused browser cases30.3s pass. Actual desktop/320px header
+  crops reviewed; source console PNG/GIF/APNG remain exact. Publication pending.
 - 2026-11-05 / README logo glows:
   User requests glow on both README logos. Derive silver-blue chrome and violet
   console halos from their alpha masks, composite original ink on top and pad

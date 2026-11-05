@@ -671,8 +671,8 @@ The server is loopback-only and serves only public allowlisted files. The
 build replaces only the generated `dist` directory and adds `.nojekyll`.
 Documentation/private context cannot enter the deployed artifact through a
 recursive repository copy.
-The website's BowserBOY header and both panel logos use the unchanged2151x731
-RGBA chrome artwork in `assets/website-logo.png`; intrinsic HTML dimensions
+The website's BowserBOY header and both panel logos use the supplied2148x732
+RGBA chrome orbit and sparkle artwork in `assets/website-logo.png`; intrinsic HTML dimensions
 match it. A neutral header shadow replaces the previous violet glow.
 The header adds a CSS-only left-to-right shimmer every six seconds: a duplicate
 of that same transparent PNG, neutral brightening/glow and a feathered moving

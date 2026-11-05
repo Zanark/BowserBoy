@@ -8,6 +8,22 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Updated chrome orbit and sparkle logo, 2026-11-05
+
+The user's replacement BowserBOY artwork is copied byte-for-byte to
+`assets/website-logo.png`: 2148x732 RGBA, 1,566,452 bytes, SHA-256
+`5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300`.
+It supersedes the earlier chrome source documented below, not the purple GBA
+console artwork. Website header and both panels use the new source with matching
+intrinsic dimensions; existing CSS glow/shimmer follows its alpha unchanged.
+
+Only the umbrella README glow is regenerated through the existing `logo_glow`
+helper: 2320x904 RGBA, 1,491,439 bytes, unchanged opaque foreground pixels,
+transparent corners and a silver-blue halo. The light/dark contact sheet and
+actual browser header crops are reviewed separately from older gameplay media.
+The purple animated README banner and all existing recordings remain unchanged.
+Historical capture/source receipts below retain their original identities.
+
 ### README logo glows, 2026-11-05
 
 The two standalone README logos now use transparent, padded derivatives:

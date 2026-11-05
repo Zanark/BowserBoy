@@ -17,7 +17,7 @@ test('BowserBOY website branding is separate from the purple GBA console artwork
     expect(await logo.evaluate(async image => {
       await image.decode();
       return { width: image.naturalWidth, height: image.naturalHeight };
-    })).toEqual({ width: 2151, height: 731 });
+    })).toEqual({ width: 2148, height: 732 });
   }
   const consoleBrand = await page.evaluate(async () => {
     const { brandImage } = await import('./src/brand.js');
@@ -34,7 +34,7 @@ test('BowserBOY website branding is separate from the purple GBA console artwork
     const box = await page.locator('.desk-heading h1 img').boundingBox();
     expect(box.x).toBeGreaterThanOrEqual(0);
     expect(box.x + box.width).toBeLessThanOrEqual(width);
-    expect(box.width / box.height).toBeCloseTo(2151 / 731, 2);
+    expect(box.width / box.height).toBeCloseTo(2148 / 732, 2);
     await page.locator('.desk-heading h1 img').screenshot({ path: test.info().outputPath(`website-logo-${width}.png`) });
   }
   await page.locator('#tools-open').click();

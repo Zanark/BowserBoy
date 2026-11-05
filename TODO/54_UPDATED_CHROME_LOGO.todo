@@ -1,0 +1,39 @@
+Status: IN_PROGRESS
+Milestone: Updated supplied BowserBOY chrome orbit and sparkle artwork.
+Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo; 53_README_LOGO_GLOWS.todo.
+
+Purpose:
+Use the user's updated umbrella logo on the website and README while preserving
+the purple BowserBOYADVANCED console branding, existing glow and shimmer.
+
+Tasks:
+- [x] Inspect original supplied PNG and update the website asset byte-for-byte.
+- [x] Update all website image dimensions and dependent artwork regressions.
+- [x] Regenerate only the umbrella README glow using the existing helper.
+- [x] Verify desktop/mobile rendering, transparency, shimmer and exact source.
+- [ ] Record affected documentation and owned continuity.
+
+Acceptance criteria:
+- Website header and both panel logos use the exact supplied 2148x732 RGBA PNG.
+- README umbrella glow derives from that image without redrawing its lettering.
+- Header retains the existing periodic shimmer and reduced-motion behavior.
+- Purple console artwork, animated banner and gameplay media remain unchanged.
+- No runtime, save, audio, repository-name or URL change.
+
+Completion evidence:
+- Supplied source SHA-256:
+  5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300.
+- Syntax/build and all 11 unit tests pass. Three focused actual-browser cases
+  pass in30.3s: website/console separation, responsive header/panels/play/Inspect,
+  exact supplied PNG bytes/transparency and periodic/reduced-motion shimmer.
+- Desktop and320px actual header crops and light/dark glow sheet reviewed.
+- README halo2320x904/1491439bytes preserves opaque ink and transparent corners.
+- Purple PNG, orbital GIF and console APNG match prior committed bytes.
+- Initial Windows path selectors found no tests; use filename regex instead.
+  Initial artwork case rejects old >50%transparent assumption; new source
+  has589657/1572336transparent pixels, now compared exactly. No app workaround.
+- Normal hosted/publication verification pending; no human acceptance claimed.
+
+Completion log:
+- 2026-11-05: User supplies the updated chrome orbit and sparkle umbrella logo.
+  Keep the original file bytes; update website and derived README branding only.

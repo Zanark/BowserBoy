@@ -635,7 +635,7 @@ test('supplied chrome website wordmark preserves both artwork assets and respons
   const logo = page.locator('.desk-heading img');
   await expect(logo).toBeVisible();
   for (const [file, digest] of [
-    ['website-logo.png', '804b1a96494dbecc9fa732e2772e8f2d23c9eb21bcd8286d9dc00b1fbf46c808'],
+    ['website-logo.png', '5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300'],
     ['logo.png', 'de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1'],
   ]) {
     const response = await request.get(`assets/${file}`);
@@ -660,7 +660,7 @@ test('supplied chrome website wordmark preserves both artwork assets and respons
     return { transparent: transparent / pixels, white, ratio: canvas.width / canvas.height,
       corners: [0, canvas.width - 1, pixels - canvas.width, pixels - 1].map(pixel => data[pixel * 4 + 3]) };
   });
-  expect(artwork.transparent).toBeGreaterThan(.5);
+  expect(artwork.transparent).toBeCloseTo(589657 / (2148 * 732), 5);
   expect(artwork.white).toBeGreaterThan(1000);
   expect(artwork.corners).toEqual([0, 0, 0, 0]);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
