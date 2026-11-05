@@ -8,6 +8,17 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Three-second README shimmer, 2026-11-05
+
+The README umbrella shimmer now repeats every three seconds instead of six.
+Only the initial resting interval changes, from 3900 ms to 900 ms. The same
+1.8-second left-to-right sweep, final 300 ms rest, supplied updated artwork,
+white highlight, transparency and individual frame pixels remain unchanged.
+The website's separate CSS shimmer is not changed by this README-only request.
+The README image URL has a new version query to avoid retaining an older cached
+animation. Generate only this asset with
+`python scripts\render-readme.py --shimmer-logo`.
+
 ### Supplied Celia demo and box art, 2026-11-05
 
 The user authorized publishing the supplied ROM and box art and confirmed the

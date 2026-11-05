@@ -51,7 +51,7 @@ def shimmering_logo():
     padding = (highlight.width - image.width) // 2
     base = Image.new("RGBA", highlight.size)
     base.alpha_composite(image, (padding, padding))
-    frames, durations = [base], [3900]
+    frames, durations = [base], [900]
     for step in range(36):
         # Match the website's 300%-wide mask, moving from 100% to 0%.
         center = padding + image.width * (-.5 + 2 * step / 36)

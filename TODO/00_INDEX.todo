@@ -61,6 +61,8 @@ BowserBOY workstreams
 59_FULLSCREEN_LCD_RESUME.todo - BLOCKED: explicit renderer resume qualified/pushed52d024b; no normal workflow run created for its SHA.
 60_EXPERIMENTAL_LCD_CONTROL_SPILL.todo - BLOCKED: faint reversible control fill qualified/pushed;42063183081lighting shard passes, existing quick-actions/restore timeouts prevent deployment.
 61_SUPPLIED_DEMO_ASSETS.todo - DONE: supplied ROM/box art published ad5bfa2; both actual public downloads match. Media only, no testing without explicit request.
+62_CHIP_STARTUP_SOUND.todo - IN_PROGRESS: crisper original square-wave power-on arpeggio with stepped envelopes and existing mute/volume.
+63_THREE_SECOND_README_SHIMMER.todo - IN_PROGRESS: repeat README-only umbrella shimmer every3seconds; preserve sweep/artwork.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

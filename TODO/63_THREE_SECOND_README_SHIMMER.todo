@@ -1,0 +1,36 @@
+Status: IN_PROGRESS
+Milestone: Repeat the README BowserBOY shimmer every three seconds.
+Dependencies: 56_README_LOGO_SHIMMER.todo.
+
+Purpose
+-------
+Make the README logo shimmer more frequently without changing the sweep,
+artwork, website animation or other media.
+
+Tasks
+-----
+[x] Shorten initial rest from3900ms to900ms; retain1800ms sweep/300ms final rest.
+[x] Version the README image URL to avoid stale cached animation.
+[x] Regenerate only the umbrella shimmer and verify exact3000ms loop.
+[ ] Verify unchanged frame pixels and actual public animation.
+[ ] Publish the changed asset, renderer and documentation.
+
+Acceptance criteria
+-------------------
+The actual published APNG repeats indefinitely every3000ms. Preserve all frame
+pixels, dimensions, transparent corners,50ms active samples and sweep direction.
+No website CSS, console logo or gameplay media changes.
+
+Completion evidence
+-------------------
+The previous renderer totals3900+1800+300=6000ms. New rest totals900+1800+300=3000ms.
+Public qualification remains pending.
+Generated1168x456APNG/29frames/4,745,072bytes, loop0, total3000ms.
+SHA2565a9d4dbca772e0867a612c5ce8ea424ff389558df7d0d6357baa1057237604c6.
+All29decoded frame pixel hashes equal the previous six-second animation;
+only the first encoded resting duration changes by3000ms. No visual redraw
+or gameplay capture is needed; no website/console artwork changes.
+
+Completion log
+--------------
+2026-11-05: User explicitly requests README shimmer once every3seconds.

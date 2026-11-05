@@ -1,4 +1,4 @@
-[![BowserBOY - updated chrome orbit and sparkle logo with left-to-right shimmer](docs/images/bowserboy-logo-shimmer.png)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY - updated chrome orbit and sparkle logo shimmering left to right every three seconds](docs/images/bowserboy-logo-shimmer.png?v=shimmer-3s-20261105)](https://zanark.github.io/BowserBoyAdvance/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>

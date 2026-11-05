@@ -14,6 +14,12 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Three-second README shimmer:
+  User requests one sweep every3seconds. Reduce only initial rest3900to900ms;
+  retain1800ms sweep/300ms final rest and version README URL for cache refresh.
+  Regenerated1168x456/29frameAPNG totals3000ms/loop0. All decoded frame pixels
+  and every other duration exactly match the old six-second animation.
+  Website CSS, console logos and gameplay media unchanged.
 - 2026-11-05 / Chip-style startup sound:
   Keep the original three-note melody/start cue; replace overlapping sine tones
   with square waves,75ms opening notes/240ms finish and eight-level decay.
