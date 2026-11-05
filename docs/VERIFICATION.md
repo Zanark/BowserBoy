@@ -23,6 +23,14 @@ pressed-cap lighting cases pass locally (22.2s). Bounded actual old/new
 warm-lamp crops are reviewed: heavier A strokes and smoothly curved B bowls.
 Hosted and independent public delivery remain pending at this local stage.
 
+**Complete, independently live:** `350cdc694699b3a1623ece9dada428fcef4e7472`
+passes fresh normal Pages `41996723564`: build, all 11 units, all 39 browser
+cases (13 per shard) and deployment. Independently match all 28 actual public
+assets. The complete actual public branding/recess/framing/fullscreen and
+pressed-cap lighting cases pass 24.8s, including the new width/corner/stem
+probes and all retained requirements. No cap material, groove shade, motion,
+other molded font, bezel, native timing or delivery gate changes.
+
 **Audio remains open:** the user reports continued intermittent distortion and
 is preparing a recording. This geometry revision makes no audio changes and
 does not establish a new diagnosis or a universal fix from the earlier reserve.

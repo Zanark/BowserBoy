@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Softer, heavier actual A/B letterforms.
 Dependencies: Completed workstreams 36/38; preserve recessed geometry/color.
 
@@ -11,7 +11,7 @@ Tasks:
 - [x] Build dedicated curved action glyphs without changing shared shell labels.
 - [x] Qualify real floor depth, counters, corner rounding and pressed lighting.
 - [x] Review a bounded actual-render comparison; preserve caps and groove shade.
-- [ ] Complete normal delivery and independent public qualification.
+- [x] Complete normal delivery and independent public qualification.
 
 Acceptance criteria:
 - A has visibly heavier strokes; B has rounded stem corners and curved bowls.
@@ -27,11 +27,16 @@ Completion evidence:
   and actual pressed-cap lighting cases pass22.2s. Existing assertions remain,
   with additional real A-width and B-rounded-corner/adjacent-stem probes.
 - Actual old/new warm-lamp crops reviewed: heavier A, curved B, same caps/shade.
-- Hosted/public delivery pending; user aesthetic acceptance not inferred.
+- Normal350cdc6/41996723564passes build/11units/all39browser cases/deployment.
+  Independently match28actual public assets; complete actual public branding/
+  recess/framing/fullscreen and pressed-light cases pass24.8s. New real width/
+  corner/stem probes and all previous assertions remain. User aesthetic
+  acceptance is not inferred.
 
 Completion log:
 - 2026-11-05: User requests softer A/B forms, especially thicker A strokes.
   Use dedicated action-cap curves rather than modifying shared molded glyphs.
   Local qualification complete;42remains IN_PROGRESS pending delivery.
+- 2026-11-05: Normal delivery and independent public proof complete;42DONE.
 - 2026-11-05: User also reports continued intermittent distortion and is
   preparing a recording. Audio remains open; no new diagnosis or audio edit.

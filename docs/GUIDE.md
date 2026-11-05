@@ -2,20 +2,23 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
-**Current release and pictures:** source `5b53c88` is independently verified
+**Current release and pictures:** source `350cdc6` is independently verified
 live after the full 39-case hosted gate and exact 28-public-asset match.
-It includes softer genuine recessed A/B lettering, deeper presses, stronger
+It includes rounder, heavier genuine recessed A/B lettering, deeper presses, stronger
 D-pad/shoulder movement and snappier returns; the centered bezel wordmark is
 another 20% smaller in both views, now without the exterior light contour.
 Frosted overlays do not move the camera;
 sustained audio buffering, darker D-pad arrows and play-only header hiding remain.
 README footage/stills retain their local `8a1d6a3` capture origin; the later
-borderless-bezel refinement postdates those recordings.
+borderless-bezel and rounded-letter refinements postdate those recordings.
 Most inherited guide motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
-See [current release evidence](VERIFICATION.md#outline-free-bezel-lettering-2026-11-05)
+See [current release evidence](VERIFICATION.md#rounded-heavier-ab-grooves-2026-11-05)
 and [capture origins](MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).
+
+Intermittent audio distortion is still reported and remains under investigation;
+the earlier buffering improvement is not a guarantee of distortion-free playback.
 
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
 

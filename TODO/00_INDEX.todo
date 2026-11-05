@@ -41,7 +41,7 @@ BowserBoyAdvance workstreams
 39_SMALLER_BEZEL_AGAIN.todo - DONE: shared bezel another20%smaller, independently verified live.
 40_CURRENT_VISUAL_README.todo - DONE: fresh actual motion/UI media and captions published and verified on GitHub.
 41_OUTLINE_FREE_BEZEL.todo - DONE: shared bezel contour removed, independently verified live.
-42_ROUNDED_AB_GROOVES.todo - IN_PROGRESS: round A/B contours and thicken A strokes; locally qualified, delivery pending.
+42_ROUNDED_AB_GROOVES.todo - DONE: round A/B contours and thicken A strokes, independently verified live.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,
