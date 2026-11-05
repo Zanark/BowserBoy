@@ -673,6 +673,12 @@ recursive repository copy.
 The website's BowserBOY header and both panel logos use the unchanged2151x731
 RGBA chrome artwork in `assets/website-logo.png`; intrinsic HTML dimensions
 match it. A neutral header shadow replaces the previous violet glow.
+The header adds a CSS-only left-to-right shimmer every six seconds: a duplicate
+of that same transparent PNG, neutral brightening/glow and a feathered moving
+mask. The 1.8-second sweep changes neither layout nor supplied artwork and adds
+no JavaScript/scene update loop. It pauses in hidden play view; reduced motion
+removes the shimmer while retaining the static image and its base shadow.
+Tools/settings panel logos do not animate.
 The2170x725purple `assets/logo.png` remains exclusively console artwork.
 `src/brand.js` still loads it for the existing GBA handheld's rear and LCD
 idle/loading/startup; the bezel retains its metallic lettering. There is no

@@ -24,9 +24,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #scene:has(#scene-canvas:focus-visible) ~ .scene-hint { text-decoration: underline dotted; text-underline-offset: 4px; }
 .desk-heading { position: absolute; top: max(28px, env(safe-area-inset-top)); left: 38px; right: 38px; display: flex; align-items: flex-start; justify-content: space-between; pointer-events: none; z-index: 3; }
 .desk-brand { width: clamp(220px, 32vw, 420px); }
-.desk-heading h1 { margin: 0; line-height: 1; }
+.desk-heading h1 { position: relative; margin: 0; line-height: 1; }
 #scene[data-view="playing"] ~ .desk-heading h1 { visibility: hidden; }
 .desk-heading h1 img { display: block; width: clamp(220px, 32vw, 420px); height: auto; filter: drop-shadow(0 1px 2px #080c12d9) drop-shadow(0 0 9px #dce5ef45); }
+.desk-heading h1::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("./assets/website-logo.png") center / 100% 100% no-repeat; filter: brightness(1.7) drop-shadow(0 0 5px #f4fbff) drop-shadow(0 0 11px #cee8ffb3); mask-image: linear-gradient(90deg, transparent 42%, #000 50%, transparent 58%); mask-size: 300% 100%; mask-repeat: no-repeat; animation: website-logo-shimmer 6s linear infinite; }
+#scene[data-view="playing"] ~ .desk-heading h1::after { animation-play-state: paused; }
+@keyframes website-logo-shimmer {
+  0%, 65% { mask-position: 100% 0; }
+  95%, 100% { mask-position: 0% 0; }
+}
 .desk-heading > span { color: #a3aab5; font: 8px var(--mono); letter-spacing: 2px; }
 #hardware-targets { pointer-events: none; }
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
@@ -160,4 +166,7 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .scene-hint { display: none; }
   footer { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .desk-heading h1::after { content: none; animation: none; }
+}

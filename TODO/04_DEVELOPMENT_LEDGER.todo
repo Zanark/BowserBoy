@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Website logo shimmer:
+  User screenshot shows older purple website header. Independently fetched
+  public HTML already points to chrome website-logo.png; do not infer a cache
+  cause or replace intentional purple console art. Add CSS-only alpha-shaped
+  highlight and neutral glow: 1.8s left-to-right sweep per6s cycle. Pause while
+  header hidden in play; reduced motion keeps static supplied image/shadow.
+  New regression fails absent animation. Branding/shimmer cases11.7s and
+  existing exact-artwork/responsive header case23.6s pass; syntax/build/11units
+  pass. Actual three-phase samples reviewed. No app loop or artwork mutation.
+  Normal hosted gate, independent public delivery and final records pending.
 - 2026-11-05 / Native VSync warning:
   User requests a notification explaining VSync risk. Preserve the off default,
   explicit enabled choices and speed coordination. Actual native-menu enable

@@ -1,0 +1,42 @@
+Status: IN_PROGRESS
+Milestone: Chrome BowserBOY header with a periodic left-to-right glow shimmer.
+Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo.
+
+Purpose:
+Keep the website's chrome BowserBOY identity and add the requested moving glow,
+without replacing the first GBA console's intentionally purple artwork.
+
+Tasks:
+- [x] Verify the screenshot's old purple header against actual public HTML.
+- [x] Retain the supplied chrome website asset and original console asset bytes.
+- [x] Add an alpha-shaped left-to-right highlight/glow every six seconds.
+- [x] Keep responsive layout, hidden play header and notifications unchanged.
+- [x] Pause hidden animation and disable shimmer for reduced-motion users.
+- [x] Review bounded actual shimmer phases and focused browser regressions.
+- [ ] Pass the normal complete hosted gate and independently verify production.
+- [ ] Record final delivery and owned continuity.
+
+Acceptance criteria:
+- Current header uses website-logo.png, not the purple console logo.
+- A restrained white/silver glow travels left to right, not a rectangular wipe.
+- One 1.8-second sweep per six-second cycle; no flashing or new application loop.
+- No extra text, logo recoloring, image regeneration or console-brand changes.
+- Header dimensions, pointer behavior and desk/play/Inspect visibility remain.
+- Reduced motion retains the static chrome logo and its existing neutral shadow.
+- Technical verification remains separate from human aesthetic acceptance.
+
+Completion evidence:
+- Actual public HTML already references the chrome BowserBOY website asset;
+  supplied screenshot shows the previous header. No unsupported cache-cause claim.
+- New regression fails the old implementation: zero shimmer animations.
+- CSS-only duplicate of the exact transparent PNG, brighter neutral shadow and
+  feathered moving mask. The source image and original base shadow stay intact.
+- Two focused branding/shimmer cases pass11.7s. Existing exact-artwork/responsive
+  header case passes23.6s. Syntax/build and all11units pass.
+- Actual rest/left/right header samples reviewed; repeat phase and reduced
+  motion, hidden-play pause, responsive identity and both asset hashes checked.
+- No private-ROM/audio analysis or fresh acceptance. Hosted publication pending.
+
+Completion log:
+- 2026-11-05: User requests BowserBOY website logo and repeating left-to-right glow.
+  Verify current chrome identity; implement six-second default shimmer.

@@ -49,6 +49,7 @@ BowserBOY workstreams
 47_WEBSITE_BRAND_SEPARATION.todo - DONE: chrome BowserBOY website independently live; purple GBA console unchanged.41hosted cases/29public assets/threepublic cases pass. Owner manages repo rename.
 48_CURRENT_BRAND_DOCUMENTATION.todo - DONE: fresh public README recordings/stills and reconciled guides/book. All25published files match; actual GitHub README renders14embeds. No app changes or repo rename.
 49_VSYNC_AUDIO_WARNING.todo - DONE: warning independently live; 42hosted cases,29public assets and real public native-menu regression pass. Enabled choices/default-off/speed retained.
+50_WEBSITE_LOGO_SHIMMER.todo - IN_PROGRESS: chrome website header with six-second left-to-right glow; responsive identity/reduced-motion checks pass locally.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

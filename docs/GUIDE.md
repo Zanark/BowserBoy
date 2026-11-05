@@ -49,7 +49,9 @@ is separate from historical pictures explicitly labeled below.
 *The supplied transparent chrome website logo, preserved byte-for-byte.
 A restrained neutral shadow separates it from the warm room without tinting
 the silver artwork purple. It is hidden in play view and returns on the desk
-or in Inspect; notifications retain their existing header position.*
+or in Inspect; notifications retain their existing header position. A soft
+silver highlight and glow sweep left to right for 1.8 seconds every six seconds.
+The shimmer pauses while hidden and is disabled for reduced-motion users.*
 
 **A little escape, on your desk.** BowserBOY currently offers one local-first
 GBA player inside an actual 3D indigo handheld, built for GitHub Pages.

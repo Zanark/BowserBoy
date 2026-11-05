@@ -47,6 +47,45 @@ test('BowserBOY website branding is separate from the purple GBA console artwork
   await expect(page.locator('.desk-heading h1')).toBeVisible();
 });
 
+test('website logo glow shimmers left to right, repeats and respects reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('./');
+  await ready(page);
+  const heading = page.locator('.desk-heading h1');
+  await expect(heading.locator('img')).toHaveAttribute('src', './assets/website-logo.png');
+  await expect.poll(() => heading.evaluate(element =>
+    element.getAnimations({ subtree: true }).filter(animation => animation.animationName === 'website-logo-shimmer').length)).toBe(1);
+  const timing = await heading.evaluate(element => {
+    const animation = element.getAnimations({ subtree: true }).find(animation => animation.animationName === 'website-logo-shimmer');
+    animation.pause();
+    return animation.effect.getTiming();
+  });
+  expect(timing.duration).toBe(6000);
+  expect(timing.iterations).toBe(Infinity);
+  const samples = [];
+  for (const [label, time] of [['rest', 0], ['left', 4500], ['right', 5100], ['repeat', 10500]]) {
+    samples.push(await heading.evaluate((element, time) => {
+      element.getAnimations({ subtree: true }).find(animation => animation.animationName === 'website-logo-shimmer').currentTime = time;
+      const style = getComputedStyle(element, '::after');
+      return { position: parseFloat(style.maskPosition), mask: style.maskImage, pointerEvents: style.pointerEvents };
+    }, time));
+    await heading.screenshot({ path: test.info().outputPath(`website-shimmer-${label}.png`) });
+  }
+  // A larger mask moves right as its percentage position decreases.
+  expect(samples[1].position).toBeGreaterThan(samples[2].position);
+  expect(samples[3].position).toBeCloseTo(samples[1].position, 2);
+  expect(samples[1].mask).toContain('linear-gradient');
+  expect(samples[1].pointerEvents).toBe('none');
+  await page.locator('#pickup').click();
+  await expect(heading).toBeHidden();
+  expect(await heading.evaluate(element => getComputedStyle(element, '::after').animationPlayState)).toBe('paused');
+  await page.locator('#inspect').click();
+  await expect(heading).toBeVisible();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  expect(await heading.evaluate(element => getComputedStyle(element, '::after').animationName)).toBe('none');
+  await expect(heading.locator('img')).toBeVisible();
+});
+
 test('favicon retains the wide handheld silhouette at browser-tab sizes', async ({ page }) => {
   await page.goto('./');
   const icon = page.locator('link[rel="icon"]');

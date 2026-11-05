@@ -7,6 +7,21 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Website header shimmer, 2026-11-05
+
+The public header already serves the supplied chrome BowserBOY asset, not the
+older purple header in the reference screenshot. Add a CSS-only neutral glow
+and alpha-shaped highlight sweeping left to right for 1.8 seconds per six-second
+cycle. Hidden play view pauses it; reduced motion retains the static chrome
+image and original shadow. Original artwork, console branding, responsive
+header geometry, notifications and application/runtime behavior are unchanged.
+
+The new browser regression fails without the animation. Local branding/
+shimmer cases pass in 11.7s and the existing exact-artwork/responsive header case
+passes in 23.6s. Syntax/build and all 11 units pass. Actual rest/left/right samples
+are reviewed; repeat phase, pause and reduced-motion behavior are checked.
+This is not human aesthetic acceptance or publication; hosted delivery pending.
+
 ## Native VSync audio warning, 2026-11-05
 
 Enabling native VSync now immediately displays a warning in the existing
