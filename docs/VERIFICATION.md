@@ -22,7 +22,17 @@ Escape and close-button exits and after subsequent main-view input. It does not
 manually render the room or call native screenshots after fullscreen entry,
 which could mask a stale presentation. The native runtime identity is retained.
 Syntax/build/12 units and the new resume, ordinary zoom, held-Space and full
-quick-actions cases pass 4/4 in 1.6m. Public release qualification is pending.
+quick-actions cases pass 4/4 in 1.6m.
+
+Fix `52d024bbf241f6bbeb5c5e14e21033e1f30ce230` is pushed and independently
+confirmed at origin/main. The first push returned GitHub HTTP 500; one retry of
+the same commit succeeded. Bounded run discovery and the exact head-SHA Actions
+API show zero workflow runs at 21:35 Asia/Kolkata. A later check-runs request
+also returns HTTP 500; no underlying service-incident cause is established.
+This fix has no completed normal gate or deployment, distinct from the earlier
+hold-Space release failure below. Public qualification did not run. No dummy
+push, denied-dispatch repeat, failed-job retry, permission switch or relaxed gate
+is used; blocker-only records are held locally. Publication remains blocked.
 No new private-ROM/audio test or human acceptance is claimed.
 
 ## Default hold-Space fast-forward, 2026-11-05

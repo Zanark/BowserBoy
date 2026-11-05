@@ -22,7 +22,12 @@ Completion log:
   with cleared room-frame timing on exit, retaining native core/source/texture.
   Actual GPU LCD readback, not native screenshots/manual rendering, verifies
   Escape and close-button returns plus subsequent main-view input. Syntax/build/
-  12units and four affected cases pass1.6m; source publication pending.
+  12units and four affected cases pass1.6m. Source52d024bpushed after initial
+  GitHub500 and same-commit push retry; actual remoteSHAconfirmed. Bounded
+  discovery and exacthead_shaActionsAPIreturn0runs at21:35IST; no normalgate,
+  deployment or public qualification. Later check-runs capture returnsHTTP500.
+  Do not invent GitHub outage cause. Helper exited. No dispatch403repeat,
+  dummytrigger, failedjobretry or gate/credentialchange; records held locally.
 - 2026-11-05 / Default hold-Space native fast-forward:
   User requests Space hold2x/release1x by default and checks EmulatorJS support.
   Exact4.2.3GameManager source exposes native toggle/ratio and momentary input27.
