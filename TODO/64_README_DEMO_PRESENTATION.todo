@@ -1,0 +1,31 @@
+Status: IN_PROGRESS
+Milestone: Keep the supplied game out of the main README's named showcase.
+Dependencies: 61_SUPPLIED_DEMO_ASSETS.todo.
+
+Purpose
+-------
+The user wants the supplied ROM used for GIF footage, not a named feature or
+box-art showcase on the main README.
+
+Tasks
+-----
+[x] Remove the featured-game heading, box-art embed, named caption and download.
+[x] Keep the existing console showcase, shimmer and current GIFs unchanged.
+[x] Preserve uploaded assets and their credits; no deletion was requested.
+[ ] Publish and verify the actual public README.
+
+Acceptance criteria
+-------------------
+The main README contains no supplied-game name, box-art embed or demo-directory
+link. No new footage or test-ROM execution is implied by removing the feature.
+Future GIF use is allowed; testing still requires an explicit request.
+
+Completion evidence
+-------------------
+Removed the six-line featured-demo block. Existing asset files/credits remain.
+Earlier61publication is historical; this supersedes only main README placement.
+
+Completion log
+--------------
+2026-11-05: User rejects the named README/box-art feature; restrict presentation
+to GIF footage.

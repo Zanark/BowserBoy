@@ -14,6 +14,11 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / README demo presentation correction:
+  User wants the supplied ROM used for GIF footage, not a named game or box-art
+  showcase. Remove the six-line featured section from the main README only.
+  Preserve uploaded assets/credits and existing GIFs; no new capture or ROM
+  testing is performed. Supersedes61's main README placement, not publication.
 - 2026-11-05 / Three-second README shimmer:
   User requests one sweep every3seconds. Reduce only initial rest3900to900ms;
   retain1800ms sweep/300ms final rest and version README URL for cache refresh.

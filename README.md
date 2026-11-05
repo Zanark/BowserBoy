@@ -23,12 +23,6 @@
 
 *Glowing animated console banner above; actual public-site gameplay recordings and UI captures below. [Origins and release evidence](docs/MEDIA.md#bowserboy-public-refresh-2026-11-05).*
 
-### Featured demo: Celia's game
-
-[<img src="demos/celias-game/box-art.png" alt="Supplied box art for Celia's Stupid ROMhack" width="320">](demos/celias-game/README.md)
-
-*Celia's supplied game and original box art, shared with the user's redistribution confirmation. [Download the demo ROM](https://raw.githubusercontent.com/Zanark/BowserBoyAdvance/main/demos/celias-game/celias-game.gba), then open it through the player's local ROM picker. [Credits and media-use boundary](demos/celias-game/README.md).*
-
 ### One table. More to come.
 
 ![BowserBOY's current public table with the chrome website logo, paper lantern and first purple GBA console](docs/images/readme-table.png?v=bowserboy-public-20261105)
