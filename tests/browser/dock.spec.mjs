@@ -502,11 +502,11 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
   });
   expect(branding.ink).toBeGreaterThan(1000);
   expect(branding.colored).toBe(0);
-  expect(branding.inkBounds.left).toBeGreaterThanOrEqual(.12);
-  expect(branding.inkBounds.top).toBeGreaterThanOrEqual(.12);
-  expect(branding.inkBounds.right).toBeLessThanOrEqual(.88);
-  expect(branding.inkBounds.bottom).toBeLessThanOrEqual(.88);
-  expect(branding.inkBounds.right - branding.inkBounds.left).toBeGreaterThan(.65);
+  expect(branding.inkBounds.left).toBeGreaterThanOrEqual(.195);
+  expect(branding.inkBounds.top).toBeGreaterThanOrEqual(.195);
+  expect(branding.inkBounds.right).toBeLessThanOrEqual(.805);
+  expect(branding.inkBounds.bottom).toBeLessThanOrEqual(.805);
+  expect(branding.inkBounds.right - branding.inkBounds.left).toBeGreaterThan(.52);
   expect(branding.depth).toBeGreaterThan(.018);
   expect(branding.samePlastic).toBe(true);
   expect(branding.sameFullscreenWordmark).toBe(true);

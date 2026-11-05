@@ -7,6 +7,20 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Smaller bezel wordmark again, 2026-11-05
+
+The user's new crop requests another reduction of the bezel lettering. Reduce
+only the centered source draw from 75% to 60% of the unchanged texture canvas:
+20% less width and height than the preceding edition. Physical planes, LCD,
+camera, aspect and all other logos remain unchanged. Actual fullscreen pixels
+must still match the normal handheld texture.
+
+Tighter real-ink inset bounds fail the old implementation at
+0.13020833333333334 (required >=0.195). Syntax/build/all11units and the
+complete real branding/recess/framing/overlay/fullscreen-identity case pass
+locally (15.5s). Hosted and independent public qualification remain pending;
+this is not a live claim.
+
 ## Softer A/B lettering, 2026-11-05
 
 The user finds the letters too dark and explicitly confirms **only the A/B

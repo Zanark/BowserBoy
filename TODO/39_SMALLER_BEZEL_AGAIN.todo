@@ -1,0 +1,30 @@
+Status: IN_PROGRESS
+Milestone: Further reduction of the shared monochrome bezel wordmark.
+Dependencies: Completed workstream 35.
+
+Purpose:
+Make the supplied bezel lettering smaller again following the user's new crop.
+Change artwork size only, not the LCD, bezel geometry, camera or other logos.
+
+Tasks:
+- [x] Reproduce the old artwork failing tighter real-pixel inset bounds.
+- [x] Reduce centered artwork from75%to60%of its existing canvas dimensions.
+- [x] Qualify actual normal/fullscreen ink, shared identity and view framing.
+- [ ] Publish normally and independently verify production.
+- [ ] Reconcile documentation and owned continuity.
+
+Acceptance criteria:
+- Wordmark width and height are20%smaller than the previous75%edition.
+- Center and source aspect remain unchanged; no cropping or mesh resizing.
+- Normal/fullscreen share byte-identical actual monochrome artwork.
+- Startup, website/header, drawer and rear-shell logos remain unchanged.
+- Softer recessed A/B letters and stronger physical motion are preserved.
+
+Completion evidence:
+- New real-pixel minimum inset.195fails old artwork at.13020833333333334.
+- Syntax/build/all11units pass. Complete real branding/recess/framing/overlay/
+  fullscreen identity case passes15.5s. Hosted/public delivery remains pending.
+
+Completion log:
+- 2026-11-05: User asks "make this even smaller" with a bezel-wordmark crop.
+  Further20%reduction of the shared actual ink, not of the entire handheld.

@@ -323,7 +323,7 @@ export function createHandheld() {
     context.drawImage(brandImage, 0, 0, width, height);
   });
   const bezelWordmark = canvasTexture(1536, 174, (context, width, height) => {
-    context.drawImage(brandImage, 25, 250, 2115, 240, width * .125, height * .125, width * .75, height * .75);
+    context.drawImage(brandImage, 25, 250, 2115, 240, width * .2, height * .2, width * .6, height * .6);
     const pixels = context.getImageData(0, 0, width, height);
     // Keep neutral lettering/highlights; discard the saturated orbital accents.
     for (let i = 0; i < pixels.data.length; i += 4) {

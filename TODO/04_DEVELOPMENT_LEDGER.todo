@@ -14,6 +14,12 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Smaller bezel again:
+  Latest reference requests smaller lettering again. Reduce only shared ink
+  from75%to60%of its canvas (another20%relative reduction), centered with the
+  same aspect. Old implementation fails new real-alpha inset bounds at.130208
+  versus minimum.195. Preserve normal/fullscreen identity and all other logos.
+  39IN_PROGRESS; current-source qualification and publication still pending.
 - 2026-11-05 / Softer A/B letters only:
   User finds A/B too dark and explicitly confirms only the letters. Change
   groove color#454c40to#999d98; cap finish/lighting/recesses/other controls
