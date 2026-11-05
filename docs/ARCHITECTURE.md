@@ -774,8 +774,12 @@ Only `three.module.js`, its relative `three.core.js` dependency, the unmodified
 the exact MIT license are mapped from the pinned package to public `vendor` paths.
 An import map resolves `three` relative to the document, preserving nested
 GitHub Pages hosting. No `node_modules` directory is publicly served.
-Pages deployment requires the separate syntax/unit/build job and all five
+Pages deployment requires the separate syntax/unit/build job and all ten
 complete test-level browser shards on Ubuntu 24.04, with one worker per runner.
+The 53 cases run exactly once, with five or six cases per runner. Parallelism
+is across isolated runners, not competing software-rendered games on one CPU.
+The shard denominator comes from `strategy.job-total`, keeping it synchronized
+with the current single-axis shard matrix.
 Browser jobs use the official Playwright 1.64.1 Noble image pinned by manifest
 digest, matching the package version and provisioning its browsers and system
 dependencies without repeated runner-side APT downloads. The container keeps

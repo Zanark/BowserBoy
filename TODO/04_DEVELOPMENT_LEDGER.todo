@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / More isolated parallel browser jobs:
+  User requests fasterCI/moreparalleltests. Increase browsermatrix5->10 and
+  derive sharddenominator fromstrategy.job-total, preservingoneworker/runner
+  ratherthanCPUcompetitionbetween emulators/WebGL/audio. ActualCLI discovery
+  proves53casesexactlyonce6/6/6/5/5/5/5/5/5/5. YAMLsemanticcomparison confirms
+  onlymatrix/denominator changes; alltests/retries/timeouts/fullgates retained.
+  Five/sixcases perrunner replaces ten/eleven; moreVMprovisioning is the
+  tradeoff. Actual elapsed-time speedup still needs normalhostedmeasurement.
 - 2026-11-06 / Browser provisioning rather than deadline relaxation:
   Run42100513643 reports all53browsercasespassing, including audio/native
   speed. Deploy skips because shard3 iscancelledat15mjobdeadline: installer

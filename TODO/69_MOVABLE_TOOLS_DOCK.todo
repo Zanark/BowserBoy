@@ -66,6 +66,11 @@ ActualUbuntu-fontdownloads stallminutes. Provision matching official
 Playwright1.64.1Nobleimage pinnedbyverifiedOCIdigest instead of repeatedAPT.
 YAMLsemanticcomparisonpreservesallotherworkflowfields/deadlines/commands.
 Nextnormalcontainer gate/publicqualificationstillpending.
+User requests faster parallelCI: increase isolated browserjobs5->10, retaining
+oneworker/runner for timing-sensitive emulation/audio. Denominator derives
+from matrixjobtotal. CLI inventoryproves53casesexactlyonce6/6/6/5/5/5/5/5/5/5.
+YAMLsemanticcomparison preserves allotherworkflow fields/gates/deadlines.
+Actualhosted speedup/container gate/publicproof remainpending.
 
 Completion log
 --------------

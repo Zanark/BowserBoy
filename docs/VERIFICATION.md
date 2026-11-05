@@ -123,6 +123,18 @@ The YAML parses; a semantic comparison confirms the only workflow changes are
 the container and replaced installer. Actual Linux-container qualification
 still requires the next normal gate; no local Docker execution is claimed.
 
+At the user's request for faster parallel CI, ten isolated browser jobs now
+replace five. Each still runs one worker: native audio/frame-clock assertions
+must not compete with another WebGL/emulator test on the same runner. CLI
+discovery verifies all 53 cases exactly once, distributed
+6/6/6/5/5/5/5/5/5/5. The denominator derives from the matrix job count instead
+of a separately maintained literal. YAML semantic comparison confirms no
+other workflow changes; all gates, timeouts, retries and tests remain intact.
+This reduces cases per runner from ten/eleven to five/six, at the cost of more
+concurrent runner provisioning. Actual elapsed-time improvement still needs
+the normal hosted run; runner queues, image pulls and external CDN timing
+remain outside this local scheduling proof.
+
 ## Complete README refresh, 2026-11-05
 
 Nine interaction GIFs and nine stills are refreshed from local application
