@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Ordinary play zoom:
+  User requests the fullscreen-style slider outside fullscreen during play.
+  Add an independent50-100%play camera-distance divisor; retain exact ordinary
+  100%framing, inspection zoom/reset and the existing fullscreen CSS scaler.
+  Keep the percentage through mode changes/resize, hide in table/Inspect,
+  transitions and LCD fullscreen. Share the widget styling; move it to the
+  vacant top-left header space on narrow/short layouts rather than shifting
+  the dock or shrinking the default console. Native core/audio/save paths
+  remain unchanged. Initial fixture incorrectly closes an auto-closed drawer;
+  fix fixture. Fullscreen leaves underlying DOM geometry in the viewport;
+  explicitly hide the ordinary widget in fullscreenchange instead of treating
+  intersection geometry as visibility. Syntax/build/11units pass; three actual
+  Edge zoom/native/fullscreen/physical-framing cases pass1.2m. Original Pixel
+  Lab runtime retained, range keys do not move the game, subsequent game input
+  works;1440x1100/844x390/390x844/320x568 fit. Two actual captures reviewed.
+  Publication pending; no fresh private-ROM/audio or user approval claim.
 - 2026-11-05 / Updated-logo README shimmer:
   User replaces the white halo with the website's left-to-right shimmer and
   emphasizes using the newly supplied orbit/sparkle logo. Derive a transparent

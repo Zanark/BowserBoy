@@ -47,6 +47,107 @@ test('BowserBOY website branding is separate from the purple GBA console artwork
   await expect(page.locator('.desk-heading h1')).toBeVisible();
 });
 
+test('ordinary play zoom fits desktop and phone without changing the native game or inspection and fullscreen zoom', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
+  await page.goto('./');
+  await ready(page);
+  const control = page.locator('#play-zoom-control');
+  const slider = page.getByRole('slider', { name: 'Play view zoom', exact: true });
+  await expect(control).toBeHidden();
+  await page.locator('#pickup').click();
+  await expect(control).toBeVisible();
+  await page.locator('#tools-open').click();
+  await page.locator('#demo').click();
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+  const frame = runtime(page);
+  await frame.evaluate(() => { window.zoomRuntime = window.EJS_emulator; });
+  const nativeBefore = await nativeFrame(page);
+  const layout = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    const zoom = document.getElementById('play-zoom-control').getBoundingClientRect();
+    const intersects = box => zoom.left < box.right && zoom.right > box.left &&
+      zoom.top < box.bottom && zoom.bottom > box.top;
+    const positions = view.model.screen.geometry.getAttribute('position');
+    const points = Array.from({ length: positions.count }, (_, i) => {
+      const point = view.model.screen.localToWorld(new Vector3().fromBufferAttribute(positions, i)).project(view.camera);
+      return { x: (point.x + 1) * view.width / 2, y: (1 - point.y) * view.height / 2 };
+    });
+    const lcd = { left: Math.min(...points.map(p => p.x)), right: Math.max(...points.map(p => p.x)),
+      top: Math.min(...points.map(p => p.y)), bottom: Math.max(...points.map(p => p.y)) };
+    const obstacles = [lcd, document.querySelector('.scene-actions').getBoundingClientRect(),
+      document.querySelector('.desk-heading > span').getBoundingClientRect(),
+      ...[...document.querySelectorAll('#hardware-targets button:not([hidden])')].map(button => button.getBoundingClientRect())];
+    return { z: view.camera.position.z, playZoom: view.playZoom, inspectionZoom: view.zoom,
+      width: lcd.right - lcd.left, height: lcd.bottom - lcd.top,
+      clear: obstacles.every(box => !intersects(box)),
+      inside: zoom.left >= 0 && zoom.right <= innerWidth && zoom.top >= 0 && zoom.bottom <= innerHeight };
+  });
+  for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    await slider.focus();
+    await page.keyboard.press('End');
+    await expect(page.locator('#play-zoom-value')).toHaveText('100%');
+    await expect.poll(async () => {
+      const fit = await layout();
+      return fit.clear && fit.inside && fit.playZoom === 1;
+    }).toBe(true);
+    const fitted = await layout();
+    await page.keyboard.press('Home');
+    await expect(page.locator('#play-zoom-value')).toHaveText('50%');
+    await expect.poll(async () => (await layout()).z / fitted.z).toBeCloseTo(2, 4);
+    const smaller = await layout();
+    expect(smaller.width / fitted.width).toBeCloseTo(.5, 1);
+    expect(smaller.height / fitted.height).toBeCloseTo(.5, 1);
+    expect(smaller.clear && smaller.inside).toBe(true);
+    await page.keyboard.press('ArrowRight');
+    await expect(slider).toHaveValue('51');
+    await page.keyboard.press('End');
+    if (width === 1440 || width === 320) {
+      await page.screenshot({ path: test.info().outputPath(`ordinary-play-zoom-${width}.png`) });
+    }
+  }
+  expect((await nativeFrame(page)).left).toBe(nativeBefore.left);
+  await slider.fill('75');
+  await expect(page.locator('#play-zoom-value')).toHaveText('75%');
+  await page.locator('#inspect').click();
+  await expect(control).toBeHidden();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('Equal');
+  await expect.poll(async () => (await layout()).inspectionZoom).toBeCloseTo(.9, 4);
+  await page.keyboard.press('Home');
+  await page.locator('#inspect').click();
+  await expect(control).toBeVisible();
+  await expect(slider).toHaveValue('75');
+  await expect.poll(async () => (await layout()).playZoom).toBe(.75);
+  await page.locator('#put-down').click();
+  await expect(control).toBeHidden();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await page.locator('#pickup').click();
+  await expect(control).toBeVisible();
+  await expect(slider).toHaveValue('75');
+  await page.locator('#quick-screen-fullscreen').click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement?.id)).toBe('screen-focus');
+  await expect(control).toBeHidden();
+  await page.locator('#screen-focus-zoom').focus();
+  await page.keyboard.press('Home');
+  await expect(page.locator('#screen-focus-zoom-value')).toHaveText('50%');
+  await page.locator('#screen-focus-close').click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();
+  await expect(slider).toHaveValue('75');
+  expect((await layout()).playZoom).toBe(.75);
+  expect(runtime(page)).toBe(frame);
+  expect(await frame.evaluate(() => window.zoomRuntime === window.EJS_emulator)).toBe(true);
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('ArrowRight');
+  try { await expect.poll(async () => (await nativeFrame(page)).left).toBeGreaterThan(nativeBefore.left); }
+  finally { await page.keyboard.up('ArrowRight'); }
+});
+
 test('website logo glow shimmers left to right, repeats and respects reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('./');

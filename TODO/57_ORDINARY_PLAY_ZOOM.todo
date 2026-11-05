@@ -1,0 +1,52 @@
+Status: IN_PROGRESS
+Milestone: Ordinary play zoom implemented and locally qualified; publication pending.
+Dependencies: Completed workstreams 25 and 31.
+
+Purpose
+-------
+Expose the fullscreen-style zoom slider during ordinary handheld play without
+requiring browser fullscreen or altering the native emulator.
+
+Tasks
+-----
+[x] Add a themed accessible 50-100% play-only slider with percentage output.
+[x] Scale the existing camera distance; retain the ordinary 100% framing.
+[x] Keep play, inspection and fullscreen zoom independent.
+[x] Retain the play percentage through Inspect/table returns and resize.
+[x] Hide during transitions, table/Inspect and screen-only fullscreen.
+[x] Check desktop/landscape/phone fit, native input/runtime and existing framing.
+[x] Review actual desktop/320px captures and update affected documentation.
+[ ] Publish through the normal complete gate and independently verify the live site.
+
+Acceptance criteria
+-------------------
+100% preserves the existing fitted handheld; 50% pulls back without cropping
+the LCD or changing core pixels, sound, speed, power or saves. The widget remains
+outside the LCD, hardware targets, status and dock at the checked viewports.
+Pointer/touch range input and keyboard Home/End/arrows update the displayed
+percentage. Inspect zoom/reset and fullscreen zoom never overwrite play zoom.
+
+Completion evidence
+-------------------
+HandheldScene retains an independent playZoom=.5..1 camera-distance divisor;
+the existing inspection multiplier/reset and 100% fit remain unchanged.
+Reframe/transition/resize reuse that same target calculation. The widget shares
+fullscreen styling, sits bottom-right on wide screens and uses the hidden
+header's top-left space on narrow/short screens, avoiding changes to framing
+or dock position. The setting lasts for this page session, not across reloads.
+Syntax/build/all11units pass. Three affected actual Edge cases pass in1.2m:
+new original-Pixel-Lab zoom/lifecycle/input case19.4s, existing complete quick
+actions/fullscreen case39.9s and physical branding/ordinary framing case11.9s.
+Checked1440x1100,844x390,390x844,320x568; actual desktop/320px captures reviewed.
+An initial fixture wrongly closed an already auto-closed drawer; corrected the
+fixture, not the application. An intersection assertion also showed ordinary
+DOM geometry remains in the viewport under native fullscreen; explicitly hide
+the ordinary widget on fullscreenchange and verify that lifecycle directly.
+No new private-ROM/audio replay, user aesthetic approval or deployment claimed.
+
+Completion log
+--------------
+2026-11-05: User requests the fullscreen zoom control in non-fullscreen play.
+2026-11-05: Local implementation, focused native qualification and visual review
+complete. Prior website-logo release54 remains publication-blocked until a
+genuinely successful normal gate and independent public qualification.

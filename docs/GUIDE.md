@@ -191,10 +191,18 @@ The 3D scene requires WebGL 2. Its decorative cartridges are not supplied games.
 
 ## Pick it up
 
+In ordinary play, **Zoom** adjusts the entire handheld from **50% to 100%**
+without entering fullscreen. **100%** keeps the existing fitted view; lower
+values pull back. The slider is bottom-right on wide screens and top-left on
+narrow or short screens, clear of the game and dock. Its percentage survives
+Inspect/table returns and resizing for this page session. It is hidden on the
+table, in Inspect, during pickup and in screen-only fullscreen.
+
 **Inspect** lets you drag the model to see its sides, ports and battery cover.
 Scroll or pinch to zoom; keyboard inspection supports arrows, plus/minus and
 Home to reset. **Back to play** restores the playable angle; **Put down** returns
 the handheld to the table. Reduced-motion mode skips the pickup animation.
+Inspection and screen-only fullscreen keep their own independent zoom settings.
 
 ![The raised handheld in play view](images/3d-handheld.png)
 

@@ -434,6 +434,18 @@ Explicit inspection zoom multiplies that ordinary baseline, rather than being
 silently clamped away; intentional zoom-in can crop the console as before.
 No new per-frame DOM measurement loop or emulator restart is introduced.
 
+Ordinary play also exposes a separate accessible 50-100% range control, sharing
+the fullscreen widget's styling. `HandheldScene.playZoom` divides the ordinary
+camera distance only in playing mode; 100% leaves the existing framing exact.
+`setPlayZoom` updates the target during an existing transition/cartridge reframe,
+otherwise updates the camera immediately. Resize and subsequent mode returns
+retain this page-session value; inspection's multiplier/reset remain independent.
+The widget hides during transitions/table/Inspect and LCD fullscreen, using
+explicit fullscreenchange visibility rather than underlying DOM intersection.
+On narrow/short screens it occupies the hidden header's top-left space so the
+dock, native LCD and original default camera envelope do not need to move.
+It never resizes the native framebuffer or touches runtime/audio/save settings.
+
 The separate screen-only fullscreen target copies the same retained post-shader
 framebuffer already feeding the LCD. A lightweight CSS bezel matches the physical
 4.47-by-3.39 surround, complete 4.05-by-2.7 LCD and metallic chroma wordmark.

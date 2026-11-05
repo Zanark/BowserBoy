@@ -142,9 +142,14 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
 /* Match the physical bezel's 4.47 x 3.39 surround and complete 4.05 x 2.7 LCD. */
 #screen-focus-canvas { position: absolute; left: 4.69799%; top: 6.63717%; display: block; width: 90.60403%; height: auto; aspect-ratio: 3 / 2; outline-offset: -4px; }
 .screen-focus-wordmark { position: absolute; bottom: 2.4%; left: 15.9%; width: 68.2%; height: auto; aspect-ratio: 1536 / 174; pointer-events: none; }
-.screen-focus-zoom { position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 10px; min-height: 48px; max-width: calc(100% - 32px); padding: 8px 12px; border: 1px solid #b18bd84d; border-radius: 14px; background: linear-gradient(150deg, #2c2139ef, #14121eee); box-shadow: 0 0 24px #a763e51a; font: 11px var(--mono); }
-#screen-focus-zoom { width: min(140px, 35vw); height: 30px; margin: 0; accent-color: #bf99ed; cursor: pointer; }
-#screen-focus-zoom-value { min-width: 4ch; text-align: right; color: #ede2ff; }
+.screen-focus-zoom, .play-zoom { position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 10px; min-height: 48px; max-width: calc(100% - 32px); padding: 8px 12px; border: 1px solid #b18bd84d; border-radius: 14px; background: linear-gradient(150deg, #2c2139ef, #14121eee); box-shadow: 0 0 24px #a763e51a; font: 11px var(--mono); }
+.screen-focus-zoom input, .play-zoom input { width: min(140px, 35vw); height: 30px; margin: 0; accent-color: #bf99ed; cursor: pointer; }
+.screen-focus-zoom output, .play-zoom output { min-width: 4ch; text-align: right; color: #ede2ff; }
+.play-zoom { z-index: 3; }
+@media (max-width: 1200px), (max-height: 500px) {
+  .play-zoom { top: max(16px, env(safe-area-inset-top)); left: max(18px, env(safe-area-inset-left)); right: auto; bottom: auto; }
+  .play-zoom input { width: min(140px, 28vw); }
+}
 #screen-focus-close { position: absolute; top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #b18bd84d; border-radius: 12px; background: #20192ed9; color: #ede2ff; }
 #screen-focus-close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 600px) {

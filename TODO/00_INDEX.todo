@@ -56,6 +56,7 @@ BowserBOY workstreams
 54_UPDATED_CHROME_LOGO.todo - IN_PROGRESS: updated supplied chrome orbit and sparkle umbrella artwork; preserve purple console branding, glow and shimmer.
 55_WHITE_README_GLOW.todo - SUPERSEDED: white-only halo published; user replaces it with periodic shimmer in56.
 56_README_LOGO_SHIMMER.todo - DONE: updated chrome logo's white shimmer published; actual GitHub native animation and all8exact public files verified.
+57_ORDINARY_PLAY_ZOOM.todo - IN_PROGRESS: independent play-only50-100%zoom locally qualified; normal publication pending.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

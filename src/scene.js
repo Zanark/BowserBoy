@@ -87,6 +87,7 @@ export class HandheldScene {
     this.raycaster = new THREE.Raycaster();
     this.pointer = new THREE.Vector2();
     this.zoom = 1;
+    this.playZoom = 1;
     this.drag = null;
     this.inspectionPointers = new Map();
     this.pinch = null;
@@ -214,7 +215,7 @@ export class HandheldScene {
       const envelopeWidth = closePlay ? 9.8 : 10.2;
       const ordinaryDistance = Math.max(envelopeWidth / this.camera.aspect, envelope *
         this.height / Math.max(160, this.height - padding)) / (2 * tangent);
-      const distance = ordinaryDistance * this.zoom;
+      const distance = ordinaryDistance * this.zoom / (this.mode === 'playing' ? this.playZoom : 1);
       const framingOffset = closePlay ? -.12 : 0;
       this.cameraTarget = new THREE.Vector3(0, this.playTarget.y + .1 + lift + framingOffset, distance);
       this.lookTarget = this.playTarget.clone().add(new THREE.Vector3(0, lift + framingOffset, 0));
@@ -247,6 +248,14 @@ export class HandheldScene {
     this.zoom = THREE.MathUtils.clamp(value, .65, 1.65);
     this.updateCameraTargets();
     this.camera.position.copy(this.cameraTarget);
+  }
+
+  setPlayZoom(value) {
+    this.playZoom = THREE.MathUtils.clamp(value, .5, 1);
+    if (this.mode !== 'playing') return;
+    this.updateCameraTargets();
+    if (!this.transition && !this.cameraMotion) this.camera.position.copy(this.cameraTarget);
+    this.changed = true;
   }
 
   setView(mode) {

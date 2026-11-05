@@ -481,8 +481,14 @@ $('screen-focus-zoom').addEventListener('input', () => {
   $('screen-focus').style.setProperty('--screen-zoom', zoom / 100);
   $('screen-focus-zoom-value').value = `${zoom}%`;
 });
+$('play-zoom').addEventListener('input', () => {
+  const zoom = $('play-zoom').valueAsNumber;
+  view.setPlayZoom(zoom / 100);
+  $('play-zoom-value').value = `${zoom}%`;
+});
 document.addEventListener('fullscreenchange', () => {
   const focused = document.fullscreenElement === $('screen-focus');
+  $('play-zoom-control').hidden = focused || view?.mode !== 'playing' || !!view?.transition;
   $('quick-screen-fullscreen').setAttribute('aria-pressed', String(focused));
   if (focused) {
     releaseHostInputs();
@@ -850,6 +856,7 @@ try {
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
       icon($('inspect'), mode === 'inspecting' ? 'back' : 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
+      $('play-zoom-control').hidden = mode !== 'playing' || moving || document.fullscreenElement === $('screen-focus');
       $('scene-hint').textContent = mode === 'table' ? 'A quiet moment. Click the handheld to pick it up.' :
         mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
           'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';

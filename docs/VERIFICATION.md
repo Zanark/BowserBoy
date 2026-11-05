@@ -7,6 +7,25 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Ordinary play zoom, 2026-11-05
+
+Local implementation adds the fullscreen-style 50-100% widget to normal play.
+The existing 100% camera envelope remains exact; lower percentages change
+camera distance only. The original Pixel Lab browser regression checks actual
+LCD projection, doubled camera distance at 50%, keyboard range changes, retained
+native runtime/input, independent inspection/fullscreen settings and mode
+visibility. At 1440x1100, 844x390, 390x844 and 320x568, the widget stays within
+the viewport and clear of the LCD, hardware targets, status and dock.
+Actual desktop/320px local captures are reviewed.
+
+Syntax/build/all 11 units pass. The new zoom case and existing complete native
+quick-actions/fullscreen and physical-branding/ordinary-framing cases pass in
+1.2m, without retries or skips. Initial test-fixture drawer/geometry assumptions
+are recorded in workstream 57; the final lifecycle explicitly hides the widget
+during LCD fullscreen. This is local evidence, not a deployed-site claim.
+Publication and independent public qualification remain pending. No new
+private-ROM/audio replay or human aesthetic acceptance is inferred.
+
 ## Deeper rear engraving, 2026-11-05
 
 The rear artwork frame increases from 2.95 to 3.45 units, another 17% wider,
