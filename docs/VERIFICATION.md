@@ -7,6 +7,21 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Ordinary play zoom baseline, 2026-11-05
+
+Ordinary play now starts at 50% with the previous fitted camera position.
+Increasing to 100% halves that camera distance rather than stopping at the
+previous framing. Inspection and screen-only fullscreen keep their independent
+settings; higher ordinary zoom may intentionally crop the handheld.
+
+The revised existing regression rejects the original 100% default. Desktop,
+landscape and phone cases verify the 50% fit, larger 100% picture, keyboard
+steps, session retention through inspection/table/fullscreen, native runtime
+identity and continued input. It and backdrop dismissal pass 2/2 in 24.8s;
+syntax/build/all 12 units pass. Actual desktop/phone 100% captures are reviewed.
+Only original Pixel Lab is used. Deployment monitoring and public qualification
+are delegated to the user until explicitly requested again.
+
 ## Settings drawer backdrop dismissal, 2026-11-05
 
 The blurred backdrop now closes the cartridge/settings drawer only when the

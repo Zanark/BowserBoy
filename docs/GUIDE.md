@@ -200,9 +200,10 @@ The 3D scene requires WebGL 2. Its decorative cartridges are not supplied games.
 ## Pick it up
 
 In ordinary play, **Zoom** adjusts the entire handheld from **50% to 100%**
-without entering fullscreen. **100%** keeps the existing fitted view; lower
-values pull back. The slider is bottom-right on wide screens and top-left on
-narrow or short screens, clear of the game and dock. Its percentage survives
+without entering fullscreen. **50%** is the default and preserves the existing
+fitted view; **100%** moves the camera twice as close. Higher zoom can crop the
+handheld. The slider is bottom-right on wide screens and top-left on narrow
+or short screens. Its percentage survives
 Inspect/table returns and resizing for this page session. It is hidden on the
 table, in Inspect, during pickup and in screen-only fullscreen.
 

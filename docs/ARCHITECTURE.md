@@ -452,8 +452,9 @@ silently clamped away; intentional zoom-in can crop the console as before.
 No new per-frame DOM measurement loop or emulator restart is introduced.
 
 Ordinary play also exposes a separate accessible 50-100% range control, sharing
-the fullscreen widget's styling. `HandheldScene.playZoom` divides the ordinary
-camera distance only in playing mode; 100% leaves the existing framing exact.
+the fullscreen widget's styling. Twice `HandheldScene.playZoom` divides the
+ordinary camera distance only in playing mode. The default 50% leaves the
+existing framing exact; 100% halves that distance and can crop the handheld.
 `setPlayZoom` updates the target during an existing transition/cartridge reframe,
 otherwise updates the camera immediately. Resize and subsequent mode returns
 retain this page-session value; inspection's multiplier/reset remain independent.

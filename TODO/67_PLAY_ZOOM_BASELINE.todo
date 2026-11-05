@@ -1,0 +1,37 @@
+Status: IN_PROGRESS
+Milestone: Preserve the ordinary play view at50%, allow zooming into100%.
+Dependencies: 57_ORDINARY_PLAY_ZOOM.todo.
+
+Purpose
+-------
+The user wants more zoom in ordinary play, explicitly not game fullscreen.
+Treat the existing fitted view as50%, not the maximum.
+
+Tasks
+-----
+[x] Default ordinary zoom UI/model to50%.
+[x] Preserve the existing framing at50% and halve camera distance at100%.
+[x] Keep inspection/fullscreen independent and native game/runtime unchanged.
+[x] Verify responsive framing, keyboard steps, session retention and game input.
+[x] Update affected documentation and development history.
+[ ] User-monitored publication; agent must not watch/poll until asked.
+
+Acceptance criteria
+-------------------
+Ordinary play starts with the same fitted picture at50%; moving toward100%
+enlarges the handheld. High zoom may intentionally crop it. Fullscreen remains
+unchanged. No emulator recreation, new persistence or supplied-ROM testing.
+
+Completion evidence
+-------------------
+UI starts50; playZoom=.5; playing distance divides by2*playZoom. Existing
+regression fails the old100default. Final ordinary-zoom/backdrop cases pass
+2/2in24.8s; syntax/build/all12units pass. Coverage includes desktop, landscape,
+phone, unchanged default fit, doubled camera magnification, keyboard, mode
+returns, native identity and ongoing input. Actual100%desktop/phone reviewed.
+Original Pixel Lab only. Deployment/public status is not inferred.
+
+Completion log
+--------------
+2026-11-05: User clarifies outside-fullscreen zoom. Implemented/local checks
+complete. User requests deployment triggers only, no pipeline monitoring.

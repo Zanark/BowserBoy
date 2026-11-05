@@ -88,6 +88,8 @@ test('ordinary play zoom fits desktop and phone without changing the native game
   await expect(control).toBeHidden();
   await page.locator('#pickup').click();
   await expect(control).toBeVisible();
+  await expect(slider).toHaveValue('50');
+  await expect(page.locator('#play-zoom-value')).toHaveText('50%');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);
@@ -121,20 +123,21 @@ test('ordinary play zoom fits desktop and phone without changing the native game
   for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
     await page.setViewportSize({ width, height });
     await slider.focus();
-    await page.keyboard.press('End');
-    await expect(page.locator('#play-zoom-value')).toHaveText('100%');
-    await expect.poll(async () => {
-      const fit = await layout();
-      return fit.clear && fit.inside && fit.playZoom === 1;
-    }).toBe(true);
-    const fitted = await layout();
     await page.keyboard.press('Home');
     await expect(page.locator('#play-zoom-value')).toHaveText('50%');
-    await expect.poll(async () => (await layout()).z / fitted.z).toBeCloseTo(2, 4);
-    const smaller = await layout();
-    expect(smaller.width / fitted.width).toBeCloseTo(.5, 1);
-    expect(smaller.height / fitted.height).toBeCloseTo(.5, 1);
-    expect(smaller.clear && smaller.inside).toBe(true);
+    await expect.poll(async () => {
+      const fit = await layout();
+      return fit.clear && fit.inside && fit.playZoom === .5;
+    }).toBe(true);
+    const fitted = await layout();
+    await page.keyboard.press('End');
+    await expect(page.locator('#play-zoom-value')).toHaveText('100%');
+    await expect.poll(async () => (await layout()).z / fitted.z).toBeCloseTo(.5, 4);
+    const larger = await layout();
+    expect(larger.width).toBeGreaterThan(fitted.width * 1.9);
+    expect(larger.height).toBeGreaterThan(fitted.height * 1.9);
+    expect(larger.inside).toBe(true);
+    await page.keyboard.press('Home');
     await page.keyboard.press('ArrowRight');
     await expect(slider).toHaveValue('51');
     await page.keyboard.press('End');

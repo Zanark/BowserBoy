@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Ordinary play zoom baseline:
+  User clarifies zoom outside game fullscreen: current framing should be50%,
+  with room to zoom into100%. Default UI/model to.5; divide ordinary playing
+  camera distance by2*playZoom.50% preserves original framing,100% halves
+  camera distance. Fullscreen/inspection unchanged; high zoom may crop hardware.
+  Updated existing regression fails old100default; final desktop/landscape/
+  phone test and backdrop case pass2/2in24.8s. Syntax/build/12units pass.
+  Reviewed actual100%desktop/phone captures; only original Pixel Lab used.
+  User explicitly takes over monitoring: local checks and genuine deployment
+  trigger only; no pipeline watches/polls or public qualification until asked.
 - 2026-11-05 / Settings drawer backdrop dismissal:
   User wants the blurred area outside settings to close the drawer. Require
   matching pointer press/click outside its bounds; padding/inside clicks and
