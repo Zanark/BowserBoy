@@ -13,7 +13,7 @@ Tasks
 [x] Support arrow-key movement, Shift for larger steps and Home to reset.
 [x] Preserve actions and skip-link access; Escape cancels a drag before menus.
 [x] Exercise real touch cancellation, desktop movement and small-phone fit.
-[ ] Record and review actual movement/collapse GIF; add it to the README.
+[x] Record and review actual movement/collapse GIF; add it to the README.
 [ ] Publish and monitor this deployment under the user's renewed authorization.
 
 Acceptance criteria
@@ -32,8 +32,11 @@ pass locally. Responsive existing test retains all controls and power clearance;
 First Escape attempt exposed the existing capture-phase menu handler; resolve
 cancellation in that existing handler, not a competing target-only listener.
 Initial CLI backslash test-file expression matched no tests; use dock.spec.mjs.
-Skip-link test activates the actual focused link rather than assuming browser
-Shift-Tab order. Syntax/build/12 units pass; capture/public release pending.
+Skip-link test awaits drawer-close focus before activating the link; no assumed
+Shift-Tab order. Final drag/reset case repeats twice. Syntax/build/12 units pass.
+Local source6fb1890 filmed with noROM; movableGIF71frames/7.1s/1,770,317bytes,
+800x618/10fps/infinite; actual movement/collapse/expand/Home reviewed.
+Public release/qualification pending.
 
 Completion log
 --------------

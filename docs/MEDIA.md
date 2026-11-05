@@ -8,6 +8,36 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Movable dock and inspection branding, 2026-11-06
+
+Source `6fb18906811c2a73301badf8e666061f9304d211` is filmed locally at
+`http://127.0.0.1:5175/BowserBoyAdvance/`; receipt timestamp
+`2026-11-05T18:51:21.318Z` (November 6 locally). No ROM is loaded or executed.
+This supplements, rather than relabels, the preceding complete-refresh edition.
+
+`movable-dock.gif` shows actual pointer dragging, collapse, dragging the small
+pill elsewhere, expansion with boundary fitting, and keyboard Home reset.
+It is 71 frames/7.1 seconds/1,770,317 bytes. The replaced `pickup-inspect.gif`
+now shows the purple animated inspection header: 124 frames/12.4 seconds/
+7,045,470 bytes. Both retain 800x618, 10 fps and infinite loops; decoded
+sampled frames change and both remain below 10 MiB. First/middle/end encoded
+frames and the actual centered-settings image are reviewed.
+
+Five affected stills are refreshed: table, front, rear, underside and dock.
+Other clips/stills retain their individually documented earlier source edition.
+The approved 1080x420, 72-frame, 8,969,021-byte purple APNG is **not regenerated**:
+the static build explicitly copies its exact existing README bytes to
+`assets/inspection-logo.png`. Only Inspect shows it; table chrome and hidden
+play branding remain distinct. Reduced motion uses original static purple
+artwork. Native browser animation requires no additional scene/render loop.
+
+The existing full capture script now includes a `movable-dock` shot. This
+bounded two-clip take uses the same actual controls and unchanged `clips()`
+encoder, with its source WebM/timing receipt retained in session evidence.
+It is not supplied-game testing, new audio/performance qualification or
+human visual approval. The user explicitly requests monitored deployment for
+this release, superseding the earlier temporary no-monitoring handoff.
+
 ### Complete README refresh, 2026-11-05
 
 All five existing interaction GIFs are freshly recorded, with four new clips
@@ -56,7 +86,8 @@ node .\scripts\capture-readme.mjs <capture-output-directory>
 Omit `BBA_CAPTURE_ROM` to use only original Pixel Lab. The original WebM and
 timing/encoding receipts stay in session evidence, not the public static build.
 README URLs are versioned for the new captures. Historical source editions
-below remain history; shared `readme-*` figures now belong to this edition.
+below remain history; shared `readme-*` figures belonged to this edition at
+that milestone. Later replacements are identified above.
 Per user instruction, publication is triggered by the genuine media push
 without watching/querying pipelines or performing public qualification.
 

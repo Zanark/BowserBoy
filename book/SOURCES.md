@@ -76,6 +76,12 @@ sources and historical geometry figures remain unchanged. The
 [new media receipt](../docs/MEDIA.md#complete-readme-refresh-2026-11-05)
 separates local footage, authorized GIF-only game content and publication.
 
+Workstreams 69/70 subsequently refresh Figure B-01, five shared stills and
+pickup/inspection footage from local application `6fb1890`, and add an actual
+movable-dock GIF. No ROM is loaded in that take. See the
+[dock/inspection receipt](../docs/MEDIA.md#movable-dock-and-inspection-branding-2026-11-06).
+The pinned book implementation edition remains unchanged.
+
 ## Evidence is narrower than explanation
 
 Current release records live in [Verification](../docs/VERIFICATION.md);

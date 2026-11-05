@@ -58,7 +58,7 @@ The shimmer pauses while hidden and is disabled for reduced-motion users.*
 **A little escape, on your desk.** BowserBOY currently offers one local-first
 GBA player inside an actual 3D indigo handheld, built for GitHub Pages.
 
-![Current-build BowserBOY table with updated chrome website branding and its first GBA handheld](images/readme-table.png?v=readme-refresh-20261105)
+![Current-build BowserBOY table with chrome website branding and movable tools](images/readme-table.png?v=dock-inspection-20261106)
 
 *The current-build desk: chrome BowserBOY header, first purple console and
 paper lantern. The other objects are cartridges, not additional consoles.*
@@ -119,7 +119,7 @@ into the battery-cover plastic. Its original purple color and bright lettering a
 preserved, not darkened to imply engraving; see
 [current qualification](VERIFICATION.md#deeper-rear-engraving-2026-11-05).
 
-![Current-build rear inspection with the larger, deeper engraving](images/readme-back.png?v=readme-refresh-20261105)
+![Current-build rear inspection with deeper engraving and animated console header](images/readme-back.png?v=dock-inspection-20261106)
 
 *The purple artwork belongs to this console, including its animated inspection
 header; chrome remains the table identity. The local capture includes the enlarged, deeper cutouts,

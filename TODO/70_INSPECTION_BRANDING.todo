@@ -16,7 +16,8 @@ Tasks
 [x] Honor reduced motion with the original static purple console artwork.
 [x] Center only the cartridge/settings drawer's chrome logo.
 [x] Check actual browser animation/static fallback, mode returns and phone fit.
-[ ] Refresh affected inspection footage/stills and qualify the normal release.
+[x] Refresh affected inspection footage/stills.
+[ ] Qualify the normal release.
 
 Acceptance criteria
 -------------------
@@ -32,6 +33,8 @@ does not layer neutral shimmer over console art. Source PNG1080x420,72frames,
 infinite loop,8,969,021bytes. Centering allows one physical pixel for the
 drawer's asymmetric border rather than treating half-pixel rounding as failure.
 Existing chrome separation/shimmer tests pass. No supplied ROM execution.
+Replaced pickup-inspect GIF124frames/12.4s/7,045,470bytes and five affected
+sharedstills from actual local6fb1890; noROM loaded. Encoded samples reviewed.
 
 Completion log
 --------------

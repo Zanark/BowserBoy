@@ -7,6 +7,29 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Movable dock and inspection branding, 2026-11-06
+
+The dock has a dedicated pointer/touch grip, collapse/expand, keyboard arrows
+(Shift for larger steps), Home reset, and Escape drag cancellation ahead of the
+existing capture-phase menu handler. Expansion/resize/fullscreen changes keep
+it in bounds; actions and the skip link retain access. State is page-local.
+Phone controls remain 44px, with two rows at390px and three at320px; settled
+physical-power targets remain above the default dock.
+
+Inspect uses the unchanged approved purple 72-frame APNG with orbiting stars.
+Actual browser screenshots change across280ms; reduced-motion static-purple
+screenshots remain identical. Table chrome, hidden play branding and phone fit
+are checked. The settings logo is centered within one physical pixel, allowing
+the asymmetric drawer border. Seven affected browser cases pass across focused
+runs; the drag/reset case repeats twice after synchronizing the drawer-close
+focus lifecycle. Syntax/build/all12units pass.
+
+Actual local source `6fb1890` is filmed with no ROM loaded. Two encoded GIFs and
+five affected stills are refreshed; bounded encoded frames and the centered
+drawer are reviewed. This is not an audio/performance or human-approval claim.
+The user explicitly resumes monitoring/fixing this deployment. The normal
+source push will trigger its unchanged full gate; live qualification is pending.
+
 ## Complete README refresh, 2026-11-05
 
 Nine interaction GIFs and nine stills are refreshed from local application

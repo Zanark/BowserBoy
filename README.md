@@ -21,23 +21,23 @@
 
 *Your Game Boy Advance, on the BowserBOY tabletop. [Play BowserBOYADVANCED](https://zanark.github.io/BowserBoyAdvance/).*
 
-*Animated console banner above; fresh current-build recordings and UI captures below. [Media origins](docs/MEDIA.md#complete-readme-refresh-2026-11-05).*
+*Animated console banner above; current-build recordings and UI captures below. [Media origins](docs/MEDIA.md#movable-dock-and-inspection-branding-2026-11-06).*
 
 ### One table. More to come.
 
-![Current BowserBOY table with the updated chrome website logo, paper lantern and purple GBA console](docs/images/readme-table.png?v=readme-refresh-20261105)
+![Current BowserBOY table with chrome website branding and its movable tools dock](docs/images/readme-table.png?v=dock-inspection-20261106)
 
 *The BowserBOY tabletop, featuring BowserBOYADVANCED.*
 
 ### Pick it up. Turn it over.
 
-![Pick up BowserBOY ADVANCED, inspect its current engraved back, and put it down](docs/images/pickup-inspect.gif?v=readme-refresh-20261105)
+![Pick up the handheld, inspect it with the animated purple console logo, and return to the chrome-branded table](docs/images/pickup-inspect.gif?v=dock-inspection-20261106)
 
-*Soft engraved A/B letters. Raised Zanark lettering. Small, borderless metallic-chroma bezel lettering.*
+*Soft engraved A/B letters. Metallic-chroma bezel. Purple console branding with orbiting stars while you inspect.*
 
 ### Purple belongs to the console.
 
-![Current rear inspection with the larger, deeper purple console engraving and separate chrome website header](docs/images/readme-back.png?v=readme-refresh-20261105)
+![Rear inspection with deeper purple console engraving and its animated purple inspection header](docs/images/readme-back.png?v=dock-inspection-20261106)
 
 *Purple console identity. Larger lettering. Deeper engraving.*
 
@@ -67,7 +67,7 @@
 
 ### Power where it belongs.
 
-![The current handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=readme-refresh-20261105)
+![The handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=dock-inspection-20261106)
 
 *Underside slider. Clear front face. Real power-off and cold boot.*
 
@@ -105,9 +105,15 @@
 
 ### Everything within reach.
 
-![Current purple icon dock with distinct actions and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=readme-refresh-20261105)
+![Purple icon dock with its drag grip, collapse arrow and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=dock-inspection-20261106)
 
 *Desk or LCD fullscreen. 1x-4x speed. Sound, lighting and settings within reach.*
+
+### Make a little room.
+
+![Drag the tools dock, collapse it into a small movable pill, move it again, expand and reset its position](docs/images/movable-dock.gif?v=dock-inspection-20261106)
+
+*Drag the grip. Collapse with the arrow. Move it where it suits you. Focus the grip and press Home to reset.*
 
 ### Keep your progress.
 
