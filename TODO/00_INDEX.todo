@@ -57,7 +57,7 @@ BowserBOY workstreams
 55_WHITE_README_GLOW.todo - SUPERSEDED: white-only halo published; user replaces it with periodic shimmer in56.
 56_README_LOGO_SHIMMER.todo - DONE: updated chrome logo's white shimmer published; actual GitHub native animation and all8exact public files verified.
 57_ORDINARY_PLAY_ZOOM.todo - BLOCKED: independent play-only50-100%zoom qualified/pushed;42050815740hits15mCIlimit/deployskipped.
-58_HOLD_SPACE_FAST_FORWARD.todo - IN_PROGRESS: default Space hold2x/release1x using verified native EmulatorJS speed support.
+58_HOLD_SPACE_FAST_FORWARD.todo - BLOCKED: native Space hold2x/release1x qualified/pushed;42056550639fails notice assertion and600sother-shard budget.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

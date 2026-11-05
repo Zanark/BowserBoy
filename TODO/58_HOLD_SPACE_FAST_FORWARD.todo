@@ -1,5 +1,5 @@
-Status: IN_PROGRESS
-Milestone: Default hold-Space native2x/release1x locally qualified; publication pending.
+Status: BLOCKED
+Milestone: Default hold-Space native2x/release1x qualified/pushed; full release gate failed.
 Dependencies: Completed workstream24 and existing source-counted keyboard input.
 
 Purpose
@@ -47,9 +47,20 @@ Final expanded native-clock/lifecycle/custom-Space case and existing speed-clock
 quick-actions group pass3/3 in1.4m. Actual cartridge clock measures59.956fps
 baseline,119.379fps held and59.638fps released. Inspect, explicit GBA Space
 priority, host/child/fullscreen/menu and repeat-after-blur coverage pass.
-Final static build passes. Publication qualification remains pending.
+Final static build passes. Source411583cdc10697807a2dd1902408bf860bbc89e6
+pushed. Normal42056550639: build/12units and shard1all15cases, including
+holdSpace, pass. Shard2passes14but existing VSync test expects hidden notice;
+artifact instead shows legitimate "Welcome back. Your latest checkpoint has
+been restored." at player.spec.mjs186. Local unchanged VSync case passes14.7s;
+do not infer the hosted failure is resolved. Shard3passes14then hits600s suite
+limit with one not run. Deploy skipped. This is NOT the previous install/job
+timeout: there is a real notice assertion plus a distinct suite-budget failure.
+No retry, dispatch403repeat, bypass or relaxedchecks/timeouts. No public asset/
+browser qualification after failed gate. Blocker-only records held locally.
 
 Completion log
 --------------
 2026-11-05: User requests default Space hold2x, release1x and asks whether
 EmulatorJS supports it. Native support confirmed in the exact pinned source.
+2026-11-05: Final local3/3passes; actual hosted hold test passes within15/15.
+Full normal release fails elsewhere as above; feature pushed but not live.

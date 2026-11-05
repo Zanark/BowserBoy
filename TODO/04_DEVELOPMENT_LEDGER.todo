@@ -29,7 +29,13 @@ Completion log:
   Final expanded native case plus existing speed-clock/quick-actions pass3/3
   in1.4m:59.956fps baseline/119.379held/59.638released. Inspect, explicit Space
   remap priority and child/fullscreen/menu/repeat cleanup pass. Final build
-  passes. Publication pending; no fresh private-ROM/audio claim.
+  passes. Source411583cpushed; normal42056550639build/12units and shard1all15
+  includingholdSpacepass. Shard2existingVSync case fails because a legitimate
+  checkpoint-restored notice remains visible;14otherspass. Unchanged local
+  VSync regression passes14.7s, not proof hosted issue resolved. Shard3passes14
+  then600s suite budget/onenotrun; deployskipped. Not a browser-install/job-limit
+  cancellation. No retry/dispatch/bypass/relaxation or public qualification.
+  Blocker records held locally; no fresh private-ROM/audio claim.
 - 2026-11-05 / Ordinary play zoom:
   User requests the fullscreen-style slider outside fullscreen during play.
   Add an independent50-100%play camera-distance divisor; retain exact ordinary

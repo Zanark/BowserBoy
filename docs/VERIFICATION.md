@@ -25,8 +25,20 @@ restored normal pacing, menu/form behavior, simulated blur, Inspect, fullscreen,
 actual child keyboard focus and explicit GBA Space remap priority. It and the
 existing native speed-clock/complete quick-actions cases pass 3/3 in 1.4m.
 The actual cartridge clock measures 59.956fps baseline, 119.379fps while held,
-and 59.638fps after release. The final static build passes. Release qualification
-remains pending; no live deployment or new private-ROM/audio testing is claimed.
+and 59.638fps after release. The final static build passes.
+
+Source `411583cdc10697807a2dd1902408bf860bbc89e6` is pushed. Normal release
+`42056550639` passes build/12 units and all 15 shard-1 browser cases, including
+the new hold-Space case. Shard 2 passes 14 but the existing VSync test fails at
+`player.spec.mjs:186`: it expects a hidden notice while the artifact shows
+"Welcome back. Your latest checkpoint has been restored." The unchanged local
+VSync case passes in 14.7s; that does not resolve or invalidate the hosted failure.
+Shard 3 passes 14 before the 600-second suite budget expires, leaving one not run.
+Deployment is skipped. Unlike the preceding releases, this is an actual notice
+assertion plus a separate suite timeout, not a browser-install/job cancellation.
+No failed-run retry, denied dispatch repeat, dummy push, gate relaxation or
+public qualification follows. Blocker-only records are held locally; the
+requested feature is pushed but not live. No new private-ROM/audio test is claimed.
 
 ## Ordinary play zoom, 2026-11-05
 
