@@ -28,6 +28,13 @@ pixels and transparent corners pass exact checks. A bounded resting/left/right
 light/dark sheet is reviewed, not every animation frame. Original website/CSS,
 purple console PNG/GIF/APNG and all gameplay captures remain unchanged.
 
+Published source `f966ff7944e2c6827224aee553250e7325091e63`: all8changed public
+files match their exact committed blobs. The actual GitHub README preserves all
+15visible image references and console navigation, decodes the updated1168x456
+umbrella and shows native APNG motion. Actual public logo samples are reviewed;
+the exact published raw asset also animates in native Edge. Initial gateway/
+incomplete-image observations are not substituted for the final successful check.
+
 ### White umbrella README glow, 2026-11-05
 
 The intermediate BowserBOY README halo used neutral white (RGB255,255,255), superseding

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Website-style periodic shimmer on the updated README umbrella logo.
 Dependencies: 54_UPDATED_CHROME_LOGO.todo (artwork); 50_WEBSITE_LOGO_SHIMMER.todo.
 
@@ -10,8 +10,8 @@ Tasks:
 - [x] Reuse updated assets/website-logo.png and website mask/timing design.
 - [x] Add an isolated --shimmer-logo APNG renderer; preserve other media modes.
 - [x] Generate and check transparent animated output and six-second loop.
-- [ ] Review bounded resting/left/right samples and actual GitHub animation.
-- [ ] Reconcile documentation and owned continuity.
+- [x] Review bounded resting/left/right samples and actual GitHub animation.
+- [x] Reconcile documentation and owned continuity.
 
 Acceptance criteria:
 - Exact updated source SHA256:
@@ -29,8 +29,17 @@ Completion evidence:
 - All27changed-frame bounds move left to right; every frame has clear corners.
 - Website/console source PNGs, console GIF/APNG and application sources exact.
 - Bounded resting/left/right light/dark sheet reviewed. Invalid mixed renderer
-  flags reject explicitly. Actual GitHub publication/native-animation pending.
+  flags reject explicitly.
+- Published f966ff7944e2c6827224aee553250e7325091e63; all8changed public
+  files exactly match committed blobs. Actual GitHub README retains15visible
+  images/navigation/hierarchy, uses new1168x456umbrella and animates natively.
+  Published raw APNG also animates in native Edge. Actual logo samples reviewed.
+- Initial GitHub gateway/zero/14-image observations do not qualify publication.
+  Final main README route passes every unchanged visibility/reference assertion.
+- No fresh application/audio gate or human aesthetic acceptance claimed.
 
 Completion log:
 - 2026-11-05: User replaces the white-glow request with website-style shimmer
   and explicitly confirms that it must use the newly updated chrome logo.
+- 2026-11-05: Publish and independently verify exact files, actual GitHub README
+  rendering and native animation; website/console effects remain unchanged.
