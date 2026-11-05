@@ -60,6 +60,12 @@ Power trace proves automatic checkpoint consumed global quota fault; fixture
 uses actual autosave-off UI before injection, retaining all safety assertions.
 Broader13-caseSwiftShader follow-up11pass8.4m; audio1.2405s gap/native-speed
 ratio.3275 fail locally. No weakened assertions; normal hosted gate pending.
+42100513643reportsall53browsercasespassing, including localtiming checks.
+Deploy still skips: shard3installer11m16s +3.7mtestshits15mjobdeadline.
+ActualUbuntu-fontdownloads stallminutes. Provision matching official
+Playwright1.64.1Nobleimage pinnedbyverifiedOCIdigest instead of repeatedAPT.
+YAMLsemanticcomparisonpreservesallotherworkflowfields/deadlines/commands.
+Nextnormalcontainer gate/publicqualificationstillpending.
 
 Completion log
 --------------

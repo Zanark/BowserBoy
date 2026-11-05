@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Browser provisioning rather than deadline relaxation:
+  Run42100513643 reports all53browsercasespassing, including audio/native
+  speed. Deploy skips because shard3 iscancelledat15mjobdeadline: installer
+  consumes11m16s andtests3.7m, with11passes justbeforecancellation.
+  Logs identify multi-minute Ubuntu mirror font downloads, not appassertions.
+  Replace repeated runner-side installer with official matching Playwright
+  1.64.1Noble image, verified OCI manifest and pinned digest. Container init/
+  private1GiBsharedmemory; no hostIPC/additionalcapabilities. YAMLparses;
+  semanticcomparison confirms only provisioning changes. All53cases,
+  commands/retries/deadlines/deploydependencies retained. NormalCIpending.
 - 2026-11-06 / Immediate expansion and static-idle correction:
   42096896534 fixes prior native/insertion blockers but still skips deployment.
   Expanded dock needs synchronous fitDock, not eventual ResizeObserver.

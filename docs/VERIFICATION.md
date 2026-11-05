@@ -107,6 +107,22 @@ measures 0.3275 of its baseline (required above 0.7). These are unresolved local
 performance findings, not passing results or grounds to weaken assertions.
 The unchanged full hosted gate remains required before deployment.
 
+Run `42100513643` reports all 53 browser cases passing across its five shards,
+including the local audio/native-speed timing checks. This still does not
+deploy: shard 3 is cancelled at the unchanged 15-minute job deadline. Its
+browser installation consumes 11 minutes 16 seconds; the suite then reports
+11 passes in 3.7 minutes immediately before cancellation. Actual APT logs show
+multi-minute font downloads from the Ubuntu mirror, not a failing application
+assertion.
+
+Browser jobs now provision the matching official Playwright 1.64.1 Noble image,
+verified through its published OCI manifest and pinned by digest. This replaces
+the repeated APT/browser-install step, not any tests or deployment dependency.
+One worker, all 53 cases and every assertion/test/suite/job deadline remain.
+The YAML parses; a semantic comparison confirms the only workflow changes are
+the container and replaced installer. Actual Linux-container qualification
+still requires the next normal gate; no local Docker execution is claimed.
+
 ## Complete README refresh, 2026-11-05
 
 Nine interaction GIFs and nine stills are refreshed from local application

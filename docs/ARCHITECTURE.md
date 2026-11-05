@@ -776,6 +776,11 @@ An import map resolves `three` relative to the document, preserving nested
 GitHub Pages hosting. No `node_modules` directory is publicly served.
 Pages deployment requires the separate syntax/unit/build job and all five
 complete test-level browser shards on Ubuntu 24.04, with one worker per runner.
+Browser jobs use the official Playwright 1.64.1 Noble image pinned by manifest
+digest, matching the package version and provisioning its browsers and system
+dependencies without repeated runner-side APT downloads. The container keeps
+its own 1GiB shared memory and init process; no host IPC or additional
+capabilities are requested. Update the image/version together with Playwright.
 Sharding changes scheduling, not coverage or the existing assertion, test,
 suite and job deadlines.
 
