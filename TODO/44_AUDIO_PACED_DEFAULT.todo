@@ -1,0 +1,54 @@
+Status: IN_PROGRESS
+Milestone: Audio-paced normal playback with sustained live PCM reserve.
+Dependencies: Existing native audio protection and configurable speed/VSync.
+
+Purpose:
+Investigate the supplied recording using audio only, reproduce recurring gaps
+with the authorized private ROM, and correct the playback clock rather than
+mistaking allocated buffer capacity for continuously queued sound.
+
+Tasks:
+- [x] Extract and analyze recording audio without decoding video frames.
+- [x] Compare real-ROM scheduling, post-limiter PCM and source restarts.
+- [x] Reject startup-only pre-roll after its measured starvation regression.
+- [x] Verify an isolated native VSync-off control and preserve explicit overrides.
+- [x] Add an original-ROM audio/clock regression that fails actual old playback.
+- [x] Keep startup, recovery, volume/mute, saves and speed qualification intact.
+- [x] Complete extended actual-source private-ROM qualification.
+- [ ] Pass normal delivery and independently verify public assets/audio.
+- [ ] Reconcile documentation, development history and owned continuity.
+
+Acceptance criteria:
+- Normal playback defaults to audio-paced native timing; explicitly selected
+  enabled/disabled VSync preferences and fast-forward coordination still work.
+- Actual scheduled reserve survives the qualified steady-state 40ms hitch.
+- The original cartridge's SRAM clock proves normal speed, not merely a UI flag.
+- Existing 256ms allocation, 96ms pre-roll, lookahead and peak/mute protection stay.
+- Private ROM, recording, extracted/captured PCM and local paths are not published.
+- Numerical sample/timing evidence is not described as direct listening or a
+  guarantee against arbitrary sustained overload, every device or every ROM.
+
+Completion evidence:
+- Supplied58.944s audio: no samples >=.99; repeated short near-silent intervals.
+  Silence alone does not distinguish every game transition from a defect.
+- Actual90s baseline:18 scheduling gaps >1ms,13 native restarts, largest108.5ms.
+  Many gaps include the adapter's96ms recovery pre-roll despite256ms allocation.
+- Startup-only pre-roll worsens actual starvation:139 gaps/92 restarts in90s.
+  Reject it; do not exchange long dropouts for frequent shorter interruptions.
+- Isolated native VSync-off control:90s, zero gaps/restarts, live headroom
+  161-206ms and90.47s of scheduled audio. No clipped source samples/page errors.
+- New actual old-source regression fails with four gaps including103.3ms.
+  Initial fixture readiness race is corrected before treating this as evidence.
+- Corrected source defaults VSync off before applying explicit saved overrides.
+  Syntax/build/11units and four audio cases plus existing speed case pass1.1m.
+  Audio cases use native source readiness rather than framebuffer screenshots.
+- Actual corrected source180s/31,042buffers: zero gaps >1ms, zero restarts,
+  no clipped source samples/page errors; output peak .6843. Live headroom
+  141-206ms;40ms mid-game hitch leaves163.2ms. Auto-save stays on; captures <=2ms.
+- Normal/public delivery remains pending.
+
+Completion log:
+- 2026-11-05: Recording supplied; analyze only its audio. Native VSync pacing
+  starves the real audio queue under tested play despite a large allocated pool.
+  Let existing native audio synchronization pace normal playback by default.
+  Retain deliberate user overrides and all existing protection/speed behavior.

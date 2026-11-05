@@ -1,6 +1,73 @@
 import { test, expect } from '@playwright/test';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
-import { demoReady, powerOn } from './pixel-lab.mjs';
+import { powerOn } from './pixel-lab.mjs';
+
+const audioReady = async (page) => {
+  const frame = page.frames().find(item => item.url().endsWith('player.html'));
+  await expect.poll(() => frame.evaluate(() =>
+    window.EJS_emulator.Module.AL.currentCtx.sources.filter(Boolean)
+      .some(source => source.audioQueue.length > 0))).toBe(true);
+  return frame;
+};
+
+test('audio-paced default retains live PCM reserve and normal cartridge speed through steady-state stalls', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.continuity = { tail: null, active: false, gaps: [] };
+    const start = AudioBufferSourceNode.prototype.start;
+    AudioBufferSourceNode.prototype.start = function (when = 0, offset = 0, ...args) {
+      const probe = window.continuity, time = Math.max(when, this.context.currentTime);
+      if (probe.active && probe.tail !== null && time - probe.tail > .001) {
+        probe.gaps.push(time - probe.tail);
+      }
+      probe.tail = time + (this.buffer.duration - offset) / this.playbackRate.value;
+      return start.call(this, when, offset, ...args);
+    };
+  });
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await expect(page.locator('#rom-file')).toBeEnabled();
+  await page.locator('#rom-file').setInputFiles({
+    name: 'Pixel Lab Audio Clock.gba', mimeType: 'application/octet-stream',
+    buffer: Buffer.from(createDemoRom({ tone: true, frameClock: true })),
+  });
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  const frame = await audioReady(page);
+  const result = await frame.evaluate(async () => {
+    const emulator = window.EJS_emulator, audio = emulator.Module.AL.currentCtx.audioCtx;
+    const probe = window.continuity;
+    const readClock = () => {
+      const sram = emulator.gameManager.getSaveFile();
+      return sram[4] | sram[5] << 8;
+    };
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    const clock = readClock(), began = performance.now(), reserves = [];
+    probe.active = true;
+    let stall;
+    for (let i = 0; i < 30; i++) {
+      await new Promise(resolve => setTimeout(resolve, 200));
+      reserves.push(probe.tail - audio.currentTime);
+      if (i === 15) {
+        const before = performance.now(), reserve = probe.tail - audio.currentTime;
+        while (performance.now() - before < 40) { /* Steady-state native scheduling hitch. */ }
+        stall = { reserve, remaining: probe.tail - audio.currentTime };
+      }
+    }
+    const elapsed = performance.now() - began, frames = (readClock() - clock + 65536) % 65536;
+    return { gaps: probe.gaps, minimumReserve: Math.min(...reserves), stall,
+      vsync: emulator.getSettingValue('vsync'),
+      fps: frames * 1000 / elapsed };
+  });
+  await test.info().attach('steady-audio-clock', { body: JSON.stringify(result), contentType: 'application/json' });
+  expect(result.gaps).toEqual([]);
+  expect(result.minimumReserve).toBeGreaterThan(.08);
+  expect(result.stall.reserve).toBeGreaterThan(.08);
+  expect(result.stall.remaining).toBeGreaterThan(0);
+  expect(result.vsync).toBe('disabled');
+  expect(result.fps).toBeGreaterThan(45);
+  expect(result.fps).toBeLessThan(70);
+});
 
 test('real native audio buffers brief stalls and smooths volume without restarting the game', async ({ page }) => {
   page.on('dialog', (dialog) => dialog.accept());
@@ -29,8 +96,7 @@ test('real native audio buffers brief stalls and smooths volume without restarti
   });
   await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
-  await demoReady(page);
-  const frame = page.frames().find(item => item.url().endsWith('player.html'));
+  const frame = await audioReady(page);
   const identity = await frame.evaluate(() => window.audioIdentity = crypto.randomUUID());
   await page.locator('#tools-open').click();
   await page.locator('#autosave-toggle').click();
@@ -171,6 +237,7 @@ test('unbuffered pinned-runtime control misses playback timing during the same 8
     };
   });
   await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await expect(page.locator('#rom-file')).toBeEnabled();
   await page.locator('#rom-file').setInputFiles({
     name: 'Pixel Lab Audio.gba', mimeType: 'application/octet-stream',
@@ -178,8 +245,7 @@ test('unbuffered pinned-runtime control misses playback timing during the same 8
   });
   await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
-  await demoReady(page);
-  const frame = page.frames().find(item => item.url().endsWith('player.html'));
+  const frame = await audioReady(page);
   const result = await frame.evaluate(() => window.unbufferedStall);
   await test.info().attach('unbuffered-control', { body: JSON.stringify(result), contentType: 'application/json' });
   expect(result.lead).toBe(0);

@@ -26,7 +26,7 @@ export function configureAudioBuffer(GameManager) {
       };
       configuredSchedulers.add(al);
     }
-    // Native rate control drains startup pre-roll; reserve must survive steady playback.
+    // Audio-paced steady playback needs native capacity, not only startup pre-roll.
     return config.replace(/^audio_latency = 64$/m, 'audio_latency = 256');
   };
 }

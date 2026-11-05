@@ -51,7 +51,7 @@
 
 *Paper-lantern warmth, room lights, or just the LCD.*
 
-*A larger native audio reserve for steadier playback. [Audio notes and limits](docs/GUIDE.md).*
+*Audio-paced timing and a larger native reserve for steadier playback. [Audio notes and limits](docs/GUIDE.md).*
 
 ## Nine ways to glow.
 

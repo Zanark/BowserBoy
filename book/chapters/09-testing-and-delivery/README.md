@@ -58,6 +58,16 @@ block size instead. The unchanged capacity bound still rejects the old source.
 Distinguish reserved capacity, currently populated data and scheduled playback
 headroom; those are three different quantities.
 
+Workstream 44 later reproduces starvation even with the larger allocation.
+An audio-only recording analysis and actual private playback lead to a clock
+comparison, not another capacity increase. Removing repeated recovery pre-roll
+worsens starvation; native VSync-off instead maintains 161-206 ms of live queued
+sound in a 90s control. Default to existing native audio synchronization while
+retaining explicit VSync choices. A new original-ROM regression measures real
+scheduled gaps, steady-state hitch tolerance and the SRAM cartridge clock.
+Four audio cases no longer need framebuffer screenshots for readiness. This
+extends the earlier evidence rather than retroactively erasing its limits.
+
 Workstream 34 deliberately reverses an earlier product requirement: the user
 now permits notices to overlap the handheld. Replace notice-separation checks
 with ordinary camera-position/look-target invariants, while retaining viewport

@@ -182,6 +182,7 @@ function initialize(data) {
     EJS_language: 'en-US',
     EJS_volume: preferences.muted ? 0 : preferences.volume / 100,
     EJS_defaultOptions: {
+      vsync: 'disabled',
       ...preferences.emulatorOptions,
       'virtual-gamepad': 'disabled',
       shader: preferences.emulatorOptions?.shader ?? preferences.shader,

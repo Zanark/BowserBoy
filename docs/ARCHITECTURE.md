@@ -108,8 +108,14 @@ that configuration alone did not establish the measured scheduling cushion.
 then adds 96 ms of pre-roll when a native playing source initializes/restarts.
 The original 128 ms budget's startup cushion drained during sustained play:
 instrumented local playback exposed repeated roughly 100 ms underrun/restart
-gaps. The larger native allocation increases the steady-state reserve instead
-of adding another startup delay. It also trades additional audio latency for
+gaps. Larger allocation alone still does not guarantee live queued sound:
+subsequent private playback reproduces starvation with 256 ms allocated.
+Normal playback now defaults native VSync off, allowing the existing native
+audio synchronization to pace the core instead of relying on animation-frame
+deadlines. An isolated 90s comparison retains 161-206 ms of live headroom without
+the baseline's repeated gaps. Explicit saved VSync settings override this default;
+fast-forward still releases VSync and 1x restores the selected preference.
+The reserve trades additional audio latency for
 tolerance of brief stalls; configured capacity is not measured end-to-end delay.
 It is not a permanent guarantee of queued sound on a host slower than real time.
 
@@ -118,6 +124,10 @@ time update. Pre-roll offsets are clamped to zero so future playback cannot
 produce a negative native buffer offset. The configuration hook is installed
 before the core starts; it validates the pinned configuration/API rather than
 silently ignoring an incompatible runtime.
+
+Do not remove recovery pre-roll as an isolated shortcut: a measured startup-only
+variant increases starvation from 18 gaps/13 restarts to 139 gaps/92 restarts
+over comparable 90s windows. Keep the buffering and correct the default clock.
 
 Source gains use continuous 15 ms ramps for volume/mute. An explicit envelope
 tracks overlapping changes because native AudioParam assignments do not provide

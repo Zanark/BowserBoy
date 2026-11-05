@@ -16,11 +16,11 @@ borderless-bezel and later A/B refinements postdate those recordings.
 Most inherited guide motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
-See [current release evidence](VERIFICATION.md#original-soft-ab-typography-2026-11-05)
+See [current release evidence](VERIFICATION.md#audio-paced-default-2026-11-05)
 and [capture origins](MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).
 
-Intermittent audio distortion is still reported and remains under investigation;
-the earlier buffering improvement is not a guarantee of distortion-free playback.
+Normal playback now defaults to audio-paced timing to address reproduced
+intermittent dropouts; bounded measurements are not a guarantee for every device.
 
 ![BowserBOY ADVANCE wordmark](../assets/logo.png)
 
@@ -274,6 +274,10 @@ cushion, smooth volume/mute changes and peak compression to reduce dropouts and
 overload distortion. More buffering trades additional audio latency for stability;
 the 256 ms native budget is not a measured end-to-end delay. This cannot guarantee glitch-free sound
 under sustained system overload or fix an operating-system/audio-device problem.
+Native **VSync defaults off** so audio synchronization can pace normal gameplay.
+Explicit saved VSync preferences are preserved. If you previously enabled it in
+Advanced settings and still get interruptions, switch it off; the measured enabled
+configuration can drain the playback queue despite its allocated capacity.
 
 **Advanced EmulatorJS settings**, at the top of the sidebar, opens the actual native graphics, speed,
 screen-capture settings and backend core options in a separate panel. It keeps

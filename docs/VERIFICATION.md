@@ -7,6 +7,41 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Audio-paced default, 2026-11-05
+
+The user supplies a recording and authorizes private-ROM audio testing. Extract
+only the recording's audio; no video frames are decoded. Numerical measurements
+are not direct listening. The 58.944s recording contains repeated short near-silent
+intervals and no samples at or above .99 full scale. Quiet musical transitions
+alone are not proof of a defect, and the recording alone does not identify a cause.
+
+A fresh actual-ROM 90s baseline reproduces 18 scheduling gaps above 1ms and
+13 native stop/restart pairs, with a largest gap of 108.5ms. The existing 256ms
+allocation does not maintain equivalent live headroom. Many restarts add the
+adapter's 96ms pre-roll. Removing that delay after the first start is rejected:
+its 90s comparison produces 139 gaps and 92 restarts, trading longer interruptions
+for more frequent starvation.
+
+An isolated native VSync-off control instead has zero gaps or restarts over 90s,
+161-206ms of live queued headroom and 90.47s of scheduled PCM. Native audio
+synchronization remains enabled. The correction defaults native VSync off before
+applying saved options; explicit user VSync choices remain effective. No game-speed,
+buffer-budget, pre-roll, mute-envelope, limiter or visual geometry change is made.
+
+The new original-ROM regression measures native scheduled gaps, actual steady
+reserve, a 40ms mid-game hitch and the cartridge's SRAM VBlank clock. Actual old
+source fails with four gaps including 103.3ms. Its initial scene-ready setup race
+is fixed before establishing that failure. Corrected syntax/build/all11units and
+four audio cases plus the existing clock/fast-forward case pass in 1.1m. Audio
+readiness now observes native audio queues instead of screenshotting game frames.
+Actual corrected-source 180s playback schedules 31,042 buffers with zero gaps
+above 1ms, zero restarts, no clipped source samples and no page errors.
+Live headroom is 141-206ms; a 40ms mid-game hitch leaves 163.2ms queued.
+Post-limiter peak is .6843. Auto-save stays on; measured capture calls take
+at most 2ms. Normal/public delivery remains pending.
+Physical audio devices, subjective quality and arbitrary host overload are not
+qualified by these measurements.
+
 ## Original soft A/B typography, 2026-11-05
 
 The user rejects the custom rounded shapes from workstream 42 and explicitly

@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Recorded audio dropouts and native pacing:
+  Extract only audio from the supplied recording; repeated quiet intervals,
+  no full-scale clipping. Actual private90s baseline reproduces18 scheduling
+  gaps/13 restarts, up to108.5ms. Startup-only pre-roll produces139 gaps/
+  92restarts; reject it. Native VSync-off control has zero gaps/restarts and
+  161-206ms live reserve. Allocation and live headroom are not interchangeable.
+  Default native VSync off, then apply explicit saved overrides; keep native
+  audio synchronization, pre-roll/volume/limiter and speed coordination.
+  Original audio/clock regression rejects old source with103.3ms gap.
+  Fix initial scene-ready fixture race first; no gate/timeout relaxation.
+  Syntax/build/11units/four audio plus existing speed case pass1.1m.
+  Actual-source180s/31,042buffers: zero gaps/restarts/clipped samples/errors;
+  141-206ms live reserve,40ms hitch leaves163.2ms. Normal/public delivery pending.
 - 2026-11-05 / Original Arial A/B independently live:
   e8e51c6/42002030860passes build/11units/all39browser cases/deployment,
   actual logs13per shard. Independently match28actual public assets; complete
