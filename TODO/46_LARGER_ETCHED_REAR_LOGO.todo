@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Larger colored engraving in the rear battery-cover plastic.
 Dependencies: 15_SUPPLIED_WORDMARK.todo; 43_ORIGINAL_AB_TYPOGRAPHY.todo.
 
@@ -13,7 +13,7 @@ Tasks:
 - [x] Retain the exact source texture and its previous bright rendering path.
 - [x] Qualify actual first-hit depth, colors and all existing branding behavior.
 - [x] Review actual old/new rear inspection renders with the same gesture.
-- [ ] Pass the normal complete hosted gate and independently verify production.
+- [x] Pass the normal complete hosted gate and independently verify production.
 - [x] Update affected guides, book, ledger and owned continuity.
 
 Acceptance criteria:
@@ -41,9 +41,18 @@ Completion evidence:
 - Syntax/build/all11units pass; complete branding/recess/framing/fullscreen
   regression passes17.5s, including8actual rear-floor hits, shallow depth,
   unchanged full source RGBA and previous A/B typography/material requirements.
-- Normal/public qualification pending. No private-ROM/audio/video replay.
+- Source a7a07fc0b143d531a662e8ecc7c7b5dce68c07b6 / Pages42018059319:
+  build,11units,all40browser cases(actual14+13+13) and deployment pass.
+- Independently match28actual public assets. Complete actual public branding/
+  recess/framing/fullscreen case passes16.0s without failures or retries,
+  including8rear-floor hits, source-color equality and unchanged bright material.
+  Actual public rear crop inspected: visible ink2.8686635, original purple/
+  white colors, unchanged cover and parented inset artwork.
+- No private-ROM/audio/video replay; human aesthetic acceptance is unrecorded.
 
 Completion log:
 - 2026-11-05: User requests a larger rear logo etched into plastic while keeping
   color and brightness. Retain the previous bright unlit artwork on real inset
   floors; let matching plastic cavity walls provide the etched edge.
+- 2026-11-05: Normal hosted gate, exact public assets and actual public browser/
+  rear-render qualification complete. Published technical delivery; not approval.

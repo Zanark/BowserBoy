@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Larger rear engraving46independently live:
+  a7a07fc0b143d531a662e8ecc7c7b5dce68c07b6 /42018059319passes build,
+  11units,all40browser cases(actual14+13+13) and deployment. Independently
+  match28public assets. Complete public branding/recess/framing/fullscreen case
+  passes16.0s without retries. Actual public rear crop reviewed; original
+  purple/white artwork, bright material and unchanged cover retained.
+  Technical delivery is complete; human aesthetic acceptance remains separate.
 - 2026-11-05 / Larger colored rear engraving:
   Enlarge the rear artwork frame2.1to2.95units while retaining its center,
   supplied1024x342RGBA, white tint and previous bright basic-material path.

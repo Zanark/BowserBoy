@@ -34,8 +34,17 @@ depth and assertions unchanged.
 
 Syntax/build/all11units and the complete branding/control/recess/notice/framing/
 fullscreen regression pass (17.5s). All original Arial A/B and front metallic
-requirements stay. Normal/public delivery is pending; aesthetic approval is
-separate from these technical observations.
+requirements stay.
+
+Source `a7a07fc0b143d531a662e8ecc7c7b5dce68c07b6`, normal Pages run
+`42018059319`, passes build, all11units, all40browser cases (actual14+13+13)
+and deployment. Independently match all28actual public assets to that source.
+The complete actual public branding/recess/framing/fullscreen case passes16.0s
+without failures or retries, retaining8floor first hits, source RGBA equality
+and the original bright material. Inspect an actual public rear crop captured
+through real pickup/Inspect/drag gestures: ink width2.8686635, artwork owned by
+the cover, original purple/white coloring and unchanged cover/framing.
+No private-ROM/audio/video replay is needed. Aesthetic approval remains separate.
 
 ## Metallic chroma lettering, 2026-11-05
 

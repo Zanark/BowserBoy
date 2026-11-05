@@ -83,6 +83,10 @@ also postdates the existing rear-view images. Its actual old/new comparison uses
 the same pickup/Inspect/drag gesture, with no fabricated pose or private ROM.
 The supplied art is unchanged; historical figures are not overwritten or
 relabeled as this new geometry.
+Source `a7a07fc` / Pages `42018059319` passes the full40-case gate.
+All28public assets match; the actual public branding case passes16.0s.
+A separate actual public rear crop is reviewed with the same inspection
+gesture, preserving the original purple/white artwork and bright material.
 
 **Previous edition:** retained for its historical evidence and existing links.
 The current README media bytes are identified in the newer section above.

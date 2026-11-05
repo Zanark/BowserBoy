@@ -34,7 +34,7 @@ monochrome screenshots are not silently relabeled as this later edition.
 ## Later rear-logo delta
 
 Workstream46adds a larger colored engraving beyond the pinned first edition.
-Current [`alphaContours` and `engraveRearLogo`](../src/handheld.js) reuse contour
+Qualified [`alphaContours` and `engraveRearLogo`](https://github.com/Zanark/BowserBoyAdvance/blob/a7a07fc0b143d531a662e8ecc7c7b5dce68c07b6/src/handheld.js) reuse contour
 extraction, classify nested plastic islands and retain the original bright
 artwork on real inset floors. The
 [verification record](../docs/VERIFICATION.md#larger-etched-rear-logo-2026-11-05)

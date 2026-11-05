@@ -2,7 +2,7 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
-**Current release and pictures:** source `ad259c3` is independently verified
+**Current release and pictures:** source `a7a07fc` is independently verified
 live after the full 40-case hosted gate and exact 28-public-asset match.
 It recovers the original soft Arial A/B shapes, size and placement with shallow
 genuine inward engraving, replacing the rejected custom rounded shapes.
@@ -12,11 +12,12 @@ another 20% smaller in both views, now without the exterior light contour.
 Frosted overlays do not move the camera;
 sustained audio buffering, darker D-pad arrows and play-only header hiding remain.
 README footage/stills retain their local `8a1d6a3` capture origin; the later
-borderless-bezel, later A/B refinements and metallic finish postdate those recordings.
+borderless-bezel, later A/B refinements, metallic finish and enlarged rear
+engraving postdate those recordings.
 Most inherited guide motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
-See [current release evidence](VERIFICATION.md#audio-paced-default-2026-11-05)
+See [current release evidence](VERIFICATION.md#larger-etched-rear-logo-2026-11-05)
 and [capture origins](MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).
 
 Normal playback now defaults to audio-paced timing to address reproduced

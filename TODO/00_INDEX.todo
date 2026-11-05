@@ -45,7 +45,7 @@ BowserBoyAdvance workstreams
 43_ORIGINAL_AB_TYPOGRAPHY.todo - DONE: reference Arial A/B with softer inward engraving independently live;42's visual result rejected.
 44_AUDIO_PACED_DEFAULT.todo - DONE: audio-paced default corrects reproduced starvation;40-case normal gate and four actual public audio cases pass.
 45_METALLIC_CHROMA_LETTERING.todo - DONE: letter-only metallic chroma independently live;40-case hosted gate,28public assets and two public cases pass.
-46_LARGER_ETCHED_REAR_LOGO.todo - IN_PROGRESS: approximately40%larger rear artwork in true shallow grooves; original color/brightness locally qualified; delivery pending.
+46_LARGER_ETCHED_REAR_LOGO.todo - DONE: approximately40%larger rear engraving independently live; original color/brightness,40hosted cases,28public assets and public branding qualified.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,
