@@ -18,8 +18,8 @@ must still match the normal handheld texture.
 Tighter real-ink inset bounds fail the old implementation at
 0.13020833333333334 (required >=0.195). Syntax/build/all11units and the
 complete real branding/recess/framing/overlay/fullscreen-identity case pass
-locally (15.5s). Hosted and independent public qualification remain pending;
-this is not a live claim.
+locally (15.5s). At this initial local stage, hosted and independent public
+qualification had not occurred.
 
 First normal `8a1d6a3` / `41982704247` passes build, all 11 units and 38 of
 39 browser cases, including the actual smaller-wordmark/branding case. The
@@ -30,6 +30,17 @@ pageError; a cause is not established. The entire unchanged local case passes
 40.8s. That does not erase the hosted failure or establish production delivery.
 No failed jobs, assertions or timeouts are retried/changed. The separately
 requested substantive README/media publication receives its own normal gate.
+
+**Complete, independently live:** the substantive README publication
+`f00f529b2693fe449287bab7b0b76162d9bfb7cd` receives fresh normal Pages
+`41984863317`, passing build, all 11 units, all 39 browser cases (including
+the unchanged complete backup/import case) and deployment. Independently
+match all 28 actual public assets. Three complete actual public branding/
+recess/framing/overlay/fullscreen-identity, pressed-light/response and mapped
+native-input cases pass 52.2s. The current public desktop rendering is reviewed.
+This qualifies both the further-smaller shared wordmark and softer A/B grooves,
+without changing cap colors, other logos, geometry, native timing or any gate.
+The earlier hosted failure remains historical evidence, not an inferred cause.
 
 ## Softer A/B lettering, 2026-11-05
 
@@ -44,13 +55,13 @@ source contrast changes from 6.22965 to 1.92740. All first-hit depth, counters,
 wall/shadow, viewport and other-marking assertions remain. Syntax/build,
 all 11 units and the three complete branding, pressed-light/response and
 mapped-native-input cases pass locally (40.5s). Actual warm-lamp rendering
-is reviewed; no historical image or private ROM changed. Normal hosted and
-independent production qualification remain pending.
+is reviewed; no historical image or private ROM changed. At this initial
+stage, hosted and independent production qualification had not occurred.
 
 Normal `3a9ed72` / `41982271371` subsequently passes build, all 11 units,
-all 39 browser cases and deployment. Independent current public qualification
-will be recorded with the combined latest bezel edition; do not infer it from
-the local README recordings.
+all 39 browser cases and deployment. The combined independent public
+qualification above now covers the exact softer floor/wall material.
+No user aesthetic acceptance is inferred from technical qualification.
 
 ## Stronger button feedback, 2026-11-05
 

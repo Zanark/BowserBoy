@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Softer gray A/B grooves, following the latest visual reference.
 Dependencies: Completed workstreams 36 and 37.
 
@@ -10,8 +10,8 @@ Tasks:
 - [x] Replace the near-black groove material with a softer neutral gray.
 - [x] Replace only the superseded high-contrast A/B assertion.
 - [x] Inspect actual rendered lettering and preserve depth/counters/shadows.
-- [ ] Qualify normal delivery and exact public appearance/geometry.
-- [ ] Reconcile documentation, tracking and owned continuity.
+- [x] Qualify normal delivery and exact public appearance/geometry.
+- [x] Reconcile documentation, tracking and owned continuity.
 
 Acceptance criteria:
 - A/B floors and walls use soft gray, not near-black, paint or emission.
@@ -23,9 +23,11 @@ Completion evidence:
 - Earlier #454c40 material contrast is6.22965; softer #999d98 is1.92740.
 - Syntax/build/all11units pass; three complete real branding, pressed-light/
   response and mapped-native-input cases pass40.5s. Actual rendering reviewed.
-- Hosted/public qualification remains pending.
 - Normal3a9ed72/41982271371passes build/11units/all39cases/deployment.
-  Independent public qualification remains pending with the combined bezel edition.
+- Combinedf00f529/41984863317also passes build/11units/all39cases/deploy.
+  Independently match28public assets; three actual public branding/recess/
+  pressed-light/response/native-input cases52.2s pass. Current public rendering
+  reviewed. Cap colors, actual grooves and stronger feedback remain intact.
 
 Completion log:
 - 2026-11-05: User supplies a gray handheld reference and says A/B are too dark.
@@ -34,3 +36,5 @@ Completion log:
 - 2026-11-05: Explicit clarification: "Only the A/B letters". Leave cap shade,
   lighting and geometry unchanged. Qualify actual lighter lettering under the
   original warm lamp; preserve historical documentation captures.
+- 2026-11-05: Combined latest public edition independently qualifies softer
+  letters;38DONE. Technical completion is not user aesthetic approval.

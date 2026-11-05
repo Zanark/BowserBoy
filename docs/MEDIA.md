@@ -45,6 +45,14 @@ with an additional actual LCD-only frame confirming the dark-room interval.
 GIF dimensions, looping, non-static sampled pixels, receipt and README local
 targets pass. This is technical/visual review, not user aesthetic approval.
 
+**Publication and release:** the README and all 12 referenced image blobs
+exactly match published `f00f529`; the actual GitHub README render retains all
+12 described embeds and the new controls/progress sections. Fresh normal
+`41984863317` passes build, 11 units, all 39 browser cases and deployment.
+All 28 actual public app assets independently match; three complete public
+branding/response/native-input cases pass 52.2s. This establishes application
+delivery, not a different origin for the locally captured media above.
+
 ### Current refresh - manufactured controls and glass
 
 **Previous edition:** retained for its historical evidence and existing links.

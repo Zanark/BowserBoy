@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Visual README edition covering the latest controls, bezel and playback.
 Dependencies: Workstreams 31-39; preserve the visual-first README contract.
 
@@ -12,7 +12,7 @@ Tasks:
 - [x] Extend real capture with button input, current UI, fullscreen and progress.
 - [x] Record five real interaction loops and affected stills with original demo.
 - [x] Review bounded frames/stills and qualify media, navigation and provenance.
-- [ ] Publish the refreshed README/media and reconcile owned continuity.
+- [x] Publish the refreshed README/media and reconcile owned continuity.
 
 Acceptance criteria:
 - Current softer actual grooves, stronger presses and smaller bezel are visible.
@@ -29,9 +29,15 @@ Completion evidence:
   reviewed; additional actual LCD-only frame confirms the dark interval.
 - Receipt, relative README targets, dimensions/looping/non-static sample pixels,
   capture syntax and whitespace pass. Banner SHA256 remains458EABE14A77710F4BE88106C4B1C65CEB054A6A9BDA9B6D76C89B226DBC4257.
-- README publication and current source public qualification remain pending.
+- Publishedf00f529: actual GitHub tree matches README/all12image blobs and
+  actual published README render retains12described embeds/new sections.
+- Fresh normal41984863317passes build/11units/all39cases/deployment.
+  Independently match28public app assets; three full actual public branding/
+  response/native-input cases52.2s pass. Local footage stays labeled local.
 
 Completion log:
 - 2026-11-05: User requests "UPDATE README WITH ALL NEW STUFF", then refines
   only A/B letters and the bezel. Batch latest approved scope before recording.
   Preserve supplied artwork and reuse the existing session-local FFmpeg.
+- 2026-11-05: Real refreshed README/media/provenance published and independently
+  verified;40DONE. Supplied banner and historical technical figures preserved.
