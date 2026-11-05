@@ -25,6 +25,14 @@ header crops are reviewed. Keep the existing play-only header hiding and
 Inspect restoration; tools/settings images share the chrome website asset.
 Normal complete hosted/public delivery is pending, not implied by local checks.
 
+The first normal run`42020805164`blocks deployment on two fixtures: a shell
+selector still expects the old website name, and a power-clearance mask paints
+the CSS-hidden play header into its overlap image. Correct the dependent
+selector and rasterize only actually visible header artwork. The viewport/
+physical-clearance assertions and all bounds/timeouts remain unchanged.
+The existing header-artwork case now checks both exact source PNG hashes.
+Four affected local browser cases pass57.0s; no runtime change or job retry.
+
 The owner explicitly elects to rename the GitHub repository themselves.
 This update leaves repository/Pages paths unchanged. Future consoles are a
 recorded product direction, not implemented functionality or an acceptance claim.

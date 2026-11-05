@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Website-brand hosted fixtures:
+  Firstnormal42020805164blocks deploy on old shell-heading selector and
+  power fixture painting a CSS-hidden header as visible. Update selector to
+  exactBowserBOY and only rasterize visible artwork; leave productcamera/
+  viewport/depth/clearance/time bounds untouched. Extend inherited header case
+  tocheck exactbothPNGhashes. Fouraffectedcases57.0spass. Preservefailedrun;
+  genuine dependent test fix gets newnormalgate, notretry/dummycommit.
 - 2026-11-05 / Website and console brand separation:
   User establishes BowserBOY as website and BowserBOY ADVANCED as first console.
   Copy supplied2151x731chrome RGBA byte-for-byte towebsite-logo.png; change

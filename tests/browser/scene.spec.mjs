@@ -344,7 +344,9 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
       const mask = document.createElement('canvas');
       mask.width = 217; mask.height = 73;
       const context = mask.getContext('2d');
-      context.drawImage(headerImage, 0, 0, mask.width, mask.height);
+      if (getComputedStyle(headerImage).visibility === 'visible') {
+        context.drawImage(headerImage, 0, 0, mask.width, mask.height);
+      }
       const alpha = context.getImageData(0, 0, mask.width, mask.height).data;
       const shell = view.model.root.getObjectByName('Front shell');
       const viewport = [];

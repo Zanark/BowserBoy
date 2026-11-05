@@ -34,7 +34,14 @@ Completion evidence:
   recess/fullscreen/framing and power/startup/persistent-power lifecycle.
 - Actual desktop/320px chrome header crops reviewed; source alpha retained.
 - Normal/public qualification pending; no private-ROM or audio/video replay.
+- First normal run42020805164blocks deployment: shell fixture still expects
+  old heading; power fixture rasterizes CSS-hidden header as visible artwork.
+  Update expected website name; only rasterize actually visible header pixels.
+  Keep all geometry/viewport/depth/time limits. Existing artwork/header case
+  now checks both exact PNG hashes. Four affected browser cases pass57.0s.
 
 Completion log:
 - 2026-11-05: User supplies the chrome BowserBOY logo and establishes website/
   console identity. Clarification: update branding only; owner renames repo.
+- 2026-11-05: Preserve first hosted failure; fix dependent test fixtures.
+  New source commit triggers a fresh normal gate, not a failed-job retry.

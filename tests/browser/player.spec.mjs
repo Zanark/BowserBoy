@@ -219,7 +219,7 @@ test('screen shader menu exposes every native CRT preset, renders each and remem
 test('static shell, responsive layout, errors, keyboard help and private-file boundaries', async ({ page, request }) => {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
-  await expect(page.getByRole('heading', { name: 'Bowser Boy Advance' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'BowserBOY', exact: true })).toBeVisible();
   await expect(page.locator('#tools')).not.toBeVisible();
   await expect(page.locator('#screen button')).toHaveCount(0);
   await expect(page.locator('#storage-badge')).toHaveText('LOCAL ONLY');
@@ -589,14 +589,19 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
   await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
 });
 
-test('supplied purple orbital wordmark preserves its artwork and responsive header, but hides in play view', async ({ page, request }) => {
+test('supplied chrome website wordmark preserves both artwork assets and responsive header, but hides in play view', async ({ page, request }) => {
   await page.goto('./');
   const logo = page.locator('.desk-heading img');
   await expect(logo).toBeVisible();
-  const response = await request.get('assets/logo.png');
-  expect(response.status()).toBe(200);
-  expect(response.headers()['content-type']).toBe('image/png');
-  expect(hash(await response.body())).toBe('de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1');
+  for (const [file, digest] of [
+    ['website-logo.png', '804b1a96494dbecc9fa732e2772e8f2d23c9eb21bcd8286d9dc00b1fbf46c808'],
+    ['logo.png', 'de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1'],
+  ]) {
+    const response = await request.get(`assets/${file}`);
+    expect(response.status()).toBe(200);
+    expect(response.headers()['content-type']).toBe('image/png');
+    expect(hash(await response.body())).toBe(digest);
+  }
   const artwork = await logo.evaluate(async image => {
     await image.decode();
     const canvas = document.createElement('canvas');
