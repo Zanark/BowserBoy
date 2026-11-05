@@ -1,0 +1,37 @@
+Status: IN_PROGRESS
+Milestone: Visual README edition covering the latest controls, bezel and playback.
+Dependencies: Workstreams 31-39; preserve the visual-first README contract.
+
+Purpose:
+Refresh actual interaction footage and affected UI stills, not just prose.
+Explain recent controls, header/notice behavior, audio and downloadable saves
+through short captions and linked detailed guides.
+
+Tasks:
+- [x] Reuse the existing capture/encoder and preserve the supplied logo/banner.
+- [x] Extend real capture with button input, current UI, fullscreen and progress.
+- [x] Record five real interaction loops and affected stills with original demo.
+- [x] Review bounded frames/stills and qualify media, navigation and provenance.
+- [ ] Publish the refreshed README/media and reconcile owned continuity.
+
+Acceptance criteria:
+- Current softer actual grooves, stronger presses and smaller bezel are visible.
+- Playing hides header branding; actual frosted notice overlays without reframing.
+- Current fullscreen/dock and real save/export UI match captions and guide links.
+- Audio text states a reserve improvement, not a silent-GIF quality guarantee.
+- Preserve banner identity and historical technical evidence images.
+- Capture source, local/public origin and independent release status stay distinct.
+
+Completion evidence:
+- Capture is using built source8a1d6a3 locally at127.0.0.1:5175.
+- Capture completes with zero page errors. Five actual loops101/44/27/62/51
+  frames,800x618/10fps; largest6,030,797bytes. Bounded samples and all5stills
+  reviewed; additional actual LCD-only frame confirms the dark interval.
+- Receipt, relative README targets, dimensions/looping/non-static sample pixels,
+  capture syntax and whitespace pass. Banner SHA256 remains458EABE14A77710F4BE88106C4B1C65CEB054A6A9BDA9B6D76C89B226DBC4257.
+- README publication and current source public qualification remain pending.
+
+Completion log:
+- 2026-11-05: User requests "UPDATE README WITH ALL NEW STUFF", then refines
+  only A/B letters and the bezel. Batch latest approved scope before recording.
+  Preserve supplied artwork and reuse the existing session-local FFmpeg.

@@ -21,6 +21,16 @@ complete real branding/recess/framing/overlay/fullscreen-identity case pass
 locally (15.5s). Hosted and independent public qualification remain pending;
 this is not a live claim.
 
+First normal `8a1d6a3` / `41982704247` passes build, all 11 units and 38 of
+39 browser cases, including the actual smaller-wordmark/branding case. The
+unchanged complete native save/export/import case fails waiting 15s for
+"Backup imported and stored"; it retains "Backup download requested".
+The actual trace confirms the export and file-input actions, with no recorded
+pageError; a cause is not established. The entire unchanged local case passes
+40.8s. That does not erase the hosted failure or establish production delivery.
+No failed jobs, assertions or timeouts are retried/changed. The separately
+requested substantive README/media publication receives its own normal gate.
+
 ## Softer A/B lettering, 2026-11-05
 
 The user finds the letters too dark and explicitly confirms **only the A/B
@@ -36,6 +46,11 @@ all 11 units and the three complete branding, pressed-light/response and
 mapped-native-input cases pass locally (40.5s). Actual warm-lamp rendering
 is reviewed; no historical image or private ROM changed. Normal hosted and
 independent production qualification remain pending.
+
+Normal `3a9ed72` / `41982271371` subsequently passes build, all 11 units,
+all 39 browser cases and deployment. Independent current public qualification
+will be recorded with the combined latest bezel edition; do not infer it from
+the local README recordings.
 
 ## Stronger button feedback, 2026-11-05
 

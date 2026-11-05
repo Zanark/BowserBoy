@@ -24,6 +24,8 @@ Completion evidence:
 - Syntax/build/all11units pass; three complete real branding, pressed-light/
   response and mapped-native-input cases pass40.5s. Actual rendering reviewed.
 - Hosted/public qualification remains pending.
+- Normal3a9ed72/41982271371passes build/11units/all39cases/deployment.
+  Independent public qualification remains pending with the combined bezel edition.
 
 Completion log:
 - 2026-11-05: User supplies a gray handheld reference and says A/B are too dark.

@@ -152,11 +152,12 @@ decorative cartridge labels are locally drawn canvas textures, not reference
 photographs or copied manufacturer logos. Shared original polygon glyphs with
 proper counters and beveled extrusion form L/R, START/SELECT and ZANARK;
 D-pad arrows also retain raised depth and darker rubber. A/B glyphs instead
-cut the cap faces: solid counter islands follow the original dome, while dark
+cut the cap faces: solid counter islands follow the original dome, while softer gray
 floors and sidewalls sit below it. Original lathe rim normals are retained and
 the face normals meet them continuously. All cap markings move with their
 parent; START/SELECT and their outline share the shell plastic.
 The cream rubber caps retain their color with rougher, less glossy surfaces.
+Only A/B floor/wall tint changes to `#999d98`; the cap and lighting stay unchanged.
 The front POWER/BBA-001 decals are removed, not the LED or underside label.
 
 The front bezel derives a 1536x174 monochrome texture from the supplied image's
@@ -164,6 +165,9 @@ lettering band (25,250,2115,240). Neutral-highlight alpha masking removes
 saturated orbital accents, while RGB is uniformly 220. This keeps distinctive
 letterforms without stars or modifying the source PNG. The physical label uses
 a lit transparent material; warm room illumination can tint its appearance.
+The lettering is centered at 60% of the existing canvas width and height:
+another 20% reduction from the preceding 75% edition, not a smaller LCD or plane.
+Fullscreen copies the same resulting pixels.
 The top ZANARK maker mark retains a chamfered matching-plastic frame.
 The rear battery cover retains the unchanged supplied purple artwork.
 `src/scene.js` owns the WebGL 2 renderer, lights/shadows, raycast picking and

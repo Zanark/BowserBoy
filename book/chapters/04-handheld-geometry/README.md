@@ -46,6 +46,12 @@ hit the inset floor before any cap surface, and counter probes must still hit
 cap height. Merely moving a dark letter below an uncut cap cannot pass that
 test. D-pad, shoulder, shell and maker markings retain their prior relief.
 
+Workstream 38 then softens **only** the A/B groove material to `#999d98`.
+The original >3 contrast requirement is superseded by moderate 1.5-2.5
+contrast against unchanged caps; actual contrast is 1.92740. Geometry, counters,
+shadows, other markings and the warm lamp remain unchanged. A shade refinement
+must not quietly turn a real groove back into paint or a raised letter.
+
 The top Zanark mark and lower bezel serve different visual roles. Molded
 manufacturer lettering belongs to the shell. The bezel uses a star-free
 monochrome derivative of the supplied wordmark. Saturated orbital accents are
@@ -53,6 +59,12 @@ removed in the derived texture; the original supplied PNG remains unchanged.
 Fullscreen copies that same bezel texture rather than substituting a generic
 font. A warm lamp can tint a neutral surface without making its source ink
 colored.
+
+Workstreams 35 and 39 progressively reduce only that shared artwork: first to
+75%, then to 60% of the unchanged canvas. The latter is another 20% reduction,
+centered with the source aspect intact. Tighten real-alpha inset checks and
+retain normal/fullscreen pixel identity; resizing the mesh or camera would
+solve a different problem.
 
 ![Actual oblique manufactured-control view](../../../docs/images/molded-controls.png)
 

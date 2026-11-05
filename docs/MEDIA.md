@@ -8,7 +8,47 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Current refresh - recessed controls and smaller bezel
+
+The five interaction GIFs and new `readme-notice`, `readme-underside`,
+`readme-fullscreen`, `readme-dock` and `readme-saves` PNGs are actual **local
+build captures** of application source
+`8a1d6a340f6f14aaac6530a1bc0d9ab9d8706995`, served at
+`http://127.0.0.1:5175/BowserBoyAdvance/`. They show the softer actual recessed
+A/B letters, stronger physical presses, further-reduced shared bezel artwork,
+hidden play header, unchanged close framing with overlay notices, and current
+progress/export UI. Local capture does not establish a deployed release;
+[verification](VERIFICATION.md) owns hosted and independent public status.
+
+The existing capture/encoder is reused. Actual keyboard input drives A, B,
+diagonal D-pad and both shoulders; no fabricated button pose or frame
+interpolation is used. Underside inspection uses Home and seven ArrowUp presses.
+The dock and progress stills crop real UI; the progress view follows an actual
+Pixel Lab checkpoint save. Fullscreen shows the native original demo, complete
+3:2 picture and shared smaller wordmark. Only original Pixel Lab is recorded.
+Insertion deliberately holds its real loader download during seating, so the
+clip is not a loading-performance measurement. Silent GIFs do not demonstrate
+audio quality; the reserve improvement has separate runtime evidence.
+
+The receipt identifies source checkout, exact local URL, timestamps, clip
+boundaries and zero page errors. A checkout ID alone is not remote identity.
+Edge records 1100x850; the unchanged clip encoder outputs 800x618 at 10 fps.
+The transparent banner and supplied logo are unchanged. Historical technical
+stills used by the guide/book remain intact; the new README-specific stills
+do not overwrite those evidence images. The unchanged nine-CRT-menu figure
+retains its earlier provenance below.
+
+Encoded loops contain 101/44/27/62/51 frames (pickup/startup/insertion/lights/
+button feedback), respectively; the largest is 6,030,797 bytes. Bounded
+beginning/middle/end contact sheets and the five new stills are reviewed,
+with an additional actual LCD-only frame confirming the dark-room interval.
+GIF dimensions, looping, non-static sampled pixels, receipt and README local
+targets pass. This is technical/visual review, not user aesthetic approval.
+
 ### Current refresh - manufactured controls and glass
+
+**Previous edition:** retained for its historical evidence and existing links.
+The current README media bytes are identified in the newer section above.
 
 The four interaction GIFs and the underside, fullscreen, dock and
 3D-pose figures now show qualified application source

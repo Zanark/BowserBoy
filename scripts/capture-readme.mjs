@@ -1,11 +1,13 @@
 import { chromium, expect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const output = process.argv[2];
 if (!output) throw new Error('Provide an output directory for the original capture and timing receipt.');
 await mkdir(output, { recursive: true });
 const baseURL = process.env.BBA_CAPTURE_URL || 'https://zanark.github.io/BowserBoyAdvance/';
+const checkoutCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge' });
 const context = await browser.newContext({
   viewport: { width: 1100, height: 850 },
@@ -61,6 +63,18 @@ try {
   end('pickup-inspect');
 
   await page.locator('#pickup').click();
+  await page.locator('#inspect').click();
+  await expect(scene).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('Home');
+  for (let step = 0; step < 7; step++) await page.keyboard.press('ArrowUp');
+  await wait(800);
+  await page.screenshot({ path: resolve(output, 'readme-underside.png') });
+  await page.keyboard.press('Home');
+  await page.locator('#inspect').click();
+  await page.locator('#put-down').click();
+  await expect(scene).toHaveAttribute('data-view', 'table');
+  await page.locator('#pickup').click();
   await expect(scene).toHaveAttribute('data-view', 'playing');
   await wait(700);
   begin('power-on');
@@ -70,6 +84,9 @@ try {
   await expect(scene).not.toHaveAttribute('data-booting', 'true', { timeout: 30000 });
   await wait(700);
   end('power-on');
+  await expect(page.locator('#notice')).toBeVisible();
+  await expect(page.locator('.desk-heading h1')).toBeHidden();
+  await page.screenshot({ path: resolve(output, 'readme-notice.png') });
 
   // Hold the real download only long enough to show the actual insertion path.
   let release;
@@ -101,15 +118,43 @@ try {
   await page.locator('#lamp-toggle').click();
   await wait(900);
   end('cozy-lights');
+
+  if (await page.locator('#notice').isVisible()) await page.locator('#notice button').click();
+  await page.locator('#scene-canvas').focus();
+  begin('button-feedback');
+  await wait(500);
+  for (const keys of [['z'], ['x'], ['ArrowUp', 'ArrowRight'], ['a'], ['s']]) {
+    for (const key of keys) await page.keyboard.down(key);
+    await wait(450);
+    for (const key of keys) await page.keyboard.up(key);
+    await wait(450);
+  }
+  await wait(500);
+  end('button-feedback');
+
+  await page.mouse.move(10, 10);
+  await page.locator('.scene-actions').screenshot({ path: resolve(output, 'readme-dock.png') });
+  await page.locator('#tools-open').click();
+  await page.locator('#save').click();
+  await expect(page.locator('#export')).toBeEnabled();
+  await page.locator('.drawer-section[aria-labelledby="progress-heading"]')
+    .screenshot({ path: resolve(output, 'readme-saves.png') });
+  await page.locator('#tools-close').click();
+  await page.locator('#quick-screen-fullscreen').click();
+  await expect(page.locator('#screen-focus')).toBeVisible();
+  await wait(800);
+  await page.mouse.move(10, 10);
+  await page.screenshot({ path: resolve(output, 'readme-fullscreen.png') });
+  await page.locator('#screen-focus-close').click();
   if (errors.length) throw new Error(errors.join('\n'));
 } finally {
   const video = await page.video().path();
   await context.close();
   await browser.close();
   await writeFile(resolve(output, 'capture.json'), JSON.stringify({
-    baseURL, capturedAt: new Date().toISOString(), video, clips, errors,
+    baseURL, checkoutCommit, capturedAt: new Date().toISOString(), video, clips, errors,
     viewport: { width: 1100, height: 850 },
-    note: 'Actual browser recording; cartridge download deliberately held during the genuine insertion animation. Original Pixel Lab only.',
+    note: 'Actual browser recording; cartridge download deliberately held during genuine insertion. Original Pixel Lab only. Underside uses Inspect/keyboard tilt; dock/save stills crop real UI. checkoutCommit identifies the local checkout, not independent remote identity.',
   }, null, 2));
 }
 console.log(`Captured ${Object.keys(clips).length} clips in ${resolve(output, 'capture.json')}`);

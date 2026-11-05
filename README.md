@@ -7,43 +7,51 @@
   &nbsp;&middot;&nbsp; <a href="book/README.md">Engineering book</a>
 </p>
 
-*Actual current-build recordings; [capture origins and release evidence](docs/MEDIA.md#current-refresh---manufactured-controls-and-glass).*
+*Actual browser recordings and UI captures; [origins and release evidence](docs/MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).*
 
 ## Pick it up. Turn it over.
 
-![Actual current-build recording: pick up the handheld, rotate to inspect its back, and put it down](docs/images/pickup-inspect.gif?v=molded-glass-book-20261104)
+![Actual recording: pick up the handheld, rotate to inspect its back, and put it down](docs/images/pickup-inspect.gif?v=recessed-bezel-20261105)
 
-*Molded controls. Raised Zanark lettering. Star-free monochrome bezel.*
+*Molded controls. Raised Zanark lettering. A smaller, star-free bezel wordmark.*
+
+## Press. Rock. Release.
+
+![Actual keyboard presses move A and B, rock the diagonal D-pad and hinge both shoulders](docs/images/button-feedback.gif?v=recessed-bezel-20261105)
+
+*Softer recessed A/B letters. Deeper presses. Rocking D-pad. Snappier return.*
 
 ## A clearer little message.
 
-![Actual public power-on notice in frosted glass below the website logo, clear of the whole handheld](docs/images/frosted-notifications.png?v=molded-glass-book-20261104)
+![Actual frosted power-on notice overlays the normal close handheld view, with the play-mode header logo hidden](docs/images/readme-notice.png?v=recessed-bezel-20261105)
 
-*Frosted glass. Room for the handheld. [Verified live](docs/VERIFICATION.md#frosted-notifications-and-clear-handheld).*
+*Frosted overlays. No shrinking or shifting the handheld. No header logo during play.*
 
 ## Power where it belongs.
 
-![The current actual handheld tilted to reveal its ribbed underside power slider and molded controls](docs/images/underside-power.png?v=molded-glass-book-20261104)
+![The actual handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=recessed-bezel-20261105)
 
 *Underside slider. Clear front face. Real power-off and cold boot.*
 
 ## Power on. Make some waves.
 
-![Actual current-build LCD startup with a sharp waving wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=molded-glass-book-20261104)
+![Actual LCD startup with a sharp waving wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=recessed-bezel-20261105)
 
 *Waving lettering. Roomy orbits. Power remembered between visits.*
 
 ## Slot it in.
 
-![The original Pixel Lab cartridge physically sliding into the current handheld during loading](docs/images/cartridge.gif?v=molded-glass-book-20261104)
+![The original Pixel Lab cartridge physically sliding into the handheld during loading](docs/images/cartridge.gif?v=recessed-bezel-20261105)
 
 *Original demo footage. Bring your own local ROMs; nothing gets uploaded.*
 
 ## Your room, your light.
 
-![Actual current-build recording of the independent room lights, paper lantern and LCD-only dark state](docs/images/cozy-lights.gif?v=molded-glass-book-20261104)
+![Actual recording of the independent room lights, paper lantern and LCD-only dark state](docs/images/cozy-lights.gif?v=recessed-bezel-20261105)
 
 *Paper-lantern warmth, room lights, or just the LCD.*
+
+*A larger native audio reserve for steadier playback. [Audio notes and limits](docs/GUIDE.md).*
 
 ## Nine ways to glow.
 
@@ -53,15 +61,21 @@
 
 ## Just the game.
 
-![The complete native Pixel Lab picture and shared stylized bezel in LCD fullscreen, with dark margins and the zoom slider](docs/images/screen-fullscreen.png?v=molded-glass-book-20261104)
+![The complete native Pixel Lab picture and smaller shared bezel wordmark in LCD fullscreen, with dark margins and the zoom slider](docs/images/readme-fullscreen.png?v=recessed-bezel-20261105)
 
 *Full 3:2 picture. Dark margins. Adjustable 50-100% zoom.*
 
 ## Everything within reach.
 
-![The current purple icon dock with distinct actions and separate desk and LCD fullscreen controls](docs/images/quick-controls.png?v=molded-glass-book-20261104)
+![The actual purple icon dock with distinct actions and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=recessed-bezel-20261105)
 
-*Desk or LCD fullscreen. 1x-4x speed. Autosave. Three checkpoint slots.*
+*Desk or LCD fullscreen. 1x-4x speed. Sound, lighting and settings within reach.*
+
+## Keep your progress.
+
+![The actual Progress and backups panel after saving an original Pixel Lab checkpoint](docs/images/readme-saves.png?v=recessed-bezel-20261105)
+
+*Local in-game saves. Autosave + three checkpoint slots. Download a `.bba-save` backup. [Saving explained](docs/SAVING.md).*
 
 ---
 

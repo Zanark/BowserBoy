@@ -39,6 +39,7 @@ BowserBoyAdvance workstreams
 37_STRONGER_BUTTON_FEEDBACK.todo - DONE: deeper presses, stronger rocking/hinging and snappier releases independently verified live.
 38_LIGHTER_AB_LETTERING.todo - IN_PROGRESS: softer gray A/B grooves following the latest reference.
 39_SMALLER_BEZEL_AGAIN.todo - IN_PROGRESS: another20%reduction of only shared bezel artwork.
+40_CURRENT_VISUAL_README.todo - IN_PROGRESS: fresh actual motion/UI media for the latest feature edition.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,
