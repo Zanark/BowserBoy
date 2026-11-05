@@ -64,7 +64,7 @@ BowserBOY workstreams
 62_CHIP_STARTUP_SOUND.todo - IN_PROGRESS: crisper original square-wave power-on arpeggio with stepped envelopes and existing mute/volume.
 63_THREE_SECOND_README_SHIMMER.todo - DONE: published24910fd; exact3000ms loop, unchanged pixels and actual public native animation verified.
 64_README_DEMO_PRESENTATION.todo - DONE: named game/box-art section removed and actual public README verified a56844f; ROM retained for GIF footage.
-65_LCD_LIGHT_BALANCE.todo - IN_PROGRESS: dimmer desk and darker-picture control fill locally qualified; normal publication pending.
+65_LCD_LIGHT_BALANCE.todo - BLOCKED: balance qualified/pushed09d8413;42077309344passes new lighting but existing cartridge assertion/600s suite budget prevent deployment.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

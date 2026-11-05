@@ -35,7 +35,17 @@ Syntax/build/all 12 units and the spill, pressed-cap and native-lifecycle
 browser cases pass 3/3 in 48.4s. Actual controlled dim-play and white-Inspect
 captures are reviewed; canonical public figures are restored afterward.
 The supplied ROM is not executed. Human aesthetic approval and publication
-remain separate; normal release qualification is pending.
+remain separate.
+
+Source `09d84136ff4a1ff204ca37e5cfdb086dceb8d33e` is pushed. Normal Pages
+run `42077309344` passes build/units and shards 1/2. Shard 3's existing
+desktop cartridge-insertion case still reports `inserting` rather than
+`seated` after its 15-second assertion wait. The new lighting and pressed-cap
+cases pass. The 600-second suite limit then leaves five cases not run,
+including the interrupted native lifecycle case: 10 pass, 1 fails, 5 not run.
+The insertion delay's root cause is not established. Deployment is skipped,
+so no independent public asset/browser qualification runs. No retries,
+dummy triggers, denied dispatches or gate changes follow.
 
 ## Chip-style startup sound, 2026-11-05
 

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: BLOCKED
 Milestone: Barely visible controls and a dimmer screen-lit wooden desk.
 Dependencies: 60_EXPERIMENTAL_LCD_CONTROL_SPILL.todo.
 
@@ -37,9 +37,19 @@ Fix initial mismatched dark/bright rotation comparison, not product lighting.
 Syntax/build/all12units and three affected browser cases pass48.4s. Actual
 dim-play/white-Inspect captures reviewed. Canonical figures restored unchanged.
 No supplied ROM, new README footage, user approval or live-release claim.
+Source09d84136ff4a1ff204ca37e5cfdb086dceb8d33e is pushed. Normal Pages
+42077309344 passes build/units and shards1/2. Shard3's existing desktop
+cartridge case remains inserting rather than seated at its15s assertion.
+The new experimental lighting and pressed-cap cases pass; the600s suite
+limit then leaves5cases not run, including incomplete native lifecycle.
+Shard3 totals10passed/1failed/5notrun. Deployment skipped; no public asset/
+browser qualification ran. Exact root cause of insertion delay unestablished.
+No retry, dummy trigger, denied dispatch or gate change. Blocker-only records
+are held locally rather than pushed to manufacture another run.
 
 Completion log
 --------------
 2026-11-05: User reports invisible controls and excessively bright wood.
 Actual public source still has old120gain/no control spill. Balance correction
-locally qualified; unchanged normal publication pending.
+locally qualified; normal42077309344 fails the existing cartridge assertion
+and suite budget, so publication is blocked.

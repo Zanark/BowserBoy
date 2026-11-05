@@ -29,6 +29,12 @@ Completion log:
   Supplied ROM never executed; aesthetic acceptance/publication still separate.
   Reconcile startup42074785914: cancelled/no jobs, not failed tests; unknown
   cancellation cause, no public qualification or remaining helper.
+  Published09d84136ff4a1ff204ca37e5cfdb086dceb8d33e. Normal42077309344
+  passes build/units/shards1/2. Shard3desktop cartridge assertion expects seated
+  but remains inserting; new lighting/pressed-cap pass.600ssuitelimit leaves
+  5notrun, including incomplete native lifecycle:10pass/1fail/5notrun.
+  Exact insertion-delay cause unknown; deploy skipped/public checks not run.
+  No retry/dummytrigger/denieddispatch/gatechange. Blocker record held locally.
 - 2026-11-05 / README demo presentation correction:
   User wants the supplied ROM used for GIF footage, not a named game or box-art
   showcase. Remove the six-line featured section from the main README only.
