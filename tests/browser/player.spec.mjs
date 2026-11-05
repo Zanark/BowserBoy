@@ -891,6 +891,9 @@ test('power-off storage failure leaves the live game recoverable instead of disc
   await page.goto('./');
   await startDemo(page);
   const frame = page.frames().find((item) => item.url().endsWith('player.html'));
+  // Scope the injected write failure to the explicit power-off save.
+  await page.locator('#quick-autosave').click();
+  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
   await page.evaluate(() => {
     window.originalPut = IDBObjectStore.prototype.put;
     IDBObjectStore.prototype.put = function () { throw new DOMException('Storage quota exceeded', 'QuotaExceededError'); };

@@ -80,6 +80,33 @@ viewports, both native quick-action flows, dock clearance, adaptive rendering,
 pressed-control visibility and LCD control-spill lighting. Build, syntax and all
 12 units pass. Hosted and public qualification remain pending.
 
+Run `42096896534` fixes the prior insertion/native-integration blockers but
+still does not deploy. Three different checks fail: expansion briefly leaves
+the moved dock outside the viewport, severe-stall adaptation wakes an idle
+scene, and the global storage fault is consumed by automatic checkpointing
+instead of the explicit power-off operation. The last trace's console stack
+identifies `automaticCheckpoint`; it does not establish a power-off error
+being overwritten.
+
+Expansion now invokes the existing clamp synchronously, rather than awaiting
+ResizeObserver. The real-click regression captures bounds inside its click
+event, before observer delivery. Quality reduction moves after the existing
+idle early return and still applies to necessary paints. The render-budget
+regression also checks a severe scheduling gap without marking the scene
+dirty. Both dock and idle cases fail locally against `cbc61c0`, then pass with
+these corrections. The power-off fault case disables autosave through its
+actual UI before injecting the global write fault; all retained-runtime,
+backup, SAVE ERROR and successful-retry assertions remain. These three actual
+SwiftShader cases pass in 1.1 minutes; build, syntax and all 12 units pass.
+
+A broader 13-case SwiftShader follow-up passes 11 in 8.4 minutes, including
+mouse/touch dock behavior, both native quick-action flows, both insertion
+viewports, remembered power, pressed caps and LCD spill. Two timing checks
+fail locally: audio records a 1.2405-second gap, and native VSync-speed return
+measures 0.3275 of its baseline (required above 0.7). These are unresolved local
+performance findings, not passing results or grounds to weaken assertions.
+The unchanged full hosted gate remains required before deployment.
+
 ## Complete README refresh, 2026-11-05
 
 Nine interaction GIFs and nine stills are refreshed from local application

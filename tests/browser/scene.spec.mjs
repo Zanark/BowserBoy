@@ -179,6 +179,7 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     await page.locator('#put-down').click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   }
+  await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
   const budget = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
@@ -202,13 +203,18 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     view.slowFrames = 0;
     view.nextPaint = 0;
     for (let i = 0; i < 6; i++) { tick(100); tick(201); }
+    const beforeIdle = view.renderer.info.render.frame;
+    view.render(view.lastRender + 1000);
+    view.render(view.lastRender + 201);
+    const afterIdle = view.renderer.info.render.frame;
     view.setControl('a', true);
     tick(100);
-    return { singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, slowRatio: view.renderer.getPixelRatio(),
+    return { singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
       width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
   });
   expect(budget.singleStallRatio).toBe(1);
   expect(budget.severeStallRatio).toBeLessThan(1);
+  expect(budget.afterIdle, 'A severe scheduling gap must not wake a settled, idle scene').toBe(budget.beforeIdle);
   expect(budget.duringRecovery).toBe(budget.beforeRecovery);
   expect(budget.slowRatio).toBeLessThan(1);
   expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.slowRatio));

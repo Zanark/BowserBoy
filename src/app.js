@@ -120,6 +120,7 @@ $('dock-toggle').addEventListener('click', () => {
   dock.toggleAttribute('data-collapsed', collapsed);
   $('dock-toggle').setAttribute('aria-expanded', String(!collapsed));
   icon($('dock-toggle'), collapsed ? 'expand' : 'collapse', `${collapsed ? 'Expand' : 'Collapse'} tools dock`);
+  fitDock();
 });
 document.querySelector('.skip-link').addEventListener('click', () => {
   if ($('dock-actions').hidden) $('dock-toggle').click();

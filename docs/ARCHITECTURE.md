@@ -425,6 +425,9 @@ its backing pixel ratio by a factor of 0.75, down to 0.5. A gap above 500ms afte
 a painted frame reaches that threshold immediately, rather than waiting through
 six multi-second stalls before adapting. An isolated 100ms stall still does not
 reduce quality. CSS controls and native core resolution do not change.
+Quality reduction runs only after the static-idle early return: a delayed
+callback must not resize the backing buffer and manufacture an otherwise
+unnecessary paint after the scene has settled.
 A slow paint also leaves up to 200 ms of recovery
 before the next 3D paint, giving native emulation scheduling headroom. Cheap
 pose/button calculations still advance and retain dirty shadows across skipped

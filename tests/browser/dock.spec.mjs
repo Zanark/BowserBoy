@@ -50,8 +50,11 @@ test('tools dock drags, collapses, cancels and resets without firing its actions
   await page.mouse.down();
   await page.mouse.move(1438, 1098, { steps: 6 });
   await page.mouse.up();
+  await toggle.evaluate(button => button.addEventListener('click', () => {
+    window.expandedDock = document.getElementById('action-dock').getBoundingClientRect().toJSON();
+  }, { once: true }));
   await toggle.click();
-  const expanded = await dock.boundingBox();
+  const expanded = await page.evaluate(() => window.expandedDock);
   expect(expanded.x + expanded.width).toBeLessThanOrEqual(1432);
   expect(expanded.y + expanded.height).toBeLessThanOrEqual(1092);
   await page.locator('#quick-controls').click();

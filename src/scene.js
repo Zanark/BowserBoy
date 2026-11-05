@@ -469,11 +469,6 @@ export class HandheldScene {
     if (time < (this.nextPaint ?? 0)) return;
     // Modal tools own interaction; keep the core running without redrawing its blurred backdrop.
     if (document.querySelector('dialog[open]')) return;
-    if (this.slowFrames >= 6 && this.renderer.getPixelRatio() > .5) {
-      this.renderer.setPixelRatio(Math.max(.5, this.renderer.getPixelRatio() * .75));
-      this.slowFrames = 0;
-      this.changed = true;
-    }
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     if (!this.screenIllumination.failed) {
       const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
@@ -488,6 +483,11 @@ export class HandheldScene {
       !this.lastRotation?.equals(this.model.root.quaternion) || !this.lastCamera?.equals(this.camera.position);
     if (!this.source && !this.cartridgeMotion && !this.changed && !poseChanged && !buttonsMoving &&
         !adapting && this.screenIllumination.settled) return;
+    if (this.slowFrames >= 6 && this.renderer.getPixelRatio() > .5) {
+      this.renderer.setPixelRatio(Math.max(.5, this.renderer.getPixelRatio() * .75));
+      this.slowFrames = 0;
+      this.changed = true;
+    }
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
     if (this.cartridgeMotion) {

@@ -52,6 +52,14 @@ failsoldsource; correctivequalificationpending.
 CorrectedactualSwiftShaderninecasespass5.4m: fullnativebackup/resume/isolation,
 bothinsertions/bothquickflows, dock/adaptive/pressedpixels/LCDspill.
 Build/syntax/12units/whitespacepass; normalhostedgate/publicproofstillpending.
+42096896534 fixes prior insertion/native blockers but fails expansion/idle/
+power fault. Synchronous expansion fit replaces observer-only clamping.
+Move quality adjustment after static idle return. Both regressions reproduce
+against cbc61c0; corrected dock/idle/explicit-power-fault cases pass1.1m.
+Power trace proves automatic checkpoint consumed global quota fault; fixture
+uses actual autosave-off UI before injection, retaining all safety assertions.
+Broader13-caseSwiftShader follow-up11pass8.4m; audio1.2405s gap/native-speed
+ratio.3275 fail locally. No weakened assertions; normal hosted gate pending.
 
 Completion log
 --------------

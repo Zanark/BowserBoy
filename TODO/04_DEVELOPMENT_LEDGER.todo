@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Immediate expansion and static-idle correction:
+  42096896534 fixes prior native/insertion blockers but still skips deployment.
+  Expanded dock needs synchronous fitDock, not eventual ResizeObserver.
+  Adaptive quality must not resize/redraw a settled idle scene. Both actual
+  regressions reproduce against cbc61c0; corrected three cases pass1.1m.
+  Failed power trace identifies automaticCheckpoint, not an overwritten
+  power-off error. Isolate global quota fault with real UI autosave-off;
+  preserve runtime/export/error/retry checks. Build/syntax/12units pass.
+  Broader13caseSwiftShader sweep11pass8.4m; audio1.2405s gap and native
+  VSync-speed ratio.3275 fail. Record unresolved local timing findings;
+  preserve assertions/deadlines and require unchanged normal hosted gate.
 - 2026-11-06 / Severe renderer stall response:
   Follow-on42093791775executesall53:51pass, including dockclearance andboth
   splitnativequickflows. Remainingfailures are reloadinsertion15s andoriginal
