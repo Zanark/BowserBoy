@@ -1,0 +1,41 @@
+Status: IN_PROGRESS
+Milestone: BowserBOY umbrella README with a dedicated BowserBOYADVANCED showcase.
+Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo; 48_CURRENT_BRAND_DOCUMENTATION.todo.
+
+Purpose:
+Make the repository front page represent the umbrella project, while presenting
+the current Game Boy Advance console with its own original purple branding and
+all existing gameplay GIFs, screenshots, captions and documentation links.
+
+Tasks:
+- [x] Verify current repository identity and preserve owner-managed rename.
+- [x] Keep chrome BowserBOY as the project-level logo.
+- [x] List BowserBOYADVANCED as the one currently supported console.
+- [x] Restore the original purple animated banner as its console-section logo.
+- [x] Nest all existing showcase sections under that console without removing media.
+- [x] Check actual Markdown structure, local navigation and retained image references.
+- [ ] Publish and verify the actual GitHub-rendered README.
+- [ ] Record final delivery and owned continuity.
+
+Acceptance criteria:
+- Project and console identities are distinct in hierarchy, not just captions.
+- BowserBOYADVANCED has its own heading, purple logo and complete prior showcase.
+- All 14 previous image embeds remain; the existing animated console banner is added.
+- Only the GBA console is described as available; additional consoles stay planned.
+- Artwork/media bytes, application behavior, repository remote and URLs stay unchanged.
+- No new captures, regenerated assets or unsupported release/acceptance claims.
+
+Completion evidence:
+- Actual GitHub repository still reports Zanark/BowserBoyAdvance. Preserve its
+  real remote/URLs; umbrella naming does not perform the owner's repository rename.
+- Reuse existing 1000x340,72-frame orbital-logo.gif without editing its bytes.
+  Only its first frame is inspected for fit; no full-animation re-review claimed.
+- Local checks pass: exactly two level-two headings (supported consoles and
+  BowserBOYADVANCED),13nested feature sections and15image embeds. All14prior
+  image references retained, navigation resolves and app/media paths unchanged.
+- Actual published GitHub rendering pending.
+
+Completion log:
+- 2026-11-05: User clarifies BowserBOY is the umbrella repository and requests
+  BowserBOYADVANCED as a supported console with its own logo and all prior GIFs.
+  Scope this change to README hierarchy and directly affected provenance.

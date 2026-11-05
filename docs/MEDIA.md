@@ -8,6 +8,16 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Console-scoped README, 2026-11-05
+
+The front page now separates the chrome BowserBOY umbrella project from its
+supported consoles. BowserBOYADVANCED is the only implemented console; its own
+section reuses the original purple `orbital-logo.gif` banner and retains all
+14 earlier image embeds, including the five actual interaction GIFs.
+The existing 72-frame banner is not regenerated or re-recorded; only its first
+frame is re-inspected for placement. Gameplay captures below it keep the source
+and timestamps recorded below. Additional consoles remain future direction.
+
 ### BowserBOY public refresh, 2026-11-05
 
 The current README's five interaction GIFs and dedicated table, front, rear,

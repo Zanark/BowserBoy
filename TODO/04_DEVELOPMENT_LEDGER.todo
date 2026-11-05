@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Console-scoped README:
+  User clarifies the umbrella project must list BowserBOYADVANCED as a supported
+  console, with its own purple logo and all prior GIFs. Keep chrome BowserBOY at
+  project level; add supported-console navigation and a dedicated console heading.
+  Reuse original animated orbital-logo.gif under that heading and nest every
+  existing feature below it. Preserve all prior media/captions and actual URLs;
+  additional consoles remain planned. No application or asset regeneration.
+  Actual GitHub metadata still reports BowserBoyAdvance; owner manages rename.
+  Local structure/navigation and actual public README rendering pending.
 - 2026-11-05 / Deeper rear engraving:
   User requests another enlargement and more pronounced etching. Retain the
   existing nested cutout topology, original colored floors and plastic walls;
