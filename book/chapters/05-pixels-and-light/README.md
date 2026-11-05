@@ -58,6 +58,14 @@ The paper lantern and room lights are independent scene systems. The lantern's
 spot, transmitted area light and finite tabletop bounce approximate a warm
 physical source. They are intentionally not a promise of unbiased path tracing.
 
+**Living implementation note, November 6, 2026.** The first-edition lantern
+above is replaced by a clean STORSEGEL-style white drum shade and ash tripod.
+An exterior transmitted-light plane avoids a hard seam on the fabric; soft
+downward light through the open bottom reveals the legs. Lamp/room/LCD
+independence and full-resolution rendering remain intact. See the current
+[lighting architecture](../../../docs/ARCHITECTURE.md#dark-room-and-screen-colored-illumination)
+for dimensions and source details; this note does not reissue the frozen book.
+
 ## Presentation performance is not game speed
 
 The scene can defer expensive painting under load and skip tabletop rendering

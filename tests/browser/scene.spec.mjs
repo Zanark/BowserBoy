@@ -157,11 +157,11 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   await page.locator('#lamp-toggle').click();
   await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'false');
   await expect.poll(() => surfaceLight(page, [0, 0, 4])).toBeLessThan(lit * .15);
-  const switchPoint = await page.evaluate(async () => {
+  const lampPoint = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
-    return view.project(view.lamp.switchCap);
+    return view.project(view.lamp.shade);
   });
-  await page.mouse.click(switchPoint.x, switchPoint.y);
+  await page.mouse.click(lampPoint.x, lampPoint.y);
   await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   expect(await surfaceLight(page, [0, 0, 4])).toBeGreaterThan(lit * .9);
@@ -279,7 +279,7 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(nativeOperation.ratio).toBe(2);
 });
 
-test('paper lantern gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {
+test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
@@ -295,16 +295,47 @@ test('paper lantern gives warm light and room lights switch independently withou
     const shell = view.model.root.getObjectByName('Front shell');
     shell.geometry.computeBoundingBox();
     const shellSize = shell.geometry.boundingBox.getSize(new Vector3());
+    const legs = [];
+    view.lamp.root.traverse(object => { if (object.name.startsWith('Ash tripod leg')) legs.push(object); });
+    const feet = legs.map(leg => new Box3().setFromObject(leg).min.y);
     return { type: shade.geometry.type, top: shade.geometry.parameters.radiusTop,
-      bottom: shade.geometry.parameters.radiusBottom, wood: !!view.lamp.root.getObjectByName('Wooden lamp base'),
+      bottom: shade.geometry.parameters.radiusBottom, legs: legs.length, feet,
+      clean: shade.material.map === null && shade.material.emissiveMap === null,
+      open: shade.geometry.parameters.openEnded, height: lampSize.y,
       heightRatio: lampSize.y / shellSize.x, handheldScale: view.model.root.scale.toArray() };
   });
   expect(shape.type).toBe('CylinderGeometry');
   expect(shape.top).toBe(shape.bottom);
-  expect(shape.wood).toBe(true);
-  expect(shape.heightRatio).toBeGreaterThan(3.9);
-  expect(shape.heightRatio).toBeLessThan(4.1);
+  expect(shape.legs).toBe(3);
+  expect(shape.feet.every(y => Math.abs(y) < .001), 'All three flat feet meet the tabletop').toBe(true);
+  expect(shape.clean, 'Neither reflected nor emitted shade color uses the rejected brown noise').toBe(true);
+  expect(shape.open).toBe(true);
+  expect(shape.height * .017).toBeCloseTo(.30, 2);
+  expect(shape.heightRatio).toBeGreaterThan(1.9);
+  expect(shape.heightRatio).toBeLessThan(2.2);
   expect(shape.handheldScale).toEqual([1, 1, 1]);
+  const shadePoints = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    return [0, .35, .7, 1.05].map(angle =>
+      view.lamp.shade.localToWorld(new Vector3(.09 * Math.sin(angle), 0, .09 * Math.cos(angle))).toArray());
+  });
+  const fabricColors = [];
+  for (const point of shadePoints) fabricColors.push(await surfaceColor(page, point));
+  expect(fabricColors.every(color => color[0] > 180), 'The lit fabric stays clean ivory, not dingy brown').toBe(true);
+  for (let channel = 0; channel < 3; channel++) {
+    const values = fabricColors.map(color => color[channel]);
+    expect(Math.max(...values) - Math.min(...values), 'No hard diagonal self-lighting seam across the drum').toBeLessThan(15);
+  }
+  const legPoint = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    return view.lamp.root.getObjectByName('Ash tripod leg 3')
+      .localToWorld(new Vector3(.054, .08, -.0065)).toArray();
+  });
+  const ash = await surfaceColor(page, legPoint);
+  expect(ash[0], 'The ash tripod is visible under the shade, not a black silhouette').toBeGreaterThan(40);
+  expect(ash[0]).toBeGreaterThan(ash[2] * 1.2);
   for (const [width, height] of [[390, 844], [1440, 1100]]) {
     await page.setViewportSize({ width, height });
     await expect.poll(() => page.evaluate(async () => {
@@ -645,7 +676,7 @@ test('experimental LCD spill barely reveals nearby controls in darkness and foll
       const { view } = await import('./src/app.js');
       const { Color } = await import('three');
       const expected = new Color(...rgb.map(channel => Math.round(channel * 255) / 255)).convertSRGBToLinear();
-      return view.screenIllumination.current.toArray().every((value, axis) =>
+      return view.screenIllumination.settled && view.screenIllumination.current.toArray().every((value, axis) =>
         Math.abs(value - expected.toArray()[axis]) < .001);
     }, color)).toBe(true);
   };

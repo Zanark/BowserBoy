@@ -14,6 +14,51 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Clean STORSEGEL-style tripod and complete showcase:
+  Follow supplied/manufacturer ash-white reference: 18cm open drum, ~30cm
+  height, three flat-footed ash legs. Remove mottled paper maps/old stem,
+  disk base and switch cap; physical shade picking/toolbar remain. No wire.
+  Preserve camera, handheld, native/audio and mandatory full pixel ratio.
+  Initial A-cap52.15 fails existing60 minimum: transmitted area180->300.
+  Actual shade screenshot reveals diagonal seam; source-isolation probes
+  identify intersecting area emitter, not texture/shadows/spot/sidedness.
+  Move emitter outside fabric; clean emission60. Final image shows dark
+  legs; add downward non-shadowing source below open shade, retaining one
+  shadow map. Actual five affected browser cases pass ~1min. LCD fixture
+  now awaits real settled state, not just .001color tolerance that could
+  accept black-transition channel1. No threshold/timeout/runtime relaxation.
+  Add actual ash-leg brightness/warmth regression; case passes13.7s. Existing
+  clean-fabric/no-seam, physical picking, controls/power/room and2x checks pass.
+  Build/syntax/12units/capture syntax pass. Record all10GIFs/nine stills from
+  final local build; reviewed contact sheets/final table, not full playback.
+  All GIFs change/animate/<10MiB; approved APNG logos unchanged. Source/timing/
+  hash receipts retained privately. Supplied ROM filming only, tests original.
+  README/guide/architecture/media/verification/book living note reconciled.
+  First milestone explicitly November6,2026(Asia/Kolkata); frozenZIP preserved.
+  Local/uncommitted, no tag/GitHubRelease/push/deploy or new performance claim.
+- 2026-11-06 / First public release v1.0.0:
+  Owner explicitly designates currentpublic release asfirstmilestone, chooses
+  v1.0.0 andconservativecleanup. Promote package/lock metadata, freezequalified
+  c3d9dbd application into33-entry staticZIP with perfilemanifest/checksums.
+  WindowsCRLF makes initial localindex17812 vs public17660bytes; all152pairs
+  accountforthedifference. ReadqualifiedGitblobs ratherthanmodifyingruntime.
+  All30siteasset hashesmatch; ZIPentryroundtrip passes. Syntax/build/12units
+  pass. Actualextractedarchive overHTTP passes originalnativeflow andrenderer
+  regression in52.5s. No ROMcollection/nativeCDNmirror/privatecontext included.
+  Addreleases index/notes anddocs hub/map, updateguide/book/README navigation.
+  Archiveoldtest-results outside repo withoutdeletingfailureevidence. Source/
+  assetpaths/artwork/controls/CI preserved. TODO72 DONE. LocalZIP/notag/
+  noGitHubRelease/newdeployment; alreadypublicwebsite remains c3d9dbd.
+- 2026-11-06 / Full-resolution release and public qualification:
+  c3d9dbdcc41341d126720ee6a26db5b824c90b24 passes all53 browser cases in
+  ten-way run42115330741; build/deploy succeed. Queue-to-deployment6m18s,
+  not a controlled parallelism speedup measurement. All30 deployed assets
+  and exact published README/twoGIFs match. Actual public2x inspection
+  retains2880x2200 for1440x1100CSS after forced stalls; full/detail reviewed.
+  Five affected public cases pass1.5m: native save/import/autosave/isolation,
+  mapped inputs/native lighting, both insertions/reload and renderer regression.
+  TODO71 DONE. Sharpness restored without lowering quality or relaxing gates.
+  Technical/public evidence is not human visual acceptance.
 - 2026-11-06 / Native-operation priority without quality reduction:
   Run42113008812 passes52/53, includinginsertion/rendererregressions. Only
   originalnativeautosavetimestamp20spoll fails; snapshotautosaveon/controls

@@ -1,0 +1,62 @@
+Status: DONE
+Milestone: Clean STORSEGEL-style table lamp and complete current README media.
+Dependencies: 71_FULL_RESOLUTION_RENDERING.todo; 72_FIRST_PUBLIC_RELEASE.todo.
+
+Purpose
+-------
+Replace the rejected dirty-looking tall lantern with the reference white drum
+shade and ash tripod, hide the cable and keep the desk cozy and sharp.
+Refresh every README interaction GIF and record the first milestone date.
+
+Tasks
+-----
+[x] Inspect supplied images and manufacturer product/reference view.
+[x] Replace lamp geometry/materials and remove the mottled shade texture.
+[x] Qualify actual lamp clicking, independent lighting and sharp rendering.
+[x] Recapture all ten README interaction GIFs and associated stills.
+[x] Review final media and reconcile README, guide, architecture and provenance.
+[x] Record first milestone as November 6, 2026; update ledger and continuity.
+
+Acceptance criteria
+-------------------
+Open clean white cylindrical shade, three splayed ash legs and no visible wire.
+Cozy warm illumination without automatic resolution reduction or handheld changes.
+Lamp/room controls, power and physical lamp interaction remain independent.
+All ten README GIFs show the current app, including the removed header label.
+Approved chrome/purple logo animations remain intact; recordings are genuine.
+First milestone date is explicit. Frozen v1.0.0 ZIP/manifest are not rewritten.
+Local captures/qualification are not publication or human acceptance.
+
+Completion evidence
+-------------------
+Build/syntax/12 units/capture-script syntax pass. Five affected Edge browser
+cases pass in approximately one minute; the added actual ash-leg rendering
+regression passes in a further13.7s. Existing actual2x/full-resolution,
+pressed-cap visibility, physical shade clicking, room/power/native LCD checks
+are retained. Clean fabric samples have <15 per-channel spread; visible ash
+red>40 and warm tint. No automatic resolution drop or relaxed deadlines.
+Final capture2026-11-05T22:54:01.973Z: ten complete clips, zero page errors.
+All ten GIFs freshly encoded800x618/10fps/loop0, changing decoded samples,
+all<10MiB (largest6,566,916bytes). Nine stills copied from the same take.
+Full-size table and bounded GIF/still contact sheets visually reviewed,
+not exhaustive playback or user approval. Approved APNG logos unchanged.
+Source/timing/per-file hashes retained in private session evidence.
+README/guide/architecture/media/verification/ledger and living book note
+updated; public remains qualifiedc3d9dbd, no new push/deployment. Frozen1.0.0
+ZIP/manifest/checksums unchanged; firstmilestone November6,2026(Asia/Kolkata).
+Manufacturer reference: IKEA STORSEGEL ash/white, product60573538/60573576,
+18cm shade diameter and30cm overall height. Original procedural geometry;
+manufacturer photographs are reference-only and are not redistributed.
+
+Completion log
+--------------
+2026-11-06: User requests STORSEGEL, a clean shade, hidden cable/cozy appearance,
+all README GIFs updated and the first milestone date recorded.
+2026-11-06: Initial dim-cap failure corrected without lowering60 threshold.
+Hard shade seam isolated to an intersecting area emitter; move it outside.
+Downward shade light reveals ash legs without extra shadow pass. The LCD
+fixture now awaits its existing real settled state rather than accepting
+an earlier approximate color; black/off bounds and production behavior kept.
+Complete current media/provenance and dated milestone recorded locally.
+Owned STATE/MEMORY/JOURNAL reconciled; episodic offload persisted and exact
+readback verified. No publication or user aesthetic approval inferred.

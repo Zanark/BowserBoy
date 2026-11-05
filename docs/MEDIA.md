@@ -8,6 +8,59 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Clean STORSEGEL-style lamp and complete refresh, 2026-11-06
+
+All **ten interaction GIFs and nine companion stills** are freshly captured
+from the local working tree based on `c3d9dbdcc41341d126720ee6a26db5b824c90b24`.
+That commit identifies the checkout baseline, **not the uncommitted lamp
+implementation or a new deployment**. The receipt is timestamped
+`2026-11-05T22:54:01.973Z` (November 6, Asia/Kolkata); preview URL is
+`http://127.0.0.1:5175/BowserBoyAdvance/`. Ten complete timing ranges and zero
+page errors are recorded. Original WebM, timing/source-hash receipt and
+encoded-media hashes are retained in session evidence, not the static site.
+
+The new procedural lamp follows the IKEA STORSEGEL ash/white reference:
+18 cm white open drum shade, approximately 30 cm overall height and three
+splayed wooden legs. The fabric has no brown noise texture or hard diagonal
+lighting seam. Soft light beneath the shade reveals the ash; no cable is
+modeled. Manufacturer images are reference-only and are not redistributed.
+The lighting clip now puts the handheld down, demonstrates the actual lamp
+and independent room lighting, then picks it up again. Every capture includes
+the current header without the removed top-right edition/battery label.
+
+| GIF | Frames | Seconds | Bytes |
+|---|---:|---:|---:|
+| `pickup-inspect.gif` | 109 | 10.9 | 6,566,916 |
+| `power-on.gif` | 44 | 4.4 | 1,367,678 |
+| `cartridge.gif` | 28 | 2.8 | 2,039,745 |
+| `cozy-lights.gif` | 117 | 11.7 | 4,421,475 |
+| `button-feedback.gif` | 33 | 3.3 | 1,089,597 |
+| `play-zoom.gif` | 47 | 4.7 | 2,745,352 |
+| `hold-space.gif` | 38 | 3.8 | 1,345,106 |
+| `screen-fullscreen.gif` | 30 | 3.0 | 1,173,067 |
+| `settings-backdrop.gif` | 18 | 1.8 | 675,130 |
+| `movable-dock.gif` | 66 | 6.6 | 2,420,112 |
+
+Encoding calls only the existing `clips()` helper: 800x618, 10 fps,
+128-color Bayer palette, infinite loop and the existing half-second end trim.
+All ten files differ from their predecessors, have changing decoded samples,
+and remain below 10 MiB. Middle-frame contact sheets and all nine stills are
+visually reviewed, plus the full-size final table image. This is bounded
+visual review, not exhaustive playback or user aesthetic approval.
+Approved chrome shimmer and purple orbital **APNG logos stay byte-identical**;
+they are not regenerated with the interaction GIFs.
+
+The explicitly authorized supplied ROM remains **GIF footage only**, never a
+correctness/performance/audio test fixture. Static game/settings captures
+use original Pixel Lab; hardware-only stills use no cartridge. Capture,
+encoding and silent GIFs are not new native-game or audio qualification.
+README captions/cache keys, the guide and living architecture describe this
+local edition. Older capture sections below remain historical.
+
+The first public milestone remains **November 6, 2026 (Asia/Kolkata),
+v1.0.0**. Its frozen ZIP/manifest/checksums are unchanged. No commit, push,
+tag, GitHub Release or new deployment is performed for this lamp update.
+
 ### Movable dock and inspection branding, 2026-11-06
 
 Source `6fb18906811c2a73301badf8e666061f9304d211` is filmed locally at

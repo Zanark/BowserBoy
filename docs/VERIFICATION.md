@@ -7,7 +7,96 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Clean STORSEGEL-style lamp and local showcase, 2026-11-06
+
+The local working tree replaces the old tall lantern with a clean white
+open drum shade, thin rims and three flat-footed ash legs. The diameter/height
+follow the 18 cm/30 cm manufacturer reference. No wire geometry or mottled
+shade map/emission map remains. Physical shade clicking and the toolbar
+toggle all lamp sources independently of room lights, native power and saves.
+
+Actual rendering found two issues that material inspection alone missed:
+the smaller lamp initially dimmed an A-cap probe to 52.15 against the existing
+60 minimum, corrected by transmitted-area intensity 180 -> 300; the emitter
+plane intersected the fabric and caused a hard diagonal seam. Bounded
+spot/shadow/sidedness/source-isolation probes identify the area source as the
+cause. Moving that plane outside the shade removes the seam without changing
+the camera or handheld. A separate downward, non-shadowing area source below
+the open shade makes the wooden tripod visible instead of a black silhouette.
+
+The final five affected Edge cases pass in approximately one minute:
+physical lamp/light falloff/full-resolution recovery, clean tripod/independent
+room lights, pressed controls, LCD-only spill and mapped inputs/native light.
+The clean-lamp case is then extended with an actual visible ash-leg pixel
+regression and passes again (13.7 seconds including runner startup).
+Rendered fabric samples must stay bright ivory with per-channel spread <15;
+the visible leg must exceed red=40 and retain its warm color. Geometry checks
+retain three tabletop feet, an open shade and unchanged handheld scale.
+
+Adding the under-shade source exposed an existing LCD-test synchronization
+race: color within .001 could pass before the light's actual .00001 settling
+condition, leaving a sampled black-transition channel at 1. The fixture now
+also awaits `screenIllumination.settled`. Its black/off <1 assertion, other
+light thresholds, deadlines and production LCD behavior are unchanged.
+Syntax/build, all 12 units and capture-script syntax pass. No automatic
+pixel-ratio reduction, new shadow pass, native/audio change or CI-gate
+relaxation is introduced. An additional rectangular light has per-pixel cost;
+this is not a new controlled performance or broad-device benchmark.
+
+All ten README GIFs and nine stills are recaptured and encoded; exact scope,
+source boundaries, sizes and bounded visual review are in
+[media provenance](MEDIA.md#clean-storsegel-style-lamp-and-complete-refresh-2026-11-06).
+Approved logo animations and the frozen v1.0.0 package are unchanged.
+This is **local qualification, not publication or human acceptance**.
+The earlier qualified public deployment below remains the public baseline.
+
+## First public release milestone, 2026-11-06
+
+The owner designates the qualified application below as **v1.0.0**, the first
+publicly available release. Version metadata and repository packaging follow
+that designation; they are not a claim that the earlier deployment had a
+v1.0.0 tag. [Release notes and package identity](../releases/v1.0.0/README.md)
+separate the live site, local archive and any future GitHub Release.
+Conservative cleanup preserves source/assets/entry paths and existing media.
+
+Package and lockfile metadata are synchronized at1.0.0; syntax, build and all
+12 units pass. The local `releases/v1.0.0/BowserBOYADVANCED-v1.0.0-static.zip`
+has33 entries and11807047bytes. All30 application assets match the previous
+public qualification receipt. Windows checkout CRLF initially changes local
+build bytes (`index.html`:17812 vs17660bytes,152CRLF pairs); comparison proves
+LF normalization is the only difference. Packaging reads exact qualified Git
+blobs instead, while retaining generated Pixel Lab and unmodified vendor bytes.
+No application source or build behavior is changed to manufacture a match.
+
+Every ZIP entry is round-trip checked; `manifest.json` records per-file hashes,
+and `SHA256SUMS.txt` covers the ZIP and manifest. Two actual browser cases run
+against the extracted archive over a local HTTP server pass in52.5seconds:
+original native save/import/autosave/ROM-isolation and the actual-render
+sharpness/recovery/light regression. This is new package qualification, not a
+repeat of all53 hosted checks. The temporary server is stopped after the run.
+Old generated test failure output is archived outside the repository without
+deleting evidence. The docs hub maps source, documentation and generated paths.
+No new tag, GitHub Release, push or deployment is performed.
+
 ## Full-resolution handheld rendering, 2026-11-06
+
+**Released and public-qualified:** commit
+`c3d9dbdcc41341d126720ee6a26db5b824c90b24`,
+[run42115330741](https://github.com/Zanark/BowserBoyAdvance/actions/runs/42115330741).
+All53 browser cases pass across ten isolated verification jobs; build and
+deployment succeed. Queue-to-deployment takes6m18s
+(21:44:18-21:50:36UTC). This is an observed release duration, not a controlled
+measurement of shard-count speedup: rendering quality and workload changed.
+
+All30 deployed assets match this exact revision, as do the published README
+and two showcase GIFs. The actual public inspection retains pixel ratio2 and
+a2880x2200 backing buffer for1440x1100CSS after forced severe/sustained stalls.
+Full and lettering-detail captures were visually reviewed with no ROM loaded.
+Five affected public browser cases pass in1.5minutes: original native
+save/import/autosave/ROM-isolation, mapped controls/native lighting, both
+insertion viewports including desktop reload, and the actual-render regression.
+All release deadlines remain unchanged. This establishes technical/public
+qualification, not human visual acceptance. The attempts below are historical.
 
 The user explicitly rejects the blurred handheld. Automatic pixel-ratio
 reduction is removed entirely: the renderer retains its initial

@@ -2,6 +2,13 @@
 
 ## The BowserBOY engineering book
 
+**Public release milestone, 2026-11-06:** the owner designates
+[v1.0.0](../releases/v1.0.0/README.md), based on qualified application
+`c3d9dbd`, as the first publicly available release. The
+[documentation map](../docs/README.md) locates current guides and release
+receipts. This does not reissue the pinned first book edition or recapture its
+historical figures.
+
 **First Markdown edition, 2026-11-04.** This is the first actual chaptered
 engineering book for this project, not a renamed collection of guides. It
 explains the implementation at application revision

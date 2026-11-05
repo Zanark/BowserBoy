@@ -8,3 +8,4 @@ test-results/
 *.sav
 *.state
 *.bba-save
+releases/**/*.zip

@@ -115,6 +115,9 @@ try {
     await wait(1800);
   }
   begin('cozy-lights');
+  await page.locator('#put-down').click();
+  await expect(scene).toHaveAttribute('data-view', 'table');
+  await wait(900);
   await wait(700);
   await page.locator('#room-toggle').click();
   await wait(1100);
@@ -124,6 +127,9 @@ try {
   await wait(1100);
   await page.locator('#lamp-toggle').click();
   await wait(900);
+  await page.locator('#pickup').click();
+  await expect(scene).toHaveAttribute('data-view', 'playing');
+  await wait(700);
   end('cozy-lights');
 
   if (await page.locator('#notice').isVisible()) await page.locator('#notice button').click();

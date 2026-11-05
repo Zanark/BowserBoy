@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "name": "BowserBOY ADVANCED",
+  "version": "1.0.0",
+  "milestoneDate": "2026-11-06",
+  "status": "local-package-verified",
+  "qualifiedApplicationRevision": "c3d9dbdcc41341d126720ee6a26db5b824c90b24",
+  "repository": "https://github.com/Zanark/BowserBoyAdvance",
+  "publicURL": "https://zanark.github.io/BowserBoyAdvance/",
+  "qualificationRun": "https://github.com/Zanark/BowserBoyAdvance/actions/runs/42115330741",
+  "provenance": "Static application entries match all 30 public-qualified asset hashes. Version metadata and release documents are later administrative changes; no new tagged deployment or GitHub Release is claimed.",
+  "runtime": {
+    "emulatorJS": "4.2.3",
+    "three": "0.186.1",
+    "offline": false,
+    "nativeCore": "mGBA via upstream EmulatorJS CDN"
+  },
+  "archive": {
+    "file": "BowserBOYADVANCED-v1.0.0-static.zip",
+    "bytes": 11807047,
+    "sha256": "c358007850bee3597e5b1e081b63a17d0568d95a8bd9a429756923f87206f8b8",
+    "entries": 33
+  },
+  "files": [
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "RELEASE-NOTES.md",
+      "bytes": 4905,
+      "sha256": "78187a549b00adfa3094cadfe557dadacbdce7585582f80c46ffb7e1b67cbc9e",
+      "role": "release-documentation"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 8816,
+      "sha256": "842397e3761953828cd013b6eec34ab531b953dfba827089d5d45aadbb49460d",
+      "role": "release-documentation"
+    },
+    {
+      "path": "assets/brand-mark.svg",
+      "bytes": 2075,
+      "sha256": "b25ffec78c24722e4c1dceea384936a62019e6d4e0dfa628e06312147c1a664d",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/cartridge.svg",
+      "bytes": 318,
+      "sha256": "3b2775a1535bbb662410d360421b9a864fa25cd152fe1bd2634330e1402c8f82",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/glow.png",
+      "bytes": 16226,
+      "sha256": "0d2f6482a043a606cf32c289b73a809596d3b8b0855b4a13172c45e91b94dd1c",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/inspection-logo.png",
+      "bytes": 8969021,
+      "sha256": "8e5990933562a9eacc6ebaa66fa9694d73d4a9b16888c272a6b028f5e51b6808",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/logo.png",
+      "bytes": 824013,
+      "sha256": "de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/orbit.png",
+      "bytes": 58137,
+      "sha256": "bac393779796498f880128ab7705208d54b1d2526175c902b2edbf7bdad77753",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/pixel-lab.gba",
+      "bytes": 1024,
+      "sha256": "f55598d6315605fc922b6f4165b71d5830bb0e846f2754075cc4991678780058",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/star.png",
+      "bytes": 24970,
+      "sha256": "691e6fd163272beb1472b1adb7ad2757c6162cf0b7e873015895e1896454599d",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "assets/website-logo.png",
+      "bytes": 1566452,
+      "sha256": "5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "index.html",
+      "bytes": 17660,
+      "sha256": "7eb875fcdf75ba072aa230049b7ad7fcfa5c6ba2942abd2b52d1e3704dd7c2ff",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "player.html",
+      "bytes": 2337,
+      "sha256": "bd5fe968a30bd9fa879c03a1e2e9bd07f12541e9bf9f04e00edc4aaaaff8ffd0",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/app.js",
+      "bytes": 47411,
+      "sha256": "48ad87332f94c51b07fa4973eaae4c533d01708eb94087a5570ec5c2b8836ad6",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/audio.js",
+      "bytes": 3377,
+      "sha256": "5b1349a0e33986690fd501b4d0a50484280c557e2c05e263f5fff9263fce7008",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/brand.js",
+      "bytes": 509,
+      "sha256": "f3dfae39c54967ff93014f9144ddb7c929fc85d3ecf34e443fe81e54ce40faf6",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/cartridge.js",
+      "bytes": 4130,
+      "sha256": "1cae7f31508b8f778be33c31764c35ae9705d1fe5037119a703c5389ebb7e3e5",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/handheld.js",
+      "bytes": 32760,
+      "sha256": "d6f537298f24242e153e4bfe4bf6318cac8ac9f94f3c8a0e3f52419415ba1975",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/icons.js",
+      "bytes": 1907,
+      "sha256": "bc62fd4ac570b396c40a91b5fac6e2f9751899524433ae09002cdb3b830346d9",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/keyboard.js",
+      "bytes": 1446,
+      "sha256": "6e41ed16396c633fbe880dbbb7ea82bc8cb3771b0ac3e3dafef542622afd12e9",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/lighting.js",
+      "bytes": 7849,
+      "sha256": "accde7e9336a5b584205a2a3ad7710a86b291d44f7866d524b957bd10c090000",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/player.js",
+      "bytes": 12585,
+      "sha256": "eac3f9890a4802b5db8ae702cd76e0ea119908d95f895081ca27a784ff5f0399",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/preferences.js",
+      "bytes": 5739,
+      "sha256": "3d91ee7122a4da7076d60c822ed9c7c2028d43171d7e8ebcf362e153309bcd6f",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/save-store.js",
+      "bytes": 4525,
+      "sha256": "2341cbb37a22cff9a12cced41af5bdd3f3bc8b1b3bfff8dc7b3d48681218c2f9",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/scene.js",
+      "bytes": 24545,
+      "sha256": "cd986bd3e2fb7c70ab0ddf03b2cc29135c0b0d3ed0b326fb15a9d75524464ec9",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "src/startup.js",
+      "bytes": 5733,
+      "sha256": "c2c749467ca0ad9c9d554d506cf9efda90f524e4c1377cc9786add068f9ac1b7",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 19019,
+      "sha256": "b81fc0b8a99340feeee84fe23158efb80aaca5524dbf856942939470b3add8f4",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "vendor/RectAreaLightTexturesLib.js",
+      "bytes": 314764,
+      "sha256": "6dd4043bb052594357a5eeff13dc0519f0a80b100b97ec80c12808f887897bc1",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "vendor/RectAreaLightUniformsLib.js",
+      "bytes": 1014,
+      "sha256": "494fef2d731ff1689050cc6040ad78d927c22b9125a12f532beb0374c2811c6e",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "vendor/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "role": "qualified-static-site"
+    },
+    {
+      "path": "vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "role": "qualified-static-site"
+    }
+  ]
+}

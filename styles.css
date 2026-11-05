@@ -35,7 +35,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   0%, 65% { mask-position: 100% 0; }
   95%, 100% { mask-position: 0% 0; }
 }
-.desk-heading > span { color: #a3aab5; font: 8px var(--mono); letter-spacing: 2px; }
 #hardware-targets { pointer-events: none; }
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 #hardware-targets button:focus-visible { outline: 2px solid #f4edc1; outline-offset: 3px; }
@@ -164,7 +163,6 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .desk-heading { top: max(23px, env(safe-area-inset-top)); left: 18px; right: 18px; }
   .desk-heading h1 img { width: min(244px, calc(100vw - 130px)); }
   .desk-brand { width: min(244px, calc(100vw - 130px)); }
-  .desk-heading > span { max-width: 88px; text-align: right; font-size: 6px; letter-spacing: 1px; }
   .scene-actions { width: min(386px,calc(100vw - 4px)); max-width: calc(100vw - 4px); gap: 0; padding: 2px; }
   .scene-actions button { width: 44px; height: 44px; padding: 10px; }
   .action-divider { display: none; }

@@ -70,7 +70,15 @@ BowserBOY workstreams
 68_COMPLETE_README_REFRESH.todo - DONE: nine current GIFs/nine stills, reconciled README/captions/provenance;18embeds/30links locally checked. Normal push triggers publication; user monitors.
 69_MOVABLE_TOOLS_DOCK.todo - DONE: actual deployed assets/README GIF and nine public UI/native cases verified at dfd8003; sharpness rejection tracked separately in71.
 70_INSPECTION_BRANDING.todo - DONE: actual public animated purple Inspect logo/static fallback and centered settings logo verified; no user visual-approval claim.
-71_FULL_RESOLUTION_RENDERING.todo - IN_PROGRESS: remove automatic resolution downgrade; retain sharp 1x/2x buffers through stalls. Local regression/native flows pass; release pending.
+71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
+72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
+73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE locally: clean white STORSEGEL-style drum/ash tripod, no cable, all ten current README GIFs/nine stills and dated first milestone; not deployed.
+
+Current public milestone: v1.0.0, designated2026-11-06, qualifiedapplication
+c3d9dbd. See releases/README.md and docs/README.md for release/navigation.
+Earlier BLOCKED/IN_PROGRESS entries below/above retain their original attempt
+status; they are not evidence that the final qualified release is still blocked.
+This release record does not silently rewrite individual historical attempts.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

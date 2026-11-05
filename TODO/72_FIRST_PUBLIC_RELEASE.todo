@@ -1,0 +1,48 @@
+Status: DONE
+Milestone: Owner-designated first public release, v1.0.0.
+Dependencies: 71_FULL_RESOLUTION_RENDERING.todo.
+
+Purpose
+-------
+Freeze the qualified public application as the first release milestone,
+provide a local distributable package and make repository navigation clear
+without moving source/assets or deleting historical evidence.
+
+Tasks
+-----
+[x] Record owner designation and conservative cleanup/version choices.
+[x] Add versioned release notes and documentation/folder navigation.
+[x] Promote package and lockfile metadata to1.0.0.
+[x] Build/package the allowlisted static site with notices and hash receipts.
+[x] Verify package bytes against the already-qualified application.
+[x] Archive obsolete generated test output outside the working repository.
+[x] Reconcile verification/index/ledger/book and owned continuity.
+
+Acceptance criteria
+-------------------
+Existing source/assets/entry paths, artwork and behavior remain unchanged.
+Release archive excludes private context/dependencies/tests/supplied media ROM.
+Package manifest and checksum identify the actual output, not a placeholder.
+Local package, public website and any future GitHub Release remain distinct.
+No automatic tag, GitHub Release, push or new deployment.
+
+Completion evidence
+-------------------
+Baseline c3d9dbdcc41341d126720ee6a26db5b824c90b24 already passed all53
+hosted browser cases and public asset/2x/five-case checks in run42115330741.
+New syntax/build/all12units pass at package1.0.0. ZIP has33 entries and
+11807047bytes; all30 application assets match the public qualification hashes.
+Tracked application entries use exact Git blobs to avoid WindowsCRLF changing
+the public LinuxLF bytes. ZIP extraction and every entry/hash checked.
+Two actual browser cases served from the extracted archive pass52.5s:
+originalnative autosave/import/isolation and renderer/sharpness/light regression.
+Checksums/manifest live in releases/v1.0.0; generatedZIP stays local/ignored.
+Oldtest-results moved outside repo, not deleted. No app/artwork/test/CI changes.
+
+Completion log
+--------------
+2026-11-06: Owner counts this as the first publicly available release;
+chooses v1.0.0 and conservative cleanup. Preserve source/asset paths.
+2026-11-06: Release package and receipts completed; documentation hub and
+navigation added, package/lock1.0.0 synchronized, stale output archived.
+Current website remains c3d9dbd; no tag/GitHubRelease/push/newdeployment.

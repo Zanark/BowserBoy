@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Preserve handheld sharpness without automatic resolution downgrades.
 Dependencies: None.
 
@@ -18,7 +18,7 @@ Tasks
 [x] Check playing-mode recovery and isolate native speed timing from room draws.
 [x] Present the insertion clock's finishing pose in the same actual paint.
 [x] Prioritize pending live-native operations over expensive room paints.
-[ ] Publish through the full normal gate and verify actual public sharpness.
+[x] Publish through the full normal gate and verify actual public sharpness.
 
 Acceptance criteria
 -------------------
@@ -54,6 +54,15 @@ Build/syntax/12units pass; all deadlines retained, hosted/publicproofpending.
 
 Completion log
 --------------
+2026-11-06: Release c3d9dbdcc41341d126720ee6a26db5b824c90b24 passes
+all 53 browser cases across ten isolated jobs in run42115330741; deployment
+succeeds. Queue-to-deployment elapsed6m18s, not a controlled speedup comparison.
+All30 public assets match exact release bytes; published README/twoGIFs match.
+Public2x inspection after forced stalls retains2880x2200 for1440x1100CSS;
+full/detail captures visually reviewed. Five affected public browser cases pass
+1.5m: native saves/import/autosave/isolation, mapped inputs/native lighting,
+both insertion viewports including desktop reload, actual renderer regression.
+No automatic downscaling, gate/deadline relaxation or human acceptance claimed.
 2026-11-06: User explicitly rejects the blur and requires sharpness. Remove the
 adaptive-resolution tradeoff entirely; no human acceptance is presumed.
 2026-11-06: Investigate actual failed gate; retain full resolution and improve

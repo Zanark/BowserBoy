@@ -2,6 +2,13 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
+**First public release: [v1.0.0](../releases/v1.0.0/README.md), 2026-11-06.**
+The owner designated the independently qualified `c3d9dbd` application as this
+milestone. Full-resolution rendering, all53 hosted browser cases and five
+affected public cases are qualified; no automatic downscaling remains.
+See the [documentation/repository map](README.md) and
+[current verification](VERIFICATION.md#full-resolution-handheld-rendering-2026-11-06).
+
 ## Website and console names
 
 **BowserBOY** is the website/table, using the supplied chrome sparkle logo
@@ -15,7 +22,7 @@ The owner will rename the GitHub repository separately. Until then the existing
 repository and Pages URLs remain valid; this branding change does not rename
 storage, modify saves, or move the local checkout.
 
-**Current release and pictures:** source `f5bc639` is independently verified
+**Earlier release and picture provenance:** source `f5bc639` was independently verified
 live after the full 41-case hosted gate and exact 29-public-asset match.
 It recovers the original soft Arial A/B shapes, size and placement with shallow
 genuine inward engraving, replacing the rejected custom rounded shapes.
@@ -58,18 +65,20 @@ The shimmer pauses while hidden and is disabled for reduced-motion users.*
 **A little escape, on your desk.** BowserBOY currently offers one local-first
 GBA player inside an actual 3D indigo handheld, built for GitHub Pages.
 
-![Current-build BowserBOY table with chrome website branding and movable tools](images/readme-table.png?v=dock-inspection-20261106)
+![Current local-build table with chrome website branding, a white tripod lamp and movable tools](images/readme-table.png?v=storsegel-20261106)
 
 *The current-build desk: chrome BowserBOY header, first purple console and
-paper lantern. The other objects are cartridges, not additional consoles.*
+clean STORSEGEL-style white shade and ash tripod. The other objects are
+cartridges, not additional consoles.*
 
 ## Lights out
 
-The room starts with a warm paper lantern on and **Room** lights off. Click the
-modeled lamp or use **Lamp** to switch it independently of the game. **Room**
+The room starts with the warm STORSEGEL-style lamp on and **Room** lights off.
+Click its shade or use **Lamp** to switch it independently of the game. **Room**
 adds optional ceiling/reflected illumination without changing console power.
-The original paper-and-wood lantern is roughly four handheld widths tall.
-Its downward light casts shadows;
+The lamp has a clean white open drum shade and three splayed ash legs, modeled
+at approximately 30 cm high with an 18 cm shade diameter. No cable is visible.
+Its warm downward light casts shadows;
 the LCD casts one-sided, screen-colored light as you lift or rotate the handheld.
 Turning the power off extinguishes its screen light. These are real-time lighting
 approximations, not a full global-illumination simulation.
@@ -81,11 +90,11 @@ and vanishes on a black screen or power-off. The experiment is isolated for
 removal if its appearance is rejected. The revised balance dims the wooden
 desk reflection and preserves faint control visibility with darker pictures.
 
-![Deployed lantern, enlarged handheld screen and optional room illumination](images/cozy-room.png)
+![Current local recording of the clean tripod lamp, optional room lights and LCD-only darkness](images/cozy-lights.gif?v=storsegel-20261106)
 
-*Left: the large clipped lantern and actual thick tabletop. Center: lantern-only
-play view, with the larger LCD and enlarged dark power slider. Right: lamp off,
-room lights on. The console remains off in all three views.*
+*Put the handheld down to see the clean shade and warm wooden legs; switch room
+and lamp light independently, then pick it up again. This local working-tree
+capture is newer than the frozen v1.0.0 release.*
 
 ![The original demo with only the LCD lighting the room](images/lcd-light.png)
 

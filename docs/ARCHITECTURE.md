@@ -243,8 +243,9 @@ A 1000-by-26-unit solid wooden slab is 2.4 units
 thick: top Y=0, front Z=10, darker wood on its edges. Repeated grain avoids
 stretching the texture across its width. The plaster wall spans the viewport;
 the room floor sits at Y=-35, leaving visible open space below the front edge.
-The approximately 34.8-unit-tall lantern may be clipped by the resting frame,
-as explicitly requested; the camera no longer tries to fit its whole height.
+The approximately 17.7-unit-tall STORSEGEL-style lamp may be clipped by the
+resting frame; replacing the old lantern does not change the camera or
+handheld scale.
 
 The LCD is a front-facing plane on that model, textured directly from the
 same-origin emulator canvas. It is not a CSS-transformed iframe, screenshot
@@ -337,20 +338,30 @@ delay, invented percentage or looping reinsertion during a long download.
 
 ### Dark room and screen-colored illumination
 
-`src/lighting.js` models an original cylindrical paper shade, end diffusers,
-wooden stem/base and physical switch. Its body scale is seven, making the lamp
-roughly four handheld widths tall; the handheld itself is not scaled down.
-One scene unit represents 0.017 meters. A broad warm downward spotlight uses
+`src/lighting.js` models a STORSEGEL-style open white drum shade, thin white
+rims and three splayed ash legs with flat tabletop feet. The geometry is
+authored in meters: approximately 30 cm overall height and an 18 cm shade
+diameter. One scene unit represents 0.017 meters, so the lamp body applies the
+inverse of that conversion. The camera and handheld geometry/scale are
+unchanged. The shade has no mottled color/emission texture; a subtle procedural
+grain belongs only to the wooden legs. No cable is modeled.
+A broad warm downward spotlight uses
 inverse-square falloff, no arbitrary distance cutoff and one 1024-square
 shadow map. This replaces the six expensive cubemap passes of the intermediate
 point-light implementation.
 
-A finite 14.7-by-22.4-unit rectangle approximates light transmitted through the
-paper. Three.js rectangular-light dimensions do not inherit parent scaling, so
-these dimensions explicitly match the enlarged shade. An upward 6-by-6-unit
-rectangle approximates the first wood bounce. Paper/bulb surfaces use authored
-emission. The lamp starts on each visit; switching it does not pause, power off
-or replace the cartridge.
+A finite 10.588-by-8.824-unit rectangle approximates transmitted shade light.
+Its plane sits outside the fabric and points toward the desk: intersecting the
+shade previously produced a hard diagonal LTC self-lighting seam. Three.js
+rectangular-light dimensions do not inherit parent scaling, so dimensions
+explicitly convert meters to scene units. A downward 9.412-unit-square
+rectangle just below the open shade softly lights the ash legs; it adds no
+shadow pass. An upward 6-by-6-unit rectangle retains the first wood-bounce
+approximation. Shade/bulb surfaces use authored emission (60/80 when on).
+Clicking the actual shade or using the toolbar toggles all lamp sources
+together; the obsolete separate switch cap is removed with the old model.
+The lamp starts on each visit; switching it does not pause, power off or
+replace the cartridge.
 
 Optional room lights start off on every visit. Their explicit toolbar toggle
 controls a ceiling rectangle and reflected hemisphere independently of the
@@ -740,7 +751,7 @@ from a trusted copy of this application.
 | `assets/brand-mark.svg` | Original transparent handheld favicon, matching the actual shell outline |
 | `src/icons.js` | Quick-dock SVGs, names, tooltip labels and speed badge |
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
-| `src/lighting.js` | Paper lantern, one-map shadow source, finite paper/wood light, optional room lights and sampled LCD |
+| `src/lighting.js` | Clean tripod lamp, one-map shadows, finite shade/wood light, optional room lights and sampled LCD |
 | `src/app.js` | File selection, host lifecycle, UI and user save actions |
 | `src/player.js`, `player.html` | Pinned runtime adapter and child document |
 | `src/cartridge.js`, `src/save-store.js` | Identity, backups and checked storage |

@@ -307,10 +307,10 @@ export class HandheldScene {
     this.lampOn = enabled;
     this.lamp.light.visible = enabled;
     this.lamp.diffuse.visible = enabled;
+    this.lamp.underShade.visible = enabled;
     this.lamp.bounce.visible = enabled;
     this.lamp.diffuser.material.emissiveIntensity = enabled ? 80 : 0;
-    this.lamp.shade.material.emissiveIntensity = enabled ? 25 : 0;
-    this.lamp.switchCap.position.y = enabled ? .34 : .37;
+    this.lamp.shade.material.emissiveIntensity = enabled ? 60 : 0;
   }
 
   setRoomLights(enabled) {
