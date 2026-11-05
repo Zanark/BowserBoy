@@ -1,0 +1,38 @@
+Status: IN_PROGRESS
+Milestone: Theme-independent glows on both README logos.
+Dependencies: 52_CONSOLE_SCOPED_README.todo.
+
+Purpose:
+Add silver-blue glow to the chrome umbrella logo and violet glow to the animated
+console banner without changing original artwork or the website/application.
+
+Tasks:
+- [x] Reuse original logo assets and preserve the existing 72-frame animation.
+- [x] Render padded, transparent README-only glow derivatives.
+- [x] Add an isolated --glow-logos generator mode without regenerating old media.
+- [x] Verify original opaque ink, all frame timings, transparency and file size.
+- [x] Review bounded first-frame samples on both light and dark backgrounds.
+- [ ] Publish and verify actual GitHub rendering and retained animation.
+- [ ] Record final delivery and owned continuity.
+
+Acceptance criteria:
+- Both standalone README logos have soft colored halos, not rectangular mattes.
+- Chrome and purple source artwork stays unchanged; opaque ink colors preserved.
+- Console animation retains all72frames,70ms timing,5.04s cycle and infinite loop.
+- Native full-alpha animated PNG preserves smooth glow on light/dark backgrounds.
+- New files remain below10MiB each. Existing gameplay media/links stay unchanged.
+- No application, website header, console model, runtime or original GIF changes.
+
+Completion evidence:
+- python scripts\render-readme.py --glow-logos generates only two new derivatives.
+- Static PNG1391871bytes; animated PNG8969021bytes,72frames and5040ms.
+- Numeric checks pass for every frame's opaque ink/timing, loop, transparent
+  corners, added halo, original sources and all13unchanged gameplay embeds.
+- Conflicting --glow-logos/--capture flags reject before rendering.
+- First-frame light/dark contact sheet reviewed. No full-animation visual review
+  or fresh application/audio qualification claimed. Actual public checks pending.
+
+Completion log:
+- 2026-11-05: User requests glow on all README logos. Bake two transparent
+  derivatives rather than relying on README CSS. Keep original GIF untouched;
+  full-alpha APNG retains both smooth transparency and its original motion.

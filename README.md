@@ -1,4 +1,4 @@
-[![BowserBOY - supplied chrome sparkle logo](assets/website-logo.png)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY - chrome sparkle logo with silver-blue glow](docs/images/bowserboy-logo-glow.png)](https://zanark.github.io/BowserBoyAdvance/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>
@@ -17,11 +17,11 @@
 
 ## BowserBOYADVANCED
 
-[![BowserBOYADVANCED - original purple animated console logo](docs/images/orbital-logo.gif)](assets/logo.png)
+[![BowserBOYADVANCED - purple animated console logo with glow](docs/images/bowserboyadvanced-logo-glow.png)](assets/logo.png)
 
 *Your Game Boy Advance, on the BowserBOY tabletop. [Play BowserBOYADVANCED](https://zanark.github.io/BowserBoyAdvance/).*
 
-*Original animated console banner above; actual public-site gameplay recordings and UI captures below. [Origins and release evidence](docs/MEDIA.md#bowserboy-public-refresh-2026-11-05).*
+*Glowing animated console banner above; actual public-site gameplay recordings and UI captures below. [Origins and release evidence](docs/MEDIA.md#bowserboy-public-refresh-2026-11-05).*
 
 ### One table. More to come.
 

@@ -1,4 +1,4 @@
-"""Render the supplied-logo banner and encode real browser clips for the README."""
+"""Render README logos/banners and encode real browser clips."""
 
 import argparse
 import json
@@ -7,11 +7,40 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs" / "images"
+
+
+def logo_glow(image, color):
+    radius = image.width * .01
+    padding = math.ceil(radius * 4)
+    original = Image.new("RGBA", (image.width + padding * 2, image.height + padding * 2))
+    original.alpha_composite(image, (padding, padding))
+    alpha = original.getchannel("A")
+    result = Image.new("RGBA", original.size)
+    for blur, strength in [(radius, .8), (radius * .28, .6)]:
+        halo = Image.new("RGBA", original.size, (*color, 0))
+        halo.putalpha(alpha.filter(ImageFilter.GaussianBlur(blur)).point(lambda value: round(value * strength)))
+        result.alpha_composite(halo)
+    result.alpha_composite(original)
+    return result
+
+
+def glowing_logos():
+    with Image.open(ROOT / "assets" / "website-logo.png") as source:
+        logo_glow(source.convert("RGBA"), (112, 166, 255)).save(OUTPUT / "bowserboy-logo-glow.png")
+    frames, durations = [], []
+    with Image.open(OUTPUT / "orbital-logo.gif") as source:
+        loop = source.info["loop"]
+        for index in range(source.n_frames):
+            source.seek(index)
+            frames.append(logo_glow(source.convert("RGBA"), (169, 65, 255)))
+            durations.append(source.info["duration"])
+    frames[0].save(OUTPUT / "bowserboyadvanced-logo-glow.png", save_all=True,
+                   append_images=frames[1:], duration=durations, loop=loop, disposal=0, blend=0)
 
 
 def banner():
@@ -82,11 +111,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--capture", type=Path, help="capture.json from capture-readme.mjs")
     parser.add_argument("--ffmpeg", default=shutil.which("ffmpeg"), help="Path to an FFmpeg executable")
+    parser.add_argument("--glow-logos", action="store_true", help="Only render README logo glows; preserve original media")
     args = parser.parse_args()
+    if args.glow_logos and args.capture:
+        parser.error("--glow-logos cannot be combined with --capture")
     OUTPUT.mkdir(parents=True, exist_ok=True)
-    banner()
-    if args.capture:
-        if not args.ffmpeg:
-            parser.error("--capture requires ffmpeg on PATH or an explicit --ffmpeg path")
-        clips(args.capture, args.ffmpeg)
+    if args.glow_logos:
+        glowing_logos()
+    else:
+        banner()
+        if args.capture:
+            if not args.ffmpeg:
+                parser.error("--capture requires ffmpeg on PATH or an explicit --ffmpeg path")
+            clips(args.capture, args.ffmpeg)
     print("README media rendered in", OUTPUT)

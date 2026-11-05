@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / README logo glows:
+  User requests glow on both README logos. Derive silver-blue chrome and violet
+  console halos from their alpha masks, composite original ink on top and pad
+  for the blur. Separate README PNG/APNG assets leave website/source logos,
+  original GIF and gameplay captures untouched. APNG preserves smooth partial
+  transparency that GIF cannot represent, plus all72original70msframes/loop.
+  Add --glow-logos isolated generation; default banner/clip path unchanged.
+  All-frame numeric ink/timing/transparency checks pass; files1.39/8.97MB each
+  below10MiB. First-frame light/dark sheet reviewed; no full visual replay.
+  Actual GitHub publication/rendered glow/native animation checks pending.
 - 2026-11-05 / Console-scoped README:
   User clarifies the umbrella project must list BowserBOYADVANCED as a supported
   console, with its own purple logo and all prior GIFs. Keep chrome BowserBOY at

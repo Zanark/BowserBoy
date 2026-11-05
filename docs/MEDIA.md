@@ -8,6 +8,26 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### README logo glows, 2026-11-05
+
+The two standalone README logos now use transparent, padded derivatives:
+`bowserboy-logo-glow.png` adds a silver-blue halo to the original chrome asset;
+`bowserboyadvanced-logo-glow.png` adds violet glow to the existing orbital banner.
+Original source artwork and the historical `orbital-logo.gif` remain unchanged.
+The website's own logos and every gameplay recording remain unchanged.
+
+Run `python scripts\render-readme.py --glow-logos` to generate only these files.
+Two Gaussian-blurred alpha masks sit behind the original foreground, retaining
+opaque ink colors. The console derivative is a full-alpha animated PNG: GIF
+cannot represent the partial opacity needed for a smooth halo on both themes.
+It retains all 72 original frames, 70ms timing, 5.04s cycle and infinite loop.
+The two files are 1,391,871 and 8,969,021 bytes, each below 10MiB.
+
+All-frame numeric ink/timing/transparency checks pass. Only a bounded first-frame
+light/dark sheet is visually reviewed locally; this is not a full-animation
+review or fresh application/audio qualification. Actual GitHub rendering and
+native animation qualification are pending.
+
 ### Console-scoped README, 2026-11-05
 
 The front page now separates the chrome BowserBOY umbrella project from its
