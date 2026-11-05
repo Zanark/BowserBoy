@@ -19,6 +19,13 @@ The README image URL has a new version query to avoid retaining an older cached
 animation. Generate only this asset with
 `python scripts\render-readme.py --shimmer-logo`.
 
+Published source `24910fda7543124a44515e4e6c5bd468f3eec7c5`: the
+1168x456 APNG retains all 29 encoded frames and 4,745,072 bytes. Decoded
+pixel hashes of every frame equal the earlier animation; the total duration
+is exactly 3000 ms, looping indefinitely. The actual public asset matches
+SHA-256 `5a9d4dbca772e0867a612c5ce8ea424ff389558df7d0d6357baa1057237604c6`,
+animates natively in Edge, and is referenced by the versioned public README.
+
 ### Supplied Celia demo and box art, 2026-11-05
 
 The user authorized publishing the supplied ROM and box art and confirmed the

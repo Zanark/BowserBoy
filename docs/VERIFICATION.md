@@ -21,6 +21,10 @@ startup-artwork cases pass 3/3 in 13.2s. An initial missing-pickup fixture
 timeout is corrected through the real UI, not forced clicks or product changes.
 No supplied ROM is executed. These checks are numerical/behavioral evidence,
 not direct listening or human approval. Public startup qualification is pending.
+Feature `e1f61ab` is pushed with source
+`24910fda7543124a44515e4e6c5bd468f3eec7c5`; normal Pages run `42074785914`
+is pending. Only a complete unchanged gate permits exact public-source and
+actual startup qualification. The separate README shimmer is already public.
 
 ## Experimental LCD control spill, 2026-11-05
 
