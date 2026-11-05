@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Larger purple rear artwork with more pronounced physical engraving.
 Dependencies: 46_LARGER_ETCHED_REAR_LOGO.todo.
 
@@ -13,8 +13,8 @@ Tasks:
 - [x] Preserve original artwork, plastic islands, cover perimeter and thumb grips.
 - [x] Review matched actual rear and angled old/new inspection crops.
 - [x] Pass syntax/build/units and affected integrated physical-branding test.
-- [ ] Pass the normal complete hosted gate and independently verify production.
-- [ ] Record final delivery and owned continuity.
+- [x] Pass the normal complete hosted gate and independently verify production.
+- [x] Record final delivery and owned continuity.
 
 Acceptance criteria:
 - Ink spans more than3.25and less than3.5units inside the unchanged cover.
@@ -36,10 +36,16 @@ Completion evidence:
   plastic color3e396e and measured render triangles141424 stay unchanged;
   that static count is not a performance benchmark. No new bevel topology,
   fake dark overlay, texture edit or recurring rendering work.
-- Normal hosted gate, actual public checks and final records remain pending.
+- Source cf53ecc05ea27a9c26e60a87d0306de1bce78bc5 / normal42035592990:
+  build,11units,all43hosted browser cases (15+14+14) and deployment pass.
+- Independently match29actual public assets. Actual public integrated branding
+  case passes19.0s, zero failures/retries/skips; eight floor hits, new size/
+  depth and original pixels/material pass. Actual tilted public rear reviewed.
 - No private-ROM/audio/video replay or fresh human aesthetic acceptance.
 
 Completion log:
 - 2026-11-05: User requests another larger and more deeply etched rear logo.
   Keep the original colored floors and increase only frame width/cavity depth;
   preserve prior evidence by capturing this comparison into separate folders.
+- 2026-11-05: Complete normal hosted gate and independent public qualification
+  pass. Larger rear logo and four-times-deeper engraving independently live.

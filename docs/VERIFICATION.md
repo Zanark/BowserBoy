@@ -9,26 +9,31 @@ record or constitute fresh execution of historical tests.
 
 ## Deeper rear engraving, 2026-11-05
 
-The rear artwork frame increases from2.95to3.45units, another17%wider,
-and colored floors move from .006to.024units below the surrounding plastic.
+The rear artwork frame increases from 2.95 to 3.45 units, another 17% wider,
+and colored floors move from .006 to .024 units below the surrounding plastic.
 The existing cutout topology, nested plastic islands, original cover perimeter/
 thickness/grips and exact bright purple texture/material remain unchanged.
 Only the two geometry parameters change; no fake dark overlay or new bevel
 algorithm is introduced.
 
-The tightened integrated regression fails the old2.8686635-unit ink width.
-The new measured ink spans3.3548777units. Eight opaque floor rays and groove
+The tightened integrated regression fails the old 2.8686635-unit ink width.
+The new measured ink spans 3.3548777 units. Eight opaque floor rays and groove
 walls pass .02-.028-unit depth bounds; a blank ray at x1.75 stays outside the
 enlarged ink. Original RGBA, unattenuated material and all unrelated control,
 bezel, fullscreen, notification and framing assertions remain in place.
-Syntax/build/all11units and the affected actual browser case pass (17.1s).
+Syntax/build/all 11 units and the affected actual browser case pass (17.1s).
 Matched straight/angled public-baseline/local-candidate inspection crops are
-reviewed; cover bounds/color and141424render triangles remain unchanged.
+reviewed; cover bounds/color and 141424 render triangles remain unchanged.
 The static triangle observation is not a performance benchmark.
 
-Normal hosted qualification, actual public delivery and final records are
-pending. No private-ROM/audio/video replay or human aesthetic acceptance is
-claimed. Earlier public rear figures retain their original capture provenance.
+Qualified source `cf53ecc05ea27a9c26e60a87d0306de1bce78bc5`, normal workflow
+`42035592990`: build, 11 units, all 43 hosted browser cases (15+14+14) and
+deployment pass. Independently fetched all 29 public application assets match.
+The actual public integrated branding case passes in 19.0s without failures,
+retries or skips, including eight inset floor hits, new dimensions/depth and
+exact bright artwork. The actual tilted public rear is reviewed.
+No private-ROM/audio/video replay or human aesthetic acceptance is claimed.
+Earlier public rear figures retain their original capture provenance.
 
 ## Website header shimmer, 2026-11-05
 

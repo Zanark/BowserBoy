@@ -219,7 +219,7 @@ warms it. No animation, emission, environment map or per-frame update is added.
 Fullscreen uses the same canvas object, not another rasterization or copy.
 The top ZANARK maker mark retains a chamfered matching-plastic frame.
 The rear battery cover retains the unchanged supplied purple artwork on a
-3.45-unit-wide frame, about17%wider than the previous2.95-unit engraving.
+3.45-unit-wide frame, about 17% wider than the previous 2.95-unit engraving.
 `engraveRearLogo` traces a512x171alpha mask at16 using the shared `alphaContours`
 extractor. Nested loops alternate artwork cavities and solid plastic islands.
 Only the old rear cap triangles are removed; the original outer bevel, cover

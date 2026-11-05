@@ -24,6 +24,11 @@ larger etched rear logo. More consoles are not shown or implemented. The main
 README remains image/GIF-led with short captions; detailed naming and save
 boundaries belong in the guide, architecture and saving reference.
 
+The [later deeper rear engraving](VERIFICATION.md#deeper-rear-engraving-2026-11-05)
+postdates these captures. Its actual matched straight/angled comparisons and
+tilted public rear were separately reviewed; existing images retain their
+original size/depth and provenance, with captions identifying the earlier view.
+
 The unchanged `capture-readme.mjs` uses a fresh browser context, the original
 Pixel Lab demo and actual input/pickup/Inspect/light/power/fullscreen/save
 actions. The receipt contains five complete timing ranges and zero page errors.

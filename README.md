@@ -23,7 +23,7 @@
 
 ## Purple belongs to the console.
 
-![Actual public rear inspection showing the larger purple logo in the battery cover and the separate chrome website header](docs/images/readme-back.png?v=bowserboy-public-20261105)
+![Earlier public rear inspection showing the purple console logo and separate chrome website header](docs/images/readme-back.png?v=bowserboy-public-20261105)
 
 *Original purple color and bright lettering preserved. The rear engraving is now larger and deeper than this capture.*
 

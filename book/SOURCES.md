@@ -41,10 +41,12 @@ artwork on real inset floors. The
 separates local qualification, actual delivery and aesthetic acceptance.
 Historical rear-view figures keep their original provenance.
 
-Workstream51further enlarges the frame to3.45units and deepens the same
-colored cavities to.024units without changing the artwork or cover. Its
+Workstream 51 further enlarges the frame to 3.45 units and deepens the same
+colored cavities to .024 units without changing the artwork or cover.
+Qualified [`engraveRearLogo`](https://github.com/Zanark/BowserBoyAdvance/blob/cf53ecc05ea27a9c26e60a87d0306de1bce78bc5/src/handheld.js)
+retains the same contour/floor/wall mechanism. Its
 [separate verification record](../docs/VERIFICATION.md#deeper-rear-engraving-2026-11-05)
-tracks this later parameter change; the original edition and46source stay pinned.
+tracks this later parameter change; the original edition and 46 source stay pinned.
 
 ## Later website identity delta
 
