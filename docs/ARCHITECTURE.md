@@ -420,14 +420,12 @@ and illumination settle. Model, lamp, power, resize and button changes invalidat
 the relevant state. Modal tools suspend 3D uploads/readbacks and painting behind
 their blurred backdrop, **not** the native game.
 
-After six sustained painted frames slower than 50 ms, the renderer reduces only
-its backing pixel ratio by a factor of 0.75, down to 0.5. A gap above 500ms after
-a painted frame reaches that threshold immediately, rather than waiting through
-six multi-second stalls before adapting. An isolated 100ms stall still does not
-reduce quality. CSS controls and native core resolution do not change.
-Quality reduction runs only after the static-idle early return: a delayed
-callback must not resize the backing buffer and manufacture an otherwise
-unnecessary paint after the scene has settled.
+Handheld sharpness is mandatory. The backing pixel ratio stays at its original
+device-aware setting, `min(devicePixelRatio, 2)`: slow frames and scheduling
+stalls never reduce it. The former adaptive-resolution mitigation was visibly
+rejected and is removed, not hidden behind another automatic quality setting.
+Model geometry, artwork, materials, anti-aliasing and native GBA resolution
+are unchanged. Performance optimizations must preserve this visual contract.
 A slow paint also leaves up to 200 ms of recovery
 before the next 3D paint, giving native emulation scheduling headroom. Cheap
 pose/button calculations still advance and retain dirty shadows across skipped

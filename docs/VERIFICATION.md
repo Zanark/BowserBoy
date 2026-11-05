@@ -7,6 +7,35 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Full-resolution handheld rendering, 2026-11-06
+
+The user explicitly rejects the blurred handheld. Automatic pixel-ratio
+reduction is removed entirely: the renderer retains its initial
+`min(devicePixelRatio, 2)` backing resolution in every mode. This supersedes
+the adaptive-resolution mitigation recorded in the historical recovery below.
+Idle-paint suppression, cached shadows and slow-frame recovery scheduling
+remain; performance must not be purchased by degrading handheld sharpness.
+No model, texture, material, logo or native-core resolution changes.
+
+The existing actual-render regression now checks both 1x and 2x backing
+resolution through isolated, severe and sustained scheduling stalls, alongside
+the retained recovery, idle and physical-button assertions. It fails the old
+source at 0.75 instead of 1, then passes the corrected source. Five actual
+SwiftShader cases pass in 4.4 minutes: sharp rendering, both cartridge-insertion
+viewports and both native quick-action flows. Build, syntax and all 12 units
+pass. A separate actual 2x inspection retains a 2880x2200 buffer for its
+1440x1100 CSS viewport after severe/sustained gaps; full/detail screenshots are
+reviewed with no ROM loaded. This is local evidence, not deployed-site proof.
+
+The ten-way run `42104749490` completes quickly but does not deploy: its VSync
+test rejects a legitimate "Welcome back" checkpoint-restore notice as if every
+ordinary notice must be hidden. The actual failure artifact contains that
+non-error message, not a VSync warning. The test now specifically prohibits
+VSync/error notices in ordinary settings while retaining all actual native
+warning, persistence and user-choice checks. This case passes locally in
+46.5 seconds; no application notice behavior is changed. The new normal gate
+and subsequent public sharpness proof remain pending.
+
 ## Movable dock and inspection branding, 2026-11-06
 
 The dock has a dedicated pointer/touch grip, collapse/expand, keyboard arrows

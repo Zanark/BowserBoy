@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Sharpness is mandatory:
+  Userrejects visible handheldblur. Remove allruntimepixelratio reduction
+  andobsolete slowcounter; keepinitialmin(devicePixelRatio,2), cachedshadows/
+  idle/recovery. No model/artwork/material/native-resolution change.
+  New1x/2xactual-buffer regression failsoldsource(.75vs1); fivecorrected
+  SwiftShadercasespass4.4m including bothnativequickflows/bothinsertions.
+  Build/syntax/12units pass. Actual2xInspect retains2880x2200 afterstalls;
+  full/detailcaptures reviewed. Gate/publicsharpness pending.
+  Ten-way42104749490fails onlyVSyncfixture: ordinary checkpointrestore
+  "Welcome back" notice incorrectly expectedhidden. ProhibitVSync/error
+  notices specifically, retainallnativewarning/persistence/userchoicechecks.
+  Correctedcasepasses46.5s. No productnoticechange ordeadline relaxation.
 - 2026-11-06 / More isolated parallel browser jobs:
   User requests fasterCI/moreparalleltests. Increase browsermatrix5->10 and
   derive sharddenominator fromstrategy.job-total, preservingoneworker/runner

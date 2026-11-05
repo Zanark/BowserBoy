@@ -1,0 +1,37 @@
+Status: IN_PROGRESS
+Milestone: Preserve handheld sharpness without automatic resolution downgrades.
+Dependencies: None.
+
+Purpose
+-------
+Correct the user's explicitly rejected blurry render. Performance improvements
+must preserve the original device-aware pixel density, artwork and model.
+
+Tasks
+-----
+[x] Remove runtime pixel-ratio reduction, including its obsolete slow counter.
+[x] Retain idle suppression, shadow caching and recovery scheduling.
+[x] Check 1x/2x drawing buffers through isolated, severe and sustained stalls.
+[x] Exercise original native quick actions and both insertion viewports.
+[x] Capture/review actual high-DPI inspection and lettering detail.
+[ ] Publish through the full normal gate and verify actual public sharpness.
+
+Acceptance criteria
+-------------------
+The backing ratio stays at min(devicePixelRatio, 2), never dropping for speed.
+No new low-quality mode, changed geometry/artwork, missing controls or altered
+native resolution. Frame recovery remains; all release deadlines stay intact.
+
+Completion evidence
+-------------------
+New actual-render expectation fails old source: ratio0.75 instead of1.
+Corrected five SwiftShader cases pass4.4m, including 1x/2x sharpness, idle/
+recovery/button checks, both insertions and both native quick-action flows.
+Build/syntax/12units pass. Actual2x inspection after severe/sustained gaps
+retains2880x2200 for1440x1100CSS; full and lettering-detail captures reviewed.
+OriginalPixelLab/noROMonly. Actual hosted release and public proof pending.
+
+Completion log
+--------------
+2026-11-06: User explicitly rejects the blur and requires sharpness. Remove the
+adaptive-resolution tradeoff entirely; no human acceptance is presumed.

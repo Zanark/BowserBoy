@@ -180,45 +180,46 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   }
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
-  const budget = await page.evaluate(async () => {
+  const budgets = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
-    view.renderer.setPixelRatio(1);
-    view.slowFrames = 0;
-    view.renderedLastFrame = false;
-    view.nextPaint = 0;
     const tick = (milliseconds) => {
       view.changed = true;
       view.render(view.lastRender + milliseconds);
     };
-    tick(16);
-    const beforeRecovery = view.renderer.info.render.frame;
-    tick(100);
-    const duringRecovery = view.renderer.info.render.frame;
-    tick(201); tick(16);
-    const singleStallRatio = view.renderer.getPixelRatio();
-    tick(1000); tick(201);
-    const severeStallRatio = view.renderer.getPixelRatio();
-    view.renderer.setPixelRatio(1);
-    view.slowFrames = 0;
-    view.nextPaint = 0;
-    for (let i = 0; i < 6; i++) { tick(100); tick(201); }
-    const beforeIdle = view.renderer.info.render.frame;
-    view.render(view.lastRender + 1000);
-    view.render(view.lastRender + 201);
-    const afterIdle = view.renderer.info.render.frame;
-    view.setControl('a', true);
-    tick(100);
-    return { singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
-      width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
+    return [1, 2].map(ratio => {
+      view.renderer.setPixelRatio(ratio);
+      view.setControl('a', false);
+      view.renderedLastFrame = false;
+      view.nextPaint = 0;
+      tick(16);
+      const beforeRecovery = view.renderer.info.render.frame;
+      tick(100);
+      const duringRecovery = view.renderer.info.render.frame;
+      tick(201); tick(16);
+      const singleStallRatio = view.renderer.getPixelRatio();
+      tick(1000); tick(201);
+      const severeStallRatio = view.renderer.getPixelRatio();
+      for (let i = 0; i < 6; i++) { tick(100); tick(201); }
+      const beforeIdle = view.renderer.info.render.frame;
+      view.render(view.lastRender + 1000);
+      view.render(view.lastRender + 201);
+      const afterIdle = view.renderer.info.render.frame;
+      view.setControl('a', true);
+      tick(100);
+      return { ratio, singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
+        width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
+    });
   });
-  expect(budget.singleStallRatio).toBe(1);
-  expect(budget.severeStallRatio).toBeLessThan(1);
-  expect(budget.afterIdle, 'A severe scheduling gap must not wake a settled, idle scene').toBe(budget.beforeIdle);
-  expect(budget.duringRecovery).toBe(budget.beforeRecovery);
-  expect(budget.slowRatio).toBeLessThan(1);
-  expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.slowRatio));
-  expect(budget.press).toBeGreaterThan(.99);
+  for (const budget of budgets) {
+    expect(budget.singleStallRatio).toBe(budget.ratio);
+    expect(budget.severeStallRatio, 'Scheduling stalls must never reduce handheld sharpness').toBe(budget.ratio);
+    expect(budget.afterIdle, 'A severe scheduling gap must not wake a settled, idle scene').toBe(budget.beforeIdle);
+    expect(budget.duringRecovery).toBe(budget.beforeRecovery);
+    expect(budget.slowRatio, 'Sustained slow frames must retain full resolution').toBe(budget.ratio);
+    expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.ratio));
+    expect(budget.press).toBeGreaterThan(.99);
+  }
 });
 
 test('paper lantern gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {

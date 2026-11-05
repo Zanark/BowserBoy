@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Animated console identity in Inspect and centered settings branding.
 Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo,53_README_LOGO_GLOWS.todo.
 
@@ -17,7 +17,7 @@ Tasks
 [x] Center only the cartridge/settings drawer's chrome logo.
 [x] Check actual browser animation/static fallback, mode returns and phone fit.
 [x] Refresh affected inspection footage/stills.
-[ ] Qualify the normal release.
+[x] Qualify the normal release.
 
 Acceptance criteria
 -------------------
@@ -35,8 +35,13 @@ drawer's asymmetric border rather than treating half-pixel rounding as failure.
 Existing chrome separation/shimmer tests pass. No supplied ROM execution.
 Replaced pickup-inspect GIF124frames/12.4s/7,045,470bytes and five affected
 sharedstills from actual local6fb1890; noROM loaded. Encoded samples reviewed.
+Actualsuccessful42100513643attempt2deploysdfd8003. Public30assets/README/
+twoGIFs match; nineactualpublicUI/nativecasespass1.5m, including animated
+Inspect logo/staticreducedmotion, tableidentity andcenteredsettingslogo.
+No uservisualapprovalclaim; automatic-resolutionblur rejection tracked in71.
 
 Completion log
 --------------
+2026-11-06: Actual public branding/settings qualification complete at dfd8003.
 2026-11-06: User adds inspection-brand and settings-logo-centering requests
 during the movable-dock release. Local implementation qualified; live pending.

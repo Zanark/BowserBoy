@@ -392,7 +392,6 @@ export class HandheldScene {
     const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
     if (this.renderedLastFrame) {
-      this.slowFrames = delta > .5 ? 6 : delta > .05 ? (this.slowFrames ?? 0) + 1 : 0;
       this.nextPaint = time + (delta > .05 ? Math.min(200, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
@@ -483,11 +482,6 @@ export class HandheldScene {
       !this.lastRotation?.equals(this.model.root.quaternion) || !this.lastCamera?.equals(this.camera.position);
     if (!this.source && !this.cartridgeMotion && !this.changed && !poseChanged && !buttonsMoving &&
         !adapting && this.screenIllumination.settled) return;
-    if (this.slowFrames >= 6 && this.renderer.getPixelRatio() > .5) {
-      this.renderer.setPixelRatio(Math.max(.5, this.renderer.getPixelRatio() * .75));
-      this.slowFrames = 0;
-      this.changed = true;
-    }
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
     if (this.cartridgeMotion) {

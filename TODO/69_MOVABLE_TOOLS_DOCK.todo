@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Movable, collapsible tools with an actual README demonstration.
 Dependencies: 66_SETTINGS_BACKDROP_DISMISS.todo,68_COMPLETE_README_REFRESH.todo.
 
@@ -14,7 +14,7 @@ Tasks
 [x] Preserve actions and skip-link access; Escape cancels a drag before menus.
 [x] Exercise real touch cancellation, desktop movement and small-phone fit.
 [x] Record and review actual movement/collapse GIF; add it to the README.
-[ ] Publish and monitor this deployment under the user's renewed authorization.
+[x] Publish and monitor this deployment under the user's renewed authorization.
 
 Acceptance criteria
 -------------------
@@ -71,9 +71,15 @@ oneworker/runner for timing-sensitive emulation/audio. Denominator derives
 from matrixjobtotal. CLI inventoryproves53casesexactlyonce6/6/6/5/5/5/5/5/5/5.
 YAMLsemanticcomparison preserves allotherworkflow fields/gates/deadlines.
 Actualhosted speedup/container gate/publicproof remainpending.
+Finalapplicationrelease: userretry42100513643attempt2SUCCESS deploysdfd8003.
+Actual30deployedassets+exactREADME/twoGIFsmatch; nineactualpublicUI/native
+casespass1.5m. OriginalPixelLabonly. Later7f78e5acontainer gatealsosucceeds.
+Thiscompletesfunctionalpublication, nothumanvisualapproval. Userrejects
+adaptive-resolution blur; separate71 restoresfullresolution before nextrelease.
 
 Completion log
 --------------
+2026-11-06: Actual public dock/media/native qualification complete at dfd8003.
 2026-11-06: User requests movable/collapsible dock and a README GIF, then
 explicitly resumes monitoring/fixing issues for this deployment.
 2026-11-06: Diagnose actual failed gate and retain logs/traces. Local and hosted

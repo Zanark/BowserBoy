@@ -183,7 +183,8 @@ test('enabling native VSync warns immediately about audio dropouts without overr
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   runtime = page.frames().find(frame => frame.url().endsWith('player.html'));
   await openTools(page);
-  await expect(page.locator('#notice')).toBeHidden();
+  await expect(page.locator('#notice')).not.toContainText('VSync is enabled');
+  await expect(page.locator('#notice')).not.toHaveClass(/error/);
   await page.locator('#native-open').click();
   await expect(warning).toContainText('VSync is enabled');
   expect(await runtime.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('enabled');
