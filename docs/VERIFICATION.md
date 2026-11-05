@@ -23,8 +23,20 @@ quick-actions/fullscreen and physical-branding/ordinary-framing cases pass in
 1.2m, without retries or skips. Initial test-fixture drawer/geometry assumptions
 are recorded in workstream 57; the final lifecycle explicitly hides the widget
 during LCD fullscreen. This is local evidence, not a deployed-site claim.
-Publication and independent public qualification remain pending. No new
-private-ROM/audio replay or human aesthetic acceptance is inferred.
+Source `c00d3233c3df802228e57e0ac580c0cf65e645c7` is pushed, but normal Pages
+`42050815740` is cancelled: build and browser shards 1/3 and 3/3 succeed,
+shard 2/3 cancels and deployment is skipped. Its exact annotation states
+**"The job has exceeded the maximum execution time of 15m0s"**. Chromium
+installation consumed 14m49s before browser tests began, leaving almost no
+job budget. No product assertion failure is established by that cancellation.
+Public-asset/browser qualification was not run after the failed gate.
+
+Publication remains blocked. The existing ordinary workflow-dispatch attempt
+requires repository-admin rights (HTTP 403); an authorized operator must start
+a fresh normal run. No failed-job retry, workaround, timeout/check relaxation
+or new commit solely to trigger CI is used. These blocker records are retained
+locally without another push. No new private-ROM/audio replay or human aesthetic
+acceptance is inferred.
 
 ## Deeper rear engraving, 2026-11-05
 

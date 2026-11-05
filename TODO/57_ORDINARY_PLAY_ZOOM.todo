@@ -1,5 +1,5 @@
-Status: IN_PROGRESS
-Milestone: Ordinary play zoom implemented and locally qualified; publication pending.
+Status: BLOCKED
+Milestone: Ordinary play zoom implemented/pushed; Pages publication blocked by CI job timeout.
 Dependencies: Completed workstreams 25 and 31.
 
 Purpose
@@ -43,10 +43,21 @@ fixture, not the application. An intersection assertion also showed ordinary
 DOM geometry remains in the viewport under native fullscreen; explicitly hide
 the ordinary widget on fullscreenchange and verify that lifecycle directly.
 No new private-ROM/audio replay, user aesthetic approval or deployment claimed.
+Sourcec00d3233c3df802228e57e0ac580c0cf65e645c7 is pushed. Normal Pages
+42050815740 passes build and verify1/3; verify2 cancels and deploy is skipped.
+The exact check annotation states "The job has exceeded the maximum execution
+time of 15m0s". Chromium installation takes14m49s, from15:02:10to15:16:59UTC;
+browser tests then cancel15:17:15UTC. This is not a product assertion failure.
+No actual public-asset/browser qualification runs after the failed gate.
+Existing ordinary workflow_dispatch already returns403/admin-rights required;
+do not repeat it, retry failed jobs, change credentials/permissions or manufacture
+a commit to trigger another gate. An authorized operator must start a fresh
+normal Pages run. Local blocker records are committed but held from push.
 
 Completion log
 --------------
 2026-11-05: User requests the fullscreen zoom control in non-fullscreen play.
 2026-11-05: Local implementation, focused native qualification and visual review
-complete. Prior website-logo release54 remains publication-blocked until a
-genuinely successful normal gate and independent public qualification.
+complete. Normal release42050815740 also hits the unchanged15mjob limit.
+57and prior website-logo release54 remain publication-blocked until a genuinely
+successful normal gate and independent public qualification. Watcher exited.

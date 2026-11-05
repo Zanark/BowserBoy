@@ -29,7 +29,16 @@ Completion log:
   Edge zoom/native/fullscreen/physical-framing cases pass1.2m. Original Pixel
   Lab runtime retained, range keys do not move the game, subsequent game input
   works;1440x1100/844x390/390x844/320x568 fit. Two actual captures reviewed.
-  Publication pending; no fresh private-ROM/audio or user approval claim.
+  Sourcec00d3233c3df802228e57e0ac580c0cf65e645c7 is pushed. Normal42050815740
+  passes build/verify1/verify3; verify2cancelled/deployskipped. Exact annotation:
+  "The job has exceeded the maximum execution time of 15m0s". Chromium install
+  consumes14m49s before tests, which cancel16slater. No product assertion
+  failure is established. Public qualification does not run. Existing
+  dispatch403boundary remains: no repeatdispatch, failedjobretry, dummycommit,
+  credential/account/permission change or timeout/check relaxation. Blocker
+  records held locally rather than pushing a commit to manufacture another
+  gate. Authorized operator must start a fresh normal run. No fresh private-
+  ROM/audio or user approval claim; publication remains BLOCKED.
 - 2026-11-05 / Updated-logo README shimmer:
   User replaces the white halo with the website's left-to-right shimmer and
   emphasizes using the newly supplied orbit/sparkle logo. Derive a transparent
