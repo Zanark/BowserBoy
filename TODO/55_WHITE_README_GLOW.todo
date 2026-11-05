@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: SUPERSEDED
 Milestone: Colorless white glow on the BowserBOY README logo.
 Dependencies: 53_README_LOGO_GLOWS.todo; 54_UPDATED_CHROME_LOGO.todo (artwork).
 
@@ -22,7 +22,9 @@ Completion evidence:
 - All264139halo-only pixels are neutral white; original opaque ink and
   transparent corners retained. Light/dark sheet reviewed.
 - Website/console source PNGs, console GIF/APNG and application sources unchanged.
-- Actual published README review and final continuity pending.
+- White-glow source published as d8f6632. User subsequently requests periodic
+  shimmer instead, explicitly on the updated logo; continue in workstream56.
 
 Completion log:
 - 2026-11-05: User explicitly requests a colorless white README umbrella glow.
+- 2026-11-05: Superseded by56before final acceptance; keep historical derivative.

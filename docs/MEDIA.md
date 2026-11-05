@@ -8,9 +8,29 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Updated-logo README shimmer, 2026-11-05
+
+The umbrella README image now uses `bowserboy-logo-shimmer.png`, replacing the
+static glow. Its source is the **new** 2148x732 chrome orbit/sparkle artwork
+whose SHA-256 is recorded below, not the previous logo or white-glow derivative.
+The source is resized once to1080pxwide; its supplied shapes/colors are retained.
+
+Run `python scripts\render-readme.py --shimmer-logo` to generate only this APNG.
+It mirrors the website's six-second cycle and1.8-second left-to-right sweep:
+1.7xbrightening, neutral white localized halo and the300%-wide feathered mask.
+Resting frames are exactly the padded, resized source, with no permanent halo.
+GitHub READMEs cannot run the website CSS, so the effect is baked into the image.
+
+The transparent1168x456APNG is4,745,072bytes,29encoded frames/6000mstotal/loop0.
+Identical rest frames are combined without changing timing; active samples
+remain50ms. All27changed-frame bounds advance left to right; original rest
+pixels and transparent corners pass exact checks. A bounded resting/left/right
+light/dark sheet is reviewed, not every animation frame. Original website/CSS,
+purple console PNG/GIF/APNG and all gameplay captures remain unchanged.
+
 ### White umbrella README glow, 2026-11-05
 
-The BowserBOY README halo is now neutral white (RGB255,255,255), superseding
+The intermediate BowserBOY README halo used neutral white (RGB255,255,255), superseding
 the silver-blue halo below. Only the umbrella color in `glowing_logos()` and
 its PNG derivative change: 2320x904 RGBA, 1,452,868 bytes. All264,139visible
 halo-only pixels are white; opaque supplied foreground pixels remain exact.

@@ -7,7 +7,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageChops, ImageEnhance, ImageFilter
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +41,36 @@ def glowing_logos():
             durations.append(source.info["duration"])
     frames[0].save(OUTPUT / "bowserboyadvanced-logo-glow.png", save_all=True,
                    append_images=frames[1:], duration=durations, loop=loop, disposal=0, blend=0)
+
+
+def shimmering_logo():
+    with Image.open(ROOT / "assets" / "website-logo.png") as source:
+        image = source.convert("RGBA")
+    image.thumbnail((1080, 1080), Image.Resampling.LANCZOS)
+    highlight = logo_glow(ImageEnhance.Brightness(image).enhance(1.7), (255, 255, 255))
+    padding = (highlight.width - image.width) // 2
+    base = Image.new("RGBA", highlight.size)
+    base.alpha_composite(image, (padding, padding))
+    frames, durations = [base], [3900]
+    for step in range(36):
+        # Match the website's 300%-wide mask, moving from 100% to 0%.
+        center = padding + image.width * (-.5 + 2 * step / 36)
+        row = Image.new("L", (base.width, 1))
+        row.putdata([
+            round(255 * max(0, 1 - abs(x - center) / (image.width * .24)))
+            for x in range(base.width)
+        ])
+        mask = row.resize(base.size)
+        sweep = highlight.copy()
+        sweep.putalpha(ImageChops.multiply(highlight.getchannel("A"), mask))
+        frame = base.copy()
+        frame.alpha_composite(sweep)
+        frames.append(frame)
+        durations.append(50)
+    frames.append(base)
+    durations.append(300)
+    frames[0].save(OUTPUT / "bowserboy-logo-shimmer.png", save_all=True,
+                   append_images=frames[1:], duration=durations, loop=0, disposal=0, blend=0)
 
 
 def banner():
@@ -112,11 +142,16 @@ if __name__ == "__main__":
     parser.add_argument("--capture", type=Path, help="capture.json from capture-readme.mjs")
     parser.add_argument("--ffmpeg", default=shutil.which("ffmpeg"), help="Path to an FFmpeg executable")
     parser.add_argument("--glow-logos", action="store_true", help="Only render README logo glows; preserve original media")
+    parser.add_argument("--shimmer-logo", action="store_true", help="Only animate the current BowserBOY website logo for the README")
     args = parser.parse_args()
     if args.glow_logos and args.capture:
         parser.error("--glow-logos cannot be combined with --capture")
+    if args.shimmer_logo and (args.glow_logos or args.capture):
+        parser.error("--shimmer-logo cannot be combined with --glow-logos or --capture")
     OUTPUT.mkdir(parents=True, exist_ok=True)
-    if args.glow_logos:
+    if args.shimmer_logo:
+        shimmering_logo()
+    elif args.glow_logos:
         glowing_logos()
     else:
         banner()

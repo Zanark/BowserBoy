@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Updated-logo README shimmer:
+  User replaces the white halo with the website's left-to-right shimmer and
+  emphasizes using the newly supplied orbit/sparkle logo. Derive a transparent
+  APNG directly from current website-logo.png, not from either older source or
+  glowing derivative. Reuse mask proportions/1.7xbrightness/six-second cycle/
+  1.8ssweep with neutral white localized light; no halo on resting frames.
+  Add isolated --shimmer-logo without changing existing rendering paths.
+  New1168x456APNG4745072bytes preserves6000ms/infinite loop in29encodedframes;
+  duplicate rest frames combine, active50msframes remain. Exact source SHA,
+  source-only rest pixels,27left-to-right changes/corners and unchanged website/
+  console media pass. Bounded light/dark rest/left/right sheet reviewed.
+  Publication/native GitHub animation checks pending.55is explicitly superseded.
 - 2026-11-05 / White README umbrella glow:
   User requests colorless white rather than silver-blue on the BowserBOY logo.
   Set only its generator halo to RGB255,255,255; regenerate only that PNG.
@@ -21,7 +33,9 @@ Completion log:
   derivative2320x904/1452868bytes. Light/dark sheet reviewed. Website source/CSS,
   runtime and purple console PNG/GIF/APNG remain unchanged. Initial unchanged
   CSS byte comparison hits checkoutCRLF versus committedLF; Git diff confirms
-  no source change instead. Publication pending.
+  no source change instead. Source d8f6632published. Actual GitHub helper again
+  sees zero visible images before settling; no publication rendering claimed.
+  User supersedes55with56before final acceptance; historical white PNG retained.
 - 2026-11-05 / Updated chrome orbit and sparkle logo:
   User supplies revised umbrella artwork. Copy its original PNG bytes to the
   existing website path, update all three intrinsic dimensions and regenerate

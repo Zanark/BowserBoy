@@ -1,0 +1,36 @@
+Status: IN_PROGRESS
+Milestone: Website-style periodic shimmer on the updated README umbrella logo.
+Dependencies: 54_UPDATED_CHROME_LOGO.todo (artwork); 50_WEBSITE_LOGO_SHIMMER.todo.
+
+Purpose:
+Replace the static README umbrella glow with a left-to-right white shimmer,
+using the latest supplied chrome orbit and sparkle logo, not earlier artwork.
+
+Tasks:
+- [x] Reuse updated assets/website-logo.png and website mask/timing design.
+- [x] Add an isolated --shimmer-logo APNG renderer; preserve other media modes.
+- [x] Generate and check transparent animated output and six-second loop.
+- [ ] Review bounded resting/left/right samples and actual GitHub animation.
+- [ ] Reconcile documentation and owned continuity.
+
+Acceptance criteria:
+- Exact updated source SHA256:
+  5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300.
+- Neutral white localized shimmer moves left to right with a resting interval.
+- Six-second cycle and 1.8-second sweep mirror the website's timing.
+- No permanent full-logo halo; APNG retains smooth transparency without a matte.
+- Website/console artwork, CSS effects and gameplay media remain unchanged.
+- README image works natively on GitHub and remains below10MiB.
+
+Completion evidence:
+- Source SHA256 matches the updated supplied artwork. APNG1168x456/4745072bytes,
+  29encodedframes/6000ms/loop0; duplicate rest frames merge, active frames50ms.
+- Exact rest frame matches padded/resized updated source with no broad halo.
+- All27changed-frame bounds move left to right; every frame has clear corners.
+- Website/console source PNGs, console GIF/APNG and application sources exact.
+- Bounded resting/left/right light/dark sheet reviewed. Invalid mixed renderer
+  flags reject explicitly. Actual GitHub publication/native-animation pending.
+
+Completion log:
+- 2026-11-05: User replaces the white-glow request with website-style shimmer
+  and explicitly confirms that it must use the newly updated chrome logo.

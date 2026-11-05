@@ -54,7 +54,8 @@ BowserBOY workstreams
 52_CONSOLE_SCOPED_README.todo - DONE: published BowserBOY umbrella and purple BowserBOYADVANCED showcase; all14old embeds plus console banner and actual GitHub navigation verified.
 53_README_LOGO_GLOWS.todo - DONE: silver-blue umbrella/purple console glows published; actual GitHub images, preserved showcase and retained native animation verified.
 54_UPDATED_CHROME_LOGO.todo - IN_PROGRESS: updated supplied chrome orbit and sparkle umbrella artwork; preserve purple console branding, glow and shimmer.
-55_WHITE_README_GLOW.todo - IN_PROGRESS: white-only umbrella README halo; website and purple console effects unchanged.
+55_WHITE_README_GLOW.todo - SUPERSEDED: white-only halo published; user replaces it with periodic shimmer in56.
+56_README_LOGO_SHIMMER.todo - IN_PROGRESS: localized white shimmer on the updated chrome orbit/sparkle logo; preserve website/console effects.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,
