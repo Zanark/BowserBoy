@@ -308,6 +308,10 @@ Native **VSync defaults off** so audio synchronization can pace normal gameplay.
 Explicit saved VSync preferences are preserved. If you previously enabled it in
 Advanced settings and still get interruptions, switch it off; the measured enabled
 configuration can drain the playback queue despite its allocated capacity.
+Enabling VSync now shows a warning immediately in the native settings panel:
+display-paced timing can cause audio crackling, stutter and dropouts. Disable
+VSync to restore audio-paced playback. Opening that panel with a saved enabled
+choice repeats the warning; it does not silently change your selection.
 
 **Advanced EmulatorJS settings**, at the top of the sidebar, opens the actual native graphics, speed,
 screen-capture settings and backend core options in a separate panel. It keeps

@@ -7,6 +7,26 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Native VSync audio warning, 2026-11-05
+
+Enabling native VSync now immediately displays a warning in the existing
+settings-panel notification host. It explains possible audio crackling,
+stutter/dropouts and disabling VSync to restore audio-paced playback. Opening
+settings with a saved enabled choice repeats the warning without overriding
+that choice. Default-off, persistence and existing speed coordination remain.
+
+The actual native-menu regression fails the old implementation's hidden notice.
+An initial hook at `EJS_ready` fails because the native setting method is not
+installed yet; install it at `EJS_onGameStart`, alongside existing adapter
+setup. Test persistence must await asynchronous settings close; after reload
+the notification is correctly hidden until opening enabled settings.
+One local speed sample reads 3.84x at selected 2x; preserve all clock bounds
+and record that failure rather than changing timing or relaxing the gate.
+The final three focused warning/native-settings/speed cases pass in 59.1s.
+Syntax/build and all 11 unit cases pass, and the actual warning crop is reviewed.
+No new private-ROM/audio qualification or human acceptance is claimed.
+Hosted delivery remains pending until separately recorded.
+
 ## Documentation and public-media refresh, 2026-11-05
 
 README, guide, saving reference, architecture and book entry now distinguish

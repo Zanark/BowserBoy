@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Native VSync warning:
+  User requests a notification explaining VSync risk. Preserve the off default,
+  explicit enabled choices and speed coordination. Actual native-menu enable
+  now warns about possible crackling, stutter/dropouts and disabling VSync.
+  Repeat on opening settings with saved enabled choice. Reuse trusted notice
+  channel/native-modal host and existing warning styling.
+  Red actual-menu case proves old notice stays hidden. Early EJS_ready hook
+  fails (native method absent); move to EJS_onGameStart. Persistence assertion
+  must await async close; reload has no notice to dismiss. One unchanged clock
+  sample reads3.84x at selected2x; keep bounds and record failure. Final three
+  focused cases pass59.1s; syntax/build/11units pass; warning crop inspected.
+  No new private-ROM/audio test or human acceptance. Normal release pending.
 - 2026-11-05 / Current BowserBOY README and documentation:
   User requests refresh after website/console split. Re-record five realpublic
   interactions and eightstills at1100x850withoriginalPixelLab; zeroerrors.

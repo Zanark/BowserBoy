@@ -83,6 +83,12 @@ function configure(value) {
   emulator.gameManager.setVSync(!emulator.isFastForward && emulator.getSettingValue('vsync') === 'enabled');
 }
 
+function warnVSync() {
+  if (window.EJS_emulator.getSettingValue('vsync') === 'enabled') {
+    send('notice', { error: true, message: 'VSync is enabled. Display-paced timing can cause audio crackling, stutter and dropouts. Disable VSync to restore audio-paced playback.' });
+  }
+}
+
 function settings(open) {
   manager();
   if (typeof open !== 'boolean') throw new Error('Invalid settings panel mode.');
@@ -111,6 +117,7 @@ function settings(open) {
       row.click();
     });
   }
+  if (open) warnVSync();
   return options;
 }
 
@@ -219,6 +226,14 @@ function initialize(data) {
       try {
         started = true;
         window.EJS_emulator.canvas.dataset.bbaDisplay = 'true';
+        const emulator = window.EJS_emulator;
+        const changeSettingOption = emulator.changeSettingOption.bind(emulator);
+        emulator.changeSettingOption = (option, ...values) => {
+          const wasEnabled = option === 'vsync' && emulator.getSettingValue('vsync') === 'enabled';
+          const result = changeSettingOption(option, ...values);
+          if (option === 'vsync' && !wasEnabled) warnVSync();
+          return result;
+        };
         protectAudio(window.EJS_emulator);
         configure(preferences);
         URL.revokeObjectURL(romUrl);

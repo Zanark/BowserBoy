@@ -156,6 +156,47 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   expect(await resumed.evaluate(() => window.EJS_emulator.getSettingValue('ff-ratio'))).toBe('2.0');
 });
 
+test('enabling native VSync warns immediately about audio dropouts without overriding the choice', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
+  await page.goto('./');
+  await startDemo(page);
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await page.locator('#native-open').click();
+  let runtime = page.frames().find(frame => frame.url().endsWith('player.html'));
+  expect(await runtime.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('disabled');
+  await page.locator('#notice-dismiss').click();
+  await runtime.getByRole('button', { name: 'Graphics Settings', exact: true }).click();
+  await runtime.getByRole('button', { name: /^VSync/ }).click();
+  await runtime.getByRole('button', { name: 'Enabled', exact: true }).click();
+  const warning = page.locator('#native-notice-host #notice');
+  await expect(warning).toBeVisible();
+  await expect(warning).toHaveClass(/error/);
+  await expect(warning).toContainText('VSync is enabled');
+  await expect(warning).toContainText('crackling, stutter and dropouts');
+  await expect(warning).toContainText('Disable VSync');
+  await warning.screenshot({ path: test.info().outputPath('vsync-warning.png') });
+  expect(await runtime.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('enabled');
+  await page.locator('#native-close').click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('bowser-boy-advance-preferences')).emulatorOptions?.vsync)).toBe('enabled');
+  await page.reload();
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  runtime = page.frames().find(frame => frame.url().endsWith('player.html'));
+  await openTools(page);
+  await expect(page.locator('#notice')).toBeHidden();
+  await page.locator('#native-open').click();
+  await expect(warning).toContainText('VSync is enabled');
+  expect(await runtime.evaluate(() => window.EJS_emulator.getSettingValue('vsync'))).toBe('enabled');
+  await page.locator('#notice-dismiss').click();
+  await runtime.getByRole('button', { name: 'Graphics Settings', exact: true }).click();
+  await runtime.getByRole('button', { name: /^VSync/ }).click();
+  await runtime.getByRole('button', { name: 'Disabled', exact: true }).click();
+  await expect(warning).toBeHidden();
+  await runtime.getByRole('button', { name: /^VSync/ }).click();
+  await runtime.getByRole('button', { name: 'Enabled', exact: true }).click();
+  await expect(warning).toBeVisible();
+});
+
 test('screen shader menu exposes every native CRT preset, renders each and remembers the selection', async ({ page }, testInfo) => {
   page.on('dialog', dialog => dialog.accept());
   const errors = [];

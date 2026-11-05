@@ -1,0 +1,45 @@
+Status: IN_PROGRESS
+Milestone: Warn when VSync is enabled without overriding the user's preference.
+Dependencies: 44_AUDIO_PACED_DEFAULT.todo.
+
+Purpose:
+Explain the known audio risk at the moment someone enables native VSync.
+Keep the existing VSync-off default, saved choices and fast-forward behavior.
+
+Tasks:
+- [x] Add an immediate warning to the existing native-panel notification host.
+- [x] Explain crackling, stutter/dropouts and how to restore audio-paced playback.
+- [x] Re-warn when opening settings with an explicitly saved enabled preference.
+- [x] Keep native method behavior, choice and preference persistence intact.
+- [x] Complete focused browser qualification and inspect the actual warning.
+- [ ] Publish through the normal hosted gate and independently verify delivery.
+- [ ] Update affected documentation, final evidence and owned continuity.
+
+Acceptance criteria:
+- The actual native VSync menu shows the warning immediately upon enabling.
+- Warning severity and text are visible inside the open settings dialog.
+- Explicit enabled choices remain enabled and remembered; no forced reset.
+- Disabling/default-off does not create an enabled warning.
+- Dismissal is respected until a new enable or enabled-panel opening.
+- Existing native settings and speed/VSync coordination remain functional.
+- Risk is described as possible audio starvation, not universal guaranteed failure.
+
+Completion evidence:
+- Actual new native-menu regression fails old implementation: notice stays hidden.
+- Initial hook at EJS_ready fails because changeSettingOption is not installed yet.
+  Move the hook to EJS_onGameStart, alongside existing runtime adapter setup.
+- Native settings/lifecycle regression passes after that correction.
+- New persistence assertion initially reads before async settings close completes;
+  wait for the actual persisted VSync value rather than changing product behavior.
+- Focused speed sample once reads 3.84x at selected 2x; preserve the clock bounds
+  and record subsequent qualification separately. No production timing changes.
+- The new test initially tries dismissing a notification that is correctly hidden
+  after reload. Assert that hidden state before opening the enabled panel instead.
+- Final three focused browser cases pass in 59.1 seconds: actual enable warning,
+  persistence/reopening/disable/re-enable, existing native lifecycle/settings,
+  and fast-forward/native VSync cartridge-clock coordination.
+- Syntax/build and all 11 unit cases pass; actual warning crop visually inspected.
+- Remaining browser, publication and human acceptance are not implied.
+
+Completion log:
+- 2026-11-05: User requests a notification explaining what enabling VSync risks.

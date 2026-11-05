@@ -325,7 +325,7 @@ window.addEventListener('message', (event) => {
       if (launchCallbacks) launchCallbacks.reject(new Error(data.message));
       else notice(`Emulator error: ${data.message}`, true);
       break;
-    case 'bba:notice': notice(data.message); break;
+    case 'bba:notice': notice(data.message, data.error === true); break;
     case 'bba:tools': openTools(); break;
     case 'bba:settings-close': void closeNativeSettings(); break;
     case 'bba:control':
