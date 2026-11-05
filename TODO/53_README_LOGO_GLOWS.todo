@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Theme-independent glows on both README logos.
 Dependencies: 52_CONSOLE_SCOPED_README.todo.
 
@@ -12,8 +12,8 @@ Tasks:
 - [x] Add an isolated --glow-logos generator mode without regenerating old media.
 - [x] Verify original opaque ink, all frame timings, transparency and file size.
 - [x] Review bounded first-frame samples on both light and dark backgrounds.
-- [ ] Publish and verify actual GitHub rendering and retained animation.
-- [ ] Record final delivery and owned continuity.
+- [x] Publish and verify actual GitHub rendering and retained animation.
+- [x] Record final delivery and owned continuity.
 
 Acceptance criteria:
 - Both standalone README logos have soft colored halos, not rectangular mattes.
@@ -30,9 +30,15 @@ Completion evidence:
   corners, added halo, original sources and all13unchanged gameplay embeds.
 - Conflicting --glow-logos/--capture flags reject before rendering.
 - First-frame light/dark contact sheet reviewed. No full-animation visual review
-  or fresh application/audio qualification claimed. Actual public checks pending.
+  or fresh application/audio qualification claimed.
+- Published cb9ed05903472a83957e6df374bc622fc067473f. Actual GitHub checks pass:
+  both glow assets decode,15visible image references and console navigation/
+  hierarchy retained. Two actual console-logo captures210msapart differ,
+  confirming native APNG animation. Actual public chrome/console crops reviewed.
 
 Completion log:
 - 2026-11-05: User requests glow on all README logos. Bake two transparent
   derivatives rather than relying on README CSS. Keep original GIF untouched;
   full-alpha APNG retains both smooth transparency and its original motion.
+- 2026-11-05: Publish and independently verify actual GitHub glow rendering and
+  retained animation. No application, original-asset or gameplay-media change.

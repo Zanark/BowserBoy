@@ -52,7 +52,7 @@ BowserBOY workstreams
 50_WEBSITE_LOGO_SHIMMER.todo - DONE: chrome header/six-second shimmer independently live;43hosted cases,29public assets and two public identity/shimmer cases pass.
 51_DEEPER_REAR_ENGRAVING.todo - DONE: another17%wider rear logo/four-times-deeper cuts independently live;43hosted cases,29public assets and actual public branding pass.
 52_CONSOLE_SCOPED_README.todo - DONE: published BowserBOY umbrella and purple BowserBOYADVANCED showcase; all14old embeds plus console banner and actual GitHub navigation verified.
-53_README_LOGO_GLOWS.todo - IN_PROGRESS: silver-blue umbrella glow and animated purple console glow locally verified; actual GitHub rendering/motion pending.
+53_README_LOGO_GLOWS.todo - DONE: silver-blue umbrella/purple console glows published; actual GitHub images, preserved showcase and retained native animation verified.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

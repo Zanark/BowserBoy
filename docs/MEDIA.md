@@ -25,8 +25,13 @@ The two files are 1,391,871 and 8,969,021 bytes, each below 10MiB.
 
 All-frame numeric ink/timing/transparency checks pass. Only a bounded first-frame
 light/dark sheet is visually reviewed locally; this is not a full-animation
-review or fresh application/audio qualification. Actual GitHub rendering and
-native animation qualification are pending.
+review or fresh application/audio qualification.
+
+Published source `cb9ed05903472a83957e6df374bc622fc067473f`: actual GitHub
+rendering retains all 15 visible image references, console navigation and
+showcase hierarchy. Both new logos decode; two actual console-logo captures
+210ms apart differ, confirming native APNG animation. Actual public chrome and
+console crops are reviewed. Original artwork and gameplay captures stay exact.
 
 ### Console-scoped README, 2026-11-05
 

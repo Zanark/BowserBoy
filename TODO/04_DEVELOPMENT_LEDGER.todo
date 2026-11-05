@@ -24,6 +24,10 @@ Completion log:
   All-frame numeric ink/timing/transparency checks pass; files1.39/8.97MB each
   below10MiB. First-frame light/dark sheet reviewed; no full visual replay.
   Actual GitHub publication/rendered glow/native animation checks pending.
+  Published cb9ed05903472a83957e6df374bc622fc067473f; actual GitHub checks
+  both new logos,15visible references, original hierarchy and console jump.
+  Two actual console crops210msapart differ, proving retained native APNG
+  motion; actual chrome and console crops reviewed.53DONE. No app gate replay.
 - 2026-11-05 / Console-scoped README:
   User clarifies the umbrella project must list BowserBOYADVANCED as a supported
   console, with its own purple logo and all prior GIFs. Keep chrome BowserBOY at
