@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / White README umbrella glow:
+  User requests colorless white rather than silver-blue on the BowserBOY logo.
+  Set only its generator halo to RGB255,255,255; regenerate only that PNG.
+  All264139halo-only pixels are white, original opaque ink/corners remain exact;
+  derivative2320x904/1452868bytes. Light/dark sheet reviewed. Website source/CSS,
+  runtime and purple console PNG/GIF/APNG remain unchanged. Initial unchanged
+  CSS byte comparison hits checkoutCRLF versus committedLF; Git diff confirms
+  no source change instead. Publication pending.
 - 2026-11-05 / Updated chrome orbit and sparkle logo:
   User supplies revised umbrella artwork. Copy its original PNG bytes to the
   existing website path, update all three intrinsic dimensions and regenerate

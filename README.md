@@ -1,4 +1,4 @@
-[![BowserBOY - chrome orbit and sparkle logo with silver-blue glow](docs/images/bowserboy-logo-glow.png)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY - chrome orbit and sparkle logo with white glow](docs/images/bowserboy-logo-glow.png)](https://zanark.github.io/BowserBoyAdvance/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>

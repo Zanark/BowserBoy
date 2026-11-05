@@ -1,0 +1,28 @@
+Status: IN_PROGRESS
+Milestone: Colorless white glow on the BowserBOY README logo.
+Dependencies: 53_README_LOGO_GLOWS.todo; 54_UPDATED_CHROME_LOGO.todo (artwork).
+
+Purpose:
+Replace the umbrella README halo's silver-blue tint with white, without
+recoloring the supplied chrome artwork or changing website/console effects.
+
+Tasks:
+- [x] Set only the umbrella README glow color to255,255,255.
+- [x] Regenerate that derivative and verify white halo/original opaque pixels.
+- [ ] Review the bounded light/dark preview and actual published README logo.
+- [ ] Reconcile documentation and owned continuity.
+
+Acceptance criteria:
+- Halo-only pixels are neutral white, with original foreground ink retained.
+- Website source PNG/CSS, purple console PNG/APNG and gameplay media unchanged.
+- README keeps its existing structure, console banner and image references.
+
+Completion evidence:
+- Generator syntax and diff checks pass. PNG2320x904/1452868bytes.
+- All264139halo-only pixels are neutral white; original opaque ink and
+  transparent corners retained. Light/dark sheet reviewed.
+- Website/console source PNGs, console GIF/APNG and application sources unchanged.
+- Actual published README review and final continuity pending.
+
+Completion log:
+- 2026-11-05: User explicitly requests a colorless white README umbrella glow.

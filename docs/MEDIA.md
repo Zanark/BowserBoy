@@ -8,6 +8,15 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### White umbrella README glow, 2026-11-05
+
+The BowserBOY README halo is now neutral white (RGB255,255,255), superseding
+the silver-blue halo below. Only the umbrella color in `glowing_logos()` and
+its PNG derivative change: 2320x904 RGBA, 1,452,868 bytes. All264,139visible
+halo-only pixels are white; opaque supplied foreground pixels remain exact.
+Transparent corners are retained. The bounded light/dark sheet is reviewed.
+Website PNG/CSS, purple console PNG/APNG and gameplay media remain unchanged.
+
 ### Updated chrome orbit and sparkle logo, 2026-11-05
 
 The user's replacement BowserBOY artwork is copied byte-for-byte to

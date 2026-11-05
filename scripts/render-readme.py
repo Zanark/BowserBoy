@@ -31,7 +31,7 @@ def logo_glow(image, color):
 
 def glowing_logos():
     with Image.open(ROOT / "assets" / "website-logo.png") as source:
-        logo_glow(source.convert("RGBA"), (112, 166, 255)).save(OUTPUT / "bowserboy-logo-glow.png")
+        logo_glow(source.convert("RGBA"), (255, 255, 255)).save(OUTPUT / "bowserboy-logo-glow.png")
     frames, durations = [], []
     with Image.open(OUTPUT / "orbital-logo.gif") as source:
         loop = source.info["loop"]
