@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Settings drawer backdrop dismissal:
+  User wants the blurred area outside settings to close the drawer. Require
+  matching pointer press/click outside its bounds; padding/inside clicks and
+  drags beginning inside stay open. Reuse existing close lifecycle, including
+  remap cancellation, notices and console focus. No native-settings change.
+  Baseline fails at outside click; final responsive desktop/landscape case
+  passes6.9s, including volume interaction, drag, focus, X and Escape.
+  Syntax/build/12units pass. No ROM needed; normal publication pending.
 - 2026-11-05 / LCD light balance correction:
   Public source still has old120forward intensity/no control spill. Reduce
   forward gain to12 and use fourth-root*.1 local control fill: darker pictures

@@ -5,6 +5,38 @@ import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 
+test('settings drawer closes on a backdrop click but not inside clicks or drags from inside', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  const drawer = page.locator('#tools');
+  for (const [width, height] of [[1440, 1100], [844, 390]]) {
+    await page.setViewportSize({ width, height });
+    await page.locator('#tools-open').click();
+    const box = await drawer.boundingBox();
+    const outside = { x: box.x / 2, y: height / 2 };
+    const inside = { x: box.x + 5, y: 60 };
+    await page.mouse.click(inside.x, inside.y);
+    await expect(drawer).toBeVisible();
+    await page.locator('#volume').fill('37');
+    await expect(drawer).toBeVisible();
+    await page.mouse.move(inside.x, inside.y);
+    await page.mouse.down();
+    await page.mouse.move(outside.x, outside.y);
+    await page.mouse.up();
+    await expect(drawer).toBeVisible();
+    await page.mouse.click(outside.x, outside.y);
+    await expect(drawer).toBeHidden();
+    await expect(page.locator('#scene-canvas')).toBeFocused();
+    await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
+    await page.locator('#tools-open').click();
+    await page.locator('#tools-close').click();
+    await expect(drawer).toBeHidden();
+    await page.locator('#tools-open').click();
+    await page.keyboard.press('Escape');
+    await expect(drawer).toBeHidden();
+  }
+});
+
 test('BowserBOY website branding is separate from the purple GBA console artwork', async ({ page }) => {
   await page.goto('./');
   await ready(page);

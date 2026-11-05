@@ -690,7 +690,23 @@ for (const [id, target] of [['quick-controls', 'controls-heading'], ['quick-slot
   });
 }
 $('tools-close').addEventListener('click', () => $('tools').close());
+let toolsBackdropPointer = null;
+function isToolsBackdrop(event) {
+  const { left, right, top, bottom } = $('tools').getBoundingClientRect();
+  return event.target === $('tools') &&
+    (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom);
+}
+$('tools').addEventListener('pointerdown', (event) => {
+  toolsBackdropPointer = isToolsBackdrop(event) ? event.pointerId : null;
+});
+$('tools').addEventListener('pointercancel', () => { toolsBackdropPointer = null; });
+$('tools').addEventListener('click', (event) => {
+  const dismiss = toolsBackdropPointer === event.pointerId && isToolsBackdrop(event);
+  toolsBackdropPointer = null;
+  if (dismiss) $('tools').close();
+});
 $('tools').addEventListener('close', () => {
+  toolsBackdropPointer = null;
   remappingAction = null;
   $('key-status').textContent = 'Escape is reserved for this drawer.';
   renderPreferences();

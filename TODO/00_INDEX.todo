@@ -65,6 +65,7 @@ BowserBOY workstreams
 63_THREE_SECOND_README_SHIMMER.todo - DONE: published24910fd; exact3000ms loop, unchanged pixels and actual public native animation verified.
 64_README_DEMO_PRESENTATION.todo - DONE: named game/box-art section removed and actual public README verified a56844f; ROM retained for GIF footage.
 65_LCD_LIGHT_BALANCE.todo - BLOCKED: balance qualified/pushed09d8413;42077309344passes new lighting but existing cartridge assertion/600s suite budget prevent deployment.
+66_SETTINGS_BACKDROP_DISMISS.todo - IN_PROGRESS: outside-click drawer dismissal locally qualified; inside interactions and existing close paths preserved.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

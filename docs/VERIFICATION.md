@@ -7,6 +7,19 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Settings drawer backdrop dismissal, 2026-11-05
+
+The blurred backdrop now closes the cartridge/settings drawer only when the
+same pointer starts and clicks outside its bounds. Inside padding, settings
+interactions and drags starting inside do not close it. Existing close handling
+still clears remapping, relocates notices and returns focus to the console.
+
+The regression fails on the original outside-click behavior. Final desktop and
+landscape checks pass in 6.9s, covering inside clicks, volume interaction, drag
+protection, backdrop dismissal, focus and unchanged X/Escape paths. Syntax,
+build and all 12 units pass. No ROM or native advanced-settings change.
+Normal publication is pending; local verification is not a live-site claim.
+
 ## LCD light balance correction, 2026-11-05
 
 The public lighting source still used the old 120-intensity forward light

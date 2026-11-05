@@ -326,6 +326,8 @@ Keys, sound and filter settings persist in checked local browser storage; failed
 explicitly apply only to the current session. Escape remains reserved for tools
 or exiting screen fullscreen.
 Opening the drawer does not automatically pause gameplay.
+Click the blurred area outside the drawer, press Escape or use its close button
+to return to the console. Clicking inside or dragging from inside does not dismiss it.
 
 Audio automatically uses a larger native playback reserve, a short startup
 cushion, smooth volume/mute changes and peak compression to reduce dropouts and

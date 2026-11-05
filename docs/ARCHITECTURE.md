@@ -436,6 +436,9 @@ there; the playing LCD contains no application buttons. Notices appear in
 normal flow directly below the header logo or inside an open drawer. Opening tools releases held
 keys but does not pause the core. Fullscreen retains the entire scene and its
 tools, rather than only the source iframe.
+Backdrop dismissal requires both the pointer press and click to land outside
+the drawer's bounds. Dialog padding and drags starting inside do not dismiss it.
+It uses the existing close lifecycle for remap cleanup, notices and game focus.
 
 Notices share translucent violet glass, an 18px backdrop blur, a subtle
 highlight/border and a 44px dismiss target. Error glass has a warmer tint.

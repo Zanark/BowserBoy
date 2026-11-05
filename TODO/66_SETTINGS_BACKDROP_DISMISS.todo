@@ -1,0 +1,35 @@
+Status: IN_PROGRESS
+Milestone: Close settings by clicking the blurred area outside the drawer.
+Dependencies: Existing tools modal and close lifecycle.
+
+Purpose
+-------
+Make the visible settings backdrop a natural dismissal target without
+interrupting settings edits or accidentally activating the console underneath.
+
+Tasks
+-----
+[x] Reproduce the missing outside-click dismissal.
+[x] Require matching pointer press/click outside the drawer bounds.
+[x] Preserve inside/padding clicks, drags starting inside, X and Escape.
+[x] Verify responsive behavior, settings interaction and console focus.
+[x] Update guide, architecture, verification and development ledger.
+[ ] Complete normal publication and independent public qualification.
+
+Acceptance criteria
+-------------------
+Clicking the blurred backdrop closes settings and restores console focus.
+Clicks inside and drags starting inside stay open. Reuse existing cleanup;
+do not change native advanced settings, gameplay or automatic pause behavior.
+
+Completion evidence
+-------------------
+Original behavior fails the actual outside-click regression. Final desktop/
+landscape case passes6.9s, including padding/volume interaction, drag safety,
+backdrop close, focus, power-off preservation and X/Escape. Syntax/build and
+all12units pass. No ROM execution. Publication pending.
+
+Completion log
+--------------
+2026-11-05: User requests blurred-area click dismissal; implemented and
+locally qualified without changing modal styling or native advanced settings.
