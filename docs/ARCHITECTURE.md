@@ -146,6 +146,13 @@ audio quality remain separate qualification boundaries.
 
 ## Actual 3D handheld and native CRT screen
 
+Action-button letters have dedicated rounded quadratic/cubic outlines and
+counters, sampled once into the shared cap-cut/floor/wall geometry. Broader
+.18x.19 proportions thicken A's strokes and round B's bowls without changing
+the polygon font used by other molded labels. Actual cap openings expose
+the .028-depth-coordinate floors; counters remain solid at dome height.
+Groove material, original cap rim normals and shared press motion are retained.
+
 `src/handheld.js` constructs original beveled front/rear shells, a volumetric
 bezel, buttons, speaker, ports, battery cover and screws. Wood grain and
 decorative cartridge labels are locally drawn canvas textures, not reference

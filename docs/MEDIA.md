@@ -60,6 +60,10 @@ identity case (16.4s). It removes the remaining exterior light contour, not
 the letters or other logos. These README recordings remain the earlier
 `8a1d6a3` media edition; do not relabel them as borderless-release footage.
 
+The subsequent rounded/heavier A/B contour refinement also postdates these
+recordings. Existing GIFs/stills retain their source edition; current shape
+qualification belongs to the [verification record](VERIFICATION.md#rounded-heavier-ab-grooves-2026-11-05).
+
 ### Current refresh - manufactured controls and glass
 
 **Previous edition:** retained for its historical evidence and existing links.

@@ -459,6 +459,16 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
       const groove = surface(id === 'a' ? 0 : -.06, id === 'a' ? -.02 : 0);
       const blank = surface(.12, 0);
       const counter = surface(id === 'a' ? 0 : -.0075, id === 'a' ? .02 : .04);
+      floor.geometry.computeBoundingBox();
+      const bounds = floor.geometry.boundingBox;
+      const corner = surface(bounds.min.x + .0015, bounds.max.y - .0015);
+      const stem = surface(bounds.min.x + .0015, bounds.max.y - .018);
+      const stroke = [];
+      if (id === 'a') {
+        for (let x = -.1; x < 0; x += .001) {
+          if (surface(x, .01)?.mesh === floor) stroke.push(x);
+        }
+      }
       walls.geometry.computeBoundingBox();
       return {
         floorReached: groove?.mesh === floor,
@@ -468,6 +478,9 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
         contrast: (luminance(cap.material.color) + .05) / (luminance(floor.material.color) + .05),
         unprinted: floor.material.map === null && walls.material.map === null,
         shadowed: floor.receiveShadow && walls.castShadow && walls.receiveShadow,
+        strokeWidth: stroke.length ? stroke.at(-1) - stroke[0] : null,
+        roundedCornerAtCap: corner && blank ? Math.abs(corner.z - blank.z) < .004 && corner.mesh !== floor : false,
+        nearbyStemFloor: stem?.mesh === floor,
       };
     });
     const markings = [
@@ -524,6 +537,9 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     expect(recess.unprinted && recess.shadowed).toBe(true);
   }
   expect(branding.markings).toHaveLength(8);
+  expect(branding.recesses[0].strokeWidth).toBeGreaterThan(.039);
+  expect(branding.recesses[1].roundedCornerAtCap).toBe(true);
+  expect(branding.recesses[1].nearbyStemFloor).toBe(true);
   for (const marking of branding.markings) {
     expect(marking).not.toBeNull();
     expect(marking.geometry).toBe('ExtrudeGeometry');

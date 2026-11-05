@@ -1,0 +1,37 @@
+Status: IN_PROGRESS
+Milestone: Softer, heavier actual A/B letterforms.
+Dependencies: Completed workstreams 36/38; preserve recessed geometry/color.
+
+Purpose:
+Round the sharp A/B edges and thicken A's thin strokes, following the user's
+earlier soft-letter reference. This does not claim to resolve audio distortion.
+
+Tasks:
+- [x] Reproduce the narrow old A failing the real stroke-width requirement.
+- [x] Build dedicated curved action glyphs without changing shared shell labels.
+- [x] Qualify real floor depth, counters, corner rounding and pressed lighting.
+- [x] Review a bounded actual-render comparison; preserve caps and groove shade.
+- [ ] Complete normal delivery and independent public qualification.
+
+Acceptance criteria:
+- A has visibly heavier strokes; B has rounded stem corners and curved bowls.
+- Actual cutouts, inset floors/walls and solid cap-height counters remain.
+- Other molded lettering, cap silhouettes, shade, motion and bezel stay intact.
+- Existing physical, viewport, native and delivery requirements remain intact.
+
+Completion evidence:
+- Old A floor width .033 fails required >.039 in the existing real ray case.
+- Dedicated quadratic/cubic A/B outlines and counters use .18x.19 proportions.
+  The shared polygon font, cap dome/rim normals and .028 floor remain unchanged.
+- Syntax/build/all11units pass; complete branding/recess/framing/fullscreen
+  and actual pressed-cap lighting cases pass22.2s. Existing assertions remain,
+  with additional real A-width and B-rounded-corner/adjacent-stem probes.
+- Actual old/new warm-lamp crops reviewed: heavier A, curved B, same caps/shade.
+- Hosted/public delivery pending; user aesthetic acceptance not inferred.
+
+Completion log:
+- 2026-11-05: User requests softer A/B forms, especially thicker A strokes.
+  Use dedicated action-cap curves rather than modifying shared molded glyphs.
+  Local qualification complete;42remains IN_PROGRESS pending delivery.
+- 2026-11-05: User also reports continued intermittent distortion and is
+  preparing a recording. Audio remains open; no new diagnosis or audio edit.

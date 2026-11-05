@@ -7,6 +7,26 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Rounded, heavier A/B grooves, 2026-11-05
+
+The user requests softer letter edges and thicker A strokes, not another cap
+or color change. Dedicated action-button outlines and counters use quadratic/
+cubic curves and broader .18x.19 proportions. Shared molded typography, cap
+silhouettes, dome/rim normals, .028 floor, groove shade and motion stay intact.
+
+The old actual A floor width .033 fails the new >.039 requirement. The existing
+real branding case now also checks that B's rounded top-left corner stays at
+cap height while the adjacent stem reaches the floor. All earlier floor-depth,
+counter-island, wall, shadow, contrast, other-marking, wordmark and viewport
+assertions remain. Syntax/build/all11units and complete branding plus actual
+pressed-cap lighting cases pass locally (22.2s). Bounded actual old/new
+warm-lamp crops are reviewed: heavier A strokes and smoothly curved B bowls.
+Hosted and independent public delivery remain pending at this local stage.
+
+**Audio remains open:** the user reports continued intermittent distortion and
+is preparing a recording. This geometry revision makes no audio changes and
+does not establish a new diagnosis or a universal fix from the earlier reserve.
+
 ## Outline-free bezel lettering, 2026-11-05
 
 Remove only the exterior light contour from the shared monochrome bezel art.

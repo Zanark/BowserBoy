@@ -169,8 +169,75 @@ function moldedText(parent, text, width, height, depth, material, x = 0, y = 0, 
   return add(parent, `Raised ${text} lettering`, solid(moldedShapes(text, width, height), depth, .0025), material, x, y, z);
 }
 
+function actionButtonGlyph(text) {
+  const outline = new THREE.Shape();
+  const counters = [];
+  if (text === 'A') {
+    outline.moveTo(.06, 0);
+    outline.quadraticCurveTo(.02, 0, .035, .065);
+    outline.lineTo(.34, .935);
+    outline.quadraticCurveTo(.363, 1, .43, 1);
+    outline.lineTo(.57, 1);
+    outline.quadraticCurveTo(.637, 1, .66, .935);
+    outline.lineTo(.965, .065);
+    outline.quadraticCurveTo(.98, 0, .94, 0);
+    outline.lineTo(.77, 0);
+    outline.quadraticCurveTo(.735, 0, .722, .04);
+    outline.lineTo(.635, .30);
+    outline.quadraticCurveTo(.63, .32, .61, .32);
+    outline.lineTo(.39, .32);
+    outline.quadraticCurveTo(.37, .32, .365, .30);
+    outline.lineTo(.278, .04);
+    outline.quadraticCurveTo(.265, 0, .23, 0);
+    outline.closePath();
+    const counter = new THREE.Path();
+    counter.moveTo(.46, .51);
+    counter.lineTo(.54, .51);
+    counter.quadraticCurveTo(.565, .51, .557, .55);
+    counter.lineTo(.525, .72);
+    counter.quadraticCurveTo(.5, .79, .475, .72);
+    counter.lineTo(.443, .55);
+    counter.quadraticCurveTo(.435, .51, .46, .51);
+    counter.closePath();
+    counters.push(counter);
+  } else if (text === 'B') {
+    outline.moveTo(.10, 0);
+    outline.quadraticCurveTo(.04, 0, .04, .06);
+    outline.lineTo(.04, .94);
+    outline.quadraticCurveTo(.04, 1, .10, 1);
+    outline.lineTo(.55, 1);
+    outline.bezierCurveTo(.84, 1, .96, .91, .96, .75);
+    outline.bezierCurveTo(.96, .64, .91, .58, .84, .54);
+    outline.quadraticCurveTo(.805, .52, .84, .50);
+    outline.bezierCurveTo(.94, .46, 1, .38, 1, .26);
+    outline.bezierCurveTo(1, .09, .85, 0, .57, 0);
+    outline.closePath();
+    for (const [bottom, top, end, bow] of [[.62, .86, .55, .74], [.16, .42, .57, .78]]) {
+      const counter = new THREE.Path();
+      const middle = (bottom + top) / 2;
+      counter.moveTo(.32, bottom);
+      counter.lineTo(end, bottom);
+      counter.quadraticCurveTo(bow, bottom, bow, middle);
+      counter.quadraticCurveTo(bow, top, end, top);
+      counter.lineTo(.32, top);
+      counter.quadraticCurveTo(.29, top, .29, top - .03);
+      counter.lineTo(.29, bottom + .03);
+      counter.quadraticCurveTo(.29, bottom, .32, bottom);
+      counter.closePath();
+      counters.push(counter);
+    }
+  } else {
+    throw new Error(`Unsupported action-button glyph: ${text}`);
+  }
+  const points = path => path.getPoints(12).map(point =>
+    new THREE.Vector2((point.x - .5) * .18, (point.y - .5) * .19));
+  const glyph = new THREE.Shape(points(outline));
+  for (const counter of counters) glyph.holes.push(new THREE.Path(points(counter)));
+  return glyph;
+}
+
 function recessedLetter(button, text, radius, material) {
-  const [glyph] = moldedShapes(text, .15, .20);
+  const glyph = actionButtonGlyph(text);
   const face = new THREE.Shape();
   face.absarc(0, 0, radius * .6, 0, Math.PI * 2, false);
   face.holes.push(new THREE.Path(glyph.getPoints()));

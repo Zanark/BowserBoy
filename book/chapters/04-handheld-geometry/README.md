@@ -52,6 +52,15 @@ contrast against unchanged caps; actual contrast is 1.92740. Geometry, counters,
 shadows, other markings and the warm lamp remain unchanged. A shade refinement
 must not quietly turn a real groove back into paint or a raised letter.
 
+Workstream 42 addresses a different meaning of "softer": the letter contours,
+not their shade. Dedicated quadratic/cubic action glyphs round A's joins and
+B's bowls, with broader .18x.19 proportions that thicken A's strokes. Leave the
+shared polygon font unchanged because the same A also belongs to shell labels.
+The cap openings, floor and walls use the same sampled contours, and counters
+remain cap-height islands. Test actual floor width and a rounded B corner next
+to its straight stem; mesh names alone cannot prove either visual property.
+Existing depth, contrast, lighting and press requirements remain in force.
+
 The top Zanark mark and lower bezel serve different visual roles. Molded
 manufacturer lettering belongs to the shell. The bezel uses a star-free
 monochrome derivative of the supplied wordmark. Saturated orbital accents are
