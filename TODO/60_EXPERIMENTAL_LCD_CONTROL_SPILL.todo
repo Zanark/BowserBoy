@@ -1,0 +1,60 @@
+Status: IN_PROGRESS
+Milestone: Experimental faint screen-colored control spill locally qualified.
+Dependencies: Existing framebuffer-derived ScreenIllumination.
+
+Purpose
+-------
+With lamp and room lights off, let LCD light barely reveal nearby controls
+without brightening the whole room or changing the existing table pool.
+User explicitly calls this an experiment and may ask to remove it.
+
+Tasks
+-----
+[x] Reuse existing smoothed native LCD color/brightness, not new sampling.
+[x] Add isolated weak reflected fill attached to the screen transform.
+[x] Keep D-pad, A/B, Start/Select and shoulder controls faint, not emissive.
+[x] Clear on a black framebuffer and power off.
+[x] Preserve primary LCD table emission and existing button behavior.
+[x] Review bounded actual play/Inspect captures.
+[ ] Publish through the unchanged full gate and independently verify live behavior.
+[x] Record experiment scope and precise removal boundary.
+
+Acceptance criteria
+-------------------
+Actual rendered controls are faintly visible with only the LCD on, follow
+screen color/brightness and go dark on black/off. The room remains dark and
+the original table illumination remains. No ambient-light increase, glowing
+button materials, new frame sampler, extra render loop or emulator change.
+This is an artistic first-bounce approximation, not physical ray tracing.
+
+Completion evidence
+-------------------
+The existing forward-facing LCD area light cannot illuminate coplanar caps.
+Add one reverse-facing local RectAreaLight, controlSpill, at LCD-localz1.2,
+twice viewport width/height. Reuse the same smoothed linear sample and color;
+peak*.1 intensity versus unchanged peak*120 primary emission. No shadow map.
+Eight product lines in src/lighting.js. Initial gain2 overlights caps; narrow
+dimmed fill leaves shoulders too dark. Wider/weaker final fill balances them.
+Baseline regression reads D-pad0/255 with a full-white native framebuffer and
+fails visibility. Final actual GPU probes read approximate max RGB:
+D-pad23, A18.32, B24, Start24, Select22, leftshoulder5.68/rightshoulder5.4.
+All stay below35/255 even at full-white maximum; black and power-off probes
+remain below1. Red/blue transfer and unchanged table pool within1/255 pass.
+Syntax/build/12units and three native/browser lighting/control cases pass46.7s.
+Actual full-white worst-case play and Inspect captures reviewed; these are
+controlled paused-native fixtures, not the user's supplied ROM/screenshots.
+Existing published lcd-light/dark-power-off figures restored byte-for-byte
+after the historical integration test generated its usual temporary captures.
+No README media regeneration, private-ROM/audio test or human acceptance.
+
+Removal boundary
+----------------
+Remove only controlSpill construction, clear and update lines in
+src/lighting.js plus this experiment's dedicated browser regression/docs.
+Keep the original forward emitter, framebuffer sampling, table lighting,
+native runtime and the separate fullscreen-resume fix intact.
+
+Completion log
+--------------
+2026-11-05: User requests barely visible controls with all lights off; explicitly
+experimental and reversible. Local effect and actual rendered bounds qualified.

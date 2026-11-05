@@ -538,6 +538,99 @@ test('pressed caps remain lit inside physical shell apertures instead of disappe
   }
 });
 
+test('experimental LCD spill barely reveals nearby controls in darkness and follows screen color and power', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.locator('#tools-open').click();
+  await page.locator('#demo').click();
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+  const runtime = page.frames().find(frame => frame.url().endsWith('player.html'));
+  await page.locator('#tools-open').click();
+  await page.locator('#pause').click();
+  await page.locator('#tools-close').click();
+  await page.locator('#lamp-toggle').click();
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
+  const fill = async color => {
+    await runtime.evaluate(rgb => {
+      const canvas = window.EJS_emulator.canvas;
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      const scissor = gl.isEnabled(gl.SCISSOR_TEST);
+      const clear = gl.getParameter(gl.COLOR_CLEAR_VALUE);
+      gl.disable(gl.SCISSOR_TEST);
+      gl.clearColor(...rgb, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.clearColor(...clear);
+      if (scissor) gl.enable(gl.SCISSOR_TEST);
+    }, color);
+    await expect.poll(() => page.evaluate(async rgb => {
+      const { view } = await import('./src/app.js');
+      return view.screenIllumination.current.toArray().every((value, axis) => Math.abs(value - rgb[axis]) < .001);
+    }, color)).toBe(true);
+  };
+  const controls = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    view.renderer.render(view.scene, view.camera);
+    const gl = view.renderer.getContext();
+    return Object.fromEntries([
+      ['up', [0, .48, .05]], ['a', [.11, .10, .05]], ['b', [.11, .10, .05]],
+      ['start', [.05, -.04, .05]], ['select', [.05, -.04, .05]],
+      ['l', [0, .15, .3]], ['r', [0, .15, .3]],
+    ].map(([id, point]) => {
+      const mesh = view.model.controls.get(id).mesh;
+      const projected = mesh.localToWorld(new Vector3(...point)).project(view.camera);
+      const x = Math.round((projected.x + 1) * view.canvas.width / 2);
+      const y = Math.round((projected.y + 1) * view.canvas.height / 2);
+      const pixels = new Uint8Array(5 * 5 * 4);
+      gl.readPixels(x - 2, y - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      const sum = [0, 0, 0];
+      for (let i = 0; i < pixels.length; i += 4) for (let c = 0; c < 3; c++) sum[c] += pixels[i + c];
+      return [id, sum.map(value => value / 25)];
+    }));
+  });
+  await fill([1, 1, 1]);
+  const white = await controls();
+  await testInfo.attach('dark-control-white-readings', { body: JSON.stringify(white), contentType: 'application/json' });
+  for (const [id, rgb] of Object.entries(white)) {
+    expect(Math.max(...rgb), `${id} is faintly visible with only LCD spill`).toBeGreaterThan(2);
+    expect(Math.max(...rgb), `${id} stays dim even with a full-white LCD`).toBeLessThan(35);
+  }
+  await page.screenshot({ path: testInfo.outputPath('experimental-lcd-control-spill-white.png') });
+  for (const color of [[1, 0, 0], [0, 0, 1]]) {
+    await fill(color);
+    const sample = (await controls()).a;
+    const dominant = color.indexOf(1);
+    expect(sample[dominant]).toBeGreaterThan(2);
+    expect(sample[dominant]).toBeGreaterThan(Math.max(...sample.filter((_, axis) => axis !== dominant)) + 2);
+  }
+  await fill([0, 0, 0]);
+  for (const rgb of Object.values(await controls())) expect(Math.max(...rgb)).toBeLessThan(1);
+  await fill([1, 1, 1]);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').hover();
+  await page.mouse.wheel(0, 350);
+  const tableWithSpill = await surfaceLight(page, [0, 0, 3]);
+  await page.evaluate(async () => { (await import('./src/app.js')).view.screenIllumination.controlSpill.visible = false; });
+  let tableWithoutSpill;
+  try { tableWithoutSpill = await surfaceLight(page, [0, 0, 3]); }
+  finally {
+    await page.evaluate(async () => { (await import('./src/app.js')).view.screenIllumination.controlSpill.visible = true; });
+  }
+  expect(tableWithSpill, 'The original forward LCD emission still lights the table').toBeGreaterThan(2);
+  expect(Math.abs(tableWithSpill - tableWithoutSpill), 'Local control fill does not brighten the existing table pool').toBeLessThan(1);
+  await page.screenshot({ path: testInfo.outputPath('experimental-lcd-control-spill-inspect.png') });
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#hardware-power').click();
+  await expect(page.locator('#frame-host iframe')).toHaveCount(0);
+  for (const rgb of Object.values(await controls())) expect(Math.max(...rgb)).toBeLessThan(1);
+});
+
 test('mapped inputs move real button meshes and the native LCD lights the room until power off', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));

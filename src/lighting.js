@@ -118,6 +118,11 @@ export class ScreenIllumination {
     this.light.rotation.y = Math.PI;
     screen.add(this.light);
     this.light.position.z = .002;
+    // Experimental first-bounce fill: the forward emitter cannot light coplanar controls.
+    this.controlSpill = new THREE.RectAreaLight('white', 0, width * 2, height * 2);
+    this.controlSpill.name = 'Experimental LCD control spill';
+    this.controlSpill.position.z = 1.2;
+    screen.add(this.controlSpill);
     this.canvas = document.createElement('canvas');
     this.canvas.width = 24;
     this.canvas.height = 16;
@@ -135,6 +140,7 @@ export class ScreenIllumination {
     this.target.setRGB(0, 0, 0);
     this.current.copy(this.target);
     this.light.intensity = 0;
+    this.controlSpill.intensity = 0;
     this.nextSample = 0;
     this.sampledSource = null;
     this.settled = true;
@@ -161,6 +167,8 @@ export class ScreenIllumination {
     if (this.settled) this.current.copy(this.target);
     const peak = Math.max(this.current.r, this.current.g, this.current.b);
     this.light.intensity = peak * 120;
+    this.controlSpill.intensity = peak * .1;
     if (peak > 0) this.light.color.copy(this.current).multiplyScalar(1 / peak);
+    this.controlSpill.color.copy(this.light.color);
   }
 }

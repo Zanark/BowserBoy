@@ -361,6 +361,17 @@ White is modeled at 120 cd/m², not calibrated against a physical GBA display.
 The source follows pickup/inspection transforms and clears immediately on
 power off. Static status textures are sampled once rather than every frame.
 
+**Experimental control spill (workstream 60):** a separate reverse-facing
+`controlSpill` rectangle approximates a faint first bounce onto coplanar
+controls, which the forward emitter cannot reach. It sits 1.2 units in front
+of the LCD, spans twice its viewport dimensions and uses the same smoothed
+linear color at only `peak * .1` intensity. The original `peak * 120` forward
+light/table pool, materials and room lighting are unchanged. Black frames and
+power-off clear both lights. There is no extra sampling, shadow map or loop.
+This is deliberately removable: delete only the isolated `controlSpill`
+construction/clear/update lines and its dedicated regression, not the main
+screen light or the independent fullscreen-resume fix. User approval is pending.
+
 ```mermaid
 flowchart TD
     A[Retained native post-shader framebuffer]

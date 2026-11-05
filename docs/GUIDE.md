@@ -72,6 +72,12 @@ the LCD casts one-sided, screen-colored light as you lift or rotate the handheld
 Turning the power off extinguishes its screen light. These are real-time lighting
 approximations, not a full global-illumination simulation.
 
+An experimental, very faint screen-colored bounce also reveals the nearby
+D-pad, A/B, Start/Select and shoulder controls in darkness. It follows the
+picture's brightness/color rather than giving the buttons permanent glow,
+and vanishes on a black screen or power-off. The experiment is isolated for
+removal if its appearance is rejected.
+
 ![Deployed lantern, enlarged handheld screen and optional room illumination](images/cozy-room.png)
 
 *Left: the large clipped lantern and actual thick tabletop. Center: lantern-only

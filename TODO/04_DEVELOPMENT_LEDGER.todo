@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Experimental LCD control spill:
+  User wants all-lights-off controls barely visible from the screen, with easy
+  removal if disliked. Add one weak reverse-facing area fill to existing
+  ScreenIllumination, sharing smoothed linear framebuffer color/brightness.
+  Final wider/weaker patch: localz1.2, twice viewport dimensions, peak*.1.
+  Original peak*120 forward/table emitter unchanged; no ambient/material changes,
+  new sampler/loop or native changes. Baseline D-pad0fails; full-white final
+  control maxchannels5.4-24/255, black/offbelow1, red/blue and table-preservation
+  checks pass. Syntax/build/12units and three affected cases pass46.7s.
+  Two actual controlled-native play/Inspect captures reviewed. Published figures
+  restored after historical integration test; no README/privateROM/audio replay.
+ 60is an isolated experiment, not user approval or calibrated global illumination.
 - 2026-11-05 / Main-view LCD after screen fullscreen:
   User reports return view frozen at the fullscreen-entry frame. Existing local
   headless/headed/normal-throttling returns pass, so do not claim exact spontaneous

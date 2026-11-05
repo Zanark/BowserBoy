@@ -7,6 +7,23 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Experimental LCD control spill, 2026-11-05
+
+The reversible experiment adds one faint reflected-light patch sharing the
+existing native framebuffer sample, not ambient room fill or emissive controls.
+The unchanged forward emitter continues lighting the table. The baseline
+regression reads a black D-pad with a full-white native framebuffer and fails.
+Final actual GPU control probes have maximum channels around 5.4-24/255 at
+full-white brightness; all remain below 35/255. Red/blue color transfer, black/
+power-off darkness below 1/255 and table-pool preservation within 1/255 pass.
+Syntax/build/12 units and the new experiment plus existing pressed-cap/native
+LCD-lighting cases pass 3/3 in 46.7s. Actual worst-case white play/Inspect
+captures are reviewed; these are controlled paused-native fixtures, not the
+user's private ROM. Existing published figures are restored after the older
+test's generated captures. No new README media, private-ROM/audio testing,
+human approval or physical global-illumination claim is made. Publication
+qualification remains pending.
+
 ## Main-view LCD after screen fullscreen, 2026-11-05
 
 The room renderer now explicitly stops on screen fullscreen entry and restarts
