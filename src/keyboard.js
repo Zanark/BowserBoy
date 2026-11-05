@@ -27,7 +27,7 @@ export function bindKeyboard(target, { enabled, getBindings, onInput, onMenu, bl
     }
     event.preventDefault();
     event.stopImmediatePropagation();
-    if (event.type === 'keydown' && !held.has(event.code)) {
+    if (event.type === 'keydown' && !event.repeat && !held.has(event.code)) {
       held.set(event.code, action);
       onInput(action, true, event.code);
     }

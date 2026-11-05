@@ -51,8 +51,9 @@ browser tests then cancel15:17:15UTC. This is not a product assertion failure.
 No actual public-asset/browser qualification runs after the failed gate.
 Existing ordinary workflow_dispatch already returns403/admin-rights required;
 do not repeat it, retry failed jobs, change credentials/permissions or manufacture
-a commit to trigger another gate. An authorized operator must start a fresh
-normal Pages run. Local blocker records are committed but held from push.
+a commit to trigger another gate. An authorized operator can start a fresh
+normal Pages run. Blocker-only records were initially committed but held from
+push; a subsequent real requested feature can use its own ordinary push gate.
 
 Completion log
 --------------

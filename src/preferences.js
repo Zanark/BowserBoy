@@ -53,6 +53,13 @@ export function defaultPreferences() {
   };
 }
 
+export function withFastForward(preferences, pressed) {
+  return { ...preferences, emulatorOptions: {
+    ...preferences.emulatorOptions, 'ff-ratio': '2.0',
+    fastForward: pressed ? 'enabled' : 'disabled', slowMotion: 'disabled',
+  } };
+}
+
 function validKey(code) {
   return typeof code === 'string' && /^(Key[A-Z]|Digit[0-9]|Arrow(Up|Down|Left|Right)|Space|Enter|Shift(Left|Right)|Backspace|Minus|Equal|Bracket(Left|Right)|Backslash|Semicolon|Quote|Comma|Period|Slash|Backquote|Numpad([0-9]|Add|Subtract|Multiply|Divide|Decimal|Enter))$/.test(code);
 }

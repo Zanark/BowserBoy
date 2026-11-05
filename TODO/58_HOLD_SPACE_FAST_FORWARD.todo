@@ -1,0 +1,55 @@
+Status: IN_PROGRESS
+Milestone: Default hold-Space native2x/release1x locally qualified; publication pending.
+Dependencies: Completed workstream24 and existing source-counted keyboard input.
+
+Purpose
+-------
+Make Space a default momentary native fast-forward shortcut, not a speed toggle.
+
+Tasks
+-----
+[x] Verify actual pinned EmulatorJS4.2.3 hold/ratio/toggle support.
+[x] Route Space through existing host/child keyboard and checked input bridge.
+[x] Apply native2x while held and explicitly return1x on release.
+[x] Release on blur, hidden page, mode/settings/fullscreen changes.
+[x] Prevent repeat keydown from re-engaging after a cancelled hold.
+[x] Keep dock feedback, native VSync pacing and settings snapshots consistent.
+[x] Preserve explicit GBA Space remaps and do not persist a transient held speed.
+[x] Complete final focused native-clock/lifecycle/compatibility qualification.
+[ ] Publish through the normal complete gate and independently verify live behavior.
+[x] Update affected help/guide/architecture and causal records.
+
+Acceptance criteria
+-------------------
+Default Space hold measurably accelerates an original native cartridge to2x;
+keyup restores1x, including after a prior latched3x/4x choice. Repeat, modal,
+blur and mode transitions cannot leave or restart a stuck boost. The native
+runtime is retained; form Space behavior/custom GBA bindings remain intact.
+Speed is actual core pacing, not a requestAnimationFrame or screenshot trick.
+
+Completion evidence
+-------------------
+Read exact CDN4.2.3GameManager.js: lines25-26 wrap native fast-forward
+toggle/ratio; simulateInput index27 is momentary but inverts latched state.
+Read emulator.js4264-4280: native setting changes invoke those functions.
+Use that existing setting path and VSync coordination, not raw27inversion.
+Both bindKeyboard callers add fastForward:Space after existing GBA mappings.
+Native source sets aggregate holds; host speed acknowledgements update dock.
+withFastForward changes in-memory speed options, not held-speed localStorage.
+Settings release before snapshot; configure cancels stale held speed.
+Unit regression covers repeat/blur/cleanup. Syntax/build/all12units pass.
+Initial new native browser case reaches its final hidden-iframe focus assertion
+after clock/storage/3x/menu/blur/fullscreen checks pass; canvas was not keyboard
+focusable. Explicitly make the test fixture canvas focusable and assert actual
+focus. The unchanged product passes focused native case18.3s.
+Existing full native speed-clock and quick-actions cases pass22.7s/40.0s.
+Final expanded native-clock/lifecycle/custom-Space case and existing speed-clock/
+quick-actions group pass3/3 in1.4m. Actual cartridge clock measures59.956fps
+baseline,119.379fps held and59.638fps released. Inspect, explicit GBA Space
+priority, host/child/fullscreen/menu and repeat-after-blur coverage pass.
+Final static build passes. Publication qualification remains pending.
+
+Completion log
+--------------
+2026-11-05: User requests default Space hold2x, release1x and asks whether
+EmulatorJS supports it. Native support confirmed in the exact pinned source.

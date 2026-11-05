@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Default hold-Space native fast-forward:
+  User requests Space hold2x/release1x by default and checks EmulatorJS support.
+  Exact4.2.3GameManager source exposes native toggle/ratio and momentary input27.
+  Raw27inverts latched fast-forward, so reuse native settings path with fixed2x
+  and explicit disabled release, retaining existing VSync pacing coordination.
+  Add default action after GBA bindings through shared source-counted input,
+  preserve explicit Space remaps and form keys; release via existing lifecycle.
+  Native speed acknowledgements keep dock feedback current. No held-speed
+  localStorage write. Preference changes release/cancel the hold before applying;
+  native settings release before snapshot. Auto-repeat cannot restart a boost
+  after cleanup. Initial unit/build pass12cases; new browsercase passes18.3s
+  after correcting the fixture's nonfocusable hidden canvas, not product code.
+  Final expanded native case plus existing speed-clock/quick-actions pass3/3
+  in1.4m:59.956fps baseline/119.379held/59.638released. Inspect, explicit Space
+  remap priority and child/fullscreen/menu/repeat cleanup pass. Final build
+  passes. Publication pending; no fresh private-ROM/audio claim.
 - 2026-11-05 / Ordinary play zoom:
   User requests the fullscreen-style slider outside fullscreen during play.
   Add an independent50-100%play camera-distance divisor; retain exact ordinary

@@ -7,6 +7,27 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Default hold-Space fast-forward, 2026-11-05
+
+The exact pinned EmulatorJS 4.2.3 source provides native fast-forward ratio/
+toggle functions and momentary input 27. Because raw input 27 inverts an
+already latched state, the adapter reuses native setting functions to guarantee
+2x while Space is held and 1x on release, including after a previous 3x choice.
+The action shares normal input cleanup, source counting and VSync coordination.
+It is enabled by default; an explicit GBA Space remap retains priority.
+
+Syntax/build/all 12 units pass, including the repeat-after-blur regression.
+An original Pixel Lab SRAM frame clock measures actual native pacing, not just
+speed flags. The bounded clock fixture excludes software-rendered room/CRT
+cost without opening a modal that would correctly disable gameplay keys.
+The final expanded native test also checks unchanged held-speed storage,
+restored normal pacing, menu/form behavior, simulated blur, Inspect, fullscreen,
+actual child keyboard focus and explicit GBA Space remap priority. It and the
+existing native speed-clock/complete quick-actions cases pass 3/3 in 1.4m.
+The actual cartridge clock measures 59.956fps baseline, 119.379fps while held,
+and 59.638fps after release. The final static build passes. Release qualification
+remains pending; no live deployment or new private-ROM/audio testing is claimed.
+
 ## Ordinary play zoom, 2026-11-05
 
 Local implementation adds the fullscreen-style 50-100% widget to normal play.
@@ -34,8 +55,9 @@ Public-asset/browser qualification was not run after the failed gate.
 Publication remains blocked. The existing ordinary workflow-dispatch attempt
 requires repository-admin rights (HTTP 403); an authorized operator must start
 a fresh normal run. No failed-job retry, workaround, timeout/check relaxation
-or new commit solely to trigger CI is used. These blocker records are retained
-locally without another push. No new private-ROM/audio replay or human aesthetic
+or new commit solely to trigger CI is used. The blocker-only commit was held
+locally rather than pushed to manufacture another run; subsequent real
+requested features may use the ordinary push gate. No new private-ROM/audio replay or human aesthetic
 acceptance is inferred.
 
 ## Deeper rear engraving, 2026-11-05

@@ -62,6 +62,30 @@ test('older preferences gain CRT Geom without losing keys or sound, and filter c
   assert.throws(() => validatePreferences({ ...older, shader: 'not-a-shader' }), /supported CRT/);
 });
 
+test('momentary fast-forward releases on focus loss and does not restart from auto-repeat', () => {
+  const target = new EventTarget();
+  const inputs = [];
+  const keyboard = bindKeyboard(target, {
+    enabled: () => true,
+    getBindings: () => ({ fastForward: 'Space' }),
+    onInput: (...args) => inputs.push(args),
+    onMenu: () => false,
+  });
+  const send = (type, repeat = false) => target.dispatchEvent(
+    Object.assign(new Event(type, { cancelable: true }), { code: 'Space', repeat }));
+  send('keydown');
+  send('keydown', true);
+  target.dispatchEvent(new Event('blur'));
+  send('keydown', true);
+  send('keyup');
+  assert.deepEqual(inputs, [['fastForward', true, 'Space'], ['fastForward', false, 'Space']]);
+  send('keydown');
+  keyboard.release();
+  send('keyup');
+  assert.equal(inputs.length, 4);
+  assert.deepEqual(inputs.slice(2), [['fastForward', true, 'Space'], ['fastForward', false, 'Space']]);
+});
+
 test('native options survive preference updates without admitting managed controls or config injection', () => {
   const emulatorOptions = { shader: 'crt-aperture.glslp', 'ff-ratio': '2.0', rewindEnabled: 'enabled' };
   const preferences = { ...defaultPreferences(), emulatorOptions };

@@ -514,6 +514,26 @@ originally pressed, ignores repeated keydowns, and releases on keyup/blur even
 if bindings change. The child intercepts native keyboard handling so old keys
 cannot bypass a remap through upstream controls. Existing gamepad mappings remain.
 
+Both keyboard paths add a default `fastForward: Space` action after the GBA
+bindings, preserving an explicit existing Space remap's priority. It uses the
+same source-counted input bridge and cleanup as console buttons, not a second
+global key listener. Press applies native `ff-ratio=2.0`, fast-forward enabled
+and slow motion disabled; release explicitly disables fast-forward for 1x,
+even after a manually selected higher speed. Existing VSync coordination
+removes the display cap while boosted and restores the selected normal pacing.
+The host receives speed acknowledgements for the dock label. Temporary held
+speed does not write localStorage, and preference changes cancel held speed
+before applying so a later volume change cannot resurrect it. Native settings
+snapshot only after releasing input. Blur, hidden-page, mode/menu/fullscreen
+cleanup uses the existing release paths. Auto-repeat after release cannot
+re-engage a boost without a new physical keydown.
+
+Pinned [EmulatorJS 4.2.3 GameManager](https://cdn.emulatorjs.org/4.2.3/data/src/GameManager.js)
+already exposes native ratio/toggle functions and momentary input 27. That raw
+input inverts an existing latched fast-forward state, so this adapter uses the
+native setting functions instead to guarantee exactly 2x held and 1x released.
+No frame skipping, extra emulation loop or ROM-specific speed patch is added.
+
 Physical buttons use pointer capture and release on pointerup, cancellation or
 lost capture. Very short taps are held for at least 40 ms to cross a core input
 poll; each press has a unique source. The child combines held sources per action,

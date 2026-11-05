@@ -1,5 +1,5 @@
 import { validateBatterySave, validateCapture } from './cartridge.js';
-import { CONTROLS, MANAGED_SETTINGS, defaultPreferences, validateEmulatorOptions, validatePreferences } from './preferences.js';
+import { CONTROLS, MANAGED_SETTINGS, defaultPreferences, validateEmulatorOptions, validatePreferences, withFastForward } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { configureAudioBuffer, protectAudio } from './audio.js';
 
@@ -31,7 +31,7 @@ function manager() {
 
 function input(action, pressed, source) {
   const control = CONTROLS.find(({ id }) => id === action);
-  if (!control || typeof pressed !== 'boolean' || typeof source !== 'string' || source.length > 64) {
+  if ((!control && action !== 'fastForward') || typeof pressed !== 'boolean' || typeof source !== 'string' || source.length > 64) {
     throw new Error('Invalid console input.');
   }
   if ((!inputEnabled || settingsOpen) && pressed) return;
@@ -42,14 +42,20 @@ function input(action, pressed, source) {
   heldInputs.set(action, sources);
   const isPressed = sources.size > 0;
   if (wasPressed !== isPressed) {
-    manager().simulateInput(0, control.button, isPressed ? 1 : 0);
-    send('control', { action, pressed: isPressed });
+    if (action === 'fastForward') {
+      preferences = withFastForward(preferences, isPressed);
+      applySpeed();
+      send('speed', { pressed: isPressed });
+    } else {
+      manager().simulateInput(0, control.button, isPressed ? 1 : 0);
+      send('control', { action, pressed: isPressed });
+    }
   }
 }
 
 const keyboard = bindKeyboard(window, {
   enabled: () => started && inputEnabled && !settingsOpen,
-  getBindings: () => preferences.controls,
+  getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => input(action, pressed, `player-key:${code}`),
   onMenu: () => { send(settingsOpen ? 'settings-close' : 'tools'); return true; },
   blockUnmapped: true,
@@ -60,11 +66,12 @@ document.addEventListener('visibilitychange', () => {
 
 function configure(value) {
   const next = validatePreferences(value);
+  const wasFastForwardHeld = !!heldInputs.get('fastForward')?.size;
   keyboard.release();
   for (const [action, sources] of heldInputs) {
     for (const source of [...sources]) input(action, false, source);
   }
-  preferences = next;
+  preferences = wasFastForwardHeld ? withFastForward(next, false) : next;
   const emulator = window.EJS_emulator;
   emulator.volume = preferences.muted ? 0 : preferences.volume / 100;
   emulator.setVolume(emulator.volume);
@@ -75,6 +82,12 @@ function configure(value) {
   if (emulator.getSettingValue('shader') !== shader) {
     emulator.changeSettingOption('shader', shader);
   }
+  applySpeed();
+}
+
+function applySpeed() {
+  const emulator = window.EJS_emulator;
+  manager();
   for (const [option, fallback] of [['ff-ratio', '2.0'], ['fastForward', 'disabled'], ['slowMotion', 'disabled']]) {
     const value = preferences.emulatorOptions?.[option] ?? fallback;
     if (emulator.getSettingValue(option) !== value) emulator.changeSettingOption(option, value);
@@ -95,8 +108,8 @@ function settings(open) {
   const emulator = window.EJS_emulator;
   const menu = emulator.settingsMenu;
   if (!menu) throw new Error('The pinned runtime could not create its settings menu.');
-  const options = validateEmulatorOptions({ ...preferences.emulatorOptions, ...emulator.settings });
   setInputEnabled(inputEnabled);
+  const options = validateEmulatorOptions({ ...preferences.emulatorOptions, ...emulator.settings });
   settingsOpen = open;
   emulator.settingsMenuOpen = open;
   document.body.classList.toggle('native-settings', open);

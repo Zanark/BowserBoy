@@ -287,6 +287,141 @@ test('three checkpoint slots stay independent and reject invalid slots without c
   expect(result).toEqual({ slots: [[1], [2], [3], [4]], error: 'Unknown save slot.', coldBoot: 'battery', retained: [2], battery: [99] });
 });
 
+test('holding Space runs the native cartridge at 2x and release or lost input restores 1x by default', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  await page.locator('#quick-autosave').click();
+  await page.locator('#rom-file').setInputFiles({
+    name: 'Pixel Lab Hold Clock.gba', mimeType: 'application/octet-stream',
+    buffer: Buffer.from(createDemoRom({ frameClock: true })),
+  });
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
+  const frame = runtime(page);
+  await page.locator('#tools-open').click();
+  await page.locator('#shader').selectOption('disabled');
+  await page.locator('#tools-close').click();
+  await frame.evaluate(() => window.EJS_emulator.changeSettingOption('vsync', 'enabled'));
+  // Isolate native pacing from software rendering without opening a modal that owns the keys.
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+  });
+  const saved = await page.evaluate(() => localStorage.getItem('bowser-boy-advance-preferences'));
+  const measure = () => frame.evaluate(async () => {
+    const read = () => {
+      const sram = window.EJS_emulator.gameManager.getSaveFile();
+      return sram[4] | sram[5] << 8;
+    };
+    await new Promise(resolve => setTimeout(resolve, 250));
+    const start = read(), time = performance.now();
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    return ((read() - start + 65536) % 65536) * 1000 / (performance.now() - time);
+  });
+  const expectSpeed = async speed => {
+    await expect(page.locator('#quick-speed')).toHaveAccessibleName(`Emulation speed: ${speed}x`);
+    await expect.poll(() => frame.evaluate(() => window.EJS_emulator.isFastForward)).toBe(speed > 1);
+  };
+  await page.locator('#scene-canvas').focus();
+  const baseline = await measure();
+  expect(baseline).toBeGreaterThan(45);
+  expect(baseline).toBeLessThan(70);
+  await page.keyboard.down('Space');
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  expect(await frame.evaluate(() => window.EJS_emulator.getSettingValue('ff-ratio'))).toBe('2.0');
+  const held = await measure();
+  expect(held / baseline).toBeGreaterThan(1.4);
+  expect(held / baseline).toBeLessThan(2.6);
+  expect(await page.evaluate(() => localStorage.getItem('bowser-boy-advance-preferences'))).toBe(saved);
+  await page.keyboard.up('Space');
+  await expectSpeed(1);
+  const released = await measure();
+  expect(released / baseline).toBeGreaterThan(.7);
+  expect(released / baseline).toBeLessThan(1.3);
+  await test.info().attach('hold-space-cartridge-clock', {
+    body: JSON.stringify({ baseline, held, released }), contentType: 'application/json',
+  });
+  expect(await page.evaluate(() => localStorage.getItem('bowser-boy-advance-preferences'))).toBe(saved);
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(time => view.render(time));
+  });
+  await page.locator('#quick-speed').click();
+  await page.locator('[data-speed="3"]').click();
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  await page.keyboard.up('Space');
+  await expectSpeed(1);
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  await page.locator('#tools-open').click();
+  await expectSpeed(1);
+  await page.keyboard.up('Space');
+  await page.locator('#volume').focus();
+  await page.keyboard.press('Space');
+  await expectSpeed(1);
+  await page.locator('#volume').fill('37');
+  await page.locator('#volume').dispatchEvent('change');
+  await expectSpeed(1);
+  await page.locator('#tools-close').click();
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expectSpeed(1);
+  await page.keyboard.down('Space');
+  await expectSpeed(1);
+  await page.keyboard.up('Space');
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  await page.locator('#inspect').click();
+  await expectSpeed(1);
+  await page.keyboard.up('Space');
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('Space');
+  await expectSpeed(1);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#quick-screen-fullscreen').click();
+  await expect(page.locator('#screen-focus-canvas')).toBeFocused();
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  await page.keyboard.press('Escape');
+  await expectSpeed(1);
+  await page.keyboard.up('Space');
+  await frame.evaluate(() => {
+    const canvas = document.querySelector('canvas[data-bba-display]');
+    canvas.tabIndex = 0;
+    canvas.focus();
+  });
+  await expect(frame.locator('canvas[data-bba-display]')).toBeFocused();
+  await page.keyboard.down('Space');
+  await expectSpeed(2);
+  await page.keyboard.up('Space');
+  await expectSpeed(1);
+  expect(runtime(page)).toBe(frame);
+  await frame.evaluate(() => {
+    window.holdInputs = [];
+    const game = window.EJS_emulator.gameManager;
+    const simulate = game.simulateInput.bind(game);
+    game.simulateInput = (...args) => { window.holdInputs.push(args); return simulate(...args); };
+  });
+  await page.locator('#quick-controls').click();
+  await page.locator('[data-binding="a"]').click();
+  await page.keyboard.press('Space');
+  await expect(page.locator('[data-binding="a"]')).toHaveText('Space');
+  await page.locator('#tools-close').click();
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('Space');
+  await expectSpeed(1);
+  await expect.poll(() => frame.evaluate(() => window.holdInputs)).toEqual([[0, 8, 1], [0, 8, 0]]);
+});
+
 test('fast-forward advances the cartridge clock after native VSync changes and returns to normal speed', async ({ page }) => {
   await page.goto('./');
   await ready(page);

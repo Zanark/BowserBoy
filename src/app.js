@@ -1,6 +1,6 @@
 import { MANUAL_SLOTS, RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
 import { SaveStore } from './save-store.js';
-import { CONTROLS, CRT_GEOM, CRT_SHADERS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, writePreferences } from './preferences.js';
+import { CONTROLS, CRT_GEOM, CRT_SHADERS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, withFastForward, writePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { HandheldScene } from './scene.js';
 import { playStartup, playStartupSound } from './startup.js';
@@ -27,6 +27,7 @@ const pointers = new Map();
 let preferences = defaultPreferences();
 let remappingAction = null;
 let preferenceWarning = null;
+let heldFastForward = false;
 export let view = null;
 let sceneFailure = null;
 try { preferences = readPreferences(localStorage); }
@@ -60,7 +61,7 @@ function renderQuickControls() {
     $('checkpoint-slot').options[index].textContent = `Slot ${index + 1}${record?.[slot] ? ' / saved' : ' / empty'}`;
   }
   const options = preferences.emulatorOptions;
-  const speed = options?.fastForward === 'enabled' ? options['ff-ratio'] ?? '2.0' : '1';
+  const speed = heldFastForward ? '2' : options?.fastForward === 'enabled' ? options['ff-ratio'] ?? '2.0' : '1';
   const label = speed === 'unlimited' ? 'MAX' : `${Number(speed)}x`;
   icon($('quick-speed'), 'speed', `Emulation speed: ${label}`, label);
   $('quick-speed').setAttribute('aria-pressed', String(speed !== '1'));
@@ -155,6 +156,7 @@ function command(name, value) {
 
 function clearPlayer() {
   releaseHostInputs();
+  heldFastForward = false;
   if ($('frame-host').open) $('frame-host').close();
   $('frame-host').setAttribute('aria-hidden', 'true');
   if (powered) view?.showStatus('INSERT CARTRIDGE', 'ESC / CARTRIDGES & SETTINGS');
@@ -328,6 +330,12 @@ window.addEventListener('message', (event) => {
     case 'bba:notice': notice(data.message, data.error === true); break;
     case 'bba:tools': openTools(); break;
     case 'bba:settings-close': void closeNativeSettings(); break;
+    case 'bba:speed':
+      if (typeof data.pressed !== 'boolean') break;
+      heldFastForward = data.pressed;
+      if (!data.pressed) preferences = withFastForward(preferences, false);
+      renderQuickControls();
+      break;
     case 'bba:control':
       if (CONTROLS.some(({ id }) => id === data.action) && typeof data.pressed === 'boolean') {
         document.querySelector(`[data-control="${data.action}"]`).classList.toggle('pressed', data.pressed);
@@ -558,6 +566,7 @@ for (const id of ['autosave-toggle', 'quick-autosave']) $(id).addEventListener('
 });
 for (const button of document.querySelectorAll('[data-speed]')) button.addEventListener('click', () => {
   void operation(async () => {
+    releaseHostInputs();
     const speed = Number(button.dataset.speed);
     await applyPreferences({ ...preferences, emulatorOptions: {
       ...preferences.emulatorOptions, 'ff-ratio': `${speed}.0`,
@@ -613,6 +622,11 @@ function moveNotice() {
 
 function sendInput(action, pressed, source) {
   if (!running || !frame) return;
+  if (action === 'fastForward') {
+    heldFastForward = pressed;
+    if (!pressed) preferences = withFastForward(preferences, false);
+    renderQuickControls();
+  }
   frame.contentWindow.postMessage({ type: 'bba:input', session, action, pressed, source }, location.origin);
 }
 
@@ -727,6 +741,7 @@ function renderPreferences() {
 }
 
 async function applyPreferences(next) {
+  if (heldFastForward) next = withFastForward(next, false);
   next = validatePreferences(next);
   releaseHostInputs();
   if (running) await command('configure', next);
@@ -787,7 +802,7 @@ window.addEventListener('keydown', (event) => {
 const keyboard = bindKeyboard(window, {
   enabled: (event) => running && (document.fullscreenElement === $('screen-focus') || (view?.mode === 'playing' && !view.transition)) && !$('tools').open && !$('help').open && !$('frame-host').open &&
     !event.target.closest?.('button, input, select, textarea, [contenteditable="true"]'),
-  getBindings: () => preferences.controls,
+  getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
   onMenu: () => {
     if (document.fullscreenElement === $('screen-focus')) { closeScreenFullscreen(); return true; }

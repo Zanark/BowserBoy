@@ -250,6 +250,14 @@ on the browser/device. Fast-forward temporarily releases native VSync's timing
 cap; returning to 1x restores your selected VSync preference.
 The drawer and real EmulatorJS panel share the purple theme.
 
+**Hold Space for 2x; release it for 1x.** This is enabled by default in play
+and screen-only fullscreen, without changing your saved speed while held.
+Release returns to 1x even if you previously selected 3x or 4x. Opening tools,
+leaving play, losing focus or hiding the page also releases the boost.
+Space retains normal button/form behavior in settings. If you explicitly map
+Space to a GBA button, that custom binding takes priority over this shortcut.
+Actual 2x throughput still depends on the device.
+
 **Screen fullscreen** fits the complete game picture and black bezel, including
 the printed wordmark, without cropping or stretching. Unused space stays black.
 Use **Zoom** at the bottom right to shrink the whole screen to 50-100%;
@@ -263,6 +271,7 @@ resume keyboard gameplay; Escape or the top-right close button returns to the de
 | A / B | Z / X |
 | L / R | A / S |
 | Start / Select | Enter / Left Shift |
+| Temporary 2x / return to 1x | Hold / release Space |
 | Cartridge and settings / exit screen fullscreen | Escape |
 
 Click the game for keyboard focus. The console's D-pad, A/B, L/R and Start/Select
