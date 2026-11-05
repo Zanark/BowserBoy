@@ -21,8 +21,19 @@ LCD-lighting cases pass 3/3 in 46.7s. Actual worst-case white play/Inspect
 captures are reviewed; these are controlled paused-native fixtures, not the
 user's private ROM. Existing published figures are restored after the older
 test's generated captures. No new README media, private-ROM/audio testing,
-human approval or physical global-illumination claim is made. Publication
-qualification remains pending.
+human approval or physical global-illumination claim is made.
+
+Source `c8c0e51917e545f0ada7c50df45ebd9a953cffc7` is pushed. Normal Pages
+run `42063183081` passes build/12 units and all 15 shard-3 cases, including
+this lighting regression. Shard 1 passes 15 but its existing quick-actions
+case exceeds 120 seconds. Shard 2 passes 12 but the existing real-mGBA
+restore case exceeds 120 seconds; the 600-second suite budget leaves three
+cases not run. The precise timeout causes are unestablished. Deployment is
+skipped, so independent public asset/browser qualification does not run.
+Publication remains blocked, including the previously pending branding,
+ordinary zoom, hold-Space and fullscreen-resume changes. No failed-job retry,
+denied-dispatch repeat, dummy push, permission change or relaxed gate follows.
+Blocker-only records are held locally.
 
 ## Main-view LCD after screen fullscreen, 2026-11-05
 

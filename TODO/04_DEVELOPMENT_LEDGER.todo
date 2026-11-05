@@ -25,7 +25,12 @@ Completion log:
   checks pass. Syntax/build/12units and three affected cases pass46.7s.
   Two actual controlled-native play/Inspect captures reviewed. Published figures
   restored after historical integration test; no README/privateROM/audio replay.
- 60is an isolated experiment, not user approval or calibrated global illumination.
+  60is an isolated experiment, not user approval or calibrated global illumination.
+  Sourcec8c0e51pushed; normal42063183081passes build/12units and all15lighting-
+  shard cases, including the experiment. Shard1passes15/quick-actions120s
+  timeout; shard2passes12/real-mGBArestore120s timeout then600s suite budget/
+  3notrun. Deployskipped; precise timeout causes unestablished. No independent
+  public qualification, retry/dispatch/bypass/gaterelaxation. Records held locally.
 - 2026-11-05 / Main-view LCD after screen fullscreen:
   User reports return view frozen at the fullscreen-entry frame. Existing local
   headless/headed/normal-throttling returns pass, so do not claim exact spontaneous

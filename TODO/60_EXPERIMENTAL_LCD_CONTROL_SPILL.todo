@@ -1,5 +1,5 @@
-Status: IN_PROGRESS
-Milestone: Experimental faint screen-colored control spill locally qualified.
+Status: BLOCKED
+Milestone: Experimental control spill qualified/pushed; normal release gate failed.
 Dependencies: Existing framebuffer-derived ScreenIllumination.
 
 Purpose
@@ -47,6 +47,16 @@ Existing published lcd-light/dark-power-off figures restored byte-for-byte
 after the historical integration test generated its usual temporary captures.
 No README media regeneration, private-ROM/audio test or human acceptance.
 
+Source c8c0e51917e545f0ada7c50df45ebd9a953cffc7 is pushed.
+Normal Pages run42063183081 passes build/12units and all15shard3cases,
+including the experimental lighting regression. Shard1passes15 but existing
+quick-actions case times out at120s. Shard2passes12 but existing real-mGBA
+restore case times out at120s; the600s suite budget leaves3notrun.
+Deployment is skipped; independent public assets/browser qualification did
+not run. The precise timeout causes are unestablished. No failed-job retry,
+denied-dispatch repeat, dummy push, gate relaxation or permission change.
+Release-blocker records are held locally rather than triggering another run.
+
 Removal boundary
 ----------------
 Remove only controlSpill construction, clear and update lines in
@@ -58,3 +68,5 @@ Completion log
 --------------
 2026-11-05: User requests barely visible controls with all lights off; explicitly
 experimental and reversible. Local effect and actual rendered bounds qualified.
+2026-11-05: Requested experiment pushed; normal gate fails the existing
+quick-actions/restore time budgets. Lighting shard passes; publication blocked.
