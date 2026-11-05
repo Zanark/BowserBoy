@@ -24,6 +24,10 @@ Completion log:
   existing exact-artwork/responsive header case23.6s pass; syntax/build/11units
   pass. Actual three-phase samples reviewed. No app loop or artwork mutation.
   Normal hosted gate, independent public delivery and final records pending.
+  Source b27bb9152996b87522a97a634d88f26627b2f2d9 / normal42031870644
+  passes build/11units/all43browser cases (15+14+14)/deployment. Independently
+  match29public assets; actual public identity/shimmer cases12.0s pass without
+  failures/retries/skips. Actual public rest/left/right phases reviewed;50DONE.
 - 2026-11-05 / Native VSync warning:
   User requests a notification explaining VSync risk. Preserve the off default,
   explicit enabled choices and speed coordination. Actual native-menu enable

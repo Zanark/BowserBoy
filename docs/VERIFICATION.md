@@ -20,7 +20,12 @@ The new browser regression fails without the animation. Local branding/
 shimmer cases pass in 11.7s and the existing exact-artwork/responsive header case
 passes in 23.6s. Syntax/build and all 11 units pass. Actual rest/left/right samples
 are reviewed; repeat phase, pause and reduced-motion behavior are checked.
-This is not human aesthetic acceptance or publication; hosted delivery pending.
+Qualified source `b27bb9152996b87522a97a634d88f26627b2f2d9`, normal workflow
+`42031870644`: build,11units,all43hosted browser cases (15+14+14) and deployment
+pass. Independently match all29actual public application assets; the two actual
+public website-identity/shimmer cases pass in12.0s without failures, retries or
+skips. Actual public rest/left/right phases are reviewed. Supplied chrome and
+purple PNGs stay exact; this is technical delivery, not aesthetic acceptance.
 
 ## Native VSync audio warning, 2026-11-05
 

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Chrome BowserBOY header with a periodic left-to-right glow shimmer.
 Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo.
 
@@ -13,8 +13,8 @@ Tasks:
 - [x] Keep responsive layout, hidden play header and notifications unchanged.
 - [x] Pause hidden animation and disable shimmer for reduced-motion users.
 - [x] Review bounded actual shimmer phases and focused browser regressions.
-- [ ] Pass the normal complete hosted gate and independently verify production.
-- [ ] Record final delivery and owned continuity.
+- [x] Pass the normal complete hosted gate and independently verify production.
+- [x] Record final delivery and owned continuity.
 
 Acceptance criteria:
 - Current header uses website-logo.png, not the purple console logo.
@@ -35,8 +35,15 @@ Completion evidence:
   header case passes23.6s. Syntax/build and all11units pass.
 - Actual rest/left/right header samples reviewed; repeat phase and reduced
   motion, hidden-play pause, responsive identity and both asset hashes checked.
-- No private-ROM/audio analysis or fresh acceptance. Hosted publication pending.
+- Source b27bb9152996b87522a97a634d88f26627b2f2d9 / normal42031870644:
+  build,11units,all43hosted browser cases (15+14+14) and deployment pass.
+- Independently match29actual public assets. Two actual public identity/shimmer
+  cases pass12.0s without failures, retries or skips; actual rest/left/right
+  public header phases reviewed. Original logo assets remain exact.
+- No private-ROM/audio analysis or fresh human aesthetic acceptance.
 
 Completion log:
 - 2026-11-05: User requests BowserBOY website logo and repeating left-to-right glow.
   Verify current chrome identity; implement six-second default shimmer.
+- 2026-11-05: Complete normal hosted gate and independent public qualification
+  pass. Chrome website header and six-second shimmer are independently live.
