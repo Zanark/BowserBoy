@@ -14,9 +14,16 @@ The front page now separates the chrome BowserBOY umbrella project from its
 supported consoles. BowserBOYADVANCED is the only implemented console; its own
 section reuses the original purple `orbital-logo.gif` banner and retains all
 14 earlier image embeds, including the five actual interaction GIFs.
-The existing 72-frame banner is not regenerated or re-recorded; only its first
-frame is re-inspected for placement. Gameplay captures below it keep the source
-and timestamps recorded below. Additional consoles remain future direction.
+The existing 72-frame banner is not regenerated or re-recorded; source review
+uses only its first frame. Actual GitHub umbrella and console-banner crops are
+also reviewed. Gameplay captures below it keep the source and timestamps recorded
+below. Additional consoles remain future direction.
+
+Published source `cfd7e1fa713a2ee9d2e13abe75573ac13146e976`: actual GitHub
+rendering has the supported-console jump,13nested feature sections and15visible
+image embeds, including every earlier reference in order. GitHub's six hidden
+GIF copies are not extra showcase media. Only the two logo images are decoded
+for this layout change; the unchanged gameplay media is not re-reviewed.
 
 ### BowserBOY public refresh, 2026-11-05
 

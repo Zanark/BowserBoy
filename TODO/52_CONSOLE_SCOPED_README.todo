@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: BowserBOY umbrella README with a dedicated BowserBOYADVANCED showcase.
 Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo; 48_CURRENT_BRAND_DOCUMENTATION.todo.
 
@@ -14,8 +14,8 @@ Tasks:
 - [x] Restore the original purple animated banner as its console-section logo.
 - [x] Nest all existing showcase sections under that console without removing media.
 - [x] Check actual Markdown structure, local navigation and retained image references.
-- [ ] Publish and verify the actual GitHub-rendered README.
-- [ ] Record final delivery and owned continuity.
+- [x] Publish and verify the actual GitHub-rendered README.
+- [x] Record final delivery and owned continuity.
 
 Acceptance criteria:
 - Project and console identities are distinct in hierarchy, not just captions.
@@ -33,9 +33,19 @@ Completion evidence:
 - Local checks pass: exactly two level-two headings (supported consoles and
   BowserBOYADVANCED),13nested feature sections and15image embeds. All14prior
   image references retained, navigation resolves and app/media paths unchanged.
-- Actual published GitHub rendering pending.
+- Published source cfd7e1fa713a2ee9d2e13abe75573ac13146e976. Actual GitHub
+  rendering has the two intended top-level sections, working supported-console
+  jump,13nested features and all15visible image references in expected order.
+- Chrome umbrella layout and actual purple animated console banner crops
+  reviewed. Only those two logo images decoded; unchanged media not re-reviewed.
+- Verification helper initially matches GitHub's permalink as well as the
+  real console link, then counts six hidden GIF copies. Select the exact named
+  navigation link and visible images, retaining strict15-image identity/order.
+- README-only presentation: no fresh application/audio qualification required.
 
 Completion log:
 - 2026-11-05: User clarifies BowserBOY is the umbrella repository and requests
   BowserBOYADVANCED as a supported console with its own logo and all prior GIFs.
   Scope this change to README hierarchy and directly affected provenance.
+- 2026-11-05: Publish the console-scoped README; verify actual GitHub hierarchy,
+  navigation and preserved showcase. No repository rename or new console.
