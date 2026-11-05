@@ -1,4 +1,4 @@
-# Player and developer guide
+# BowserBOY player and developer guide
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
 
@@ -24,14 +24,15 @@ D-pad/shoulder movement and snappier returns; the centered bezel wordmark is
 another 20% smaller in both views, now without the exterior light contour.
 Frosted overlays do not move the camera;
 sustained audio buffering, darker D-pad arrows and play-only header hiding remain.
-README footage/stills retain their local `8a1d6a3` capture origin; the later
-borderless-bezel, later A/B refinements, metallic finish and enlarged rear
-engraving and chrome website header postdate those recordings.
+The README's current interaction recordings and dedicated stills are actual
+public-site captures of this qualified application, including the chrome
+website header, original A/B contours, metallic bezel and larger etched rear
+logo. Earlier `8a1d6a3` local recordings remain documented as a previous edition.
 Most inherited guide motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
 See [current release evidence](VERIFICATION.md#bowserboy-website-brand-separation-2026-11-05)
-and [capture origins](MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).
+and [capture origins](MEDIA.md#bowserboy-public-refresh-2026-11-05).
 
 Normal playback now defaults to audio-paced timing to address reproduced
 intermittent dropouts; bounded measurements are not a guarantee for every device.
@@ -41,7 +42,7 @@ with restrained iridescent color, not an animated RGB glow. Their original
 shape, smaller size and borderless silhouette stay unchanged; the bezel and
 other logos are untouched. Fullscreen shares the exact lettering canvas.
 Current [qualification](VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
-is separate from the older pictures below.
+is separate from historical pictures explicitly labeled below.
 
 ![BowserBOY chrome website wordmark](../assets/website-logo.png)
 
@@ -50,14 +51,13 @@ A restrained neutral shadow separates it from the warm room without tinting
 the silver artwork purple. It is hidden in play view and returns on the desk
 or in Inspect; notifications retain their existing header position.*
 
-**A little escape, on your desk.** A local-first browser GBA player inside an
-actual 3D indigo handheld, built for static hosting on GitHub Pages.
+**A little escape, on your desk.** BowserBOY currently offers one local-first
+GBA player inside an actual 3D indigo handheld, built for GitHub Pages.
 
-![The 3D indigo handheld on its wooden table](images/3d-table.png)
+![Current public BowserBOY table with chrome website branding and its first GBA handheld](images/readme-table.png?v=bowserboy-public-20261105)
 
-*A full-width warm plaster wall and thick wooden tabletop, with open room
-below its front edge. The closer resting view keeps the handheld's physical
-size unchanged; the large paper lantern can extend beyond the frame.*
+*The current public desk: chrome BowserBOY header, first purple console and
+paper lantern. The other objects are cartridges, not additional consoles.*
 
 ## Lights out
 
@@ -98,13 +98,20 @@ physical cap, track and label; this is not a mockup.*
 
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
 from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
-The supplied transparent wordmark also appears on the rear shell, idle/loading
-LCD and settings panels. The front bezel uses the supplied logo's distinctive
+The supplied purple console wordmark also appears on the rear shell and
+idle/loading LCD. Website tools/settings panels use the separate chrome logo.
+The front bezel uses the purple logo's distinctive
 lettering with a metallic chroma finish, without stars; screen-only fullscreen shares that artwork.
 The rear logo is about40%larger and inset into the battery-cover plastic with
 shallow engraved edges. Its original purple color and bright lettering are
-preserved, not darkened to imply engraving. Existing rear-view pictures predate
-this refinement; see [current qualification](VERIFICATION.md#larger-etched-rear-logo-2026-11-05).
+preserved, not darkened to imply engraving; see
+[current qualification](VERIFICATION.md#larger-etched-rear-logo-2026-11-05).
+
+![Actual current public rear inspection, with separate chrome website and purple console logos](images/readme-back.png?v=bowserboy-public-20261105)
+
+*The purple artwork belongs to this console; the chrome header belongs to the
+website. The larger rear logo sits in shallow cutouts in the battery cover.*
+
 A/B letters are softer gray grooves cut into the unchanged cap faces, with inset floors and
 sidewalls rather than raised or printed lettering. D-pad arrows retain their
 raised rubber geometry and darker tones. Shoulder letters retain their cap material;
@@ -272,10 +279,10 @@ or refused requests display an explicit notice.
 Scene notices appear directly below the website logo; open tools retain notices
 inside their own panel.
 
-![Complete native Pixel Lab picture and shared stylized bezel fitted in fullscreen with a bottom-right zoom slider](images/screen-fullscreen.png?v=molded-glass-book-20261104)
+![Complete native Pixel Lab picture and metallic bezel fitted in fullscreen with a bottom-right zoom slider](images/readme-fullscreen.png?v=bowserboy-public-20261105)
 
 *The original demo on the actual native CRT output, surrounded by the matching
-black bezel and monochrome print. No second emulator or reset; zoom only changes
+black bezel and metallic-chroma lettering. No second emulator or reset; zoom only changes
 the presentation. Escape or the top-right close button returns.*
 
 The hidden drawer contains ROM loading, every save/backup action, pause,

@@ -1,4 +1,4 @@
-# README media
+# BowserBOY media and capture provenance
 
 [Visual showcase](../README.md) | [Player and developer guide](GUIDE.md) | [Engineering book](../book/README.md)
 
@@ -8,7 +8,46 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### BowserBOY public refresh, 2026-11-05
+
+The current README's five interaction GIFs and dedicated table, front, rear,
+notice, underside, fullscreen, dock and save-panel stills are actual captures
+from **https://zanark.github.io/BowserBoyAdvance/** at
+2026-11-05T12:09:57.438Z. All 29 independently fetched public application assets
+match qualified source `f5bc63933a88040c46879645e91a107fbe930df5`.
+The local capture checkout is documentation-only `9140b53`; it is not used as
+a substitute for that public-source comparison.
+
+The footage now includes the chrome BowserBOY website header, unchanged purple
+GBA startup/rear artwork, original soft A/B contours, metallic-chroma bezel and
+larger etched rear logo. More consoles are not shown or implemented. The main
+README remains image/GIF-led with short captions; detailed naming and save
+boundaries belong in the guide, architecture and saving reference.
+
+The unchanged `capture-readme.mjs` uses a fresh browser context, the original
+Pixel Lab demo and actual input/pickup/Inspect/light/power/fullscreen/save
+actions. The receipt contains five complete timing ranges and zero page errors.
+Insertion deliberately holds the real loader download during its seating
+animation, so it is not a performance measurement. No private ROM, recording
+or unsupplied artwork is used. Silent GIFs are not new audio-quality evidence.
+
+Only the existing `clips()` encoder is called: 1100x850 original recording,
+800x618 GIFs at 10 fps. The `banner()` generator is not called; the supplied chrome lead logo stays
+byte-identical and the old purple orbital banner remains a historical asset.
+Current dedicated stills use `readme-*` names; historical `3d-*`, original book
+figures and older qualification images are not overwritten or relabeled.
+The previous local media edition and release records below remain history.
+Encoded loops contain 107/44/29/52/51 frames (pickup/startup/insertion/lights/
+button feedback), respectively; the largest is 6,663,993 bytes. All loop at the
+intended size with changing sampled frames. Bounded first/middle/end and
+eight-still contact sheets are reviewed, plus an actual LCD-only dark interval.
+The 14 README embeds decode and all local Markdown links/anchors across the
+19 public Markdown documents resolve. These checks do not imply human approval.
+
 ### Current refresh - recessed controls and smaller bezel
+
+**Previous local media edition.** These origins describe the earlier images
+at their historical revision, not the current public captures above.
 
 The five interaction GIFs and new `readme-notice`, `readme-underside`,
 `readme-fullscreen`, `readme-dock` and `readme-saves` PNGs are actual **local

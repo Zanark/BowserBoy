@@ -1,4 +1,4 @@
-# Verification scope
+# BowserBOY verification scope
 
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
@@ -6,6 +6,27 @@ human acceptance nor deployment; the actual release evidence is recorded below.
 The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
+
+## Documentation and public-media refresh, 2026-11-05
+
+README, guide, saving reference, architecture and book entry now distinguish
+the chrome BowserBOY website from its first purple GBA console, BowserBOY
+ADVANCED. Additional consoles remain future direction; the owner still manages
+the repository rename. This corrects the stale guide claim that settings panels use
+the purple console PNG: those panels use the chrome website PNG.
+
+The README interactions and dedicated stills were re-recorded on the actual public
+site, with the original Pixel Lab demo and zero page errors. All 29 independently
+fetched public app assets match qualified `f5bc639`; the local checkout is the
+later documentation-only `9140b53`. Capture/encoding and historical-image
+boundaries are recorded in [Media](MEDIA.md#bowserboy-public-refresh-2026-11-05).
+No application behavior changes, extra console implementation, fresh
+audio/private-ROM test or new human acceptance is implied by this refresh.
+The five encoded loops have 107/44/29/52/51 frames at 800x618/10 fps. Bounded
+contact/still review includes a separate LCD-only sample; current media is not
+validated by file existence alone. All local links/anchors in 19 Markdown
+documents and all 14 README image embeds resolve/decode; supplied chrome-logo
+bytes stay exact. Public documentation publication is recorded separately.
 
 ## BowserBOY website brand separation, 2026-11-05
 

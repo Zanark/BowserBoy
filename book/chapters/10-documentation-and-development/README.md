@@ -43,6 +43,14 @@ behavior, provided the caption and receipt do not call it a public capture.
 Its source identity, actual URL, timing receipt and page errors belong in
 Media. The book never turns a local receipt into production evidence.
 
+The later BowserBOY refresh records those same interactions on the actual
+public site. The capture checkout is a documentation revision; independently
+matching the public application's assets to qualified `f5bc639` is what binds
+the footage to deployed source. Current `readme-*` stills can replace the
+visual front page without overwriting pinned first-edition geometry figures.
+The chrome website logo and purple console logo are separate supplied assets,
+not two color variants of one interchangeable global brand.
+
 ![The original startup recorded through the current application build](../../../docs/images/power-on.gif)
 
 *Figure 10-02. Actual startup motion from the documentation-refresh recording.

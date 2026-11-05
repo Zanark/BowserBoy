@@ -1,4 +1,4 @@
-# Architecture
+# BowserBOY architecture
 
 [Engineering book](../book/README.md) | [Player guide](GUIDE.md) | [Verification](VERIFICATION.md)
 
@@ -7,6 +7,28 @@ This is the concise implementation reference. The first
 examples, dedicated algorithms/data-structures and design-principle chapters,
 and revision-bound source references. It describes qualified source; release
 status remains a separate verification claim.
+
+## Website identity, console identity and future direction
+
+BowserBOY is the website and shared tabletop. BowserBOY ADVANCED is its one
+implemented console: the current GBA handheld. Its supplied purple artwork
+still reads ADVANCE. That artwork is not the website's chrome logo.
+
+| Surface | Asset or implementation | Current ownership |
+|---|---|---|
+| Website header, tools/settings panels, README lead | `assets/website-logo.png` | BowserBOY chrome identity |
+| GBA rear shell and idle/loading/startup LCD | `assets/logo.png` through `src/brand.js` | Original purple console identity |
+| GBA bezel and LCD-fullscreen bezel | Letter-only metallic texture | Console presentation, not website branding |
+
+More consoles on the table are planned. There is no console picker, second
+emulator core or multi-console save model today. Do not interpret decorative
+cartridges as implemented consoles. The current single-console lifecycle below
+is intentionally unchanged; future support needs its own requirements and
+qualification rather than speculative abstractions in this branding update.
+
+The GitHub repository remains `Zanark/BowserBoyAdvance` at this documentation
+refresh. The owner will rename it to BowserBOY; current links and the local
+checkout retain their real paths until that separate action is performed.
 
 ## One static site, one active cartridge
 

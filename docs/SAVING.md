@@ -1,6 +1,11 @@
-# Progress, backups and recovery
+# BowserBOY ADVANCED: progress, backups and recovery
 
 [Player guide](GUIDE.md) | [Book chapter: saves and recovery](../book/chapters/03-saves-and-recovery/README.md)
+
+This guide covers the current GBA console on the **BowserBOY** website.
+The chrome website rebrand does not change saves, ROM identity, backup format,
+storage keys or the purple console artwork. No additional console save model
+is implemented.
 
 ## Three different things
 
@@ -84,7 +89,7 @@ along with its saves; it is not a backup or cloud synchronization.
 ## Move to another browser or device
 
 1. Export backup while the session is running and keep the downloaded file.
-2. Open BowserBoyAdvance on the other device, choose the exact same ROM and turn it on.
+2. Open BowserBOY on the other device, choose the exact same GBA ROM and turn the console on.
 3. Import that `.bba-save` file and confirm replacement of the current session.
 
 Imports check application format/version, runtime identity, ROM digest, size,
@@ -96,6 +101,15 @@ the session can be restored without promising persistent browser storage.
 These are EmulatorJS 4.2.3 / mGBA checkpoints. Other emulators and future core
 versions may use different state formats. Keep originals when migrating.
 Checksums are not signatures: only import backups from a trusted source.
+
+## Before the repository or website address changes
+
+The owner will rename the GitHub repository separately; this documentation
+does not perform that move. Export a `.bba-save` backup first and retain the
+exact ROM. The present website name alone does not migrate or erase storage.
+Browser storage is origin-scoped, but a future hosting move still needs
+verification of the actual origin, browser profile and emulator behavior.
+Do not assume a repository redirect proves that progress has migrated.
 
 ## If something goes wrong
 

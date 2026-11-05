@@ -1,0 +1,43 @@
+Status: IN_PROGRESS
+Milestone: Current BowserBOY visual README and reconciled public documentation.
+Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo.
+
+Purpose:
+Refresh the actual visual front page and documentation after the website/
+console brand split, preserving historical source and media boundaries.
+
+Tasks:
+- [x] Record all five README interactions on the actual public website.
+- [x] Refresh dedicated README stills and add current table/front/rear figures.
+- [x] Review encoded media without repeatedly decoding unchanged artwork.
+- [x] Reconcile names, current features and future-console limits across guides.
+- [x] Correct stale settings-logo/fullscreen descriptions and saving guidance.
+- [x] Update book entry and documentation chapter without repinning first edition.
+- [x] Check Markdown paths/anchors, image decoding and unchanged source artwork.
+- [ ] Publish and independently verify changed public documents/media.
+- [ ] Complete owned continuity and final delivery record.
+
+Acceptance criteria:
+- README stays visual-first, with short captions and no invented future feature.
+- Current public footage includes chrome website and purple GBA console identity.
+- Original A/B, metallic bezel and enlarged colored rear engraving are represented.
+- Original Pixel Lab only; no private ROM, recording or generated product mockup.
+- Exact source/capture origin, historical editions and publication remain distinct.
+- No application changes, repository rename or new console implementation.
+- Existing source pins and historical 3d/book qualification figures stay intact.
+
+Completion evidence:
+- Actual public capture at 2026-11-05T12:09:57.438Z; zero page errors.
+  Independent 29-asset match identifies application f5bc639; local checkout 9140b53
+  is documentation-only, not a substitute for public-source identity.
+- Existing capture/encoder reused; only clips() called, not old purple banner().
+  Five 800x618/10fps looping GIFs have 107/44/29/52/51 frames and changing samples.
+- Bounded first/middle/end contact sheet, eight-still sheet and actual LCD-only
+  frame reviewed. Current stills use readme-*; historical figures unchanged.
+- 152 local Markdown paths/anchors across 19 documents resolve. All 14 README
+  image embeds decode; supplied chrome PNG hash remains exact; diff check passes.
+- Public publication/receipt pending. No new runtime/audio test or human approval.
+
+Completion log:
+- 2026-11-05: User explicitly requests README and documentation refresh.
+  Extend the brand split into current media, book entry and recovery guidance.
