@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Softer A/B letters only:
+  User finds A/B too dark and explicitly confirms only the letters. Change
+  groove color#454c40to#999d98; cap finish/lighting/recesses/other controls
+  stay unchanged. Actual material contrast6.22965->1.92740. Supersede only
+  the old >3A/B contrast requirement with moderate1.5-2.5; preserve all real
+  depth/counter/shadow and other marking assertions. Syntax/build/11units and
+  three complete branding/pressed-light/response/native-input cases40.5s pass.
+  Actual rendering reviewed.38IN_PROGRESS until normal/public qualification;
+  pending README refresh will use this latest letter shade.
 - 2026-11-05 / Stronger button feedback independently live:
   Fresh normal2cc1a58/41932265544 passes build/11units/all39browser cases and
   deployment. Independently match28actual public assets; all four complete

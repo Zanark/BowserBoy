@@ -248,7 +248,7 @@ export function createHandheld() {
   rubber.roughness = .68;
   rubber.clearcoat = .06;
   const buttonMark = rubber.clone();
-  buttonMark.color.set('#454c40');
+  buttonMark.color.set('#999d98');
   buttonMark.roughness = .85;
   buttonMark.clearcoat = 0;
   const padMark = rubber.clone();

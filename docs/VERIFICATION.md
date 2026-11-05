@@ -7,6 +7,22 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Softer A/B lettering, 2026-11-05
+
+The user finds the letters too dark and explicitly confirms **only the A/B
+letters**, not the cap color. Change only the shared groove material from
+`#454c40` to `#999d98`. Cap materials, illumination, genuine cutouts, counter
+islands, stronger press motion and all other markings remain unchanged.
+
+The revised requirement deliberately supersedes workstream 36's >3 material
+contrast: retain legible but moderate contrast between 1.5 and 2.5. Actual
+source contrast changes from 6.22965 to 1.92740. All first-hit depth, counters,
+wall/shadow, viewport and other-marking assertions remain. Syntax/build,
+all 11 units and the three complete branding, pressed-light/response and
+mapped-native-input cases pass locally (40.5s). Actual warm-lamp rendering
+is reviewed; no historical image or private ROM changed. Normal hosted and
+independent production qualification remain pending.
+
 ## Stronger button feedback, 2026-11-05
 
 Workstream 37 increases actual A/B travel to .075 units, Start/Select to .04,

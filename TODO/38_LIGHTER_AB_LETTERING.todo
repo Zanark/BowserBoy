@@ -1,0 +1,34 @@
+Status: IN_PROGRESS
+Milestone: Softer gray A/B grooves, following the latest visual reference.
+Dependencies: Completed workstreams 36 and 37.
+
+Purpose:
+Lighten only the recessed A/B lettering, which the user now finds too dark.
+Preserve actual grooves, cap finish, D-pad tones and stronger physical motion.
+
+Tasks:
+- [x] Replace the near-black groove material with a softer neutral gray.
+- [x] Replace only the superseded high-contrast A/B assertion.
+- [x] Inspect actual rendered lettering and preserve depth/counters/shadows.
+- [ ] Qualify normal delivery and exact public appearance/geometry.
+- [ ] Reconcile documentation, tracking and owned continuity.
+
+Acceptance criteria:
+- A/B floors and walls use soft gray, not near-black, paint or emission.
+- Actual material contrast stays between1.5and2.5against the unchanged caps.
+- First-hit groove depth, counter islands, shadows and smooth cap shading remain.
+- Other markings, stronger presses, lighting, input and emulator timing stay intact.
+
+Completion evidence:
+- Earlier #454c40 material contrast is6.22965; softer #999d98 is1.92740.
+- Syntax/build/all11units pass; three complete real branding, pressed-light/
+  response and mapped-native-input cases pass40.5s. Actual rendering reviewed.
+- Hosted/public qualification remains pending.
+
+Completion log:
+- 2026-11-05: User supplies a gray handheld reference and says A/B are too dark.
+  Lighten only the shared A/B groove material. This supersedes36's >3contrast
+  requirement, not its real recessed geometry or any other control's color.
+- 2026-11-05: Explicit clarification: "Only the A/B letters". Leave cap shade,
+  lighting and geometry unchanged. Qualify actual lighter lettering under the
+  original warm lamp; preserve historical documentation captures.

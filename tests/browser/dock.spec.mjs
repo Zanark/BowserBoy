@@ -519,7 +519,8 @@ test('molded controls and monochrome logo retain physical branding, and frosted 
     expect(recess.depth).toBeLessThan(.035);
     expect(recess.counterAtCap).toBe(true);
     expect(recess.wallDepth).toBeGreaterThan(.018);
-    expect(recess.contrast).toBeGreaterThan(3);
+    expect(recess.contrast).toBeGreaterThan(1.5);
+    expect(recess.contrast).toBeLessThan(2.5);
     expect(recess.unprinted && recess.shadowed).toBe(true);
   }
   expect(branding.markings).toHaveLength(8);
