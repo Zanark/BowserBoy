@@ -19,8 +19,17 @@ Tighter real-ink bounds fail the old contour at left inset
 0.20182291666666666 (required >=0.21). Syntax/build/all11units and the complete
 actual branding/recess/framing/overlay/fullscreen-identity case pass locally
 (18.3s). All four bounds are tighter, while width/ink/monochrome/shared-pixel
-and physical-control assertions remain. Hosted/public qualification is pending.
+and physical-control assertions remain. At this local stage, hosted/public
+qualification had not occurred.
 Actual local warm-lamp rendering is reviewed: clean letters, no exterior frame.
+
+**Complete, independently live:** `5b53c887c04ba9ba381ba86b04f0f4640a78ef9a`
+passes fresh normal Pages `41992917534`, including build, all 11 units, all
+39 browser cases and deployment. Independently match all 28 actual public
+assets. The complete actual public branding/recess/framing/overlay/fullscreen
+identity case passes 16.4s, with all four clean-letter bounds and existing
+shared-pixel, color, size, control and viewport requirements intact.
+No supplied image, other logo, cap, camera, native input or timing changed.
 
 ## Smaller bezel wordmark again, 2026-11-05
 

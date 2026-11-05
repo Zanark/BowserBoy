@@ -40,7 +40,7 @@ BowserBoyAdvance workstreams
 38_LIGHTER_AB_LETTERING.todo - DONE: only A/B grooves softened, independently verified live.
 39_SMALLER_BEZEL_AGAIN.todo - DONE: shared bezel another20%smaller, independently verified live.
 40_CURRENT_VISUAL_README.todo - DONE: fresh actual motion/UI media and captions published and verified on GitHub.
-41_OUTLINE_FREE_BEZEL.todo - IN_PROGRESS: remove only the shared lettering's exterior contour.
+41_OUTLINE_FREE_BEZEL.todo - DONE: shared bezel contour removed, independently verified live.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

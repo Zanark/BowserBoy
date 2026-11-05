@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Outline-free bezel independently live:
+  5b53c88/41992917534passes build/11units/all39browser cases/deployment.
+  Independently match28actual public assets; complete actual public branding/
+  recess/framing/overlay/fullscreen identity case16.4s passes with tighter ink
+  bounds on all sides.41DONE: clean letters, no exterior frame/underline;
+  original glyph pixels, shade,60%size/center and other logos preserved.
+  Earlier README footage remains labeled8a1d6a3, not new-release footage.
 - 2026-11-05 / Outline-free bezel:
   User rejects the exterior light contour around the words. Preserve original
   letters, centered60%size, shade and other logos. Color filters damage fills

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Clean bezel letterforms without the exterior light contour.
 Dependencies: Completed workstream 39; retain shared normal/fullscreen artwork.
 
@@ -10,8 +10,8 @@ Tasks:
 - [x] Inspect the source and reject color filters that damage letter fills.
 - [x] Remove detached thin contours without eroding the original letter edges.
 - [x] Reproduce old ink failing clean-letter bounds; qualify actual new pixels.
-- [ ] Qualify normal delivery and exact public normal/fullscreen appearance.
-- [ ] Reconcile completion records and owned continuity.
+- [x] Qualify normal delivery and exact public normal/fullscreen appearance.
+- [x] Reconcile completion records and owned continuity.
 
 Acceptance criteria:
 - No surrounding contour, frame or underline remains around either word.
@@ -24,10 +24,16 @@ Completion evidence:
 - Syntax/build/all11units pass; complete real branding/recess/framing/overlay/
   fullscreen-identity case passes18.3s with tighter bounds on all four sides.
 - Local source-art reconstruction and actual warm-lamp rendering reviewed;
-  clean letters remain intact. Hosted/public qualification pending.
+  clean letters remain intact.
+- Normal5b53c88/41992917534passes build/11units/all39browser cases/deployment.
+  Independently match28actual public assets; complete actual public branding/
+  recess/framing/overlay/fullscreen identity case passes16.4s. All four clean
+  ink bounds and earlier size/color/control/viewport assertions remain intact.
 
 Completion log:
 - 2026-11-05: User asks to remove the white border on bezel text. Color-only
   rejection damages letter fills and leaves contour fragments, so do not use it.
   Select solid7x7alpha cores and reconstruct their original connected pixels;
   reject detached thin contours, not the lettering's antialiased edge.
+- 2026-11-05: Normal delivery and independent public proof complete;41DONE.
+  Preserve prior README capture origins rather than relabeling older footage.

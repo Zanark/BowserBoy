@@ -53,6 +53,13 @@ All 28 actual public app assets independently match; three complete public
 branding/response/native-input cases pass 52.2s. This establishes application
 delivery, not a different origin for the locally captured media above.
 
+The subsequent runtime-only borderless-bezel refinement `5b53c88` passes fresh
+normal `41992917534` (build, 11 units, all 39 browser cases, deployment), exact
+28-public-asset matching and the complete actual public branding/fullscreen
+identity case (16.4s). It removes the remaining exterior light contour, not
+the letters or other logos. These README recordings remain the earlier
+`8a1d6a3` media edition; do not relabel them as borderless-release footage.
+
 ### Current refresh - manufactured controls and glass
 
 **Previous edition:** retained for its historical evidence and existing links.
