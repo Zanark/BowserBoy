@@ -24,9 +24,9 @@ so later documentation-only commits do not silently change the cited source.
 ## Later lettering delta
 
 Workstream45's metallic chroma follow-up is a deliberate update beyond the
-pinned first edition above. Current [`createHandheld`](../src/handheld.js)
+pinned first edition above. Qualified [`createHandheld`](https://github.com/Zanark/BowserBoyAdvance/blob/ad259c3263dc36b668036425c45b5b8cb8910d1e/src/handheld.js)
 paints static chrome bands/tint inside the retained letter alpha;
-[`app.js`](../src/app.js) shares that exact canvas with the fullscreen DOM.
+[`app.js`](https://github.com/Zanark/BowserBoyAdvance/blob/ad259c3263dc36b668036425c45b5b8cb8910d1e/src/app.js) shares that exact canvas with the fullscreen DOM.
 The [verification record](../docs/VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
 identifies qualification and delivery. The original source links and historical
 monochrome screenshots are not silently relabeled as this later edition.

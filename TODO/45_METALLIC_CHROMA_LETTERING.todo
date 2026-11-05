@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Metallic chroma finish on the bezel lettering only.
 Dependencies: 39_SMALLER_BEZEL_AGAIN.todo; 41_OUTLINE_FREE_BEZEL.todo.
 
@@ -13,7 +13,7 @@ Tasks:
 - [x] Share the actual texture canvas with fullscreen instead of copying it.
 - [x] Replace only the superseded monochrome assertion; retain physical gates.
 - [x] Inspect actual rendered lettering and qualify the local branding case.
-- [ ] Pass the normal complete hosted gate and independently verify production.
+- [x] Pass the normal complete hosted gate and independently verify production.
 - [x] Update affected guides, book explanation, ledger and owned continuity.
 
 Acceptance criteria:
@@ -38,9 +38,20 @@ Completion evidence:
   Reuse the original canvas in the decorative fullscreen DOM; preserve the exact
   existing equality assertion rather than weakening it.
 - Syntax/build/all11units pass. Complete actual branding/control/recess/notice/
-  framing/fullscreen identity case passes21.2s. Normal/public delivery pending.
+  framing/fullscreen identity case passes21.2s before normal/public delivery.
+- Sourcead259c3263dc36b668036425c45b5b8cb8910d1e / Pages42013383789 passes
+  build/all11units/all40browser cases, actual logs14+13+13, and deployment.
+  Independently match all28public assets to that commit.
+- Two complete actual public branding/recess/framing/overlay/fullscreen and
+  quick-action/fullscreen/native lifecycle cases pass62.2s, no failures/retries.
+  Actual public lamp-lit crop inspected; exact source/fullscreen RGBA has zero
+  differences, original geometry/material scope retained. All owned helpers exit.
 
 Completion log:
 - 2026-11-05: User clarifies metallic chroma, not animated RGB or chromatic fringes.
   Supersede the old monochrome color contract only for the bezel lettering.
   Preserve the outline-free mask and original controls; user acceptance unrecorded.
+- 2026-11-05: Fresh normal gate, actual deployment,28asset identity and two
+  actual public cases pass.45DONE on bounded technical evidence. Local watch
+  connection drops once; resume only observation of the same successful run,
+  not jobs or deployment. No workflow/gate changes or private media publication.

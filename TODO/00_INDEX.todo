@@ -44,7 +44,7 @@ BowserBoyAdvance workstreams
 42_ROUNDED_AB_GROOVES.todo - DONE: round A/B contours and thicken A strokes, independently verified live.
 43_ORIGINAL_AB_TYPOGRAPHY.todo - DONE: reference Arial A/B with softer inward engraving independently live;42's visual result rejected.
 44_AUDIO_PACED_DEFAULT.todo - DONE: audio-paced default corrects reproduced starvation;40-case normal gate and four actual public audio cases pass.
-45_METALLIC_CHROMA_LETTERING.todo - IN_PROGRESS: letter-only chrome bands/chroma locally qualified; exact fullscreen canvas shared; hosted/public delivery pending.
+45_METALLIC_CHROMA_LETTERING.todo - DONE: letter-only metallic chroma independently live;40-case hosted gate,28public assets and two public cases pass.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

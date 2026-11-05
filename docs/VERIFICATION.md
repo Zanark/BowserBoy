@@ -35,6 +35,17 @@ Syntax/build/all11units pass; the complete actual branding/control/recess/
 framing/overlay/fullscreen case passes21.2s. Hosted/public qualification is
 pending; technical evidence is not user aesthetic approval.
 
+**Complete, independently live:** source
+`ad259c3263dc36b668036425c45b5b8cb8910d1e` / Pages `42013383789` passes
+build, all11units, all40browser cases (actual logs14+13+13) and deployment.
+Independently match all28public application assets. Two complete actual public
+branding/control/recess/framing/overlay/fullscreen and quick-action/native
+lifecycle cases pass62.2s, with no failures or retries. Inspect the actual public
+lamp-lit lettering crop; source/fullscreen RGBA differences are zero. No private
+media is published. A local observer network disconnect does not fail the remote
+workflow; resume only observation of that same run, not its jobs.
+Workstream45isDONE; user aesthetic acceptance remains separate.
+
 ## Audio-paced default, 2026-11-05
 
 The user supplies a recording and authorizes private-ROM audio testing. Extract

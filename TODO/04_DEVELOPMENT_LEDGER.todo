@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Metallic chroma45independently live:
+  ad259c3/42013383789passes build/11units/all40browser cases14+13+13 and
+  deployment. Independently match28actual public assets. Two complete public
+  branding/recess/framing/overlay/fullscreen and quick-action/fullscreen/
+  native lifecycle cases62.2s pass. Actual public crop inspected; source/
+  fullscreen RGBA differences zero. Only lettering finish changes;45DONE.
+  Local observer disconnects once, then resumes watching the same successful
+  run. No failed-job retry, gate change, extra private-ROM loop or user approval.
 - 2026-11-05 / Letter-only metallic chroma:
   Keep the original25,931ink pixels with zero changed alpha; bake chrome bands
   and restrained iridescent tint into only the bezel texture. Actual first

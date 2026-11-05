@@ -71,7 +71,10 @@ comparison sheets are not project-authored public media and are not published.
 The later [metallic chroma lettering](VERIFICATION.md#metallic-chroma-lettering-2026-11-05)
 also postdates these recordings and the historical monochrome guide/book figures.
 Bounded actual rendering comparisons qualify that text-only finish; existing
-GIFs and images retain their original capture identities.
+GIFs and images retain their original capture identities. Source `ad259c3` /
+Pages `42013383789` passes the full gate;28actual public assets match and two
+public cases pass62.2s. Its actual public lamp-lit text crop is separately
+inspected, not substituted into earlier GIFs or figures.
 
 ### Current refresh - manufactured controls and glass
 
