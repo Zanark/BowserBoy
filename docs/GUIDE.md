@@ -15,8 +15,8 @@ The owner will rename the GitHub repository separately. Until then the existing
 repository and Pages URLs remain valid; this branding change does not rename
 storage, modify saves, or move the local checkout.
 
-**Current release and pictures:** source `a7a07fc` is independently verified
-live after the full 40-case hosted gate and exact 28-public-asset match.
+**Current release and pictures:** source `f5bc639` is independently verified
+live after the full 41-case hosted gate and exact 29-public-asset match.
 It recovers the original soft Arial A/B shapes, size and placement with shallow
 genuine inward engraving, replacing the rejected custom rounded shapes.
 It retains deeper presses, stronger
@@ -30,7 +30,7 @@ engraving and chrome website header postdate those recordings.
 Most inherited guide motion/pose/detail figures belong
 to the earlier `ab912d5` edition and were captured locally before its deployment;
 the notice and lighting/power-off figures were captured on that public edition.
-See [current release evidence](VERIFICATION.md#larger-etched-rear-logo-2026-11-05)
+See [current release evidence](VERIFICATION.md#bowserboy-website-brand-separation-2026-11-05)
 and [capture origins](MEDIA.md#current-refresh---recessed-controls-and-smaller-bezel).
 
 Normal playback now defaults to audio-paced timing to address reproduced

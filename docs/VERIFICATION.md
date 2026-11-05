@@ -23,7 +23,7 @@ orbital startup drawing, complete physical branding/recess/framing/fullscreen
 and first-visit/startup/persistent-power lifecycle. Actual desktop and320px
 header crops are reviewed. Keep the existing play-only header hiding and
 Inspect restoration; tools/settings images share the chrome website asset.
-Normal complete hosted/public delivery is pending, not implied by local checks.
+These local checks alone do not establish hosted/public delivery.
 
 The first normal run`42020805164`blocks deployment on two fixtures: a shell
 selector still expects the old website name, and a power-clearance mask paints
@@ -32,6 +32,16 @@ selector and rasterize only actually visible header artwork. The viewport/
 physical-clearance assertions and all bounds/timeouts remain unchanged.
 The existing header-artwork case now checks both exact source PNG hashes.
 Four affected local browser cases pass57.0s; no runtime change or job retry.
+
+Qualified source`f5bc63933a88040c46879645e91a107fbe930df5`, fresh normal
+Pages run`42022953048`, passes build, all11units, all41browser cases
+(actual14+14+13) and deployment. Independently match all29actual public
+assets to that source. Three actual public website/console-branding, header
+visibility/responsiveness and complete physical-branding/recess/framing/
+fullscreen cases pass42.1s without failures or retries. Actual public desktop/
+320px chrome header crops are reviewed. Both supplied PNG hashes stay exact.
+The private byte verifier initially exceeds its1MiBchild-process output buffer
+on the1.3MBchromePNG; enlarge that helper buffer, not its equality assertion.
 
 The owner explicitly elects to rename the GitHub repository themselves.
 This update leaves repository/Pages paths unchanged. Future consoles are a

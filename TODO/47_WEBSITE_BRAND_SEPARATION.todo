@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: BowserBOY website identity separate from its first console.
 Dependencies: 46_LARGER_ETCHED_REAR_LOGO.todo.
 
@@ -15,7 +15,7 @@ Tasks:
 - [x] Preserve saves, storage keys, runtime and existing relative URLs.
 - [x] Qualify desktop/phone header fit and retained play/Inspect visibility.
 - [x] Update README, affected docs, source register and owned continuity.
-- [ ] Pass the normal complete hosted gate and independently verify production.
+- [x] Pass the normal complete hosted gate and independently verify production.
 
 Acceptance criteria:
 - Website uses the exact2151x731chrome RGBA artwork without purple tint.
@@ -33,15 +33,24 @@ Completion evidence:
   website identity/fit/visibility, orbital drawing, complete physical branding/
   recess/fullscreen/framing and power/startup/persistent-power lifecycle.
 - Actual desktop/320px chrome header crops reviewed; source alpha retained.
-- Normal/public qualification pending; no private-ROM or audio/video replay.
+- No private-ROM or audio/video replay.
 - First normal run42020805164blocks deployment: shell fixture still expects
   old heading; power fixture rasterizes CSS-hidden header as visible artwork.
   Update expected website name; only rasterize actually visible header pixels.
   Keep all geometry/viewport/depth/time limits. Existing artwork/header case
   now checks both exact PNG hashes. Four affected browser cases pass57.0s.
+- Qualifiedf5bc63933a88040c46879645e91a107fbe930df5 /42022953048:
+  build,11units,all41hosted browser cases(actual14+14+13) and deployment pass.
+- Independently match29public assets. Three actual public website/console/
+  responsive-header/physical-branding/fullscreen cases pass42.1s, no failures
+  or retries. Actual public desktop/320px chrome header crops inspected.
+- Private asset verifier's1MiBchild-process output limit rejects the1.3MBPNG.
+  Increase only that helper's output buffer; exact byte/hash assertions stay.
 
 Completion log:
 - 2026-11-05: User supplies the chrome BowserBOY logo and establishes website/
   console identity. Clarification: update branding only; owner renames repo.
 - 2026-11-05: Preserve first hosted failure; fix dependent test fixtures.
   New source commit triggers a fresh normal gate, not a failed-job retry.
+- 2026-11-05: Fresh normal gate and independent public qualification complete.
+  Website branding live; repo rename remains owner action, not performed here.

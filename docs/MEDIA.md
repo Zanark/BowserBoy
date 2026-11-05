@@ -87,6 +87,10 @@ Older captures and the preserved orbital banner GIF show the previous website
 identity. They are historical footage, not chrome-header captures.
 Actual local desktop/mobile header crops are reviewed separately; that is not
 a recapture of existing GIFs or proof of public deployment.
+Subsequent source`f5bc639` / Pages`42022953048`passes the full41-case gate,
+with29exact public assets and three actual public branding/header cases42.1s.
+Separate actual public desktop/320px header crops are inspected. Older footage
+is still not relabeled as this later website identity.
 
 ### Current refresh - manufactured controls and glass
 
