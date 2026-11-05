@@ -392,7 +392,8 @@ export class HandheldScene {
     const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
     if (this.renderedLastFrame) {
-      this.nextPaint = time + (delta > .05 ? Math.min(200, delta * 2000) : 0);
+      const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion ? 1000 : 200;
+      this.nextPaint = time + (delta > .05 ? Math.min(recoveryLimit, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
     const exposure = this.lampOn || this.roomLightsOn ? .018 : .45;

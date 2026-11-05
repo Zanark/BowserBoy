@@ -36,6 +36,34 @@ warning, persistence and user-choice checks. This case passes locally in
 46.5 seconds; no application notice behavior is changed. The new normal gate
 and subsequent public sharpness proof remain pending.
 
+### Full-resolution gate recovery
+
+Run `42107437027` executes all 53 browser cases: 50 pass and three fail, so
+deployment is skipped. The failures are the native fast-forward/VSync clock
+(3x measures 1.99894 times baseline), original save/import/ROM-isolation flow
+(power is still disabled during the second upload), and mapped-controls/LCD
+flow (120-second budget expires at the later Pause click). Logs and all three
+failed shards' trace artifacts are retained; these are not public-site fixes.
+
+Give settled playing-mode paints up to 1000 ms of recovery after expensive
+draws instead of the former 200 ms ceiling. Transitions and cartridge animation
+retain 200 ms, normal fast frames add no delay, and pixel density never changes.
+The actual-render regression now checks this playing-mode branch at 2x:
+it fails the old build because an extra paint occurs during the reserved
+interval, then passes the correction. The corrected renderer, original
+save/import/isolation flow, and mapped-controls/native-lighting flow pass
+together under explicit SwiftShader; the four-case run takes 4.8 minutes but
+still fails the separate native speed case on its final 1x sample (0.55338).
+
+That native pacing fixture reopened the 3D loop between speed-menu clicks:
+opening the drawer only suppresses paints while it remains open. Match the
+existing hold-Space pacing fixture by stopping only the decorative scene loop
+after native startup. Keep the actual cartridge frame clock, real controls,
+native VSync setting, runtime identity and every multiplier bound unchanged.
+The corrected native speed case passes in 34.0 seconds. Other scene/native
+integration cases continue to run the full-resolution 3D renderer. Build,
+syntax and all 12 units pass. Normal hosted gate and public proof are pending.
+
 ## Movable dock and inspection branding, 2026-11-06
 
 The dock has a dedicated pointer/touch grip, collapse/expand, keyboard arrows

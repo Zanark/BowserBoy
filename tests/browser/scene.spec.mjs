@@ -220,6 +220,22 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.ratio));
     expect(budget.press).toBeGreaterThan(.99);
   }
+  const playingRecovery = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const tick = gap => { view.changed = true; view.render(view.lastRender + gap); };
+    view.setView('playing');
+    view.renderedLastFrame = false;
+    view.nextPaint = 0;
+    tick(1000);
+    const before = view.renderer.info.render.frame;
+    tick(1000); tick(201);
+    const during = view.renderer.info.render.frame;
+    tick(800);
+    return { before, during, after: view.renderer.info.render.frame, ratio: view.renderer.getPixelRatio() };
+  });
+  expect(playingRecovery.during, 'A stalled, stationary handheld must leave time for the native core').toBe(playingRecovery.before);
+  expect(playingRecovery.after).toBeGreaterThan(playingRecovery.before);
+  expect(playingRecovery.ratio).toBe(2);
 });
 
 test('paper lantern gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {

@@ -14,6 +14,8 @@ Tasks
 [x] Check 1x/2x drawing buffers through isolated, severe and sustained stalls.
 [x] Exercise original native quick actions and both insertion viewports.
 [x] Capture/review actual high-DPI inspection and lettering detail.
+[x] Reserve native-core recovery time after costly full-resolution playing draws.
+[x] Check playing-mode recovery and isolate native speed timing from room draws.
 [ ] Publish through the full normal gate and verify actual public sharpness.
 
 Acceptance criteria
@@ -30,8 +32,16 @@ recovery/button checks, both insertions and both native quick-action flows.
 Build/syntax/12units pass. Actual2x inspection after severe/sustained gaps
 retains2880x2200 for1440x1100CSS; full and lettering-detail captures reviewed.
 OriginalPixelLab/noROMonly. Actual hosted release and public proof pending.
+Follow-up gate42107437027:50/53 pass; speed/native-import/mapped-lighting fail.
+Playing recovery regression fails old200ms build, passes1000ms ceiling at2x.
+Corrected renderer plus both failed native integration flows pass together;
+native speed still fails1x in that4.8m sweep. Isolating its decorative renderer
+matches prior hold-Space fixture; all real clock/speed/VSync assertions then
+pass34.0s. No timeouts/bounds relaxed. New hosted/public proof pending.
 
 Completion log
 --------------
 2026-11-06: User explicitly rejects the blur and requires sharpness. Remove the
 adaptive-resolution tradeoff entirely; no human acceptance is presumed.
+2026-11-06: Investigate actual failed gate; retain full resolution and improve
+recovery scheduling. Correct native-only performance fixture isolation.

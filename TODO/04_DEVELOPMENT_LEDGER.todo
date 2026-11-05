@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Full-resolution scheduling and native timing isolation:
+  Sharpness gate42107437027 executes53:50pass, three failures; no deploy.
+  Actual artifacts identify native3x ratio1.99894, second-ROM power disabled,
+  and mapped-controls/light case120s atPause. Never restore blurry fallback.
+  Extend expensive playing-paint recovery ceiling200->1000ms, retain200ms
+  for transitions/cartridge animation and no added delay for fast frames.
+  Playing-mode2x regression failsold200ms build, passescorrection. Original
+  save/import/isolation and mapped-input/native-light cases also pass in4.8m
+  sweep, but native1x speed fails0.55338. Its modal-only isolation repaints
+  betweenmenu clicks. Match existinghold-Space fixture by stopping only the
+  decorative renderer; retainactualclock/realcontrols/VSync/identity andall
+  multiplierbounds. Correctedcasepasses34.0s. Build/syntax/12units pass.
+  Hostedgate/publicsharpness pending; no deadline/test/gate removals.
 - 2026-11-06 / Sharpness is mandatory:
   Userrejects visible handheldblur. Remove allruntimepixelratio reduction
   andobsolete slowcounter; keepinitialmin(devicePixelRatio,2), cachedshadows/

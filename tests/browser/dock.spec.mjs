@@ -718,6 +718,11 @@ test('fast-forward advances the cartridge clock after native VSync changes and r
   await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
+  // Isolate native pacing from software rendering between real speed-control clicks.
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+  });
   const frame = runtime(page);
   const identity = await frame.evaluate(() => {
     window.speedVSyncCalls = [];
@@ -730,7 +735,6 @@ test('fast-forward advances the cartridge clock after native VSync changes and r
     if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
     await page.locator('#quick-speed').click();
     await page.locator(`[data-speed="${speed}"]`).click();
-    // Exclude the room's GPU cost from this native pacing regression.
     await page.locator('#tools-open').click();
   };
   const measure = () => frame.evaluate(async () => {

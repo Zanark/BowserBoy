@@ -426,8 +426,11 @@ stalls never reduce it. The former adaptive-resolution mitigation was visibly
 rejected and is removed, not hidden behind another automatic quality setting.
 Model geometry, artwork, materials, anti-aliasing and native GBA resolution
 are unchanged. Performance optimizations must preserve this visual contract.
-A slow paint also leaves up to 200 ms of recovery
-before the next 3D paint, giving native emulation scheduling headroom. Cheap
+A slow paint also leaves recovery time before the next 3D paint, giving native
+emulation scheduling headroom. The ceiling is 1000 ms in playing mode without
+a view transition or cartridge animation, and 200 ms otherwise. Frames taking
+50 ms or less add no recovery delay; slow frames retain the same two-times-gap
+calculation. This changes scheduling under load, never backing resolution. Cheap
 pose/button calculations still advance and retain dirty shadows across skipped
 paints. Light damping uses elapsed time since the actual previous paint.
 
