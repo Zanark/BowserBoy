@@ -113,14 +113,21 @@ export async function playStartupSound({ volume, muted }) {
             const oscillator = audio.createOscillator();
             const gain = audio.createGain();
             const start = started + index * .085;
-            oscillator.type = 'sine';
+            const duration = index === 2 ? .24 : .075;
+            const level = volume / 100 * .045;
+            oscillator.type = 'square';
             oscillator.frequency.value = frequency;
             gain.gain.setValueAtTime(0, start);
-            gain.gain.linearRampToValueAtTime(volume / 100 * .08, start + .008);
-            gain.gain.exponentialRampToValueAtTime(.0001, start + .32);
+            gain.gain.linearRampToValueAtTime(level, start + .002);
+            for (let step = 1; step < 8; step++) {
+              gain.gain.setValueAtTime(level * (8 - step) / 8,
+                start + .002 + (duration - .012) * step / 8);
+            }
+            gain.gain.setValueAtTime(level / 8, start + duration - .008);
+            gain.gain.linearRampToValueAtTime(0, start + duration);
             oscillator.connect(gain).connect(audio.destination);
             oscillator.start(start);
-            oscillator.stop(start + .34);
+            oscillator.stop(start + duration + .005);
             if (index === 2) oscillator.onended = resolve;
           }
         });

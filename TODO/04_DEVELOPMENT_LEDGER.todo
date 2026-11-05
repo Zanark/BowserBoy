@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Chip-style startup sound:
+  Keep the original three-note melody/start cue; replace overlapping sine tones
+  with square waves,75ms opening notes/240ms finish and eight-level decay.
+  2ms attack/8ms release and lower peak retain headroom. Mute/volume, context
+  cleanup, permission reporting and game audio remain unchanged.
+  Actual offline PCM rejects old source. Syntax/build/12units and three focused
+  browser cases pass13.2s, including physical power, no-cartridge startup,
+  unchanged startup artwork and audio protection. Initial new physical fixture
+  omits pickup and times out; fix fixture through real pickup, not product code
+  or a forced click. No supplied ROM, listening or human acceptance claim.
 - 2026-11-05 / Supplied demo assets:
   User authorizes uploading the supplied ROM and box art, confirming the ROM is
   fully original or licensed for redistribution. Preserve exact bytes in a

@@ -105,7 +105,8 @@ lower shell edge, with no switch on the front face. Room lights reveal its
 physical cap, track and label; this is not a mockup.*
 
 A short orbital-logo reveal, revolving stars and synthesized chime play on the actual LCD only when switching
-from off to on. The chime follows volume/mute; reduced motion uses a static reveal.
+from off to on. The chime uses crisp 8-bit-style square tones and a short rising
+arpeggio. It follows volume/mute; reduced motion uses a static reveal.
 The supplied purple console wordmark also appears on the rear shell and
 idle/loading LCD. Website tools/settings panels use the separate chrome logo.
 The front bezel uses the purple logo's distinctive

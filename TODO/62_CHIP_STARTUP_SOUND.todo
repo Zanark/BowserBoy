@@ -1,0 +1,46 @@
+Status: IN_PROGRESS
+Milestone: Give BowserBOYADVANCED a crisper 8-bit-style power-on sound.
+Dependencies: Existing original startup chime and physical power lifecycle.
+
+Purpose
+-------
+Replace the softer overlapping sine tones with a chip-style rising arpeggio
+without changing the original melody, startup cue, mute/volume or game audio.
+
+Tasks
+-----
+[x] Use square waves with shorter separated opening notes.
+[x] Apply an eight-level decay,2ms attack and8ms final release.
+[x] Preserve existing mute/volume, audio-context cleanup and permission errors.
+[x] Add real rendered PCM and physical-power regressions without a supplied ROM.
+[x] Finish focused validation.
+[ ] Complete normal publication and verify the actual public startup.
+
+Acceptance criteria
+-------------------
+Original three-note melody has a pulse-wave harmonic profile and crisp note
+separation. Muted/zero volume creates no audio context; half volume halves
+amplitude. No clipping, lingering tail, game-audio change or commercial sample.
+Technical verification is not user listening approval.
+
+Completion evidence
+-------------------
+The new PCM regression rejects old sine source, initially at its0.08946peak.
+Original frequencies/start cue are retained. Syntax/build/all12units pass.
+The new rendered-PCM/physical-power test, existing audio protection and startup
+artwork tests pass3/3in13.2s. PCM checks cover strong square-wave third harmonic,
+separated notes, bounded peak, exact half-volume ratio, mute/zero short-circuit,
+silent tail and both context closures. Actual power switch creates3square
+oscillators and completes startup without a cartridge.
+The first final run passes PCM but times out because the fixture never picks
+up the handheld before clicking its hidden power target. Add real pickup,
+not forced interaction or a product change; the full affected group passes.
+No listening/aesthetic approval is claimed.
+No supplied demo ROM is executed.
+
+Completion log
+--------------
+2026-11-05: User requests more8-bit-style power-on sound; square arpeggio and
+stepped envelopes implemented. Initial filename-filter run found no tests;
+basename selection runs the actual baseline regression.
+2026-11-05: Correct the new test's missing pickup; focused3-case group passes.

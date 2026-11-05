@@ -616,7 +616,11 @@ blur without changing native game resolution or its shader. Narrow source
 strips displace the central wordmark by a gentle two-cycle sine wave; the outer
 orbit and composition remain centered. Reduced motion draws the whole image
 without displacement in a static
-500 ms presentation. An original three-note sine-wave chime follows mute/volume;
+500 ms presentation. An original three-note square-wave chip arpeggio follows
+mute/volume. Short separated opening notes and an eight-level descending gain
+envelope replace the earlier overlapping sine tones; 2 ms attack and 8 ms
+release ramps soften the outer edges without removing the pulse-wave character.
+The same melody, startup cue, independent audio context and cleanup remain;
 audio permission failures are reported without blocking gameplay indefinitely.
 No Nintendo recording, boot ROM or video is loaded. Animation/chime are original;
 the wordmark/star artwork is supplied, not independently authored. The active

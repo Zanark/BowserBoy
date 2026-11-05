@@ -10,6 +10,81 @@ const audioReady = async (page) => {
   return frame;
 };
 
+test('power-on chime renders a crisp chip arpeggio with volume, mute and context cleanup intact', async ({ page }) => {
+  await page.goto('./');
+  const result = await page.evaluate(async () => {
+    const { playStartupSound } = await import('./src/startup.js');
+    const NativeAudioContext = window.AudioContext;
+    const renders = [];
+    let created = 0, closed = 0;
+    window.AudioContext = class extends OfflineAudioContext {
+      constructor() { super(1, 96000, 48000); created++; }
+      resume() {
+        renders.push(new Promise((resolve, reject) =>
+          setTimeout(() => this.startRendering().then(resolve, reject), 0)));
+        return Promise.resolve();
+      }
+      close() { closed++; return Promise.resolve(); }
+    };
+    try {
+      await playStartupSound({ volume: 100, muted: true });
+      await playStartupSound({ volume: 0, muted: false });
+      const silentContexts = created;
+      const render = async volume => {
+        await playStartupSound({ volume, muted: false });
+        return (await renders.at(-1)).getChannelData(0);
+      };
+      const full = await render(100), half = await render(50);
+      const peak = samples => samples.reduce((value, sample) => Math.max(value, Math.abs(sample)), 0);
+      const harmonic = frequency => {
+        let real = 0, imaginary = 0;
+        const start = Math.round(.96 * 48000), length = 2400;
+        for (let i = 0; i < length; i++) {
+          const sample = full[start + i] * (.5 - .5 * Math.cos(2 * Math.PI * i / (length - 1)));
+          const angle = 2 * Math.PI * frequency * i / 48000;
+          real += sample * Math.cos(angle); imaginary += sample * Math.sin(angle);
+        }
+        return Math.hypot(real, imaginary);
+      };
+      return { silentContexts, created, closed,
+        peak: peak(full), volumeRatio: peak(half) / peak(full),
+        thirdHarmonicRatio: harmonic(523.25 * 3) / harmonic(523.25),
+        noteGap: peak(full.subarray(Math.round(1.03 * 48000), Math.round(1.034 * 48000))),
+        notePeaks: [.96, 1.045, 1.13].map(time =>
+          peak(full.subarray(Math.round(time * 48000), Math.round((time + .025) * 48000)))),
+        tail: peak(full.subarray(Math.round(1.37 * 48000))) };
+    } finally { window.AudioContext = NativeAudioContext; }
+  });
+  await test.info().attach('startup-chip-audio', { body: JSON.stringify(result), contentType: 'application/json' });
+  expect(result.silentContexts).toBe(0);
+  expect(result.created).toBe(2);
+  expect(result.closed).toBe(2);
+  expect(result.peak).toBeGreaterThan(.01);
+  expect(result.peak).toBeLessThan(.08);
+  expect(result.volumeRatio).toBeCloseTo(.5, 3);
+  expect(result.thirdHarmonicRatio).toBeGreaterThan(.2);
+  expect(result.thirdHarmonicRatio).toBeLessThan(.45);
+  expect(result.noteGap).toBeLessThan(.00001);
+  expect(result.notePeaks.every(peak => peak > .01)).toBe(true);
+  expect(result.tail).toBeLessThan(.00001);
+
+  await page.evaluate(() => {
+    window.startupWaves = [];
+    const start = OscillatorNode.prototype.start;
+    OscillatorNode.prototype.start = function (...args) {
+      window.startupWaves.push(this.type);
+      return start.apply(this, args);
+    };
+  });
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await powerOn(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'false');
+  await expect.poll(() => page.evaluate(() => window.startupWaves)).toEqual(['square', 'square', 'square']);
+  await expect(page.locator('#power-label')).toHaveText('POWER ON / INSERT CARTRIDGE');
+});
+
 test('audio-paced default retains live PCM reserve and normal cartridge speed through steady-state stalls', async ({ page }) => {
   await page.addInitScript(() => {
     window.continuity = { tail: null, active: false, gaps: [] };

@@ -7,6 +7,21 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Chip-style startup sound, 2026-11-05
+
+The original rising melody and startup cue now use square waves, short
+separated opening notes and an eight-level decay. Actual rendered PCM verifies
+the pulse-wave third harmonic, note separation, bounded peak, half-volume
+amplitude, zero/mute short-circuit, silent tail and audio-context cleanup.
+The original sine source fails the new regression. Actual physical pickup/
+power-on reaches the new sound and finishes startup without a cartridge.
+
+Syntax/build/all 12 units and the new chime plus existing audio protection/
+startup-artwork cases pass 3/3 in 13.2s. An initial missing-pickup fixture
+timeout is corrected through the real UI, not forced clicks or product changes.
+No supplied ROM is executed. These checks are numerical/behavioral evidence,
+not direct listening or human approval. Public startup qualification is pending.
+
 ## Experimental LCD control spill, 2026-11-05
 
 The reversible experiment adds one faint reflected-light patch sharing the
