@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Published showcase and stale header-check recovery:
+  Owner pushes6449715; actual GitHub homepage/exact-commit README serve all19
+  expected images, including10fresh GIFs. Rendered table independently shows
+  the clean tripod; exact cause of the owner's older view is not established.
+  Run42129264382 passes build/eight verification shards; two fail because
+  existing browser tests still access the intentionally removed header span.
+  Correct the zoom obstacle list and responsive artwork bounds/visibility
+  checks, explicitly retaining label absence. Both affected Edge cases pass
+  40.7s; syntax/build pass. No application/assets/rendering/deadline/gate
+  changes. Deployment correctly skipped; subsequent pushed gate and exact
+  public app identity remain required. Prior frozen1.0.0 package untouched.
 - 2026-11-06 / Clean STORSEGEL-style tripod and complete showcase:
   Follow supplied/manufacturer ash-white reference: 18cm open drum, ~30cm
   height, three flat-footed ash legs. Remove mottled paper maps/old stem,

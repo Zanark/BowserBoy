@@ -283,7 +283,6 @@ test('ordinary play zoom fits desktop and phone without changing the native game
     const lcd = { left: Math.min(...points.map(p => p.x)), right: Math.max(...points.map(p => p.x)),
       top: Math.min(...points.map(p => p.y)), bottom: Math.max(...points.map(p => p.y)) };
     const obstacles = [lcd, document.querySelector('.scene-actions').getBoundingClientRect(),
-      document.querySelector('.desk-heading > span').getBoundingClientRect(),
       ...[...document.querySelectorAll('#hardware-targets button:not([hidden])')].map(button => button.getBoundingClientRect())];
     return { z: view.camera.position.z, playZoom: view.playZoom, inspectionZoom: view.zoom,
       width: lcd.right - lcd.left, height: lcd.bottom - lcd.top,

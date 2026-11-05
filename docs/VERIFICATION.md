@@ -7,9 +7,33 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Published README and header-check recovery, 2026-11-06
+
+The owner pushes commit `64497155124b8ebb9a51651a9d1a9c1b1633f235`.
+Fresh browser checks of the actual GitHub homepage and exact-commit README
+confirm all 19 served image bodies match the committed assets, including
+all ten refreshed GIFs. The rendered table shows the clean tripod lamp without
+the removed header label. An older screenshot is not the current served media;
+its exact client-side cache or tab mechanism has not been established.
+
+[Run42129264382](https://github.com/Zanark/BowserBoyAdvance/actions/runs/42129264382)
+passes build and eight of ten verification shards. Both failures are stale
+tests of the deliberately removed `.desk-heading > span`: play-zoom geometry
+dereferences a missing element, and responsive artwork waits for its bounds.
+Deployment is correctly skipped. The repair removes the nonexistent zoom
+obstacle, retains viewport/artwork/visibility coverage, and explicitly checks
+that the removed label stays absent. Both affected Edge cases pass in
+40.7 seconds; syntax and production build also pass.
+
+This correction changes tests only, not the application, assets, renderer,
+deadlines or deployment gates. A subsequent successful pushed workflow and
+exact public application identity are still required. README publication
+does not mean the updated application has deployed; the last qualified
+application remains `c3d9dbdcc41341d126720ee6a26db5b824c90b24`.
+
 ## Clean STORSEGEL-style lamp and local showcase, 2026-11-06
 
-The local working tree replaces the old tall lantern with a clean white
+The STORSEGEL update replaces the old tall lantern with a clean white
 open drum shade, thin rims and three flat-footed ash legs. The diameter/height
 follow the 18 cm/30 cm manufacturer reference. No wire geometry or mottled
 shade map/emission map remains. Physical shade clicking and the toolbar
@@ -47,8 +71,9 @@ All ten README GIFs and nine stills are recaptured and encoded; exact scope,
 source boundaries, sizes and bounded visual review are in
 [media provenance](MEDIA.md#clean-storsegel-style-lamp-and-complete-refresh-2026-11-06).
 Approved logo animations and the frozen v1.0.0 package are unchanged.
-This is **local qualification, not publication or human acceptance**.
-The earlier qualified public deployment below remains the public baseline.
+This records the original **local qualification, not human acceptance**.
+The later README publication and pending application gate are recorded above.
+The earlier qualified public deployment below remains the application baseline.
 
 ## First public release milestone, 2026-11-06
 

@@ -22,7 +22,7 @@ Acceptance criteria
 Open clean white cylindrical shade, three splayed ash legs and no visible wire.
 Cozy warm illumination without automatic resolution reduction or handheld changes.
 Lamp/room controls, power and physical lamp interaction remain independent.
-All ten README GIFs show the current app, including the removed header label.
+All ten README GIFs show the current app without the removed header label.
 Approved chrome/purple logo animations remain intact; recordings are genuine.
 First milestone date is explicit. Frozen v1.0.0 ZIP/manifest are not rewritten.
 Local captures/qualification are not publication or human acceptance.
@@ -42,7 +42,7 @@ Full-size table and bounded GIF/still contact sheets visually reviewed,
 not exhaustive playback or user approval. Approved APNG logos unchanged.
 Source/timing/per-file hashes retained in private session evidence.
 README/guide/architecture/media/verification/ledger and living book note
-updated; public remains qualifiedc3d9dbd, no new push/deployment. Frozen1.0.0
+updated; original local handoff predates the subsequent owner push below. Frozen1.0.0
 ZIP/manifest/checksums unchanged; firstmilestone November6,2026(Asia/Kolkata).
 Manufacturer reference: IKEA STORSEGEL ash/white, product60573538/60573576,
 18cm shade diameter and30cm overall height. Original procedural geometry;
@@ -60,3 +60,13 @@ an earlier approximate color; black/off bounds and production behavior kept.
 Complete current media/provenance and dated milestone recorded locally.
 Owned STATE/MEMORY/JOURNAL reconciled; episodic offload persisted and exact
 readback verified. No publication or user aesthetic approval inferred.
+2026-11-06: Owner pushes6449715. Actual GitHub homepage/exact-commit README
+serve all19matching images, including all10updated GIFs; final rendered
+table independently shows the clean tripod. Old screenshot's exact client
+cache/tab cause unknown. Run42129264382 passes build/eight verification
+shards; two stale tests still access the intentionally removed header span,
+so deploy correctly skips. Repair both tests while retaining responsive/
+native/zoom checks and adding explicit label-absence coverage. Both affected
+Edge cases pass40.7s; syntax/build pass. Application/artwork/full-resolution
+rendering and all gate deadlines unchanged. Updated app deployment still
+pending; last qualified public application remainsc3d9dbd.

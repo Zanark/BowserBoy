@@ -635,6 +635,7 @@ test('supplied chrome website wordmark preserves both artwork assets and respons
   await page.goto('./');
   const logo = page.locator('.desk-heading img');
   await expect(logo).toBeVisible();
+  await expect(page.locator('.desk-heading > span')).toHaveCount(0);
   for (const [file, digest] of [
     ['website-logo.png', '5e8ed0b2a4edb5f4bf43dc28b4757fc8206df395385e16af4235467998a31300'],
     ['logo.png', 'de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1'],
@@ -668,16 +669,13 @@ test('supplied chrome website wordmark preserves both artwork assets and respons
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     const bounds = await logo.boundingBox();
-    const status = await page.locator('.desk-heading > span').boundingBox();
     expect(bounds.width / bounds.height).toBeCloseTo(artwork.ratio, 2);
     expect(bounds.x).toBeGreaterThanOrEqual(0);
-    expect(bounds.x + bounds.width).toBeLessThanOrEqual(status.x - 5);
-    expect(status.x + status.width).toBeLessThanOrEqual(width);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
     await page.locator('.desk-heading').screenshot({ path: test.info().outputPath(`logo-header-${width}.png`) });
     await page.locator('#pickup').click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
     await expect(logo).toBeHidden();
-    await expect(page.locator('.desk-heading > span')).toBeVisible();
     await page.locator('#inspect').click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
     await expect(logo).toBeVisible();
