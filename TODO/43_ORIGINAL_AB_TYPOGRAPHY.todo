@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Original soft A/B typography in genuine inward engraving.
 Dependencies: Existing A/B recesses; retain all other controls and markings.
 
@@ -13,7 +13,7 @@ Tasks:
 - [x] Soften only A/B engraving depth to avoid hard, occluding deep walls.
 - [x] Verify original-font silhouette fidelity and actual inward geometry.
 - [x] Review bounded reference/deep/shallow actual-render comparisons.
-- [ ] Qualify normal delivery and independent public behavior.
+- [x] Qualify normal delivery and independent public behavior.
 
 Acceptance criteria:
 - Original bold95pxArial shapes, .25x.28label footprint and -.005baseline
@@ -34,7 +34,10 @@ Completion evidence:
   remove floor-first-hit, counter, shadow or material assertions.
 - Syntax/build/all11units pass. Final complete branding/real recess/framing/
   fullscreen and pressed-light cases pass20.5s. Bounded actual reference/deep/
-  shallow comparisons reviewed. Delivery and human acceptance remain pending.
+  shallow comparisons reviewed. Human acceptance is not inferred.
+- Normale8e51c6/42002030860passes build/11units/all39browser cases/deployment.
+  Independently match28actual public assets; complete actual public branding/
+  reference-font/recess/framing/fullscreen and pressed-light cases25.6s pass.
 
 Completion log:
 - 2026-11-05: User rejects the custom approximation and confirms original text
@@ -43,3 +46,4 @@ Completion log:
   only for A/B with actual shallow .004-.012depth checks.
 - 2026-11-05:43locally qualified; normal/public qualification pending.
   Continued audio distortion remains open awaiting the recording; no audio edits.
+- 2026-11-05: Normal delivery and independent public proof complete;43DONE.

@@ -33,6 +33,15 @@ Syntax/build/all11units pass. Final complete branding/recess/framing/fullscreen
 and pressed-cap lighting cases pass20.5s locally. Normal/public delivery and
 human aesthetic acceptance remain pending at this stage. Audio stays open.
 
+**Complete, independently live:** `e8e51c6845740da4a37ac4b60c066a88ec1fcb86`
+passes fresh normal Pages `42002030860`: build, all 11 units, all 39 browser
+cases (actual logs13 per shard) and deployment. Independently match all28
+actual public assets. Complete actual public branding/reference-font/shallow-
+recess/framing/fullscreen and pressed-cap lighting cases pass25.6s, including
+the >94% original-font floor overlap and genuine .004-.012 inward depths.
+Other controls, cap material/shape, shade, bezel, motion and native behavior
+remain unchanged. This is technical delivery, not new human aesthetic approval.
+
 ## Rounded, heavier A/B grooves, 2026-11-05
 
 **Superseded visually:** technically delivered, but the user rejects these
