@@ -18,10 +18,14 @@ const sceneState = (page) => page.evaluate(async () => {
   };
 });
 
-const surfaceColor = (page, position) => page.evaluate(async (point) => {
+const surfaceColor = (page, position, lcdIntensity) => page.evaluate(async ({ point, lcdIntensity }) => {
   const { view } = await import('./src/app.js');
   const { Vector3 } = await import('three');
-  view.renderer.render(view.scene, view.camera);
+  const previousIntensity = view.screenIllumination.light.intensity;
+  try {
+    if (lcdIntensity !== undefined) view.screenIllumination.light.intensity = lcdIntensity;
+    view.renderer.render(view.scene, view.camera);
+  } finally { view.screenIllumination.light.intensity = previousIntensity; }
   const projected = new Vector3(...point).project(view.camera);
   const { width, height } = view.canvas;
   const x = Math.round((projected.x + 1) * width / 2);
@@ -33,8 +37,9 @@ const surfaceColor = (page, position) => page.evaluate(async (point) => {
   const total = [0, 0, 0];
   for (let i = 0; i < pixels.length; i += 4) for (let channel = 0; channel < 3; channel++) total[channel] += pixels[i + channel];
   return total.map(channel => channel / 25);
-}, position);
-const surfaceLight = async (page, position) => (await surfaceColor(page, position)).reduce((a, b) => a + b) / 3;
+}, { point: position, lcdIntensity });
+const surfaceLight = async (page, position, lcdIntensity) =>
+  (await surfaceColor(page, position, lcdIntensity)).reduce((a, b) => a + b) / 3;
 
 for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844 }]) {
   test(`physical cartridge slides into the top slot during real loading at ${viewport.width}px`, async ({ page }, testInfo) => {
@@ -568,7 +573,10 @@ test('experimental LCD spill barely reveals nearby controls in darkness and foll
     }, color);
     await expect.poll(() => page.evaluate(async rgb => {
       const { view } = await import('./src/app.js');
-      return view.screenIllumination.current.toArray().every((value, axis) => Math.abs(value - rgb[axis]) < .001);
+      const { Color } = await import('three');
+      const expected = new Color(...rgb.map(channel => Math.round(channel * 255) / 255)).convertSRGBToLinear();
+      return view.screenIllumination.current.toArray().every((value, axis) =>
+        Math.abs(value - expected.toArray()[axis]) < .001);
     }, color)).toBe(true);
   };
   const controls = () => page.evaluate(async () => {
@@ -600,6 +608,14 @@ test('experimental LCD spill barely reveals nearby controls in darkness and foll
     expect(Math.max(...rgb), `${id} stays dim even with a full-white LCD`).toBeLessThan(35);
   }
   await page.screenshot({ path: testInfo.outputPath('experimental-lcd-control-spill-white.png') });
+  await fill([.25, .25, .25]);
+  const dim = await controls();
+  await testInfo.attach('dark-control-dim-readings', { body: JSON.stringify(dim), contentType: 'application/json' });
+  for (const [id, rgb] of Object.entries(dim)) {
+    expect(Math.max(...rgb), `${id} remains visible with darker screen content`).toBeGreaterThan(1);
+    expect(Math.max(...rgb), `${id} dims with the screen`).toBeLessThan(Math.max(...white[id]));
+  }
+  await page.screenshot({ path: testInfo.outputPath('experimental-lcd-control-spill-dim.png') });
   for (const color of [[1, 0, 0], [0, 0, 1]]) {
     await fill(color);
     const sample = (await controls()).a;
@@ -621,7 +637,12 @@ test('experimental LCD spill barely reveals nearby controls in darkness and foll
   finally {
     await page.evaluate(async () => { (await import('./src/app.js')).view.screenIllumination.controlSpill.visible = true; });
   }
-  expect(tableWithSpill, 'The original forward LCD emission still lights the table').toBeGreaterThan(2);
+  const oldTable = await surfaceLight(page, [0, 0, 3], 120);
+  await testInfo.attach('lcd-table-balance', {
+    body: JSON.stringify({ tableWithSpill, tableWithoutSpill, oldTable }), contentType: 'application/json',
+  });
+  expect(tableWithSpill, 'The dimmer forward LCD emission still lights the table').toBeGreaterThan(2);
+  expect(tableWithSpill, 'The desk pool is substantially dimmer than the previous screen light').toBeLessThan(oldTable * .55);
   expect(Math.abs(tableWithSpill - tableWithoutSpill), 'Local control fill does not brighten the existing table pool').toBeLessThan(1);
   await page.screenshot({ path: testInfo.outputPath('experimental-lcd-control-spill-inspect.png') });
   await page.locator('#inspect').click();
@@ -721,7 +742,7 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   expect(nativeLight.power).toBeGreaterThan(0);
   for (let axis = 0; axis < 3; axis++) expect(nativeLight.normal[axis]).toBeCloseTo(nativeLight.front[axis], 5);
   const spill = await surfaceLight(page, [0, 0, 3]);
-  expect(spill, 'The actual table receives light from the native post-shader framebuffer').toBeGreaterThan(2);
+  expect(spill, 'The mostly-black Pixel Lab picture does not brightly light the desk').toBeLessThan(5);
   await page.screenshot({ path: 'docs/images/lcd-light.png' });
   await page.locator('#tools-open').click();
   await page.locator('#pause').click();
@@ -748,11 +769,14 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
     await expect.poll(async () => (await emission()).map((value, axis) =>
       Math.abs(value - linear([r, g, b][axis]))).every((difference) => difference < .01)).toBe(true);
   }
+  const brightSpill = await surfaceLight(page, [0, 0, 3]);
+  expect(brightSpill,
+    'Brighter content in the retained native framebuffer still lights the actual table').toBeGreaterThan(2);
   await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.model.root.rotateY(Math.PI);
   });
-  await expect.poll(() => surfaceLight(page, [0, 0, 3])).toBeLessThan(spill * .2);
+  await expect.poll(() => surfaceLight(page, [0, 0, 3])).toBeLessThan(brightSpill * .2);
   await page.locator('#inspect').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await page.locator('#hardware-power').click();

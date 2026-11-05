@@ -357,16 +357,19 @@ Three.js emits along local negative Z, so the light is rotated toward the LCD's
 front. At most every 125 ms, a 24-by-16 CPU canvas samples the actual retained
 post-shader framebuffer. Each sRGB channel is converted to linear light before
 averaging; smoothed color and intensity then drive that one-sided source.
-White is modeled at 120 cd/m², not calibrated against a physical GBA display.
+Full-white forward intensity is 12, reduced from 120 to dim the desk pool;
+this is an artistic balance, not calibrated against a physical GBA display.
 The source follows pickup/inspection transforms and clears immediately on
 power off. Static status textures are sampled once rather than every frame.
 
-**Experimental control spill (workstream 60):** a separate reverse-facing
+**Experimental control spill (workstreams 60/65):** a separate reverse-facing
 `controlSpill` rectangle approximates a faint first bounce onto coplanar
 controls, which the forward emitter cannot reach. It sits 1.2 units in front
 of the LCD, spans twice its viewport dimensions and uses the same smoothed
-linear color at only `peak * .1` intensity. The original `peak * 120` forward
-light/table pool, materials and room lighting are unchanged. Black frames and
+linear color at `Math.pow(peak, .25) * .1` intensity. The sublinear response
+keeps darker pictures' controls barely visible without increasing the
+full-white ceiling. The forward light is `peak * 12`; materials and room
+lighting are unchanged. Black frames and
 power-off clear both lights. There is no extra sampling, shadow map or loop.
 This is deliberately removable: delete only the isolated `controlSpill`
 construction/clear/update lines and its dedicated regression, not the main

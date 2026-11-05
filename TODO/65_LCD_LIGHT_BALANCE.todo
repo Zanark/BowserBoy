@@ -1,0 +1,45 @@
+Status: IN_PROGRESS
+Milestone: Barely visible controls and a dimmer screen-lit wooden desk.
+Dependencies: 60_EXPERIMENTAL_LCD_CONTROL_SPILL.todo.
+
+Purpose
+-------
+Correct the user's dark-controls/overbright-desk observation while keeping
+the screen spill experimental and reversible.
+
+Tasks
+-----
+[x] Check actual public source and preserve existing uncommitted experiment.
+[x] Reduce forward LCD gain and reveal controls with darker screen pictures.
+[x] Preserve full-white ceiling, color transfer, black/off darkness and isolation.
+[x] Qualify actual GPU probes, pressed caps and native lighting lifecycle.
+[x] Record failures, final design and reconcile the cancelled startup gate.
+[ ] Complete unchanged normal release and independent public qualification.
+
+Acceptance criteria
+-------------------
+Controls remain faint, including with a 25%-gray screen. Desk reflection is
+substantially below the old gain120 reference. Black/off are fully dark.
+No permanent glow, ambient/material changes, extra sampling or supplied-ROM
+testing. Actual publication and human aesthetic approval remain separate.
+
+Completion evidence
+-------------------
+Forward peak*12 replaces peak*120. Control fill peak**.25*.1 shares the existing
+linear framebuffer color and never exceeds the old full-white maximum.
+Actual full-white caps peak5.5-25/255;25%-gray peak2-11/255. Full-white table
+mean73.67vsold215.4, unchanged when control fill is hidden. Baseline darker
+picture fails; sqrt*.16 tuning fails existing full-white ceiling.
+Native mostly-black Pixel Lab table expectation fails at reduced gain.
+Check native darkness, then preserve actual GPU table-light/directionality
+checks using the existing controlled brighter retained-native picture.
+Fix initial mismatched dark/bright rotation comparison, not product lighting.
+Syntax/build/all12units and three affected browser cases pass48.4s. Actual
+dim-play/white-Inspect captures reviewed. Canonical figures restored unchanged.
+No supplied ROM, new README footage, user approval or live-release claim.
+
+Completion log
+--------------
+2026-11-05: User reports invisible controls and excessively bright wood.
+Actual public source still has old120gain/no control spill. Balance correction
+locally qualified; unchanged normal publication pending.

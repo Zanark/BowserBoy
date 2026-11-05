@@ -166,8 +166,9 @@ export class ScreenIllumination {
       Math.abs(this.current.g - this.target.g), Math.abs(this.current.b - this.target.b)) < .00001;
     if (this.settled) this.current.copy(this.target);
     const peak = Math.max(this.current.r, this.current.g, this.current.b);
-    this.light.intensity = peak * 120;
-    this.controlSpill.intensity = peak * .1;
+    this.light.intensity = peak * 12;
+    // Reveal controls in darker scenes without lifting black or the full-white level.
+    this.controlSpill.intensity = Math.pow(peak, .25) * .1;
     if (peak > 0) this.light.color.copy(this.current).multiplyScalar(1 / peak);
     this.controlSpill.color.copy(this.light.color);
   }

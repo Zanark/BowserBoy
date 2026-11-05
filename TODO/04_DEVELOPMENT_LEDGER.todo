@@ -14,6 +14,21 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / LCD light balance correction:
+  Public source still has old120forward intensity/no control spill. Reduce
+  forward gain to12 and use fourth-root*.1 local control fill: darker pictures
+  remain readable, full-white ceiling unchanged, black/off remain dark.
+  Initial sqrt*.16 violates full-white ceiling. Final actual GPU maxima:
+  white5.5-25/255,25%-gray2-11/255; table73.67vsold215.4, no fill contribution.
+  Old lifecycle's mostly-black Pixel Lab table assertion fails at new gain;
+  assert dimness there and retain GPU light/directionality checks on the same
+  brighter paused-native frame. First revision mismatches reference brightness;
+  compare rotation against the matching bright-frame sample.
+  Syntax/build/12units and three affected browser cases pass48.4s. Reviewed
+  actual dim-play/white-Inspect captures; restored canonical public figures.
+  Supplied ROM never executed; aesthetic acceptance/publication still separate.
+  Reconcile startup42074785914: cancelled/no jobs, not failed tests; unknown
+  cancellation cause, no public qualification or remaining helper.
 - 2026-11-05 / README demo presentation correction:
   User wants the supplied ROM used for GIF footage, not a named game or box-art
   showcase. Remove the six-line featured section from the main README only.

@@ -7,6 +7,36 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## LCD light balance correction, 2026-11-05
+
+The public lighting source still used the old 120-intensity forward light
+without experimental control spill when the user reported black controls and
+an overbright desk. Workstream 65 reduces forward gain to 12 and makes the
+isolated control fill sublinear (`peak ** .25 * .1`), with no black-level
+floor or full-white increase. Materials, room lights and framebuffer sampling
+remain unchanged. This supersedes workstream 60's unchanged-table balance.
+
+The darker-picture baseline fails with a black D-pad. An initial square-root
+fill at .16 fails the full-white control ceiling; the final .1 maximum retains
+that ceiling. Actual full-white control maxima are about 5.5-25/255; a
+25%-gray picture gives about 2-11/255. The white-picture desk probe falls from
+215.4 to 73.67/255, with no measurable contribution from the control fill.
+Red/blue transfer and black/power-off darkness remain covered.
+
+The old native lifecycle case expected the mostly-black Pixel Lab picture
+to visibly light the desk and fails at the new gain. It now checks that this
+picture stays dark, then retains the real GPU table-light and rotated-away
+directionality checks using the same brighter paused-native framebuffer.
+The first revision incorrectly compared rotated brightness against the earlier
+black-picture reading; comparison now uses the matching bright-frame reading.
+No light/directionality assertion is removed.
+
+Syntax/build/all 12 units and the spill, pressed-cap and native-lifecycle
+browser cases pass 3/3 in 48.4s. Actual controlled dim-play and white-Inspect
+captures are reviewed; canonical public figures are restored afterward.
+The supplied ROM is not executed. Human aesthetic approval and publication
+remain separate; normal release qualification is pending.
+
 ## Chip-style startup sound, 2026-11-05
 
 The original rising melody and startup cue now use square waves, short
@@ -23,7 +53,9 @@ No supplied ROM is executed. These checks are numerical/behavioral evidence,
 not direct listening or human approval. Public startup qualification is pending.
 Feature `e1f61ab` is pushed with source
 `24910fda7543124a44515e4e6c5bd468f3eec7c5`; normal Pages run `42074785914`
-is pending. Only a complete unchanged gate permits exact public-source and
+is cancelled with no jobs in the saved run response. Its cancellation cause
+is not established; no public startup qualification ran and no helper remains.
+Only a subsequent complete unchanged gate permits exact public-source and
 actual startup qualification. The separate README shimmer is already public.
 
 ## Experimental LCD control spill, 2026-11-05

@@ -76,7 +76,8 @@ An experimental, very faint screen-colored bounce also reveals the nearby
 D-pad, A/B, Start/Select and shoulder controls in darkness. It follows the
 picture's brightness/color rather than giving the buttons permanent glow,
 and vanishes on a black screen or power-off. The experiment is isolated for
-removal if its appearance is rejected.
+removal if its appearance is rejected. The revised balance dims the wooden
+desk reflection and preserves faint control visibility with darker pictures.
 
 ![Deployed lantern, enlarged handheld screen and optional room illumination](images/cozy-room.png)
 
