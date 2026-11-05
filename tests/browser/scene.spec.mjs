@@ -226,6 +226,7 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     view.setView('playing');
     view.renderedLastFrame = false;
     view.nextPaint = 0;
+    view.lastRender = performance.now();
     tick(1000);
     const before = view.renderer.info.render.frame;
     tick(1000); tick(201);
@@ -236,6 +237,30 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(playingRecovery.during, 'A stalled, stationary handheld must leave time for the native core').toBe(playingRecovery.before);
   expect(playingRecovery.after).toBeGreaterThan(playingRecovery.before);
   expect(playingRecovery.ratio).toBe(2);
+  const insertion = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const render = view.renderer.render.bind(view.renderer);
+    const presented = [];
+    view.renderer.render = (...args) => {
+      render(...args);
+      presented.push(view.model.cartridge.position.y);
+    };
+    try {
+      view.insertCartridge('presented-clock-regression');
+      view.renderedLastFrame = false;
+      view.nextPaint = 0;
+      for (let frame = 0; frame < 6; frame++) {
+        view.render(view.lastRender + 1000);
+        view.render(view.lastRender + 201);
+      }
+      return { presented, state: view.host.dataset.cartridge, ratio: view.renderer.getPixelRatio() };
+    } finally { view.renderer.render = render; }
+  });
+  expect(insertion.presented[0]).toBe(3.8);
+  expect(insertion.presented.some(y => y > 1.52 && y < 3.8)).toBe(true);
+  expect(insertion.presented.at(-1), 'The finishing paint must present the seated pose, not the previous clock step').toBe(1.52);
+  expect(insertion.state).toBe('seated');
+  expect(insertion.ratio).toBe(2);
 });
 
 test('paper lantern gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {

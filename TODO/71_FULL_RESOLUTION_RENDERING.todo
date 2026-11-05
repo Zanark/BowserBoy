@@ -16,6 +16,7 @@ Tasks
 [x] Capture/review actual high-DPI inspection and lettering detail.
 [x] Reserve native-core recovery time after costly full-resolution playing draws.
 [x] Check playing-mode recovery and isolate native speed timing from room draws.
+[x] Present the insertion clock's finishing pose in the same actual paint.
 [ ] Publish through the full normal gate and verify actual public sharpness.
 
 Acceptance criteria
@@ -38,6 +39,12 @@ Corrected renderer plus both failed native integration flows pass together;
 native speed still fails1x in that4.8m sweep. Isolating its decorative renderer
 matches prior hold-Space fixture; all real clock/speed/VSync assertions then
 pass34.0s. No timeouts/bounds relaxed. New hosted/public proof pending.
+Follow-up42110569140:51/53pass; allthreepriornativefailurespass. Rebasefake
+clock atreal-time-stampedviewtransition. Newactualpresented-pose regression
+failsoldsource1.63472vsseated1.52; presentnextcappedstep andcommitonlyafterdraw.
+Keep500mscap/firstpose/intermediatestages/fullresolution. Fourcorrectedcases
+pass2.9m: renderer/bothinsertions includingreload/originalnativeflow.
+Build/syntax/12units pass; hosted/publicproof stillpending.
 
 Completion log
 --------------
@@ -45,3 +52,5 @@ Completion log
 adaptive-resolution tradeoff entirely; no human acceptance is presumed.
 2026-11-06: Investigate actual failed gate; retain full resolution and improve
 recovery scheduling. Correct native-only performance fixture isolation.
+2026-11-06: Correct the insertion's one-presented-frame lag and synthetic
+transition timestamp without bypassing the full-resolution release gate.

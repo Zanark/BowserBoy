@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Present the insertion clock's current capped step:
+  Follow-up42110569140 passes51/53, includingallthreepriornativefailures.
+  Desktopreloadinsertion15s andnewplayingfixture fail. Rebasefaketime when
+  startingreal-time-stampedsetView. Actualpresentationregression failsold
+  source: lastdrawncartridge1.63472vsseated1.52. Oldclockcommitsafterdrawbut
+  poseconsumesprogressonecallbacklate; skippedcallbackcanreportseatedearly.
+  Presentnexteligiblecappedstep, commitonlyafteractualpaint; preserve500mscap,
+  firstvisiblepose/intermediatestages/850+1350choreography/fullpixelratio.
+  Recovery/modalframes neveradvanceclock. FourcorrectedSwiftShadercases
+  pass2.9m: renderer/bothinsertions inclreload/originalnativeflow. Build/
+  syntax/12units pass. Hostedgate/publicproof pending; no deadline relaxation.
 - 2026-11-06 / Full-resolution scheduling and native timing isolation:
   Sharpness gate42107437027 executes53:50pass, three failures; no deploy.
   Actual artifacts identify native3x ratio1.99894, second-ROM power disabled,

@@ -326,6 +326,10 @@ Each step is bounded to 500 ms, smaller than the overlapping lowered/visible
 early-cartridge window. A multi-second graphics stall therefore cannot skip
 the whole slide. Fast rendering retains the 850/1350 ms choreography; slow
 rendering can lengthen the visual animation, never native loading.
+The next eligible paint computes its pose and framing from the next capped
+step, then commits that step only after drawing. Recovery/modal callbacks do
+not advance the clock. This avoids displaying the previous clock step or
+reporting seating on a skipped callback before painting the seated cartridge.
 Completed motions clear their state so an idle console can stop drawing.
 Framing does not trigger a view-mode callback, pause the core or reset input.
 Native loading proceeds independently: there is no animation-based startup

@@ -64,6 +64,28 @@ The corrected native speed case passes in 34.0 seconds. Other scene/native
 integration cases continue to run the full-resolution 3D renderer. Build,
 syntax and all 12 units pass. Normal hosted gate and public proof are pending.
 
+Run `42110569140` passes 51/53: all three previous native failures pass, but
+desktop reload insertion and the new playing-recovery fixture fail. The
+fixture had retained synthetic time across expensive 2x draws while `setView`
+starts its transition from `performance.now()`. Rebase the synthetic render
+timestamp when starting that transition; keep its recovery and density bounds.
+
+Insertion exposed a real one-presented-frame lag. The clock advanced after a
+draw, but the pose consumed that progress only on the following callback; a
+skipped callback could even report seating before painting the final pose.
+A new actual-render regression observes the last drawn cartridge at 1.63472
+instead of seated Y=1.52 under capped, stalled frames. Compute the next eligible
+paint's pose/camera from its next capped step, then commit the clock only after
+drawing. Keep the 500ms cap, initial visible pose, intermediate slide stages,
+850/1350ms choreography and full backing density. Recovery/modal callbacks
+never advance the clock.
+
+The corrected regression, both actual insertion viewports including desktop
+reload, and original native save/import/ROM-isolation flow pass together:
+four explicit SwiftShader cases in 2.9 minutes. Build, syntax and all 12 units
+pass. No deadline, multiplier bound, feature, geometry or artwork is removed.
+The follow-up normal hosted gate and public sharpness proof remain pending.
+
 ## Movable dock and inspection branding, 2026-11-06
 
 The dock has a dedicated pointer/touch grip, collapse/expand, keyboard arrows

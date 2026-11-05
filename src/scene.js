@@ -396,13 +396,19 @@ export class HandheldScene {
       this.nextPaint = time + (delta > .05 ? Math.min(recoveryLimit, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
+    const paintDue = time >= (this.nextPaint ?? 0) && !document.querySelector('dialog[open]');
+    const cartridgeMotion = this.cartridgeMotion;
+    // Present the next capped clock step; commit it only after an actual paint.
+    const cartridgeStep = cartridgeMotion && paintDue ? Math.min(500, Math.max(0,
+      time - (cartridgeMotion.lastPaint ?? time - 16.67))) : 0;
+    const cartridgeElapsed = (cartridgeMotion?.elapsed ?? 0) + cartridgeStep;
     const exposure = this.lampOn || this.roomLightsOn ? .018 : .45;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, exposure, 4, delta);
     const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
     if (!adapting) this.renderer.toneMappingExposure = exposure;
     if (this.cartridgeMotion) {
-      const fraction = THREE.MathUtils.clamp((this.cartridgeMotion.elapsed - 850) / 1350, 0, 1);
+      const fraction = THREE.MathUtils.clamp((cartridgeElapsed - 850) / 1350, 0, 1);
       const ease = fraction * fraction * (3 - 2 * fraction);
       const y = THREE.MathUtils.lerp(3.8, 1.52, ease);
       this.changed ||= this.model.cartridge.position.y !== y;
@@ -429,7 +435,7 @@ export class HandheldScene {
     } else {
       this.host.dataset.view = this.mode;
       if (this.cameraMotion) {
-        const elapsed = this.cartridgeMotion?.elapsed ?? time - this.cameraMotion.started;
+        const elapsed = this.cartridgeMotion ? cartridgeElapsed : time - this.cameraMotion.started;
         const fraction = this.reducedMotion.matches ? 1 : Math.min(1, elapsed / 850);
         const ease = fraction * fraction * (3 - 2 * fraction);
         this.camera.position.lerpVectors(this.cameraMotion.camera, this.cameraTarget, ease);
@@ -465,10 +471,8 @@ export class HandheldScene {
       }
     }
     this.changed ||= buttonsMoving;
-    // Leave recovery frames for emulation when software graphics cannot keep up.
-    if (time < (this.nextPaint ?? 0)) return;
-    // Modal tools own interaction; keep the core running without redrawing its blurred backdrop.
-    if (document.querySelector('dialog[open]')) return;
+    // Recovery and modal tools leave the native core running without room paints.
+    if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     if (!this.screenIllumination.failed) {
       const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
@@ -485,11 +489,9 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     this.renderer.render(this.scene, this.camera);
-    if (this.cartridgeMotion) {
-      // Only presented frames advance insertion; a GPU stall must not skip the whole slide.
-      this.cartridgeMotion.elapsed += Math.min(500, Math.max(0,
-        time - (this.cartridgeMotion.lastPaint ?? time - 16.67)));
-      this.cartridgeMotion.lastPaint = time;
+    if (cartridgeMotion) {
+      cartridgeMotion.elapsed += cartridgeStep;
+      cartridgeMotion.lastPaint = time;
     }
     this.lastPaint = time;
     this.renderedLastFrame = true;
