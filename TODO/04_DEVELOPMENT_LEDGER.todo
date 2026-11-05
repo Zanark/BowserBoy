@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Outline-free bezel:
+  User rejects the exterior light contour around the words. Preserve original
+  letters, centered60%size, shade and other logos. Color filters damage fills
+  and leave fragments; reconstruct original connected letter pixels from solid
+  7x7alpha cores instead, discarding detached thin contour components.
+  Old actual left inset.2018229fails new.21; all four ink bounds tighten.
+  Syntax/build/11units and complete actual branding/recess/framing/overlay/
+  fullscreen identity case18.3s pass.41IN_PROGRESS until normal/public proof.
 - 2026-11-05 / Softer letters, smaller bezel and refreshed README complete:
   Substantivef00f529/41984863317passes build/11units/all39browser cases/
   deployment, including unchanged native backup/import. Independently match

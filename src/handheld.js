@@ -331,6 +331,47 @@ export function createHandheld() {
       pixels.data[i + 3] *= THREE.MathUtils.clamp((neutral - 95) / 70, 0, 1);
       pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = 220;
     }
+    // Reconstruct original letter pixels from solid cores, excluding thin detached
+    // contours. The core filter selects components; it does not erode their edges.
+    const lettering = new Uint8Array(width * height);
+    const frontier = [];
+    for (let y = 3; y < height - 3; y++) {
+      for (let x = 3; x < width - 3; x++) {
+        const index = y * width + x;
+        if (pixels.data[index * 4 + 3] <= 200) continue;
+        let solid = true;
+        for (let dy = -3; solid && dy <= 3; dy++) {
+          for (let dx = -3; dx <= 3; dx++) {
+            if (pixels.data[((y + dy) * width + x + dx) * 4 + 3] <= 200) {
+              solid = false;
+              break;
+            }
+          }
+        }
+        if (solid) {
+          lettering[index] = 1;
+          frontier.push(index);
+        }
+      }
+    }
+    if (!frontier.length) throw new Error('The supplied wordmark has no solid lettering.');
+    for (let cursor = 0; cursor < frontier.length; cursor++) {
+      const index = frontier[cursor], x = index % width, y = Math.floor(index / width);
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
+          const next = ny * width + nx;
+          if (!lettering[next] && pixels.data[next * 4 + 3]) {
+            lettering[next] = 1;
+            frontier.push(next);
+          }
+        }
+      }
+    }
+    for (let i = 0; i < lettering.length; i++) {
+      if (!lettering[i]) pixels.data[i * 4 + 3] = 0;
+    }
     context.putImageData(pixels, 0, 0);
   });
   const logo = add(root, 'Monochrome bezel wordmark', new THREE.PlaneGeometry(3.05, .346),

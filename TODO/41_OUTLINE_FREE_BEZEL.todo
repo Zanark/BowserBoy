@@ -1,0 +1,33 @@
+Status: IN_PROGRESS
+Milestone: Clean bezel letterforms without the exterior light contour.
+Dependencies: Completed workstream 39; retain shared normal/fullscreen artwork.
+
+Purpose:
+Remove the light border around the words, following the user's new crop.
+Keep the actual lettering, existing size, neutral shade and other logos intact.
+
+Tasks:
+- [x] Inspect the source and reject color filters that damage letter fills.
+- [x] Remove detached thin contours without eroding the original letter edges.
+- [x] Reproduce old ink failing clean-letter bounds; qualify actual new pixels.
+- [ ] Qualify normal delivery and exact public normal/fullscreen appearance.
+- [ ] Reconcile completion records and owned continuity.
+
+Acceptance criteria:
+- No surrounding contour, frame or underline remains around either word.
+- Original connected letter pixels, counters and antialiasing are retained.
+- Centered60%draw, canvas/mesh/LCD/camera, shade and fullscreen identity stay.
+- Supplied PNG, website/startup/rear logos, A/B grooves and motion stay unchanged.
+
+Completion evidence:
+- Old contour fails real minimum left inset.21at.20182291666666666.
+- Syntax/build/all11units pass; complete real branding/recess/framing/overlay/
+  fullscreen-identity case passes18.3s with tighter bounds on all four sides.
+- Local source-art reconstruction and actual warm-lamp rendering reviewed;
+  clean letters remain intact. Hosted/public qualification pending.
+
+Completion log:
+- 2026-11-05: User asks to remove the white border on bezel text. Color-only
+  rejection damages letter fills and leaves contour fragments, so do not use it.
+  Select solid7x7alpha cores and reconstruct their original connected pixels;
+  reject detached thin contours, not the lettering's antialiased edge.

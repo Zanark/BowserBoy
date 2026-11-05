@@ -7,6 +7,21 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Outline-free bezel lettering, 2026-11-05
+
+Remove only the exterior light contour from the shared monochrome bezel art.
+Color-only filters visibly damage letter fills and leave contour fragments.
+Instead, solid 7x7 alpha cores seed reconstruction of their original connected
+pixels; reject detached thin contours without eroding the selected glyphs.
+Keep the 60% source draw, neutral shade, original supplied PNG and all other logos.
+
+Tighter real-ink bounds fail the old contour at left inset
+0.20182291666666666 (required >=0.21). Syntax/build/all11units and the complete
+actual branding/recess/framing/overlay/fullscreen-identity case pass locally
+(18.3s). All four bounds are tighter, while width/ink/monochrome/shared-pixel
+and physical-control assertions remain. Hosted/public qualification is pending.
+Actual local warm-lamp rendering is reviewed: clean letters, no exterior frame.
+
 ## Smaller bezel wordmark again, 2026-11-05
 
 The user's new crop requests another reduction of the bezel lettering. Reduce

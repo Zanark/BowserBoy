@@ -66,6 +66,12 @@ centered with the source aspect intact. Tighten real-alpha inset checks and
 retain normal/fullscreen pixel identity; resizing the mesh or camera would
 solve a different problem.
 
+Workstream 41 removes the surviving light exterior contour. A stricter color
+threshold damages the supplied letter gradients, so use solid alpha cores
+and flood-fill their original connected pixels instead. The seed filter only
+chooses components; it must not erode the reconstructed glyph edges or counters.
+The shared size, neutral shade and original purple artwork remain unchanged.
+
 ![Actual oblique manufactured-control view](../../../docs/images/molded-controls.png)
 
 *Figure 04-02. The public manufactured-control capture makes cap relief and

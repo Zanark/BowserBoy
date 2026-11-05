@@ -165,6 +165,10 @@ lettering band (25,250,2115,240). Neutral-highlight alpha masking removes
 saturated orbital accents, while RGB is uniformly 220. This keeps distinctive
 letterforms without stars or modifying the source PNG. The physical label uses
 a lit transparent material; warm room illumination can tint its appearance.
+Solid 7x7 alpha cores seed an eight-neighbor reconstruction of the original
+connected letter pixels. Detached thin contours are discarded, not recolored;
+the original glyph edges and counters are not eroded. This removes the exterior
+light frame/underline while leaving every other use of the source PNG unchanged.
 The lettering is centered at 60% of the existing canvas width and height:
 another 20% reduction from the preceding 75% edition, not a smaller LCD or plane.
 Fullscreen copies the same resulting pixels.
