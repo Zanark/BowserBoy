@@ -78,6 +78,12 @@ inspected, not substituted into earlier GIFs or figures.
 
 ### Current refresh - manufactured controls and glass
 
+The later [larger etched rear logo](VERIFICATION.md#larger-etched-rear-logo-2026-11-05)
+also postdates the existing rear-view images. Its actual old/new comparison uses
+the same pickup/Inspect/drag gesture, with no fabricated pose or private ROM.
+The supplied art is unchanged; historical figures are not overwritten or
+relabeled as this new geometry.
+
 **Previous edition:** retained for its historical evidence and existing links.
 The current README media bytes are identified in the newer section above.
 

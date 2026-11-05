@@ -169,13 +169,7 @@ function moldedText(parent, text, width, height, depth, material, x = 0, y = 0, 
   return add(parent, `Raised ${text} lettering`, solid(moldedShapes(text, width, height), depth, .0025), material, x, y, z);
 }
 
-function actionButtonGlyph(text) {
-  if (text !== 'A' && text !== 'B') throw new Error(`Unsupported action-button glyph: ${text}`);
-  // Recover the original antialiased Arial contours, size and baseline as real cutouts.
-  const texture = textTexture(text, '#fff', 'bold 95px Arial', .25 / .28);
-  const { width, height } = texture.image;
-  const pixels = texture.image.getContext('2d').getImageData(0, 0, width, height).data;
-  texture.dispose();
+function alphaContours(pixels, width, height, project, threshold = 128) {
   const vertices = new Map();
   const corners = [[0, 0], [1, 0], [1, 1], [0, 1]];
   const edgeCorners = [[0, 1], [1, 2], [3, 2], [0, 3]];
@@ -186,25 +180,24 @@ function actionButtonGlyph(text) {
   for (let y = 0; y < height - 1; y++) {
     for (let x = 0; x < width - 1; x++) {
       const alpha = corners.map(([dx, dy]) => pixels[((y + dy) * width + x + dx) * 4 + 3]);
-      if (alpha.every(value => value < 128) || alpha.every(value => value >= 128)) continue;
+      if (alpha.every(value => value < threshold) || alpha.every(value => value >= threshold)) continue;
       const keys = [(y * width + x) * 2, (y * width + x + 1) * 2 + 1,
         ((y + 1) * width + x) * 2, (y * width + x) * 2 + 1];
       const crossings = [];
       for (let edge = 0; edge < 4; edge++) {
         const [a, b] = edgeCorners[edge];
-        if ((alpha[a] >= 128) === (alpha[b] >= 128)) continue;
+        if ((alpha[a] >= threshold) === (alpha[b] >= threshold)) continue;
         const key = keys[edge];
         if (!vertices.has(key)) {
-          const t = (127.5 - alpha[a]) / (alpha[b] - alpha[a]);
+          const t = (threshold - .5 - alpha[a]) / (alpha[b] - alpha[a]);
           const px = x + .5 + corners[a][0] + (corners[b][0] - corners[a][0]) * t;
           const py = y + .5 + corners[a][1] + (corners[b][1] - corners[a][1]) * t;
-          vertices.set(key, { point: new THREE.Vector2((px / width - .5) * .25,
-            (.5 - py / height) * .28 - .005), neighbors: [] });
+          vertices.set(key, { point: project(px, py), neighbors: [] });
         }
         crossings.push(key);
       }
       if (crossings.length === 2) join(...crossings);
-      else if (alpha[0] >= 128) {
+      else if (alpha[0] >= threshold) {
         join(crossings[0], crossings[3]);
         join(crossings[1], crossings[2]);
       } else {
@@ -221,7 +214,7 @@ function actionButtonGlyph(text) {
     do {
       const vertex = vertices.get(current);
       if (visited.has(current) || vertex.neighbors.length !== 2) {
-        throw new Error(`The original ${text} lettering has an invalid contour.`);
+        throw new Error('The engraved artwork has an invalid alpha contour.');
       }
       visited.add(current);
       contour.push(vertex.point);
@@ -231,6 +224,18 @@ function actionButtonGlyph(text) {
     } while (current !== start);
     contours.push(contour);
   }
+  return contours;
+}
+
+function actionButtonGlyph(text) {
+  if (text !== 'A' && text !== 'B') throw new Error(`Unsupported action-button glyph: ${text}`);
+  // Recover the original antialiased Arial contours, size and baseline as real cutouts.
+  const texture = textTexture(text, '#fff', 'bold 95px Arial', .25 / .28);
+  const { width, height } = texture.image;
+  const pixels = texture.image.getContext('2d').getImageData(0, 0, width, height).data;
+  texture.dispose();
+  const contours = alphaContours(pixels, width, height, (px, py) =>
+    new THREE.Vector2((px / width - .5) * .25, (.5 - py / height) * .28 - .005));
   if (contours.length !== (text === 'A' ? 2 : 3)) {
     throw new Error(`The original ${text} lettering could not be recovered with its counters.`);
   }
@@ -243,6 +248,75 @@ function actionButtonGlyph(text) {
     glyph.holes.push(counter);
   }
   return glyph;
+}
+
+function engraveRearLogo(cover, texture) {
+  const width = 2.95, height = width * texture.image.height / texture.image.width;
+  const depth = .006, centerY = -.35;
+  const mask = canvasTexture(512, 171, (context, w, h) => context.drawImage(texture.image, 0, 0, w, h));
+  const pixels = mask.image.getContext('2d').getImageData(0, 0, 512, 171).data;
+  const contours = alphaContours(pixels, 512, 171, (px, py) =>
+    new THREE.Vector2((px / 512 - .5) * width, (.5 - py / 171) * height + centerY), 16);
+  mask.dispose();
+  if (!contours.length) throw new Error('The supplied rear logo has no engravable artwork.');
+  const contains = (points, point) => {
+    let inside = false;
+    for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+      const a = points[i], b = points[j];
+      if ((a.y > point.y) !== (b.y > point.y) &&
+        point.x < (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x) inside = !inside;
+    }
+    return inside;
+  };
+  contours.sort((a, b) => Math.abs(THREE.ShapeUtils.area(b)) - Math.abs(THREE.ShapeUtils.area(a)));
+  const regions = [], face = roundedShape(3.65, 2.9, .2);
+  for (const points of contours) {
+    const parent = regions.findLast(region => region.bounds.containsPoint(points[0]) && contains(region.points, points[0]));
+    const level = parent ? parent.level + 1 : 0;
+    if (THREE.ShapeUtils.isClockWise(points) !== (level % 2 === 0)) points.reverse();
+    const shape = new THREE.Shape(points), path = new THREE.Path(points);
+    shape.closePath();
+    path.closePath();
+    (parent ? parent.shape : face).holes.push(path);
+    regions.push({ points, shape, level, bounds: new THREE.Box2().setFromPoints(points) });
+  }
+  cover.geometry.computeBoundingBox();
+  const surfaceZ = cover.geometry.boundingBox.min.z;
+  const position = cover.geometry.getAttribute('position'), triangles = [];
+  for (let i = 0; i < position.count; i += 3) {
+    if ([0, 1, 2].every(j => Math.abs(position.getZ(i + j) - surfaceZ) < 1e-6)) continue;
+    triangles.push(i, i + 1, i + 2);
+  }
+  // Replace only the rear cap; keep the original bevel, thickness and side normals.
+  cover.geometry.setIndex(triangles);
+  const engraving = new THREE.Group();
+  engraving.name = 'Colored rear-logo engraving';
+  engraving.position.z = surfaceZ;
+  engraving.rotation.y = Math.PI;
+  cover.add(engraving);
+  add(engraving, 'Engraved battery-cover face',
+    new THREE.ShapeGeometry([face, ...regions.filter(region => region.level % 2).map(region => region.shape)], 18),
+    cover.material);
+  const floor = new THREE.ShapeGeometry(regions.filter(region => region.level % 2 === 0).map(region => region.shape));
+  const floorPosition = floor.getAttribute('position'), uv = floor.getAttribute('uv');
+  for (let i = 0; i < floorPosition.count; i++) {
+    uv.setXY(i, floorPosition.getX(i) / width + .5, (floorPosition.getY(i) - centerY) / height + .5);
+  }
+  const logo = add(engraving, 'Orbital battery-cover logo', floor,
+    new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, toneMapped: false }), 0, 0, -depth);
+  logo.castShadow = logo.receiveShadow = false;
+  const walls = [];
+  for (const { points } of regions) {
+    for (let i = 0; i < points.length; i++) {
+      const a = points[i], b = points[(i + 1) % points.length];
+      walls.push(a.x, a.y, 0, a.x, a.y, -depth, b.x, b.y, 0,
+        b.x, b.y, 0, a.x, a.y, -depth, b.x, b.y, -depth);
+    }
+  }
+  const wallGeometry = new THREE.BufferGeometry();
+  wallGeometry.setAttribute('position', new THREE.Float32BufferAttribute(walls, 3));
+  wallGeometry.computeVertexNormals();
+  add(engraving, 'Rear logo groove walls', wallGeometry, cover.material);
 }
 
 function recessedLetter(button, text, radius, material) {
@@ -557,13 +631,7 @@ export function createHandheld() {
   headphone.rotation.x = Math.PI / 2;
   const cover = add(root, 'Battery cover', box(3.65, 2.9, .06, .2), rear, 0, -.2, -.57);
   for (let i = 0; i < 4; i++) add(cover, 'Battery thumb grip', box(.58, .035, .025, .01), purple, 0, .85 - i * .12, -.065);
-  const backLabel = new THREE.Mesh(new THREE.PlaneGeometry(1.05, .35),
-    new THREE.MeshBasicMaterial({ map: wordmark, transparent: true, depthWrite: false, toneMapped: false }));
-  backLabel.name = 'Orbital battery-cover logo';
-  backLabel.scale.setScalar(2);
-  backLabel.position.set(0, -.55, -.645);
-  backLabel.rotation.y = Math.PI;
-  root.add(backLabel);
+  engraveRearLogo(cover, wordmark);
   for (const [x, y] of [[-3.62, .92], [3.62, .92], [-3.16, -1.68], [3.16, -1.68], [0, 1.83]]) {
     add(root, 'Recessed screw socket', cylinder(.11, .03), dark, x, y, -.53);
     add(root, 'Screw', cylinder(.065, .035), silver, x, y, -.55);

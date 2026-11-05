@@ -114,4 +114,30 @@ changes, and why is fitting only the console center insufficient?
 considered. A center inside the region says nothing about the envelope edges;
 fit size first, then clamp the center with half-envelope margins.
 
-**Source trail:** [S-02, S-03, S-06, S-07, S-08 and S-09](../../SOURCES.md).
+## 7.6 Alpha contours and nested engraved surfaces
+
+The later [rear-logo delta](../../SOURCES.md#later-rear-logo-delta) reuses the
+A/B marching-contour mechanism. Scan adjacent alpha samples, interpolate
+threshold crossings and connect grid edges through a map. Every recovered
+vertex must have two neighbors; an invalid loop reports an explicit error.
+Keep A/B's threshold128and original coordinate projection; the rear mask
+instead uses16to include colored orbital strokes, with separate physical sizing.
+
+Sort rear contours by absolute area. Bounding boxes reject impossible parents;
+a point-in-polygon crossing test identifies the smallest enclosing prior loop.
+Even nesting depths belong to colored cavities; odd depths are plastic islands.
+Attach each child as a hole in its parent, then triangulate both alternating
+surface sets. Normalize winding so the shallow wall normals face the cavities.
+
+**Worked example.** An opaque ring has an outer contour at depth0and a transparent
+counter at depth1. Cut the outer loop out of the cover, but restore the counter
+as plastic. An additional colored island at depth2cuts only that counter.
+Painting a rectangle or treating every loop as a hole would lose this topology.
+
+Raster scanning and loop traversal cost O(W*H+V), with O(V) contour storage.
+Ordering C contours uses area-based comparisons; naive containment can cost O(C*V) in the
+worst case before triangulation. This happens once during model construction,
+not per frame. The mask only defines geometry: UVs sample the unchanged full
+color texture, keeping color preservation separate from cavity construction.
+
+**Source trail:** [S-02, S-03, S-05, S-06, S-07, S-08 and S-09](../../SOURCES.md).

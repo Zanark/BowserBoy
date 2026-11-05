@@ -422,6 +422,7 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
   const branding = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const { Raycaster, Vector3 } = await import('three');
+    const { brandImage } = await import('./src/brand.js');
     const bezel = view.model.root.getObjectByName('Metallic chroma bezel wordmark');
     const canvas = bezel.material.map.image;
     const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
@@ -449,6 +450,50 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
     letters.geometry.computeBoundingBox();
     const root = view.model.root;
     root.updateWorldMatrix(true, true);
+    const cover = root.getObjectByName('Battery cover');
+    const back = root.getObjectByName('Orbital battery-cover logo');
+    back.geometry.computeBoundingBox();
+    const backImage = back.material.map.image;
+    const backPixels = backImage.getContext('2d').getImageData(0, 0, backImage.width, backImage.height).data;
+    const referenceLogo = document.createElement('canvas');
+    referenceLogo.width = backImage.width;
+    referenceLogo.height = backImage.height;
+    const originalLogo = referenceLogo.getContext('2d');
+    originalLogo.drawImage(brandImage, 0, 0, backImage.width, backImage.height);
+    const originalPixels = originalLogo.getImageData(0, 0, backImage.width, backImage.height).data;
+    const towardBack = new Vector3(0, 0, 1).transformDirection(cover.matrixWorld);
+    const blank = new Raycaster(cover.localToWorld(new Vector3(1.65, -.35, -1)), towardBack)
+      .intersectObject(root, true)[0];
+    const backPositions = back.geometry.getAttribute('position');
+    const backUv = back.geometry.getAttribute('uv');
+    const backIndices = back.geometry.getIndex();
+    const depths = [], floorHits = [];
+    for (let i = 0; i < (backIndices?.count ?? backPositions.count) && depths.length < 8; i += 3) {
+      const vertices = [0, 1, 2].map(j => backIndices ? backIndices.getX(i + j) : i + j);
+      const u = vertices.reduce((sum, index) => sum + backUv.getX(index), 0) / 3;
+      const v = vertices.reduce((sum, index) => sum + backUv.getY(index), 0) / 3;
+      const pixel = (Math.min(backImage.height - 1, Math.max(0, Math.floor((1 - v) * backImage.height))) * backImage.width +
+        Math.min(backImage.width - 1, Math.max(0, Math.floor(u * backImage.width)))) * 4;
+      if (backPixels[pixel + 3] < 240 || Math.max(...backPixels.subarray(pixel, pixel + 3)) < 200) continue;
+      const point = vertices.reduce((sum, index) => sum.add(new Vector3().fromBufferAttribute(backPositions, index)), new Vector3())
+        .multiplyScalar(1 / 3);
+      point.z += .2;
+      const hit = new Raycaster(back.localToWorld(point), new Vector3(0, 0, -1).transformDirection(back.matrixWorld))
+        .intersectObject(root, true)[0];
+      floorHits.push(hit?.object === back);
+      depths.push(hit && blank ? cover.worldToLocal(hit.point.clone()).z - cover.worldToLocal(blank.point.clone()).z : null);
+    }
+    const backWalls = root.getObjectByName('Rear logo groove walls');
+    backWalls?.geometry.computeBoundingBox();
+    const rear = {
+      width: (back.geometry.boundingBox.max.x - back.geometry.boundingBox.min.x) * back.scale.x,
+      parented: cover.getObjectByName(back.name) === back,
+      originalPixels: backPixels.every((value, index) => value === originalPixels[index]),
+      unattenuated: back.material.type === 'MeshBasicMaterial' && !back.material.toneMapped &&
+        back.material.opacity === 1 && back.material.color.getHexString() === 'ffffff',
+      blank: blank?.object.name, depths, floorHits,
+      wallDepth: backWalls ? backWalls.geometry.boundingBox.max.z - backWalls.geometry.boundingBox.min.z : null,
+    };
     const luminance = color => .2126 * color.r + .7152 * color.g + .0722 * color.b;
     const recesses = ['a', 'b'].map(id => {
       const cap = view.model.controls.get(id).mesh;
@@ -533,7 +578,7 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
         new Vector3(0, 0, -1).transformDirection(root.matrixWorld));
       return !!ray.intersectObject(root, true)[0]?.object.material.map;
     });
-    return { ink, colored, chromeRange: brightest - darkest,
+    return { ink, colored, chromeRange: brightest - darkest, rear,
       inkBounds: { left: minX / canvas.width, top: minY / canvas.height,
         right: (maxX + 1) / canvas.width, bottom: (maxY + 1) / canvas.height },
       depth: letters.geometry.boundingBox.max.z - letters.geometry.boundingBox.min.z,
@@ -541,6 +586,7 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
       sameFullscreenWordmark: canvas.width === fullscreen.width && canvas.height === fullscreen.height &&
         pixels.every((value, index) => value === fullscreenPixels[index]), recesses, markings, microLabels };
   });
+  await test.info().attach('rear-logo-geometry', { body: JSON.stringify(branding.rear), contentType: 'application/json' });
   expect(branding.ink).toBeGreaterThan(1000);
   expect(branding.colored).toBeGreaterThan(branding.ink * .8);
   expect(branding.chromeRange).toBeGreaterThan(100);
@@ -552,6 +598,18 @@ test('molded controls and metallic chroma logo retain physical branding, and fro
   expect(branding.depth).toBeGreaterThan(.018);
   expect(branding.samePlastic).toBe(true);
   expect(branding.sameFullscreenWordmark).toBe(true);
+  expect(branding.rear.width).toBeGreaterThan(2.5);
+  expect(branding.rear.width).toBeLessThan(3.3);
+  expect(branding.rear.parented && branding.rear.originalPixels && branding.rear.unattenuated).toBe(true);
+  expect(branding.rear.blank).toBe('Engraved battery-cover face');
+  expect(branding.rear.depths).toHaveLength(8);
+  expect(branding.rear.floorHits.every(Boolean)).toBe(true);
+  for (const depth of branding.rear.depths) {
+    expect(depth).toBeGreaterThan(.004);
+    expect(depth).toBeLessThan(.01);
+  }
+  expect(branding.rear.wallDepth).toBeGreaterThan(.004);
+  expect(branding.rear.wallDepth).toBeLessThan(.01);
   expect(branding.microLabels).toEqual([false, false]);
   expect(branding.recesses).toHaveLength(2);
   for (const recess of branding.recesses) {

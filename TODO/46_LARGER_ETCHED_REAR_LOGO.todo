@@ -1,0 +1,49 @@
+Status: IN_PROGRESS
+Milestone: Larger colored engraving in the rear battery-cover plastic.
+Dependencies: 15_SUPPLIED_WORDMARK.todo; 43_ORIGINAL_AB_TYPOGRAPHY.todo.
+
+Purpose:
+Enlarge the supplied rear logo and make it physically recessed rather than a
+floating decal, without losing its purple color or bright white lettering.
+
+Tasks:
+- [x] Enlarge the artwork width from2.1to2.95units, approximately40%.
+- [x] Reuse alpha-contour extraction without changing original A/B contours.
+- [x] Cut the rear cover face, preserve counter islands and add shallow walls.
+- [x] Retain the exact source texture and its previous bright rendering path.
+- [x] Qualify actual first-hit depth, colors and all existing branding behavior.
+- [x] Review actual old/new rear inspection renders with the same gesture.
+- [ ] Pass the normal complete hosted gate and independently verify production.
+- [x] Update affected guides, book, ledger and owned continuity.
+
+Acceptance criteria:
+- Logo is larger but stays within the unchanged cover and clear of its grips.
+- Actual colored floors are .006units below the surrounding plastic, with real
+  openings and plastic walls rather than buried paint behind an uncut face.
+- Full1024x342source RGBA, white tint, opacity and existing untone-mapped basic
+  material are retained; only the cavity mask is downsampled.
+- Original A/B glyphs/depth, front metallic lettering, other artwork, cover
+  bevel/thickness, native timing, audio and power behavior stay unchanged.
+- Static geometry is built once; no new animation, lamp or per-frame texture work.
+- Technical verification/publication do not imply user aesthetic acceptance.
+
+Completion evidence:
+- Actual old rear width2.0999999fails the new>2.5geometry gate.
+- New actual ink geometry is2.8686635units wide; the full artwork frame is2.95.
+  Original and candidate use the same projected cover rectangle, material/white
+  tint, source texture and cover color3e396e. Actual rear crops inspected.
+- Contour mask512x171at alpha16 retains the colored strokes; only the rear cap
+  is replaced. Alternating contour nesting preserves plastic islands/counters.
+  Walls/floors are .006deep and parented to the existing battery cover.
+- Initial new depth probe reports .01259because an awaited import splits its
+  moving-pose matrix snapshot. Move imports before the synchronous measurement;
+  no production depth or acceptance bound changes.
+- Syntax/build/all11units pass; complete branding/recess/framing/fullscreen
+  regression passes17.5s, including8actual rear-floor hits, shallow depth,
+  unchanged full source RGBA and previous A/B typography/material requirements.
+- Normal/public qualification pending. No private-ROM/audio/video replay.
+
+Completion log:
+- 2026-11-05: User requests a larger rear logo etched into plastic while keeping
+  color and brightness. Retain the previous bright unlit artwork on real inset
+  floors; let matching plastic cavity walls provide the etched edge.

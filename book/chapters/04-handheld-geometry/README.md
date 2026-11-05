@@ -108,6 +108,16 @@ Three.js texture. Reusing the bitmap avoids the one-channel rounding found when
 copying colored antialiased edges, while preserving exact RGBA equality.
 See the [current source/evidence delta](../../SOURCES.md#later-lettering-delta).
 
+Workstream46treats the rear differently: enlarge its full supplied artwork from
+2.1to2.95units and cut real shallow cavities into only the battery cover's rear
+face. Nested alpha contours preserve transparent counters as solid plastic
+islands. Colored floors and matching-plastic walls sit .006units inward; the
+outer bevel, thickness and grips are preserved. Keep the original1024x342RGBA
+and bright basic material on those floors, rather than dulling the logo to fake
+depth. Only the cavity mask uses512x171sampling. The same contour extractor
+retains the original A/B threshold/projection; no front-branding change follows.
+See the [rear-logo source/evidence delta](../../SOURCES.md#later-rear-logo-delta).
+
 ![Actual oblique manufactured-control view](../../../docs/images/molded-controls.png)
 
 *Figure 04-02. The public manufactured-control capture makes cap relief and

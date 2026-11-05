@@ -89,6 +89,10 @@ from off to on. The chime follows volume/mute; reduced motion uses a static reve
 The supplied transparent wordmark also appears on the rear shell, idle/loading
 LCD and settings panels. The front bezel uses the supplied logo's distinctive
 lettering with a metallic chroma finish, without stars; screen-only fullscreen shares that artwork.
+The rear logo is about40%larger and inset into the battery-cover plastic with
+shallow engraved edges. Its original purple color and bright lettering are
+preserved, not darkened to imply engraving. Existing rear-view pictures predate
+this refinement; see [current qualification](VERIFICATION.md#larger-etched-rear-logo-2026-11-05).
 A/B letters are softer gray grooves cut into the unchanged cap faces, with inset floors and
 sidewalls rather than raised or printed lettering. D-pad arrows retain their
 raised rubber geometry and darker tones. Shoulder letters retain their cap material;

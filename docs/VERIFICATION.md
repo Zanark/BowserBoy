@@ -7,6 +7,36 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Larger etched rear logo, 2026-11-05
+
+The user requests a larger rear logo etched into the plastic, retaining its
+color and brightness. Enlarge the artwork frame from2.1to2.95units (about40%)
+without changing its center or the outer battery cover/grips. Reuse the alpha
+contour extractor with unchanged A/B projection/threshold. Trace a512x171mask
+at alpha16, classify nested loops and replace only the rear cover cap. Retain
+plastic counter islands, actual .006deep colored floors and matching plastic
+walls. This is actual recessed geometry, not an image buried under an uncut face.
+
+The floor keeps the exact previous1024x342RGBA texture, white tint, full opacity
+and untone-mapped basic material. Bright artwork remains independent of room
+light attenuation as before; the surrounding plastic and walls remain lit.
+No global light, front lettering, original A/B appearance, power, audio or native
+timing change is made. Geometry is built once, not repainted each frame.
+
+Actual old width2.0999999fails the new>2.5gate. The new actual ink width is
+2.8686635, within the unchanged cover. Inspect actual original/candidate rear
+renders from the same pickup/Inspect/drag gesture. Source RGBA is independently
+compared against the supplied image;8actual ray first hits reach inset floors,
+with .004-.01depth bounds, matching wall depth and cover ownership.
+The first fixture reads .01259after an awaited import splits a moving-pose
+matrix snapshot. Move imports before the synchronous probe; keep production
+depth and assertions unchanged.
+
+Syntax/build/all11units and the complete branding/control/recess/notice/framing/
+fullscreen regression pass (17.5s). All original Arial A/B and front metallic
+requirements stay. Normal/public delivery is pending; aesthetic approval is
+separate from these technical observations.
+
 ## Metallic chroma lettering, 2026-11-05
 
 The user clarifies **metallic chroma**, applied to the bezel text only.

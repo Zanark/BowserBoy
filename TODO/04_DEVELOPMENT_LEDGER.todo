@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Larger colored rear engraving:
+  Enlarge the rear artwork frame2.1to2.95units while retaining its center,
+  supplied1024x342RGBA, white tint and previous bright basic-material path.
+  Reuse marching alpha contours, retaining original A/B threshold/projection.
+  Classify nested loops to cut only the rear cover face and preserve plastic
+  islands; add real .006deep floors/walls under the existing cover hierarchy.
+  Keep outer cover/bevel/grips and front branding/native/audio unchanged.
+  Actual old width2.1fails; new ink width2.86866passes. Same-gesture rear crops
+  reviewed. Initial geometry fixture awaits an import inside a moving matrix
+  snapshot; move imports first, not the depth bound. Syntax/build/11units and
+  complete branding/recess/framing/fullscreen case17.5s pass. Delivery pending.
 - 2026-11-05 / Metallic chroma45independently live:
   ad259c3/42013383789passes build/11units/all40browser cases14+13+13 and
   deployment. Independently match28actual public assets. Two complete public

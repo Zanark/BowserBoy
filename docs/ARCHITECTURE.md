@@ -196,7 +196,18 @@ standard material has roughness .4 and metalness .1, so warm illumination still
 warms it. No animation, emission, environment map or per-frame update is added.
 Fullscreen uses the same canvas object, not another rasterization or copy.
 The top ZANARK maker mark retains a chamfered matching-plastic frame.
-The rear battery cover retains the unchanged supplied purple artwork.
+The rear battery cover retains the unchanged supplied purple artwork on a
+2.95-unit-wide frame, about40%larger than its former2.1-unit floating plane.
+`engraveRearLogo` traces a512x171alpha mask at16 using the shared `alphaContours`
+extractor. Nested loops alternate artwork cavities and solid plastic islands.
+Only the old rear cap triangles are removed; the original outer bevel, cover
+thickness, grips and side normals remain. New colored floors sit .006units
+below the cover face, with matching-plastic walls, all parented to the cover.
+UVs continue to sample the exact original1024x342texture. The existing white,
+untone-mapped basic material preserves bright artwork; the walls/cover remain
+lit plastic. The cavity mask is not the color texture. Geometry is constructed
+once, with no recurring texture work or new scene lighting. A/B retains its
+original half-alpha threshold and projection through the same extractor.
 `src/scene.js` owns the WebGL 2 renderer, lights/shadows, raycast picking and
 animated table/play/inspection poses. Inspection supports dragging, touch
 rotation/pinch, wheel zoom and keyboard rotation/reset. Reduced motion skips
