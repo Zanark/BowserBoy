@@ -14,8 +14,10 @@ licensed for public redistribution. No separate upstream license text was
 supplied, and no independent rights audit is claimed.
 
 These are demo/media assets, not test fixtures. Do not execute this ROM for
-testing without an explicit user request. Existing Pixel Lab test and footage
-provenance remains unchanged; the player does not automatically load this ROM.
+testing without an explicit user request. Pixel Lab remains the test fixture;
+the complete README refresh uses the supplied game only in authorized GIF
+footage. Static game/settings captures use Pixel Lab. The player does not
+automatically load the supplied ROM.
 
 ## Runtime dependencies
 
@@ -114,8 +116,10 @@ tab icon, without importing a manufacturer's logo or reference image.
 
 The README's transparent animated orbital banner derives from that same supplied
 logo and the separately supplied effect sprites, with original animation code.
-Its interaction GIFs record this application and the original Pixel Lab demo,
-not commercial game footage.
+Its interaction GIFs record this application with original Pixel Lab and the
+separately supplied, user-authorized media ROM described above. Distribution
+and footage permissions are based on that confirmation, not an independent
+rights audit.
 See [media provenance and reproduction](docs/MEDIA.md).
 
 Playwright is a development/test dependency, not part of the deployed app.

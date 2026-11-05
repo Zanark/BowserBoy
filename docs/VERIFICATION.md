@@ -7,6 +7,33 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Complete README refresh, 2026-11-05
+
+Nine interaction GIFs and nine stills are refreshed from local application
+`82834df`, including new ordinary zoom, hold-Space, fullscreen zoom and
+settings-backdrop footage. All nine GIFs decode, loop indefinitely, have
+changing sampled frames and are below 10 MiB. Bounded first/middle/end sheets,
+all refreshed stills and an LCD-only interval are reviewed. Existing approved
+logo animations remain byte-identical.
+
+A local Edge preview of GFM-rendered current Markdown decodes all 18 embeds,
+checks 30 relative references/anchors and verifies console navigation and
+390px responsive width. This preview supplies normal heading IDs and basic
+styling; it is not the actual GitHub webpage. All 28 standard build assets
+match working source bytes and source `82834df` (normalizing only Windows text
+newlines for the committed-source comparison). Capture-script syntax and
+whitespace checks pass. No application behavior changes in this workstream.
+
+The supplied ROM is executed only for authorized GIF filming, not correctness,
+audio or speed tests. Static game/settings captures use original Pixel Lab.
+GIF/video compression may hide extremely faint light spill; silent GIFs are
+not audio-quality evidence. Provenance and reproduction are in
+[Media](MEDIA.md#complete-readme-refresh-2026-11-05).
+
+The genuine source push is the normal publication trigger. At the user's
+request, no pipeline is queried/watched and no public qualification is run.
+This local refresh does not establish a successful deployment or human approval.
+
 ## Ordinary play zoom baseline, 2026-11-05
 
 Ordinary play now starts at 50% with the previous fitted camera position.

@@ -21,87 +21,105 @@
 
 *Your Game Boy Advance, on the BowserBOY tabletop. [Play BowserBOYADVANCED](https://zanark.github.io/BowserBoyAdvance/).*
 
-*Glowing animated console banner above; actual public-site gameplay recordings and UI captures below. [Origins and release evidence](docs/MEDIA.md#bowserboy-public-refresh-2026-11-05).*
+*Animated console banner above; fresh current-build recordings and UI captures below. [Media origins](docs/MEDIA.md#complete-readme-refresh-2026-11-05).*
 
 ### One table. More to come.
 
-![BowserBOY's current public table with the chrome website logo, paper lantern and first purple GBA console](docs/images/readme-table.png?v=bowserboy-public-20261105)
+![Current BowserBOY table with the updated chrome website logo, paper lantern and purple GBA console](docs/images/readme-table.png?v=readme-refresh-20261105)
 
 *The BowserBOY tabletop, featuring BowserBOYADVANCED.*
 
 ### Pick it up. Turn it over.
 
-![Actual public recording: pick up BowserBOY ADVANCED, inspect its back, and put it down](docs/images/pickup-inspect.gif?v=bowserboy-public-20261105)
+![Pick up BowserBOY ADVANCED, inspect its current engraved back, and put it down](docs/images/pickup-inspect.gif?v=readme-refresh-20261105)
 
 *Soft engraved A/B letters. Raised Zanark lettering. Small, borderless metallic-chroma bezel lettering.*
 
 ### Purple belongs to the console.
 
-![Earlier public rear inspection showing the purple console logo and separate chrome website header](docs/images/readme-back.png?v=bowserboy-public-20261105)
+![Current rear inspection with the larger, deeper purple console engraving and separate chrome website header](docs/images/readme-back.png?v=readme-refresh-20261105)
 
-*Original purple color and bright lettering preserved. The rear engraving is now larger and deeper than this capture.*
+*Purple console identity. Larger lettering. Deeper engraving.*
 
 ### Press. Rock. Release.
 
-![Actual keyboard presses move A and B, rock the diagonal D-pad and hinge both shoulders](docs/images/button-feedback.gif?v=bowserboy-public-20261105)
+![Actual keyboard presses move A and B and rock the diagonal D-pad during play](docs/images/button-feedback.gif?v=readme-refresh-20261105)
 
 *Softer recessed A/B letters. Deeper presses. Rocking D-pad. Snappier return.*
 
+### A closer look.
+
+![Ordinary play zoom moves from the fitted 50 percent view into 100 percent and back without fullscreen](docs/images/play-zoom.gif?v=readme-refresh-20261105)
+
+*Same comfortable view at 50%. Move closer up to 100%. No fullscreen needed.*
+
+### A little faster. Just while you hold.
+
+![Hold Space for native fast-forward, then release it to return to normal speed](docs/images/hold-space.gif?v=readme-refresh-20261105)
+
+*Hold **Space** for 2x. Let go for 1x.*
+
 ### A clearer little message.
 
-![Actual frosted power-on notice overlays the normal close handheld view, with the play-mode header logo hidden](docs/images/readme-notice.png?v=bowserboy-public-20261105)
+![Current frosted power-on notice overlays the fitted handheld, with the play-mode header logo hidden](docs/images/readme-notice.png?v=readme-refresh-20261105)
 
 *Frosted overlays. No shrinking or shifting the handheld. No header logo during play.*
 
 ### Power where it belongs.
 
-![The actual handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=bowserboy-public-20261105)
+![The current handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=readme-refresh-20261105)
 
 *Underside slider. Clear front face. Real power-off and cold boot.*
 
 ### Power on. Make some waves.
 
-![Actual LCD startup with the purple console wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=bowserboy-public-20261105)
+![Current LCD startup with the purple console wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=readme-refresh-20261105)
 
-*Purple console startup. Waving lettering. Roomy orbits. Power remembered between visits.*
+*Purple console startup. Waving lettering. An 8-bit-style chime. Power remembered between visits.*
 
 ### Slot it in.
 
-![The original Pixel Lab cartridge physically sliding into the handheld during loading](docs/images/cartridge.gif?v=bowserboy-public-20261105)
+![A selected local cartridge physically slides into the handheld during loading](docs/images/cartridge.gif?v=readme-refresh-20261105)
 
-*Original demo footage. Bring your own local ROMs; nothing gets uploaded.*
+*Bring your own local ROMs. Game files stay on your device.*
 
 ### Your room, your light.
 
-![Actual recording of the independent room lights, paper lantern and LCD-only dark state](docs/images/cozy-lights.gif?v=bowserboy-public-20261105)
+![Current recording of independent room lights, the paper lantern and the rebalanced LCD-only dark state](docs/images/cozy-lights.gif?v=readme-refresh-20261105)
 
-*Paper-lantern warmth, room lights, or just the LCD.*
+*Paper-lantern warmth, room lights, or just the LCD. Gentler screen light on the wooden desk.*
 
 *Audio-paced timing and a larger native reserve for steadier playback. [Audio notes and limits](docs/GUIDE.md).*
 
 ### Nine ways to glow.
 
-![The actual Screen shader menu showing all nine native CRT presets and Unfiltered, with CRT Geom selected](docs/images/crt-presets.png?v=underside-crt-20261104)
+![Current sound and Screen shader settings with CRT Geom selected](docs/images/crt-presets.png?v=readme-refresh-20261105)
 
 *Nine native CRT presets. CRT Geom by default. Unfiltered, too.*
 
 ### Just the game.
 
-![The complete native Pixel Lab picture and metallic-chroma bezel wordmark in LCD fullscreen, with dark margins and the zoom slider](docs/images/readme-fullscreen.png?v=bowserboy-public-20261105)
+![Actual game-screen fullscreen with the metallic-chroma bezel wordmark, dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=readme-refresh-20261105)
 
 *Full 3:2 picture. Dark margins. Adjustable 50-100% zoom.*
 
 ### Everything within reach.
 
-![The actual purple icon dock with distinct actions and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=bowserboy-public-20261105)
+![Current purple icon dock with distinct actions and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=readme-refresh-20261105)
 
 *Desk or LCD fullscreen. 1x-4x speed. Sound, lighting and settings within reach.*
 
 ### Keep your progress.
 
-![The actual Progress and backups panel after saving an original Pixel Lab checkpoint](docs/images/readme-saves.png?v=bowserboy-public-20261105)
+![Current Progress and backups panel with an original-demo checkpoint saved](docs/images/readme-saves.png?v=readme-refresh-20261105)
 
 *Local in-game saves. Autosave + three checkpoint slots. Download a `.bba-save` backup. [Saving explained](docs/SAVING.md).*
+
+### Back to your game.
+
+![Click the blurred area outside settings to close the drawer and return to the console](docs/images/settings-backdrop.gif?v=readme-refresh-20261105)
+
+*Click outside to close. Or use Escape. Your game keeps running.*
 
 ---
 

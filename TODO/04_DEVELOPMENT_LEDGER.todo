@@ -14,6 +14,23 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Complete README media refresh:
+  User requests all GIFs/everything on README updated. Capture current local
+  application82834df, not an unverified deployment. Refresh five originalGIFs,
+  add playzoom/holdSpace/fullscreen/settingsbackdrop, replace nine stills.
+  Finalreceipt2026-11-05T18:21:46.643Z:9completeclips/0pageerrors;105/44/27/58/
+  33/47/37/30/18frames at800x618/10fps/infinite; max6,844,427bytes. Reviewed
+  bounded encoded frame sheets, stills and LCD-only interval. Supplied ROM is
+  GIF-only, no test execution; stills use Pixel Lab/no cartridge. First takes
+  open game's shoulder help; final A/B/Dpadshot avoids carrying it onward.
+  Approved logo animations unchanged. Current-build labels replace stale
+  public/earlier-rear claims; shared book/guide figures and credits reconciled.
+  No game/audio/performance approval claim. User owns pipeline monitoring.
+  Final local Edge GFM preview:18embeds decode/30relative links and anchors/
+  console navigation/390pxwidth pass; basic local style and headingIDs, not
+  actualGitHubpage.28standardbuildassets matchworkingbytes/82834dfsource,
+  normalizing onlyWindows textnewlines. Capture syntax/diffwhitespacepass.
+  Normal genuinepush is publication trigger; no pipeline/publicqualification.
 - 2026-11-05 / Ordinary play zoom baseline:
   User clarifies zoom outside game fullscreen: current framing should be50%,
   with room to zoom into100%. Default UI/model to.5; divide ordinary playing

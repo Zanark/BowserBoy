@@ -61,13 +61,20 @@ the owner's repository rename are not implemented by that branding change.
 
 ## Current documentation and media
 
-Workstream 48 refreshes README media on the actual public application, whose
+The earlier workstream 48 refreshes README media on the actual public application, whose
 29 assets independently match the qualified `f5bc639` source above.
-The recording checkout `9140b53` is documentation-only. Current `readme-*`
+The recording checkout `9140b53` is documentation-only. That edition's `readme-*`
 figures and GIFs show the later chrome website, purple console, metallic bezel
 and etched rear; the first-edition source pins and historical geometry figures
 remain intact. See [Media](../docs/MEDIA.md#bowserboy-public-refresh-2026-11-05)
 for actual origin, timestamps, review scope and the previous local media edition.
+
+Workstream 68 replaces shared README captures with the current local application
+source `82834df242aa7f0cec6cfa634e0966e7a3a500ec`. Figure B-01 and the shared
+startup GIF now use that capture edition; the book's pinned implementation
+sources and historical geometry figures remain unchanged. The
+[new media receipt](../docs/MEDIA.md#complete-readme-refresh-2026-11-05)
+separates local footage, authorized GIF-only game content and publication.
 
 ## Evidence is narrower than explanation
 

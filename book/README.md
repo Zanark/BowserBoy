@@ -15,9 +15,9 @@ soft A/B engraving, metallic-chroma bezel lettering and the larger colored
 rear engraving. [Sources](SOURCES.md) distinguishes those later qualified
 revisions from the pinned first edition; the earlier source links stay intact.
 
-![Current public front view of BowserBOY ADVANCED with recessed A/B lettering and metallic-chroma bezel](../docs/images/readme-handheld.png?v=bowserboy-public-20261105)
+![Current-build front view of BowserBOY ADVANCED with recessed A/B lettering and metallic-chroma bezel](../docs/images/readme-handheld.png?v=readme-refresh-20261105)
 
-*Figure B-01. Current public console, application source `f5bc639`. This later
+*Figure B-01. Refreshed local console capture, application source `82834df`. This later
 figure is not a capture of the first-edition `ab912d5` source.*
 
 The central engineering problem is not writing a GBA CPU from scratch. It is

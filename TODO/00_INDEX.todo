@@ -67,6 +67,7 @@ BowserBOY workstreams
 65_LCD_LIGHT_BALANCE.todo - BLOCKED: balance qualified/pushed09d8413;42077309344passes new lighting but existing cartridge assertion/600s suite budget prevent deployment.
 66_SETTINGS_BACKDROP_DISMISS.todo - IN_PROGRESS: outside-click drawer dismissal locally qualified; inside interactions and existing close paths preserved.
 67_PLAY_ZOOM_BASELINE.todo - IN_PROGRESS: existing ordinary framing is now default50%;100% moves twice closer. Locally qualified; deployment monitoring belongs to the user.
+68_COMPLETE_README_REFRESH.todo - DONE: nine current GIFs/nine stills, reconciled README/captions/provenance;18embeds/30links locally checked. Normal push triggers publication; user monitors.
 
 Current documentation edition: book/README.md now provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,

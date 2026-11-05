@@ -8,6 +8,58 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Complete README refresh, 2026-11-05
+
+All five existing interaction GIFs are freshly recorded, with four new clips
+for ordinary play zoom, hold-Space fast-forward, screen-only fullscreen zoom
+and clicking outside settings. Every embedded non-logo still is refreshed;
+the companion front/fullscreen stills are refreshed too. Approved three-second
+umbrella shimmer and purple console animation remain byte-identical.
+
+These are **local build captures**, not a claim about the deployed site.
+The application source is `82834df242aa7f0cec6cfa634e0966e7a3a500ec`,
+served at `http://127.0.0.1:5175/BowserBoyAdvance/`; the final recording receipt
+is timestamped `2026-11-05T18:21:46.643Z`. The revised existing capture script
+records real pickup, inspection, physical power, insertion, lighting, keyboard,
+zoom, fullscreen, settings and save actions. The receipt has nine complete
+timing ranges and zero page errors. Insertion holds the real loader download
+for the seating shot; this is not a loading-performance measurement.
+
+The explicitly authorized supplied ROM is used **only for GIF footage**.
+It is not a test fixture, and no game correctness, audio or speed measurement
+is performed with it. Static settings/game stills use original Pixel Lab;
+hardware-only stills use no cartridge. The main README names neither the game
+nor its box art and does not embed the box art. The game's own title screen
+may appear naturally inside recorded GIF footage. Test fixtures remain unchanged.
+The final button clip shows A/B and D-pad presses; the supplied game's shoulder
+actions open an in-game help screen, so that unrelated screen is not carried
+into the zoom/fullscreen showcase.
+
+The encoder reuses `clips()` in `scripts/render-readme.py`, without regenerating
+either approved logo. All nine GIFs are 800x618, 10 fps and infinite loops.
+Frame counts are 105/44/27/58/33/47/37/30/18 for pickup/startup/insertion/lights/
+buttons/play zoom/hold Space/fullscreen/settings, respectively. Their largest
+file is 6,844,427 bytes; all are below 10 MiB. Sampled decoded frames change.
+Bounded first/middle/end sheets, all refreshed stills and an LCD-only interval
+are reviewed. GIF palette/video compression can obscure very faint dark detail;
+silent recordings are not new audio-quality or human-acceptance evidence.
+
+Reproduce with a built current checkout and an already-running local preview:
+
+```powershell
+$env:BBA_CAPTURE_URL = 'http://127.0.0.1:5175/BowserBoyAdvance/'
+# Optional, explicitly authorized media-only ROM; never a test-suite input.
+$env:BBA_CAPTURE_ROM = (Resolve-Path '.\demos\celias-game\celias-game.gba').Path
+node .\scripts\capture-readme.mjs <capture-output-directory>
+```
+
+Omit `BBA_CAPTURE_ROM` to use only original Pixel Lab. The original WebM and
+timing/encoding receipts stay in session evidence, not the public static build.
+README URLs are versioned for the new captures. Historical source editions
+below remain history; shared `readme-*` figures now belong to this edition.
+Per user instruction, publication is triggered by the genuine media push
+without watching/querying pipelines or performing public qualification.
+
 ### Three-second README shimmer, 2026-11-05
 
 The README umbrella shimmer now repeats every three seconds instead of six.
@@ -31,13 +83,15 @@ animates natively in Edge, and is referenced by the versioned public README.
 The user authorized publishing the supplied ROM and box art and confirmed the
 ROM is fully original or licensed for public redistribution. Exact originals,
 credits, byte counts and SHA-256 identities are recorded in the
-[demo directory](../demos/celias-game/README.md). The box-art README embed is
-the supplied PNG, not a generated or recolored derivative.
+[demo directory](../demos/celias-game/README.md). The supplied PNG is not a generated or recolored derivative. The initial main
+README feature was subsequently removed at the user's request; assets and
+credits remain in the demo directory, not as a named front-page showcase.
 
 The ROM is authorized for demo GIFs, README media and showcases only, not tests
 unless explicitly requested. It is not executed during this upload, not a
 replacement for Pixel Lab fixtures, and not automatically loaded by the player.
-No existing gameplay GIF or capture has been replaced with this game's footage.
+At upload time, no existing gameplay GIF was replaced. The complete README
+refresh above subsequently uses it only for authorized GIF footage.
 Publication permission is the user's confirmation, not an independent rights audit.
 
 ### Updated-logo README shimmer, 2026-11-05

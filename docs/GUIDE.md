@@ -56,9 +56,9 @@ The shimmer pauses while hidden and is disabled for reduced-motion users.*
 **A little escape, on your desk.** BowserBOY currently offers one local-first
 GBA player inside an actual 3D indigo handheld, built for GitHub Pages.
 
-![Current public BowserBOY table with chrome website branding and its first GBA handheld](images/readme-table.png?v=bowserboy-public-20261105)
+![Current-build BowserBOY table with updated chrome website branding and its first GBA handheld](images/readme-table.png?v=readme-refresh-20261105)
 
-*The current public desk: chrome BowserBOY header, first purple console and
+*The current-build desk: chrome BowserBOY header, first purple console and
 paper lantern. The other objects are cartridges, not additional consoles.*
 
 ## Lights out
@@ -117,11 +117,11 @@ into the battery-cover plastic. Its original purple color and bright lettering a
 preserved, not darkened to imply engraving; see
 [current qualification](VERIFICATION.md#deeper-rear-engraving-2026-11-05).
 
-![Earlier public rear inspection, with separate chrome website and purple console logos](images/readme-back.png?v=bowserboy-public-20261105)
+![Current-build rear inspection with the larger, deeper engraving](images/readme-back.png?v=readme-refresh-20261105)
 
 *The purple artwork belongs to this console; the chrome header belongs to the
-website. This capture shows the previous rear engraving; the latest geometry
-enlarges it again and deepens the cutouts without changing the cover or artwork.*
+website. This refreshed local capture includes the enlarged, deeper cutouts,
+without changing the cover or artwork.*
 
 A/B letters are softer gray grooves cut into the unchanged cap faces, with inset floors and
 sidewalls rather than raised or printed lettering. D-pad arrows retain their
@@ -308,7 +308,7 @@ or refused requests display an explicit notice.
 Scene notices appear directly below the website logo; open tools retain notices
 inside their own panel.
 
-![Complete native Pixel Lab picture and metallic bezel fitted in fullscreen with a bottom-right zoom slider](images/readme-fullscreen.png?v=bowserboy-public-20261105)
+![Complete native Pixel Lab picture and metallic bezel fitted in fullscreen with a bottom-right zoom slider](images/readme-fullscreen.png?v=readme-refresh-20261105)
 
 *The original demo on the actual native CRT output, surrounded by the matching
 black bezel and metallic-chroma lettering. No second emulator or reset; zoom only changes

@@ -1,0 +1,51 @@
+Status: DONE
+Milestone: Refresh every README showcase GIF, screenshot and stale caption.
+Dependencies: 61_SUPPLIED_DEMO_ASSETS.todo,64_README_DEMO_PRESENTATION.todo,
+65_LCD_LIGHT_BALANCE.todo,66_SETTINGS_BACKDROP_DISMISS.todo,67_PLAY_ZOOM_BASELINE.todo.
+
+Purpose
+-------
+Show the current console/branding/features rather than outdated recordings,
+while keeping the front page visual and the supplied game unnamed/unfeatured.
+
+Tasks
+-----
+[x] Capture the current local application, not an unverified public deployment.
+[x] Refresh all five original interaction GIFs and every embedded non-logo still.
+[x] Add ordinary zoom, hold Space, fullscreen zoom and outside-settings GIFs.
+[x] Use supplied ROM only for footage; use Pixel Lab/no cartridge for stills.
+[x] Preserve approved three-second shimmer and purple logo animation exactly.
+[x] Review bounded encoded-motion/still sheets and update captions/provenance.
+[x] Finish local README image/navigation validation and prepare genuine publication.
+[x] Leave deployment monitoring to the user without pipeline queries.
+
+Acceptance criteria
+-------------------
+No stale public-capture or earlier-engraving captions on refreshed images.
+All nine GIFs decode, loop, contain motion and stay below10MiB. All README
+embeds/links resolve. No named game/box-art feature, game testing, new audio
+quality claim or inferred live deployment. Preserve frozen book source pins.
+
+Completion evidence
+-------------------
+Actual local application82834df captured at2026-11-05T18:21:46.643Z.
+Nine complete timing ranges/zero page errors; original1100x850WebM retained.
+Nine800x618/10fps/infiniteGIFs:105/44/27/58/33/47/37/30/18frames; max6,844,427bytes.
+Nine dedicated stills refreshed. Encoded first/middle/end sheets, all stills
+and an LCD-only interval reviewed. Approved logos unchanged. Supplied ROM
+never used as a test fixture; no cartridge/game changes. Main README names
+neither supplied game nor box art. Shared guide/book figure captions reconciled.
+Local Edge GFM preview decodes18embeds, checks30relative links/anchors, console
+navigation and390pxresponsivewidth. Basic styling/headingIDs supplied locally;
+not actualGitHubpage.28standardbuildassets matchworkingbytes and82834dfsource
+after onlyWindows text-newline normalization. Node syntax/diffwhitespacepass.
+First captures carried the game's shoulder-help overlay into later clips;
+final supplied-game button sequence uses A/B/D-pad and avoids that overlay.
+GIF quantization may hide very faint dark detail; silent GIFs do not test audio.
+
+Completion log
+--------------
+2026-11-05: User requests all GIFs/everything on README updated. Capture and
+encoding/visual review and local validation complete. Publish this genuine
+media commit through the normal push; user owns subsequent deployment checks.
+No pipeline query/watch/public qualification or live-release claim.
