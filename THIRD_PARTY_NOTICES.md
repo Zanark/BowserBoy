@@ -1,8 +1,21 @@
 # Third-party notices and provenance
 
 This independent prototype is not affiliated with Nintendo. Game Boy Advance
-is a Nintendo trademark. No commercial games, firmware/BIOS images, franchise
-characters, box art or manufacturer logo bytes are included.
+is a Nintendo trademark. No firmware/BIOS images are included. The separately
+supplied demo ROM and box art below are not independently authored emulator
+assets; their publication relies on the user's redistribution confirmation.
+
+## Supplied demo game and box art
+
+[`demos/celias-game`](demos/celias-game/README.md) contains the supplied game,
+attributed by the user to Celia, and its unmodified box art. The user authorized
+the GitHub upload and confirmed on 2026-11-05 that the ROM is fully original or
+licensed for public redistribution. No separate upstream license text was
+supplied, and no independent rights audit is claimed.
+
+These are demo/media assets, not test fixtures. Do not execute this ROM for
+testing without an explicit user request. Existing Pixel Lab test and footage
+provenance remains unchanged; the player does not automatically load this ROM.
 
 ## Runtime dependencies
 

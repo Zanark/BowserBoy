@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-05 / Supplied demo assets:
+  User authorizes uploading the supplied ROM and box art, confirming the ROM is
+  fully original or licensed for redistribution. Preserve exact bytes in a
+  dedicated demo directory, with credits, hashes and a captioned README link.
+  Keep the ROM out of the static build, player defaults and test fixtures.
+  Media capture is authorized; testing still requires an explicit request.
+  No game execution or new footage is performed for the upload.
 - 2026-11-05 / Experimental LCD control spill:
   User wants all-lights-off controls barely visible from the screen, with easy
   removal if disliked. Add one weak reverse-facing area fill to existing

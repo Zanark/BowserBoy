@@ -8,6 +8,20 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Supplied Celia demo and box art, 2026-11-05
+
+The user authorized publishing the supplied ROM and box art and confirmed the
+ROM is fully original or licensed for public redistribution. Exact originals,
+credits, byte counts and SHA-256 identities are recorded in the
+[demo directory](../demos/celias-game/README.md). The box-art README embed is
+the supplied PNG, not a generated or recolored derivative.
+
+The ROM is authorized for demo GIFs, README media and showcases only, not tests
+unless explicitly requested. It is not executed during this upload, not a
+replacement for Pixel Lab fixtures, and not automatically loaded by the player.
+No existing gameplay GIF or capture has been replaced with this game's footage.
+Publication permission is the user's confirmation, not an independent rights audit.
+
 ### Updated-logo README shimmer, 2026-11-05
 
 The umbrella README image now uses `bowserboy-logo-shimmer.png`, replacing the

@@ -1,0 +1,39 @@
+Status: IN_PROGRESS
+Milestone: Publish the supplied demo ROM and box art on GitHub.
+Dependencies: User upload authorization and redistribution confirmation.
+
+Purpose
+-------
+Make the supplied game and box art available for future demo GIFs, README
+media and showcases without turning the ROM into a test fixture.
+
+Tasks
+-----
+[x] Obtain explicit GitHub upload and redistribution confirmation.
+[x] Preserve supplied ROM and box-art bytes in a dedicated demo directory.
+[x] Document credits, exact file identities and the no-testing boundary.
+[x] Add a captioned README showcase and direct ROM download.
+[ ] Commit/push the actual assets and verify their public GitHub identities.
+
+Acceptance criteria
+-------------------
+The exact supplied ROM/PNG are publicly available from GitHub and discoverable
+from the README. No ROM execution, testing, new gameplay capture, player
+integration or static-site build inclusion is part of this asset upload.
+Keep all other private ROMs ignored and retain original Pixel Lab fixtures.
+
+Completion evidence
+-------------------
+The user confirms the ROM is fully original or licensed for redistribution.
+That is user-provided clearance, not an independent rights audit or license.
+ROM30,091,948bytes/SHA25681ac9b9d4e7bdd3bf06ed53954d784118a743372906c6c6fc62b3cbc19587148.
+PNG585,329bytes/SHA256b37150470ee70c88563f908dc4d5e569892f74eb6514ae882852693db25643c7.
+Only the exact demos/celias-game/celias-game.gba path is exempted from *.gba.
+Existing runtime, tests, static build and earlier media remain unchanged.
+Both copied SHA-256 values match the supplied originals. A private-example.gba
+remains ignored while the single authorized ROM is not ignored.
+
+Completion log
+--------------
+2026-11-05: Upload authorized after explicit redistribution clarification;
+supplied-artwork showcase and media-only boundary documented.

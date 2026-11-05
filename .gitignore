@@ -4,6 +4,7 @@ playwright-report/
 test-results/
 .agent-context/
 *.gba
+!/demos/celias-game/celias-game.gba
 *.sav
 *.state
 *.bba-save
