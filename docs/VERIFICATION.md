@@ -56,6 +56,18 @@ matching the adjacent existing power fixture, without removing lifecycle asserti
 These two corrected cases pass locally in 34.3s. No application bytes, workflow,
 timeouts or assertion bounds change; fresh normal/public qualification follows.
 
+**Complete, independently live:** fresh `b223a425c66d574d36917d9f4ff2d850c5675df0`
+/ Pages `42008857811` passes build, all11units, all40browser cases (actual logs
+14+13+13) and deployment. Independently match all28public assets. All four actual
+public audio cases pass in45.2s without screenshot/video captures. Steady queued
+reserve is at least189.9ms; the40ms hitch leaves154.2ms. The original cartridge's
+SRAM clock measures60.05frames/s, with zero measured scheduling gaps.
+Five generated private PCM captures are removed after numerical comparisons are
+retained; the user's original recording and ROM remain untouched.
+Workstream44isDONE on this bounded technical evidence, not direct listening,
+human approval or a guarantee against arbitrary overload. Explicitly enabled
+native VSync remains a user override and can reintroduce the measured starvation.
+
 ## Original soft A/B typography, 2026-11-05
 
 The user rejects the custom rounded shapes from workstream 42 and explicitly

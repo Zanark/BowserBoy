@@ -73,6 +73,10 @@ Isolate graphics cost as the existing native clock regression does, retaining
 all audio bounds; the old clock still fails measured reserve. Full-view private
 playback remains separate evidence rather than claiming this isolated fixture
 qualifies an arbitrarily slow renderer.
+Fresh normal `42008857811` then passes all40cases and deployment. All28public
+assets match; four actual public audio cases pass45.2s with >=189.9ms steady
+reserve, a40ms hitch leaving154.2ms, zero gaps and a60.05fps SRAM clock.
+Keep that public qualification distinct from the private full-view180s run.
 
 Workstream 34 deliberately reverses an earlier product requirement: the user
 now permits notices to overlap the handheld. Replace notice-separation checks

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Audio-paced normal playback with sustained live PCM reserve.
 Dependencies: Existing native audio protection and configurable speed/VSync.
 
@@ -15,8 +15,8 @@ Tasks:
 - [x] Add an original-ROM audio/clock regression that fails actual old playback.
 - [x] Keep startup, recovery, volume/mute, saves and speed qualification intact.
 - [x] Complete extended actual-source private-ROM qualification.
-- [ ] Pass normal delivery and independently verify public assets/audio.
-- [ ] Reconcile documentation, development history and owned continuity.
+- [x] Pass normal delivery and independently verify public assets/audio.
+- [x] Reconcile documentation, development history and owned continuity.
 
 Acceptance criteria:
 - Normal playback defaults to audio-paced native timing; explicitly selected
@@ -45,7 +45,7 @@ Completion evidence:
 - Actual corrected source180s/31,042buffers: zero gaps >1ms, zero restarts,
   no clipped source samples/page errors; output peak .6843. Live headroom
   141-206ms;40ms mid-game hitch leaves163.2ms. Auto-save stays on; captures <=2ms.
-- Normal/public delivery remains pending.
+- Normal/public delivery is pending at this first local milestone.
 - First normal71123d4/42006670563passes build/11units/38of40browser cases,
   blocks deployment. Isolate multi-second software-GPU draws from the new40ms
   audio fixture using the existing native speed-test setup; all bounds stay.
@@ -53,9 +53,19 @@ Completion evidence:
   Separate power fixture excludes its independently tested autosave lock,
   matching adjacent prior art; all lifecycle assertions remain. Both34.3s pass.
   No application bytes, workflow or deadlines change in this qualification follow-up.
+- Fresh normalb223a42/42008857811passes build/11units/all40browser cases,
+  actual logs14+13+13, and deployment. Independently match28public assets.
+- All four actual public audio cases pass45.2s without image/video captures.
+  Steady live reserve >=189.9ms;40ms hitch leaves154.2ms; actual SRAM clock
+  60.05frames/s; zero measured scheduling gaps. Old-source/control bounds stay.
+- Five generated private PCM files removed after comparison metrics persisted;
+  original user recording/ROM retained. No private media/source paths published.
 
 Completion log:
 - 2026-11-05: Recording supplied; analyze only its audio. Native VSync pacing
   starves the real audio queue under tested play despite a large allocated pool.
   Let existing native audio synchronization pace normal playback by default.
   Retain deliberate user overrides and all existing protection/speed behavior.
+- 2026-11-05: Fresh normal gate, actual deployment,28asset identity and all four
+  public audio cases pass.44DONE on bounded technical evidence, not human hearing
+  approval or a guarantee against arbitrary sustained overload.
