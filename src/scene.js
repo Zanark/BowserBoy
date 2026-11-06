@@ -3,6 +3,8 @@ import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, cr
 import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
 import { brandImage } from './brand.js';
 import { createDsHandheld } from './ds-handheld.js';
+import { createPearBoy } from './pear-boy.js';
+import { PearMotion } from './pear-motion.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -12,6 +14,7 @@ const dsTablePosition = new THREE.Vector3(10.3, .32, -7.2);
 const dsTableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.4));
 const dsPlayPosition = new THREE.Vector3(10.3, 5.1, 3.5);
 const dsPlayQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.45, -.18, 0));
+const pearHome = new THREE.Vector3(21.3, 0, -8);
 
 export class HandheldScene {
   constructor(host, { onTools, onView, onError, onLamp, onConsole }) {
@@ -34,7 +37,7 @@ export class HandheldScene {
     this.canvas = this.renderer.domElement;
     this.canvas.id = 'scene-canvas';
     this.canvas.tabIndex = 0;
-    this.canvas.setAttribute('aria-label', 'Interactive 3D handheld. Click to pick up. Inspect mode: drag or use arrow keys to rotate, plus and minus to zoom, Home to reset.');
+    this.canvas.setAttribute('aria-label', 'Interactive 3D desk. Click a console to pick it up. Drag pear-boy in 3D, scroll for depth, release to drop; click to switch his light. Inspect: drag or arrows rotate, plus/minus zoom. Move pear-boy from his dock controls: arrows move, Page Up/Down lift, Enter drops, Escape cancels.');
     host.append(this.canvas);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#000000');
@@ -71,6 +74,7 @@ export class HandheldScene {
     floor.name = 'Room floor';
     floor.receiveShadow = true;
     this.scene.add(floor);
+    this.deskObjects = [];
     for (const [color, title, subtitle, x, z, angle] of [
       ['#648579', 'DAYDREAM', 'EMPTY CARTRIDGE', 4.3, -1.9, .42],
       ['#b2a7b5', 'LITTLE WORLDS', 'EMPTY CARTRIDGE', 5.6, -.2, -.16],
@@ -80,6 +84,7 @@ export class HandheldScene {
       cartridge.position.set(x, .18, z);
       cartridge.rotation.set(-Math.PI / 2, 0, angle);
       this.scene.add(cartridge);
+      this.deskObjects.push(cartridge);
     }
     this.model = createHandheld();
     this.model.root.userData.console = 'gba';
@@ -92,6 +97,14 @@ export class HandheldScene {
     this.ds.root.position.copy(dsTablePosition);
     this.ds.root.quaternion.copy(dsTableQuaternion);
     this.scene.add(this.ds.root);
+    this.pear = createPearBoy();
+    this.pear.root.position.copy(pearHome);
+    this.pearMotion = new PearMotion(this.pear.root.position);
+    this.pear.resetLimbs();
+    this.scene.add(this.pear.root);
+    this.pearOn = true;
+    this.pearBrightness = .7;
+    this.updatePearLight();
     this.dsReflectionCube = new THREE.WebGLCubeRenderTarget(128, { type: THREE.HalfFloatType });
     this.dsReflectionCamera = new THREE.CubeCamera(.1, 1500, this.dsReflectionCube);
     this.dsReflectionFilter = new THREE.PMREMGenerator(this.renderer);
@@ -115,6 +128,17 @@ export class HandheldScene {
       if (event.button !== 0) return;
       this.canvas.focus({ preventScroll: true });
       const hit = this.pick(event);
+      if (this.pearMove) {
+        if (this.pearMove.pointerId === undefined && this.mode === 'table' && !this.transition) {
+          const point = this.tablePoint(event);
+          if (point && this.movePearTo(point)) this.finishPearMove(false);
+        }
+        return;
+      }
+      if (this.mode === 'table' && !this.transition && hit?.object.userData.pearBoy) {
+        this.beginPearMove(event, hit.point);
+        return;
+      }
       if (!this.transition && hit?.object.userData.lampToggle) { onLamp(); return; }
       if (this.mode === 'table' && !this.transition && hit) {
         let object = hit.object;
@@ -141,6 +165,13 @@ export class HandheldScene {
       }
     });
     this.canvas.addEventListener('pointermove', (event) => {
+      if (this.pearMove?.pointerId === event.pointerId) {
+        const move = this.pearMove;
+        move.moved ||= Math.hypot(event.clientX - move.x, event.clientY - move.y) > 4;
+        const point = this.tablePoint(event);
+        if (move.moved && point) this.movePearTo(point.add(move.offset));
+        return;
+      }
       if (this.inspectionPointers.has(event.pointerId)) {
         this.inspectionPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       }
@@ -153,11 +184,21 @@ export class HandheldScene {
         const pitch = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), (event.clientY - this.drag.y) * .008);
         this.activeModel.root.quaternion.copy(yaw.multiply(pitch).multiply(this.drag.rotation));
       } else {
-        this.canvas.style.cursor = this.mode === 'inspecting' ? 'grab' : this.pick(event) ? 'pointer' : 'default';
+        const hit = this.pick(event);
+        this.canvas.style.cursor = this.mode === 'inspecting' || (this.mode === 'table' && hit?.object.userData.pearBoy) ?
+          'grab' : hit ? 'pointer' : 'default';
       }
     });
+    this.canvas.addEventListener('touchstart', event => {
+      // An owned drag must not consume the next dock tap as a native gesture.
+      if (this.pearMove?.pointerId !== undefined) event.preventDefault();
+    }, { passive: false });
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
       this.canvas.addEventListener(name, (event) => {
+        if (this.pearMove?.pointerId === event.pointerId) {
+          this.finishPearMove(name !== 'pointerup', name === 'pointerup' && !this.pearMove.moved);
+          return;
+        }
         this.inspectionPointers.delete(event.pointerId);
         this.drag = null;
         this.pinch = null;
@@ -168,11 +209,36 @@ export class HandheldScene {
       });
     }
     this.canvas.addEventListener('wheel', (event) => {
+      if (this.pearMove) {
+        event.preventDefault();
+        const direction = this.camera.getWorldDirection(new THREE.Vector3());
+        const offset = direction.multiplyScalar(THREE.MathUtils.clamp(event.deltaY * .015, -2, 2));
+        const previous = this.pear.root.position.clone();
+        if (this.movePearTo(this.pear.root.position.clone().add(offset))) {
+          this.pearMove.plane.translate(this.pear.root.position.clone().sub(previous));
+        }
+        return;
+      }
       if (this.mode !== 'inspecting') return;
       event.preventDefault();
       this.setZoom(this.zoom * Math.exp(event.deltaY * .001));
     }, { passive: false });
     this.canvas.addEventListener('keydown', (event) => {
+      if (this.pearMove && !this.transition && !event.ctrlKey && !event.altKey && !event.metaKey) {
+        const steps = {
+          ArrowLeft: [-.65, 0, 0], ArrowRight: [.65, 0, 0],
+          ArrowUp: [0, 0, -.65], ArrowDown: [0, 0, .65],
+          PageUp: [0, .65, 0], PageDown: [0, -.65, 0],
+        };
+        if (steps[event.code]) {
+          event.preventDefault();
+          this.movePearTo(this.pear.root.position.clone().add(new THREE.Vector3(...steps[event.code])));
+        } else if (event.code === 'Enter' || event.code === 'Escape') {
+          event.preventDefault();
+          this.finishPearMove(event.code === 'Escape');
+        }
+        return;
+      }
       if (this.mode !== 'inspecting' || event.ctrlKey || event.altKey || event.metaKey) return;
       const rotations = { ArrowLeft: [0, -.15], ArrowRight: [0, .15], ArrowUp: [-.15, 0], ArrowDown: [.15, 0] };
       if (rotations[event.code]) {
@@ -196,6 +262,19 @@ export class HandheldScene {
     });
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(host);
+    this.cancelPearOnBlur = () => this.finishPearMove(true);
+    window.addEventListener('blur', this.cancelPearOnBlur);
+    this.pearCursor = null;
+    this.pearGaze = new THREE.Vector2();
+    this.trackPearCursor = event => {
+      if (event.pointerType === 'touch') return;
+      this.pearCursor ??= new THREE.Vector2();
+      this.pearCursor.set(event.clientX, event.clientY);
+    };
+    this.clearPearCursor = () => { this.pearCursor = null; };
+    window.addEventListener('pointermove', this.trackPearCursor);
+    document.addEventListener('pointerleave', this.clearPearCursor);
+    window.addEventListener('blur', this.clearPearCursor);
     this.resize();
     this.camera.position.copy(this.cameraTarget);
     this.lookAt.copy(this.lookTarget);
@@ -204,6 +283,7 @@ export class HandheldScene {
   get activeModel() { return this.console === 'ds' ? this.ds : this.model; }
 
   selectConsole(system) {
+    this.finishPearMove(true);
     if (!['gba', 'ds'].includes(system)) throw new Error('Unknown console.');
     if (system === this.console) { this.setView('playing'); return; }
     this.activeModel.root.position.copy(this.console === 'ds' ? dsTablePosition : tablePosition);
@@ -229,10 +309,121 @@ export class HandheldScene {
     const bounds = this.canvas.getBoundingClientRect();
     this.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.raycaster.setFromCamera(this.pointer, this.camera);
-    return this.raycaster.intersectObjects([this.model.root, this.ds.root, this.lamp.root], true)[0];
+    return this.raycaster.intersectObjects([this.model.root, this.ds.root, this.lamp.root, this.pear.root], true)
+      .find(hit => hit.object !== this.pear.root.getObjectByName('pear-boy soft contact shadow'));
+  }
+
+  tablePoint(event, plane = this.pearMove?.plane ?? new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)) {
+    const bounds = this.canvas.getBoundingClientRect();
+    this.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
+    this.raycaster.setFromCamera(this.pointer, this.camera);
+    return this.raycaster.ray.intersectPlane(plane, new THREE.Vector3());
+  }
+
+  updatePearLight() {
+    for (const light of this.pear.lights) {
+      light.visible = this.pearOn;
+      light.intensity = 800 * this.pearBrightness;
+    }
+    this.pear.body.material.emissiveIntensity = this.pearOn ? 110 * this.pearBrightness : 0;
+    this.changed = this.dsReflectionsDirty = true;
+    this.host.dispatchEvent(new CustomEvent('pear-change'));
+  }
+
+  setPearEnabled(enabled) {
+    if (typeof enabled !== 'boolean') throw new Error('Invalid pear-boy power state.');
+    this.pearOn = enabled;
+    this.updatePearLight();
+  }
+
+  setPearBrightness(value) {
+    if (!Number.isFinite(value) || value < .1 || value > 1) throw new Error('pear-boy brightness must be between 10% and 100%.');
+    this.pearBrightness = value;
+    this.updatePearLight();
+  }
+
+  beginPearMove(event, hitPoint) {
+    if (this.pearMove) return;
+    this.setView('table');
+    const origin = this.pear.root.position.clone();
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(
+      this.camera.getWorldDirection(new THREE.Vector3()), hitPoint ?? origin.clone().add(new THREE.Vector3(0, 4, 0)));
+    const point = event ? this.tablePoint(event, plane) : null;
+    this.pearMove = {
+      origin, pointerId: event?.pointerId, x: event?.clientX, y: event?.clientY, moved: false,
+      offset: point ? origin.clone().sub(point) : new THREE.Vector3(), plane,
+    };
+    this.pearMotion.pickUp();
+    this.pear.setFaceLifted(true);
+    this.updatePearContact();
+    this.canvas.style.cursor = 'grabbing';
+    if (event) this.canvas.setPointerCapture(event.pointerId);
+    this.canvas.focus({ preventScroll: true });
+    this.changed = true;
+    this.host.dispatchEvent(new CustomEvent('pear-change'));
+  }
+
+  movePearTo(point) {
+    const position = new THREE.Vector3(THREE.MathUtils.clamp(point.x, -22, 24), THREE.MathUtils.clamp(point.y, 0, 25),
+      THREE.MathUtils.clamp(point.z, -11.5, 5.5));
+    const candidate = this.pear.bounds.clone().translate(position);
+    const occupied = this.pearObstacles().some(bounds =>
+      candidate.max.x + .25 > bounds.min.x && candidate.min.x - .25 < bounds.max.x &&
+      candidate.max.z + .25 > bounds.min.z && candidate.min.z - .25 < bounds.max.z &&
+      candidate.max.y > bounds.min.y && position.y < bounds.max.y + .25);
+    this.host.dataset.pearPlacement = occupied ? 'blocked' : 'clear';
+    if (!occupied) {
+      this.pearMotion.moveTo(position, performance.now());
+      this.updatePearContact();
+      this.changed = true;
+    }
+    this.host.dispatchEvent(new CustomEvent('pear-change'));
+    return !occupied;
+  }
+
+  finishPearMove(cancelled = false, toggle = false) {
+    const move = this.pearMove;
+    if (!move) return;
+    this.pearMove = null;
+    if (cancelled) {
+      this.pearMotion.reset(move.origin);
+      this.pear.resetLimbs();
+    } else {
+      this.pearMotion.drop(performance.now());
+    }
+    this.pear.setFaceLifted(!this.pearMotion.sleeping);
+    this.updatePearContact();
+    delete this.host.dataset.pearPlacement;
+    if (move.pointerId !== undefined && this.canvas.hasPointerCapture(move.pointerId)) this.canvas.releasePointerCapture(move.pointerId);
+    this.canvas.style.cursor = 'default';
+    this.changed = this.dsReflectionsDirty = true;
+    if (toggle && !cancelled) this.setPearEnabled(!this.pearOn);
+    this.host.dispatchEvent(new CustomEvent('pear-change'));
+  }
+
+  resetPearPosition() {
+    this.finishPearMove(true);
+    this.pearMotion.reset(pearHome);
+    this.pear.setFaceLifted(false);
+    this.pear.resetLimbs();
+    this.updatePearContact();
+    this.changed = this.dsReflectionsDirty = true;
+  }
+
+  pearObstacles() {
+    return [this.model.root, this.ds.root, this.lamp.root, ...this.deskObjects]
+      .map(object => new THREE.Box3().setFromObject(object));
+  }
+
+  updatePearContact() {
+    const height = this.pear.root.position.y;
+    this.pear.contact.position.y = .012 - height;
+    this.pear.contact.material.opacity = Math.max(.12, 1 - height / 20);
+    this.pear.contact.scale.setScalar(1 + height * .04);
   }
 
   resize() {
+    this.finishPearMove(true);
     const { width, height } = this.host.getBoundingClientRect();
     if (!width || !height) return;
     this.width = width;
@@ -252,7 +443,7 @@ export class HandheldScene {
 
   updateCameraTargets() {
     if (this.mode === 'table') {
-      const scale = Math.max(1, .8 / this.camera.aspect);
+      const scale = Math.max(1, 1.3 / this.camera.aspect);
       this.cameraTarget = new THREE.Vector3(2, 27, 42).multiplyScalar(scale);
       this.lookTarget = new THREE.Vector3(4.2, 4, -1.5);
     } else if (this.console === 'ds') {
@@ -318,6 +509,7 @@ export class HandheldScene {
   }
 
   setView(mode) {
+    this.finishPearMove(true);
     if (!['table', 'playing', 'inspecting'].includes(mode)) throw new Error('Unknown handheld view.');
     if (mode === this.mode && !this.transition) return;
     this.changed = true;
@@ -480,7 +672,7 @@ export class HandheldScene {
     const cartridgeStep = cartridgeMotion && paintDue ? Math.min(500, Math.max(0,
       time - (cartridgeMotion.lastPaint ?? time - 16.67))) : 0;
     const cartridgeElapsed = (cartridgeMotion?.elapsed ?? 0) + cartridgeStep;
-    const exposure = this.lampOn || this.roomLightsOn ? .018 : .45;
+    const exposure = this.lampOn || this.roomLightsOn || this.pearOn ? .018 : .45;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, exposure, 4, delta);
     const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
@@ -552,7 +744,25 @@ export class HandheldScene {
         if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .075);
       }
     }
-    this.changed ||= buttonsMoving;
+    const bodyMoving = this.pearMotion.update(delta,
+      this.pearMotion.held || this.pearMotion.sleeping ? [] : this.pearObstacles());
+    if (bodyMoving) {
+      this.updatePearContact();
+      if (this.pearMotion.sleeping) this.dsReflectionsDirty = true;
+    }
+    const frightened = !!this.pearMove || !this.pearMotion.sleeping;
+    if (this.pear.face.lifted !== frightened) this.pear.setFaceLifted(frightened);
+    const limbsMoving = this.pear.updateLimbs(delta, this.reducedMotion.matches);
+    this.pearGaze.set(0, 0);
+    if (this.pearCursor) {
+      const bounds = this.canvas.getBoundingClientRect();
+      const facePoint = this.project(this.pear.face.anchor);
+      this.pearGaze.set(
+        THREE.MathUtils.clamp((this.pearCursor.x - bounds.left - facePoint.x) / (this.width * .2), -1, 1),
+        THREE.MathUtils.clamp((facePoint.y - this.pearCursor.y + bounds.top) / (this.height * .2), -1, 1));
+    }
+    const faceMoving = this.pear.updateFace(delta, this.pearGaze, this.reducedMotion.matches);
+    this.changed ||= buttonsMoving || bodyMoving || limbsMoving || faceMoving;
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
@@ -569,11 +779,11 @@ export class HandheldScene {
     const activeRoot = this.activeModel.root;
     const poseChanged = this.lastModel !== activeRoot || !this.lastPosition?.equals(activeRoot.position) ||
       !this.lastRotation?.equals(activeRoot.quaternion) || !this.lastCamera?.equals(this.camera.position);
-    if (!this.source && !this.dsController?.running && !this.dsController?.inserting && !this.cartridgeMotion && !this.changed && !poseChanged && !buttonsMoving &&
+    if (!this.source && !this.dsController?.running && !this.dsController?.inserting && !this.cartridgeMotion && !this.changed && !this.dsReflectionsDirty && !poseChanged && !buttonsMoving &&
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     // Sample the actual room once per settled pose/light change, only for DS paint.
-    if (this.dsReflectionsDirty && !this.transition) this.updateDsReflections();
+    if (this.dsReflectionsDirty && !this.transition && !this.pearMove && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
     if (cartridgeMotion) {
       cartridgeMotion.elapsed += cartridgeStep;
@@ -604,6 +814,10 @@ export class HandheldScene {
   }
 
   dispose() {
+    window.removeEventListener('blur', this.cancelPearOnBlur);
+    window.removeEventListener('pointermove', this.trackPearCursor);
+    document.removeEventListener('pointerleave', this.clearPearCursor);
+    window.removeEventListener('blur', this.clearPearCursor);
     this.renderer.setAnimationLoop(null);
     this.observer.disconnect();
     this.dsReflection?.dispose();

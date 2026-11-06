@@ -165,9 +165,39 @@ real-phone touch/performance, microphone/camera support, commercial
 compatibility and long-duration audio remain unqualified. Runtime CDN code
 still executes with the page's origin privileges.
 
+## pear-boy
+
+The pear character at the desk's upper right is a separate movable warm lamp.
+Click him to switch his glow, or use the pear dock button for power,
+10-100% brightness, **Move** and **Reset position**. Lighting and position last
+for this page session only. Reset returns him home without changing brightness.
+
+Drag to move in a camera-facing plane; upward movement lifts him. While holding
+him, scroll for depth. Alternatively choose **Move**, use arrows across the desk,
+**Page Up/Page Down** for height and **Enter** to drop. **Escape** cancels the
+move and restores its starting position. Releasing a drag drops him with
+gravity, bounded throwing inertia, a small bounce and friction.
+
+The longer, thick braided rope arms and legs swing and settle. His eyes track
+mouse/pen movement, and his squeezed eyes/wobbly mouth remain frightened while
+held or falling. Reduced motion removes decorative swinging and trembling,
+not the gravity needed to complete a drop.
+
+![pear-boy with squeezed eyes while lifted above the table](images/pear-boy-scared.png)
+
+*Actual local rendering of the scared expression and hanging rope limbs,
+not an edited reference image.*
+
+Movement stays within a bounded tabletop workspace and rejects occupied
+placement. Body collisions approximate props with boxes and keep the pear
+upright; this is not a rotating rigid-body engine or full cloth simulation.
+Ropes collide with the pear body and desk, not every prop surface.
+Physical-phone performance and owner visual acceptance remain unqualified.
+
 ## Lights out
 
-The room starts with the warm STORSEGEL-style lamp on and **Room** lights off.
+The room starts with the warm STORSEGEL-style lamp and pear-boy on, and **Room**
+lights off. Switch pear-boy off too when you want LCD-only darkness.
 Click its shade or use **Lamp** to switch it independently of the game. **Room**
 adds optional ceiling/reflected illumination without changing console power.
 The lamp has a clean white open drum shade and three splayed ash legs, modeled

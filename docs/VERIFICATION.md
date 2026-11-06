@@ -9,6 +9,34 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-06
 
+### pear-boy local companion
+
+One focused Edge gate passes **8 cases in 1.4m**: five pear cases plus original
+lamp/dark-room/LCD-spill regressions. Real near/far desk pixels verify broader
+warm illumination and brightness changes. Held-pointer pixels verify live
+movement; real touch drag followed by a first dock tap works at 390px.
+Checks cover longer thick ropes, anchors/endpoints, finite geometry, length
+constraints, swing/sleep/reduced motion, cursor-following pixels, frightened
+pickup/cancellation, depth movement, sampled falling/bounce frames and landing.
+All **32 unit tests** pass; build and application syntax checks pass.
+This is not a full browser-suite run or fresh DS-native qualification.
+
+An intermediate gate found occasional stretched segments during pickup.
+Constrain moved anchors even between fixed physics steps and allow bounded
+iterations to converge after a large displacement. Add a rapid-pointer unit
+regression. The earlier instantaneous pickup fixture exceeded the entire rope
+length in one tick; use a within-reach pickup for the inertia assertion and
+retain large teleports in the separate constrained-motion regression.
+The original lamp's fabric probes needed a wider explicit desktop viewport
+after adding the second console/pear; retain actual color and seam bounds.
+Pear-off fixtures preserve the meaning of historical LCD-only darkness.
+
+The actual table, scared and airborne renders are locally reviewed.
+Body collisions are upright/box-based, not a full rigid-body simulation;
+ropes do not collide with arbitrary prop surfaces or simulate moving supports.
+Physical phones, owner aesthetic acceptance and public deployment are not
+qualified. Historical captures and the frozen book keep their earlier epoch.
+
 ### Current local DS reference remodel
 
 The rejected first model is superseded by the owner's later teal material

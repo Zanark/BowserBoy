@@ -917,6 +917,8 @@ const keyboard = bindKeyboard(window, {
   getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
   onMenu: () => {
+    if (view?.pearMove) { view.finishPearMove(true); return true; }
+    if ($('pear-controls').matches(':popover-open')) { $('pear-controls').hidePopover(); return true; }
     if (dockDrag) {
       const previous = dockDrag.previous;
       resetDockPosition();
@@ -998,6 +1000,28 @@ function toggleLamp() {
   view.canvas.focus({ preventScroll: true });
 }
 $('lamp-toggle').addEventListener('click', toggleLamp);
+function updatePearControls() {
+  if (!view) return;
+  $('pear-toggle').setAttribute('aria-pressed', String(view.pearOn));
+  $('pear-open').toggleAttribute('data-lit', view.pearOn);
+  $('pear-brightness').value = Math.round(view.pearBrightness * 100);
+  $('pear-level').value = `${Math.round(view.pearBrightness * 100)}%`;
+  $('pear-move').setAttribute('aria-pressed', String(!!view.pearMove));
+  if (view.pearMove) $('scene-hint').textContent = view.host.dataset.pearPlacement === 'blocked' ?
+    'That spot is occupied. Move pear-boy to clear desk space.' :
+    'Move pear-boy in 3D: drag, scroll for depth; arrows move, Page Up/Down lift. Release or Enter drops; Escape cancels.';
+  else if (view.mode === 'table') $('scene-hint').textContent =
+    'Pick up a console. Drag pear-boy to move him; click him to switch his warm glow.';
+}
+icon($('pear-open'), 'pear', 'pear-boy lighting controls');
+$('scene').addEventListener('pear-change', updatePearControls);
+$('pear-toggle').addEventListener('click', () => view?.setPearEnabled(!view.pearOn));
+$('pear-brightness').addEventListener('input', () => view?.setPearBrightness(Number($('pear-brightness').value) / 100));
+$('pear-move').addEventListener('click', () => {
+  $('pear-controls').hidePopover();
+  view?.beginPearMove();
+});
+$('pear-home').addEventListener('click', () => view?.resetPearPosition());
 $('room-toggle').addEventListener('click', () => {
   if (!view) return;
   view.setRoomLights(!view.roomLightsOn);
@@ -1037,7 +1061,7 @@ try {
       icon($('inspect'), mode === 'inspecting' ? 'back' : 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
       $('play-zoom-control').hidden = mode !== 'playing' || moving || document.fullscreenElement === $('screen-focus');
-      $('scene-hint').textContent = mode === 'table' ? 'Two separate handhelds. Click a console or use the GBA / DS selector.' :
+      $('scene-hint').textContent = mode === 'table' ? 'Pick up a console. Drag pear-boy to move him; click him to switch his warm glow.' :
         mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
           view?.console === 'ds' ? 'BowserBOY DS / touch the lower screen. Z/X = A/B. C/V = X/Y. DS for cartridges.' :
             'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
@@ -1054,6 +1078,8 @@ try {
   await ds.initialize();
   // Open save storage before first-paint shader compilation can block its timeout.
   view.setScreenFullscreen(false);
+  $('pear-open').disabled = false;
+  updatePearControls();
 } catch (error) {
   console.error('Creating the 3D scene:', error);
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);

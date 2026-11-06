@@ -8,6 +8,20 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### pear-boy local companion
+
+`docs/images/pear-boy-table.png` and `docs/images/pear-boy-scared.png` are
+actual Edge/Playwright captures from the local eight-case pear/lighting gate.
+The longer rope limbs, pear silhouette, face, leaf and light are procedural
+project geometry based on the owner's supplied character references; no
+reference screenshot is pasted into the scene. The table capture shows both
+separate consoles and the broader warm pool. The lifted capture shows the
+actual scared face and hanging limbs.
+
+These are unpublished local captures, not owner approval or physical-device
+qualification. Historical GBA media and the frozen 96-page book remain
+unchanged; earlier lamp-only figures do not include pear-boy.
+
 ### New local DS prototype, 2026-11-06
 
 The README's `docs/images/ds-prototype-table.png` and

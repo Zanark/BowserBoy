@@ -45,6 +45,7 @@
         <button id="put-down" hidden>Put down</button>
         <button id="lamp-toggle" aria-pressed="true" aria-label="Turn desk lamp off"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z"/></svg><span id="lamp-label">Lamp on</span></button>
         <button id="room-toggle" aria-pressed="false" aria-label="Turn room lights on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2v3M6 5h12l3 6H3zM6 16l-2 3m8-3v5m6-5 2 3"/></svg><span id="room-label">Room off</span></button>
+        <button id="pear-open" popovertarget="pear-controls" aria-haspopup="dialog" aria-label="pear-boy lighting controls" disabled></button>
         <button id="quick-fullscreen"></button>
         <button id="quick-screen-fullscreen"></button>
         <button id="quick-speed" popovertarget="speed-menu" aria-haspopup="dialog"></button>
@@ -59,6 +60,15 @@
         <button id="ds-open" aria-label="Open DS cartridges and saves" aria-haspopup="dialog" aria-controls="ds-tools">DS</button>
         </div>
       </nav>
+      <div id="pear-controls" popover role="dialog" aria-labelledby="pear-title" class="pear-controls">
+        <p class="eyebrow">YOUR LITTLE DESK COMPANION</p>
+        <h2 id="pear-title">pear-boy</h2>
+        <div class="setting-row"><label for="pear-toggle">Warm glow</label><button id="pear-toggle" class="toggle" aria-label="pear-boy warm light" aria-pressed="true"><span></span></button></div>
+        <label for="pear-brightness">Brightness <output id="pear-level" for="pear-brightness">70%</output></label>
+        <input id="pear-brightness" class="volume-slider" type="range" min="10" max="100" step="5" value="70">
+        <div class="button-pair"><button id="pear-move" class="button button-secondary" aria-pressed="false">Move pear-boy</button><button id="pear-home" class="button button-secondary">Reset position</button></div>
+        <p class="fineprint">Drag to lift and move him in 3D; scroll while holding him to move nearer or farther. Release to drop him. Click to switch his glow. Move also works with arrows and Page Up/Down; Enter drops, Escape cancels. Position and light reset on reload.</p>
+      </div>
       <div id="speed-menu" popover role="dialog" aria-label="Emulation speed" class="speed-menu">
         <p class="eyebrow">PICK YOUR PACE</p>
         <div class="speed-options"><button data-speed="1" aria-pressed="true">1&times;</button><button data-speed="2" aria-pressed="false">2&times;</button><button data-speed="3" aria-pressed="false">3&times;</button><button data-speed="4" aria-pressed="false">4&times;</button></div>

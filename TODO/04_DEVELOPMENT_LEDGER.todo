@@ -14,6 +14,21 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / pear-boy lamp, longer ropes and free pickup:
+  Owner requests a warm pear-character lamp, its own dock control, thick rope
+  limbs, cursor-following/scared face, free3Dlift/drop, broader diffuse lighting
+  and then longer arms/legs. Build procedural geometry, distributed warm light,
+  constrained Verlet ropes and upright body gravity/bounce/friction.
+  Correct first dock touch after a real drag through scoped native-touch
+  prevention; keep wheel plane aligned with actual clamped movement and contact
+  shadow on the tabletop. An intermediate gate catches stretched ropes:
+  constrain moved anchors between fixed steps and converge bounded iterations.
+  Retain realistic pickup inertia and large-teleport regression separately.
+  Final focused8browser cases pass in1.4m;32units,syntax/build pass. Actual
+  near/far pixels, touch, rope/face and visible falling/bounce are checked.
+  Review actual local captures; retain captioned table/scared figures.
+  Keep84open for owner/device review; no full cloth/rigid-body or publication
+  claim. Preserve unrelated83clock/tracking work and historical book/media.
 - 2026-11-06 / DS reference remodel and interaction correction:
   Owner rejects the first shell/hinge/stylus, then supplies exact teal PBR
   #2A9D98/.80/.35 and110-degree hinge specifications. Studio-lighting section

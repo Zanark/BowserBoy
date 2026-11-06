@@ -136,6 +136,7 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
 test('dark room has a working physical lamp, actual light falloff and a narrow accessible toolbar', async ({ page }) => {
   await page.goto('./');
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
+  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('dark');
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
   await expect.poll(() => page.evaluate(async () => {
@@ -159,7 +160,8 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   await expect.poll(() => surfaceLight(page, [0, 0, 4])).toBeLessThan(lit * .15);
   const lampPoint = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
-    return view.project(view.lamp.shade);
+    const point = view.project(view.lamp.shade);
+    return { x: Math.max(8, point.x), y: point.y };
   });
   await page.mouse.click(lampPoint.x, lampPoint.y);
   await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
@@ -280,8 +282,10 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
 });
 
 test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1920, height: 1100 });
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
   const color = await surfaceColor(page, [0, 0, 4]);
@@ -660,6 +664,7 @@ test('pressed caps remain lit inside physical shell apertures instead of disappe
 test('experimental LCD spill barely reveals nearby controls in darkness and follows screen color and power', async ({ page }, testInfo) => {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);
@@ -838,6 +843,7 @@ test('green power LED and native LCD light follow room switches, content and pow
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);

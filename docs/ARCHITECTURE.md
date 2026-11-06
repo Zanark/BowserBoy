@@ -30,6 +30,39 @@ not a downloadable game library. This working-tree addition is not deployed.
 The repository is `Zanark/BowserBoy`; historical Pages links and the local
 checkout name remain `BowserBoyAdvance`.
 
+## pear-boy: movable light and constrained ropes
+
+`src/pear-boy.js` builds the procedural pear, separate curious/scared faces,
+braided rope meshes and four distributed warm point emitters. Higher emitter
+positions and longer falloff broaden the lit desk area; they do not add
+shadow-map passes or simulate subsurface scattering. The dock uses the existing
+scene/app event boundary for independent power, brightness, movement and reset.
+
+`src/pear-motion.js` advances an upright body at 120Hz with gravity, bounded
+release velocity, box-based prop collisions, desk bounds, bounce, friction
+and sleep. Pointer drags use a camera-facing plane plus grab offset; wheel
+depth translates that plane by the actual clamped displacement. Cancellation
+restores the original pose and clears momentum. The contact shadow stays on
+the table, fading and widening with height.
+
+`src/pear-rope.js` uses fixed-step Verlet particles, a pinned anchor, heavier
+tip and iterative length/body/floor constraints. Dynamic tube vertices,
+normals and both bounds follow the particles in place. The thicker .14-radius
+arms and legs are longer than the first pear model; hands and feet follow their
+rope ends. Constraints also run when an anchor moves between physics steps,
+preventing visible stretching on high-frequency pointer frames. Convergence
+is bounded at 120 iterations, ending early below .002 segment-length error.
+Body movement, ropes and face updates run before idle-paint suppression.
+
+Cursor gaze uses a stable face anchor, not a moving eye mesh. Held/airborne
+state selects squeezed eyes and a trembling mouth; settling restores the
+curious face. Reduced motion snaps gaze and removes decorative swing/tremble.
+DS reflections wait for landing instead of capturing every falling frame.
+
+This is stylized physics, not a general cloth/rotating-rigid-body engine.
+Ropes collide with their own body and desk only; arbitrary prop-surface
+contacts and moving supports are not fully simulated.
+
 ## DS extension: separate consoles, one active core
 
 `src/ds-handheld.js` constructs the second clamshell, two LCD meshes,

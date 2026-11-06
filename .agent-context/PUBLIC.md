@@ -35,6 +35,11 @@ and console-themed dock have a focused9-case browser gate. Existing desk
 lighting/background and full resolution are retained.
 This prototype is not pushed/deployed. Phone-performance work78
 and boxed cartridges80 remain deferred.
+Local workstream84 adds pear-boy: independent warm lighting/dock controls,
+longer thick rope limbs, cursor/scared face and bounded3Dpickup/drop physics.
+Five pear browser cases plus three affected lighting cases pass together.
+Body collisions remain upright/box-based; ropes collide with the pear/desk,
+not arbitrary prop surfaces or moving supports. Owner/device review pending.
 Supplied demo media permissions are not blanket rights for new ROMs or testing.
 
 Keep all eight workstream fields, evidence distinct from human approval, and

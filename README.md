@@ -73,6 +73,19 @@ tested; real-phone performance and commercial games remain unqualified.
 The GBA's native shader/settings/fullscreen features are not all DS features.
 [Full instructions and limits](docs/GUIDE.md#nintendo-ds-local-prototype).
 
+## pear-boy - local desk companion
+
+![pear-boy beside the separate GBA and DS, lighting the desk](docs/images/pear-boy-table.png)
+
+*Actual local capture: pear-boy spreads warm light across the right side of the
+desk. His longer, thick rope arms and legs swing when you lift him.*
+
+Drag him upward or sideways, scroll for depth, then release to drop and bounce.
+His eyes follow the cursor; being picked up brings out his scared face.
+The pear dock button controls power, brightness, movement and reset.
+[Controls and physics limits](docs/GUIDE.md#pear-boy).
+This addition is local, not deployed.
+
 ## BowserBOYADVANCED
 
 [![BowserBOYADVANCED - purple animated console logo with glow](docs/images/bowserboyadvanced-logo-glow.png)](assets/logo.png)

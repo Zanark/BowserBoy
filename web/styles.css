@@ -54,6 +54,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .scene-actions[data-dragging] #dock-drag { cursor: grabbing; }
 .runtime-source[open] > .panel-logo { width: 170px; margin: -4px 0 -8px; }
 .speed-menu { position: fixed; inset: auto 0 max(112px,calc(env(safe-area-inset-bottom) + 96px)); margin: 0 auto; width: min(310px,calc(100vw - 24px)); padding: 18px; border: 1px solid #b18bd84d; border-radius: 18px; color: var(--ink); background: #20192ef5; box-shadow: 0 15px 50px #0008; }
+.pear-controls { position: fixed; inset: auto 0 max(112px,calc(env(safe-area-inset-bottom) + 96px)); margin: 0 auto; width: min(340px,calc(100vw - 24px)); max-height: calc(100dvh - 140px); overflow-y: auto; padding: 22px; border: 1px solid #edc57466; border-radius: 18px; color: #fff0cf; background: #292016f5; box-shadow: 0 15px 50px #0008; }
+.pear-controls h2 { margin: 0 0 18px; font-size: 22px; }
+.pear-controls output { float: right; font: 11px var(--mono); }
+.pear-controls .volume-slider { accent-color: #efc06e; }
+#pear-open { color: #edcc83; }
+#pear-open[data-lit] { background: #e8bc6518; }
 .speed-options { display: flex; gap: 8px; }
 .speed-options button { flex: 1; min-height: 44px; border: 1px solid #9975bd55; border-radius: 10px; background: #33263f; font: 14px var(--mono); }
 .speed-options button[aria-pressed=true] { border-color: #bf99ed; background: #664688; box-shadow: 0 0 18px #aa66dd26; }

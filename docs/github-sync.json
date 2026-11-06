@@ -978,6 +978,18 @@
       "reason": "completed",
       "projectStatus": "Done",
       "bodySha256": "e3767edd440a0abc32c8d0269cdd06543bffcc7eb61fe160d50cd9060b571b05"
+    },
+    {
+      "id": "84",
+      "file": "TODO/84_PEAR_BOY.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/82",
+      "number": 82,
+      "nodeId": "I_kwDOVhqp0s8AAAABdG4b7Q",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGpFPo",
+      "state": "open",
+      "reason": null,
+      "projectStatus": "In progress",
+      "bodySha256": "de22572179f3f395a430c8a7f54aeb7e1e4fe86a74725186a76c5888496ea0d0"
     }
   ]
 }
