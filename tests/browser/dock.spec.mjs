@@ -216,7 +216,7 @@ test('BowserBOY website branding is separate from static GBA settings and DS art
     ['.desk-heading h1 img', 'website-logo.png', 'BowserBOY', 2148, 732],
     ['#tools > .panel-logo', 'logo.png', 'BowserBOY Advance', 2170, 725],
     ['#frame-host > .panel-logo', 'logo.png', 'BowserBOY Advance', 2170, 725],
-    ['#ds-tools > .panel-logo', 'ds-logo.png', 'BowserBOY DS chrome neon emblem', 2149, 732],
+    ['#ds-tools > .panel-logo', 'ds-logo.png', 'BowserBOY DS chrome neon emblem', 2151, 731],
   ]) {
     const logo = page.locator(selector);
     await expect(logo).toHaveAttribute('src', `./assets/${file}`);

@@ -1028,8 +1028,8 @@ try {
       const image = heading.querySelector('img');
       image.setAttribute('src', dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
       image.alt = dsBrand ? 'BowserBOY DS' : consoleBrand ? 'BowserBOYADVANCED' : 'BowserBOY';
-      image.width = consoleBrand ? 1080 : 2148;
-      image.height = consoleBrand ? 420 : 732;
+      image.width = dsBrand ? 2151 : consoleBrand ? 1080 : 2148;
+      image.height = dsBrand ? 731 : consoleBrand ? 420 : 732;
       heading.querySelector('source').srcset = dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/logo.png' : './assets/website-logo.png';
       $('pickup').hidden = mode !== 'table';
       $('inspect').hidden = $('put-down').hidden = mode === 'table';

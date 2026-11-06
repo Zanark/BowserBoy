@@ -21,8 +21,9 @@ blue D-pad, lime controls and clipped stylus. The current desktop table/runtime,
 front/rear and 390px captures were reviewed together; this is not owner approval
 or physical-phone qualification. No studio lighting or white backdrop was added.
 
-`assets/ds-logo.png` is the latest owner-supplied transparent Glowing BowserBOY DS
-logo, copied unchanged at 2149x732 RGBA. It supersedes the earlier opaque emblem
+`assets/ds-logo.png` is the latest owner-supplied transparent BOWSERBOY DS Neon
+Orbital Logo, copied unchanged at 2151x731 RGBA. It supersedes the 2149x732
+Glowing BowserBOY DS logo and earlier opaque emblem
 for this prototype and appears on the tools/loading views and rear lid only.
 The model follows the supplied DS concept references; Twin Lab's code/art are
 original project fixtures. See [third-party notices](../THIRD_PARTY_NOTICES.md)
