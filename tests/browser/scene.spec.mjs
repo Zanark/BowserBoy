@@ -129,9 +129,57 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
         await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
         await demoReady(page);
       }
-    } finally { release(); }
+    } finally {
+      release();
+      if (!page.isClosed()) {
+        await testInfo.attach('cartridge-final-state', {
+          body: JSON.stringify(await page.evaluate(async () => {
+            const { view } = await import('./src/app.js');
+            return {
+              samples: window.cartridgeSamples,
+              cartridge: document.getElementById('scene').dataset.cartridge,
+              motion: view?.cartridgeMotion,
+              lastPaint: view?.lastPaint,
+              nativeBusy: view?.nativeBusy,
+            };
+          })), contentType: 'application/json',
+        });
+      }
+    }
   });
 }
+
+test('sparse room paints lower the console before seating the cartridge', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const frames = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+    view.lastRender = null;
+    view.nextPaint = 0;
+    view.renderedLastFrame = false;
+    view.insertCartridge('sparse-paint-regression');
+    const start = performance.now();
+    const painted = [];
+    for (const offset of [0, 2600, 2900, 5500, 5800]) {
+      view.render(start + offset);
+      if (view.renderedLastFrame) {
+        painted.push({
+          phase: view.host.dataset.cartridge,
+          y: view.model.cartridge.position.y,
+          lowered: view.model.root.position.y < 2.65,
+        });
+      }
+    }
+    return painted;
+  });
+  expect(frames).toHaveLength(3);
+  expect(frames[0]).toMatchObject({ phase: 'inserting', y: 3.8 });
+  expect(frames[1]).toEqual({ phase: 'inserting', y: 3.8, lowered: true });
+  expect(frames[2]).toMatchObject({ phase: 'seated', y: 1.52 });
+});
 
 test('dark room has a working physical lamp, actual light falloff and a narrow accessible toolbar', async ({ page }) => {
   await page.goto('./');

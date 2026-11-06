@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, createWood } from './handheld.js';
 import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
 import { brandImage } from './brand.js';
+import { cartridgeFramingDuration, cartridgeSlideDuration, nextCartridgeElapsed } from './cartridge-motion.js';
 import { createDsHandheld } from './ds-handheld.js';
 import { createPearBoy } from './pear-boy.js';
 import { PearMotion } from './pear-motion.js';
@@ -670,10 +671,7 @@ export class HandheldScene {
     this.renderedLastFrame = false;
     const paintDue = time >= (this.nextPaint ?? 0) && !this.nativeBusy && !document.querySelector('dialog[open]');
     const cartridgeMotion = this.cartridgeMotion;
-    // Present the next capped clock step; commit it only after an actual paint.
-    const cartridgeStep = cartridgeMotion && paintDue ? Math.min(500, Math.max(0,
-      time - (cartridgeMotion.lastPaint ?? time - 16.67))) : 0;
-    const cartridgeElapsed = (cartridgeMotion?.elapsed ?? 0) + cartridgeStep;
+    const cartridgeElapsed = cartridgeMotion ? nextCartridgeElapsed(cartridgeMotion, time, paintDue) : 0;
     const exposure = this.lampOn || this.roomLightsOn || this.pearOn ? .018 : .45;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, exposure, 4, delta);
@@ -684,16 +682,12 @@ export class HandheldScene {
       this.model.led.material.emissiveIntensity = 80 * .018 / this.renderer.toneMappingExposure;
     }
     if (this.cartridgeMotion) {
-      const fraction = THREE.MathUtils.clamp((cartridgeElapsed - 850) / 1350, 0, 1);
+      const fraction = THREE.MathUtils.clamp(
+        (cartridgeElapsed - cartridgeFramingDuration) / cartridgeSlideDuration, 0, 1);
       const ease = fraction * fraction * (3 - 2 * fraction);
       const y = THREE.MathUtils.lerp(3.8, 1.52, ease);
       this.changed ||= this.model.cartridge.position.y !== y;
       this.model.cartridge.position.y = y;
-      if (fraction === 1) {
-        this.cartridgeMotion = null;
-        this.host.dataset.cartridge = 'seated';
-        this.reframeCartridge();
-      }
     }
     if (this.transition) {
       const transition = this.transition;
@@ -712,7 +706,7 @@ export class HandheldScene {
       this.host.dataset.view = this.mode;
       if (this.cameraMotion) {
         const elapsed = this.cartridgeMotion ? cartridgeElapsed : time - this.cameraMotion.started;
-        const fraction = this.reducedMotion.matches ? 1 : Math.min(1, elapsed / 850);
+        const fraction = this.reducedMotion.matches ? 1 : Math.min(1, elapsed / cartridgeFramingDuration);
         const ease = fraction * fraction * (3 - 2 * fraction);
         this.camera.position.lerpVectors(this.cameraMotion.camera, this.cameraTarget, ease);
         this.lookAt.lerpVectors(this.cameraMotion.look, this.lookTarget, ease);
@@ -788,8 +782,13 @@ export class HandheldScene {
     if (this.dsReflectionsDirty && !this.transition && !this.pearMove && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
     if (cartridgeMotion) {
-      cartridgeMotion.elapsed += cartridgeStep;
+      cartridgeMotion.elapsed = cartridgeElapsed;
       cartridgeMotion.lastPaint = time;
+      if (cartridgeElapsed === cartridgeFramingDuration + cartridgeSlideDuration) {
+        this.cartridgeMotion = null;
+        this.host.dataset.cartridge = 'seated';
+        this.reframeCartridge();
+      }
     }
     this.lastPaint = time;
     this.renderedLastFrame = true;

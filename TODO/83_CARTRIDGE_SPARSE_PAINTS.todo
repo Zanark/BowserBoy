@@ -1,0 +1,36 @@
+Status: IN_PROGRESS
+Milestone: Cartridge reload seats reliably under sparse hosted renderer paints.
+Dependencies: None; supplies a fix needed by74, preserving71 full-resolution rendering.
+Purpose: Fix the source of the 1440px reload insertion timeout without relaxing
+the 15-second seating assertion, reducing pixel density or bypassing deployment gates.
+
+Tasks:
+- [x] Inspect failed run42202172946, retained trace and animation clock.
+- [x] Preserve visible framing/slide phases while accounting for sparse paint intervals.
+- [x] Prove deterministic regression fails with the former 500ms clock cap.
+- [x] Run affected unit/browser cases and record actual results.
+- [ ] Synchronize issue/Project tracking and verify hosted qualification if published.
+
+Acceptance criteria:
+Sparse paints present the lowered console with the raised cartridge before seating.
+Only successfully rendered steps commit the timeline/completion state. Existing
+desktop/phone insertion and reload assertions retain their original deadlines.
+Pixel ratio, native lifecycle, lighting, saves and other tests remain unchanged.
+
+Completion evidence:
+Hosted failure:42202172946/shard15 expects seated but observes inserting on
+1440px reload at scene.spec.mjs:126 after15000ms. Initial-motion samples contain
+2.6-2.8second gaps; source discards gaps above500ms on each painted step.
+New deterministic browser regression fails against HEAD's former scene code;
+the same regression and both actual desktop/phone insertion/reload cases pass
+with the fix. Reduced-motion/WebGL error coverage also passes:4cases/38.8s.
+Twenty-one unit tests pass before repository-rename compatibility coverage.
+Original15000ms assertions, renderer pixel density and native lifecycle retained.
+
+Completion log:
+2026-11-06: Owner asks to fix latest failed cartridge tests. Download failing
+shard evidence and inspect source rather than raising timeouts. GitHub API now
+resolves the repository's canonical name to Zanark/BowserBoy; existing repository
+URLs redirect. Keep tracking's existing identity marker and allow only bounded,
+same-GitHub-API-origin redirects; recognize verified original issue URLs before
+refreshing canonical backlinks. No website/repository rename migration is performed.

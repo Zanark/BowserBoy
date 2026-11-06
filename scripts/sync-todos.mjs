@@ -59,6 +59,19 @@ export function verificationProblems(row, issue, item, backlink) {
   return problems;
 }
 
+export function githubRedirect(location, current) {
+  const target = new URL(location, current);
+  if (target.origin !== 'https://api.github.com' || target.username || target.password) {
+    throw new Error('Refusing to forward GitHub credentials outside the GitHub API origin.');
+  }
+  return target.href;
+}
+
+export function matchesIssueBacklink(backlink, issue, repository) {
+  return !backlink || backlink === issue?.html_url ||
+    (issue && backlink === `https://github.com/${repository}/issues/${issue.number}`);
+}
+
 async function main() {
   const args = process.argv.slice(2);
   if (args.some(arg => arg !== '--apply' && !/^--only=\d+$/.test(arg))) {
@@ -84,17 +97,26 @@ async function main() {
   if (new Set(workstreams.map(item => item.id)).size !== workstreams.length) throw new Error('Duplicate workstream identity.');
 
   async function api(endpoint, method = 'GET', body) {
-    const response = await fetch(`https://api.github.com/${endpoint}`, {
-      method,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'BowserBOY-TODO-sync',
-        ...(body ? { 'Content-Type': 'application/json' } : {}) },
-      ...(body ? { body: JSON.stringify(body) } : {}),
-      signal: AbortSignal.timeout(60000),
-      redirect: 'error',
-    });
-    if (!response.ok) throw new Error(`GitHub ${method} ${endpoint}: HTTP ${response.status}; stop and inspect permissions/rate limits before retrying.`);
-    return response.status === 204 ? undefined : response.json();
+    let url = `https://api.github.com/${endpoint}`;
+    for (let redirects = 0; ; redirects++) {
+      const response = await fetch(url, {
+        method,
+        headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'BowserBOY-TODO-sync',
+          ...(body ? { 'Content-Type': 'application/json' } : {}) },
+        ...(body ? { body: JSON.stringify(body) } : {}),
+        signal: AbortSignal.timeout(60000),
+        redirect: 'manual',
+      });
+      if ([301, 302, 307, 308].includes(response.status)) {
+        const location = response.headers.get('location');
+        if (!location || redirects === 3) throw new Error(`Missing or excessive GitHub redirects for ${endpoint}.`);
+        url = githubRedirect(location, url);
+        continue;
+      }
+      if (!response.ok) throw new Error(`GitHub ${method} ${endpoint}: HTTP ${response.status}; stop and inspect permissions/rate limits before retrying.`);
+      return response.status === 204 ? undefined : response.json();
+    }
   }
   async function graphql(query, variables) {
     const result = await api('graphql', 'POST', { query, variables });
@@ -156,7 +178,7 @@ async function main() {
     if (!options.has(option)) throw new Error(`Missing Project option ${option} for ${stream.file}`);
     const existing = byMarker.get(stream.id);
     if (existing) assertManagedBody(existing.body, stream.file);
-    if (stream.backlink && stream.backlink !== existing?.html_url) {
+    if (!matchesIssueBacklink(stream.backlink, existing, config.repository)) {
       throw new Error(`Unresolved or conflicting backlink in ${stream.file}; do not create a duplicate.`);
     }
     return { stream, existing, body: issueBody(stream, config.repository, config.todoDirectory), option };

@@ -55,3 +55,9 @@ TODO content, or expose the token to untrusted pull-request code.
 Creating issues for deferred workstreams 78-80 does not start their features.
 Sync writes local backlinks and the public receipt; committing/pushing them
 remains a separate authorized operation.
+
+After a repository rename, retain the configured repository identity/issue
+markers. Bounded API redirects are followed only within `https://api.github.com`;
+credentials never follow another origin. Existing verified old-name backlinks
+are accepted for the same issue number and refreshed to GitHub's canonical URL.
+This does not migrate website URLs or recreate historical issues.

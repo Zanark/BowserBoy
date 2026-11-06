@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { parseWorkstream, issueBody, assertManagedBody, verificationProblems } from '../../scripts/sync-todos.mjs';
+import { parseWorkstream, issueBody, assertManagedBody, verificationProblems, githubRedirect, matchesIssueBacklink } from '../../scripts/sync-todos.mjs';
 
 const source = status => `Status: ${status}
 Milestone: Preserve local and remote identity.
@@ -57,4 +57,16 @@ test('verification rejects partially visible Project updates and requires all ma
   assert.deepEqual(verificationProblems(row, issue, item, 'issue-url'), []);
   assert.deepEqual(verificationProblems(row, issue, { content: item.content }, 'issue-url'), ['Project Status']);
   assert.ok(verificationProblems(row, undefined, undefined, undefined).length >= 4);
+});
+
+test('repository rename redirects retain identity without forwarding credentials off-origin', () => {
+  assert.equal(githubRedirect('/repositories/123/issues', 'https://api.github.com/repos/old/name/issues'),
+    'https://api.github.com/repositories/123/issues');
+  for (const target of ['https://example.com/issues', 'http://api.github.com/issues', 'https://user@api.github.com/issues']) {
+    assert.throws(() => githubRedirect(target, 'https://api.github.com/'), /Refusing/);
+  }
+  const issue = { number: 74, html_url: 'https://github.com/owner/renamed/issues/74' };
+  assert.equal(matchesIssueBacklink('https://github.com/owner/original/issues/74', issue, 'owner/original'), true);
+  assert.equal(matchesIssueBacklink('https://github.com/owner/original/issues/75', issue, 'owner/original'), false);
+  assert.equal(Boolean(matchesIssueBacklink('https://github.com/owner/original/issues/74', undefined, 'owner/original')), false);
 });

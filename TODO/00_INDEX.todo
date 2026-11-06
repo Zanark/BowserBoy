@@ -82,14 +82,14 @@ BowserBOY workstreams
 80_BOXED_CARTRIDGE_LIBRARY.todo - NOT_STARTED/deferred: selectable boxed GBA/NDS cartridges that load cleared ROMs without repeated user uploads; NDS portion depends on79.
 81_REPOSITORY_ORGANIZATION.todo - DONE: cleaner source/docs layout and safe public context published as Zanark at0e1ac9f; website URLs preserved.
 82_GITHUB_TRACKING.todo - DONE:81workstreams linked to verified issues/Project items; full rerun creates/updates zero issues.
-
+83_CARTRIDGE_SPARSE_PAINTS.todo - IN_PROGRESS: fix reload insertion clock under sparse hosted paints without relaxing deadlines or sharpness.
 84_PEAR_BOY.todo - IN_PROGRESS/local: movable warm pear lamp, longer thick rope limbs, cursor/scared face and drop physics; owner review pending.
 
 Current pending work
 --------------------
 -79: New owner request authorizes a local DS prototype using the supplied
   reference images/logo. This supersedes79's earlier deferral only. No push,
-  release or deployment is requested. Preserve existing GBA behavior.
+  release or deployment is requested. Preserve GBA and its unfinished83fix.
 -78/80: backlog registration only. Owner explicitly says not to work on
   these now; await a new implementation request. No profiling, DS research,
   modelling, ROM acquisition or runtime changes are authorized by this entry.
