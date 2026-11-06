@@ -1,0 +1,50 @@
+Status: DONE (local implementation and qualification; not pushed/dispatched)
+Milestone: Manually dispatched, qualified GitHub Release creation.
+Dependencies: Existing Pages build/browser verification for the selected source.
+
+Purpose
+-------
+Create a GitHub Release only when the owner manually requests one, with a
+versioned static ZIP, checksums and source-linked release notes.
+
+Tasks
+-----
+[x] Add workflow_dispatch-only inputs for version, source, draft and prerelease.
+[x] Require the latest existing Pages gate to pass for the exact selected commit.
+[x] Build the allowlisted site and package notices, notes and checksums.
+[x] Isolate repository-write permission to artifact publication.
+[x] Preserve existing tags/releases and publish only after completed uploads.
+[x] Document manual operation and unchanged frozen-release boundaries.
+[x] Validate workflow syntax and exercise the actual packaging implementation.
+
+Acceptance criteria
+-------------------
+No push/tag trigger or automatic Pages deployment is added.
+Failed or pending source verification cannot create a release.
+No existing test, deadline, assertion or sharp-rendering requirement changes.
+The ZIP contains the static build at its root, notes and third-party notices;
+no private context, commercial media ROM, dependencies or recordings.
+Archive checksums match. Existing release/tag identity is never overwritten.
+No real release is created merely to validate the workflow.
+
+Completion evidence
+-------------------
+Official actionlint1.7.12 passes the new workflow. All Bash steps parse.
+Existing JavaScript checks, all12unit tests and the static build pass.
+Execute the actual embedded packaging step:33ZIP entries, every build byte,
+notes/notices and archive checksum verified; no excluded files included.
+Execute the actual identity step against temporary Git history: stable and
+prerelease tags accepted, malformed/path/command-like tags rejected, existing
+same-source tag accepted and different-source tag rejected.
+Execute the actual qualification step against GitHub:1b0385b's latest passing
+run42135170801 accepted;55a5867's failed latest run rejected before publication.
+Actions registration requires a push to the default branch. No commit, push,
+tag, real release, upload or Pages deployment was performed for this task.
+
+Completion log
+--------------
+2026-11-06: User requests a manually triggered repository-release workflow.
+Reuse successful exact-source Pages qualification, not a bypass around its
+currently failing follow-up gates. Preserve the frozen first milestone.
+2026-11-06: Local workflow/packaging/identity/actual-GitHub guard qualification
+complete. Operational release creation remains an intentional manual action.

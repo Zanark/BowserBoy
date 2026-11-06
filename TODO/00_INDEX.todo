@@ -74,6 +74,7 @@ BowserBOY workstreams
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
 74_MORE_ISOLATED_CI.todo - DONE: nineteen isolated one-worker browser shards, current56-case inventory and fewer duplicate fullscreen readbacks; initial successful run4m33s plus independent public qualification.
+75_MANUAL_GITHUB_RELEASE.todo - DONE locally: manual-only GitHub Release workflow, latest exact-source passing Pages gate, static ZIP/checksum and guarded publication; not pushed or dispatched.
 
 Current public milestone: v1.0.0, designated2026-11-06, qualifiedapplication
 c3d9dbd in the unchanged frozen package. Current live refinements are

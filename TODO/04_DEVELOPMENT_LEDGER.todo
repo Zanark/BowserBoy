@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Manual GitHub Release workflow:
+  Owner requests manual release creation. Add workflow_dispatch-only version/
+  source/draft/prerelease inputs. Require an existing successful Pages gate
+  for the exact selected commit, then check/unit-test/build and package only
+  the static allowlist plus notes/notices. Publish from a separate write-
+  scoped job only after draft asset uploads finish. Preserve existing tag
+  identity, existing releases and frozen v1.0.0; no real release dispatched.
+  Official actionlint1.7.12,12units/check/build and actual embedded packaging
+  pass (33entries/all bytes/checksum). Execute actual identity behavior in
+  temporary Git history and real qualification against known green/failed
+  GitHub SHAs; both behave correctly. Local-only, no commit/push/publication.
 - 2026-11-06 / Independent real automatic interval:
   e1bcd34/42138825789 reaches120s awaiting the final automatic checkpoint;
   reload insertion also misses its existing15s seated expectation.
