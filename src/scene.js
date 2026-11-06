@@ -5,7 +5,7 @@ import { brandImage } from './brand.js';
 import { cartridgeFramingDuration, cartridgeSlideDuration, nextCartridgeElapsed } from './cartridge-motion.js';
 import { createDsHandheld } from './ds-handheld.js';
 import { createPearBoy } from './pear-boy.js';
-import { PearMotion } from './pear-motion.js';
+import { DeskMotion, PearMotion } from './pear-motion.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -39,7 +39,7 @@ export class HandheldScene {
     this.canvas = this.renderer.domElement;
     this.canvas.id = 'scene-canvas';
     this.canvas.tabIndex = 0;
-    this.canvas.setAttribute('aria-label', 'Interactive 3D desk. Click a console to pick it up. Drag pear-boy in 3D, scroll for depth, release to drop; click to switch his light. Inspect: drag or arrows rotate, plus/minus zoom. Move pear-boy from his dock controls: arrows move, Page Up/Down lift, Enter drops, Escape cancels.');
+    this.canvas.setAttribute('aria-label', 'Interactive 3D desk. Drag a console or pear-boy in 3D, scroll for depth, release to drop. Console orientation stays fixed while moving. Click a console to play; click pear-boy to switch his light. Dock movement controls: arrows move, Page Up/Down lift, Enter drops, Escape cancels. Inspect: drag or arrows rotate, plus/minus zoom.');
     host.append(this.canvas);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#000000');
@@ -104,6 +104,19 @@ export class HandheldScene {
     this.pearMotion = new PearMotion(this.pear.root.position);
     this.pear.resetLimbs();
     this.scene.add(this.pear.root);
+    this.consoleHomes = {};
+    this.consolePoses = {};
+    this.consoleMotions = {};
+    for (const [system, model] of [['gba', this.model], ['ds', this.ds]]) {
+      const { root } = model;
+      this.consoleHomes[system] = root.position.clone();
+      this.consolePoses[system] = { position: root.position.clone(), rotation: root.quaternion.clone() };
+      const bounds = new THREE.Box3().setFromObject(root).translate(root.position.clone().negate());
+      const workspace = new THREE.Box3(
+        new THREE.Vector3(-22 - bounds.min.x, root.position.y, -11.5 - bounds.min.z),
+        new THREE.Vector3(24 - bounds.max.x, 25, 9.5 - bounds.max.z));
+      this.consoleMotions[system] = new DeskMotion(root.position, { bounds, workspace });
+    }
     this.pearOn = true;
     this.pearBrightness = .7;
     this.updatePearLight();
@@ -130,6 +143,7 @@ export class HandheldScene {
       if (event.button !== 0) return;
       this.canvas.focus({ preventScroll: true });
       const hit = this.pick(event);
+      if (this.consoleMove) return;
       if (this.pearMove) {
         if (this.pearMove.pointerId === undefined && this.mode === 'table' && !this.transition) {
           const point = this.tablePoint(event);
@@ -145,8 +159,8 @@ export class HandheldScene {
       if (this.mode === 'table' && !this.transition && hit) {
         let object = hit.object;
         while (object && !object.userData.console) object = object.parent;
-        if (object?.userData.console && this.console !== object.userData.console) {
-          onConsole?.(object.userData.console);
+        if (object?.userData.console) {
+          this.beginConsoleMove(object.userData.console, event, hit.point);
           return;
         }
       }
@@ -167,6 +181,13 @@ export class HandheldScene {
       }
     });
     this.canvas.addEventListener('pointermove', (event) => {
+      if (this.consoleMove?.pointerId === event.pointerId) {
+        const move = this.consoleMove;
+        move.moved ||= Math.hypot(event.clientX - move.x, event.clientY - move.y) > 4;
+        const point = this.tablePoint(event, move.plane);
+        if (move.moved && point) this.moveConsoleTo(point.add(move.offset));
+        return;
+      }
       if (this.pearMove?.pointerId === event.pointerId) {
         const move = this.pearMove;
         move.moved ||= Math.hypot(event.clientX - move.x, event.clientY - move.y) > 4;
@@ -187,16 +208,20 @@ export class HandheldScene {
         this.activeModel.root.quaternion.copy(yaw.multiply(pitch).multiply(this.drag.rotation));
       } else {
         const hit = this.pick(event);
-        this.canvas.style.cursor = this.mode === 'inspecting' || (this.mode === 'table' && hit?.object.userData.pearBoy) ?
+        this.canvas.style.cursor = this.mode === 'inspecting' || (this.mode === 'table' && hit) ?
           'grab' : hit ? 'pointer' : 'default';
       }
     });
     this.canvas.addEventListener('touchstart', event => {
       // An owned drag must not consume the next dock tap as a native gesture.
-      if (this.pearMove?.pointerId !== undefined) event.preventDefault();
+      if (this.pearMove?.pointerId !== undefined || this.consoleMove?.pointerId !== undefined) event.preventDefault();
     }, { passive: false });
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
       this.canvas.addEventListener(name, (event) => {
+        if (this.consoleMove?.pointerId === event.pointerId) {
+          this.finishConsoleMove(name !== 'pointerup', name === 'pointerup');
+          return;
+        }
         if (this.pearMove?.pointerId === event.pointerId) {
           this.finishPearMove(name !== 'pointerup', name === 'pointerup' && !this.pearMove.moved);
           return;
@@ -211,6 +236,18 @@ export class HandheldScene {
       });
     }
     this.canvas.addEventListener('wheel', (event) => {
+      if (this.consoleMove) {
+        event.preventDefault();
+        const move = this.consoleMove, motion = this.consoleMotions[move.system];
+        const offset = this.camera.getWorldDirection(new THREE.Vector3())
+          .multiplyScalar(THREE.MathUtils.clamp(event.deltaY * .015, -2, 2));
+        const previous = motion.position.clone();
+        if (this.moveConsoleTo(previous.clone().add(offset))) {
+          move.moved = true;
+          move.plane.translate(motion.position.clone().sub(previous));
+        }
+        return;
+      }
       if (this.pearMove) {
         event.preventDefault();
         const direction = this.camera.getWorldDirection(new THREE.Vector3());
@@ -226,6 +263,24 @@ export class HandheldScene {
       this.setZoom(this.zoom * Math.exp(event.deltaY * .001));
     }, { passive: false });
     this.canvas.addEventListener('keydown', (event) => {
+      if (this.consoleMove && !event.ctrlKey && !event.altKey && !event.metaKey) {
+        const steps = {
+          ArrowLeft: [-.65, 0, 0], ArrowRight: [.65, 0, 0],
+          ArrowUp: [0, 0, -.65], ArrowDown: [0, 0, .65],
+          PageUp: [0, .65, 0], PageDown: [0, -.65, 0],
+        };
+        const motion = this.consoleMotions[this.consoleMove.system];
+        if (steps[event.code]) {
+          event.preventDefault();
+          this.consoleMove.moved = true;
+          this.moveConsoleTo(motion.position.clone().add(new THREE.Vector3(...steps[event.code])));
+          motion.velocity.set(0, 0, 0);
+        } else if (event.code === 'Enter' || event.code === 'Escape') {
+          event.preventDefault();
+          this.finishConsoleMove(event.code === 'Escape');
+        }
+        return;
+      }
       if (this.pearMove && !this.transition && !event.ctrlKey && !event.altKey && !event.metaKey) {
         const steps = {
           ArrowLeft: [-.65, 0, 0], ArrowRight: [.65, 0, 0],
@@ -265,7 +320,7 @@ export class HandheldScene {
     });
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(host);
-    this.cancelPearOnBlur = () => this.finishPearMove(true);
+    this.cancelPearOnBlur = () => { this.finishPearMove(true); this.finishConsoleMove(true); };
     window.addEventListener('blur', this.cancelPearOnBlur);
     this.pearCursor = null;
     this.pearGaze = new THREE.Vector2();
@@ -281,16 +336,18 @@ export class HandheldScene {
     this.resize();
     this.camera.position.copy(this.cameraTarget);
     this.lookAt.copy(this.lookTarget);
+    this.camera.lookAt(this.lookAt);
   }
 
   get activeModel() { return this.console === 'ds' ? this.ds : this.model; }
 
   selectConsole(system) {
     this.finishPearMove(true);
+    this.finishConsoleMove(true);
     if (!['gba', 'ds'].includes(system)) throw new Error('Unknown console.');
     if (system === this.console) { this.setView('playing'); return; }
-    this.activeModel.root.position.copy(this.console === 'ds' ? dsTablePosition : tablePosition);
-    this.activeModel.root.quaternion.copy(this.console === 'ds' ? dsTableQuaternion : tableQuaternion);
+    this.activeModel.root.position.copy(this.consolePoses[this.console].position);
+    this.activeModel.root.quaternion.copy(this.consolePoses[this.console].rotation);
     this.transition = this.cameraMotion = null;
     this.console = system;
     this.host.dataset.console = system;
@@ -366,6 +423,84 @@ export class HandheldScene {
     this.host.dispatchEvent(new CustomEvent('pear-change'));
   }
 
+  beginConsoleMove(system, event, hitPoint) {
+    if (!this.consoleMotions[system]) throw new Error('Unknown console.');
+    if (this.mode !== 'table' || this.transition || this.consoleMove) return;
+    this.finishPearMove(true);
+    const motion = this.consoleMotions[system], origin = motion.position.clone();
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(
+      this.camera.getWorldDirection(new THREE.Vector3()), hitPoint ?? origin);
+    const point = event ? this.tablePoint(event, plane) : null;
+    this.consoleMove = {
+      system, origin,
+      pointerId: event?.pointerId, x: event?.clientX, y: event?.clientY, moved: false,
+      plane, offset: point ? origin.clone().sub(point) : new THREE.Vector3(),
+    };
+    motion.pickUp();
+    if (event) this.canvas.setPointerCapture(event.pointerId);
+    this.canvas.style.cursor = 'grabbing';
+    this.canvas.focus({ preventScroll: true });
+    this.host.dispatchEvent(new CustomEvent('console-move-change'));
+  }
+
+  consoleObstacles(system) {
+    const other = system === 'gba' ? this.ds.root : this.model.root;
+    return [other, this.lamp.root, ...this.deskObjects].map(object => new THREE.Box3().setFromObject(object))
+      .concat(this.pear.bounds.clone().translate(this.pear.root.position));
+  }
+
+  moveConsoleTo(point) {
+    const move = this.consoleMove;
+    if (!move) return false;
+    const motion = this.consoleMotions[move.system];
+    const position = point.clone().clamp(motion.workspace.min, motion.workspace.max);
+    const candidate = motion.bounds.clone().translate(position).expandByScalar(.04);
+    const occupied = this.consoleObstacles(move.system).some(box => candidate.intersectsBox(box));
+    this.host.dataset.consolePlacement = occupied ? 'blocked' : 'clear';
+    if (!occupied) {
+      motion.moveTo(position, performance.now());
+      this.consolePoses[move.system].position.copy(position);
+      this.changed = true;
+    } else motion.velocity.set(0, 0, 0);
+    this.host.dispatchEvent(new CustomEvent('console-move-change'));
+    return !occupied;
+  }
+
+  finishConsoleMove(cancelled = false, activate = false) {
+    const move = this.consoleMove;
+    if (!move) return;
+    this.consoleMove = null;
+    const motion = this.consoleMotions[move.system];
+    if (cancelled || (activate && !move.moved)) motion.reset(move.origin);
+    else motion.drop(performance.now());
+    this.consolePoses[move.system].position.copy(motion.position);
+    delete this.host.dataset.consolePlacement;
+    if (move.pointerId !== undefined && this.canvas.hasPointerCapture(move.pointerId)) this.canvas.releasePointerCapture(move.pointerId);
+    this.canvas.style.cursor = 'default';
+    this.changed = this.dsReflectionsDirty = true;
+    this.host.dispatchEvent(new CustomEvent('console-move-change'));
+    if (!cancelled && activate && !move.moved) {
+      if (move.system === this.console) this.setView('playing');
+      else this.onConsole?.(move.system);
+    }
+  }
+
+  resetConsolePositions() {
+    this.finishConsoleMove(true);
+    if (this.mode !== 'table' || this.transition) return;
+    const pearBounds = this.pear.bounds.clone().translate(this.pear.root.position);
+    if (['gba', 'ds'].some(system =>
+      this.consoleMotions[system].bounds.clone().translate(this.consoleHomes[system]).intersectsBox(pearBounds))) {
+      throw new Error('The original console positions are occupied by pear-boy. Move him before resetting the consoles.');
+    }
+    for (const system of ['gba', 'ds']) {
+      this.consoleMotions[system].reset(this.consoleHomes[system]);
+      this.consolePoses[system].position.copy(this.consoleHomes[system]);
+    }
+    this.changed = this.dsReflectionsDirty = true;
+    this.host.dispatchEvent(new CustomEvent('console-move-change'));
+  }
+
   movePearTo(point) {
     const position = new THREE.Vector3(THREE.MathUtils.clamp(point.x, -22, 24), THREE.MathUtils.clamp(point.y, 0, 25),
       THREE.MathUtils.clamp(point.z, -11.5, 7.5));
@@ -427,6 +562,7 @@ export class HandheldScene {
 
   resize() {
     this.finishPearMove(true);
+    this.finishConsoleMove(true);
     const { width, height } = this.host.getBoundingClientRect();
     if (!width || !height) return;
     this.width = width;
@@ -513,6 +649,7 @@ export class HandheldScene {
 
   setView(mode) {
     this.finishPearMove(true);
+    this.finishConsoleMove(true);
     if (!['table', 'playing', 'inspecting'].includes(mode)) throw new Error('Unknown handheld view.');
     if (mode === this.mode && !this.transition) return;
     this.changed = true;
@@ -528,8 +665,8 @@ export class HandheldScene {
       started: performance.now(), duration: this.reducedMotion.matches ? 0 : 850,
       position: this.activeModel.root.position.clone(), rotation: this.activeModel.root.quaternion.clone(),
       camera: this.camera.position.clone(), look: this.lookAt.clone(),
-      targetPosition: mode === 'table' ? (this.console === 'ds' ? dsTablePosition : tablePosition) : this.playTarget,
-      targetRotation: mode === 'table' ? (this.console === 'ds' ? dsTableQuaternion : tableQuaternion) :
+      targetPosition: mode === 'table' ? this.consolePoses[this.console].position.clone() : this.playTarget,
+      targetRotation: mode === 'table' ? this.consolePoses[this.console].rotation :
         (this.console === 'ds' ? dsPlayQuaternion : playQuaternion),
     };
     this.host.dataset.view = 'moving';
@@ -698,6 +835,8 @@ export class HandheldScene {
       this.camera.position.lerpVectors(transition.camera, this.cameraTarget, ease);
       this.lookAt.lerpVectors(transition.look, this.lookTarget, ease);
       if (fraction === 1) {
+        this.activeModel.root.position.copy(transition.targetPosition);
+        this.activeModel.root.quaternion.copy(transition.targetRotation);
         this.transition = null;
         this.host.dataset.view = this.mode;
         this.onView(this.mode, false);
@@ -740,6 +879,16 @@ export class HandheldScene {
         if (ids.includes('l') || ids.includes('r')) mesh.rotateX(-motion.press * .075);
       }
     }
+    let consolesMoving = false;
+    for (const system of ['gba', 'ds']) {
+      if ((system === this.console && this.mode !== 'table') || this.transition) continue;
+      const motion = this.consoleMotions[system];
+      if (motion.update(delta, motion.held || motion.sleeping ? [] : this.consoleObstacles(system))) {
+        this.consolePoses[system].position.copy(motion.position);
+        consolesMoving = true;
+        if (motion.sleeping) this.dsReflectionsDirty = true;
+      }
+    }
     const bodyMoving = this.pearMotion.update(delta,
       this.pearMotion.held || this.pearMotion.sleeping ? [] : this.pearObstacles());
     if (bodyMoving) {
@@ -758,7 +907,7 @@ export class HandheldScene {
         THREE.MathUtils.clamp((facePoint.y - this.pearCursor.y + bounds.top) / (this.height * .2), -1, 1));
     }
     const faceMoving = this.pear.updateFace(delta, this.pearGaze, this.reducedMotion.matches);
-    this.changed ||= buttonsMoving || bodyMoving || limbsMoving || faceMoving;
+    this.changed ||= buttonsMoving || bodyMoving || limbsMoving || faceMoving || consolesMoving;
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
@@ -779,7 +928,8 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     // Sample the actual room once per settled pose/light change, only for DS paint.
-    if (this.dsReflectionsDirty && !this.transition && !this.pearMove && this.pearMotion.sleeping) this.updateDsReflections();
+    if (this.dsReflectionsDirty && !this.transition && !this.pearMove && !this.consoleMove &&
+        !consolesMoving && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
     if (cartridgeMotion) {
       cartridgeMotion.elapsed = cartridgeElapsed;

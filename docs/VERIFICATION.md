@@ -9,6 +9,43 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Orientation-locked console movement
+
+The requested commit/context checkpoint is `c996f7d`, made as Zanark before
+this implementation. Both consoles now support independent pointer/touch
+relocation, wheel depth, keyboard height/translation, gravity/drop, collision
+rejection, cancellation and reset. Their desk quaternions remain fixed;
+ordinary Inspect rotation and exact moved-position restoration are retained.
+
+All **35 unit tests**, application syntax and build pass. A bounded **26-case
+Edge gate** completed in **4.5m**: **25 passed**, with one outdated phone-dock
+height expectation failing. The four new console cases all passed, including
+wheel-only movement, real phone touch and the next dock tap, both exact
+play/Inspect/table round trips, cancellation and occupied-position rejection.
+The same gate passed all four DS and six pear cases, native mGBA input/saves,
+cartridge/sparse-paint and desktop/mobile inspection regressions.
+
+The 390px dock now has independent companion controls: seventeen 44px
+buttons require three rows rather than the old two. The revised dock case
+retains 44px targets, viewport bounds and physical-power clearance, and adds
+320px table movement-popover reachability. It **passes separately in 14.3s**.
+This is not a claim that the original 26-case run was entirely green or that
+the full browser suite ran. A further DS movement pass regenerated its lost
+capture for actual visual review; the captioned README image is that render.
+
+Intermediate console qualification exposed interpolation residue in exact
+saved poses, a projection fixture running before the first paint, and a
+keyboard fixture crossing the actual lamp collider. Copy final transition
+targets exactly, initialize camera orientation, wait for a real paint and use
+an unobstructed route while retaining explicit collision checks. Accepted
+wheel-only movement must mark the gesture as moved or release becomes a
+click-to-play; the focused regression now covers that path.
+
+Positions are session-only. Upright AABB contact is not angular rigid-body
+physics, stable stacking, moving-support tracking or dynamic prop pushing.
+Physical phones, owner aesthetic acceptance and public deployment remain
+unqualified. Historical captures and the frozen book are unchanged.
+
 ### Whole-face tracking, seated edge and transparent DS emblem
 
 Final `npx playwright test ds.spec.mjs pear-boy.spec.mjs`: **10 passed in 1.9m**,

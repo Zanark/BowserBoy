@@ -84,6 +84,7 @@ BowserBOY workstreams
 82_GITHUB_TRACKING.todo - DONE:81workstreams linked to verified issues/Project items; full rerun creates/updates zero issues.
 83_CARTRIDGE_SPARSE_PAINTS.todo - IN_PROGRESS: fix reload insertion clock under sparse hosted paints without relaxing deadlines or sharpness.
 84_PEAR_BOY.todo - IN_PROGRESS/local: movable warm pear lamp, longer thick rope limbs, cursor/scared face and drop physics; owner review pending.
+85_MOVABLE_CONSOLES.todo - IN_PROGRESS: independent orientation-locked console relocation, drop physics and session desk positions.
 
 Current pending work
 --------------------

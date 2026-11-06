@@ -73,6 +73,20 @@ tested; real-phone performance and commercial games remain unqualified.
 The GBA's native shader/settings/fullscreen features are not all DS features.
 [Full instructions and limits](docs/GUIDE.md#nintendo-ds-local-prototype).
 
+## Rearrange the desk - local prototype
+
+![The DS moved from its original desk position, beside the unchanged GBA and pear-boy](docs/images/console-movement.png)
+
+*The DS after a real drag, depth adjustment and drop. Its desk orientation
+is unchanged; each console remembers its own placement during this session.*
+
+Drag either console to lift and move it in 3D; scroll for depth and release
+to drop. Both keep their original desk orientation. **Move consoles** in
+the dock also provides keyboard placement and reset. Click without dragging
+to play; **Put down** returns to the moved position. **Inspect** still rotates
+normally. Positions last until reload. [Movement controls and limits](docs/GUIDE.md#move-the-consoles).
+This addition is local, not deployed.
+
 ## pear-boy - local desk companion
 
 ![pear-boy beside the separate GBA and DS, lighting the desk](docs/images/pear-boy-table.png)

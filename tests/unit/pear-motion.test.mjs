@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { Box3, Vector3 } from 'three';
-import { PearMotion } from '../../src/pear-motion.js';
+import { DeskMotion, PearMotion } from '../../src/pear-motion.js';
 
 function settle(motion, obstacles = []) {
   for (let i = 0; i < 1800 && !motion.sleeping; i++) motion.update(1 / 120, obstacles);
@@ -59,4 +59,27 @@ test('a dropped pear lands on a prop without tunnelling and cannot leave the des
   assert.ok(position.x <= 24 && position.z <= 7.5);
   settle(motion);
   assert.ok(position.toArray().every(Number.isFinite));
+});
+
+test('a wide console uses its offset bounds for support and side contact without rotating', () => {
+  const bounds = new Box3(new Vector3(-5, -.5, -2), new Vector3(5, 1, 2));
+  const workspace = new Box3(new Vector3(-15, .5, -9), new Vector3(15, 25, 7));
+  const position = new Vector3(0, 10, 0), motion = new DeskMotion(position, { bounds, workspace });
+  const prop = new Box3(new Vector3(4, 0, -1), new Vector3(8, 3, 1));
+  settle(motion, [prop]);
+  assert.equal(position.y, 3.5);
+  motion.reset(new Vector3(-2, .5, 0));
+  motion.pickUp();
+  motion.moveTo(new Vector3(-1.1, .5, 0), 0);
+  motion.velocity.set(22, 0, 0);
+  motion.drop(20);
+  motion.update(.05, [prop]);
+  assert.ok(position.x + bounds.max.x <= prop.min.x);
+  assert.ok(motion.velocity.x <= 0);
+  motion.pickUp();
+  motion.moveTo(new Vector3(15, 25, 7), 100);
+  motion.velocity.set(22, 22, 22);
+  motion.drop(110);
+  motion.update(.05, []);
+  assert.ok(workspace.containsPoint(position));
 });

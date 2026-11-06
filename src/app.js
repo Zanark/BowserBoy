@@ -50,6 +50,7 @@ for (const [id, name, label] of [
   ['quick-screen-fullscreen', 'screen', 'Fullscreen game screen'], ['screen-focus-close', 'close', 'Exit screen fullscreen'],
   ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
   ['dock-drag', 'drag', 'Move tools dock'], ['dock-toggle', 'collapse', 'Collapse tools dock'],
+  ['consoles-open', 'drag', 'Move consoles'],
 ]) icon($(id), name, label);
 
 const dock = $('action-dock');
@@ -917,6 +918,8 @@ const keyboard = bindKeyboard(window, {
   getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
   onMenu: () => {
+    if (view?.consoleMove) { view.finishConsoleMove(true); return true; }
+    if ($('console-controls').matches(':popover-open')) { $('console-controls').hidePopover(); return true; }
     if (view?.pearMove) { view.finishPearMove(true); return true; }
     if ($('pear-controls').matches(':popover-open')) { $('pear-controls').hidePopover(); return true; }
     if (dockDrag) {
@@ -1010,9 +1013,25 @@ function updatePearControls() {
   if (view.pearMove) $('scene-hint').textContent = view.host.dataset.pearPlacement === 'blocked' ?
     'That spot is occupied. Move pear-boy to clear desk space.' :
     'Move pear-boy in 3D: drag, scroll for depth; arrows move, Page Up/Down lift. Release or Enter drops; Escape cancels.';
-  else if (view.mode === 'table') $('scene-hint').textContent =
-    'Pick up a console. Drag pear-boy to move him; click him to switch his warm glow.';
+  else if (view.mode === 'table' && !view.consoleMove) $('scene-hint').textContent =
+    'Drag consoles or pear-boy to move them. Click a console to play; click pear-boy for light.';
 }
+function updateConsoleMovement() {
+  if (!view) return;
+  for (const system of ['gba', 'ds']) $(`move-${system}`).setAttribute('aria-pressed', String(view.consoleMove?.system === system));
+  if (view.consoleMove) $('scene-hint').textContent = view.host.dataset.consolePlacement === 'blocked' ?
+    'That spot is occupied. Lift the console or move to clear desk space.' :
+    'Orientation locked. Drag to move, scroll for depth; arrows move, Page Up/Down lift. Release or Enter drops; Escape cancels.';
+  else updatePearControls();
+}
+$('scene').addEventListener('console-move-change', updateConsoleMovement);
+for (const system of ['gba', 'ds']) $(`move-${system}`).addEventListener('click', () => {
+  $('console-controls').hidePopover();
+  releaseHostInputs();
+  ds?.releaseInputs();
+  view?.beginConsoleMove(system);
+});
+$('consoles-home').addEventListener('click', () => void operation(() => view?.resetConsolePositions()));
 icon($('pear-open'), 'pear', 'pear-boy lighting controls');
 $('scene').addEventListener('pear-change', updatePearControls);
 $('pear-toggle').addEventListener('click', () => view?.setPearEnabled(!view.pearOn));
@@ -1056,12 +1075,15 @@ try {
       image.height = dsBrand ? 732 : consoleBrand ? 420 : 732;
       heading.querySelector('source').srcset = dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/logo.png' : './assets/website-logo.png';
       $('pickup').hidden = mode !== 'table';
+      $('consoles-open').hidden = mode !== 'table';
+      $('consoles-open').disabled = moving;
+      if (mode !== 'table' && $('console-controls').matches(':popover-open')) $('console-controls').hidePopover();
       $('inspect').hidden = $('put-down').hidden = mode === 'table';
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
       icon($('inspect'), mode === 'inspecting' ? 'back' : 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
       $('play-zoom-control').hidden = mode !== 'playing' || moving || document.fullscreenElement === $('screen-focus');
-      $('scene-hint').textContent = mode === 'table' ? 'Pick up a console. Drag pear-boy to move him; click him to switch his warm glow.' :
+      $('scene-hint').textContent = mode === 'table' ? 'Drag consoles or pear-boy to move them. Click a console to play; click pear-boy for light.' :
         mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
           view?.console === 'ds' ? 'BowserBOY DS / touch the lower screen. Z/X = A/B. C/V = X/Y. DS for cartridges.' :
             'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
@@ -1079,13 +1101,14 @@ try {
   // Open save storage before first-paint shader compilation can block its timeout.
   view.setScreenFullscreen(false);
   $('pear-open').disabled = false;
+  $('consoles-open').disabled = false;
   updatePearControls();
 } catch (error) {
   console.error('Creating the 3D scene:', error);
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);
   $('scene-error').textContent = `${sceneFailure.message} Try a WebGL-enabled browser with hardware acceleration.`;
   $('scene-error').hidden = false;
-  for (const id of ['pickup', 'inspect', 'put-down', 'lamp-toggle', 'room-toggle']) $(id).disabled = true;
+  for (const id of ['pickup', 'inspect', 'put-down', 'lamp-toggle', 'room-toggle', 'consoles-open']) $(id).disabled = true;
 }
 $('scene').addEventListener('graphics-restored', () => notice('3D graphics recovered. Your cartridge session was retained.'));
 renderPreferences();

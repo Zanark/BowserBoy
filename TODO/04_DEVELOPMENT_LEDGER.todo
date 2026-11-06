@@ -14,6 +14,28 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Orientation-locked console relocation:
+  Owner orders commit, context refresh, then console movement like pear-boy.
+  Checkpoint c996f7d as Zanark precedes episode ep_1085 and checked mesh.
+  Generalize upright body physics with actual offset console bounds and
+  independent saved desk positions; retain normal Inspect rotation and
+  click-to-play through a4px drag threshold. Add touch/pointer/wheel,
+  keyboard, bounded gravity/drop, collision rejection, cancellation and reset.
+  Copy exact transition targets after interpolation; first-paint readiness
+  avoids invalid projected-pointer fixtures. Use a lamp-free keyboard path
+  without weakening collision checks. Wheel-only movement now suppresses
+  click activation, with a real-pointer regression.
+ 35units,syntax/build pass. One26-case affected Edge gate completes4.5m:
+ 25pass; the old phone dock two-row expectation fails at138px. Seventeen
+ 44px controls need three rows; retain touch sizing, bounds and power
+  clearance, add320px table-popover reachability. Corrected dock case
+  passes separately14.3s. All4new console,4DS,6pear, nativeGBA/saves,
+  sparse cartridge and Inspect cases pass in the affected gate.
+  Review actual moved GBA/DS/phone renders and caption the DS capture.
+  No full-suite, physical-phone, owner acceptance or deployment claim.
+  Keep85active for owner/device review; technical implementation qualified.
+  Scoped85apply creates issue83 and verifies body/state/Project/backlink;
+  independent gh read confirms OPEN/In progress. No bulk import or push.
 - 2026-11-07 / Whole face, seated edge and Chrome Neon emblem:
   Owner requests whole-face tracking, default edge sitting and dangling feet,
   plus the supplied Chrome Neon logo without its black matte. Group eyes,

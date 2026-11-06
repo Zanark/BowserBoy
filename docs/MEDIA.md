@@ -8,6 +8,17 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Orientation-locked console movement, 2026-11-07
+
+`docs/images/console-movement.png` is an actual Edge/Playwright capture from
+`tests/browser/console-movement.spec.mjs`: the DS after pointer translation,
+wheel depth and a completed drop, before its play/Inspect/table round trip.
+Its quaternion matches the original desk orientation. No synthetic gameplay,
+lighting changes or image compositing are added. The moved GBA, DS and phone
+captures were visually reviewed; the README embeds and captions the DS.
+This is unpublished local evidence, not owner approval or physical-phone
+qualification. Existing historical media and the frozen book are unchanged.
+
 ### pear-boy local companion
 
 `docs/images/pear-boy-table.png` and `docs/images/pear-boy-scared.png` are

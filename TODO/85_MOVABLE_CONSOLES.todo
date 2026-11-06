@@ -1,0 +1,51 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/83
+Milestone: Independent orientation-locked 3D desk movement for GBA and DS.
+Dependencies: 79 separate DS; 84 pear-boy movement and desk physics.
+Purpose: Let the owner rearrange either console like pear-boy without
+rotating its current desk orientation or disrupting the native emulators.
+
+Tasks:
+- [x] Commit existing pending work as Zanark and refresh owned context first.
+- [x] Reuse bounded upright drop physics with each console's actual bounds.
+- [x] Add pointer/touch drag, wheel depth, keyboard movement, cancel and reset.
+- [x] Retain click-to-play, normal Inspect rotation and moved put-down positions.
+- [x] Verify actual movement, fixed orientation, collisions and lifecycle.
+- [x] Update affected documentation and caption the actual moved-DS render.
+- [x] Sync the issue/Project and prepare the scoped local Zanark commit.
+- [ ] Owner visual review and physical-phone qualification.
+
+Acceptance criteria:
+Either console can be lifted, translated on all three axes and dropped while
+its quaternion remains unchanged. Moves avoid occupied positions; releases
+fall and settle within the desk workspace. Escape, pointer cancellation,
+lost capture, blur and resize safely cancel. Independent moved positions
+survive console switching and play/Inspect/table round trips in this session.
+Keyboard and touch work; reset is available. Pear-boy and both native cores,
+input, screens and saves retain their existing behavior. No push/deployment.
+
+Completion evidence:
+Checkpoint c996f7d authored/committed as Zanark before implementation;
+34units/syntax pass. Context episode ep_1085 and checked mesh published.
+All35units,syntax/build pass. The26-case affected Edge gate completes4.5m:
+25pass, including all4console/all4DS/all6pear cases, nativeGBA input/saves,
+cartridge/sparse-paint and desktop/mobile Inspect. One obsolete dock height
+expectation fails:17controls at44px require three phone rows, not two.
+The corrected dock case passes separately14.3s, retaining viewport bounds,
+touch targets and power clearance, plus320px table movement reachability.
+Actual moved GBA, DS and phone captures reviewed; README captions the DS.
+Owner approval, physical phones and publication remain unqualified.
+Scoped85apply verifies issue83 OPEN, its BowserBOY Project/In progress item,
+managed body and local backlink. Independent gh read confirms state/status.
+
+Completion log:
+2026-11-07: Owner explicitly requests commit, context refresh, then consoles
+movable like pear-boy while locking their current orientation. Lock applies
+to desk relocation; dedicated Inspect rotation remains deliberately available.
+2026-11-07: Shared bounded upright physics retains pear behavior. Independent
+session positions survive play/Inspect/table and system switches. Exact final
+transition copies remove interpolation residue. Fixture waits for actual
+paint; keyboard route avoids the real lamp. Wheel-only movement counts as a
+drag, not click-to-play. No angular physics, stable stacking or prop pushing.
+2026-11-07: Sync creates one issue/Project item for85, not a bulk import.
+Keep IN_PROGRESS for owner/device review; technical delivery is qualified.

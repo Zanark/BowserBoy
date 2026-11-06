@@ -74,6 +74,31 @@ the local DS prototype described below.
 clean STORSEGEL-style white shade and ash tripod. The other objects are
 cartridges, not additional consoles.*
 
+## Move the consoles
+
+On the table, drag either GBA or DS upward or sideways to lift and translate
+it without rotating. Scroll while holding to move nearer or farther; release
+to drop with gravity, bounded throw momentum and a small bounce. The camera
+does not orbit. Occupied spots are rejected with a hint; lift above props
+before moving across them.
+
+The **Move consoles** dock button offers **Move GBA**, **Move DS** and
+**Reset console positions**. After selecting a move, arrows move across the
+desk, **Page Up/Down** change height, **Enter** drops and **Escape** cancels.
+Keyboard steps do not throw. Cancellation, pointer capture loss, blur and
+resize restore the pickup position. Reset reports an error if pear-boy
+occupies an original console position. The phone dock may occupy three rows,
+retaining 44px touch targets and access to the physical power switch.
+
+Dragging does not change the selected system or restart either emulator.
+Clicking without dragging still selects and plays that console. **Put down**
+returns it to its independently remembered desk position; **Inspect** remains
+the separate mode for rotation. Positions are session-only and reset on reload.
+The bounded workspace prevents desk-edge falls. Collisions use fixed
+world-axis-aligned bounding boxes, not arbitrary rotating rigid bodies;
+moving supports, stacking stability and dynamic prop pushing are not simulated.
+This feature is local and has not been published.
+
 ## Nintendo DS local prototype
 
 Start the existing development server with `npm run dev` and open

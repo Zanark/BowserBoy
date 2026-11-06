@@ -30,6 +30,32 @@ not a downloadable game library. This working-tree addition is not deployed.
 The repository is `Zanark/BowserBoy`; historical Pages links and the local
 checkout name remain `BowserBoyAdvance`.
 
+## Orientation-locked console relocation
+
+`DeskMotion` in `src/pear-motion.js` shares upright 120Hz body integration
+between the consoles and the `PearMotion` default-bounds subclass. Console
+colliders are the actual table-oriented world AABBs translated relative to
+their roots. Asymmetric extents determine contact/support height and the
+root-coordinate workspace; the original resting root Y remains the floor.
+No angular velocity or desk quaternion changes are introduced.
+
+`src/scene.js` separates saved desk poses from play/Inspect transforms.
+Both bodies reference their own model position, but the selected body's
+physics is skipped while held for play/Inspect and during transitions.
+Inactive-model motion explicitly invalidates room paints. Returning to the
+table copies the exact saved position/quaternion after interpolation.
+DS reflection capture waits until dragging/falling stops.
+
+A four-pixel drag threshold preserves click-to-play. Pointer moves use a
+camera-facing plane and grab offset; wheel depth translates that plane by
+the accepted displacement and counts as movement even without pointer travel.
+Keyboard steps clear throw velocity. Capture loss, cancellation, blur, resize,
+view and system changes cancel safely. Broad-phase box overlap rejects
+occupied held placements; released bodies use the shared contact solver.
+The dock exposes independent movement/reset without switching native cores.
+Positions are not persisted across reloads. Full rotating-body response,
+moving-support tracking, stable stacking and prop pushing are out of scope.
+
 ## pear-boy: movable light and constrained ropes
 
 `src/pear-boy.js` builds the procedural pear, separate curious/scared faces,

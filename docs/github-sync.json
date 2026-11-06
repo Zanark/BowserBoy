@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "84",
-      "file": "TODO/84_PEAR_BOY.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/82",
-      "number": 82,
-      "nodeId": "I_kwDOVhqp0s8AAAABdG4b7Q",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGpFPo",
+      "id": "85",
+      "file": "TODO/85_MOVABLE_CONSOLES.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/83",
+      "number": 83,
+      "nodeId": "I_kwDOVhqp0s8AAAABdHydQA",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGp7cM",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "f295ade4e2d18cea2f4bb9561726b2f1ded7c5df33ab83ae4ea705dfe4e268b1"
+      "bodySha256": "ae0a90d1b76b41df3b4ea3d8ffcf59c0a4cb39dc7d2bfab040cab93761e7bb77"
     }
   ]
 }

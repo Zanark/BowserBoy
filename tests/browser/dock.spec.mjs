@@ -453,8 +453,8 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
     }
     if (width <= 390) {
       const dock = await page.locator('.scene-actions').boundingBox();
-      expect(dock.height, 'Two rows on phones; three on 320px with the two new dock controls')
-        .toBeLessThan(width <= 360 ? 150 : 100);
+      expect(dock.height, 'Independent desk-companion controls fit in at most three rows without shrinking touch targets')
+        .toBeLessThan(150);
       await expect.poll(async () => {
         const power = await page.locator('#hardware-power').boundingBox();
         const currentDock = await page.locator('.scene-actions').boundingBox();
@@ -475,6 +475,16 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
   await page.locator('#quick-fullscreen').click();
   await expect.poll(() => page.evaluate(() => document.fullscreenElement?.id)).toBe('player');
   await page.evaluate(() => document.exitFullscreen());
+  await page.locator('#put-down').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  const tableDock = await page.locator('.scene-actions').boundingBox();
+  expect(tableDock.height).toBeLessThan(150);
+  expect(tableDock.x).toBeGreaterThanOrEqual(0);
+  expect(tableDock.x + tableDock.width).toBeLessThanOrEqual(320);
+  await page.locator('#consoles-open').click();
+  await expect(page.locator('#console-controls')).toBeVisible();
+  await expect(page.locator('#move-gba')).toBeInViewport();
+  await expect(page.locator('#move-ds')).toBeInViewport();
 });
 
 test('three checkpoint slots stay independent and reject invalid slots without changing legacy saves', async ({ page }) => {

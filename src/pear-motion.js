@@ -1,12 +1,12 @@
-import { Vector3 } from 'three';
+import { Box3, Vector3 } from 'three';
 
 const step = 1 / 120;
-const radius = 3;
-const height = 8.1;
 
-export class PearMotion {
-  constructor(position) {
+export class DeskMotion {
+  constructor(position, { bounds, workspace }) {
     this.position = position;
+    this.bounds = bounds;
+    this.workspace = workspace;
     this.velocity = new Vector3();
     this.previous = new Vector3();
     this.reset(position);
@@ -17,7 +17,7 @@ export class PearMotion {
     this.velocity.set(0, 0, 0);
     this.accumulator = 0;
     this.held = false;
-    this.sleeping = position.y === 0;
+    this.sleeping = position.y === this.workspace.min.y;
     this.lastMove = -Infinity;
   }
 
@@ -57,30 +57,34 @@ export class PearMotion {
       this.velocity.z *= .998;
       this.position.addScaledVector(this.velocity, step);
       let supported = false;
-      if (this.position.y <= 0) {
-        this.position.y = 0;
+      if (this.position.y <= this.workspace.min.y) {
+        this.position.y = this.workspace.min.y;
         this.velocity.y = Math.abs(this.velocity.y) > 1.2 ? Math.abs(this.velocity.y) * .23 : 0;
         supported = true;
       }
       for (const axis of ['x', 'z']) {
-        const low = axis === 'x' ? -22 : -11.5, high = axis === 'x' ? 24 : 7.5;
+        const low = this.workspace.min[axis], high = this.workspace.max[axis];
         if (this.position[axis] < low || this.position[axis] > high) {
           this.position[axis] = Math.max(low, Math.min(high, this.position[axis]));
           this.velocity[axis] *= -.23;
         }
       }
+      if (this.position.y > this.workspace.max.y) {
+        this.position.y = this.workspace.max.y;
+        this.velocity.y = -Math.abs(this.velocity.y) * .23;
+      }
       for (const box of obstacles) {
-        const minX = box.min.x - radius, maxX = box.max.x + radius;
-        const minZ = box.min.z - radius, maxZ = box.max.z + radius;
+        const minX = box.min.x - this.bounds.max.x, maxX = box.max.x - this.bounds.min.x;
+        const minZ = box.min.z - this.bounds.max.z, maxZ = box.max.z - this.bounds.min.z;
         const p = this.position, before = this.previous;
         if (p.x <= minX || p.x >= maxX || p.z <= minZ || p.z >= maxZ ||
-            p.y >= box.max.y || p.y + height <= box.min.y) continue;
-        if (before.y >= box.max.y) {
-          p.y = box.max.y;
+            p.y + this.bounds.min.y >= box.max.y || p.y + this.bounds.max.y <= box.min.y) continue;
+        if (before.y + this.bounds.min.y >= box.max.y) {
+          p.y = box.max.y - this.bounds.min.y;
           this.velocity.y = Math.abs(this.velocity.y) > 1.2 ? Math.abs(this.velocity.y) * .23 : 0;
           supported = true;
-        } else if (before.y + height <= box.min.y) {
-          p.y = box.min.y - height;
+        } else if (before.y + this.bounds.max.y <= box.min.y) {
+          p.y = box.min.y - this.bounds.max.y;
           this.velocity.y = -Math.abs(this.velocity.y) * .23;
         } else {
           const sides = [
@@ -93,6 +97,7 @@ export class PearMotion {
           this.velocity[axis] *= -.23;
         }
       }
+
       if (supported) {
         this.velocity.x *= .85;
         this.velocity.z *= .85;
@@ -106,5 +111,14 @@ export class PearMotion {
       if (this.sleeping) break;
     }
     return changed;
+  }
+}
+
+export class PearMotion extends DeskMotion {
+  constructor(position) {
+    super(position, {
+      bounds: new Box3(new Vector3(-3, 0, -3), new Vector3(3, 8.1, 3)),
+      workspace: new Box3(new Vector3(-22, 0, -11.5), new Vector3(24, 25, 7.5)),
+    });
   }
 }

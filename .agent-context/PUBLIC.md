@@ -48,6 +48,17 @@ Body collisions remain upright/box-based; ropes collide with the pear/desk,
 not arbitrary prop surfaces or moving supports. Owner/device review pending.
 Supplied demo media permissions are not blanket rights for new ROMs or testing.
 
+Workstream85 adds independent GBA/DS desk movement without angular changes:
+drag/touch, wheel depth, keyboard, drop, cancellation and reset. Click still
+plays; normal Inspect rotation is separate. Put down restores each moved
+session position exactly. No persistence across reloads or dynamic prop pushing.
+35units,syntax/build pass. The26-case affected Edge gate has25passes and one
+obsolete phone-dock height failure; the corrected dock case passes separately,
+retaining44px targets, physical-power clearance and320px move reachability.
+All4console/all4DS/all6pear cases pass with nativeGBA/sparse/Inspect regressions.
+Actual moved captures are reviewed. Owner/device review and publication remain
+separate; historical book/media are not regenerated.
+
 Keep all eight workstream fields, evidence distinct from human approval, and
 issue backlinks consistent with the [tracking guide](../docs/GITHUB-TRACKING.md).
 Never publish credentials, local continuity, raw conversations or social data.
