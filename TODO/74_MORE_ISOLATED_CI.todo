@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: More independent browser jobs without quality or coverage loss.
 Dependencies: 71_FULL_RESOLUTION_RENDERING.todo.
 
@@ -13,7 +13,7 @@ Tasks
 [x] Increase isolated browser shards from ten to nineteen, one worker each.
 [x] Prove every current case is assigned exactly once.
 [x] Remove duplicate fullscreen-frame waits without removing assertions.
-[ ] Qualify the genuine pushed workflow and record observed elapsed time.
+[x] Qualify the genuine pushed workflow and record observed elapsed time.
 
 Acceptance criteria
 -------------------
@@ -33,9 +33,16 @@ YAML semantic comparison finds only the matrix expansion.
 Prior corrected-header42130747520 passes nine browser jobs; fullscreen case
 hits120s after repeated6-8s readbacks. Reuse already verified pixels rather
 than request redundant frames, retain both exit paths and all behavior checks.
-Corrected case passes locally16.8s. Hosted qualification remains pending.
+Corrected case passes locally16.8s. Exact implementation1b0385b publishes
+through run42135170801: build/all19browser shards/deploy SUCCESS.
+Complete run4m33s; browser steps28s-3m27s, all19start within one second.
+Independent30deployed-asset match, actual20README-image match/all11GIFs,
+and four live Edge lamp/LED/native/fullscreen cases52.1s qualify publication.
+This is one observed run, not a controlled speedup over failed predecessors.
 
 Completion log
 --------------
 2026-11-06: User asks for still more parallel CI. Expand runner isolation,
 not competing workers; preserve all quality/timeout gates.
+2026-11-06: Genuine nineteen-way gate and exact public application/README
+qualification complete. No quality, timeout, coverage or permission changes.

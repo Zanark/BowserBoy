@@ -7,6 +7,29 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Current published warm-lamp/green-LED edition, 2026-11-06
+
+Implementation `1b0385b384a1329fe643607c4874af88e5259001` is published through
+[run42135170801](https://github.com/Zanark/BowserBoyAdvance/actions/runs/42135170801):
+build, all nineteen browser shards and deployment succeed. Its 53-case
+inventory is unchanged, with one worker per runner and no retries or relaxed
+deadlines. The complete run takes **4m33s** (00:12:53-00:17:26 UTC);
+individual browser steps take 28s-3m27s. This is one observed run, not a
+controlled speedup over earlier failed ten-shard attempts.
+
+Independent public verification matches all **30 deployed assets** to that
+implementation. Four actual live Edge cases pass in **52.1s**: warm woven
+lamp/independent room lighting, pressed-cap visibility, native mapped
+input/LCD spill/green dark-Inspect LED/power off, and both fullscreen-return
+paths. Actual GitHub homepage and immutable README inspection match all
+**20 served image bodies**, including all eleven refreshed GIFs and the
+unchanged approved logos. The new LCD-only GIF uses genuine native light.
+The frozen v1.0.0 package and November 6 milestone date are unchanged.
+Technical/public qualification does not imply user aesthetic approval.
+
+The local/pending statements in earlier attempt records below describe their
+original stage; this publication record supersedes them.
+
 ## Smaller green LED and current eleven-GIF showcase, 2026-11-06
 
 The indicator radius is reduced from .09 to .055, with deeper green albedo

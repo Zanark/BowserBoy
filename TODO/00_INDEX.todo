@@ -72,11 +72,12 @@ BowserBOY workstreams
 70_INSPECTION_BRANDING.todo - DONE: actual public animated purple Inspect logo/static fallback and centered settings logo verified; no user visual-approval claim.
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
-73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE locally: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills and dated first milestone; public app qualification pending.
-74_MORE_ISOLATED_CI.todo - IN_PROGRESS: nineteen isolated one-worker browser shards, exact53-case coverage and fewer duplicate fullscreen readbacks; hosted qualification pending.
+73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
+74_MORE_ISOLATED_CI.todo - DONE: nineteen isolated one-worker browser shards, exact53-case inventory and fewer duplicate fullscreen readbacks; successful run4m33s plus independent public qualification.
 
 Current public milestone: v1.0.0, designated2026-11-06, qualifiedapplication
-c3d9dbd. See releases/README.md and docs/README.md for release/navigation.
+c3d9dbd in the unchanged frozen package. Current live refinements are
+1b0385b/Pages42135170801. See releases/README.md and docs/README.md.
 Earlier BLOCKED/IN_PROGRESS entries below/above retain their original attempt
 status; they are not evidence that the final qualified release is still blocked.
 This release record does not silently rewrite individual historical attempts.

@@ -8,6 +8,12 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+Current publication: implementation `1b0385b384a1329fe643607c4874af88e5259001`,
+successful Pages run42135170801. Actual GitHub homepage and immutable README
+serve all20matching images, including all11GIFs. Independent public checks
+match all30application assets; four live lamp/LED/native/fullscreen cases pass.
+The following captures retain their original local-checkout provenance.
+
 ### Smaller green indicator and LCD-only reflections, 2026-11-06
 
 This final edition supersedes both takes below. All **eleven interaction GIFs
