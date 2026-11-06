@@ -94,6 +94,7 @@ export function createDsHandheld() {
     const screen = mesh(parent, `${name} live 256x192 LCD`, new THREE.PlaneGeometry(4.5, 3.375),
       new THREE.MeshBasicMaterial({ color: '#101d23', toneMapped: false }), 0, y, z + .085);
     screen.castShadow = false;
+    screen.geometry.userData.viewport = { width: 4.5, height: 3.375 };
     screens.push(screen);
   }
   screens[1].userData.touchscreen = true;
@@ -233,16 +234,27 @@ export function createDsHandheld() {
   stylus.name = 'Docked molded DS stylus with short rounded nib';
   stylus.position.set(4.39, -2.43, -.025);
   root.add(stylus);
+  const stylusPlastic = lime.clone();
   mesh(root, 'Stylus side docking channel', roundedBox(.24, 4.22, .075, .05), edge, 4.27, -2.43, -.075);
-  mesh(stylus, 'Molded lime stylus shaft', new THREE.CylinderGeometry(.073, .065, 3.64, 24), lime, 0, -.03);
-  mesh(stylus, 'Flat stylus pull tab', roundedBox(.24, .38, .13, .06), lime, 0, 1.86, .015);
-  mesh(stylus, 'Short molded retention hook', roundedBox(.075, .22, .08, .025), lime, -.115, 1.89, .04);
-  mesh(stylus, 'Pull tab release groove', roundedBox(.025, .19, .008, .008), dark, -.04, 1.88, .119);
-  mesh(stylus, 'Tapered plastic stylus nose', new THREE.CylinderGeometry(.065, .028, .20, 24), lime, 0, -1.95);
-  const nib = mesh(stylus, 'Short rounded polymer touch nib', new THREE.SphereGeometry(.032, 16, 12), lavender, 0, -2.07);
+  mesh(stylus, 'Molded lime stylus shaft', new THREE.CylinderGeometry(.073, .065, 3.64, 24), stylusPlastic, 0, -.03);
+  mesh(stylus, 'Flat stylus pull tab', roundedBox(.24, .38, .13, .06), stylusPlastic, 0, 1.86, .015);
+  mesh(stylus, 'Short molded retention hook', roundedBox(.075, .22, .08, .025), stylusPlastic, -.115, 1.89, .04);
+  mesh(stylus, 'Pull tab release groove', roundedBox(.025, .19, .008, .008), dark.clone(), -.04, 1.88, .119);
+  mesh(stylus, 'Tapered plastic stylus nose', new THREE.CylinderGeometry(.065, .028, .20, 24), stylusPlastic, 0, -1.95);
+  const nib = mesh(stylus, 'Short rounded polymer touch nib', new THREE.SphereGeometry(.032, 16, 12), lavender.clone(), 0, -2.07);
   nib.scale.set(1, 1.8, 1);
+  const stylusTip = new THREE.Object3D();
+  stylusTip.name = 'Stylus contact tip';
+  stylusTip.position.set(0, -2.07 - .032 * 1.8, 0);
+  stylus.add(stylusTip);
+  const stylusGlow = mesh(stylus, 'Stylus hover halo', new THREE.CylinderGeometry(.12, .105, 4.18, 24),
+    new THREE.MeshBasicMaterial({ color: '#b8ff8a', transparent: true, opacity: .3,
+      side: THREE.BackSide, depthWrite: false, toneMapped: false }), 0, -.04);
+  stylusGlow.visible = stylusGlow.castShadow = stylusGlow.receiveShadow = false;
+  stylus.traverse(object => { object.userData.dsStylus = true; });
   for (const y of [-.90, -4.02]) {
     mesh(root, 'Shell-integrated stylus retaining clip', roundedBox(.35, .16, .10, .035), baseShell, 4.30, y, .055);
   }
-  return { root, lid, hinge, screens, screen: screens[1], controls, led, power, cartridge, stylus, branding };
+  return { root, lid, hinge, screens, screen: screens[1], controls, led, power, cartridge,
+    stylus, stylusTip, stylusGlow, stylusPlastic, branding };
 }

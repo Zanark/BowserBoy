@@ -14,6 +14,32 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / DS pen, single-line hints, screen spill and startup chime:
+  Owner requests pickable glowing side pen with camera-facing back, bottom-left
+  hint, GBA-style light spill and a different non-chip power-on tune, then
+  authorizes commit/push and monitored deployment through existing Actions.
+  Isolate pen materials, retain dock bounds and unchanged physical LCD UVs;
+  held tip follows its pointer ray, with modal/blur/cancel/return cleanup.
+  Shared GBA menu listener originally consumes Escape before DS pen return.
+  Keep shared move/popover precedence, then defer DS menu handling to DS.
+  Each LCD reuses ScreenIllumination with its own framebuffer/hinge transform.
+  Fix initial model-construction order; hide off emitters, not just intensity0.
+  Native and paused color/pixel checks separate actual spill from state alone.
+  Original overlapping sine-partial tune is power-on only, distinct from GBA.
+  Scale exponential floor with volume after rendered half-volume test fails.
+  Await scene readiness for offline rendering; don't assert shader contention
+  caused an earlier audio timeout without proof. Empty-slot power is idle,
+  not firmware boot. Enable mute without a cartridge; configure only live core.
+  Final syntax,35units,build and five-case Edge feature gate pass1.6m:
+  GBA chime14.2s,DS chime6.0s,spill45.0s,hints3.6s,held pen22.8s.
+  Actual native marks/tip placement, return/cleanup, upside-down390x844DPR2,
+  independent color/black/off/hinge, rendered cap spill and1440/390/320hints.
+  Prior eight-case run passes lifecycle/precise touch/hinge as well as spill/
+  hint but fails audio/Escape; superseded next run stopped before final build.
+  Review actual pen desktop/phone and native/controlled dark-room captures.
+  Keep owner listening/device acceptance open. Frozen96-pagebook unchanged.
+  Existing Pages retains all19browser shards and exact-source release gate.
+  Publication evidence follows actual Actions completion, not a local pass.
 - 2026-11-07 / Exact DS stylus alignment and held input:
   Owner's click appears above its target. A native regression fails at
   (200,150) even with the DS flat; the old case only checked some yellow.

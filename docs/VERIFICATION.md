@@ -9,6 +9,55 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Pickable DS pen, screen spill and original startup sound
+
+The docked stylus has isolated hover glow and a camera-facing held visual;
+its tip remains on the pointer ray without changing physical LCD coordinates.
+Escape returns it before opening tools. The first combined regression exposed
+the shared GBA menu listener taking Escape before the DS listener; retain
+shared move/popover handling, then let the DS controller own its menu key.
+Black emissive material has a default intensity of one, so the isolation
+fixture checks its black emissive color instead of assuming zero intensity.
+Gameplay hints use a single bottom-left line with responsive ellipsis.
+
+Each DS LCD reuses the GBA's framebuffer-driven light sampler independently.
+Construct emitters after the DS model, and hide off emitters rather than
+leaving zero-intensity lights in the renderer's shader workload. Native
+framebuffers, independent red/blue halves, white/black rendered control pixels,
+hinge/body attachment and power-off cleanup have a passing browser case.
+Dark-room captures distinguish native content from controlled paused fills.
+No global exposure, room lighting or paint changes are part of this feature.
+
+The new DS sound is an original overlapping sine-partial arpeggio, not a
+manufacturer recording or the GBA's square-wave tune. Offline rendering
+exposed a fixed exponential decay floor that made half volume nonlinear;
+the floor now scales with volume. Audio fixtures wait for initial scene
+readiness before rendering. Empty-slot power-on is a real powered-idle state,
+not a firmware boot. Mute must remain editable without a running cartridge;
+only configure a native core when one exists. Permission failures are visible.
+
+The owner authorizes commit/push and monitored deployment. Existing Pages
+Actions already discover the new cases and require all 19 browser shards
+plus syntax/unit/build before deployment. No test exclusion, gate bypass or
+manual tagged release is authorized. Final qualification/publication receipts
+are recorded separately; automated sound checks are not listening approval.
+
+Final syntax, **35 unit tests** and build pass. The final **five-case Edge
+feature gate passes in 1.6m**: unchanged GBA startup14.2s, DS startup6.0s,
+independent screen spill45.0s, hint layout3.6s and native held pen22.8s.
+The pen case includes exact native yellow pixels, <.25CSSpx tip error,
+camera-facing shaft, all return/cleanup paths and upside-down390x844DPR2touch.
+Hints are checked at1440/390/320px. Actual desktop/phone pen and native/
+controlled-fill dark-room captures were reviewed.
+
+The preceding eight-case run passed native DS lifecycle, precise touch,
+lighting, hints and hinge lock, but failed both audio fixtures and Escape
+return. Those failures led to the corrections above, not relaxed assertions.
+A later run passed GBA audio; it was stopped after discovering that the old
+idle mute control remained disabled, before rebuilding the final five cases.
+There is no claim of an all-eight pass, full local suite, physical-device
+qualification, commercial compatibility or owner acceptance.
+
 ### Precise DS touchscreen input
 
 The new native regression first fails at requested pixel (200,150), even in

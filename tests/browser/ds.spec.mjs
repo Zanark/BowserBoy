@@ -280,6 +280,271 @@ test('DS stylus draws under the pointer across locked orientations, zoom and hig
   expect(errors).toEqual([]);
 });
 
+test('both DS LCDs cast independent framebuffer-colored spill and go dark with black or power-off', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-demo').click();
+  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    clearInterval(view.dsController.autosave);
+    view.setPearEnabled(false);
+  });
+  if (await page.locator('#lamp-toggle').getAttribute('aria-pressed') === 'true') await page.locator('#lamp-toggle').click();
+  await page.locator('#lamp-toggle').blur();
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.renderer.toneMappingExposure)).toBeCloseTo(.45, 4);
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.dsScreenIllumination.every(light => light.light.intensity > 0))).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('ds-native-dark-room-spill.png') });
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-pause').click();
+  await page.locator('#ds-close').click();
+  const runtime = await dsFrame(page);
+  const fill = async colors => {
+    await runtime.evaluate(colors => {
+      const canvas = window.EJS_emulator.canvas;
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      const scissor = gl.isEnabled(gl.SCISSOR_TEST), box = gl.getParameter(gl.SCISSOR_BOX);
+      const clear = gl.getParameter(gl.COLOR_CLEAR_VALUE);
+      try {
+        gl.enable(gl.SCISSOR_TEST);
+        for (const [index, color] of colors.entries()) {
+          gl.scissor(0, index ? 0 : canvas.height / 2, canvas.width, canvas.height / 2);
+          gl.clearColor(...color, 1); gl.clear(gl.COLOR_BUFFER_BIT);
+        }
+      } finally {
+        gl.clearColor(...clear); gl.scissor(...box);
+        if (!scissor) gl.disable(gl.SCISSOR_TEST);
+      }
+    }, colors);
+    await expect.poll(() => page.evaluate(async colors => {
+      const { view } = await import('./src/app.js'), { Color } = await import('three');
+      return view.dsScreenIllumination.every((light, index) => {
+        const expected = new Color(...colors[index]).convertSRGBToLinear().toArray();
+        return light.settled && light.current.toArray().every((value, axis) => Math.abs(value - expected[axis]) < .001);
+      });
+    }, colors)).toBe(true);
+  };
+  await fill([[1, 0, 0], [0, 0, 1]]);
+  await page.screenshot({ path: testInfo.outputPath('ds-independent-red-blue-spill.png') });
+  const shell = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    view.renderer.render(view.scene, view.camera);
+    const gl = view.renderer.getContext();
+    return ['up', 'a', 'b', 'start', 'select'].map(id => {
+      const point = view.ds.controls.get(id).mesh.localToWorld(new Vector3(.06, .04, .05)).project(view.camera);
+      const pixels = new Uint8Array(3 * 3 * 4);
+      gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2) - 1,
+        Math.round((point.y + 1) * view.canvas.height / 2) - 1, 3, 3, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      return [id, ...[0, 1, 2].map(channel =>
+        pixels.reduce((sum, value, index) => sum + (index % 4 === channel ? value : 0), 0) / 9)];
+    });
+  });
+  await fill([[1, 1, 1], [1, 1, 1]]);
+  const lit = await shell();
+  for (const [id, ...rgb] of lit) expect(Math.max(...rgb), `${id} catches local LCD spill`).toBeGreaterThan(2);
+  await page.screenshot({ path: testInfo.outputPath('ds-white-control-spill.png') });
+  await fill([[0, 0, 0], [0, 0, 0]]);
+  const dark = await shell();
+  for (const [index, [id, ...rgb]] of dark.entries()) {
+    expect(Math.max(...rgb), `${id} dims with black LCDs`).toBeLessThan(Math.max(...lit[index].slice(1)));
+  }
+  await testInfo.attach('ds-control-spill-pixels', { body: JSON.stringify({ lit, dark }), contentType: 'application/json' });
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsScreenIllumination
+    .map(light => [light.light.intensity, light.controlSpill.intensity]))).toEqual([[0, 0], [0, 0]]);
+  await fill([[1, 0, 0], [0, 0, 1]]);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  const carried = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Euler, Vector3 } = await import('three');
+    view.ds.root.quaternion.setFromEuler(new Euler(.2, -.3, .4)); view.setDsHinge(130);
+    view.ds.root.updateMatrixWorld(true);
+    return view.dsScreenIllumination.map((light, index) => {
+      const screen = view.ds.screens[index];
+      return light.light.parent === screen && light.controlSpill.parent === screen &&
+        light.light.getWorldPosition(new Vector3()).distanceTo(screen.localToWorld(new Vector3(0, 0, .002))) < .00001;
+    });
+  });
+  expect(carried).toEqual([true, true]);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#ds-hardware-power').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'off');
+  await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.dsScreenIllumination
+    .map(light => [light.light.intensity, light.controlSpill.intensity]))).toEqual([[0, 0], [0, 0]]);
+  expect(errors).toEqual([]);
+});
+
+test('gameplay hints stay on one bottom-left line instead of covering the LCD', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  for (const [width, height] of [[1440, 1100], [390, 844], [320, 740]]) {
+    await page.setViewportSize({ width, height });
+    const hint = await page.locator('#scene-hint').evaluate(element => {
+      const rect = element.getBoundingClientRect(), style = getComputedStyle(element);
+      return { x: rect.x, bottom: innerHeight - rect.bottom, height: rect.height,
+        lineHeight: Number.parseFloat(style.lineHeight), align: style.textAlign,
+        wrap: style.whiteSpace, events: style.pointerEvents };
+    });
+    expect(hint.x).toBe(12);
+    expect(hint.bottom).toBe(28);
+    expect(hint.height).toBeCloseTo(hint.lineHeight, 1);
+    expect(hint.align).toBe('left'); expect(hint.wrap).toBe('nowrap');
+    expect(hint.events).toBe('none');
+  }
+});
+
+test('DS side stylus glows, picks up and draws tip-first with its back toward the camera', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const screenPointer = (x, y) => page.evaluate(async ({ x, y }) => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    const point = view.ds.screen.localToWorld(new Vector3(
+      ((x + .5) / 256 - .5) * 4.5, (.5 - (y + .5) / 192) * 3.375, 0,
+    )).project(view.camera), bounds = view.canvas.getBoundingClientRect();
+    return { x: bounds.left + (point.x + 1) * bounds.width / 2,
+      y: bounds.top + (1 - point.y) * bounds.height / 2 };
+  }, { x, y });
+  const tipPlacement = pointer => page.evaluate(async pointer => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    const pen = view.dsController.heldStylus;
+    const tip = pen.getObjectByName('Stylus contact tip').getWorldPosition(new Vector3());
+    const back = pen.localToWorld(new Vector3(0, 2.05, 0));
+    const direction = back.clone().sub(tip).normalize();
+    const towardCamera = view.camera.position.clone().sub(tip).normalize();
+    const projected = tip.clone().project(view.camera), bounds = view.canvas.getBoundingClientRect();
+    const dx = bounds.left + (projected.x + 1) * bounds.width / 2 - pointer.x;
+    const dy = bounds.top + (1 - projected.y) * bounds.height / 2 - pointer.y;
+    const end = back.project(view.camera);
+    return { error: Math.hypot(dx, dy), facing: direction.dot(towardCamera),
+      span: Math.hypot(end.x - projected.x, end.y - projected.y),
+      visible: pen.visible, mapped: view.dsController.touchAt({ clientX: pointer.x, clientY: pointer.y }),
+      held: view.dsController.stylusHeld };
+  }, pointer);
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
+  const docked = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    const bounds = view.canvas.getBoundingClientRect();
+    for (const y of [0, .6, -.6, 1.8]) for (const x of [.065, -.065, 0]) {
+      const point = view.ds.stylus.localToWorld(new Vector3(x, y, .06)).project(view.camera);
+      const event = { clientX: bounds.left + (point.x + 1) * bounds.width / 2,
+        clientY: bounds.top + (1 - point.y) * bounds.height / 2 };
+      if (view.pick(event)?.object.userData.dsStylus) return { x: event.clientX, y: event.clientY };
+    }
+    return null;
+  });
+  expect(docked, 'physical docked stylus is reachable on the desk').not.toBeNull();
+  await page.mouse.move(docked.x, docked.y);
+  await expect.poll(() => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return { glow: view.ds.stylusGlow.visible, emitting: view.ds.stylusPlastic.emissiveIntensity > 0,
+      buttonsBlack: view.ds.controls.get('a').mesh.material.emissive.getHex() === 0,
+      mode: view.mode, transition: !!view.transition };
+  })).toMatchObject({ glow: true, emitting: true, buttonsBlack: true });
+  await page.screenshot({ path: testInfo.outputPath('ds-stylus-hover.png') });
+  await page.mouse.click(docked.x, docked.y);
+  await expect(page.locator('#scene')).toHaveAttribute('data-console', 'ds');
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'held');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  await expect(page.locator('#ds-tools')).not.toBeVisible();
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-demo').click();
+  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await page.evaluate(async () => clearInterval((await import('./src/app.js')).view.dsController.autosave));
+  await page.locator('#ds-stylus').click();
+  const points = [[100, 90], [168, 152]];
+  for (const [index, [x, y]] of points.entries()) {
+    const pointer = await screenPointer(x, y);
+    await page.mouse.move(pointer.x, pointer.y);
+    if (!index) await page.mouse.down();
+    await expect.poll(async () => (await framePixels(page, { x, y })).probe).toEqual([255, 255, 0]);
+    await expect.poll(async () => (await tipPlacement(pointer)).error).toBeLessThan(.25);
+    const pen = await tipPlacement(pointer);
+    expect(pen.facing).toBeGreaterThan(.8);
+    expect(pen.span).toBeLessThan(.25);
+    expect(pen.visible && pen.held).toBe(true);
+    expect(pen.mapped).toEqual({ x, y });
+  }
+  await page.screenshot({ path: testInfo.outputPath('ds-stylus-drawing.png') });
+  await page.mouse.up();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'held');
+  await page.mouse.click(100, 400, { button: 'right' });
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  await page.locator('#ds-stylus').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'held');
+  await page.locator('#ds-stylus').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  await page.locator('#ds-stylus').click();
+  const cancelPoint = await screenPointer(220, 40);
+  await page.mouse.move(cancelPoint.x, cancelPoint.y);
+  await page.mouse.down();
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.canvas.dispatchEvent(new PointerEvent('pointercancel', { pointerId: view.dsController.touchPointer }));
+  });
+  await page.mouse.up();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
+  await page.locator('#ds-stylus').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Euler } = await import('three');
+    view.ds.root.quaternion.setFromEuler(new Euler(.15, -.2, Math.PI));
+    view.setDsHinge(155);
+  });
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('#play-zoom').fill('65');
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setDeviceMetricsOverride', {
+    width: 390, height: 844, deviceScaleFactor: 2, mobile: false,
+  });
+  const button = await page.locator('#ds-stylus').boundingBox();
+  expect(button.width).toBeGreaterThanOrEqual(44);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{
+    id: 1, x: button.x + button.width / 2, y: button.y + button.height / 2,
+  }] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'held');
+  const phonePointer = await screenPointer(44, 148);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ id: 1, ...phonePointer }] });
+  await expect.poll(async () => (await framePixels(page, { x: 44, y: 148 })).probe).toEqual([255, 255, 0]);
+  await expect.poll(async () => (await tipPlacement(phonePointer)).error).toBeLessThan(.25);
+  expect((await tipPlacement(phonePointer)).facing).toBeGreaterThan(.8);
+  await page.screenshot({ path: testInfo.outputPath('ds-stylus-phone.png') });
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await cdp.detach();
+  await page.locator('#ds-stylus').click();
+  await page.locator('#ds-open').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  await page.locator('#ds-close').click();
+  await page.locator('#ds-stylus').click();
+  await page.locator('#select-gba').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-stylus', 'docked');
+  await expect(page.locator('#ds-stylus')).not.toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test('DS independently articulates its hinge and locks a gameplay pose without changing the desk pose', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));

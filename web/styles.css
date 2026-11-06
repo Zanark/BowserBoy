@@ -38,7 +38,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #hardware-targets { pointer-events: none; }
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 #hardware-targets button:focus-visible { outline: 2px solid #f4edc1; outline-offset: 3px; }
-.scene-hint { position: absolute; bottom: max(104px, calc(env(safe-area-inset-bottom) + 88px)); left: 16px; right: 16px; margin: 0; text-align: center; color: #bbc3cc; font: 11px/1.7 var(--sans); pointer-events: none; text-shadow: 0 1px 5px #000; }
+#hardware-targets #ds-stylus { cursor: grab; }
+#hardware-targets #ds-stylus[aria-pressed=true] { border: 1px solid #8bff78; background: #080b35e6; color: #b8ff8a; font: 9px var(--sans); cursor: pointer; }
+.scene-hint { position: absolute; bottom: max(28px, calc(env(safe-area-inset-bottom) + 24px)); left: max(12px, env(safe-area-inset-left)); right: 12px; margin: 0; text-align: left; color: #bbc3cc; font: 11px/1.3 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; text-shadow: 0 1px 5px #000; }
 .scene-actions { --dock-start: #2c2139ef; --dock-end: #14121eee; --dock-line: #c3a0ed40; --dock-ink: #cdbfe0; --dock-active: #b7a4ee20; --dock-bright: #e0d5ff; --dock-ring: #cdacff45; --dock-glow: #a763e51a; --dock-tooltip: #20192ef5; position: absolute; bottom: max(44px, calc(env(safe-area-inset-bottom) + 28px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; border: 1px solid var(--dock-line); border-radius: 18px; background: linear-gradient(150deg,var(--dock-start),var(--dock-end)); box-shadow: 0 12px 35px #0008, inset 0 1px var(--dock-ring); backdrop-filter: blur(20px); white-space: nowrap; z-index: 2; }
 .desk[data-console=ds] .scene-actions { --dock-start: #171a70ef; --dock-end: #080b35ee; --dock-line: #36d9ff70; --dock-ink: #b9dfff; --dock-active: #245bff45; --dock-bright: #eaf5ff; --dock-ring: #36d9ff55; --dock-glow: #245bff35; --dock-tooltip: #080b35f5; }
 .scene-actions button { position: relative; display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 10px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--dock-ink); transition: background .15s, box-shadow .15s; }
@@ -208,11 +210,8 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .action-divider { display: none; }
   .speed-menu { bottom: max(156px,calc(env(safe-area-inset-bottom) + 140px)); }
   .scene-actions kbd, #lamp-label, #room-label { display: none; }
-  .scene-hint { bottom: max(154px,calc(env(safe-area-inset-bottom) + 138px)); font-size: 10px; padding: 0 12px; }
+  .scene-hint { font-size: 10px; }
   .tools-drawer { padding: 22px; }
-}
-@media (max-width: 360px) {
-  .scene-hint { bottom: max(198px, calc(env(safe-area-inset-bottom) + 182px)); }
 }
 @media (max-height: 500px) {
   .desk-heading { top: 16px; }

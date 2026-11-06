@@ -1,0 +1,43 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/87
+Milestone: Pick up the side stylus and draw with a camera-facing pen.
+Dependencies: 79 separate DS; 87 DS orientation; 88 precise touchscreen input.
+Purpose: Make the physical side stylus glow on hover and usable as a pen without
+covering the lower LCD with a long sideways shaft.
+
+Tasks:
+- [x] Trace existing model, pointer routing, pose bounds and native touch input.
+- [x] Add isolated hover glow and pickup of the docked stylus.
+- [x] Keep the held nib under the pointer with the back facing the camera.
+- [x] Preserve direct LCD input, pose framing and real blur/cancel cleanup.
+- [x] Move gameplay hints to one bottom-left line instead of over the play area.
+- [x] Qualify native drawing, return controls, orientations and phone-sized input.
+- [x] Update affected documentation, tracking and owned continuity.
+- [ ] Owner visual/device review.
+
+Acceptance criteria:
+The actual side stylus glows on hover without changing lime console buttons.
+Click/tap picks it up; its nib stays at the pointer while the shaft points
+toward the camera. Drawing uses unchanged physical LCD UVs, respects lid/body
+occlusion, and remains correct when rotated, zoomed or resized. Escape,
+right-click or Put back returns it; blur, cancellation, modal tools, console
+and view changes safely release input and dock it. Direct mouse/touch drawing,
+GBA behavior, lighting, paint, saves and the frozen book remain unchanged.
+Gameplay hints stay on one bottom-left line, with ellipsis on narrow screens.
+
+Completion evidence:
+Syntax,35units and build pass. Final five-case Edge feature gate passes1.6m,
+including native pen drawing and tip projection, back facing the camera,
+Escape/right-click/keyboard/Put back, cancellation, modal/view/system cleanup
+and upside-down390x844DPR2touch. Hint layout passes1440/390/320px.
+Actual desktop/phone pen captures reviewed. Owner/device acceptance remains open.
+
+Completion log:
+2026-11-07: Owner supplies a pen-over-DS reference and requests hover glow,
+pickup and a camera-facing back that does not obscure the screen. Reuse
+native touch routing; isolate stylus materials from shared lime controls.
+Keep dock geometry in framing bounds and move only the non-pickable held
+visual, so pen motion cannot change the gameplay camera or block its own ray.
+2026-11-07: Regression exposes shared GBA Escape handling opening DS tools
+before the pen can return. Preserve shared move/popover precedence, then let
+the DS controller own Escape. Final native pen case passes22.8s; no UV offset.

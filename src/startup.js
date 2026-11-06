@@ -72,7 +72,6 @@ export function drawStartup(canvas, elapsed, reducedMotion = false) {
   context.globalAlpha = 1;
   context.restore();
 }
-
 export async function playStartup(view) {
   await loadBrand();
   const canvas = document.createElement('canvas');
@@ -123,6 +122,7 @@ export async function playStartupSound({ volume, muted }) {
               gain.gain.setValueAtTime(level * (8 - step) / 8,
                 start + .002 + (duration - .012) * step / 8);
             }
+
             gain.gain.setValueAtTime(level / 8, start + duration - .008);
             gain.gain.linearRampToValueAtTime(0, start + duration);
             oscillator.connect(gain).connect(audio.destination);
@@ -134,6 +134,45 @@ export async function playStartupSound({ volume, muted }) {
       })(),
       new Promise((_, reject) => {
         timer = setTimeout(() => reject(new Error('The browser did not allow startup audio. Check its sound permissions.')), 4000);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+    await audio.close();
+  }
+}
+
+export async function playDsStartupSound({ volume, muted }) {
+  if (muted || volume === 0) return;
+  const audio = new AudioContext();
+  let timer;
+  try {
+    await Promise.race([
+      (async () => {
+        await audio.resume();
+        const started = audio.currentTime + .02;
+        await new Promise(resolve => {
+          for (const [index, frequency] of [587.33, 739.99, 880, 1174.66, 1318.51].entries()) {
+            const start = started + index * .14;
+            const duration = .85;
+            for (const [partial, level] of [[1, 1], [2.001, .18], [3.99, .045]]) {
+              const oscillator = audio.createOscillator(), gain = audio.createGain();
+              oscillator.type = 'sine';
+              oscillator.frequency.value = frequency * partial;
+              gain.gain.setValueAtTime(0, start);
+              gain.gain.linearRampToValueAtTime(volume / 100 * .075 * level, start + .012);
+              gain.gain.exponentialRampToValueAtTime(volume / 100 * level * .00001, start + duration - .04);
+              gain.gain.linearRampToValueAtTime(0, start + duration);
+              oscillator.connect(gain).connect(audio.destination);
+              oscillator.start(start);
+              oscillator.stop(start + duration + .005);
+              if (index === 4 && partial === 1) oscillator.onended = resolve;
+            }
+          }
+        });
+      })(),
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('The browser did not allow DS startup audio. Check its sound permissions.')), 4000);
       }),
     ]);
   } finally {

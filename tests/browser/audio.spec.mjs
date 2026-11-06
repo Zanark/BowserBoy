@@ -12,6 +12,7 @@ const audioReady = async (page) => {
 
 test('power-on chime renders a crisp chip arpeggio with volume, mute and context cleanup intact', async ({ page }) => {
   await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   const result = await page.evaluate(async () => {
     const { playStartupSound } = await import('./src/startup.js');
     const NativeAudioContext = window.AudioContext;
@@ -83,6 +84,86 @@ test('power-on chime renders a crisp chip arpeggio with volume, mute and context
   await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'false');
   await expect.poll(() => page.evaluate(() => window.startupWaves)).toEqual(['square', 'square', 'square']);
   await expect(page.locator('#power-label')).toHaveText('POWER ON / INSERT CARTRIDGE');
+});
+
+test('DS power-on renders its own soft-glass chime and honors mute, cleanup and physical power', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  const result = await page.evaluate(async () => {
+    const { playDsStartupSound } = await import('./src/startup.js');
+    const NativeAudioContext = window.AudioContext, renders = [], waves = [];
+    let created = 0, closed = 0;
+    window.AudioContext = class extends OfflineAudioContext {
+      constructor() { super(1, 96000, 48000); created++; }
+      resume() {
+        renders.push(new Promise((resolve, reject) =>
+          setTimeout(() => this.startRendering().then(resolve, reject), 0)));
+        return Promise.resolve();
+      }
+      createOscillator() {
+        const oscillator = super.createOscillator(), start = oscillator.start.bind(oscillator);
+        oscillator.start = (...args) => { waves.push(oscillator.type); return start(...args); };
+        return oscillator;
+      }
+      close() { closed++; return Promise.resolve(); }
+    };
+    try {
+      await playDsStartupSound({ volume: 100, muted: true });
+      await playDsStartupSound({ volume: 0, muted: false });
+      const silentContexts = created;
+      const render = async volume => {
+        await playDsStartupSound({ volume, muted: false });
+        return (await renders.at(-1)).getChannelData(0);
+      };
+      const full = await render(100), half = await render(50);
+      const peak = samples => samples.reduce((max, value) => Math.max(max, Math.abs(value)), 0);
+      return { silentContexts, created, closed, waves, peak: peak(full),
+        volumeRatio: peak(half) / peak(full),
+        opening: peak(full.subarray(0, 48000 * .02)),
+        overlappingTail: peak(full.subarray(48000 * .8, 48000)),
+        tail: peak(full.subarray(48000 * 1.5)) };
+    } finally { window.AudioContext = NativeAudioContext; }
+  });
+  expect(result.silentContexts).toBe(0);
+  expect(result.created).toBe(2); expect(result.closed).toBe(2);
+  expect(result.waves).toEqual(Array(30).fill('sine'));
+  expect(result.peak).toBeGreaterThan(.03); expect(result.peak).toBeLessThan(.3);
+  expect(result.volumeRatio).toBeCloseTo(.5, 2);
+  expect(result.opening).toBeLessThan(.00001);
+  expect(result.overlappingTail).toBeGreaterThan(.001);
+  expect(result.tail).toBeLessThan(.00001);
+  await test.info().attach('ds-original-chime-audio', { body: JSON.stringify(result), contentType: 'application/json' });
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.evaluate(() => {
+    window.dsStartupWaves = [];
+    const start = OscillatorNode.prototype.start;
+    OscillatorNode.prototype.start = function (...args) {
+      window.dsStartupWaves.push(this.type);
+      return start.apply(this, args);
+    };
+  });
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect(await page.evaluate(() => window.dsStartupWaves)).toEqual([]);
+  await page.locator('#ds-hardware-power').click();
+  await expect(page.locator('#ds-tools')).toBeVisible();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'on');
+  expect(await page.evaluate(() => window.dsStartupWaves)).toEqual(Array(15).fill('sine'));
+  await page.locator('#ds-power').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'off');
+  expect(await page.evaluate(() => window.dsStartupWaves)).toHaveLength(15);
+  await page.locator('#ds-mute').check();
+  await page.locator('#ds-power').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'on');
+  expect(await page.evaluate(() => window.dsStartupWaves)).toHaveLength(15);
+  await page.locator('#ds-power').click();
+  await page.locator('#ds-mute').uncheck();
+  await page.evaluate(() => {
+    window.AudioContext = class { constructor() { throw new Error('test audio permission denied'); } };
+  });
+  await page.locator('#ds-power').click();
+  await expect(page.locator('#ds-status')).toContainText('DS startup chime could not play: test audio permission denied');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'on');
 });
 
 test('audio-paced default retains live PCM reserve and normal cartridge speed through steady-state stalls', async ({ page }) => {

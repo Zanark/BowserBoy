@@ -1,0 +1,34 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/88
+Milestone: Both DS LCDs illuminate their surrounding shell like the GBA.
+Dependencies: 79 separate DS; 43 framebuffer-driven LCD lighting.
+Purpose: Keep the DS shell and controls faintly visible in a dark room using
+the colors of each actual screen, not extra room lighting.
+
+Tasks:
+- [x] Reuse GBA ScreenIllumination independently on both physical DS LCDs.
+- [x] Keep emitters attached to each LCD through hinge and body articulation.
+- [x] Qualify framebuffer colors, black/off cleanup and actual shell spill.
+- [x] Qualify bottom-left single-line gameplay hints across viewport sizes.
+- [x] Update documentation, tracking and owned continuity.
+- [ ] Owner visual/device review.
+
+Acceptance criteria:
+Upper and lower LCDs sample their own framebuffer regions and cast matching
+soft local spill. Black pixels and power-off do not leave residual light.
+Hinge/body changes carry the lights with the screens. Existing room lighting,
+GBA lighting, input, saves, paint colors and the frozen book remain unchanged.
+
+Completion evidence:
+Syntax,35units and build pass. Final five-case Edge feature gate passes1.6m.
+Native framebuffer and paused independent red/blue, rendered white/black
+control pixels, hinge/body attachment and power-off cleanup pass45.0s.
+Hint layout passes1440/390/320px. Actual dark-room/colored captures reviewed.
+Owner/device acceptance remains open; no global exposure/paint changes.
+
+Completion log:
+2026-11-07: Owner reports an effectively black DS shell around bright gameplay
+and requests the same framebuffer-driven local light spill already used by GBA.
+2026-11-07: Fix initial construction before the DS model exists; hide off
+emitters to preserve GBA shader workload. Capture native dark-room evidence
+after exposure settles rather than recording a stale warm-room frame.

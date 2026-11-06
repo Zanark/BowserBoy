@@ -174,7 +174,22 @@ Touch coordinates follow the lower LCD in flat, tilted or upside-down gameplay
 poses and at different zoom levels. Twin Lab's 8px brush surrounds the clicked
 native pixel, staying inside the LCD at its edges; drawing is not confined below
 the instruction text. The hidden runtime does not take focus from the desk
-while drawing. Releasing the pointer or losing window focus releases the stylus.
+while drawing. Releasing the pointer ends native touch, but keeps a picked-up
+pen in your hand. Hover the docked side stylus for a glow, then click/tap to
+pick it up. Its nib stays at the pointer; its back faces you to avoid hiding
+the screen. Direct mouse/touch drawing still works without picking it up.
+**Escape**, right-click or **Put back** docks the pen. Cancellation, focus loss,
+tools, Inspect or console changes dock it and release native input.
+Hints use one bottom-left line; narrow screens truncate long hints.
+
+Each DS LCD casts its own soft framebuffer-colored light, like the GBA.
+Black screens and power-off leave no residual screen light. These local
+emitters follow the lid hinge and body pose without raising room lighting.
+
+The physical DS Power switch plays an original, soft-glass startup arpeggio,
+not the GBA tune or a manufacturer's recording. **Mute DS** silences it.
+It plays only on explicit power-on, not page load, console selection or
+power-off. An empty-slot power-on shows cartridge guidance; Power off still works.
 
 The corrected Twin Lab is a newly generated ROM with a different content hash.
 Older demo checkpoints remain associated with the older ROM and do not resume
@@ -215,7 +230,7 @@ The visible front-left power button has a minimum 44px pointer target and
 uses the same lifecycle as **Power off/on DS** in tools. Without a cartridge,
 it opens DS tools with an insertion explanation rather than pretending to boot.
 
-**Scope:** local, unpublished prototype for original DS direct boot.
+**Scope:** prototype for original DS direct boot with local cartridge files.
 No DSi, wireless/multiplayer, firmware-menu boot, offline-first guarantee or
 universal commercial-game compatibility. The GBA's CRT presets, advanced
 settings, three save slots, speed controls and LCD-only fullscreen are not

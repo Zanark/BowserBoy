@@ -99,6 +99,10 @@ export class HandheldScene {
     this.model.root.position.copy(tablePosition);
     this.model.root.quaternion.copy(tableQuaternion);
     this.ds = createDsHandheld();
+    this.dsScreenIllumination = this.ds.screens.map(screen => new ScreenIllumination(screen));
+    for (const illumination of this.dsScreenIllumination) {
+      illumination.light.visible = illumination.controlSpill.visible = false;
+    }
     this.ds.root.position.copy(dsTablePosition);
     this.ds.root.quaternion.copy(dsTableQuaternion);
     this.scene.add(this.ds.root);
@@ -146,6 +150,11 @@ export class HandheldScene {
       if (event.button !== 0) return;
       this.canvas.focus({ preventScroll: true });
       const hit = this.pick(event);
+      if (!this.transition && hit?.object.userData.dsStylus && this.mode !== 'inspecting') {
+        this.dsController?.pickUpStylus(event);
+        return;
+      }
+      if (this.dsController?.stylusHeld && this.console === 'ds' && this.mode === 'playing') return;
       if (this.consoleMove) return;
       if (this.pearMove) {
         if (this.pearMove.pointerId === undefined && this.mode === 'table' && !this.transition) {
@@ -217,6 +226,7 @@ export class HandheldScene {
         }
       } else {
         const hit = this.pick(event);
+        this.dsController?.hoverStylus(!!hit?.object.userData.dsStylus);
         this.canvas.style.cursor = this.mode === 'inspecting' || (this.mode === 'table' && hit) ?
           'grab' : hit ? 'pointer' : 'default';
       }
@@ -448,7 +458,8 @@ export class HandheldScene {
     this.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.raycaster.setFromCamera(this.pointer, this.camera);
     return this.raycaster.intersectObjects([this.model.root, this.ds.root, this.lamp.root, this.pear.root], true)
-      .find(hit => hit.object !== this.pear.root.getObjectByName('pear-boy soft contact shadow'));
+      .find(hit => hit.object !== this.pear.root.getObjectByName('pear-boy soft contact shadow') &&
+        !(this.dsController?.stylusHeld && hit.object.userData.dsStylus));
   }
 
   tablePoint(event, plane = this.pearMove?.plane ?? new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)) {
@@ -1016,12 +1027,13 @@ export class HandheldScene {
     }
     const faceMoving = this.pear.updateFace(delta, this.pearGaze, this.reducedMotion.matches);
     this.changed ||= buttonsMoving || bodyMoving || limbsMoving || faceMoving || consolesMoving;
+    this.dsController?.paintStylus();
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     this.dsController?.paint(time);
+    const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
     if (!this.screenIllumination.failed) {
-      const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
       try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, lightDelta, !!this.source); }
       catch (error) {
         this.screenIllumination.clear();
@@ -1029,11 +1041,27 @@ export class HandheldScene {
         this.onError(new Error(`LCD light sampling failed: ${error.message}. The game is retained; reload to retry lighting.`));
       }
     }
+    for (const [index, illumination] of this.dsScreenIllumination.entries()) {
+      if (illumination.failed) continue;
+      const source = this.dsController?.powered ? this.ds.screens[index].material.map?.image : null;
+      if (!source) {
+        illumination.clear();
+        illumination.light.visible = illumination.controlSpill.visible = false;
+        continue;
+      }
+      illumination.light.visible = illumination.controlSpill.visible = true;
+      try { illumination.update(source, time, lightDelta, !!this.dsController.source); }
+      catch (error) {
+        illumination.clear();
+        illumination.failed = true;
+        this.onError(new Error(`DS LCD ${index + 1} light sampling failed: ${error.message}. The game is retained; reload to retry lighting.`));
+      }
+    }
     const activeRoot = this.activeModel.root;
     const poseChanged = this.lastModel !== activeRoot || !this.lastPosition?.equals(activeRoot.position) ||
       !this.lastRotation?.equals(activeRoot.quaternion) || !this.lastCamera?.equals(this.camera.position);
     if (!this.source && !this.dsController?.running && !this.dsController?.inserting && !this.cartridgeMotion && !this.changed && !this.dsReflectionsDirty && !poseChanged && !buttonsMoving &&
-        !adapting && this.screenIllumination.settled) return;
+        !adapting && this.screenIllumination.settled && this.dsScreenIllumination.every(light => light.settled)) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     // Sample the actual room once per settled pose/light change, only for DS paint.
     if (this.dsReflectionsDirty && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&

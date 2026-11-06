@@ -1,0 +1,36 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/89
+Milestone: An original soft-glass chime on DS power-on.
+Dependencies: 79 separate DS; 87 physical DS power button.
+Purpose: Give the DS its own non-chiptune startup identity without replacing
+or copying the GBA sound or a manufacturer's startup recording.
+
+Tasks:
+- [x] Synthesize an original overlapping sine-partial chime.
+- [x] Play only on DS power-on; honor DS mute and clean up its audio context.
+- [x] Support real power-on/off with no cartridge, retaining cartridge guidance.
+- [x] Qualify rendered audio, physical power routing and mute/error paths.
+- [x] Update documentation, tracking and owned continuity.
+- [ ] Owner listening/device review.
+
+Acceptance criteria:
+The physical DS power switch produces a distinctly different original tune
+from GBA. Power-off, ordinary page loads and console selection do not play it.
+Muted startup is silent; blocked audio is reported without losing the game.
+The existing GBA tune and runtime audio remain unchanged.
+
+Completion evidence:
+Syntax,35units and build pass. Final five-case Edge feature gate passes1.6m.
+DS offline rendering/physical power case passes6.0s: separate sine partials,
+proportional volume, overlapping decay, mute/zero silence, context cleanup,
+no selection/off chime, empty-slot power and explicit permission failure.
+Existing GBA square-wave startup case passes14.2s unchanged.
+Owner listening/device acceptance remains open; numeric checks are not audition.
+
+Completion log:
+2026-11-07: Owner requests a separate DS startup sound, explicitly not limited
+to an 8-bit style. Use an original soft-glass arpeggio with overlapping decays.
+2026-11-07: Offline rendering reveals nonlinear half volume from a fixed
+exponential floor; scale it with volume. Wait for scene readiness in audio
+fixtures. Keep mute editable without a running cartridge, configuring a native
+core only when one exists. Cancel a superseded run before rebuilding dist.

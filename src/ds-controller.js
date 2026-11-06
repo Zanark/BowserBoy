@@ -4,6 +4,7 @@ import { defaultPreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { canvasTexture } from './handheld.js';
 import { DsSaveStore } from './ds-store.js';
+import { playDsStartupSound } from './startup.js';
 
 const $ = id => document.getElementById(id);
 
@@ -18,11 +19,37 @@ export class DsController {
     this.pending = new Map();
     this.pointers = new Map();
     this.pressed = new Set();
+    this.stylusHeld = false;
+    // Keep the docked geometry in the model's bounds; only its held visual moves.
+    this.heldStylus = this.model.stylus.clone(true);
+    this.heldStylus.name = 'Picked-up camera-facing DS stylus';
+    this.heldStylus.visible = false;
+    this.heldStylus.scale.setScalar(.8);
+    this.heldStylus.traverse(object => {
+      object.castShadow = object.receiveShadow = false;
+      object.raycast = () => {};
+    });
+    view.scene.add(this.heldStylus);
+    this.stylusButton = document.createElement('button');
+    this.stylusButton.id = 'ds-stylus';
+    this.stylusButton.hidden = true;
+    this.stylusButton.addEventListener('pointerenter', () => this.hoverStylus(true));
+    this.stylusButton.addEventListener('pointerleave', () => this.hoverStylus(false));
+    this.stylusButton.addEventListener('focus', () => this.hoverStylus(true));
+    this.stylusButton.addEventListener('blur', () => this.hoverStylus(false));
+    this.stylusButton.addEventListener('click', event => {
+      if (this.stylusHeld) this.returnStylus();
+      else this.pickUpStylus(event.detail ? event : null);
+      view.canvas.focus({ preventScroll: true });
+    });
+    $('hardware-targets').append(this.stylusButton);
+    this.returnStylus();
     this.keyboard = bindKeyboard(window, {
       enabled: event => this.inputAllowed() && !event.target.closest?.('button,input,select,textarea,[contenteditable="true"]'),
       getBindings: () => Object.fromEntries(DS_CONTROLS.map(({ id, code }) => [id, code])),
       onInput: (action, pressed, code) => this.input(action, pressed, `ds-key:${code}`),
       onMenu: () => {
+        if (this.stylusHeld) { this.returnStylus(); return true; }
         if (view.console !== 'ds' || $('ds-tools').open || document.querySelector('dialog[open]')) return false;
         this.openTools(); return true;
       },
@@ -54,6 +81,7 @@ export class DsController {
       $('hardware-targets').append(button);
     }
     this.stylusDown = event => {
+      this.trackStylus(event);
       if (!this.inputAllowed() || event.button !== 0 || this.touchPointer !== undefined) return;
       const point = this.touchAt(event);
       if (!point) return;
@@ -65,6 +93,7 @@ export class DsController {
     };
     view.canvas.addEventListener('pointerdown', this.stylusDown);
     view.canvas.addEventListener('pointermove', event => {
+      this.trackStylus(event);
       if (event.pointerId !== this.touchPointer) return;
       const point = this.touchAt(event);
       if (!point) { this.releaseTouch(); return; }
@@ -73,10 +102,23 @@ export class DsController {
     });
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) view.canvas.addEventListener(name, event => {
       if (event.pointerId === this.touchPointer) this.releaseTouch();
+      if (name === 'pointercancel') this.returnStylus();
+      else if (name === 'pointerup' && event.pointerType !== 'mouse') this.stylusPointer = null;
     });
-    window.addEventListener('blur', () => this.releaseInputs());
+    view.canvas.addEventListener('pointerenter', event => this.trackStylus(event));
+    view.canvas.addEventListener('pointerleave', () => {
+      this.stylusPointer = null;
+      this.hoverStylus(false);
+      view.changed = true;
+    });
+    view.canvas.addEventListener('contextmenu', event => {
+      if (!this.stylusHeld) return;
+      event.preventDefault();
+      this.returnStylus();
+    });
+    window.addEventListener('blur', () => { this.stylusPickup = false; this.releaseInputs(); });
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') this.releaseInputs();
+      if (document.visibilityState === 'hidden') { this.stylusPickup = false; this.releaseInputs(); }
     });
     window.addEventListener('beforeunload', event => {
       if (this.running) { event.preventDefault(); event.returnValue = ''; }
@@ -127,8 +169,9 @@ export class DsController {
         this.feedback('DS backup restored. GBA saves are unchanged.');
       });
     });
-    $('ds-mute').addEventListener('change', () => void this.operation(() =>
-      this.command('configure', this.preferences())));
+    $('ds-mute').addEventListener('change', () => {
+      if (this.running) void this.operation(() => this.command('configure', this.preferences()));
+    });
     $('ds-cancel').addEventListener('click', () => this.launchCallbacks?.reject(new Error('DS launch cancelled. Choose a cartridge to retry.')));
     this.autosave = setInterval(() => {
       if (this.running && !this.busy && !this.paused && this.storageAvailable) void this.operation(() => this.save());
@@ -174,26 +217,40 @@ export class DsController {
     finally { this.busy = false; this.update(); }
   }
   async togglePower() {
-    if (this.running) {
-      await this.save();
+    if (this.powered) {
+      if (this.running) await this.save();
       this.clear();
       this.powered = false;
       this.showPowerOff();
-      this.feedback('DS powered off. Cartridge retained; Power on boots from its in-game save data.');
-    } else if (this.cartridge) await this.launch(null, this.battery ?? null);
-    else {
-      this.feedback('Insert a DS .nds cartridge or try Twin Lab to power on.');
-      this.openTools();
+      this.feedback(this.cartridge ? 'DS powered off. Cartridge retained; Power on boots from its in-game save data.' : 'DS powered off.');
+    } else {
+      this.powered = true;
+      const sound = playDsStartupSound(this.preferences()).catch(error => {
+        console.error('DS startup sound:', error);
+        return error;
+      });
+      try {
+        if (this.cartridge) await this.launch(null, this.battery ?? null);
+        else {
+          this.status('INSERT CARTRIDGE', 'OPEN DS CARTRIDGES');
+          this.feedback('Insert a DS .nds cartridge or try Twin Lab to play.');
+          this.openTools();
+        }
+      } finally {
+        const error = await sound;
+        if (error) this.feedback(`The DS startup chime could not play: ${error.message}`, true);
+      }
     }
   }
   update() {
     for (const id of ['ds-upload', 'ds-demo']) $(id).disabled = this.busy;
-    $('ds-power').disabled = this.busy || !this.cartridge;
-    $('ds-power').textContent = this.running ? 'Power off DS' : 'Power on DS';
+    $('ds-power').disabled = this.busy;
+    $('ds-power').textContent = this.powered ? 'Power off DS' : 'Power on DS';
     $('ds-hardware-power').setAttribute('aria-pressed', String(this.powered));
-    $('ds-hardware-power').setAttribute('aria-label', this.running ? 'Power off DS' : 'Power on DS');
-    $('ds-hardware-power').title = this.running ? 'Power off DS' : 'Power on DS';
-    for (const id of ['ds-pause', 'ds-export', 'ds-import', 'ds-mute']) $(id).disabled = this.busy || !this.running;
+    $('ds-hardware-power').setAttribute('aria-label', this.powered ? 'Power off DS' : 'Power on DS');
+    $('ds-hardware-power').title = this.powered ? 'Power off DS' : 'Power on DS';
+    $('ds-mute').disabled = this.busy;
+    for (const id of ['ds-pause', 'ds-export', 'ds-import']) $(id).disabled = this.busy || !this.running;
     for (const id of ['ds-save', 'ds-restore']) $(id).disabled = this.busy || !this.running || !this.storageAvailable;
     $('ds-pause').textContent = this.paused ? 'Resume DS' : 'Pause DS';
     $('ds-cancel').hidden = !this.launchCallbacks;
@@ -380,7 +437,8 @@ export class DsController {
     const bounds = this.view.canvas.getBoundingClientRect();
     this.view.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.view.raycaster.setFromCamera(this.view.pointer, this.view.camera);
-    const hit = this.view.raycaster.intersectObject(this.model.root, true)[0];
+    const hit = this.view.raycaster.intersectObject(this.model.root, true)
+      .find(hit => !(this.stylusHeld && hit.object.userData.dsStylus));
     return hit?.object === this.model.screens[1] ? dsTouchFromUv(hit.uv) : null;
   }
   touch(point, pressed) {
@@ -395,8 +453,116 @@ export class DsController {
   }
   releaseInputs() {
     this.keyboard.release(); this.releaseTouch();
+    this.returnStylus();
     for (const { action, source } of this.pointers.values()) this.input(action, false, source);
     this.pointers.clear();
+  }
+  stylusAvailable() {
+    return this.view.console === 'ds' && this.view.mode === 'playing' &&
+      !this.view.transition && !this.busy && !document.querySelector('dialog[open]');
+  }
+  hoverStylus(hovered) {
+    const available = !this.view.transition && !this.busy &&
+      (this.view.mode === 'table' || this.stylusAvailable());
+    this.model.stylusGlow.visible = hovered && available && !this.stylusHeld;
+    this.model.stylusPlastic.emissive.set('#8bff78');
+    this.model.stylusPlastic.emissiveIntensity = this.model.stylusGlow.visible ? 45 : this.stylusHeld ? 8 : 0;
+    this.view.changed = true;
+  }
+  pickUpStylus(event) {
+    if (this.busy || this.view.transition || document.querySelector('dialog[open]')) return;
+    if (this.view.mode === 'table') {
+      void this.operation(async () => {
+        await this.selectConsole('ds');
+        this.stylusPickup = true;
+      });
+      return;
+    }
+    if (!this.stylusAvailable()) return;
+    this.releaseTouch();
+    this.stylusHeld = true;
+    this.model.stylus.visible = false;
+    this.view.host.dataset.dsStylus = 'held';
+    this.stylusButton.setAttribute('aria-label', 'Return DS stylus');
+    this.stylusButton.setAttribute('aria-pressed', 'true');
+    this.stylusButton.title = 'Return stylus (Escape or right-click)';
+    this.stylusButton.textContent = 'Put back';
+    this.previousStylusHint = $('scene-hint').textContent;
+    this.stylusHint = 'Stylus picked up. Click or drag on the lower LCD to draw. Escape, right-click or Put back returns it.';
+    $('scene-hint').textContent = this.stylusHint;
+    this.hoverStylus(false);
+    if (event) this.trackStylus(event);
+    else {
+      const point = this.view.project(this.model.screens[1]);
+      const bounds = this.view.canvas.getBoundingClientRect();
+      this.stylusPointer = { clientX: bounds.left + point.x, clientY: bounds.top + point.y };
+    }
+    this.view.canvas.focus({ preventScroll: true });
+  }
+  returnStylus() {
+    const held = this.stylusHeld;
+    this.stylusHeld = false;
+    this.heldStylus.visible = false;
+    this.model.stylus.visible = true;
+    this.stylusPointer = null;
+    this.view.host.dataset.dsStylus = 'docked';
+    this.stylusButton.setAttribute('aria-label', 'Pick up DS stylus');
+    this.stylusButton.setAttribute('aria-pressed', 'false');
+    this.stylusButton.title = 'Pick up stylus; click or drag on the lower LCD to draw';
+    this.stylusButton.textContent = '';
+    this.hoverStylus(false);
+    if (held) {
+      this.releaseTouch();
+      if ($('scene-hint').textContent === this.stylusHint) $('scene-hint').textContent = this.previousStylusHint;
+    }
+    this.view.canvas.style.cursor = 'default';
+    this.view.changed = true;
+  }
+  trackStylus(event) {
+    if (!this.stylusHeld || (this.touchPointer !== undefined && event.pointerId !== this.touchPointer)) return;
+    const bounds = this.view.canvas.getBoundingClientRect();
+    this.stylusPointer = event.clientX >= bounds.left && event.clientX < bounds.right &&
+      event.clientY >= bounds.top && event.clientY < bounds.bottom ?
+      { clientX: event.clientX, clientY: event.clientY } : null;
+    this.view.changed = true;
+  }
+  paintStylus() {
+    if (this.stylusPickup && (this.view.console !== 'ds' || this.view.mode !== 'playing' ||
+        document.querySelector('dialog[open]'))) this.stylusPickup = false;
+    if (this.model.stylusGlow.visible && (this.view.transition || document.querySelector('dialog[open]'))) this.hoverStylus(false);
+    if (this.stylusPickup && !this.view.transition) {
+      this.stylusPickup = false;
+      this.pickUpStylus();
+    }
+    if (!this.stylusHeld) return;
+    if (!this.stylusAvailable()) { this.returnStylus(); return; }
+    const visible = !!this.stylusPointer;
+    if (this.heldStylus.visible !== visible) this.view.changed = true;
+    this.heldStylus.visible = visible;
+    this.view.canvas.style.cursor = visible ? 'none' : 'default';
+    if (!visible) return;
+    const bounds = this.view.canvas.getBoundingClientRect();
+    const ndc = new THREE.Vector2(
+      (this.stylusPointer.clientX - bounds.left) / bounds.width * 2 - 1,
+      -(this.stylusPointer.clientY - bounds.top) / bounds.height * 2 + 1);
+    this.view.raycaster.setFromCamera(ndc, this.view.camera);
+    const hit = this.view.raycaster.intersectObject(this.model.root, true)
+      .find(hit => !hit.object.userData.dsStylus);
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(
+      this.view.camera.getWorldDirection(new THREE.Vector3()),
+      this.model.screens[1].getWorldPosition(new THREE.Vector3()));
+    const tip = hit?.point.clone() ?? this.view.raycaster.ray.intersectPlane(plane, new THREE.Vector3());
+    if (!tip) { this.heldStylus.visible = false; this.view.canvas.style.cursor = 'default'; return; }
+    // Lift along the pointer ray, not the LCD normal, so the tip never shifts on screen.
+    tip.addScaledVector(this.view.raycaster.ray.direction, this.touchPointer === undefined ? -.06 : -.008);
+    const back = new THREE.Vector3(ndc.x > .65 ? -.32 : .32, ndc.y > .65 ? -.42 : .42, 1)
+      .applyQuaternion(this.view.camera.quaternion).normalize();
+    this.heldStylus.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), back);
+    const offset = this.model.stylusTip.position.clone().multiply(this.heldStylus.scale)
+      .applyQuaternion(this.heldStylus.quaternion);
+    const position = tip.sub(offset);
+    this.view.changed ||= !this.heldStylus.position.equals(position);
+    this.heldStylus.position.copy(position);
   }
   paint(time) {
     if (this.inserting) {
@@ -428,6 +594,7 @@ export class DsController {
     }
   }
   projectControls() {
+    this.projectStylus();
     for (const [id, control] of this.model.controls) {
       const button = id === 'power' ? $('ds-hardware-power') : document.querySelector(`[data-ds-control="${id}"]`);
       button.hidden = this.view.console !== 'ds' || this.view.mode !== 'playing' || !!this.view.transition;
@@ -451,5 +618,21 @@ export class DsController {
       button.style.width = `${Math.max(minimum, control.width * scale)}px`;
       button.style.height = `${Math.max(minimum, control.height * scale)}px`;
     }
+  }
+  projectStylus() {
+    const button = this.stylusButton;
+    button.hidden = !this.stylusAvailable();
+    button.disabled = !this.stylusAvailable();
+    if (button.hidden) return;
+    const world = this.model.stylus.getWorldPosition(new THREE.Vector3());
+    const point = world.clone().project(this.view.camera);
+    this.view.raycaster.setFromCamera(new THREE.Vector2(point.x, point.y), this.view.camera);
+    const hit = this.view.raycaster.intersectObject(this.model.root, true)
+      .find(hit => !this.stylusHeld || !hit.object.userData.dsStylus);
+    button.hidden = Math.abs(point.x) > .95 || Math.abs(point.y) > .95 || point.z < -1 || point.z > 1 ||
+      (!!hit && !hit.object.userData.dsStylus && hit.distance < this.view.camera.position.distanceTo(world) - .16);
+    const projected = this.view.project(this.model.stylus);
+    button.style.left = `${projected.x}px`; button.style.top = `${projected.y}px`;
+    button.style.width = '44px'; button.style.height = '44px';
   }
 }

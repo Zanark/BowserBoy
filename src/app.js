@@ -929,6 +929,7 @@ const keyboard = bindKeyboard(window, {
       return true;
     }
     if (document.fullscreenElement === $('screen-focus')) { closeScreenFullscreen(); return true; }
+    if (view?.console === 'ds') return false;
     if ($('tools').open || $('help').open || $('frame-host').open || $('ds-tools').open) return false;
     openTools();
     return true;

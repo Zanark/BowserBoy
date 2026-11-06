@@ -136,6 +136,28 @@ Projected targets reject back-facing/offscreen caps and lid occlusion.
 Touch raycasts require the lower LCD to be the first actual DS surface,
 preventing stylus input through a folded lid or the rear shell.
 
+The side stylus has isolated materials, a hover halo and a tip anchor.
+A scene-level non-raycastable clone is the held visual; original docked
+geometry remains in pose bounds so pen movement cannot reframe the camera.
+The tip follows the pointer ray, lifted along that same ray rather than the
+LCD normal. Local +Y points mostly toward the camera. A projected 44px target
+supports touch/keyboard pickup and return; native touch still uses unchanged
+LCD UVs. Escape returns the held pen before opening tools. Blur/cancel,
+dialogs, Inspect and console changes clear it and native input.
+
+Each DS LCD owns its own existing `ScreenIllumination` instance, sampling
+the corresponding copied framebuffer texture, never the combined display.
+Both the forward area emitter and dim control bounce inherit the screen's
+hinge/body transform. Power-off clears and hides DS emitters, avoiding four
+unnecessary lights in GBA-only rendering. Sampling errors are surfaced once
+and disable that emitter until reload; paused frames remain sampled.
+The idle render gate waits for all LCD light smoothing to settle.
+
+`playDsStartupSound` synthesizes a separate original sine-partial glass chime
+on explicit DS power-on. It honors DS mute/volume, closes its audio context,
+reports blocked audio and does not replace the GBA square-wave tune.
+Empty-slot power is real powered-idle state with cartridge guidance.
+
 The physical shell uses #0077FF blue-cyan, metalness .80, roughness .35, deterministic
 fine-grain roughness/bump and clearcoat. Lime hinge/stylus plastic is dielectric
 (.40 roughness); blue D-pad and lime convex controls use .45 roughness.

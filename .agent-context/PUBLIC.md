@@ -7,6 +7,23 @@ Pixel Lab (GBA) and Twin Lab (DS) demos are included in the website build.
 
 ## Source and verification
 
+Current November7 follow-up: workstreams89-91 add a pickable camera-facing DS
+pen, bottom-left one-line hints, independent framebuffer-driven LCD spill and
+an original sine-partial DS power-on chime. Empty-slot power is powered-idle,
+mute remains editable before boot, and audio permission errors are visible.
+Shared menu routing gives DS Escape to its controller after shared move/popover
+handling. Physical touch coordinates and existing GBA tune remain unchanged.
+Syntax,35units,build and the final five-case Edge feature gate pass1.6m.
+Native pen/cleanup/upside-down390x844DPR2, independent screen colors/black/off/
+hinge/rendered cap spill,1440/390/320pxhints and both startup sounds are checked.
+Actual pen/light captures reviewed; listening/device acceptance remains open.
+The preceding eight-case run separately passes native lifecycle/precision/
+hinge but has three documented failures; it is not an all-eight green claim.
+Owner now explicitly authorizes commit/push and monitored gated deployment.
+Older no-push/local-only statements below are historical, not current authority.
+Existing Pages includes new tests automatically and requires all19browser
+shards plus build; a public deployment requires an actual successful run.
+
 - `web/`: HTML documents and CSS; emitted at the website root.
 - `src/`, `assets/`: application code and runtime artwork.
 - `scripts/`, `tests/`: allowlisted build/server, tracking and verification.
