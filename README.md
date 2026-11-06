@@ -78,10 +78,11 @@ The GBA's native shader/settings/fullscreen features are not all DS features.
 ![pear-boy beside the separate GBA and DS, lighting the desk](docs/images/pear-boy-table.png)
 
 *Actual local capture: pear-boy spreads warm light across the right side of the
-desk. His longer, thick rope arms and legs swing when you lift him.*
+desk. He sits on the front-right edge with his rope legs dangling below it.*
 
 Drag him upward or sideways, scroll for depth, then release to drop and bounce.
-His eyes follow the cursor; being picked up brings out his scared face.
+His whole face follows the cursor; being picked up brings out his scared face.
+Move him farther back to rest his feet on the table.
 The pear dock button controls power, brightness, movement and reset.
 [Controls and physics limits](docs/GUIDE.md#pear-boy).
 This addition is local, not deployed.

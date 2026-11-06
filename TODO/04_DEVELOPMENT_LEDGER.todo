@@ -14,6 +14,25 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Whole face, seated edge and Chrome Neon emblem:
+  Owner requests whole-face tracking, default edge sitting and dangling feet,
+  plus the supplied Chrome Neon logo without its black matte. Group eyes,
+  mouths and freckles on the curved shell; convert the original-size artwork
+  to RGBA without redrawing. Extend front placement, settle reset poses,
+  clip the shadow and resolve finite desk/fascia contact.
+  An invisible square-expanded ledge trapped feet after returning to the
+  edge; rounded elliptical contact fixes it with a focused unit regression.
+  Clear keyboard-generated throw momentum. Relocate obscured wood probes,
+  retaining actual pixel bounds, and use enough real pointer travel.
+  Foreground pear obscured DS inspection. A distant pickup darkened teal;
+  a lateral camera remained obstructed. Discard both and move the held DS
+  only modestly forward, keeping its original camera and existing lighting.
+  Final all4DS/all6pear browser gate passes10cases in1.9m;3original lighting
+  cases pass separately. Then extract the exact staged subset without pending
+  clock/tracking edits:30units,syntax/build and all13affected browser cases
+  pass in2.6m.34working-tree units also pass. Review actual
+  edge/interior/DS/phone captures; update captioned README figure and guides.
+  Keep79/84open for owner/device review; no push/deployment or full-suite claim.
 - 2026-11-06 / pear-boy lamp, longer ropes and free pickup:
   Owner requests a warm pear-character lamp, its own dock control, thick rope
   limbs, cursor-following/scared face, free3Dlift/drop, broader diffuse lighting

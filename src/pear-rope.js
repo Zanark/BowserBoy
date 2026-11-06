@@ -1,6 +1,7 @@
 import { Vector3 } from 'three';
 
 const step = 1 / 120;
+const tableFront = 10, tableBottom = -2.4;
 
 export class PearRope {
   constructor(points, { radiusAt, radius = .085, tipRadius = .32, tipFloor = tipRadius }) {
@@ -28,6 +29,20 @@ export class PearRope {
     this.accumulator = 0;
     this.quietFrames = 0;
     this.sleeping = true;
+  }
+
+  settle(origin) {
+    this.reset(origin);
+    this.sleeping = false;
+    for (let i = 0; i < 600 && !this.sleeping; i++) this.integrate();
+    this.previous.forEach((point, index) => point.copy(this.positions[index]));
+    this.accumulator = 0;
+    this.sleeping = true;
+  }
+
+  get tipSupported() {
+    const tip = this.positions.at(-1);
+    return Math.abs(tip.y - this.tipFloor) < .01 && tip.z <= tableFront;
   }
 
   update(origin, seconds) {
@@ -98,11 +113,28 @@ export class PearRope {
       for (let i = 1; i <= last; i++) {
         const p = this.positions[i], previous = this.previous[i];
         const floor = i === last ? this.tipFloor : this.radius;
-        if (p.y < floor) {
-          p.y = floor;
-          previous.y = floor;
-          previous.x = p.x - (p.x - previous.x) * .75;
-          previous.z = p.z - (p.z - previous.z) * .75;
+        const radius = i === last ? this.tipRadius : this.radius;
+        const edge = tableFront + radius;
+        if (p.y < floor && p.y > tableBottom - floor && p.z < edge) {
+          if (p.z > tableFront && p.y > 0) {
+            const distance = Math.hypot((p.z - tableFront) / radius, p.y / floor);
+            if (distance < 1) {
+              p.z = tableFront + (p.z - tableFront) / distance;
+              p.y /= distance;
+            }
+          } else if (p.y <= 0 && edge - p.z < floor - p.y) {
+            p.z = edge;
+            previous.z = edge;
+          } else {
+            p.y = floor;
+            previous.y = floor;
+            previous.x = p.x - (p.x - previous.x) * .75;
+            previous.z = p.z - (p.z - previous.z) * .75;
+          }
+        }
+        if (p.y < -35 + floor) {
+          p.y = -35 + floor;
+          previous.y = p.y;
         }
         const x = p.x - this.origin.x, z = p.z - this.origin.z;
         const radial = Math.hypot(x, z), body = this.radiusAt(p.y - this.origin.y);

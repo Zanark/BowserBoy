@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { Vector3 } from 'three';
+import { CatmullRomCurve3, Vector3 } from 'three';
 import { PearRope } from '../../src/pear-rope.js';
 
 function rope() {
@@ -61,4 +61,44 @@ test('rapid pointer moves constrain the pinned rope even between physics steps',
     constrained(a);
     assert.ok(a.positions[0].equals(a.rest[0].clone().add(origin)));
   }
+});
+
+test('legs hang over the finite tabletop, clear its front fascia, and rest on top farther back', () => {
+  const curve = new CatmullRomCurve3([
+    new Vector3(1.2, .65, 2.35), new Vector3(1.7, .4, 3.15), new Vector3(2.05, .36, 3.85),
+  ]);
+  const leg = new PearRope(curve.getSpacedPoints(6), {
+    radiusAt: () => 0, radius: .14, tipRadius: .55, tipFloor: .36,
+  });
+  const edge = new Vector3(18, 0, 7.3);
+  leg.settle(edge);
+  assert.ok(leg.positions[0].equals(leg.rest[0].clone().add(edge)));
+  assert.ok(leg.positions.at(-1).y < -.5, 'the foot must hang below the tabletop');
+  assert.equal(leg.tipSupported, false);
+  for (let i = 1; i < leg.positions.length; i++) {
+    const point = leg.positions[i], radius = i === leg.positions.length - 1 ? .55 : .14;
+    const floor = i === leg.positions.length - 1 ? .36 : .14;
+    const corner = point.z > 10 && point.y > 0 &&
+      Math.hypot((point.z - 10) / radius, point.y / floor) >= 1 - 1e-6;
+    assert.ok(point.y >= floor - 1e-6 || point.z >= 10 + radius - 1e-6 || corner,
+      'hanging rope and foot must not cut through the wooden front edge');
+    assert.ok(Math.abs(point.distanceTo(leg.positions[i - 1]) - leg.lengths[i - 1]) < .02);
+  }
+  simulate(leg, new Vector3(18, 0, 1), 600);
+  assert.equal(leg.tipSupported, true);
+  constrained(leg);
+  simulate(leg, edge, 600);
+  assert.ok(leg.positions.at(-1).y < -.5);
+  assert.equal(leg.sleeping, true);
+});
+
+test('a foot partly over the rounded desk edge slides off instead of resting on an invisible ledge', () => {
+  const leg = new PearRope([new Vector3(0, .65, 9.9), new Vector3(1.9, .36, 10.48)], {
+    radiusAt: () => 0, radius: .14, tipRadius: .55, tipFloor: .36,
+  });
+  leg.settle(new Vector3());
+  assert.ok(leg.positions.at(-1).y < -.5);
+  assert.ok(leg.positions.at(-1).z >= 10.55 - 1e-6);
+  assert.equal(leg.tipSupported, false);
+  assert.ok(Math.abs(leg.positions[0].distanceTo(leg.positions[1]) - leg.lengths[0]) < .02);
 });

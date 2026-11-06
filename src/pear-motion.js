@@ -63,7 +63,7 @@ export class PearMotion {
         supported = true;
       }
       for (const axis of ['x', 'z']) {
-        const low = axis === 'x' ? -22 : -11.5, high = axis === 'x' ? 24 : 5.5;
+        const low = axis === 'x' ? -22 : -11.5, high = axis === 'x' ? 24 : 7.5;
         if (this.position[axis] < low || this.position[axis] > high) {
           this.position[axis] = Math.max(low, Math.min(high, this.position[axis]));
           this.velocity[axis] *= -.23;

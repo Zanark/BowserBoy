@@ -12,35 +12,52 @@ Tasks:
 - [x] Add independent power, 10-100% brightness, movement and reset controls.
 - [x] Make braided rope limbs thicker, then lengthen both arms and legs.
 - [x] Simulate pinned ropes, inertial swing, body/desk contacts and settling.
-- [x] Track the cursor with the eyes; show squeezed eyes and a trembling mouth
+- [x] Track the cursor with the whole face (eyes, mouth and freckles together);
+      show squeezed eyes and a trembling mouth
       while picked up or falling, with reduced-motion support.
 - [x] Support camera-plane dragging, wheel depth, keyboard height, release/drop,
       bounce/friction, workspace bounds, occupied-placement rejection and cancel.
 - [x] Broaden warm illumination using distributed emitters; verify near/far
       actual pixels rather than relying only on material/light metadata.
 - [x] Verify actual desktop/touch/physics/face interaction and affected darkness.
+- [x] Default to sitting at the front-right edge, let the feet hang below it,
+      and support moving back onto the tabletop with edge-aware rope contact.
 - [ ] Obtain owner visual review; qualify performance on a physical phone.
 
 Acceptance criteria:
 The pear lamp is visible at the upper right, can be moved through the bounded
 three-dimensional workspace and dropped with visible gravity/bounce. Longer,
-thick rope limbs stay attached and swing. His eyes follow mouse/pen movement
+thick rope limbs stay attached and swing. His entire face follows mouse/pen movement
 and the scared face lasts through pickup/falling. Lighting controls work
 independently, and the light spreads across the surrounding desk. Preserve
 full-resolution rendering, the separate consoles and unrelated pending work.
+Default feet hang below the desk edge; farther-back placements rest on top.
 
 Completion evidence:
-One focused Edge gate passes8cases in1.4m: all5pear cases and3affected original
-lamp/dark-room/LCD-spill cases. Includes actual near/far illumination pixels,
-held movement repaint, real390px touch drag/first dock tap, rope constraints,
-face pixels and sampled falling/bounce/settling.32units,syntax and build pass.
-Actual local table/scared/airborne captures reviewed; retained figures in
+Final isolated feature-snapshot Edge gate passes13cases in2.6m: all6pear,
+all4DS and3affected original lamp/dark-room/LCD-spill cases together.
+Includes actual near/far wood pixels, held movement repaint, real390px touch,
+whole-face movement, sampled falling/bounce, and edge-to-table-to-edge feet.
+Reduced-motion reset also preserves dangling feet.30feature-snapshot units
+and34working-tree units, syntax and build pass. Unrelated sparse-clock and
+tracking edits are excluded from the snapshot. Actual local edge/interior/DS/phone captures reviewed;
+retained figures in
 docs/images/pear-boy-table.png and pear-boy-scared.png. Not a full-suite result,
 physical-phone qualification, owner approval, push or deployment.
 Body remains upright with box-based prop collisions. Ropes collide with the
 pear and desk only; arbitrary prop surfaces/moving supports are not simulated.
 
 Completion log:
+2026-11-07: Owner clarifies that the whole face, not only the eyes, must follow
+the pointer. Move the eyes, mouth and freckles in one curved-shell face group.
+Owner then requests a seated default with dangling feet: permit front-edge
+placement, replace the infinite rope floor with desk top/fascia contact, settle
+reset/reduced-motion poses locally and clip the contact shadow to the tabletop.
+The first corner collider left an invisible square-expanded ledge: replace it
+with rounded elliptical contact so partly overhanging feet slide down.
+Keyboard steps are deliberate placement, not repeated pointer throws.
+Move the held DS modestly forward to avoid foreground pear occlusion while
+retaining teal illumination; a distant trial was too dark and was discarded.
 2026-11-06: Owner requests pear-boy, dock lighting, rope limbs and thicker cords,
 then cursor-following/scared expression and free3Dlift/drop. Broaden warm light
 after the owner's diffusion feedback. Subsequently lengthen arms and legs,

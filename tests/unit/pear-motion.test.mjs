@@ -52,11 +52,11 @@ test('a dropped pear lands on a prop without tunnelling and cannot leave the des
   settle(motion, [box]);
   assert.equal(position.y, 3);
   motion.pickUp();
-  motion.moveTo(new Vector3(24, 2, 5.5), 0);
+  motion.moveTo(new Vector3(24, 2, 7.5), 0);
   motion.velocity.set(22, 0, 22);
   motion.drop(20);
   motion.update(30, []);
-  assert.ok(position.x <= 24 && position.z <= 5.5);
+  assert.ok(position.x <= 24 && position.z <= 7.5);
   settle(motion);
   assert.ok(position.toArray().every(Number.isFinite));
 });

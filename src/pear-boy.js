@@ -38,13 +38,15 @@ export function createPearBoy() {
   const cord = new THREE.MeshStandardMaterial({ color: '#ead8a8', map: braid, roughness: .95 });
   const limbs = [];
   const face = {
-    calm: new THREE.Group(), scared: new THREE.Group(), eyes: [],
+    root: new THREE.Group(), calm: new THREE.Group(), scared: new THREE.Group(), eyes: [],
     anchor: new THREE.Object3D(), gaze: new THREE.Vector2(), lifted: false, elapsed: 0,
   };
   face.calm.name = 'pear-boy curious face';
   face.scared.name = 'pear-boy scared-of-heights face';
   face.scared.visible = false;
-  root.add(face.calm, face.scared);
+  face.root.name = 'pear-boy pointer-following face';
+  face.root.add(face.calm, face.scared);
+  root.add(face.root);
   function mesh(name, geometry, material, position = new THREE.Vector3()) {
     const object = new THREE.Mesh(geometry, material);
     object.name = name;
@@ -106,6 +108,7 @@ export function createPearBoy() {
     for (const [x, y] of [[1.05, 4.25], [1.16, 4.03], [.92, 4.04]]) {
       const dot = mesh('pear-boy cheek freckle', new THREE.SphereGeometry(.055, 10, 8), freckles, front(side * x, y));
       dot.scale.z = .4;
+      face.root.add(dot);
     }
     const hand = mesh('pear-boy rounded hand', new THREE.SphereGeometry(1, 16, 12), gold,
       new THREE.Vector3(side * 3.05, 1.6, .8));
@@ -148,8 +151,11 @@ export function createPearBoy() {
     face.gaze.lerp(target, blend);
     if (face.gaze.distanceToSquared(target) < 1e-7) face.gaze.copy(target);
     const changed = face.gaze.x !== previousX || face.gaze.y !== previousY;
-    if (changed) for (const { mesh, side } of face.eyes) {
-      mesh.position.copy(front(side * .66 + face.gaze.x * .16, 4.5 + face.gaze.y * .14));
+    if (changed) {
+      face.root.position.y = face.gaze.y * .18;
+      face.root.rotation.y = face.gaze.x * .22;
+      const radius = radiusAt(4.5 + face.root.position.y) / radiusAt(4.5);
+      face.root.scale.set(radius, 1, radius);
     }
     if (face.lifted) {
       face.elapsed += Math.min(delta, .05);
@@ -184,7 +190,8 @@ export function createPearBoy() {
     context.fillRect(0, 0, width, height);
   });
   const contact = mesh('pear-boy soft contact shadow', new THREE.PlaneGeometry(6.6, 6.6),
-    new THREE.MeshBasicMaterial({ map: shadow, transparent: true, depthWrite: false }),
+    new THREE.MeshBasicMaterial({ map: shadow, transparent: true, depthWrite: false,
+      clippingPlanes: [new THREE.Plane(new THREE.Vector3(0, 0, -1), 10)] }),
     new THREE.Vector3(0, .012, .15));
   contact.rotation.x = -Math.PI / 2;
   contact.userData.pearBoy = false;
@@ -225,18 +232,18 @@ export function createPearBoy() {
     rope.geometry.computeBoundingBox();
     rope.geometry.computeBoundingSphere();
     tip.position.copy(curve.points.at(-1));
-    if (physics.positions.at(-1).y <= physics.tipFloor + .01) tip.quaternion.identity();
+    if (physics.tipSupported) tip.quaternion.identity();
     else tip.quaternion.setFromUnitVectors(up, tangent.subVectors(curve.points.at(-2), tip.position).normalize());
   }
   function resetLimbs() {
-    for (const limb of limbs) { limb.physics.reset(root.position); paintLimb(limb); }
+    for (const limb of limbs) { limb.physics.settle(root.position); paintLimb(limb); }
   }
   function updateLimbs(delta, reducedMotion) {
     let changed = false;
     for (const limb of limbs) {
       if (reducedMotion) {
         if (!limb.physics.sleeping || !limb.physics.origin.equals(root.position)) {
-          limb.physics.reset(root.position);
+          limb.physics.settle(root.position);
           paintLimb(limb);
           changed = true;
         }

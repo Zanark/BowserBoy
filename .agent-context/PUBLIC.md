@@ -37,7 +37,13 @@ This prototype is not pushed/deployed. Phone-performance work78
 and boxed cartridges80 remain deferred.
 Local workstream84 adds pear-boy: independent warm lighting/dock controls,
 longer thick rope limbs, cursor/scared face and bounded3Dpickup/drop physics.
-Five pear browser cases plus three affected lighting cases pass together.
+Whole-face tracking includes eyes, mouth and freckles. Default front-right
+edge placement dangles the feet; farther-back placements rest them on top.
+All six pear plus four DS browser cases pass together after an unobstructed
+held-DS placement adjustment. The exact feature snapshot also passes all
+13affected browser cases together, including three original lighting cases,
+and30units without unrelated pending clock/tracking edits.
+The latest supplied Chrome Neon DS emblem has its black matte removed.
 Body collisions remain upright/box-based; ropes collide with the pear/desk,
 not arbitrary prop surfaces or moving supports. Owner/device review pending.
 Supplied demo media permissions are not blanket rights for new ROMs or testing.

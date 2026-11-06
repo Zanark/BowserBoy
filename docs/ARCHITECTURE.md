@@ -41,12 +41,19 @@ scene/app event boundary for independent power, brightness, movement and reset.
 `src/pear-motion.js` advances an upright body at 120Hz with gravity, bounded
 release velocity, box-based prop collisions, desk bounds, bounce, friction
 and sleep. Pointer drags use a camera-facing plane plus grab offset; wheel
-depth translates that plane by the actual clamped displacement. Cancellation
+depth translates that plane by the actual clamped displacement. Keyboard
+steps clear pointer-style release velocity for deliberate placement. Cancellation
 restores the original pose and clears momentum. The contact shadow stays on
 the table, fading and widening with height.
 
 `src/pear-rope.js` uses fixed-step Verlet particles, a pinned anchor, heavier
-tip and iterative length/body/floor constraints. Dynamic tube vertices,
+tip and iterative length/body/table constraints. The finite desk top ends at
+world Z=10, with a 2.4-unit front fascia. Elliptical rounded-corner contact
+avoids an invisible square-expanded ledge under partly overhanging feet.
+Top/side projection lets the feet
+hang outside the front edge without cutting through the wood. Explicit reset
+and reduced motion settle the ropes for the actual body position rather than
+translating a flat-table rest pose. Dynamic tube vertices,
 normals and both bounds follow the particles in place. The thicker .14-radius
 arms and legs are longer than the first pear model; hands and feet follow their
 rope ends. Constraints also run when an anchor moves between physics steps,
@@ -54,7 +61,10 @@ preventing visible stretching on high-frequency pointer frames. Convergence
 is bounded at 120 iterations, ending early below .002 segment-length error.
 Body movement, ropes and face updates run before idle-paint suppression.
 
-Cursor gaze uses a stable face anchor, not a moving eye mesh. Held/airborne
+Cursor gaze uses a stable face anchor, not a moving eye mesh. A shared face
+group turns the eyes, mouth and freckles together around the pear's axis;
+vertical motion adjusts radial scale to follow its tapered shell. The body,
+leaf and anchor do not chase their own face movement. Held/airborne
 state selects squeezed eyes and a trembling mouth; settling restores the
 curious face. Reduced motion snaps gaze and removes decorative swing/tremble.
 DS reflections wait for landing instead of capturing every falling frame.
@@ -76,6 +86,9 @@ keeps both LCDs readable. Its table pose faces the lamp, rests on underside
 rubber feet and clears the loose cartridges. Pickup remains over its own
 side of the desk. Inspection invalidation compares the active root's identity,
 position and quaternion, rather than always watching the GBA.
+The held DS sits modestly forward of the seated pear, keeping the original
+front-facing inspection camera and both screens unobstructed without
+moving the console beyond the existing desk illumination.
 
 The physical shell uses #2A9D98 teal, metalness .80, roughness .35, deterministic
 fine-grain roughness/bump and clearcoat. Lime hinge/stylus plastic is dielectric

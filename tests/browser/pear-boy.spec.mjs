@@ -51,12 +51,12 @@ test('pear-boy casts adjustable warm light, moves live, cancels and avoids the c
   const home = (await state(page)).position;
   await page.locator('#pear-open').click();
   await expect(page.getByRole('heading', { name: 'pear-boy', exact: true })).toBeVisible();
-  const lit = await pixel(page, [22.7, .02, -4.1]);
-  const farLit = await pixel(page, [17, .02, 3]);
+  const lit = await pixel(page, [11.5, .02, 8.5]);
+  const farLit = await pixel(page, [10, .02, 4]);
   await page.locator('#pear-toggle').click();
   await expect.poll(async () => (await state(page)).on).toBe(false);
-  const dark = await pixel(page, [22.7, .02, -4.1]);
-  const farDark = await pixel(page, [17, .02, 3]);
+  const dark = await pixel(page, [11.5, .02, 8.5]);
+  const farDark = await pixel(page, [10, .02, 4]);
   expect(lit[0]).toBeGreaterThan(dark[0] + 8);
   expect(lit[0] - dark[0]).toBeGreaterThan(lit[2] - dark[2]);
   expect(farLit[0], 'Diffused light must reach the clear desk beyond the immediate foot of the lamp').toBeGreaterThan(farDark[0] + 5);
@@ -64,21 +64,21 @@ test('pear-boy casts adjustable warm light, moves live, cancels and avoids the c
   await page.locator('#pear-brightness').focus();
   await page.keyboard.press('Home');
   await expect(page.locator('#pear-level')).toHaveText('10%');
-  const dim = await pixel(page, [22.7, .02, -4.1]);
+  const dim = await pixel(page, [11.5, .02, 8.5]);
   expect(dim[0]).toBeLessThan(lit[0]);
   await page.keyboard.press('End');
   await expect(page.locator('#pear-level')).toHaveText('100%');
   await page.keyboard.press('Escape');
   await expect(page.locator('#pear-controls')).not.toBeVisible();
   await expect(page.locator('#tools')).not.toBeVisible();
-  const before = await pixel(page, [21.3, 1.8, -5.3]);
+  const before = await pixel(page, [15.3, 1.8, 10]);
   const { body } = await state(page);
   await page.mouse.move(body.x, body.y);
   await page.mouse.down();
-  await page.mouse.move(body.x + 35, body.y - 120, { steps: 8 });
+  await page.mouse.move(body.x + 35, body.y - 170, { steps: 8 });
   await expect.poll(async () => (await state(page)).position[1]).toBeGreaterThan(3);
   expect((await state(page)).moving).toBe(true);
-  const during = await pixel(page, [21.3, 1.8, -5.3]);
+  const during = await pixel(page, [15.3, 1.8, 10]);
   expect(before[0]).toBeGreaterThan(during[0] + 30);
   await page.mouse.up();
   await expect.poll(async () => (await state(page)).position[1]).toBe(0);
@@ -118,6 +118,49 @@ test('pear-boy casts adjustable warm light, moves live, cancels and avoids the c
   await page.keyboard.press('Escape');
   await page.screenshot({ path: testInfo.outputPath('pear-boy-table.png') });
   expect(errors).toEqual([]);
+});
+
+test('pear-boy sits at the desk edge with dangling feet and can be placed back on top', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#pear-open')).toBeEnabled();
+  await expect.poll(async () => (await state(page)).fits).toBe(true);
+  const feet = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3, Box3 } = await import('three');
+    view.pear.root.updateWorldMatrix(true, true);
+    const table = new Box3().setFromObject(view.scene.getObjectByName('Wooden tabletop'));
+    return view.pear.limbs.filter(({ tip }) => tip.name === 'pear-boy rounded foot').map(({ tip, physics }) => ({
+      y: tip.getWorldPosition(new Vector3()).y - table.max.y,
+      front: tip.getWorldPosition(new Vector3()).z - physics.tipRadius - table.max.z,
+      sleeping: physics.sleeping,
+      attached: physics.positions[0].distanceTo(physics.rest[0].clone().add(view.pear.root.position)),
+    }));
+  });
+  const home = (await state(page)).position;
+  expect(home[1]).toBe(0);
+  for (const foot of await feet()) {
+    expect(foot.y).toBeLessThan(-.5);
+    expect(foot.front).toBeGreaterThanOrEqual(-1e-5);
+    expect(foot.attached).toBeLessThan(1e-6);
+  }
+  await page.screenshot({ path: testInfo.outputPath('pear-boy-edge.png') });
+  await page.locator('#pear-open').click();
+  await page.locator('#pear-move').click();
+  for (let i = 0; i < 10; i++) await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('Enter');
+  await expect.poll(async () => (await feet()).every(foot => foot.sleeping && foot.y >= .35)).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('pear-boy-on-table.png') });
+  await page.locator('#pear-open').click();
+  await page.locator('#pear-move').click();
+  for (let i = 0; i < 10; i++) await page.keyboard.press('ArrowDown');
+  expect((await state(page)).position[2]).toBe(7.5);
+  await page.keyboard.press('Enter');
+  await expect.poll(async () => (await feet()).every(foot => foot.sleeping && foot.y < -.5)).toBe(true);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('#pear-open').click();
+  await page.locator('#pear-home').click();
+  expect((await state(page)).position).toEqual(home);
+  for (const foot of await feet()) expect(foot.y).toBeLessThan(-.5);
 });
 
 test.describe('pear-boy touch', () => {
@@ -208,10 +251,18 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
   await expect.poll(async () => (await state(page)).fits).toBe(true);
   const face = () => page.evaluate(async () => {
     const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
     const { face } = view.pear;
+    view.pear.root.updateWorldMatrix(true, true);
+    const center = mesh => {
+      mesh.geometry.computeBoundingSphere();
+      return mesh.localToWorld(mesh.geometry.boundingSphere.center.clone()).toArray();
+    };
     return {
       point: view.project(face.anchor), gaze: face.gaze.toArray(),
-      eyes: face.eyes.map(({ mesh }) => mesh.position.toArray()),
+      eyes: face.eyes.map(({ mesh }) => mesh.getWorldPosition(new Vector3()).toArray()),
+      smile: center(view.pear.root.getObjectByName('pear-boy smile')),
+      freckles: face.root.children.filter(mesh => mesh.name === 'pear-boy cheek freckle').map(center),
       calm: face.calm.visible, scared: face.scared.visible,
       mouth: face.mouth.position.toArray(),
     };
@@ -229,6 +280,12 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
     expect(right.eyes[i][0]).toBeGreaterThan(left.eyes[i][0] + .1);
     expect(right.eyes[i][1]).toBeGreaterThan(left.eyes[i][1] + .1);
   }
+  for (const [before, after] of [[left.smile, right.smile],
+    ...left.freckles.map((point, index) => [point, right.freckles[index]])]) {
+    expect(after[0]).toBeGreaterThan(before[0] + .1);
+    expect(after[1]).toBeGreaterThan(before[1] + .1);
+  }
+  expect(right.point).toEqual(left.point);
   expect((await page.screenshot({ clip })).equals(leftPixels)).toBe(false);
   await page.screenshot({ path: testInfo.outputPath('pear-boy-curious.png') });
   await page.mouse.move(right.point.x, right.point.y);
@@ -267,7 +324,7 @@ test('pear-boy moves in all three axes and falls through visible frames before a
   const { body, position: home } = await state(page);
   await page.mouse.move(body.x, body.y);
   await page.mouse.down();
-  await page.mouse.move(body.x + 25, body.y - 150, { steps: 10 });
+  await page.mouse.move(body.x + 25, body.y - 230, { steps: 10 });
   const raised = (await state(page)).position;
   expect(raised[0]).toBeGreaterThan(home[0]);
   expect(raised[1]).toBeGreaterThan(4);

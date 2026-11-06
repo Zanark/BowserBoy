@@ -12,9 +12,9 @@ const playPosition = new THREE.Vector3(0, 3.5, 0);
 const tablePosition = new THREE.Vector3(-.6, .68, .4);
 const dsTablePosition = new THREE.Vector3(10.3, .32, -7.2);
 const dsTableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.4));
-const dsPlayPosition = new THREE.Vector3(10.3, 5.1, 3.5);
+const dsPlayPosition = new THREE.Vector3(10.3, 5.1, 8);
 const dsPlayQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.45, -.18, 0));
-const pearHome = new THREE.Vector3(21.3, 0, -8);
+const pearHome = new THREE.Vector3(15.3, 0, 7.3);
 
 export class HandheldScene {
   constructor(host, { onTools, onView, onError, onLamp, onConsole }) {
@@ -34,6 +34,7 @@ export class HandheldScene {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.shadowMap.autoUpdate = false;
+    this.renderer.localClippingEnabled = true;
     this.canvas = this.renderer.domElement;
     this.canvas.id = 'scene-canvas';
     this.canvas.tabIndex = 0;
@@ -233,6 +234,7 @@ export class HandheldScene {
         if (steps[event.code]) {
           event.preventDefault();
           this.movePearTo(this.pear.root.position.clone().add(new THREE.Vector3(...steps[event.code])));
+          this.pearMotion.velocity.set(0, 0, 0);
         } else if (event.code === 'Enter' || event.code === 'Escape') {
           event.preventDefault();
           this.finishPearMove(event.code === 'Escape');
@@ -365,7 +367,7 @@ export class HandheldScene {
 
   movePearTo(point) {
     const position = new THREE.Vector3(THREE.MathUtils.clamp(point.x, -22, 24), THREE.MathUtils.clamp(point.y, 0, 25),
-      THREE.MathUtils.clamp(point.z, -11.5, 5.5));
+      THREE.MathUtils.clamp(point.z, -11.5, 7.5));
     const candidate = this.pear.bounds.clone().translate(position);
     const occupied = this.pearObstacles().some(bounds =>
       candidate.max.x + .25 > bounds.min.x && candidate.min.x - .25 < bounds.max.x &&

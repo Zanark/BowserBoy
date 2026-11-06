@@ -167,18 +167,22 @@ still executes with the page's origin privileges.
 
 ## pear-boy
 
-The pear character at the desk's upper right is a separate movable warm lamp.
+The pear character sitting on the front-right desk edge is a separate movable warm lamp.
 Click him to switch his glow, or use the pear dock button for power,
 10-100% brightness, **Move** and **Reset position**. Lighting and position last
-for this page session only. Reset returns him home without changing brightness.
+for this page session only. Reset returns him to the edge without changing brightness.
+His feet hang below the tabletop when placed close enough to its front edge;
+move him farther back to let them rest on the table.
 
 Drag to move in a camera-facing plane; upward movement lifts him. While holding
 him, scroll for depth. Alternatively choose **Move**, use arrows across the desk,
 **Page Up/Page Down** for height and **Enter** to drop. **Escape** cancels the
 move and restores its starting position. Releasing a drag drops him with
 gravity, bounded throwing inertia, a small bounce and friction.
+Keyboard steps place him deliberately without accumulating throwing speed.
 
-The longer, thick braided rope arms and legs swing and settle. His eyes track
+The longer, thick braided rope arms and legs swing and settle. His entire face
+(eyes, smile and freckles together) tracks
 mouse/pen movement, and his squeezed eyes/wobbly mouth remain frightened while
 held or falling. Reduced motion removes decorative swinging and trembling,
 not the gravity needed to complete a drop.
@@ -191,7 +195,8 @@ not an edited reference image.*
 Movement stays within a bounded tabletop workspace and rejects occupied
 placement. Body collisions approximate props with boxes and keep the pear
 upright; this is not a rotating rigid-body engine or full cloth simulation.
-Ropes collide with the pear body and desk, not every prop surface.
+Ropes collide with the pear body and the desk's top/front edge, not every prop
+surface. Reduced motion keeps a settled edge-aware pose rather than swinging.
 Physical-phone performance and owner visual acceptance remain unqualified.
 
 ## Lights out

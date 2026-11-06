@@ -7,9 +7,47 @@ The [engineering book](book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
-## Current follow-up and manual-release status, 2026-11-06
+## Current follow-up and manual-release status, 2026-11-07
 
-### pear-boy local companion
+### Whole-face tracking, seated edge and transparent DS emblem
+
+Final `npx playwright test ds.spec.mjs pear-boy.spec.mjs`: **10 passed in 1.9m**,
+all four DS cases and all six pear cases. This requalifies actual Twin Lab
+pixels, buttons/stylus, saves/lifecycle/retry and 390px framing after the DS
+pickup adjustment. Pear checks include the whole eye/mouth/freckle group,
+default dangling feet, tabletop placement, return to the edge, reduced-motion
+reset, real touch, diffuse warm wood pixels and visible free-3D falling.
+All **34 working-tree unit tests**, application syntax and build pass.
+The three original lamp/dark-room/LCD-spill cases passed in the preceding
+combined gate; this is not a full-suite result.
+
+The exact staged feature was then extracted without unrelated sparse-clock
+or tracking edits. Its **30 unit tests**, syntax and build pass; a single
+**13-case Edge gate passes in 2.6m**, combining all six pear, four DS and
+three original lighting cases. This independently qualifies the committed
+subset rather than relying on uncommitted changes elsewhere.
+
+An intermediate rounded-edge fixture exposed feet asleep on an invisible
+square-expanded ledge. Elliptical top/front contact lets overhanging feet
+slide down instead. Keyboard steps now clear pointer-style throw momentum.
+Light probes were moved from behind the new pear silhouette onto visible
+wood; actual warmth/falloff requirements remain. Longer pointer travel
+qualifies the same world-space lift thresholds in the closer framing.
+
+The new foreground pear initially obscured DS inspection. A distant forward
+trial made the shell too dark; a lateral camera trial still left occlusion.
+Both were discarded. A modest forward held-DS placement preserves the
+original front-facing camera, actual teal pixels and existing light rig.
+The supplied Chrome Neon emblem has transparent browser-loaded corners,
+2149x732 intrinsic dimensions and retained bright lettering/glow.
+
+Actual final edge, interior, DS front and phone renders were reviewed.
+Body physics remains upright/box-based, not a full rigid-body or cloth engine;
+rope contacts cover the pear and desk, not arbitrary moving props.
+Owner aesthetic acceptance, physical phones, push and deployment are not
+qualified. Earlier results below retain their original scope and date.
+
+### Earlier pear-boy local companion gate, 2026-11-06
 
 One focused Edge gate passes **8 cases in 1.4m**: five pear cases plus original
 lamp/dark-room/LCD-spill regressions. Real near/far desk pixels verify broader
