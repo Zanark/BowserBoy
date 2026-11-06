@@ -17,7 +17,7 @@ Tasks
 
 Acceptance criteria
 -------------------
-All53 browser cases run once, fifteen shards of3 and four shards of2.
+All55 browser cases run once, seventeen shards of3 and two shards of2.
 Nineteen browser jobs plus build fit the20-job baseline concurrency budget.
 Native tests do not compete on the same runner. Rendering stays sharp.
 No tests, assertions, deadlines, failure evidence or deployment gates removed.
@@ -28,7 +28,7 @@ Completion evidence
 Prior42129264382 slowest successful browser step takes6m03; quickest1m24.
 This failed run is diagnostic, not a clean performance baseline.
 Official GitHub limits document20standard concurrent jobs for Free.
-Actual CLI shard audit finds all53cases exactly once, workers1/retries0.
+Initial CLI shard audit finds all53cases exactly once, workers1/retries0.
 YAML semantic comparison finds only the matrix expansion.
 Prior corrected-header42130747520 passes nine browser jobs; fullscreen case
 hits120s after repeated6-8s readbacks. Reuse already verified pixels rather
@@ -39,6 +39,12 @@ Complete run4m33s; browser steps28s-3m27s, all19start within one second.
 Independent30deployed-asset match, actual20README-image match/all11GIFs,
 and four live Edge lamp/LED/native/fullscreen cases52.1s qualify publication.
 This is one observed run, not a controlled speedup over failed predecessors.
+Follow-up53a3a0e reaches120s during a compound native scenario and the final
+lighting screenshot. Split two compound cases into four independent native
+scenarios, retaining all original behavior assertions. Current CLI audit:
+55cases exactly once (17x3+2x2), same19jobs/workers1/retries0/deadlines.
+Upload fixtures await actual scene startup readiness before cartridge choice.
+Four focused local cases pass31.3s/11.4s/14.9s/17.5s. No app/media change.
 
 Completion log
 --------------

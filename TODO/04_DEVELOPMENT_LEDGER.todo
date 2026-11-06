@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Independent native scenarios within unchanged deadlines:
+  Follow-up53a3a0e/42137195674 still reaches120s in compound backup/ROM flow
+  and final native-light screenshot. Split the two compound cases into four
+  independent native scenarios, retaining original behavioral assertions.
+  CLI audit proves55exactlyonce17x3+2x2 in unchanged19single-worker jobs.
+  Initial local split exposes upload-before-startup and closed-drawer setup
+  races; await scene data-ready before choosing a cartridge and open the
+  drawer before toggling its setting. Final local cases31.3/11.4/14.9/17.5s
+  pass. App/media/quality/deadlines unchanged; no fresh filming needed.
 - 2026-11-06 / Follow-up native backup fixture isolation:
   Evidence-only e5e14fc run42136082685 fails verify9 awaiting export download;
   deploy correctly skips, qualified visual release1b0385b remains live.

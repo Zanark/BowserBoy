@@ -38,6 +38,17 @@ and deadlines are retained. The successful visual release above remains live.
 The corrected real-native case passes locally in33.8s, including actual
 export/import, reload/resume, automatic saving, ROM isolation and quota failure.
 
+Follow-up `53a3a0e` still reaches120s during the compound native scenario
+and final lighting screenshot. Two compound cases are therefore split into
+four independent native scenarios: backup/resume/automatic save, cross-ROM/
+quota/emergency export, mapped physical input, and green LED/native lighting.
+All original behavior assertions remain; no application/media change,
+resolution reduction or longer deadline is used. Current discovery audits
+**55 cases exactly once** across the same nineteen jobs (17x3+2x2).
+The upload fixture also waits for actual scene startup readiness, rather
+than an upload control briefly enabled before persisted-cartridge restoration.
+Four focused local cases pass in31.3s/11.4s/14.9s/17.5s.
+
 The local/pending statements in earlier attempt records below describe their
 original stage; this publication record supersedes them.
 

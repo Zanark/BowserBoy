@@ -21,6 +21,7 @@ const startDemo = async (page) => {
   await demoReady(page);
 };
 const upload = async (page, name = 'Pixel Lab.gba', bytes = demoBytes()) => {
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await expect(page.locator('#rom-file')).toBeEnabled({ timeout: 90000 });
   await page.locator('#rom-file').setInputFiles({ name, mimeType: 'application/octet-stream', buffer: bytes });
   await powerOn(page);
@@ -296,7 +297,7 @@ test('static shell, responsive layout, errors, keyboard help and private-file bo
   }
 });
 
-test('real mGBA renders, responds to input, resumes, isolates ROMs and restores exported progress', async ({ page }) => {
+test('real mGBA renders, responds to input, resumes and restores exported progress', async ({ page }) => {
   const errors = [];
   const methods = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -355,17 +356,39 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   const beforeAutomatic = (await readStored(page))[0]?.automatic?.createdAt;
   await move(page, 'ArrowUp', 100);
   await expect.poll(async () => (await readStored(page))[0]?.automatic?.createdAt, { timeout: 20000 }).not.toBe(beforeAutomatic);
-  const automaticImage = await image(page);
   const savedRecords = await readStored(page);
   expect(savedRecords[0].automatic).toBeTruthy();
+  expect(methods.every((method) => ['GET', 'HEAD'].includes(method))).toBe(true);
+  expect(errors).toEqual([]);
+});
 
+test('native backups reject other ROMs and storage failure retains emergency export', async ({ page }) => {
+  const errors = [];
+  const methods = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('request', (request) => methods.push(request.method()));
+  page.on('dialog', (dialog) => dialog.accept());
+  await page.goto('./');
+  await startDemo(page);
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await move(page);
+  const originalImage = await image(page);
+  await openTools(page);
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export backup', exact: false }).click();
+  const backupPath = await (await downloadPromise).path();
   const second = demoBytes();
   second[second.length - 1] ^= 1;
   await upload(page, 'Other cartridge.gba', second);
   await expect(page.locator('#restore')).toBeDisabled();
   await page.locator('#backup-file').setInputFiles(backupPath);
   await expect(page.locator('#notice')).toContainText('different ROM');
-  expect(await image(page)).not.toBe(automaticImage);
+  expect(await image(page)).not.toBe(originalImage);
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'true');
   await page.evaluate(() => {
     window.originalPut = IDBObjectStore.prototype.put;
     IDBObjectStore.prototype.put = function () { throw new DOMException('Storage quota exceeded', 'QuotaExceededError'); };

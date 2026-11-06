@@ -766,7 +766,7 @@ test('experimental LCD spill barely reveals nearby controls in darkness and foll
   for (const rgb of Object.values(await controls())) expect(Math.max(...rgb)).toBeLessThan(1);
 });
 
-test('mapped inputs move real button meshes and the native LCD lights the room until power off', async ({ page }) => {
+test('mapped inputs move real button meshes and release after remapping and focus loss', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
@@ -777,30 +777,6 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
-  const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
-  const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
-  const ledColor = async () => {
-    const point = await page.evaluate(async () => {
-      const { view } = await import('./src/app.js');
-      const { Vector3 } = await import('three');
-      return view.model.led.localToWorld(new Vector3(0, 0, .021)).toArray();
-    });
-    return surfaceColor(page, point);
-  };
-  const ledRadius = await page.evaluate(async () =>
-    (await import('./src/app.js')).view.model.led.geometry.parameters.radiusTop);
-  expect(ledRadius, 'The power indicator stays smaller than the old oversized lens').toBeLessThan(.065);
-  await page.locator('#room-toggle').click();
-  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
-  const roomLed = await ledColor();
-  expect(roomLed[1], 'The powered LED stays visibly green under both room and lamp light').toBeGreaterThan(roomLed[0] * 1.5);
-  expect(roomLed[1]).toBeGreaterThan(roomLed[2] * 1.5);
-  expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
-  expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);
-  await page.locator('#room-toggle').click();
-  const lampLed = await ledColor();
-  expect(lampLed[1]).toBeGreaterThan(lampLed[0] * 1.5);
-  expect(lampLed[1]).toBeGreaterThan(lampLed[2] * 1.5);
   const displacement = (id) => page.evaluate(async (action) => {
     const { view } = await import('./src/app.js');
     const { mesh } = view.model.controls.get(action);
@@ -854,7 +830,44 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await expect.poll(async () => (await displacement('a')).z).toBeLessThan(.001);
   await page.keyboard.up('q');
   await page.locator('#tools-close').click();
+  expect(errors).toEqual([]);
+});
 
+test('green power LED and native LCD light follow room switches, content and power off', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.locator('#tools-open').click();
+  await page.locator('#demo').click();
+  await powerOn(page);
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await demoReady(page);
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
+  const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
+  const ledColor = async () => {
+    const point = await page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      const { Vector3 } = await import('three');
+      return view.model.led.localToWorld(new Vector3(0, 0, .021)).toArray();
+    });
+    return surfaceColor(page, point);
+  };
+  const ledRadius = await page.evaluate(async () =>
+    (await import('./src/app.js')).view.model.led.geometry.parameters.radiusTop);
+  expect(ledRadius, 'The power indicator stays smaller than the old oversized lens').toBeLessThan(.065);
+  await page.locator('#room-toggle').click();
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
+  const roomLed = await ledColor();
+  expect(roomLed[1], 'The powered LED stays visibly green under both room and lamp light').toBeGreaterThan(roomLed[0] * 1.5);
+  expect(roomLed[1]).toBeGreaterThan(roomLed[2] * 1.5);
+  expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
+  expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);
+  await page.locator('#room-toggle').click();
+  const lampLed = await ledColor();
+  expect(lampLed[1]).toBeGreaterThan(lampLed[0] * 1.5);
+  expect(lampLed[1]).toBeGreaterThan(lampLed[2] * 1.5);
   await page.locator('#lamp-toggle').click();
   expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
   expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);

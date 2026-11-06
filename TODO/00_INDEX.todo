@@ -73,7 +73,7 @@ BowserBOY workstreams
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - DONE: nineteen isolated one-worker browser shards, exact53-case inventory and fewer duplicate fullscreen readbacks; successful run4m33s plus independent public qualification.
+74_MORE_ISOLATED_CI.todo - DONE: nineteen isolated one-worker browser shards, current55-case inventory and fewer duplicate fullscreen readbacks; initial successful run4m33s plus independent public qualification.
 
 Current public milestone: v1.0.0, designated2026-11-06, qualifiedapplication
 c3d9dbd in the unchanged frozen package. Current live refinements are
