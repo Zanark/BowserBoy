@@ -9,6 +9,48 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### DS hinge, locked gameplay pose and visible power
+
+All **35 units**, application syntax and build pass. The final bounded
+**12-case Edge gate passes in 2.4m**: all six DS cases, all four console
+movement cases and both GBA Inspect/reduced-motion regressions.
+Native Twin Lab runs in a nondefault locked body/145-degree hinge pose:
+both physical LCD pixels match the native frame, D-pad and real lower-screen
+stylus input work, backup/restore and inactive-core pause survive, and the new
+physical power button saves/removes/cold-boots the retained cartridge.
+A 30-degree folded pose hides covered controls and rejects actual touchscreen
+raycasts while the runtime input gate remains open.
+Final review caught the lock blocking two-finger zoom as well as rotation.
+Track pinch pointers without starting a locked rotation drag. The expanded
+independent-pose case passes separately in 24.5s, including actual two-touch
+zoom with an unchanged locked quaternion; syntax, all 35 units and build
+also pass again after that correction.
+
+The independent pose case covers real body and hinge drags, keyboard/range
+limits, disabled locked edits, exact quaternion retention, table's 110-degree
+hinge restoration, system switching, 390px resizing, power-target alignment
+and minimum 44px sizing, unlock-to-flat and lock reset on reload. LCD sample
+rays check both viewport fit and actual visibility against the DS and pear.
+Actual flat/native, desktop Inspect and phone-panel captures were reviewed.
+
+Intermediate qualification caught pear occlusion and DS/GBA lift intersections;
+move the held DS left/above and delay sideways pickup until lifted. The old
+color fixture incorrectly assumed a fixed gameplay angle/position. It now
+explicitly recreates the original reference pose, position and camera without
+changing any material, global lighting, hue/brightness or lighter-base assertion.
+The reference checks pass under both warm and Room lighting. Metallic brightness
+is angle-dependent: those thresholds are not a promise for every gameplay pose.
+
+An initially overbroad gate also selected the unrelated GBA pressed-cap test.
+Its lamp-off darkness assertion fails at 17.533 rather than below 5. Replaying
+that exact test against committed HEAD source, HTML and CSS through browser
+interception reproduces exactly 17.533. Leave it unchanged and record the
+pre-existing failure; it is not part of the final 12-case result.
+The first standalone baseline attempt used a 5s rather than configured 15s
+expect timeout and stopped at startup; only the corrected replay reaches the
+same darkness failure. No full-suite, real-phone, owner approval or deployment
+claim. The frozen book and global lights/materials remain unchanged.
+
 ### Blue-cyan shell and lighter NDS-only base
 
 The owner rejects the rendered green appearance, requests bright blue-cyan,

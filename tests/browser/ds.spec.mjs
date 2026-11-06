@@ -47,6 +47,17 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await page.locator('#ds-demo').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'on');
   await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await page.screenshot({ path: testInfo.outputPath('ds-flat-playing.png') });
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('ArrowRight');
+  await page.locator('#ds-inspect-action').selectOption('hinge');
+  await page.locator('#scene-canvas').focus();
+  for (let i = 0; i < 7; i++) await page.keyboard.press('ArrowDown');
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     clearInterval(view.dsController.autosave);
@@ -94,6 +105,31 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await page.mouse.up();
   expect((await framePixels(page)).touch.left).toBeGreaterThan(128);
   expect((await framePixels(page)).touch.left).toBeLessThan(200);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#ds-hinge').focus();
+  await page.keyboard.press('Home');
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await expect(page.locator('[data-ds-control="right"]')).toBeHidden();
+  expect(await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    const point = view.ds.screens[1].localToWorld(new Vector3()).project(view.camera);
+    const bounds = view.canvas.getBoundingClientRect();
+    return view.dsController.inputAllowed() && view.dsController.touchAt({
+      clientX: bounds.x + (point.x + 1) * bounds.width / 2,
+      clientY: bounds.y + (1 - point.y) * bounds.height / 2,
+    }) === null;
+  })).toBe(true);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#ds-pose-lock').click();
+  await page.evaluate(async () => (await import('./src/app.js')).view.setDsHinge(145));
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   const savedLeft = (await framePixels(page)).marker.left;
   await page.locator('#ds-open').click();
   await page.locator('#ds-save').click();
@@ -132,11 +168,10 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   expect(databases).toContain('bowserboy-ds');
   expect(databases).toContain('bowser-boy-advance');
   await page.screenshot({ path: testInfo.outputPath('ds-with-gba-retained.png') });
-  await page.locator('#ds-open').click();
-  await page.locator('#ds-power').click();
+  await page.locator('#ds-hardware-power').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-ds-power', 'off');
   await expect(page.locator('#ds-runtime-mount iframe')).toHaveCount(0);
-  await page.locator('#ds-power').click();
+  await page.locator('#ds-hardware-power').click();
   await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(120);
   expect(await gba.evaluate(() => window.EJS_emulator.paused)).toBe(true);
@@ -148,6 +183,141 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await page.locator('#ds-demo').click();
   await expect(page.locator('#ds-status')).toContainText('Latest DS checkpoint resumed', { timeout: 90000 });
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(savedLeft);
+  expect(errors).toEqual([]);
+});
+
+test('DS independently articulates its hinge and locks a gameplay pose without changing the desk pose', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const pose = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return { rotation: view.ds.root.quaternion.toArray(), hinge: view.dsHinge,
+      locked: !!view.dsGameplayPose, desk: view.consolePoses.ds.position.toArray() };
+  });
+  const fits = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector2, Vector3 } = await import('three');
+    return view.ds.screens.every(screen => [-2.2, 0, 2.2].every(x => [-1.65, 0, 1.65].every(y => {
+      const point = screen.localToWorld(new Vector3(x, y, 0)).project(view.camera);
+      view.raycaster.setFromCamera(new Vector2(point.x, point.y), view.camera);
+      const hit = view.raycaster.intersectObjects([view.ds.root, view.pear.root], true)[0];
+      return Math.abs(point.x) < .98 && Math.abs(point.y) < .95 && hit?.object === screen;
+    })));
+  });
+  await page.goto('./');
+  await expect(page.locator('#select-ds')).toBeEnabled();
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect((await pose()).rotation).toEqual([0, 0, 0, 1]);
+  expect((await pose()).hinge).toBe(180);
+  const desk = (await pose()).desk;
+  await page.locator('#ds-hardware-power').click();
+  await expect(page.locator('#ds-tools')).toBeVisible();
+  await expect(page.locator('#ds-status')).toContainText('Insert a DS .nds cartridge');
+  await page.locator('#ds-close').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  const canvas = page.locator('#scene-canvas');
+  const rect = await canvas.boundingBox();
+  await page.mouse.move(rect.x + rect.width * .6, rect.y + rect.height * .5);
+  await page.mouse.down();
+  await page.mouse.move(rect.x + rect.width * .6 + 30, rect.y + rect.height * .5 + 15, { steps: 4 });
+  await page.mouse.up();
+  const rotated = await pose();
+  expect(rotated.rotation).not.toEqual([0, 0, 0, 1]);
+  expect(rotated.hinge).toBe(180);
+  await page.locator('#ds-inspect-action').selectOption('hinge');
+  await page.mouse.move(rect.x + rect.width * .6, rect.y + rect.height * .5);
+  await page.mouse.down();
+  await page.mouse.move(rect.x + rect.width * .6, rect.y + rect.height * .5 + 100, { steps: 5 });
+  await page.mouse.up();
+  expect((await pose()).rotation).toEqual(rotated.rotation);
+  expect((await pose()).hinge).toBeCloseTo(140);
+  await canvas.focus();
+  await page.keyboard.press('ArrowDown');
+  expect((await pose()).hinge).toBeCloseTo(135);
+  await page.locator('#ds-hinge').focus();
+  await page.keyboard.press('Home');
+  expect((await pose()).hinge).toBeCloseTo(30);
+  await page.keyboard.press('End');
+  expect((await pose()).hinge).toBe(180);
+  for (let i = 0; i < 40; i++) await page.keyboard.press('ArrowLeft');
+  expect((await pose()).hinge).toBeCloseTo(140);
+  const selected = await pose();
+  await page.locator('#ds-pose-lock').click();
+  await expect(page.locator('#ds-pose-lock')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#ds-hinge')).toBeDisabled();
+  await canvas.focus();
+  await page.keyboard.press('ArrowRight');
+  expect((await pose()).rotation).toEqual(selected.rotation);
+  await page.screenshot({ path: testInfo.outputPath('ds-hinge-inspect.png') });
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect((await pose()).rotation).toEqual(selected.rotation);
+  expect((await pose()).hinge).toBeCloseTo(selected.hinge);
+  expect(await fits()).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('ds-locked-playing.png') });
+  await page.locator('#put-down').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  expect((await pose()).hinge).toBeCloseTo(110);
+  expect((await pose()).desk).toEqual(desk);
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect((await pose()).rotation).toEqual(selected.rotation);
+  expect((await pose()).hinge).toBeCloseTo(selected.hinge);
+  await page.locator('#select-gba').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await expect(page.locator('#ds-inspect-controls')).toBeHidden();
+  await expect(page.locator('#ds-hardware-power')).toBeHidden();
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect((await pose()).rotation).toEqual(selected.rotation);
+  expect((await pose()).hinge).toBeCloseTo(selected.hinge);
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await fits()).toBe(true);
+  await expect(page.locator('#ds-hardware-power')).toBeVisible();
+  const power = await page.locator('#ds-hardware-power').boundingBox();
+  expect(power.width).toBeGreaterThanOrEqual(44);
+  expect(power.height).toBeGreaterThanOrEqual(44);
+  const alignment = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const point = view.project(view.ds.power), rect = view.canvas.getBoundingClientRect();
+    const button = document.getElementById('ds-hardware-power').getBoundingClientRect();
+    return Math.hypot(button.x + button.width / 2 - rect.x - point.x,
+      button.y + button.height / 2 - rect.y - point.y);
+  });
+  expect(alignment).toBeLessThan(1);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  const panel = await page.locator('#ds-inspect-controls').boundingBox();
+  expect(panel.x).toBeGreaterThanOrEqual(0);
+  expect(panel.x + panel.width).toBeLessThanOrEqual(390);
+  expect(panel.y + panel.height).toBeLessThan(844);
+  await page.screenshot({ path: testInfo.outputPath('ds-phone-pose-controls.png') });
+  const cdp = await page.context().newCDPSession(page);
+  const zoom = await page.evaluate(async () => (await import('./src/app.js')).view.zoom);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [
+    { id: 1, x: 120, y: 430 }, { id: 2, x: 270, y: 430 },
+  ] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [
+    { id: 1, x: 90, y: 430 }, { id: 2, x: 300, y: 430 },
+  ] });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.zoom)).toBeLessThan(zoom);
+  expect((await pose()).rotation).toEqual(selected.rotation);
+  await cdp.detach();
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('ArrowUp');
+  expect((await pose()).hinge).toBeCloseTo(145);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect((await pose()).rotation).toEqual([0, 0, 0, 1]);
+  expect((await pose()).hinge).toBe(180);
+  expect(await fits()).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('ds-flat-default-phone.png') });
+  await page.reload();
+  await expect(page.locator('#select-ds')).toBeEnabled();
+  expect((await pose()).locked).toBe(false);
   expect(errors).toEqual([]);
 });
 
@@ -366,7 +536,7 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   expect(errors).toEqual([]);
 });
 
-test('DS shell renders bright blue-cyan under warm companion light and room light', async ({ page }, testInfo) => {
+test('DS shell retains bright blue-cyan in its reference lighting pose under warm companion light and room light', async ({ page }, testInfo) => {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
@@ -376,6 +546,27 @@ test('DS shell renders bright blue-cyan under warm companion light and room ligh
   await page.locator('#ds-demo').click();
   await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
 
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Euler } = await import('three');
+    view.ds.root.quaternion.setFromEuler(new Euler(-.45, -.18, 0));
+    view.setDsHinge(110);
+    view.setDsPoseLocked(true);
+  });
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+
+  // Preserve the original photometric reference independently of editable gameplay poses.
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    view.ds.root.position.set(10.3, 5.1, 8);
+    view.lookAt.copy(view.ds.root.position).add(new Vector3(.15, -.5, 0));
+    const tangent = Math.tan(view.camera.fov * Math.PI / 360);
+    const distance = Math.max(12 / view.camera.aspect, 9.8 * view.height / (view.height - 180)) / (2 * tangent);
+    view.camera.position.copy(view.lookAt).add(new Vector3(0, 0, distance));
+    view.dsReflectionsDirty = view.changed = true;
+  });
   for (const lighting of ['warm', 'room']) {
     if (lighting === 'room') await page.locator('#room-toggle').click();
     await expect.poll(() => page.evaluate(async () => {

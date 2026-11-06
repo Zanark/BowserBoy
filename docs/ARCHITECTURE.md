@@ -107,19 +107,39 @@ buttons, stylus and insertable card; it does not replace `view.model` (GBA).
 `src/app.js` serializes console selection, releases held inputs and pauses the
 inactive core. Each retained session has its own iframe/message session ID.
 
-The DS has a 110-degree opening and a separate presentation quaternion that
-keeps both LCDs readable. Its table pose faces the lamp, rests on underside
-rubber feet and clears the loose cartridges. Pickup remains over its own
-side of the desk. Inspection invalidation compares the active root's identity,
+The DS rests at a 110-degree opening; unlocked gameplay uses an identity
+root quaternion and zero lid rotation (180-degree opening), facing the camera.
+Its table pose faces the lamp, rests on underside rubber feet and clears the
+loose cartridges. Inspection invalidation compares the active root's identity,
 position and quaternion, rather than always watching the GBA.
-The held DS sits modestly forward of the seated pear, keeping the original
-front-facing inspection camera and both screens unobstructed without
-moving the console beyond the existing desk illumination.
+The held DS sits left of the default pear and above the GBA. Its lift delays
+sideways motion until it has risen, with a vertical arc that clears the GBA.
+`dsPoseBounds` transforms each geometry bound into the desired root/lid pose
+without mutating the visible scene; framing reserves phone-panel space and
+raises the model to keep its lower bound above desk consoles.
+
+Inspect preserves the current DS angles. `dsInspectAction` selects body
+rotation or hinge opening; slider/drag/arrows clamp the latter to 30-180 degrees.
+`dsGameplayPose` clones the root quaternion and lid angle only when locked.
+Locked editing is disabled; zoom remains available. The snapshot is session-only,
+independent of `consolePoses.ds`. Play uses the snapshot or the flat default.
+Table transitions and switching away restore the original 110-degree hinge.
+The existing reduced-motion-aware tween interpolates both body and lid.
+Hinge edits explicitly invalidate paints/shadows/reflections; cube capture
+waits for gesture release. GBA pose behavior is unchanged.
+
+The front-left power cap belongs to the physical control map, not the emulator's
+`DS_CONTROLS`. Its separately labelled minimum-44px DOM target and the tools
+button share `togglePower`, checkpoint/error handling and cold-boot semantics.
+It remains available while powered off; an empty slot opens tools with guidance.
+Projected targets reject back-facing/offscreen caps and lid occlusion.
+Touch raycasts require the lower LCD to be the first actual DS surface,
+preventing stylus input through a folded lid or the rear shell.
 
 The physical shell uses #0077FF blue-cyan, metalness .80, roughness .35, deterministic
 fine-grain roughness/bump and clearcoat. Lime hinge/stylus plastic is dielectric
 (.40 roughness); blue D-pad and lime convex controls use .45 roughness.
-Deep-blue slot/power trim uses .25 roughness and .50 metalness.
+Deep-blue slot trim uses .25 roughness and .50 metalness.
 The rear lid's two square recesses are extruded holes with inset floors;
 the supplied project emblem remains separate and rear-only.
 

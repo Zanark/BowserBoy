@@ -86,6 +86,7 @@ BowserBOY workstreams
 84_PEAR_BOY.todo - IN_PROGRESS/local: movable warm pear lamp, longer thick rope limbs, cursor/scared face and drop physics; owner review pending.
 85_MOVABLE_CONSOLES.todo - IN_PROGRESS: independent orientation-locked console relocation, drop physics and session desk positions.
 86_DS_BLUE_CYAN_BASE.todo - IN_PROGRESS: brighter blue-cyan DS and slightly lighter NDS-only lower base; owner review pending.
+87_DS_HINGE_GAMEPLAY_POSE.todo - IN_PROGRESS: independent DS hinge/body inspection, locked gameplay pose, flat unlocked play and visible physical power.
 
 Current pending work
 --------------------

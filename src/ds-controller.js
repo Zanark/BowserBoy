@@ -99,16 +99,8 @@ export class DsController {
       this.releaseInputs();
       this.paused = await this.command('setPaused', !this.paused);
     }));
-    $('ds-power').addEventListener('click', () => void this.operation(async () => {
-      if (this.running) {
-        await this.save();
-        this.clear();
-        this.powered = false;
-        this.showPowerOff();
-        this.feedback('DS powered off. Cartridge retained; Power on boots from its in-game save data.');
-      } else if (this.cartridge) await this.launch(null, this.battery ?? null);
-      else throw new Error('Insert a DS .nds cartridge or try Twin Lab first.');
-    }));
+    for (const id of ['ds-power', 'ds-hardware-power']) $(id).addEventListener('click', () =>
+      void this.operation(() => this.togglePower()));
     $('ds-save').addEventListener('click', () => void this.operation(() => this.save()));
     $('ds-restore').addEventListener('click', () => void this.operation(async () => {
       const capture = await this.store.get(this.game.id);
@@ -181,10 +173,26 @@ export class DsController {
     catch (error) { console.error('DS player:', error); this.feedback(error.message, true); this.openTools(); }
     finally { this.busy = false; this.update(); }
   }
+  async togglePower() {
+    if (this.running) {
+      await this.save();
+      this.clear();
+      this.powered = false;
+      this.showPowerOff();
+      this.feedback('DS powered off. Cartridge retained; Power on boots from its in-game save data.');
+    } else if (this.cartridge) await this.launch(null, this.battery ?? null);
+    else {
+      this.feedback('Insert a DS .nds cartridge or try Twin Lab to power on.');
+      this.openTools();
+    }
+  }
   update() {
     for (const id of ['ds-upload', 'ds-demo']) $(id).disabled = this.busy;
     $('ds-power').disabled = this.busy || !this.cartridge;
     $('ds-power').textContent = this.running ? 'Power off DS' : 'Power on DS';
+    $('ds-hardware-power').setAttribute('aria-pressed', String(this.powered));
+    $('ds-hardware-power').setAttribute('aria-label', this.running ? 'Power off DS' : 'Power on DS');
+    $('ds-hardware-power').title = this.running ? 'Power off DS' : 'Power on DS';
     for (const id of ['ds-pause', 'ds-export', 'ds-import', 'ds-mute']) $(id).disabled = this.busy || !this.running;
     for (const id of ['ds-save', 'ds-restore']) $(id).disabled = this.busy || !this.running || !this.storageAvailable;
     $('ds-pause').textContent = this.paused ? 'Resume DS' : 'Pause DS';
@@ -192,7 +200,6 @@ export class DsController {
     this.onState();
     this.view.host.dataset.dsPower = this.powered ? 'on' : 'off';
     this.model.led.material.emissiveIntensity = this.powered ? 28 : 0;
-    this.model.power.position.x = this.powered ? -3.2 : -3.4;
     this.view.changed = true;
     this.projectControls();
   }
@@ -373,7 +380,8 @@ export class DsController {
     const bounds = this.view.canvas.getBoundingClientRect();
     this.view.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.view.raycaster.setFromCamera(this.view.pointer, this.view.camera);
-    return dsTouchFromUv(this.view.raycaster.intersectObject(this.model.screens[1])[0]?.uv);
+    const hit = this.view.raycaster.intersectObject(this.model.root, true)[0];
+    return hit?.object === this.model.screens[1] ? dsTouchFromUv(hit.uv) : null;
   }
   touch(point, pressed) {
     if (this.frame && this.running) this.frame.contentWindow.postMessage({ type: 'bba:touch', session: this.session, value: { ...point, pressed } }, location.origin);
@@ -421,16 +429,27 @@ export class DsController {
   }
   projectControls() {
     for (const [id, control] of this.model.controls) {
-      const button = document.querySelector(`[data-ds-control="${id}"]`);
+      const button = id === 'power' ? $('ds-hardware-power') : document.querySelector(`[data-ds-control="${id}"]`);
       button.hidden = this.view.console !== 'ds' || this.view.mode !== 'playing' || !!this.view.transition;
-      button.disabled = !this.inputAllowed();
+      button.disabled = id === 'power' ? this.busy : !this.inputAllowed();
+      if (button.hidden) continue;
+      const world = control.anchor.getWorldPosition(new THREE.Vector3());
+      const normal = new THREE.Vector3(0, 0, 1).transformDirection(this.model.root.matrixWorld);
+      const projected = world.clone().project(this.view.camera);
+      const facing = normal.dot(this.view.camera.position.clone().sub(world)) > 0;
+      button.hidden = !facing || Math.abs(projected.x) > 1 || Math.abs(projected.y) > 1 || projected.z < -1 || projected.z > 1;
+      if (button.hidden) continue;
+      this.view.raycaster.setFromCamera(new THREE.Vector2(projected.x, projected.y), this.view.camera);
+      const cover = this.view.raycaster.intersectObject(this.model.lid, true)[0];
+      button.hidden = !!cover && cover.distance < this.view.camera.position.distanceTo(world) - .08;
       if (button.hidden) continue;
       const point = this.view.project(control.anchor);
       const distance = this.view.camera.position.distanceTo(control.anchor.getWorldPosition(new THREE.Vector3()));
       const scale = this.view.height / (2 * Math.tan(THREE.MathUtils.degToRad(this.view.camera.fov / 2)) * distance);
       button.style.left = `${point.x}px`; button.style.top = `${point.y}px`;
-      button.style.width = `${Math.max(14, control.width * scale)}px`;
-      button.style.height = `${Math.max(14, control.height * scale)}px`;
+      const minimum = id === 'power' ? 44 : 14;
+      button.style.width = `${Math.max(minimum, control.width * scale)}px`;
+      button.style.height = `${Math.max(minimum, control.height * scale)}px`;
     }
   }
 }

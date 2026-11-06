@@ -1,0 +1,56 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/85
+Milestone: Articulated DS inspection with optional locked gameplay orientation.
+Dependencies: 79 separate DS; 85 independent fixed-orientation desk placement.
+Purpose: Let the owner rotate the DS body and adjust its hinge independently,
+lock a preferred gameplay pose, and use a visible physical power button.
+
+Tasks:
+- [x] Add independent body/hinge inspection controls and a bounded hinge slider.
+- [x] Lock body and hinge together for gameplay, preserving the desk pose.
+- [x] Default unlocked gameplay to fully open, flat and camera-facing.
+- [x] Add a visible front power button using the existing DS lifecycle.
+- [x] Qualify native LCD/button/stylus input and physical power in a locked pose.
+- [x] Qualify table/system transitions, mobile framing and unlocked reset.
+- [x] Update affected documentation, contributor context and GitHub tracking.
+- [ ] Owner visual review.
+
+Acceptance criteria:
+Inspect offers Rotate body and Move hinge; dragging/arrows act on the chosen
+control, with a keyboard/touch-capable 30-180 degree hinge slider. Lock pose
+retains both angles when returning to gameplay, putting down/picking up,
+switching consoles and resizing. Unlocking and returning to play restores a
+180-degree flat DS facing the camera. The lock resets on reload. Desk placement
+and its 110-degree resting hinge remain independent. Native screens, projected
+buttons and actual touchscreen mapping still work in a tilted gameplay pose.
+A visible, labelled, at-least-44px power target powers off safely and cold-boots
+the retained cartridge; no cartridge opens the DS chooser with an explanation.
+GBA behavior, emulator/save formats, lights and existing paints remain unchanged.
+
+Completion evidence:
+All 35 units, syntax/build pass. The 12-case Edge gate passes in 2.4m:
+all six DS, all four console movement and two GBA Inspect/reduced-motion cases.
+Actual native145-degree locked-pose pixels, buttons/stylus, backup/lifecycle,
+physical power cycle,30-degree occlusion, exact root/hinge retention,
+table110-degree restoration, switching/390px resizing,44px aligned power,
+unlocked flat reset and reload lock clearing pass. Actual desktop native/
+Inspect and phone panel reviewed. Existing color thresholds retained in their
+explicit original photometric reference. No all-angle brightness, physical
+phone, owner approval, full-suite or deployment claim.
+Expanded independent-pose case passes separately in 24.5s after allowing
+actual two-finger zoom without changing locked angles; syntax, 35 units and
+build pass again. Reviewed figures, guide/help, architecture, verification,
+media provenance and contributor context updated; owner review remains open.
+
+Completion log:
+2026-11-07: Owner requests selectable hinge motion, independent Inspect body
+rotation, optional gameplay orientation lock and flat unlocked gameplay
+matching the supplied front-facing references. Also requests missing DS power
+button. Existing tiny lower-edge slider was not a clickable DS control.
+2026-11-07: Actual screenshots expose pear blocking the first held pose;
+move held DS left/above, then delay sideways lift until it clears the GBA.
+Keep desk placement unchanged. Folded lid now blocks projected caps/stylus.
+An overbroad initial gate also selects a pre-existing GBA darkness failure;
+exact HEAD-source replay reproduces17.533vs<5. Preserve it outside this scope.
+Original photometric fixture needs fixed historical world/camera pose, not
+the newly editable gameplay default; retain all material and color assertions.

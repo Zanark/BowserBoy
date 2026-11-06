@@ -43,15 +43,22 @@ Actual local capture with optional Room lighting; not a deployed build.*
 
 ![Twin Lab running on both physical DS displays beside its stylus](docs/images/ds-prototype-playing.png)
 
-*The remodeled 110-degree clamshell has a blue-cyan lid, slightly lighter blue
+*The unlocked, fully open DS faces the camera, with a blue-cyan lid, slightly lighter blue
 lower base, blue D-pad and
 lime controls. Both screens show actual DeSmuME output: buttons move the
 upper marker and pointer/stylus input draws on the lower LCD. Twin Lab is
-original project homebrew, not a commercial game or simulated video.*
+original project homebrew, not a commercial game or simulated video.
+Optional Room lighting is on; the front-left power button is functional.*
+
+![Independent DS hinge control and locked orientation in Inspect](docs/images/ds-hinge-inspect.png)
+
+*Choose Rotate body or Move hinge, adjust the opening, then Lock pose and
+Back to play. Both angles stay fixed for gameplay. Without a lock, gameplay
+returns to a flat, camera-facing DS. Actual local capture; no deployment.*
 
 ![Blue-cyan DS shell with its lighter base under the existing warm lamps](docs/images/ds-blue-cyan-warm.png)
 
-*The same shell with Room lighting off and the displays dark. Warm lamps,
+*The shell in its earlier fixed lighting-reference pose, with Room lighting off and the displays dark. Warm lamps,
 exposure and GBA materials are unchanged; the lower base alone uses a lighter
 blue pigment than the lid. Actual local capture, not a published build.*
 
@@ -64,6 +71,9 @@ Use arrows for the D-pad; **Z/X = A/B**, **C/V = X/Y**, **A/S = L/R**,
 **Enter = Start**, **left Shift = Select**. Press the physical controls or
 click/drag the lower LCD for touchscreen input. **Escape** opens DS tools.
 Switching GBA/DS pauses the inactive core rather than running both games.
+The visible front-left **Power** button saves before powering off; press
+it again to cold-boot the retained cartridge. The orientation lock survives
+console switching and put-down/pickup, but resets on page reload.
 
 DS checkpoints use a separate browser database and `.bbds-save` backups;
 GBA saves and `.bba-save` files remain separate. Reselect the exact same

@@ -8,6 +8,18 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### DS articulation and gameplay orientation, 2026-11-07
+
+`ds-prototype-playing.png` is now the actual flat, fully open Twin Lab capture
+from the native DS case, with optional Room lighting enabled and the front
+power cap visible. `ds-hinge-inspect.png` is the actual independent-pose case:
+rotated body, 140-degree hinge and Lock pose enabled. Both, plus its 390px
+panel capture, were visually reviewed after the unobstructed held-position
+correction. Both LCDs show real native output in the runtime image, not a
+composite. The table figure and earlier warm color-reference figure retain
+their prior epochs; they do not represent the new unlocked gameplay pose.
+No new generated artwork, global lighting/material change or deployment.
+
 ### Brighter blue-cyan DS and lighter NDS base, 2026-11-07
 
 The current `ds-prototype-table.png` and `ds-prototype-playing.png` come from

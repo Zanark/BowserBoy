@@ -190,14 +190,14 @@ export function createDsHandheld() {
     const mark = text(button, id.toUpperCase(), .23, 0, 0, -.14);
     mark.rotation.y = Math.PI;
   }
-  const power = mesh(root, 'Indigo power slider with lime tab', roundedBox(.45, .13, .035, .025), navy, -3.3, -4.835, .015);
-  power.rotation.x = Math.PI / 2;
-  mesh(power, 'Lime power slider grip', roundedBox(.25, .10, .018, .02), lime, 0, 0, .03);
-  const powerIcon = mesh(root, 'Molded power icon ring', new THREE.TorusGeometry(.045, .008, 6, 20, Math.PI * 1.65),
-    rim, -3.62, -4.53, .255);
+  const power = cap('power', -3.3, -4.22, .20, buttonPlastic, '');
+  power.name = 'Front DS power button';
+  const powerMark = new THREE.MeshBasicMaterial({ color: '#EAF5FF', toneMapped: false });
+  const powerIcon = mesh(power, 'Power button icon ring', new THREE.TorusGeometry(.075, .012, 8, 24, Math.PI * 1.65),
+    powerMark, 0, 0, .066);
   powerIcon.rotation.z = Math.PI * .675;
-  mesh(root, 'Molded power icon stem', roundedBox(.014, .062, .008, .004), rim, -3.62, -4.50, .255);
-  text(root, 'POWER', .5, -3.3, -4.53, .255, '#EAF5FF', .09);
+  mesh(power, 'Power button icon stem', roundedBox(.018, .09, .012, .006), powerMark, 0, .065, .066);
+  text(root, 'POWER', .5, -3.3, -4.60, .255, '#EAF5FF', .09);
   const led = mesh(hinge, 'DS green hinge power indicator', roundedBox(.025, .10, .004, .008),
     new THREE.MeshStandardMaterial({ color: '#8BFF78', emissive: '#00c82d', emissiveIntensity: 0 }), 3.72, .035, .263);
   const expansion = mesh(root, 'Front navy expansion slot', roundedBox(3.9, .30, .025, .025), slot, -.12, -4.842, -.015);

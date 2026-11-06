@@ -70,6 +70,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .console-picker span { display: block; font: 7px var(--mono); letter-spacing: 1px; }
 .console-picker button:disabled { opacity: .5; }
 #ds-open { display: none; }
+.ds-inspect-controls { position: absolute; top: max(185px, env(safe-area-inset-top)); left: 24px; z-index: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px; width: min(270px,calc(100vw - 24px)); padding: 12px; border: 1px solid #36d9ff70; border-radius: 14px; background: #080b35ee; box-shadow: 0 8px 25px #0006; font-size: 11px; }
+.ds-inspect-controls :is(select,button) { min-width: 0; min-height: 44px; padding: 6px 9px; border: 1px solid #36d9ff55; border-radius: 9px; background: #171a70; color: #eaf5ff; }
+.ds-inspect-controls button[aria-pressed=true] { border-color: #8bff78; color: #8bff78; }
+.ds-inspect-controls label:not(.sr-only), .ds-inspect-controls input, .ds-inspect-controls p { grid-column: 1 / -1; }
+.ds-inspect-controls output { float: right; }
+.ds-inspect-controls input { width: 100%; height: 30px; margin: 0; accent-color: #36d9ff; }
+.ds-inspect-controls p { margin: 0; color: #b9dfff; }
+@media (max-width: 600px) {
+  .ds-inspect-controls { top: max(108px, env(safe-area-inset-top)); left: 12px; width: calc(100vw - 24px); padding: 9px 12px; gap: 3px 10px; }
+}
+@media (max-height: 500px) and (min-width: 601px) {
+  .ds-inspect-controls { top: 90px; left: 12px; width: 220px; }
+}
 .desk[data-console=ds] #ds-open { display: grid; color: #c9ed71; }
 .desk[data-console=ds] :is(#quick-speed,#quick-controls,#quick-autosave,#quick-save,#quick-load,#quick-slots,#quick-restart,#quick-screen-fullscreen,#tools-open) { display: none; }
 .ds-runtime-source { position: fixed; top: 0; left: 0; width: 512px; height: 768px; opacity: 0; pointer-events: none; z-index: -1; }

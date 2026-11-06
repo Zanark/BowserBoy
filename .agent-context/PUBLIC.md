@@ -64,6 +64,19 @@ issue backlinks consistent with the [tracking guide](../docs/GITHUB-TRACKING.md)
 Never publish credentials, local continuity, raw conversations or social data.
 Read current contracts and source before editing; preserve unrelated changes.
 
+Workstream87 adds DS body/hinge inspection,30-180-degree articulation,
+session-only locked gameplay angles, flat camera-facing unlocked gameplay
+and a functioning front-left44px physical power target. Saved desk pose and
+110-degree resting hinge are independent. Hinge edits invalidate renders;
+folded lids block caps/stylus. Actual native145-degree input/save/power,
+30-degree occlusion,390px resizing and both consoles' desk restoration pass.
+Final35units,syntax/build and12affected Edge cases pass2.4m. Reference-pose
+paint thresholds remain unchanged; metallic brightness varies with angle.
+An unrelated GBA lamp-off darkness failure reproduces on committed HEAD.
+Final locked-pinch correction keeps two-finger zoom without rotating;
+expanded pose case passes24.5s, and syntax/35units/build pass again.
+Owner/device review remains pending; no push/deployment or frozen-book change.
+
 Workstream86 supersedes the green-looking teal: #0077FF blue-cyan lid and
 separate #40A0FF slightly lighter NDS base, paint reflection20. Both retain
 .80/.35 grain/clearcoat; GBA/global lighting/exposure/geometry stay unchanged.

@@ -110,19 +110,40 @@ operate on the selected console. Inspection drags repaint immediately.
 The table DS faces the lamp without covering the loose cartridges; its pickup
 and return path stay beside the GBA rather than passing through it.
 
-The latest shell specification supersedes the earlier royal-blue paint:
-**#2A9D98 teal, metalness 0.80, roughness 0.35**, with fine-grain bump/roughness
+The latest shell specification supersedes the earlier teal paint:
+**#0077FF blue-cyan lid and #40A0FF lighter lower base,
+metalness 0.80, roughness 0.35**, with fine-grain bump/roughness
 and clearcoat. The D-pad is electric blue; face/system buttons, hinge caps and
-clipped stylus are lime. The clamshell opens to approximately 110 degrees.
+clipped stylus are lime. The resting table hinge opens to approximately 110 degrees;
+unlocked gameplay opens fully to 180 degrees, flat and facing the camera.
 The supplied emblem stays on the rear lid only; two small rear square
 recesses are actual geometry. GBA settings use the static Advance logo and
 the action dock changes from GBA purple to DS blue/cyan.
 
 The existing warm lamp, optional **Room** lighting and background are unchanged:
 no studio-light rig or white backdrop was added. Those warm sources still
-shift the teal appearance and leave shadowed faces dark. Exact material
+shift the metallic appearance and leave shadowed faces dark. Exact material
 values do not imply a lighting-independent match to the white-background
 reference photographs.
+
+**Set your gameplay angle:** enter **Inspect**, then choose **Rotate body**
+or **Move hinge**. Drag to rotate the body; in hinge mode, drag upward to
+open or downward to fold. The hinge slider accepts 30-180 degrees.
+With the canvas focused, arrows rotate the body or change the selected hinge
+by five degrees; scroll/pinch or plus/minus zoom. **Home** resets an unlocked
+DS to its flat pose.
+
+Choose **Lock pose**, then **Back to play** to keep both angles. Locked
+controls cannot accidentally change the pose; **Unlock pose** enables editing.
+If you leave Inspect unlocked, gameplay resets the body and hinge flat.
+The lock survives put-down/pickup, console switches and resizing for this
+session only. Reload clears it. The saved desk position/orientation and its
+110-degree resting hinge remain separate. The held console frames its actual
+pose, stays above the GBA and clear of the default pear placement; the controls
+panel fits a 390px viewport. This is bounded articulation, not a simulation of
+hinge torque or a fully closed clamshell. Extreme/back-facing poses can hide
+screens or controls; covered buttons and touch input do not click through
+the lid. Existing warm lighting means brightness changes with orientation.
 
 Choose **Try Twin Lab** for the original dual-CPU homebrew or **Choose .nds**.
 You can also drop an authorized uncompressed `.nds` file onto the page.
@@ -180,6 +201,9 @@ without replacing either ROM. GBA and DS databases/backups are never mixed.
 With DS storage unavailable, switching to GBA retains the paused DS only in
 memory and warns that export is needed; saving/replacing/powering off is
 blocked rather than silently discarding progress.
+The visible front-left power button has a minimum 44px pointer target and
+uses the same lifecycle as **Power off/on DS** in tools. Without a cartridge,
+it opens DS tools with an insertion explanation rather than pretending to boot.
 
 **Scope:** local, unpublished prototype for original DS direct boot.
 No DSi, wireless/multiplayer, firmware-menu boot, offline-first guarantee or
@@ -374,7 +398,8 @@ table, in Inspect, during pickup and in screen-only fullscreen.
 
 **Inspect** lets you drag the model to see its sides, ports and battery cover.
 Scroll or pinch to zoom; keyboard inspection supports arrows, plus/minus and
-Home to reset. **Back to play** restores the playable angle; **Put down** returns
+Home to reset. **Back to play** restores the GBA playable angle; DS uses its
+locked body/hinge pose or the unlocked flat default. **Put down** returns
 the handheld to the table. Reduced-motion mode skips the pickup animation.
 Inspection and screen-only fullscreen keep their own independent zoom settings.
 

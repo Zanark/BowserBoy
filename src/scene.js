@@ -13,8 +13,9 @@ const playPosition = new THREE.Vector3(0, 3.5, 0);
 const tablePosition = new THREE.Vector3(-.6, .68, .4);
 const dsTablePosition = new THREE.Vector3(10.3, .32, -7.2);
 const dsTableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.4));
-const dsPlayPosition = new THREE.Vector3(10.3, 5.1, 8);
-const dsPlayQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.45, -.18, 0));
+const dsPlayPosition = new THREE.Vector3(5, 5.1, 8);
+const dsPlayQuaternion = new THREE.Quaternion();
+const dsTableHinge = THREE.MathUtils.degToRad(70);
 const pearHome = new THREE.Vector3(15.3, 0, 7.3);
 
 export class HandheldScene {
@@ -24,6 +25,8 @@ export class HandheldScene {
     this.onError = onError;
     this.onConsole = onConsole;
     this.console = 'gba';
+    this.dsInspectAction = 'body';
+    this.dsGameplayPose = null;
     this.mode = 'table';
     this.nativeBusy = false;
     this.reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -165,9 +168,10 @@ export class HandheldScene {
         }
       }
       if (this.mode === 'inspecting') {
+        if (this.transition) return;
         this.inspectionPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
         if (this.inspectionPointers.size === 1) {
-          this.drag = { id: event.pointerId, x: event.clientX, y: event.clientY, rotation: this.activeModel.root.quaternion.clone() };
+          this.beginInspectionDrag(event.pointerId, event);
         } else if (this.inspectionPointers.size === 2) {
           const [a, b] = this.inspectionPointers.values();
           this.pinch = { distance: Math.hypot(a.x - b.x, a.y - b.y), zoom: this.zoom };
@@ -203,9 +207,14 @@ export class HandheldScene {
         const distance = Math.hypot(a.x - b.x, a.y - b.y);
         if (distance > 0) this.setZoom(this.pinch.zoom * this.pinch.distance / distance);
       } else if (this.drag?.id === event.pointerId) {
-        const yaw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), (event.clientX - this.drag.x) * .008);
-        const pitch = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), (event.clientY - this.drag.y) * .008);
-        this.activeModel.root.quaternion.copy(yaw.multiply(pitch).multiply(this.drag.rotation));
+        if (this.console === 'ds' && this.dsInspectAction === 'hinge') {
+          this.setDsHinge(this.drag.hinge - (event.clientY - this.drag.y) * .4);
+        } else {
+          const yaw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), (event.clientX - this.drag.x) * .008);
+          const pitch = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), (event.clientY - this.drag.y) * .008);
+          this.activeModel.root.quaternion.copy(yaw.multiply(pitch).multiply(this.drag.rotation));
+          this.reframeDsPose();
+        }
       } else {
         const hit = this.pick(event);
         this.canvas.style.cursor = this.mode === 'inspecting' || (this.mode === 'table' && hit) ?
@@ -231,7 +240,7 @@ export class HandheldScene {
         this.pinch = null;
         if (this.inspectionPointers.size === 1) {
           const [id, point] = this.inspectionPointers.entries().next().value;
-          this.drag = { id, ...point, rotation: this.activeModel.root.quaternion.clone() };
+          this.beginInspectionDrag(id, { clientX: point.x, clientY: point.y });
         }
       });
     }
@@ -301,12 +310,20 @@ export class HandheldScene {
       const rotations = { ArrowLeft: [0, -.15], ArrowRight: [0, .15], ArrowUp: [-.15, 0], ArrowDown: [.15, 0] };
       if (rotations[event.code]) {
         event.preventDefault();
+        if (this.transition || (this.console === 'ds' && this.dsGameplayPose)) return;
         const [pitch, yaw] = rotations[event.code];
-        this.activeModel.root.quaternion.premultiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch, yaw, 0)));
+        if (this.console === 'ds' && this.dsInspectAction === 'hinge') {
+          this.setDsHinge(this.dsHinge + (['ArrowUp', 'ArrowRight'].includes(event.code) ? 5 : -5));
+        } else {
+          this.activeModel.root.quaternion.premultiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch, yaw, 0)));
+          this.reframeDsPose();
+        }
       } else if (['Equal', 'NumpadAdd', 'Minus', 'NumpadSubtract', 'Home'].includes(event.code)) {
         event.preventDefault();
         if (event.code === 'Home') {
+          if (this.transition || (this.console === 'ds' && this.dsGameplayPose)) return;
           this.activeModel.root.quaternion.copy(this.console === 'ds' ? dsPlayQuaternion : playQuaternion);
+          if (this.console === 'ds') this.setDsHinge(180);
           this.setZoom(1);
         } else this.setZoom(this.zoom * (['Equal', 'NumpadAdd'].includes(event.code) ? .9 : 1.1));
       }
@@ -341,6 +358,66 @@ export class HandheldScene {
 
   get activeModel() { return this.console === 'ds' ? this.ds : this.model; }
 
+  get dsHinge() { return 180 - THREE.MathUtils.radToDeg(this.ds.lid.rotation.x); }
+
+  beginInspectionDrag(id, event) {
+    if (this.console === 'ds' && this.dsGameplayPose) { this.drag = null; return; }
+    this.drag = { id, x: event.clientX, y: event.clientY,
+      rotation: this.activeModel.root.quaternion.clone(), hinge: this.dsHinge };
+  }
+
+  setDsInspectAction(action) {
+    if (!['body', 'hinge'].includes(action)) throw new Error('Unknown DS inspection control.');
+    this.dsInspectAction = action;
+    this.drag = this.pinch = null;
+    this.inspectionPointers.clear();
+  }
+
+  setDsHinge(degrees) {
+    if (!Number.isFinite(degrees)) throw new Error('Invalid DS hinge opening.');
+    if (this.console !== 'ds' || this.mode !== 'inspecting' || this.transition || this.dsGameplayPose) return;
+    this.ds.lid.rotation.x = THREE.MathUtils.degToRad(180 - THREE.MathUtils.clamp(degrees, 30, 180));
+    this.reframeDsPose();
+    this.host.dispatchEvent(new CustomEvent('ds-pose-change'));
+  }
+
+  setDsPoseLocked(locked) {
+    if (typeof locked !== 'boolean') throw new Error('Invalid DS orientation lock.');
+    if (this.console !== 'ds' || this.mode !== 'inspecting' || this.transition) return;
+    this.dsGameplayPose = locked ? { rotation: this.ds.root.quaternion.clone(), hinge: this.ds.lid.rotation.x } : null;
+    this.drag = this.pinch = null;
+    this.inspectionPointers.clear();
+    this.host.dispatchEvent(new CustomEvent('ds-pose-change'));
+  }
+
+  reframeDsPose() {
+    if (this.console !== 'ds' || this.mode !== 'inspecting' || this.transition) return;
+    this.changed = this.dsReflectionsDirty = true;
+    this.updateCameraTargets();
+    this.ds.root.position.copy(this.playTarget);
+    this.camera.position.copy(this.cameraTarget);
+    this.lookAt.copy(this.lookTarget);
+  }
+
+  dsPoseBounds(rotation, hinge) {
+    this.ds.root.updateWorldMatrix(true, true);
+    const rootMatrix = new THREE.Matrix4().compose(dsPlayPosition, rotation, this.ds.root.scale);
+    const rootDelta = rootMatrix.clone().multiply(this.ds.root.matrixWorld.clone().invert());
+    const lidMatrix = new THREE.Matrix4().compose(this.ds.lid.position,
+      new THREE.Quaternion().setFromEuler(new THREE.Euler(hinge, 0, 0)), this.ds.lid.scale);
+    const lidDelta = rootMatrix.clone().multiply(lidMatrix).multiply(this.ds.lid.matrixWorld.clone().invert());
+    const bounds = new THREE.Box3();
+    this.ds.root.traverse(object => {
+      if (!object.geometry) return;
+      let parent = object;
+      while (parent !== this.ds.root && parent !== this.ds.lid) parent = parent.parent;
+      if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
+      const matrix = (parent === this.ds.lid ? lidDelta : rootDelta).clone().multiply(object.matrixWorld);
+      bounds.union(object.geometry.boundingBox.clone().applyMatrix4(matrix));
+    });
+    return bounds;
+  }
+
   selectConsole(system) {
     this.finishPearMove(true);
     this.finishConsoleMove(true);
@@ -348,6 +425,7 @@ export class HandheldScene {
     if (system === this.console) { this.setView('playing'); return; }
     this.activeModel.root.position.copy(this.consolePoses[this.console].position);
     this.activeModel.root.quaternion.copy(this.consolePoses[this.console].rotation);
+    if (this.console === 'ds') this.ds.lid.rotation.x = dsTableHinge;
     this.transition = this.cameraMotion = null;
     this.console = system;
     this.host.dataset.console = system;
@@ -572,6 +650,7 @@ export class HandheldScene {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.updateCameraTargets();
+    if (this.transition && this.mode !== 'table') this.transition.targetPosition = this.playTarget;
     if (!this.transition) {
       this.cameraMotion = null;
       this.camera.position.copy(this.cameraTarget);
@@ -587,12 +666,24 @@ export class HandheldScene {
       this.lookTarget = new THREE.Vector3(4.2, 4, -1.5);
     } else if (this.console === 'ds') {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
+      const rotation = this.transition?.targetRotation ??
+        (this.mode === 'playing' ? this.dsGameplayPose?.rotation ?? dsPlayQuaternion : this.ds.root.quaternion);
+      const hinge = this.transition?.targetHinge ??
+        (this.mode === 'playing' ? this.dsGameplayPose?.hinge ?? 0 : this.ds.lid.rotation.x);
+      const bounds = this.dsPoseBounds(rotation, hinge);
       this.playTarget = dsPlayPosition.clone();
-      const padding = this.width < 600 ? 300 : 180;
-      const distance = Math.max(12 / this.camera.aspect, 9.8 *
-        this.height / Math.max(160, this.height - padding)) / (2 * tangent);
-      this.lookTarget = dsPlayPosition.clone().add(new THREE.Vector3(.15, -.5, 0));
-      this.cameraTarget = this.lookTarget.clone().add(new THREE.Vector3(0, 0, distance * this.zoom / (this.mode === 'playing' ? this.playZoom * 2 : 1)));
+      const lift = Math.max(0, 2 - bounds.min.y);
+      this.playTarget.y += lift;
+      bounds.translate(new THREE.Vector3(0, lift, 0));
+      const size = bounds.getSize(new THREE.Vector3());
+      const phoneInspect = this.width < 600 && this.mode === 'inspecting';
+      const top = phoneInspect ? 260 : 90, bottom = this.width < 600 ? 140 : 120;
+      const distance = (Math.max(Math.max(12, size.x + 1.2) / this.camera.aspect, (size.y + .8) *
+        this.height / Math.max(160, this.height - top - bottom)) / (2 * tangent) + size.z / 2) *
+        this.zoom / (this.mode === 'playing' ? this.playZoom * 2 : 1);
+      this.lookTarget = bounds.getCenter(new THREE.Vector3());
+      this.lookTarget.y += (top - bottom) * tangent * distance / this.height;
+      this.cameraTarget = this.lookTarget.clone().add(new THREE.Vector3(0, 0, distance));
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = 180;
@@ -637,13 +728,17 @@ export class HandheldScene {
     this.zoom = THREE.MathUtils.clamp(value, .65, 1.65);
     this.updateCameraTargets();
     this.camera.position.copy(this.cameraTarget);
+    if (this.console === 'ds') this.lookAt.copy(this.lookTarget);
   }
 
   setPlayZoom(value) {
     this.playZoom = THREE.MathUtils.clamp(value, .5, 1);
     if (this.mode !== 'playing') return;
     this.updateCameraTargets();
-    if (!this.transition && !this.cameraMotion) this.camera.position.copy(this.cameraTarget);
+    if (!this.transition && !this.cameraMotion) {
+      this.camera.position.copy(this.cameraTarget);
+      if (this.console === 'ds') this.lookAt.copy(this.lookTarget);
+    }
     this.changed = true;
   }
 
@@ -656,19 +751,25 @@ export class HandheldScene {
     this.drag = null;
     this.inspectionPointers.clear();
     this.pinch = null;
+    const deskTransition = this.console === 'ds' && (mode === 'table' || this.mode === 'table');
     this.mode = mode;
     this.dsReflectionsDirty = true;
     this.cameraMotion = null;
     this.zoom = 1;
-    this.updateCameraTargets();
     this.transition = {
       started: performance.now(), duration: this.reducedMotion.matches ? 0 : 850,
+      deskTransition,
       position: this.activeModel.root.position.clone(), rotation: this.activeModel.root.quaternion.clone(),
       camera: this.camera.position.clone(), look: this.lookAt.clone(),
-      targetPosition: mode === 'table' ? this.consolePoses[this.console].position.clone() : this.playTarget,
       targetRotation: mode === 'table' ? this.consolePoses[this.console].rotation :
-        (this.console === 'ds' ? dsPlayQuaternion : playQuaternion),
+        (this.console === 'ds' ? (mode === 'inspecting' ? this.ds.root.quaternion.clone() :
+          this.dsGameplayPose?.rotation ?? dsPlayQuaternion) : playQuaternion),
+      hinge: this.ds.lid.rotation.x,
+      targetHinge: mode === 'table' ? dsTableHinge : mode === 'inspecting' ? this.ds.lid.rotation.x :
+        this.dsGameplayPose?.hinge ?? 0,
     };
+    this.updateCameraTargets();
+    this.transition.targetPosition = mode === 'table' ? this.consolePoses[this.console].position.clone() : this.playTarget;
     this.host.dataset.view = 'moving';
     this.onView(mode, true);
     this.canvas.focus({ preventScroll: true });
@@ -831,7 +932,14 @@ export class HandheldScene {
       const fraction = transition.duration ? Math.min(1, (time - transition.started) / transition.duration) : 1;
       const ease = fraction * fraction * (3 - 2 * fraction);
       this.activeModel.root.position.lerpVectors(transition.position, transition.targetPosition, ease);
+      if (transition.deskTransition) {
+        const sideways = this.mode === 'table' ? 1 - THREE.MathUtils.smoothstep(1 - ease, .2, 1) :
+          THREE.MathUtils.smoothstep(ease, .2, 1);
+        this.ds.root.position.x = THREE.MathUtils.lerp(transition.position.x, transition.targetPosition.x, sideways);
+        this.ds.root.position.y += Math.sin(Math.PI * ease) * 3.5;
+      }
       this.activeModel.root.quaternion.slerpQuaternions(transition.rotation, transition.targetRotation, ease);
+      if (this.console === 'ds') this.ds.lid.rotation.x = THREE.MathUtils.lerp(transition.hinge, transition.targetHinge, ease);
       this.camera.position.lerpVectors(transition.camera, this.cameraTarget, ease);
       this.lookAt.lerpVectors(transition.look, this.lookTarget, ease);
       if (fraction === 1) {
@@ -928,7 +1036,7 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     // Sample the actual room once per settled pose/light change, only for DS paint.
-    if (this.dsReflectionsDirty && !this.transition && !this.pearMove && !this.consoleMove &&
+    if (this.dsReflectionsDirty && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&
         !consolesMoving && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
     if (cartridgeMotion) {

@@ -1052,6 +1052,24 @@ $('room-toggle').addEventListener('click', () => {
 $('pickup').addEventListener('click', () => changeView('playing'));
 $('inspect').addEventListener('click', () => changeView(view?.mode === 'inspecting' ? 'playing' : 'inspecting'));
 $('put-down').addEventListener('click', () => changeView('table'));
+function updateDsPoseControls() {
+  const inspecting = view?.console === 'ds' && view.mode === 'inspecting';
+  const locked = !!view?.dsGameplayPose;
+  $('ds-inspect-controls').hidden = !inspecting;
+  for (const id of ['ds-inspect-action', 'ds-hinge']) $(id).disabled = !inspecting || !!view?.transition || locked;
+  $('ds-pose-lock').disabled = !inspecting || !!view?.transition;
+  $('ds-inspect-action').value = view?.dsInspectAction ?? 'body';
+  const opening = Math.round(view?.dsHinge ?? 180);
+  $('ds-hinge').value = String(opening);
+  $('ds-hinge-value').textContent = `${opening}\u00b0`;
+  $('ds-pose-lock').setAttribute('aria-pressed', String(locked));
+  $('ds-pose-lock').textContent = locked ? 'Unlock pose' : 'Lock pose';
+  $('ds-pose-status').textContent = locked ? 'Locked: Back to play keeps this pose.' : 'Unlocked: Back to play resets flat.';
+}
+$('scene').addEventListener('ds-pose-change', updateDsPoseControls);
+$('ds-inspect-action').addEventListener('change', () => view?.setDsInspectAction($('ds-inspect-action').value));
+$('ds-hinge').addEventListener('input', () => view?.setDsHinge(Number($('ds-hinge').value)));
+$('ds-pose-lock').addEventListener('click', () => view?.setDsPoseLocked(!view.dsGameplayPose));
 await storageReady;
 try {
   await loadBrand();
@@ -1082,9 +1100,12 @@ try {
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
       icon($('inspect'), mode === 'inspecting' ? 'back' : 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
+      updateDsPoseControls();
       $('play-zoom-control').hidden = mode !== 'playing' || moving || document.fullscreenElement === $('screen-focus');
       $('scene-hint').textContent = mode === 'table' ? 'Drag consoles or pear-boy to move them. Click a console to play; click pear-boy for light.' :
-        mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
+        mode === 'inspecting' ? (view?.console === 'ds' ?
+          'Rotate body or choose Move hinge. Lock pose, then Back to play. Unlocked returns flat.' :
+          'Drag to look around. Scroll to zoom. Your game keeps running.') :
           view?.console === 'ds' ? 'BowserBOY DS / touch the lower screen. Z/X = A/B. C/V = X/Y. DS for cartridges.' :
             'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
       if (running) void command('setInputEnabled', view?.console !== 'ds' && (document.fullscreenElement === $('screen-focus') || (mode === 'playing' && !moving))).catch((error) => notice(error.message, true));

@@ -14,6 +14,28 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / DS articulation, pose lock and visible physical power:
+  Owner requests independent Inspect body/hinge control, retained gameplay
+  angles on lock, flat camera-facing unlocked default and a missing power cap.
+  Add body/hinge drag+arrows,30-180-degree slider, session-only cloned lock,
+  reduced-motion-aware hinge tween and independent110-degree table reset.
+  Visible front power shares existing safe save/cold-boot lifecycle.
+  Projected caps reject back faces/offscreen/lid cover; stylus checks first
+  actual DS surface. Actual visual review catches pear blocking the DS;
+  move held position left/above and delay sideways lift to clear the GBA.
+ 35units,syntax/build and final12-case Edge gate pass2.4m:6DS,4movement,
+  2GBA Inspect/reduced-motion. Native locked145-degree pixels/input/saves/
+  power cycle and30-degree folded occlusion pass, as do390px controls,
+  exact pose retention/restoration, unlock-to-flat and reload reset.
+  Keep original color assertions/materials; recreate their fixed historical
+  reference independently of editable gameplay pose. Brightness varies with
+  angle under unchanged lighting. Review native/Inspect/phone captures.
+  Overbroad intermediate gate exposes unrelated GBA lamp-off cap17.533vs<5;
+  corrected15s exact HEAD replay reproduces it. Leave production/test unchanged.
+  Final review finds locked pointers blocked pinch zoom; track pointers without
+  starting a rotation drag. Expanded actual two-touch case passes separately
+  in24.5s with exact quaternion unchanged; syntax/35units/build pass again.
+  Keep87active for owner/device review; no full-suite, push or deployment.
 - 2026-11-07 / Blue-cyan DS and lighter NDS-only base:
   Owner rejects green-looking teal, then requests a slightly lighter base
   for NDS only. Keep #0077FF lid; separate #40A0FF lower-base paint.

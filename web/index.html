@@ -33,8 +33,17 @@
         <button data-control="a" aria-label="A button" disabled hidden></button>
         <button data-control="b" aria-label="B button" disabled hidden></button>
         <button id="hardware-power" aria-label="Turn power on" aria-pressed="false" title="Power on" disabled hidden></button>
+        <button id="ds-hardware-power" aria-label="Power on DS" aria-pressed="false" title="Power on DS" disabled hidden></button>
       </div>
       <p id="scene-hint" class="scene-hint" aria-live="polite">Drag a console to move it. Click to play.</p>
+      <div id="ds-inspect-controls" class="ds-inspect-controls" role="group" aria-label="DS orientation controls" hidden>
+        <label class="sr-only" for="ds-inspect-action">DS drag control</label>
+        <select id="ds-inspect-action"><option value="body">Rotate body</option><option value="hinge">Move hinge</option></select>
+        <button id="ds-pose-lock" aria-pressed="false">Lock pose</button>
+        <label for="ds-hinge">Hinge opening <output id="ds-hinge-value" for="ds-hinge">180&deg;</output></label>
+        <input id="ds-hinge" type="range" min="30" max="180" step="1" value="180">
+        <p id="ds-pose-status" role="status">Unlocked: Back to play resets flat.</p>
+      </div>
       <nav id="action-dock" class="scene-actions" aria-label="Handheld and cartridge tools">
         <button id="dock-drag" aria-describedby="dock-help"></button>
         <button id="dock-toggle" aria-expanded="true" aria-controls="dock-actions"></button>
@@ -160,7 +169,7 @@
       <button id="help-close" class="close-button" aria-label="Close help">&times;</button>
       <p class="eyebrow">A QUICK START</p><h2 id="help-title">Your games. Your save points.</h2>
       <h3>Insert a cartridge</h3><p>Open the cartridge slot or press Escape. Choose an uncompressed <strong>.gba</strong> file you have the right to use, or try the original Pixel Lab demo. Files are read locally, not uploaded. No commercial ROM or BIOS collection is supplied.</p>
-      <h3>A handheld you can hold</h3><p>Click either console on the desk to play. Drag it to lift and move it in 3D without rotating; scroll while holding for depth and release to drop. The Move consoles dock control also offers keyboard movement: arrows move, Page Up/Down lift, Enter drops, Escape cancels. Put down returns to the moved desk position. Positions reset on reload. Inspect still lets you rotate to see the sides and battery cover: drag or use arrows, +/minus zoom, Home resets the inspection angle. Back to play restores a playable angle. The other cartridges are original decorative props, not supplied games.</p>
+      <h3>A handheld you can hold</h3><p>Click either console on the desk to play. Drag it to lift and move it in 3D without rotating; scroll while holding for depth and release to drop. The Move consoles dock control also offers keyboard movement: arrows move, Page Up/Down lift, Enter drops, Escape cancels. Put down returns to the moved desk position. Positions reset on reload. Inspect lets you rotate the body: drag or use arrows, +/minus zoom, Home resets an unlocked angle. For DS, choose Move hinge or use its opening slider, then Lock pose and Back to play to keep both angles. Unlock before editing; leaving unlocked restores flat, camera-facing DS gameplay. Locks reset on reload. GBA Back to play restores its normal playable angle. The front-left DS power button saves before powering off and cold-boots the retained cartridge on power-on. The other cartridges are original decorative props, not supplied games.</p>
       <h3>Play, the familiar way</h3><p>Use the physical buttons, or click the 3D display for keyboard focus. Defaults: arrows to move, <strong>Z = A, X = B</strong>, A/S = L/R, Enter = Start, left Shift = Select. <strong>Hold Space for 2x; release for 1x.</strong> Remap keys in Cartridges; assigning Space to a GBA button gives that binding priority over fast-forward. CRT Geom is the default screen shader; choose any of the nine native CRT presets or Unfiltered there if preferred. No buttons cover the LCD. Keyboard and mouse/touch controls are active in play view; the game keeps running on the table and while inspecting until you pause it. Connected gamepads retain their native runtime mappings.</p>
       <h3>Power and pause</h3><p>The physical switch powers the emulator off and stores available in-game save data. Turn it back on to boot the loaded ROM from the beginning, then use the game's own Continue/Load menu. The dock's power-cycle icon safely switches off, then on; it is not checkpoint restore. Power on never restores an instant checkpoint. Pause game in Cartridges keeps the current session instead.</p>
       <h3>Quick controls</h3><p>The icon dock offers whole-player fullscreen and a separate screen-only fullscreen view, control remapping, autosave, checkpoint save/load and slot selection. Screen-only mode displays the current live LCD without the handheld or room; keyboard controls keep working and Escape returns to the desk without restarting the game. Hover or focus an icon for its label. The fast-forward icon offers 1x, 2x, 3x and 4x native emulation speeds; actual throughput depends on your device. Speed and autosave choices are remembered.</p>

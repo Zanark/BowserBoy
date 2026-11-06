@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "86",
-      "file": "TODO/86_DS_BLUE_CYAN_BASE.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/84",
-      "number": 84,
-      "nodeId": "I_kwDOVhqp0s8AAAABdIGKxQ",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGqOjc",
+      "id": "87",
+      "file": "TODO/87_DS_HINGE_GAMEPLAY_POSE.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/85",
+      "number": 85,
+      "nodeId": "I_kwDOVhqp0s8AAAABdIkM2A",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGqpqg",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "ea669bc21ad0014fdd3b72627c38d37a8a865d9c117526ba03f35d2c2069857e"
+      "bodySha256": "9c3440d3a23f80437c93644e5388cd91473b03fbe54b0e068d78eade2401fe2d"
     }
   ]
 }
