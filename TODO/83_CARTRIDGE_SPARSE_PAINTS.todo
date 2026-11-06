@@ -1,4 +1,5 @@
 Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/90
 Milestone: Cartridge reload seats reliably under sparse hosted renderer paints.
 Dependencies: None; supplies a fix needed by74, preserving71 full-resolution rendering.
 Purpose: Fix the source of the 1440px reload insertion timeout without relaxing
@@ -18,6 +19,13 @@ desktop/phone insertion and reload assertions retain their original deadlines.
 Pixel ratio, native lifecycle, lighting, saves and other tests remain unchanged.
 
 Completion evidence:
+Related view-transition recovery now retains actual painted lift midpoints
+and publishes completion only after a successful draw. New deterministic
+sparse-paint unit/browser regressions retain ordinary/reduced-motion behavior.
+Affected motion Edge gate passes7cases/2.0m; software-rendered transition
+regression passes independently. Current integrated43units/syntax/build pass.
+Hosted qualification remains pending and distinct from these local passes.
+
 Hosted failure:42202172946/shard15 expects seated but observes inserting on
 1440px reload at scene.spec.mjs:126 after15000ms. Initial-motion samples contain
 2.6-2.8second gaps; source discards gaps above500ms on each painted step.
@@ -28,6 +36,9 @@ Twenty-one unit tests pass before repository-rename compatibility coverage.
 Original15000ms assertions, renderer pixel density and native lifecycle retained.
 
 Completion log:
+2026-11-07: Recover the failed feature gate without weakening deadlines:
+share the paint-commit principle with view transitions and exercise sparse
+painted lift frames explicitly. Preserve full-resolution rendering.
 2026-11-06: Owner asks to fix latest failed cartridge tests. Download failing
 shard evidence and inspect source rather than raising timeouts. GitHub API now
 resolves the repository's canonical name to Zanark/BowserBoy; existing repository

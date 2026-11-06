@@ -47,11 +47,13 @@ test('rope tolerates a stalled frame, collides with the body and desk, and reset
   assert.ok(a.positions.every((point, i) => point.equals(a.rest[i]) && point.equals(a.previous[i])));
 });
 
-test('fixed steps produce the same rope trajectory at 30 and 120Hz', () => {
-  const a = rope(), b = rope(), origin = new Vector3(0, 1, 1);
+test('fixed steps produce the same rope trajectory at sparse 2Hz, 30 and 120Hz', () => {
+  const a = rope(), b = rope(), c = rope(), origin = new Vector3(0, 1, 1);
   simulate(a, origin, 30, 30);
   simulate(b, origin, 120, 120);
+  simulate(c, origin, 2, 2);
   a.positions.forEach((point, i) => assert.ok(point.distanceTo(b.positions[i]) < 1e-8));
+  a.positions.forEach((point, i) => assert.ok(point.distanceTo(c.positions[i]) < 1e-8));
 });
 
 test('rapid pointer moves constrain the pinned rope even between physics steps', () => {

@@ -20,6 +20,9 @@ async function state(page) {
 }
 
 async function pixel(page, point) {
+  // Power/UI state changes before a recovery-gated WebGL frame reaches the canvas.
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.changed)).toBe(false);
   const position = await page.evaluate(async point => {
     const { view } = await import('./src/app.js');
     const { Vector3 } = await import('three');
@@ -57,6 +60,9 @@ test('pear-boy casts adjustable warm light, moves live, cancels and avoids the c
   await expect.poll(async () => (await state(page)).on).toBe(false);
   const dark = await pixel(page, [11.5, .02, 8.5]);
   const farDark = await pixel(page, [10, .02, 4]);
+  await testInfo.attach('pear-light-readings', {
+    body: JSON.stringify({ lit, dark, farLit, farDark }), contentType: 'application/json',
+  });
   expect(lit[0]).toBeGreaterThan(dark[0] + 8);
   expect(lit[0] - dark[0]).toBeGreaterThan(lit[2] - dark[2]);
   expect(farLit[0], 'Diffused light must reach the clear desk beyond the immediate foot of the lamp').toBeGreaterThan(farDark[0] + 5);

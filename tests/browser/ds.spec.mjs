@@ -35,6 +35,20 @@ const framePixels = async (page, point) => (await dsFrame(page)).evaluate(async 
   bitmap.close(); return result;
 }, point);
 
+async function bootDsDemo(page) {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-demo').click();
+  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await page.evaluate(async () => clearInterval((await import('./src/app.js')).view.dsController.autosave));
+  return errors;
+}
+
 test('separate DS boots original homebrew, splits both LCDs and accepts buttons and physical-screen stylus', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -133,6 +147,11 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await page.locator('#ds-pose-lock').click();
   await page.locator('#inspect').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect(errors).toEqual([]);
+});
+
+test('DS native backups restore the saved framebuffer after further input', async ({ page }, testInfo) => {
+  const errors = await bootDsDemo(page);
   const savedLeft = (await framePixels(page)).marker.left;
   await page.locator('#ds-open').click();
   await page.locator('#ds-save').click();
@@ -154,6 +173,16 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await expect(page.locator('#ds-status')).toContainText('DS backup restored');
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(savedLeft);
   await page.locator('#ds-close').click();
+  expect(errors).toEqual([]);
+});
+
+test('DS and GBA retain isolated cores and saves while DS power starts cold', async ({ page }, testInfo) => {
+  const errors = await bootDsDemo(page);
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('ArrowRight');
+  await expect.poll(async () => (await framePixels(page)).marker.left).toBeGreaterThan(140);
+  await page.keyboard.up('ArrowRight');
+  const savedLeft = (await framePixels(page)).marker.left;
   const frame = await dsFrame(page);
   await page.locator('#select-gba').click();
   await expect.poll(() => frame.evaluate(() => window.EJS_emulator.paused)).toBe(true);
@@ -178,6 +207,20 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(120);
   expect(await gba.evaluate(() => window.EJS_emulator.paused)).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test('DS reload resumes the latest manual checkpoint rather than a cold game', async ({ page }) => {
+  const errors = await bootDsDemo(page);
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('ArrowRight');
+  await expect.poll(async () => (await framePixels(page)).marker.left).toBeGreaterThan(140);
+  await page.keyboard.up('ArrowRight');
+  const savedLeft = (await framePixels(page)).marker.left;
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-save').click();
+  await expect(page.locator('#ds-status')).toContainText('DS checkpoint saved');
+  await expect(page.locator('#ds-save')).toBeEnabled();
   page.once('dialog', dialog => dialog.accept());
   await page.reload();
   await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
@@ -278,6 +321,94 @@ test('DS stylus draws under the pointer across locked orientations, zoom and hig
   }
   await cdp.detach();
   expect(errors).toEqual([]);
+});
+
+test('DS quick taps reach their clicked pixels without holding, with and without the pen', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-demo').click();
+  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await page.evaluate(async () => clearInterval((await import('./src/app.js')).view.dsController.autosave));
+  const frame = await dsFrame(page);
+  await frame.evaluate(() => {
+    window.touchEdges = [];
+    for (const type of ['mousedown', 'mouseup']) window.EJS_emulator.canvas.addEventListener(type, event => {
+      window.touchEdges.push({ type: event.type, frame: window.EJS_emulator.gameManager.getFrameNum() });
+    });
+  });
+  const cdp = await page.context().newCDPSession(page);
+  for (const [held, pixels, phone] of [
+    [false, [[32, 80], [72, 80], [112, 80], [152, 80]]],
+    [true, [[40, 128], [88, 128], [136, 128], [192, 128]]],
+    [true, [[44, 160], [100, 160], [160, 160], [212, 160]], true],
+  ]) {
+    if (phone) {
+      await page.locator('#inspect').click();
+      await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+      await page.evaluate(async () => {
+        const { view } = await import('./src/app.js'), { Euler } = await import('three');
+        view.ds.root.quaternion.setFromEuler(new Euler(.15, -.2, Math.PI));
+        view.setDsHinge(155);
+      });
+      await page.locator('#ds-pose-lock').click();
+      await page.locator('#inspect').click();
+      await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.locator('#play-zoom').fill('65');
+      await cdp.send('Emulation.setDeviceMetricsOverride', {
+        width: 390, height: 844, deviceScaleFactor: 2, mobile: false,
+      });
+    }
+    if (held) await page.locator('#ds-stylus').click();
+    const targets = await page.evaluate(async pixels => {
+      const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+      const bounds = view.canvas.getBoundingClientRect();
+      return pixels.map(([x, y]) => {
+        const point = view.ds.screens[1].localToWorld(new Vector3(
+          ((x + .5) / 256 - .5) * 4.5, (.5 - (y + .5) / 192) * 3.375, 0,
+        )).project(view.camera);
+        return { x, y, clientX: bounds.left + (point.x + 1) * bounds.width / 2,
+          clientY: bounds.top + (1 - point.y) * bounds.height / 2 };
+      });
+    }, pixels);
+    for (const point of targets) {
+      if (phone) {
+        await cdp.send('Input.dispatchTouchEvent', {
+          type: 'touchStart', touchPoints: [{ id: 1, x: point.clientX, y: point.clientY }],
+        });
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      } else await page.mouse.click(point.clientX, point.clientY);
+    }
+    await expect.poll(() => page.evaluate(async targets => {
+      const { view } = await import('./src/app.js'), ds = view.dsController;
+      const native = new OffscreenCanvas(256, 384).getContext('2d');
+      native.imageSmoothingEnabled = false;
+      native.drawImage(ds.source, 0, 0, 256, 384);
+      const displayed = ds.outputs[1].getContext('2d');
+      return targets.every(({ x, y }) => {
+        for (const [context, offset] of [[native, 192], [displayed, 0]]) {
+          const pixel = context.getImageData(x, y + offset, 1, 1).data;
+          if (pixel[0] !== 255 || pixel[1] !== 255 || pixel[2] !== 0) return false;
+        }
+        return true;
+      });
+    }, targets), { timeout: 1500, intervals: [20, 40, 80],
+      message: 'every quick tap reaches the native framebuffer and naturally repainted lower LCD' }).toBe(true);
+    expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
+    await expect.poll(() => frame.evaluate(() => window.touchEdges.at(-1)?.type)).toBe('mouseup');
+  }
+  const edges = await frame.evaluate(() => window.touchEdges);
+  expect(edges).toHaveLength(24);
+  for (let index = 0; index < edges.length; index += 2) {
+    expect(edges[index].type).toBe('mousedown');
+    expect(edges[index + 1].type).toBe('mouseup');
+    expect(edges[index + 1].frame).toBeGreaterThan(edges[index].frame);
+  }
+  await cdp.detach();
+  await page.screenshot({ path: testInfo.outputPath('ds-quick-taps.png') });
 });
 
 test('both DS LCDs cast independent framebuffer-colored spill and go dark with black or power-off', async ({ page }, testInfo) => {
@@ -637,14 +768,13 @@ test('DS independently articulates its hinge and locks a gameplay pose without c
   const power = await page.locator('#ds-hardware-power').boundingBox();
   expect(power.width).toBeGreaterThanOrEqual(44);
   expect(power.height).toBeGreaterThanOrEqual(44);
-  const alignment = await page.evaluate(async () => {
+  await expect.poll(() => page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const point = view.project(view.ds.power), rect = view.canvas.getBoundingClientRect();
     const button = document.getElementById('ds-hardware-power').getBoundingClientRect();
     return Math.hypot(button.x + button.width / 2 - rect.x - point.x,
       button.y + button.height / 2 - rect.y - point.y);
-  });
-  expect(alignment).toBeLessThan(1);
+  })).toBeLessThan(1);
   await page.locator('#inspect').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
   const panel = await page.locator('#ds-inspect-controls').boundingBox();

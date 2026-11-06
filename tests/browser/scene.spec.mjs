@@ -703,6 +703,11 @@ test('pressed caps remain lit inside physical shell apertures instead of disappe
     'Release progresses farther than compression over the same elapsed time').toBeGreaterThan(response.compressing / response.pressed + .1);
   expect(response.released).toBeLessThan(.0001);
   await page.locator('#lamp-toggle').click();
+  // The companion is an independent room light, not artificial cap illumination.
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false);
+  });
   for (const id of ['a', 'up']) {
     expect(Math.max(...await sample(id, true)), 'An unlit cap cannot acquire artificial press illumination').toBeLessThan(5);
     await sample(id, false);

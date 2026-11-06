@@ -1,6 +1,6 @@
-Status: BLOCKED (initial 53-case release done; latest 56-case qualification fails)
-GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/74
-Milestone: Nineteen-way CI delivered; qualify the subsequent 56-case inventory.
+Status: IN_PROGRESS (initial release done; current 83-case recovery qualification pending)
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/74
+Milestone: Nineteen-way CI delivered; qualify the current 83-case inventory.
 Dependencies: 71_FULL_RESOLUTION_RENDERING.todo.
 
 Purpose
@@ -16,10 +16,12 @@ Tasks
 [x] Remove duplicate fullscreen-frame waits without removing assertions.
 [x] Qualify the genuine pushed workflow and record observed elapsed time.
 [ ] Qualify the later 56-case follow-up through all hosted gates.
+[x] Audit the expanded 83-case inventory across all nineteen isolated shards.
+[ ] Qualify the current touchscreen/motion/lighting recovery on the pushed SHA.
 
 Acceptance criteria
 -------------------
-All56 browser cases run once, eighteen shards of3 and one shard of2.
+All83 current browser cases run once, seven shards of5 and twelve shards of4.
 Nineteen browser jobs plus build fit the20-job baseline concurrency budget.
 Native tests do not compete on the same runner. Rendering stays sharp.
 No tests, assertions, deadlines, failure evidence or deployment gates removed.
@@ -27,6 +29,13 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Current recovery audit:83cases assigned exactly once across19shards
+(7x5+12x4), using the workflow's fully-parallel shard selection, workers1,
+retries0 and unchanged120s/15s deadlines. Previous0fdd81b run42299473861
+passes build and12browser shards;7fail and deployment skips. Root-cause
+corrections and focused qualification are in progress. This audit alone
+does not establish that the current native/browser gate or deployment passes.
+
 Prior42129264382 slowest successful browser step takes6m03; quickest1m24.
 This failed run is diagnostic, not a clean performance baseline.
 Official GitHub limits document20standard concurrent jobs for Free.
@@ -61,6 +70,9 @@ alone does not establish the underlying timing cause.
 
 Completion log
 --------------
+2026-11-07: Recover the failed DS feature release with native-frame-paced
+touch contacts, bounded native lifecycle cases and independent lighting/
+motion investigations. Preserve all hosted gates; audit the expanded83cases.
 2026-11-06: User asks for still more parallel CI. Expand runner isolation,
 not competing workers; preserve all quality/timeout gates.
 2026-11-06: Genuine nineteen-way gate and exact public application/README

@@ -14,6 +14,33 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Quick DS taps and unattended CI recovery:
+  Owner rejects localhost Twin Lab responsiveness and reports lag. Eight
+  quick clicks miss every native/copied mark despite correct coordinates and
+  current served ROM. Native down/up pairs arrive0-0.3ms apart. Existing
+  precision fixture holds contact and misses this input-poll sampling bug.
+  Add failing actual quick-tap regression; two browser RAFs still lose taps.
+  Pace ordered contact samples by pinned native getFrameNum instead, coalesce
+  pending moves and cancel stale contacts even after host pointer-up.
+  Four queue units pass,39total; syntax/build pass. Expanded12quick mouse/
+  touch contacts with/without pen, upside-down390x844DPR2 and actual native
+  edge-frame ordering pass17.5s. Existing held precision/pen also pass.
+  Compound lifecycle reaches its120s total deadline at the final reload
+  core boot, not a touch-coordinate assertion. Split native scenarios without
+  dropping behavior checks or extending deadlines; qualification continues.
+  Correct DS logo fixture to actual supplied2149x732, verified PNG header,
+  rather than changing the owner-supplied artwork to match stale2151x731.
+  Owner authorizes unattended Zanark commits, monitored deployments and
+  test corrections without questions. Parallel agents handle independent
+  lighting and motion/framing CI faults; serialize runtime/browser checks.
+  Final integrated Edge gate passes10cases/4.5m, all four split native
+  lifecycle cases included;43units/syntax/build pass. Motion Edge7/2.0m
+  plus software transition/edge-return/rope pass. Lighting2/47.2s passes
+  after actual-paint synchronization and independent pear-light isolation,
+  with production lighting unchanged. Transitions retain painted midpoints;
+  body/rope catch-up accepts500ms while keeping120Hz substeps.
+  Audit83browser cases exactly once across19shards (7x5+12x4).
+  Hosted exact-SHA publication is still a separate pending gate at this entry.
 - 2026-11-07 / DS pen, single-line hints, screen spill and startup chime:
   Owner requests pickable glowing side pen with camera-facing back, bottom-left
   hint, GBA-style light spill and a different non-chip power-on tune, then

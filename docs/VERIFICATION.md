@@ -60,6 +60,34 @@ qualification, commercial compatibility or owner acceptance.
 
 ### Precise DS touchscreen input
 
+**Quick-tap follow-up:** the owner rejects localhost Twin Lab responsiveness.
+Eight ordinary clicks produce no yellow in native screenshots or copied LCDs,
+despite correct coordinates and current served ROM bytes. Native down/up pairs
+arrive0-0.3ms apart; the earlier held-pointer regression misses this sampling
+failure. A new real quick-click case fails on the synchronous bridge. A queue
+paced by two browser RAFs also fails: browser paints are not native core frames.
+Use the pinned manager's `getFrameNum()` changes to separate queued samples.
+Preserve separate contact edges/start/endpoints, coalesce only pending moves,
+and immediately cancel pending contacts on input/lifecycle cancellation.
+
+Four focused queue units pass, bringing the unit inventory to39. The expanded
+native quick-tap case passes17.5s: twelve ordinary mouse/touch taps with/without
+the picked-up pen, including upside-down390x844DPR2, reach native and naturally
+copied lower LCD pixels. Each native down/up spans a core-frame change.
+Existing four-pose held precision and pen lifecycle also pass in that gate.
+The compound native lifecycle case hits its unchanged120s total deadline while
+loading its final post-reload core; split physical input, backup restore,
+retained-core/cold-power and checkpoint reload into independent cases while
+retaining all behavior assertions. The final integrated Edge gate passes
+10cases/4.5m, including all four split lifecycle scenarios, four-pose
+precision, quick taps, hinge controls, actual DS branding and two existing
+GBA quick-action lifecycle cases. Current43units/syntax/build pass.
+Parallel investigation qualifies7motion Edge cases/2.0m, software-rendered
+transition and edge-return/rope cases, and2software-rendered lighting
+cases/47.2s. Lighting fixtures sample completed paints and isolate the pear
+ambient contribution; production illumination is unchanged.
+No hosted deployment or physical-phone acceptance is implied by local passes.
+
 The new native regression first fails at requested pixel (200,150), even in
 flat gameplay: the clicked pixel retains its green background. The old test
 only required yellow pixels somewhere in a limited Y band. Twin Lab incorrectly

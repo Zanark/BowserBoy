@@ -47,7 +47,7 @@ export class DeskMotion {
 
   update(seconds, obstacles) {
     if (this.held || this.sleeping) return false;
-    this.accumulator += Math.max(0, Math.min(seconds, .05));
+    this.accumulator += Math.max(0, Math.min(seconds, .5));
     let changed = false;
     while (this.accumulator + 1e-10 >= step) {
       this.accumulator = Math.max(0, this.accumulator - step);

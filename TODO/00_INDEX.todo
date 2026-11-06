@@ -73,7 +73,7 @@ BowserBOY workstreams
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - BLOCKED follow-up: initial53-case nineteen-way release qualified in4m33s; later56-case gate has not passed.
+74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery: initial53-case release qualified; current83cases audited once across19shards, monitored hosted qualification pending.
 75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
@@ -87,7 +87,7 @@ BowserBOY workstreams
 85_MOVABLE_CONSOLES.todo - IN_PROGRESS: independent orientation-locked console relocation, drop physics and session desk positions.
 86_DS_BLUE_CYAN_BASE.todo - IN_PROGRESS: brighter blue-cyan DS and slightly lighter NDS-only lower base; owner review pending.
 87_DS_HINGE_GAMEPLAY_POSE.todo - IN_PROGRESS: independent DS hinge/body inspection, locked gameplay pose, flat unlocked play and visible physical power.
-88_DS_PRECISE_TOUCHSCREEN.todo - IN_PROGRESS: native touchscreen marks under the pointer across orientation, zoom and high-DPI input.
+88_DS_PRECISE_TOUCHSCREEN.todo - IN_PROGRESS: precise native marks and frame-observable quick taps across orientation, zoom and high-DPI input.
 89_PICKABLE_DS_STYLUS.todo - IN_PROGRESS: hover glow, pickup and camera-facing pen input.
 90_DS_SCREEN_LIGHT_SPILL.todo - IN_PROGRESS: independent framebuffer-driven spill from both DS LCDs.
 91_DS_STARTUP_CHIME.todo - IN_PROGRESS: original soft-glass DS power-on sound, distinct from GBA.
@@ -106,7 +106,7 @@ Current pending work
   Authorized personal-account credentials now permit issue/Project tracking;
   workstream82 supersedes the earlier authentication blocker. Tracking these
   features does not change their explicit implementation deferral.
--74: diagnose and qualify the56-case hosted suite without weakening quality,
+-74: diagnose and qualify the current83-case hosted suite without weakening quality,
   assertions or deadlines.55a5867/42139790805 fails reload seating and CRT
   deadlines.9ff921b/42179075618 completesFAILURE by12:45Asia/Kolkata:
   verify15's1440px reload/cartridge assertion receives"inserting" instead of

@@ -29,6 +29,56 @@ async function keyboardMove(page, system) {
   await page.locator(`#move-${system}`).click();
 }
 
+test('sparse console paints retain the lift and only publish completion with aligned controls', async ({ page }) => {
+  await ready(page);
+  const result = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Box3 } = await import('three');
+    view.renderer.setAnimationLoop(null);
+    const originalRender = view.renderer.render.bind(view.renderer);
+    const samples = [];
+    view.renderer.render = (scene, camera) => {
+      if (camera === view.camera) samples.push({
+        y: view.ds.root.position.y,
+        clear: !new Box3().setFromObject(view.ds.root).intersectsBox(new Box3().setFromObject(view.model.root)),
+      });
+      return originalRender(scene, camera);
+    };
+    const paint = time => {
+      view.renderedLastFrame = false;
+      view.nextPaint = 0;
+      view.render(time);
+    };
+    try {
+      const time = performance.now();
+      view.selectConsole('ds');
+      paint(time);
+      view.nativeBusy = true;
+      view.render(time + 5000);
+      const deferred = { mode: view.host.dataset.view, elapsed: view.transition?.elapsed };
+      view.nativeBusy = false;
+      paint(time + 10000);
+      const midpoint = view.host.dataset.view;
+      paint(time + 15000);
+      const button = document.querySelector('#ds-hardware-power').getBoundingClientRect();
+      const canvas = view.canvas.getBoundingClientRect();
+      const point = view.project(view.ds.controls.get('power').anchor);
+      return { samples, deferred, midpoint, mode: view.host.dataset.view,
+        alignment: Math.hypot(button.x + button.width / 2 - canvas.x - point.x,
+          button.y + button.height / 2 - canvas.y - point.y) };
+    } finally {
+      view.nativeBusy = false;
+      view.renderer.render = originalRender;
+    }
+  });
+  expect(result.deferred).toEqual({ mode: 'moving', elapsed: 0 });
+  expect(result.midpoint).toBe('moving');
+  expect(result.mode).toBe('playing');
+  expect(result.samples).toHaveLength(3);
+  expect(result.samples.every(sample => sample.clear)).toBe(true);
+  expect(result.samples[1].y).toBeGreaterThan(Math.max(result.samples[0].y, result.samples[2].y));
+  expect(result.alignment).toBeLessThan(1);
+});
+
 for (const system of ['gba', 'ds']) {
   test(`${system} drags in 3D without rotating, drops, and returns to its moved desk position`, async ({ page }, testInfo) => {
     const errors = [];

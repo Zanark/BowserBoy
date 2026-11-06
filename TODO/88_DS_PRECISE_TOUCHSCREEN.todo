@@ -1,6 +1,6 @@
 Status: IN_PROGRESS
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/86
-Milestone: Native touchscreen marks align with the physical pointer.
+Milestone: Native touchscreen marks align with the pointer and ordinary taps register.
 Dependencies: 79 separate DS; 87 independent DS gameplay orientation.
 Purpose: Correct the reported Twin Lab stylus offset without distorting input
 for other games or weakening screen/lid visibility checks.
@@ -10,6 +10,9 @@ Tasks:
 - [x] Correct the cause rather than applying a compensating host-screen offset.
 - [x] Verify new native marks at clicked pixels across body/hinge/zoom changes.
 - [x] Cover LCD edges, upside-down pose, resizing and high-DPI touch input.
+- [x] Reproduce lost quick taps and preserve contact edges across actual native frames.
+- [x] Coalesce drag moves and cancel queued contacts on input/lifecycle changes.
+- [x] Qualify quick mouse/touch taps and existing native/pen lifecycle together.
 - [x] Update affected documentation, contributor context and GitHub tracking.
 - [ ] Owner visual review.
 
@@ -20,8 +23,30 @@ visible orientation. Mouse/touch coordinates remain accurate across zoom,
 resizing and device-pixel ratios. Upper LCDs, hidden/covered/back-facing surfaces
 and points outside the LCD do not become touchscreen targets. GBA behavior,
 unrelated DS ROM bytes, pose locks and save formats remain unchanged.
+Ordinary short mouse/touch taps work without artificially holding contact.
+Queued drag moves do not build a stale backlog; cancellation discards pending
+contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Responsiveness follow-up: owner rejects localhost Twin Lab touch response and
+reports lag. All eight ordinary clicks reproduce missing native and copied-LCD
+marks despite correct host/native coordinates and current served ROM bytes.
+Native down/up events arrive only0-0.3ms apart. The earlier twelve-point
+precision fixture holds contact and therefore does not qualify quick taps.
+A new genuine quick-click regression fails before the timing fix.
+Two browser RAFs still lose touches; the pinned getFrameNum counter proves
+browser paints are not native input-poll boundaries. Preserve down/up across
+actual native frame changes, coalesce only pending moves, preserve contact
+starts/endpoints and clear queued input on cancellation/lifecycle changes.
+The first native quick-tap gate passes30.7s with/without the held pen.
+Expanded twelve-contact mouse/touch case passes17.5s, including picked-up pen,
+upside-down390x844DPR2, naturally copied pixels and native edge-frame ordering.
+Final integrated Edge gate passes10cases/4.5m: physical DS input/occlusion,
+backup restore, dual-core isolation/cold power, nondefault checkpoint reload,
+four-pose precision, quick taps, hinge controls, branding and GBA quick actions.
+The earlier separate held-pen lifecycle also passes25.8s. All43units,
+syntax/build pass. Hosted publication remains a separate monitored gate.
+
 The regression fails before the fix at native (200,150) in flat gameplay.
 Final35units,syntax/build and both affected native Edge cases pass together1.6m
 (50.7s lifecycle,41.7s precision). Twelve fresh native yellow-pixel targets and
@@ -36,6 +61,13 @@ Owner/device review remains pending; no full-suite or deployment claim.
 Scoped synchronization verifies issue86 OPEN, Project1/In progress and backlink.
 
 Completion log:
+2026-11-07: Owner reports localhost Twin Lab misses clicks and lags. Reproduce
+eight missed quick taps, not another UV offset. Add failing native/copied-LCD
+regression; reject insufficient browser-RAF pacing after it still misses taps.
+Use pinned native frame counter, separate normal release from cancellation,
+coalesce drag moves, and cover cancellation/error behavior with four unit cases.
+Expanded and integrated native qualification pass; preserve original deadlines
+by splitting the compound four-core lifecycle, not removing assertions.
 2026-11-07: Owner supplies a screenshot of a click near the lower-right LCD
 appearing substantially higher. Trace the existing native touch bridge and
 original Twin Lab homebrew rather than assuming a rotated-screen projection bug.

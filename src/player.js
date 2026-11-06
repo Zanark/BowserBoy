@@ -3,6 +3,7 @@ import { CONTROLS, MANAGED_SETTINGS, defaultPreferences, validateEmulatorOptions
 import { bindKeyboard } from './keyboard.js';
 import { configureAudioBuffer, protectAudio } from './audio.js';
 import { DS_CONTROLS, DS_OPTIONS, dsScreenRegions, validateDsBattery, validateDsCapture } from './ds-cartridge.js';
+import { DsTouchQueue } from './ds-touch.js';
 
 // Version-specific internals are confined to this adapter; see docs/ARCHITECTURE.md.
 const DATA_PATH = 'https://cdn.emulatorjs.org/4.2.3/data/';
@@ -13,7 +14,6 @@ let settingsOpen = false;
 let system = 'gba';
 let controls = CONTROLS;
 let touchDown = false;
-let touchPoint = { x: 128, y: 96 };
 let preferences = defaultPreferences();
 const heldInputs = new Map();
 
@@ -66,11 +66,15 @@ const keyboard = bindKeyboard(window, {
   blockUnmapped: true,
 });
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') keyboard.release();
+  if (document.visibilityState === 'hidden') {
+    keyboard.release();
+    if (system === 'ds') dsTouch.cancel();
+  }
 });
 
 function configure(value) {
   const next = validatePreferences(value);
+  if (system === 'ds') dsTouch.cancel();
   const wasFastForwardHeld = !!heldInputs.get('fastForward')?.size;
   keyboard.release();
   for (const [action, sources] of heldInputs) {
@@ -146,7 +150,7 @@ function setInputEnabled(enabled) {
     for (const source of [...sources]) input(action, false, source);
   }
   inputEnabled = enabled;
-  if (system === 'ds' && touchDown) touch({ ...touchPoint, pressed: false });
+  if (system === 'ds') dsTouch.cancel();
 }
 
 function capture() {
@@ -169,9 +173,17 @@ function loadBattery(sram) {
 }
 
 const renderedFrames = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+async function dsInputFrame(current) {
+  const frame = manager().getFrameNum();
+  do {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+  } while (current() && manager().getFrameNum() === frame);
+}
+const dsTouch = new DsTouchQueue({ dispatch: dispatchTouch, nextFrame: dsInputFrame, onError: fail });
 
 async function restore(data) {
   (system === 'ds' ? validateDsCapture : validateCapture)(data);
+  if (system === 'ds') dsTouch.cancel();
   const game = manager();
   const emulator = window.EJS_emulator;
   const wasPaused = emulator.paused;
@@ -291,10 +303,16 @@ function initialize(data) {
 
 function touch(value) {
   if (system !== 'ds' || !Number.isInteger(value?.x) || !Number.isInteger(value?.y) ||
-      value.x < 0 || value.x > 255 || value.y < 0 || value.y > 191 || typeof value.pressed !== 'boolean') {
+      value.x < 0 || value.x > 255 || value.y < 0 || value.y > 191 || typeof value.pressed !== 'boolean' ||
+      (value.cancelled !== undefined && (typeof value.cancelled !== 'boolean' || (value.cancelled && value.pressed)))) {
     throw new Error('Invalid DS stylus coordinates.');
   }
-  if ((!inputEnabled || settingsOpen) && value.pressed) return;
+  if ((!inputEnabled || settingsOpen || window.EJS_emulator.paused) && value.pressed) return;
+  if (value.cancelled) dsTouch.cancel();
+  else dsTouch.push(value);
+}
+
+function dispatchTouch(value) {
   const canvas = window.EJS_emulator.canvas;
   dsScreenRegions(canvas.width, canvas.height);
   const bounds = canvas.getBoundingClientRect();
@@ -305,7 +323,6 @@ function touch(value) {
   canvas.dispatchEvent(new MouseEvent('mousemove', options));
   if (touchDown !== value.pressed) canvas.dispatchEvent(new MouseEvent(value.pressed ? 'mousedown' : 'mouseup', options));
   touchDown = value.pressed;
-  touchPoint = { x: value.x, y: value.y };
 }
 
 window.addEventListener('message', async (event) => {
@@ -339,6 +356,7 @@ window.addEventListener('message', async (event) => {
       case 'setInputEnabled': setInputEnabled(data.value); result = true; break;
       case 'togglePause': {
         manager();
+        if (system === 'ds') dsTouch.cancel();
         window.EJS_emulator.togglePlaying();
         result = window.EJS_emulator.paused;
         break;
@@ -346,6 +364,7 @@ window.addEventListener('message', async (event) => {
       case 'setPaused': {
         manager();
         if (typeof data.value !== 'boolean') throw new Error('Invalid pause mode.');
+        if (system === 'ds') dsTouch.cancel();
         if (data.value) window.EJS_emulator.pause();
         else window.EJS_emulator.play();
         result = window.EJS_emulator.paused;

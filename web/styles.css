@@ -84,6 +84,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .ds-inspect-controls { top: 90px; left: 12px; width: 220px; }
+  .scene-actions { gap: 3px; }
 }
 .desk[data-console=ds] #ds-open { display: grid; color: #c9ed71; }
 .desk[data-console=ds] :is(#quick-speed,#quick-controls,#quick-autosave,#quick-save,#quick-load,#quick-slots,#quick-restart,#quick-screen-fullscreen,#tools-open) { display: none; }

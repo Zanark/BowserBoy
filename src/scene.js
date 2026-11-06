@@ -3,6 +3,7 @@ import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, cr
 import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
 import { brandImage } from './brand.js';
 import { cartridgeFramingDuration, cartridgeSlideDuration, nextCartridgeElapsed } from './cartridge-motion.js';
+import { nextTransitionElapsed } from './transition-motion.js';
 import { createDsHandheld } from './ds-handheld.js';
 import { createPearBoy } from './pear-boy.js';
 import { DeskMotion, PearMotion } from './pear-motion.js';
@@ -768,7 +769,7 @@ export class HandheldScene {
     this.cameraMotion = null;
     this.zoom = 1;
     this.transition = {
-      started: performance.now(), duration: this.reducedMotion.matches ? 0 : 850,
+      elapsed: 0, lastPaint: null, duration: this.reducedMotion.matches ? 0 : 850,
       deskTransition,
       position: this.activeModel.root.position.clone(), rotation: this.activeModel.root.quaternion.clone(),
       camera: this.camera.position.clone(), look: this.lookAt.clone(),
@@ -921,6 +922,8 @@ export class HandheldScene {
     const paintDue = time >= (this.nextPaint ?? 0) && !this.nativeBusy && !document.querySelector('dialog[open]');
     const cartridgeMotion = this.cartridgeMotion;
     const cartridgeElapsed = cartridgeMotion ? nextCartridgeElapsed(cartridgeMotion, time, paintDue) : 0;
+    const transition = this.transition;
+    const transitionElapsed = transition ? nextTransitionElapsed(transition, time, paintDue) : 0;
     const exposure = this.lampOn || this.roomLightsOn || this.pearOn ? .018 : .45;
     this.renderer.toneMappingExposure = THREE.MathUtils.damp(
       this.renderer.toneMappingExposure, exposure, 4, delta);
@@ -938,9 +941,8 @@ export class HandheldScene {
       this.changed ||= this.model.cartridge.position.y !== y;
       this.model.cartridge.position.y = y;
     }
-    if (this.transition) {
-      const transition = this.transition;
-      const fraction = transition.duration ? Math.min(1, (time - transition.started) / transition.duration) : 1;
+    if (transition) {
+      const fraction = transition.duration ? transitionElapsed / transition.duration : 1;
       const ease = fraction * fraction * (3 - 2 * fraction);
       this.activeModel.root.position.lerpVectors(transition.position, transition.targetPosition, ease);
       if (transition.deskTransition) {
@@ -956,10 +958,8 @@ export class HandheldScene {
       if (fraction === 1) {
         this.activeModel.root.position.copy(transition.targetPosition);
         this.activeModel.root.quaternion.copy(transition.targetRotation);
-        this.transition = null;
-        this.host.dataset.view = this.mode;
-        this.onView(this.mode, false);
       }
+      this.changed = true;
     } else {
       this.host.dataset.view = this.mode;
       if (this.cameraMotion) {
@@ -1067,6 +1067,15 @@ export class HandheldScene {
     if (this.dsReflectionsDirty && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&
         !consolesMoving && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
+    if (transition) {
+      transition.elapsed = transitionElapsed;
+      transition.lastPaint = time;
+      if (transitionElapsed === transition.duration) {
+        this.transition = null;
+        this.host.dataset.view = this.mode;
+        this.onView(this.mode, false);
+      }
+    }
     if (cartridgeMotion) {
       cartridgeMotion.elapsed = cartridgeElapsed;
       cartridgeMotion.lastPaint = time;

@@ -66,8 +66,10 @@ scene/app event boundary for independent power, brightness, movement and reset.
 
 `src/pear-motion.js` advances an upright body at 120Hz with gravity, bounded
 release velocity, box-based prop collisions, desk bounds, bounce, friction
-and sleep. Pointer drags use a camera-facing plane plus grab offset; wheel
-depth translates that plane by the actual clamped displacement. Keyboard
+and sleep. Body and rope accumulators accept up to500ms of elapsed time per
+callback, retaining fixed120Hz substeps rather than slowing simulated time at
+2Hz software-rendered callback rates. Pointer drags use a camera-facing plane
+plus grab offset; wheel depth translates that plane by the actual clamped displacement. Keyboard
 steps clear pointer-style release velocity for deliberate placement. Cancellation
 restores the original pose and clears momentum. The contact shadow stays on
 the table, fading and widening with height.
@@ -144,6 +146,16 @@ LCD normal. Local +Y points mostly toward the camera. A projected 44px target
 supports touch/keyboard pickup and return; native touch still uses unchanged
 LCD UVs. Escape returns the held pen before opening tools. Blur/cancel,
 dialogs, Inspect and console changes clear it and native input.
+
+`src/ds-touch.js` serializes contact edges in the native-player adapter.
+The pinned manager's `getFrameNum()` must change before the next queued
+sample is delivered: consecutive message tasks, or even browser RAFs, can
+otherwise press and release between native input polls. Pending drag moves
+coalesce, but contact starts, final positions and separate taps remain ordered.
+Normal pointer-up completes the contact; cancellation clears pending contacts
+and immediately releases the native pen, even after host pointer-up. Input
+disable, settings, configuration, restore and pause also cancel pending input.
+The existing physical UV mapping and GBA input path remain unchanged.
 
 Each DS LCD owns its own existing `ScreenIllumination` instance, sampling
 the corresponding copied framebuffer texture, never the combined display.
@@ -526,6 +538,12 @@ not advance the clock. This avoids displaying the previous clock step or
 reporting seating on a skipped callback before painting the seated cartridge.
 Completed motions clear their state so an idle console can stop drawing.
 Framing does not trigger a view-mode callback, pause the core or reset input.
+
+View pickup/put-down transitions use `src/transition-motion.js` to retain
+the initial and lifted-middle presentations under sparse paints. Unpainted
+callbacks cannot commit transition time, and completion is published only
+after the final pose is actually rendered. Ordinary and reduced-motion
+durations remain covered separately.
 Native loading proceeds independently: there is no animation-based startup
 delay, invented percentage or looping reinsertion during a long download.
 

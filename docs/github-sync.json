@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "91",
-      "file": "TODO/91_DS_STARTUP_CHIME.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/89",
-      "number": 89,
-      "nodeId": "I_kwDOVhqp0s8AAAABdJmaNQ",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGrmmA",
+      "id": "88",
+      "file": "TODO/88_DS_PRECISE_TOUCHSCREEN.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/86",
+      "number": 86,
+      "nodeId": "I_kwDOVhqp0s8AAAABdJE8Yw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGrGJw",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "b1f1b90bdb7bff0d849cc34f0954822c014838de42041d0e10154f4013f4004f"
+      "bodySha256": "3cded32c38baa1d3496d3ccd04987c9b1a854ceaa63b177b03aaea7ca055dfc4"
     }
   ]
 }

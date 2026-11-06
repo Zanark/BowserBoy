@@ -25,6 +25,15 @@ Keyboard and touch work; reset is available. Pear-boy and both native cores,
 input, screens and saves retain their existing behavior. No push/deployment.
 
 Completion evidence:
+CI recovery: view transitions retain a painted lifted midpoint and publish
+completion after rendering;500ms body/rope catch-up preserves fixed120Hz
+steps under sparse paints. Landscape dock gaps become3px while preserving
+44px targets and power clearance. The affected motion Edge gate passes
+7cases/2.0m, with independent software-rendered transition/physics checks.
+Integrated43units/syntax/build and10native/branding cases pass.
+The later explicit monitored-publication authority supersedes the earlier
+local-only restriction; owner/device acceptance remains separate.
+
 Checkpoint c996f7d authored/committed as Zanark before implementation;
 34units/syntax pass. Context episode ep_1085 and checked mesh published.
 All35units,syntax/build pass. The26-case affected Edge gate completes4.5m:
@@ -39,6 +48,8 @@ Scoped85apply verifies issue83 OPEN, its BowserBOY Project/In progress item,
 managed body and local backlink. Independent gh read confirms state/status.
 
 Completion log:
+2026-11-07: Correct sparse-paint motion and landscape dock wrapping exposed
+by the hosted gate; preserve orientation locks, sharpness and touch targets.
 2026-11-07: Owner explicitly requests commit, context refresh, then consoles
 movable like pear-boy while locking their current orientation. Lock applies
 to desk relocation; dedicated Inspect rotation remains deliberately available.

@@ -19,6 +19,7 @@ export class DsController {
     this.pending = new Map();
     this.pointers = new Map();
     this.pressed = new Set();
+    this.lastTouch = { x: 128, y: 96 };
     this.stylusHeld = false;
     // Keep the docked geometry in the model's bounds; only its held visual moves.
     this.heldStylus = this.model.stylus.clone(true);
@@ -101,7 +102,7 @@ export class DsController {
       this.touch(point, true);
     });
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) view.canvas.addEventListener(name, event => {
-      if (event.pointerId === this.touchPointer) this.releaseTouch();
+      if (event.pointerId === this.touchPointer) this.releaseTouch(name !== 'pointerup');
       if (name === 'pointercancel') this.returnStylus();
       else if (name === 'pointerup' && event.pointerType !== 'mouse') this.stylusPointer = null;
     });
@@ -441,18 +442,19 @@ export class DsController {
       .find(hit => !(this.stylusHeld && hit.object.userData.dsStylus));
     return hit?.object === this.model.screens[1] ? dsTouchFromUv(hit.uv) : null;
   }
-  touch(point, pressed) {
-    if (this.frame && this.running) this.frame.contentWindow.postMessage({ type: 'bba:touch', session: this.session, value: { ...point, pressed } }, location.origin);
+  touch(point, pressed, cancelled = false) {
+    if (this.frame && this.running) this.frame.contentWindow.postMessage({ type: 'bba:touch', session: this.session, value: { ...point, pressed, cancelled } }, location.origin);
   }
-  releaseTouch() {
+  releaseTouch(cancelled = false) {
+    if (this.touchPointer === undefined && !cancelled) return;
+    this.touch(this.lastTouch, false, cancelled);
     if (this.touchPointer === undefined) return;
-    this.touch(this.lastTouch, false);
     const id = this.touchPointer;
     this.touchPointer = undefined;
     if (this.view.canvas.hasPointerCapture(id)) this.view.canvas.releasePointerCapture(id);
   }
   releaseInputs() {
-    this.keyboard.release(); this.releaseTouch();
+    this.keyboard.release(); this.releaseTouch(true);
     this.returnStylus();
     for (const { action, source } of this.pointers.values()) this.input(action, false, source);
     this.pointers.clear();
@@ -479,7 +481,7 @@ export class DsController {
       return;
     }
     if (!this.stylusAvailable()) return;
-    this.releaseTouch();
+    this.releaseTouch(true);
     this.stylusHeld = true;
     this.model.stylus.visible = false;
     this.view.host.dataset.dsStylus = 'held';
@@ -512,7 +514,7 @@ export class DsController {
     this.stylusButton.textContent = '';
     this.hoverStylus(false);
     if (held) {
-      this.releaseTouch();
+      this.releaseTouch(true);
       if ($('scene-hint').textContent === this.stylusHint) $('scene-hint').textContent = this.previousStylusHint;
     }
     this.view.canvas.style.cursor = 'default';

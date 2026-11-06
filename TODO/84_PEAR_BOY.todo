@@ -34,6 +34,16 @@ full-resolution rendering, the separate consoles and unrelated pending work.
 Default feet hang below the desk edge; farther-back placements rest on top.
 
 Completion evidence:
+CI recovery: body and rope integration now catch up through bounded500ms
+stalls while retaining120Hz physics steps. Focused motion Edge gate passes
+7cases/2.0m; final software-rendered edge-return/rope pair passes1.2m.
+Sparse2Hz/30Hz/120Hz trajectory units retain the same simulated contacts.
+Warm-light pixel checks wait for the actual completed WebGL paint; the GBA
+unlit-cap fixture explicitly disables the independent pear ambient light.
+Both targeted software-rendered lighting cases pass47.2s without changing
+production illumination. Current integrated43units/syntax/build pass.
+No new physical-phone performance or owner visual acceptance is claimed.
+
 Final isolated feature-snapshot Edge gate passes13cases in2.6m: all6pear,
 all4DS and3affected original lamp/dark-room/LCD-spill cases together.
 Includes actual near/far wood pixels, held movement repaint, real390px touch,
@@ -48,6 +58,9 @@ Body remains upright with box-based prop collisions. Ropes collide with the
 pear and desk only; arbitrary prop surfaces/moving supports are not simulated.
 
 Completion log:
+2026-11-07: Failed hosted captures expose stale pre-OFF wood pixels and
+physics time discarded under sparse callbacks. Wait for actual painted
+lighting state and preserve bounded fixed-step catch-up, not looser thresholds.
 2026-11-07: Owner clarifies that the whole face, not only the eyes, must follow
 the pointer. Move the eyes, mouth and freckles in one curved-shell face group.
 Owner then requests a seated default with dangling feet: permit front-edge
