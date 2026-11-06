@@ -1,5 +1,5 @@
-Status: BLOCKED
-Milestone: Experimental control spill qualified/pushed; normal release gate failed.
+Status: DONE (later delivery reconciled; subsequent balance in65)
+Milestone: Reversible native-LCD control spill delivered.
 Dependencies: Existing framebuffer-derived ScreenIllumination.
 
 Purpose
@@ -16,7 +16,7 @@ Tasks
 [x] Clear on a black framebuffer and power off.
 [x] Preserve primary LCD table emission and existing button behavior.
 [x] Review bounded actual play/Inspect captures.
-[ ] Publish through the unchanged full gate and independently verify live behavior.
+[x] Publish through the unchanged full gate and independently verify live behavior.
 [x] Record experiment scope and precise removal boundary.
 
 Acceptance criteria
@@ -66,6 +66,10 @@ native runtime and the separate fullscreen-resume fix intact.
 
 Completion log
 --------------
+2026-11-06: Original gate failure is historical. Later balance65 is included
+in1b0385b/42135170801's green19-way release and exact30public assets.
+Four live cases include native mapped-input/LCD spill and power-off. The
+effect remains reversible and artistic; no human aesthetic approval inferred.
 2026-11-05: User requests barely visible controls with all lights off; explicitly
 experimental and reversible. Local effect and actual rendered bounds qualified.
 2026-11-05: Requested experiment pushed; normal gate fails the existing

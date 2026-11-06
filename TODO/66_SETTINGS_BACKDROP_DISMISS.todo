@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE (later public delivery reconciled)
 Milestone: Close settings by clicking the blurred area outside the drawer.
 Dependencies: Existing tools modal and close lifecycle.
 
@@ -14,7 +14,7 @@ Tasks
 [x] Preserve inside/padding clicks, drags starting inside, X and Escape.
 [x] Verify responsive behavior, settings interaction and console focus.
 [x] Update guide, architecture, verification and development ledger.
-[ ] Complete normal publication and independent public qualification.
+[x] Complete normal publication and independent public qualification.
 
 Acceptance criteria
 -------------------
@@ -31,5 +31,9 @@ all12units pass. No ROM execution. Publication pending.
 
 Completion log
 --------------
+2026-11-06: Later69 records nine actual public UI/native cases and exact30
+assets atdfd8003. Full-resolutionc3d9dbd then passes all53browser cases and
+exact public-asset qualification. This closes the old delivery-only item;
+inside-click/drag/focus assertions are not weakened or rerun in this audit.
 2026-11-05: User requests blurred-area click dismissal; implemented and
 locally qualified without changing modal styling or native advanced settings.

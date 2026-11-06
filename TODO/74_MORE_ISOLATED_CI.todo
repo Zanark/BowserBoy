@@ -1,5 +1,5 @@
-Status: DONE
-Milestone: More independent browser jobs without quality or coverage loss.
+Status: BLOCKED (initial 53-case release done; latest 56-case qualification fails)
+Milestone: Nineteen-way CI delivered; qualify the subsequent 56-case inventory.
 Dependencies: 71_FULL_RESOLUTION_RENDERING.todo.
 
 Purpose
@@ -14,6 +14,7 @@ Tasks
 [x] Prove every current case is assigned exactly once.
 [x] Remove duplicate fullscreen-frame waits without removing assertions.
 [x] Qualify the genuine pushed workflow and record observed elapsed time.
+[ ] Qualify the later 56-case follow-up through all hosted gates.
 
 Acceptance criteria
 -------------------
@@ -50,6 +51,12 @@ automatic checkpoint, and a separate reload-insertion case reaches its15s
 seating assertion. Separate the real automatic interval into its own native
 case; preserve both unchanged deadlines and all insertion assertions.
 Current inventory56cases across19jobs (18x3+1x2); no rendering change.
+Latest completed follow-up55a5867/42139790805 fails reload seating at15s and
+the existing CRT native-framebuffer case at120s. Deploy skips. New head
+9ff921b/42179075618 completesFAILURE by12:45Asia/Kolkata. Verify15's1440px
+reload/cartridge assertion expects"seated", receives"inserting"; deploy skips.
+The initial53-case success does not qualify this new suite. Assertion evidence
+alone does not establish the underlying timing cause.
 
 Completion log
 --------------
@@ -57,3 +64,5 @@ Completion log
 not competing workers; preserve all quality/timeout gates.
 2026-11-06: Genuine nineteen-way gate and exact public application/README
 qualification complete. No quality, timeout, coverage or permission changes.
+2026-11-06: Documentation audit separates the completed initial release from
+the still-blocked56-case follow-up. No retries, fixes or dispatches in this audit.

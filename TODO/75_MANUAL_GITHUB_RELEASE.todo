@@ -1,4 +1,4 @@
-Status: DONE (local implementation and qualification; not pushed/dispatched)
+Status: DONE (pushed/registered; first manual request safely blocked, no release)
 Milestone: Manually dispatched, qualified GitHub Release creation.
 Dependencies: Existing Pages build/browser verification for the selected source.
 
@@ -39,7 +39,14 @@ same-source tag accepted and different-source tag rejected.
 Execute the actual qualification step against GitHub:1b0385b's latest passing
 run42135170801 accepted;55a5867's failed latest run rejected before publication.
 Actions registration requires a push to the default branch. No commit, push,
-tag, real release, upload or Pages deployment was performed for this task.
+tag, real release, upload or Pages deployment was performed during the local
+implementation task.
+Later owner push9ff921be5d1b1d4a6657a181fc3ac84ea72373e7 registers the
+workflow. Manual v1.0.0 run42179152331 fails the exact-source Pages guard;
+identity passes, packaging/upload/publish skip. Pages42179075618 was not
+yet successful. GitHub lists no releases at12:42Asia/Kolkata.
+Successful hosted packaging/publication remains unexercised, not implied by
+the local qualification. Source readiness is tracked in74, not bypassed here.
 
 Completion log
 --------------
@@ -48,3 +55,6 @@ Reuse successful exact-source Pages qualification, not a bypass around its
 currently failing follow-up gates. Preserve the frozen first milestone.
 2026-11-06: Local workflow/packaging/identity/actual-GitHub guard qualification
 complete. Operational release creation remains an intentional manual action.
+2026-11-06: Reconcile actual owner push and first dispatch in the guide/index/
+verification record. The source guard works; no release was created and this
+documentation audit does not retry publication.

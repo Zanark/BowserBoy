@@ -1,5 +1,5 @@
-Status: BLOCKED
-Milestone: Barely visible controls and a dimmer screen-lit wooden desk.
+Status: DONE (later public delivery reconciled; original failure retained)
+Milestone: Barely visible controls and dimmer screen-lit wood delivered.
 Dependencies: 60_EXPERIMENTAL_LCD_CONTROL_SPILL.todo.
 
 Purpose
@@ -14,7 +14,7 @@ Tasks
 [x] Preserve full-white ceiling, color transfer, black/off darkness and isolation.
 [x] Qualify actual GPU probes, pressed caps and native lighting lifecycle.
 [x] Record failures, final design and reconcile the cancelled startup gate.
-[ ] Complete unchanged normal release and independent public qualification.
+[x] Complete unchanged normal release and independent public qualification.
 
 Acceptance criteria
 -------------------
@@ -49,6 +49,10 @@ are held locally rather than pushed to manufacture another run.
 
 Completion log
 --------------
+2026-11-06: Later1b0385b/42135170801 green19-way release, exact30public assets
+and four live lamp/pressed-cap/native-LCD/fullscreen cases close delivery.
+The original cartridge/suite failures remain historical evidence, not current
+publication blockers. New56-case qualification is separately blocked in74.
 2026-11-05: User reports invisible controls and excessively bright wood.
 Actual public source still has old120gain/no control spill. Balance correction
 locally qualified; normal42077309344 fails the existing cartridge assertion

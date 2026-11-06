@@ -95,6 +95,7 @@ jobs:
         run: |
           import hashlib
           import os
+          import shutil
           from pathlib import Path
           from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -115,7 +116,11 @@ jobs:
               "collection or BIOS is included. Export saves before changing hosts, "
               "because progress belongs to the browser origin.\n\n"
               "Preserve THIRD_PARTY_NOTICES.md. Checksums detect changed bytes; "
-              "they are not a digital signature.\n"
+              "they are not a digital signature.\n\n"
+              "Engineering documentation: download the separate "
+              "Building-a-Little-Escape.pdf companion asset. The second-edition "
+              "book retains its own dated source and review boundaries; it "
+              "is not included inside the application ZIP.\n"
           )
           Path("dist/RELEASE-NOTES.md").write_text(notes, encoding="utf-8")
           Path("dist/THIRD_PARTY_NOTICES.md").write_bytes(
@@ -127,9 +132,19 @@ jobs:
               for path in sorted(Path("dist").rglob("*")):
                   if path.is_file():
                       bundle.write(path, path.relative_to("dist").as_posix())
-          checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+          book = Path("book/published/Building-a-Little-Escape.pdf")
+          expected, filename = Path("book/published/SHA256SUMS.txt").read_text(
+              encoding="utf-8"
+          ).strip().split("  ")
+          checksum = hashlib.sha256(book.read_bytes()).hexdigest()
+          if filename != book.name or checksum != expected:
+              raise SystemExit("The reviewed book does not match its published checksum.")
+          if not book.read_bytes().startswith(b"%PDF-"):
+              raise SystemExit("The book companion is not a PDF.")
+          shutil.copyfile(book, output / book.name)
           (output / "SHA256SUMS.txt").write_text(
-              f"{checksum}  {archive.name}\n", encoding="utf-8"
+              f"{hashlib.sha256(archive.read_bytes()).hexdigest()}  {archive.name}\n"
+              f"{checksum}  {book.name}\n", encoding="utf-8"
           )
       - uses: actions/upload-artifact@v7.0.2
         with:
@@ -165,7 +180,8 @@ jobs:
             flags+=(--prerelease)
           fi
           gh release create "$RELEASE_TAG" \
-            "BowserBOYADVANCED-${RELEASE_TAG}-static.zip" SHA256SUMS.txt \
+            "BowserBOYADVANCED-${RELEASE_TAG}-static.zip" \
+            Building-a-Little-Escape.pdf SHA256SUMS.txt \
             --repo "$GITHUB_REPOSITORY" --target "$SOURCE_SHA" \
             --title "BowserBOY ADVANCED $RELEASE_TAG" \
             --notes-file RELEASE-NOTES.md "${flags[@]}"

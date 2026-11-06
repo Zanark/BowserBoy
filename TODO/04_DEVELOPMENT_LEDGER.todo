@@ -14,6 +14,68 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Supplied-cover reading copy and release companion77:
+  Owner supplies complete Blueprint BowserBoy Advance Cover.png and asks for
+  a README cover/link and release book. Preserve exact PNG bytes, use one
+  fitted full-page image instead of overlaying old composed title blocks.
+  Narrow textless-page exception to page1/cover; native checks compare exact
+  source RGB pixels and full-page image placement. Missing/small-cover
+  negative fixtures fail. Final96-page PDF passes existing native/offline/
+  layout gates; all95interior pages retain exact text/page positions, and
+  native43/71/77pixels match inspected rasters. Review new cover, retain old
+  SVG/receipt and original PDF outside repository. Cover lettering is raster
+  at~128DPIA4; no300DPI/searchable-cover/rightsclearance claim.
+  Tracked book/published PDF/checksum and visual README route are ready for
+  a future push. Existing GIF/still routes are byte-for-byte unchanged.
+  Local desktop/mobile preview and six documentation hubs pass; fix helper
+  module-resolution/CRLF mistakes before claiming that preview result.
+  Manual workflow copies matching PDF separately, hashes both assets and
+  preserves source guard/write split/draft flow. Actionlint and actual
+  33-entry packaging pass; missing/changed/non-PDF companions fail explicitly.
+  Frozenv1.0.0 ZIP/manifest hashes unchanged. GitHub lists zero releases.
+  No book upload, tag, commit, push or dispatch; hosted publication stays
+  blocked by known failed source qualification, not weakened to attach PDF.
+  Current PDF identity/scope: book/editions/2026-11/REVIEW.md. Original
+  second-edition receipt now REVIEW-original-cover.md, not the current PDF.
+- 2026-11-06 / Rendered second engineering-book edition:
+  Owner requests following the BookMaker thread, then points out new material.
+  Refresh/read all44sections: new39-44catalogue tools and warn against legacy
+  paths/launch flags; do not copy private books or their hard-coded contracts.
+  Preserve ten original chapter files; add learning supplements, current
+  sharpness/lighting/release chapters, hypothetical capstone and references.
+  Independent locked Markdown/Mermaid/Paged.js/Playwright/PyMuPDF pipeline
+  uses ephemeral loopback resources with external requests denied.
+  Real runs expose learning heading depth, pagination API, undersized diagram
+  labels and native named-link assumptions. Correct these, not the gates.
+  Stronger source coverage accounts for intentional contents placeholders
+  and cross-page running margins while retaining native per-page checks.
+  Final local PDF96A4pages/14diagrams/25bookmarks/56learning markers;
+  821original blocks and828paged blocks survive;81internal/49external links.
+  Offline standalone reader96pages/zero scripts/resource requests passes.
+  Two contact sheets and eight selected native pages are visually reviewed,
+  not every sentence. Fix stale reference running header. Exact PDF hash,
+  scope/limits and failure history originally in REVIEW.md, now preserved
+  at book/editions/2026-11/REVIEW-original-cover.md after77's supplied cover.
+  Public book/docs navigation reconciled; generated outputs remain ignored/
+  local. Application, README GIFs, frozen release and prior audit preserved.
+  No commit, push, deployment, release, rights clearance or user approval.
+- 2026-11-06 / Documentation and pending-work reconciliation:
+  Owner pushes9ff921b and workflow is active. Actual manualv1.0.0
+  run42179152331 fails its exact-source Pages guard, before packaging or
+  publication. No GitHub Release exists. Pages42179075618 finishesFAILURE
+  by12:45Asia/Kolkata: verify15's1440px cartridge/reload expects"seated",
+  receives"inserting"; deploy skips. Exact timing root cause is unestablished.
+  Prior55a5867/42139790805 failed
+  reload seating15s and CRT120s; do not claim new56-case qualification.
+  Correct docs hub's ten-way description to nineteen-way and link release
+  operations/current blockers. Separate74's initial53-case public success
+  from later56-case blockage;75 is pushed, not local-only.
+  Reconcile54/57/58/59/60/65/66/67 delivery against later qualified public
+  releases while preserving original failed logs.62's source is delivered,
+  but independent live chip-startup evidence was not located; retain that
+  specific open item without inventing a sound defect or listening approval.
+  Frozenv1.0.0 and first milestone November6 remain unchanged. Documentation
+  only: no app/media edits, fresh runtime claim, retry, commit/push or release.
 - 2026-11-06 / Manual GitHub Release workflow:
   Owner requests manual release creation. Add workflow_dispatch-only version/
   source/draft/prerelease inputs. Require an existing successful Pages gate

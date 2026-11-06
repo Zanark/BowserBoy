@@ -1,0 +1,18 @@
+{
+  "name": "bowserboy-book-production",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test production.test.mjs",
+    "build": "node build.mjs",
+    "render": "node render.mjs",
+    "book": "npm test && npm run build && npm run render"
+  },
+  "dependencies": {
+    "markdown-it": "15.0.3",
+    "mermaid": "12.2.0",
+    "pagedjs": "0.4.3",
+    "playwright-core": "1.64.1"
+  },
+  "engines": { "node": ">=22" }
+}

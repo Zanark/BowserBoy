@@ -9,3 +9,5 @@ test-results/
 *.state
 *.bba-save
 releases/**/*.zip
+/book/output/
+/book/production/.candidate/

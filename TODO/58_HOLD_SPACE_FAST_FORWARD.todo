@@ -1,5 +1,5 @@
-Status: BLOCKED
-Milestone: Default hold-Space native2x/release1x qualified/pushed; full release gate failed.
+Status: DONE (later public delivery reconciled; original failed attempt retained)
+Milestone: Default hold-Space native2x/release1x delivered.
 Dependencies: Completed workstream24 and existing source-counted keyboard input.
 
 Purpose
@@ -16,7 +16,7 @@ Tasks
 [x] Keep dock feedback, native VSync pacing and settings snapshots consistent.
 [x] Preserve explicit GBA Space remaps and do not persist a transient held speed.
 [x] Complete final focused native-clock/lifecycle/compatibility qualification.
-[ ] Publish through the normal complete gate and independently verify live behavior.
+[x] Publish through the normal complete gate and independently verify live behavior.
 [x] Update affected help/guide/architecture and causal records.
 
 Acceptance criteria
@@ -60,6 +60,10 @@ browser qualification after failed gate. Blocker-only records held locally.
 
 Completion log
 --------------
+2026-11-06: Original failure is superseded by later53-case green gate
+42115330741, exact30public assets atc3d9dbd and69's nine actual public
+UI/native cases atdfd8003. This reconciles delivery, not a fresh pacing test
+or human approval. Current56-case CI failures remain separately open in74.
 2026-11-05: User requests default Space hold2x, release1x and asks whether
 EmulatorJS supports it. Native support confirmed in the exact pinned source.
 2026-11-05: Final local3/3passes; actual hosted hold test passes within15/15.

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700">
+  <title>Original engraving-style handheld console illustration</title>
+  <desc>A white cutout handheld with fine black contour hatching, a blank LCD and separate controls. Authored for Building a Little Escape; no publisher or product artwork.</desc>
+  <defs>
+    <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+      <path d="M0 0V9" stroke="#42413e" stroke-width=".8"/>
+    </pattern>
+    <pattern id="cross" width="7" height="7" patternUnits="userSpaceOnUse">
+      <path d="M0 7 7 0M-2 2 2-2M5 9 9 5" stroke="#474540" stroke-width=".7"/>
+    </pattern>
+  </defs>
+  <g transform="translate(40 70) rotate(-8 450 250)" stroke="#242523" stroke-linejoin="round">
+    <path d="M55 150Q75 65 190 73L710 73Q837 66 858 155L904 379Q915 455 827 472L111 472Q19 454 29 381Z" fill="#fffdf7" stroke-width="5"/>
+    <path d="M34 347Q37 425 116 443H822Q897 427 892 356L904 379Q915 455 827 472H111Q19 454 29 381Z" fill="url(#hatch)" stroke-width="2"/>
+    <path d="M78 151Q95 94 190 100H713Q808 94 834 159" fill="none" stroke-width="2"/>
+    <rect x="232" y="106" width="461" height="309" rx="33" fill="url(#cross)" stroke-width="3"/>
+    <rect x="256" y="127" width="413" height="262" rx="16" fill="#fffdf7" stroke-width="3"/>
+    <path d="M278 158H644V357H278Z" fill="#e9e9df" stroke-width="2"/>
+    <path d="M285 352 637 166M285 335 612 166M310 352 637 180" stroke="#b1b1a3" stroke-width="1"/>
+    <path d="M110 197H151V236H190V277H151V317H110V277H71V236H110Z" fill="#faf8ef" stroke-width="4"/>
+    <path d="M119 210H142V249H179V265H142V304H119V265H82V249H119Z" fill="url(#hatch)" stroke-width="1"/>
+    <circle cx="763" cy="228" r="36" fill="#faf8ef" stroke-width="4"/>
+    <circle cx="816" cy="295" r="36" fill="#faf8ef" stroke-width="4"/>
+    <path d="M742 247 784 209M748 253 790 215M795 314 837 276M801 320 843 282" stroke-width="1"/>
+    <rect x="350" y="428" width="72" height="17" rx="8" fill="url(#hatch)" stroke-width="2"/>
+    <rect x="464" y="428" width="72" height="17" rx="8" fill="url(#hatch)" stroke-width="2"/>
+    <circle cx="722" cy="152" r="7" fill="#4a5943"/>
+    <path d="M78 366H170M78 377H170M78 388H170M78 399H170M758 378H845M758 389H845M758 400H845M758 411H845" stroke-width="2"/>
+    <path d="M112 92 128 81M132 91 148 79M152 90 168 77M717 82 735 94M741 84 759 98M765 89 783 105" stroke-width="1"/>
+  </g>
+  <g fill="none" stroke="#66645b" stroke-width="1">
+    <path d="M118 593Q480 653 866 572M141 611Q505 669 832 603"/>
+    <path d="M158 628Q483 679 803 625" stroke-dasharray="2 5"/>
+  </g>
+</svg>

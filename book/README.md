@@ -2,6 +2,18 @@
 
 ## The BowserBOY engineering book
 
+**Second rendered edition, 2026-11-06:** the
+[fourteen-chapter BookMaker edition](editions/2026-11/README.md) adds current
+sharpness, lamp/LED and release-engineering lessons, a capstone, worked
+practice and references. [Read the96-page PDF](published/Building-a-Little-Escape.pdf),
+now using the owner's supplied illustrated cover. The cover lettering is raster
+artwork; the book's interior remains searchable. The tracked PDF is the reading
+copy and separate manual-release companion; it becomes public when pushed.
+An instant offline reader is also built locally. The linked edition explains
+how to reproduce the delivery.
+The [review record](editions/2026-11/REVIEW.md) states the exact artifact and
+bounded inspection. The first Markdown edition below remains preserved.
+
 **Public release milestone, 2026-11-06:** the owner designates
 [v1.0.0](../releases/v1.0.0/README.md), based on qualified application
 `c3d9dbd`, as the first publicly available release. The

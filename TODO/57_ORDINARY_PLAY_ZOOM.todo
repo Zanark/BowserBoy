@@ -1,5 +1,5 @@
-Status: BLOCKED
-Milestone: Ordinary play zoom implemented/pushed; Pages publication blocked by CI job timeout.
+Status: DONE (later public delivery reconciled; original failed attempt retained)
+Milestone: Independent ordinary-play zoom delivered; baseline revised by67.
 Dependencies: Completed workstreams 25 and 31.
 
 Purpose
@@ -16,7 +16,7 @@ Tasks
 [x] Hide during transitions, table/Inspect and screen-only fullscreen.
 [x] Check desktop/landscape/phone fit, native input/runtime and existing framing.
 [x] Review actual desktop/320px captures and update affected documentation.
-[ ] Publish through the normal complete gate and independently verify the live site.
+[x] Publish through the normal complete gate and independently verify the live site.
 
 Acceptance criteria
 -------------------
@@ -57,6 +57,10 @@ push; a subsequent real requested feature can use its own ordinary push gate.
 
 Completion log
 --------------
+2026-11-06: Later53-case gate42115330741 and exact30public-asset receipt
+atc3d9dbd supersede the original publication blocker;69 records nine actual
+public UI/native cases atdfd8003. Current ordinary baseline is67's50% fit,
+not this workstream's original100% fit. No new execution or approval claimed.
 2026-11-05: User requests the fullscreen zoom control in non-fullscreen play.
 2026-11-05: Local implementation, focused native qualification and visual review
 complete. Normal release42050815740 also hits the unchanged15mjob limit.

@@ -7,6 +7,36 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Current follow-up and manual-release status, 2026-11-06
+
+Documentation audit, final hosted observation at 12:45 Asia/Kolkata:
+
+- The owner has committed/pushed the manual release workflow as
+  `9ff921be5d1b1d4a6657a181fc3ac84ea72373e7`; GitHub reports it active.
+  Earlier "local only/not pushed" statements describe its implementation stage.
+- Manual `v1.0.0` [run42179152331](https://github.com/Zanark/BowserBoyAdvance/actions/runs/42179152331)
+  fails at **Require successful Pages verification for this exact source**.
+  Checkout and identity validation pass; build/package/upload/publish do not run.
+  The selected source's Pages run was not yet successful. The guard correctly
+  refuses to package an unqualified revision. No GitHub Release is listed.
+- Current [Pages run42179075618](https://github.com/Zanark/BowserBoyAdvance/actions/runs/42179075618)
+  for `9ff921b` completes with **failure**; build passes and browser shard 15
+  fails. Its log shows the 1440px cartridge/reload case expecting `"seated"`
+  but receiving `"inserting"`. Deployment skips. The exact timing root cause
+  is not established by that assertion. All eighteen other browser shards,
+  including the prior CRT failure's shard 18, pass. No current-head deployment
+  is claimed.
+- Prior `55a5867` [run42139790805](https://github.com/Zanark/BowserBoyAdvance/actions/runs/42139790805)
+  fails the desktop reload-seating expectation at 15s and the existing CRT
+  native-framebuffer case at its 120s deadline. Deployment skips.
+  The 56-case inventory is distributed exactly once across nineteen runners
+  (18x3+1x2), with one worker, zero retries and unchanged deadlines.
+
+The last independently qualified visual application below remains `1b0385b`.
+Current source is not fully green merely because the same application/media
+bytes previously passed. No retry, new release, deployment or CI workaround is
+performed as part of this documentation audit.
+
 ## Current published warm-lamp/green-LED edition, 2026-11-06
 
 Implementation `1b0385b384a1329fe643607c4874af88e5259001` is published through
@@ -44,7 +74,8 @@ four independent native scenarios: backup/resume/automatic save, cross-ROM/
 quota/emergency export, mapped physical input, and green LED/native lighting.
 All original behavior assertions remain; no application/media change,
 resolution reduction or longer deadline is used. Current discovery audits
-**55 cases exactly once** across the same nineteen jobs (17x3+2x2).
+**55 cases exactly once** at that intermediate stage across the same nineteen
+jobs (17x3+2x2).
 The upload fixture also waits for actual scene startup readiness, rather
 than an upload control briefly enabled before persisted-cartridge restoration.
 Four focused local cases pass in31.3s/11.4s/14.9s/17.5s.

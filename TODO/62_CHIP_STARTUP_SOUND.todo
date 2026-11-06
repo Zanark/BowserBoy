@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: IN_PROGRESS (delivered source; specific live-startup evidence not located)
 Milestone: Give BowserBOYADVANCED a crisper 8-bit-style power-on sound.
 Dependencies: Existing original startup chime and physical power lifecycle.
 
@@ -45,6 +45,11 @@ No supplied demo ROM is executed.
 
 Completion log
 --------------
+2026-11-06: Later53-case green gate42115330741 and exact30public assets
+establish source delivery, superseding the cancelled-run publication blocker.
+This audit has not located an independently recorded public chip-startup
+PCM/physical-power result. Keep that specific live-qualification item open;
+do not confuse hosted/local audio measurements with public listening approval.
 2026-11-05: User requests more8-bit-style power-on sound; square arpeggio and
 stepped envelopes implemented. Initial filename-filter run found no tests;
 basename selection runs the actual baseline regression.

@@ -53,37 +53,74 @@ BowserBOY workstreams
 51_DEEPER_REAR_ENGRAVING.todo - DONE: another17%wider rear logo/four-times-deeper cuts independently live;43hosted cases,29public assets and actual public branding pass.
 52_CONSOLE_SCOPED_README.todo - DONE: published BowserBOY umbrella and purple BowserBOYADVANCED showcase; all14old embeds plus console banner and actual GitHub navigation verified.
 53_README_LOGO_GLOWS.todo - DONE: silver-blue umbrella/purple console glows published; actual GitHub images, preserved showcase and retained native animation verified.
-54_UPDATED_CHROME_LOGO.todo - IN_PROGRESS: updated supplied chrome orbit and sparkle umbrella artwork; preserve purple console branding, glow and shimmer.
+54_UPDATED_CHROME_LOGO.todo - DONE: updated chrome artwork and README shimmer publicly delivered; later qualification reconciled.
 55_WHITE_README_GLOW.todo - SUPERSEDED: white-only halo published; user replaces it with periodic shimmer in56.
 56_README_LOGO_SHIMMER.todo - DONE: updated chrome logo's white shimmer published; actual GitHub native animation and all8exact public files verified.
-57_ORDINARY_PLAY_ZOOM.todo - BLOCKED: independent play-only50-100%zoom qualified/pushed;42050815740hits15mCIlimit/deployskipped.
-58_HOLD_SPACE_FAST_FORWARD.todo - BLOCKED: native Space hold2x/release1x qualified/pushed;42056550639fails notice assertion and600sother-shard budget.
-59_FULLSCREEN_LCD_RESUME.todo - BLOCKED: explicit renderer resume qualified/pushed52d024b; no normal workflow run created for its SHA.
-60_EXPERIMENTAL_LCD_CONTROL_SPILL.todo - BLOCKED: faint reversible control fill qualified/pushed;42063183081lighting shard passes, existing quick-actions/restore timeouts prevent deployment.
+57_ORDINARY_PLAY_ZOOM.todo - DONE: independent play zoom delivered; original failed run retained, current50%baseline in67.
+58_HOLD_SPACE_FAST_FORWARD.todo - DONE: native Space hold2x/release1x delivered in later fully qualified releases; original failure retained.
+59_FULLSCREEN_LCD_RESUME.todo - DONE: renderer resume delivered; both actual public return paths requalified at1b0385b.
+60_EXPERIMENTAL_LCD_CONTROL_SPILL.todo - DONE: reversible native-LCD control fill delivered; later balance in65, original failure retained.
 61_SUPPLIED_DEMO_ASSETS.todo - DONE: supplied ROM/box art published ad5bfa2; both actual public downloads match. Media only, no testing without explicit request.
-62_CHIP_STARTUP_SOUND.todo - IN_PROGRESS: crisper original square-wave power-on arpeggio with stepped envelopes and existing mute/volume.
+62_CHIP_STARTUP_SOUND.todo - IN_PROGRESS: source delivered and hosted checks passed; specific independent live-startup result not located, not human listening approval.
 63_THREE_SECOND_README_SHIMMER.todo - DONE: published24910fd; exact3000ms loop, unchanged pixels and actual public native animation verified.
 64_README_DEMO_PRESENTATION.todo - DONE: named game/box-art section removed and actual public README verified a56844f; ROM retained for GIF footage.
-65_LCD_LIGHT_BALANCE.todo - BLOCKED: balance qualified/pushed09d8413;42077309344passes new lighting but existing cartridge assertion/600s suite budget prevent deployment.
-66_SETTINGS_BACKDROP_DISMISS.todo - IN_PROGRESS: outside-click drawer dismissal locally qualified; inside interactions and existing close paths preserved.
-67_PLAY_ZOOM_BASELINE.todo - IN_PROGRESS: existing ordinary framing is now default50%;100% moves twice closer. Locally qualified; deployment monitoring belongs to the user.
+65_LCD_LIGHT_BALANCE.todo - DONE: balanced desk/control spill delivered and publicly qualified; original failed gate retained.
+66_SETTINGS_BACKDROP_DISMISS.todo - DONE: outside-click dismissal included in later green gates and exact public source qualification.
+67_PLAY_ZOOM_BASELINE.todo - DONE: default50%fit/100%closer framing delivered; later69/71 monitoring authorization/public qualification reconciled.
 68_COMPLETE_README_REFRESH.todo - DONE: nine current GIFs/nine stills, reconciled README/captions/provenance;18embeds/30links locally checked. Normal push triggers publication; user monitors.
 69_MOVABLE_TOOLS_DOCK.todo - DONE: actual deployed assets/README GIF and nine public UI/native cases verified at dfd8003; sharpness rejection tracked separately in71.
 70_INSPECTION_BRANDING.todo - DONE: actual public animated purple Inspect logo/static fallback and centered settings logo verified; no user visual-approval claim.
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - DONE: nineteen isolated one-worker browser shards, current56-case inventory and fewer duplicate fullscreen readbacks; initial successful run4m33s plus independent public qualification.
-75_MANUAL_GITHUB_RELEASE.todo - DONE locally: manual-only GitHub Release workflow, latest exact-source passing Pages gate, static ZIP/checksum and guarded publication; not pushed or dispatched.
+74_MORE_ISOLATED_CI.todo - BLOCKED follow-up: initial53-case nineteen-way release qualified in4m33s; later56-case gate has not passed.
+75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
+76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
+77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
+
+Current pending work
+--------------------
+-74: diagnose and qualify the56-case hosted suite without weakening quality,
+  assertions or deadlines.55a5867/42139790805 fails reload seating and CRT
+  deadlines.9ff921b/42179075618 completesFAILURE by12:45Asia/Kolkata:
+  verify15's1440px reload/cartridge assertion receives"inserting" instead of
+  "seated"; deploy skips. No current-head green deployment is claimed.
+-75 operational follow-through: successful hosted packaging/publication has
+  not run. First manualv1.0.0 dispatch42179152331 fails before packaging
+  because selected source9ff921b has no successful latest Pages run.
+  No GitHub Release exists; a later deliberate release request needs a
+  successfully qualified source. Do not retry automatically.
+-77 publication follow-through: supplied-cover PDF/README/manual-release
+  companion are implemented and qualified locally. Push the reviewed book
+  changes before expecting repository links to resolve remotely; a release
+  source must contain the PDF/checksum and pass the existing Pages gate.
+  No GitHub Release exists to receive an immediate attachment.
+-62 evidence follow-through: source is public and passes hosted checks, but
+  a specifically recorded independent live chip-startup result was not located.
+  This is an evidence gap, not a proven sound defect or listening approval.
+-This documentation reconciliation is local/uncommitted; no push, deployment,
+  workflow rerun, tag or release is authorized merely by the documentation task.
 
 Current public milestone: v1.0.0, designated2026-11-06, qualifiedapplication
 c3d9dbd in the unchanged frozen package. Current live refinements are
 1b0385b/Pages42135170801. See releases/README.md and docs/README.md.
-Earlier BLOCKED/IN_PROGRESS entries below/above retain their original attempt
-status; they are not evidence that the final qualified release is still blocked.
-This release record does not silently rewrite individual historical attempts.
+Earlier failed-attempt evidence is retained in each workstream and ledger.
+Current status lines above now reconcile later qualified delivery; they do not
+relabel an old failed run as successful. The62/74/75 boundaries remain explicit.
 
-Current documentation edition: book/README.md now provides the first actual
+Current rendered edition: book/editions/2026-11 contains the second learning
+edition and book/production the independent locked toolchain. Local delivery
+at book/output/2026-11 has96pages,14diagrams,25bookmarks,56stable learning
+markers, source/output hashes and a standalone offline reader. Review is
+bounded, not every sentence, human approval or publication. First edition
+and frozen release stay intact; application/README media unchanged.77replaces
+only the cover with the supplied finished PNG, retains historical review,
+adds book/published/Building-a-Little-Escape.pdf and SHA256SUMS.txt, and
+attaches the reviewed PDF separately through manual release packaging.
+Current exact-byte review is book/editions/2026-11/REVIEW.md; previous receipt
+is REVIEW-original-cover.md. These changes remain local/uncommitted.
+
+First documentation edition: book/README.md provides the first actual
 chaptered Markdown book, with ten numbered chapter folders, source register,
 dedicated algorithms/data-structures and design-principle chapters, diagrams,
 captioned figures and worked exercises. This supersedes the older present-state

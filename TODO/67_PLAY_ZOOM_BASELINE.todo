@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE (later public delivery reconciled)
 Milestone: Preserve the ordinary play view at50%, allow zooming into100%.
 Dependencies: 57_ORDINARY_PLAY_ZOOM.todo.
 
@@ -14,7 +14,7 @@ Tasks
 [x] Keep inspection/fullscreen independent and native game/runtime unchanged.
 [x] Verify responsive framing, keyboard steps, session retention and game input.
 [x] Update affected documentation and development history.
-[ ] User-monitored publication; agent must not watch/poll until asked.
+[x] User-monitored publication; later monitoring explicitly authorized in69/71.
 
 Acceptance criteria
 -------------------
@@ -33,5 +33,9 @@ Original Pixel Lab only. Deployment/public status is not inferred.
 
 Completion log
 --------------
+2026-11-06: Later69/71 authorization and qualified public releases supersede
+the initial monitoring handoff. All53browser cases and exact30public assets
+qualifyc3d9dbd;69 also records nine actual public UI/native cases. No new
+monitoring permission is inferred for an unrelated future release.
 2026-11-05: User clarifies outside-fullscreen zoom. Implemented/local checks
 complete. User requests deployment triggers only, no pipeline monitoring.

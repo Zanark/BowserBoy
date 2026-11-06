@@ -1,0 +1,63 @@
+Status: DONE - local delivery, not publication or user approval
+Milestone: Locally delivered, rendered second engineering-book edition.
+Dependencies: Existing ten teaching chapters, current project documentation,
+reviewed BookMaker production thread and locally installed Chromium/Python.
+
+Purpose
+-------
+Create a polished engineering learning book from approved repository sources
+and additional teaching material. Preserve the earlier Markdown edition,
+frozen v1.0.0 release and application behavior.
+
+Tasks
+-----
+[x] Read the root and all44sections, including the new39-44tool catalogue.
+[x] Inspect original chapters, production precedents and current source.
+[x] Add learning extensions, current chapters, glossary and maintainer reference.
+[x] Declare an independent local, locked production toolchain.
+[x] Render diagrams, original overlapping cover, offline reader and native PDF.
+[x] Check source boundaries, exercises, links, pages, text and clipping.
+[x] Review representative native PDF pages; state bounded review honestly.
+[x] Update navigation, causal ledger and owned continuity.
+
+Acceptance criteria
+-------------------
+Actual searchable A4 PDF, instant offline reader, source/output hashes and
+chapter page map exist locally. Required learning items are matched, diagrams
+render, navigation resolves and true clipping is absent. New pages distinguish
+historical chapters, current implementation, actual release evidence and pending
+work. No private chat/context source, commercial ROM, new application change,
+commit, push, publication or approval claim is introduced.
+
+Completion evidence
+-------------------
+book/output/2026-11:96native A4 pages,14diagrams,25bookmarks,56stable
+learning markers,81internal/49external links and an offline standalone reader.
+All821original source blocks/828browser fragments/diagram labels survive.
+Seven embedded fonts; no clipping/missing navigation. Smallest diagram8.13pt.
+Two contact sheets/eight selected full-size native pages reviewed, bounded:
+not complete proofreading, human acceptance or fresh-machine reproduction.
+Exact PDF identity and review limits: book/editions/2026-11/REVIEW.md.
+All11delivery hashes and landing/book/docs file targets checked.
+Prior audit changes, original chapters, application and frozen release preserved.
+
+Completion log
+--------------
+2026-11-06: Started after reading the complete BookMaker reference. Selected an
+independent edition adapter: preserve the first ten chapter files, supplement
+their teaching and add current implementation chapters. Do not copy the other
+book's48-chapter guards or import its manuscript, cover or dependency directory.
+2026-11-06: Refreshed the mesh and read the six new reference sections. They
+catalogue existing books, tools and runtimes; they do not authorize copying
+internal content. Keep independent locked dependencies, avoid legacy disabled
+browser sandbox flags and do not inherit the AI guide's stale asset path.
+Focused production checks pass; assembly contains14chapters,14diagrams and
+56stable learning markers. Actual rendering and native review remain pending.
+2026-11-06: Rendered and qualified the actual96-page PDF and offline reader.
+Corrected heading-depth/pagination APIs, undersized diagram labels, native
+named-link and cross-page body extraction assumptions without weakening gates.
+Found stale reference running header; separate selector initially affected
+earlier chapters, so combined registration and checked five native headers.
+Final PDF and prior inspected43/71/77pixels match. Authored exact-byte bounded
+review and refreshed its checksum. Navigation/index/ledger/owned context
+reconciled. Outputs remain ignored/local; nothing committed or published.

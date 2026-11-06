@@ -1,0 +1,54 @@
+Status: DONE locally; remote release publication BLOCKED by74/75.
+Milestone: Supplied full cover, discoverable book PDF and release companion.
+Dependencies: 76 rendered book;75 manual source-qualified release workflow.
+
+Purpose:
+Use the owner's complete image, show it in the visual README, provide a
+tracked reading copy and include the reviewed PDF in the manual release.
+Do not regenerate the artwork, recapture existing GIFs, rewrite the frozen
+application archive or bypass the successful-Pages source gate.
+
+Tasks:
+- [x] Adopt the supplied PNG as the full cover and retain its exact source.
+- [x] Regenerate and qualify the actual PDF/reader with native cover checks.
+- [x] Review the new cover and compare unchanged interior page content.
+- [x] Add README cover/link and a tracked checksummed PDF reading copy.
+- [x] Attach the same PDF through release packaging and verify failure paths.
+- [x] Reconcile public documentation, ledger and owned continuity.
+
+Acceptance criteria:
+Native PDF page1 embeds the supplied cover pixels; full image is fitted
+without cropping or added title overlays. Existing chapter/page navigation
+and interior content survive. README cover and PDF targets exist. Manual
+release packages the reviewed PDF separately, verifies both asset hashes and
+publishes neither on a failed source gate. Existing application archive stays
+unchanged. Repository changes are not claimed public before a push.
+
+Completion evidence:
+Supplied1055x1491RGB PNG remains byte-identical:
+8ffff6a20edb1d93d41e162791951d7d5c51b56641c94b5cf054e3f5469af6cc.
+Reviewed96-page PDF/book/published reading copy:
+25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad.
+Production tests/build/render pass; native first-page pixels/fit checked.
+All95interior pages retain exact native text/page positions;43/71/77rasters
+match prior inspected pages. README cover/PDF delivery works1440/390px;
+all pre-existing image routes remain unchanged. Six doc hubs resolve.
+Actionlint1.7.12 passes. Actual workflow packaging produces33ZIP entries and
+a separate identical PDF with both checksums; missing/changed/non-PDF cases
+fail. Native review rejects missing/undersized cover fixtures. Frozen
+v1.0.0 ZIP/manifest checksums remain unchanged. REVIEW.md scopes the result.
+GitHub API lists zero releases. No upload/tag/commit/push/dispatch occurred.
+Hosted release publication remains blocked, not counted as delivered.
+
+Completion log:
+2026-11-06: Owner supplies Blueprint BowserBoy Advance Cover.png and asks for
+cover adoption, README book navigation and release inclusion. Preserve prior
+worktree/documentation changes. Add separate PDF asset, not book bytes inside
+the frozen/static application package.
+2026-11-06: Render/inspect exact supplied cover, preserve historical SVG/review
+and original PDF outside the repository. Add persistent reviewed PDF/checksum,
+visual README navigation and guarded release companion. Isolated README check
+initially uses an incorrect module entry path and LF-only section split;
+correct the helper's package resolution/CRLF handling, then actual preview/
+PDF delivery passes. These were test-helper failures, not application bugs.
+No application/media edits or repeated hosted release attempt.

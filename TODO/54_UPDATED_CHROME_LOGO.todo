@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE (later public delivery reconciled; original attempt retained below)
 Milestone: Updated supplied BowserBOY chrome orbit and sparkle artwork.
 Dependencies: 47_WEBSITE_BRAND_SEPARATION.todo; 53_README_LOGO_GLOWS.todo.
 
@@ -11,7 +11,7 @@ Tasks:
 - [x] Update all website image dimensions and dependent artwork regressions.
 - [x] Regenerate only the umbrella README glow using the existing helper.
 - [x] Verify desktop/mobile rendering, transparency, shimmer and exact source.
-- [ ] Record affected documentation and owned continuity.
+- [x] Record affected documentation and owned continuity.
 
 Acceptance criteria:
 - Website header and both panel logos use the exact supplied 2148x732 RGBA PNG.
@@ -35,5 +35,9 @@ Completion evidence:
 - Normal hosted/publication verification pending; no human acceptance claimed.
 
 Completion log:
+- 2026-11-06: Reconciled delivery:56 verifies the exact updated artwork and
+  GitHub animation; later1b0385b qualification matches all30public assets and
+  all20README images. The old pending statement is historical, not a current
+  artwork-release blocker. Documentation and owned continuity updated.
 - 2026-11-05: User supplies the updated chrome orbit and sparkle umbrella logo.
   Keep the original file bytes; update website and derived README branding only.

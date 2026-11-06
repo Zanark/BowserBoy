@@ -13,6 +13,12 @@
 [Release archive and evidence](releases/README.md) &middot;
 [Documentation and repository map](docs/README.md).
 
+## Read the engineering book
+
+<a href="book/published/Building-a-Little-Escape.pdf"><img src="book/editions/2026-11/cover.png" alt="Building a Little Escape - the BowserBOY engineering book, with the supplied purple handheld cover" width="360"></a>
+
+*Want to explore the documentation? [Read the 96-page engineering book](book/published/Building-a-Little-Escape.pdf): architecture, saves, geometry, lighting, testing and releases. [Chapter sources and build instructions](book/editions/2026-11/README.md). The PDF is also included as a separate companion asset by the manual release workflow.*
+
 ## Supported consoles
 
 - [**BowserBOYADVANCED**](#bowserboyadvanced) - Game Boy Advance.

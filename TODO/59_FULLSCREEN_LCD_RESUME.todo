@@ -1,5 +1,5 @@
-Status: BLOCKED
-Milestone: Explicit room-renderer restart qualified/pushed; no normal release run created.
+Status: DONE (later public delivery reconciled; original missing-run record retained)
+Milestone: Explicit room-renderer restart delivered and publicly requalified.
 Dependencies: Existing screen fullscreen; completed native framebuffer integration.
 
 Purpose
@@ -14,7 +14,7 @@ Tasks
 [x] Verify actual rendered LCD pixels change after Escape and close-button exits.
 [x] Cover a suspended room animation loop and subsequent main-view game input.
 [x] Preserve ordinary zoom, held fast-forward and full native quick-actions.
-[ ] Publish through the unchanged full gate and independently verify public behavior.
+[x] Publish through the unchanged full gate and independently verify public behavior.
 [x] Update affected architecture, verification and causal records.
 
 Acceptance criteria
@@ -59,6 +59,10 @@ Blocker-only records held locally rather than triggering another push.
 
 Completion log
 --------------
+2026-11-06: Later1b0385b/42135170801 passes all19browser shards and deploys;
+all30public assets match. Four actual public cases include both fullscreen-
+return paths. This closes the original missing-run blocker without deleting
+its evidence or claiming the user's original freeze was reproduced.
 2026-11-05: User reports main-view LCD frozen at the fullscreen-entry frame
 after returning from screen fullscreen. Add explicit renderer resume lifecycle.
 2026-11-05: Four local affected cases pass; real fix pushed. No normal workflow
