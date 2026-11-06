@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Blue-cyan DS and lighter NDS-only base:
+  Owner rejects green-looking teal, then requests a slightly lighter base
+  for NDS only. Keep #0077FF lid; separate #40A0FF lower-base paint.
+  Increase paint-only reflection to20, retaining .80/.35 grain/clearcoat.
+  No GBA, global lights/exposure, LCD, control, logo or geometry changes.
+  Hex-only trials remain dark/green;12/28reflection trials fail provisional
+  brightness/hue checks. Measured lid/deck probes select the final paint,
+  with separate bounds for their actual illumination.
+ 35units,syntax/build pass. Uniform cyan: all5DS cases pass1.5m.
+  Final lighter base:4DS cases pass1.4m; the new comparison fixture has
+  an accidentally nested return. Repair sampler placement, keep production
+  material/assertions unchanged; the focused case passes separately20.2s.
+  Ray-verified shell probes cover warm/Room light and a same-lighting
+  darker-pigment comparison requiring >15% weighted RGB improvement.
+  Review actual warm/native captures; update captioned README/current docs.
+  Keep86active for owner review. No full-suite or deployment claim.
 - 2026-11-07 / Orientation-locked console relocation:
   Owner orders commit, context refresh, then console movement like pear-boy.
   Checkpoint c996f7d as Zanark precedes episode ep_1085 and checked mesh.

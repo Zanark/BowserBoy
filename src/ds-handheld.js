@@ -6,7 +6,7 @@ const roundedBox = (width, height, depth, radius = .08) =>
 
 export function createDsHandheld() {
   const root = new THREE.Group();
-  root.name = 'BowserBoy DS - metallic teal DS Lite clamshell';
+  root.name = 'BowserBoy DS - bright blue-cyan DS Lite clamshell';
   root.userData.console = 'ds';
   const metal = (color, roughness = .36, metalness = .32) =>
     new THREE.MeshStandardMaterial({ color, roughness, metalness });
@@ -25,10 +25,11 @@ export function createDsHandheld() {
   grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
   grain.repeat.set(3, 3);
   const paint = color => new THREE.MeshPhysicalMaterial({
-    color, metalness: .80, roughness: .35, envMapIntensity: 3.5, roughnessMap: grain,
+    color, metalness: .80, roughness: .35, envMapIntensity: 20, roughnessMap: grain,
     bumpMap: grain, bumpScale: .003, clearcoat: .55, clearcoatRoughness: .19,
   });
-  const shell = paint('#2A9D98');
+  const shell = paint('#0077FF');
+  const baseShell = paint('#40A0FF');
   const rim = shell;
   const edge = metal('#171A70', .42, .25);
   const lime = metal('#8BFF78', .40, 0);
@@ -61,8 +62,8 @@ export function createDsHandheld() {
     return mesh(parent, name, geometry, material, x, y, z);
   }
   mesh(root, 'Lower shell parting line', roundedBox(8.5, 4.75, .025, .14), edge, 0, -2.43, -.025);
-  mesh(root, 'Metallic blue lower rear shell', roundedBox(8.5, 4.75, .19, .14), shell, 0, -2.43, -.135);
-  mesh(root, 'Metallic blue control deck', roundedBox(8.5, 4.75, .22, .14), shell, 0, -2.43, .105);
+  mesh(root, 'Metallic blue lower rear shell', roundedBox(8.5, 4.75, .19, .14), baseShell, 0, -2.43, -.135);
+  mesh(root, 'Metallic blue control deck', roundedBox(8.5, 4.75, .22, .14), baseShell, 0, -2.43, .105);
   const lid = new THREE.Group();
   lid.name = 'Open hinged upper shell';
   lid.rotation.x = THREE.MathUtils.degToRad(70);
@@ -88,7 +89,7 @@ export function createDsHandheld() {
   const screens = [];
   for (const [parent, y, z, name] of [[lid, 2.43, .18, 'Upper'], [root, -2.43, .265, 'Touch']]) {
     mesh(parent, `${name} fine cyan bezel edge`, roundedBox(4.88, 3.77, .035, .06), rim, 0, y, z);
-    mesh(parent, `${name} metallic blue screen surround`, roundedBox(4.80, 3.69, .03, .04), shell, 0, y, z + .018);
+    mesh(parent, `${name} metallic blue screen surround`, roundedBox(4.80, 3.69, .03, .04), parent === root ? baseShell : shell, 0, y, z + .018);
     mesh(parent, `${name} black screen recess`, roundedBox(4.60, 3.475, .008, .015), dark, 0, y, z + .048);
     const screen = mesh(parent, `${name} live 256x192 LCD`, new THREE.PlaneGeometry(4.5, 3.375),
       new THREE.MeshBasicMaterial({ color: '#101d23', toneMapped: false }), 0, y, z + .085);
@@ -210,7 +211,7 @@ export function createDsHandheld() {
   circle(headphones, 'Headphone round recess', .09, .014, dark, .17, .015, 0);
   mesh(root, 'Rear DS game-card slot', roundedBox(1.68, .18, .24, .02), dark, 1.4, .1, -.02);
   mesh(root, 'Underside right battery cover seam', roundedBox(2.81, 3.51, .008, .10), edge, 2.35, -2.43, -.27);
-  mesh(root, 'Underside right battery cover', roundedBox(2.79, 3.49, .008, .09), shell, 2.35, -2.43, -.278);
+  mesh(root, 'Underside right battery cover', roundedBox(2.79, 3.49, .008, .09), baseShell, 2.35, -2.43, -.278);
   for (const [x, y] of [[-3.8, -.6], [3.8, -.6], [-3.8, -4.4], [3.8, -4.4], [2.35, -3.95]]) {
     const z = x === 2.35 ? -.292 : -.257;
     circle(root, 'Underside screw recess', .07, .012, dark, x, y, z);
@@ -241,7 +242,7 @@ export function createDsHandheld() {
   const nib = mesh(stylus, 'Short rounded polymer touch nib', new THREE.SphereGeometry(.032, 16, 12), lavender, 0, -2.07);
   nib.scale.set(1, 1.8, 1);
   for (const y of [-.90, -4.02]) {
-    mesh(root, 'Shell-integrated stylus retaining clip', roundedBox(.35, .16, .10, .035), shell, 4.30, y, .055);
+    mesh(root, 'Shell-integrated stylus retaining clip', roundedBox(.35, .16, .10, .035), baseShell, 4.30, y, .055);
   }
   return { root, lid, hinge, screens, screen: screens[1], controls, led, power, cartridge, stylus, branding };
 }

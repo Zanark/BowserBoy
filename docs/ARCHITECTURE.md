@@ -116,7 +116,7 @@ The held DS sits modestly forward of the seated pear, keeping the original
 front-facing inspection camera and both screens unobstructed without
 moving the console beyond the existing desk illumination.
 
-The physical shell uses #2A9D98 teal, metalness .80, roughness .35, deterministic
+The physical shell uses #0077FF blue-cyan, metalness .80, roughness .35, deterministic
 fine-grain roughness/bump and clearcoat. Lime hinge/stylus plastic is dielectric
 (.40 roughness); blue D-pad and lime convex controls use .45 roughness.
 Deep-blue slot/power trim uses .25 roughness and .50 metalness.
@@ -125,7 +125,12 @@ the supplied project emblem remains separate and rear-only.
 
 A 128px cube probe captures the actual existing room with both consoles hidden,
 then PMREM filters the reflection for DS paint only. Paint reflection strength
-is 3.5; lighting/background, GBA materials and renderer resolution are unchanged.
+is 20; lighting/background, GBA materials and renderer resolution are unchanged.
+This supersedes the earlier #2A9D98/3.5 teal appearance, which rendered green
+under the warm lamps. The lower deck/rear, touch-screen surround, battery
+cover and retaining clips use a separate #40A0FF paint for the subsequently
+requested slightly lighter NDS base. Lid/hinge paint remains #0077FF.
+Neither paint emits light; metalness, roughness and grain remain shared.
 Pose/light changes invalidate the probe; replacement maps are disposed.
 The first render starts only after DS storage initialization. Initial shader
 compilation otherwise blocked IndexedDB events beyond its unchanged 5s deadline.

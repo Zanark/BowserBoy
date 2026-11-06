@@ -9,6 +9,36 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Blue-cyan shell and lighter NDS-only base
+
+The owner rejects the rendered green appearance, requests bright blue-cyan,
+then asks to lighten only the NDS lower base. Lid #0077FF and lower-base
+#40A0FF use paint-only reflection strength 20; .80 metalness/.35 roughness,
+grain and clearcoat remain. GBA, global lights/exposure, LCDs, controls,
+geometry and logos are unchanged.
+
+The initial hex-only trials stayed dark or green. Reflection trials at 12
+and 28 failed provisional brightness/hue checks; the latter also approached
+neutral highlights. Actual shell-only measurements selected 20 and a bluer
+pigment. Separate lid/deck bounds accommodate their different illumination,
+not an average including brown scenery, green LCDs or lime controls.
+
+The uniform blue-cyan material passed all five DS cases in 1.5m. After the
+lighter-base follow-up, four DS cases pass in a 1.4m run; the new comparison
+fixture fails because its return was accidentally nested in the sampler.
+Correct that fixture, without changing production material or assertions:
+the focused case then passes separately in 20.2s. It ray-checks eight visible
+shell probes under warm and Room lighting, requires blue-dominant cyan and
+separate lid/deck brightness, then renders the base in the lid's pigment
+under identical lighting. The lighter base must improve weighted RGB
+brightness by more than 15%; its real paint is restored in `finally`.
+
+All 35 units, application syntax and build pass. Native DS pixels,
+button/stylus/save/lifecycle/retry and 390px framing pass on the final
+production material. Actual warm and native runtime captures were reviewed
+and captioned in README. This is not a full-suite result, physical-phone
+qualification, aesthetic approval or publication.
+
 ### Orientation-locked console movement
 
 The requested commit/context checkpoint is `c996f7d`, made as Zanark before

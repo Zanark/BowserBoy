@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "85",
-      "file": "TODO/85_MOVABLE_CONSOLES.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/83",
-      "number": 83,
-      "nodeId": "I_kwDOVhqp0s8AAAABdHydQA",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGp7cM",
+      "id": "86",
+      "file": "TODO/86_DS_BLUE_CYAN_BASE.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/84",
+      "number": 84,
+      "nodeId": "I_kwDOVhqp0s8AAAABdIGKxQ",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGqOjc",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "ae0a90d1b76b41df3b4ea3d8ffcf59c0a4cb39dc7d2bfab040cab93761e7bb77"
+      "bodySha256": "ea669bc21ad0014fdd3b72627c38d37a8a865d9c117526ba03f35d2c2069857e"
     }
   ]
 }

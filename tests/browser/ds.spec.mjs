@@ -333,25 +333,23 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
     const stylus = new Box3().setFromObject(view.ds.stylus);
     const deck = new Box3().setFromObject(view.ds.root.getObjectByName('Metallic blue control deck'));
     view.renderer.render(view.scene, view.camera);
-    const teal = [[-3.0, -3.4, .25], [3.7, -3.1, .25]].map(position => {
+    const cyan = [[-3.0, -3.4, .25], [3.7, -3.1, .25]].map(position => {
       const point = view.ds.root.localToWorld(new Vector3(...position)).project(view.camera);
       const gl = view.renderer.getContext(), rgba = new Uint8Array(4);
       gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2), Math.round((point.y + 1) * view.canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
       return [...rgba].slice(0, 3);
     });
     return { front: hit([0, .37, 1], [0, 0, -1]), rear: hit([0, 2.43, -1], [0, 0, 1]),
-      dockGap: stylus.min.x - deck.max.x, withinBase: stylus.min.y > deck.min.y && stylus.max.y < deck.max.y, teal };
+      dockGap: stylus.min.x - deck.max.x, withinBase: stylus.min.y > deck.min.y && stylus.max.y < deck.max.y, cyan };
   });
   expect(surfaces.front).not.toContain('emblem');
   expect(surfaces.rear).toBe('Supplied transparent DS rear emblem');
   expect(surfaces.dockGap).toBeLessThan(.15);
   expect(surfaces.withinBase).toBe(true);
-  for (const [red, green, blue] of surfaces.teal) {
-    expect(green).toBeGreaterThan(red * 1.35);
-    expect(blue).toBeGreaterThan(red * 1.1);
-    expect(green).toBeGreaterThan(blue * .9);
-    expect(blue).toBeGreaterThan(green * .35);
-    expect(green).toBeGreaterThan(12);
+  for (const [red, green, blue] of surfaces.cyan) {
+    expect(blue).toBeGreaterThan(green * 1.05);
+    expect(green).toBeGreaterThan(red * 1.3);
+    expect(blue).toBeGreaterThan(35);
   }
   await page.screenshot({ path: testInfo.outputPath('ds-reference-front.png') });
   await page.locator('#put-down').click();
@@ -366,6 +364,72 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   expect(await dockStyle()).toEqual(gbaDock);
   expect(errors).toEqual([]);
+});
+
+test('DS shell renders bright blue-cyan under warm companion light and room light', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-demo').click();
+  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+
+  for (const lighting of ['warm', 'room']) {
+    if (lighting === 'room') await page.locator('#room-toggle').click();
+    await expect.poll(() => page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      return view.transition === null && view.screenIllumination.settled && !view.dsReflectionsDirty;
+    })).toBe(true);
+    const surfaces = await page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      const { Vector2, Vector3, Raycaster } = await import('three');
+      const shell = view.ds.root.getObjectByName('Metallic blue control deck').material;
+      const lidShell = view.ds.root.getObjectByName('Metallic blue recessed inner lid').material;
+      const gl = view.renderer.getContext(), ray = new Raycaster();
+      view.renderer.render(view.scene, view.camera);
+      const sample = () => [
+        [view.ds.lid, [[-3.4, 2.4, .15], [3.4, 2.4, .15], [-3.4, 3.8, .15], [3.4, 3.8, .15]]],
+        [view.ds.root, [[-3, -3.4, .25], [3.7, -3.1, .25], [-3, -4.2, .25], [3.7, -4.2, .25]]],
+      ].map(([parent, points]) => {
+        const samples = points.map(position => {
+          const point = parent.localToWorld(new Vector3(...position)).project(view.camera);
+          ray.setFromCamera(new Vector2(point.x, point.y), view.camera);
+          const hit = ray.intersectObjects(view.scene.children, true)[0];
+          const rgba = new Uint8Array(4);
+          gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2),
+            Math.round((point.y + 1) * view.canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+          return { shell: hit?.object.material === (parent === view.ds.lid ? lidShell : shell),
+            rgb: [...rgba].slice(0, 3) };
+        });
+        return { visibleShell: samples.every(sample => sample.shell),
+          mean: [0, 1, 2].map(channel => samples.reduce((sum, sample) => sum + sample.rgb[channel], 0) / samples.length) };
+      });
+      const surfaces = sample(), color = shell.color.clone();
+      try {
+        shell.color.copy(lidShell.color);
+        view.renderer.render(view.scene, view.camera);
+        surfaces[1].darkerMean = sample()[1].mean;
+      } finally {
+        shell.color.copy(color);
+        view.renderer.render(view.scene, view.camera);
+      }
+      return surfaces;
+    });
+    for (const [index, surface] of surfaces.entries()) {
+      expect(surface.visibleShell, `${lighting}: sample shell, not screens, controls or props`).toBe(true);
+      const [red, green, blue] = surface.mean;
+      expect(blue, `${lighting}: blue must exceed green`).toBeGreaterThan(green * 1.05);
+      expect(green, `${lighting}: retain cyan rather than violet`).toBeGreaterThan(red * 1.3);
+      expect(blue, `${lighting}: visibly brighter ${index === 0 ? 'lid' : 'deck'}`)
+        .toBeGreaterThan(lighting === 'warm' ? (index === 0 ? 100 : 30) : (index === 0 ? 140 : 60));
+    }
+    const luminance = rgb => rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
+    expect(luminance(surfaces[1].mean), `${lighting}: lighter NDS base in the same lighting`)
+      .toBeGreaterThan(luminance(surfaces[1].darkerMean) * 1.15);
+    await page.screenshot({ path: testInfo.outputPath(`ds-blue-cyan-${lighting}.png`) });
+  }
 });
 
 test('DS CDN failure is visible and retryable without replacing the GBA, including reduced motion', async ({ page }) => {

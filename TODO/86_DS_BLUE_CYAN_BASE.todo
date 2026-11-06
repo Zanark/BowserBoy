@@ -1,0 +1,43 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/84
+Milestone: Brighter blue-cyan DS shell with a slightly lighter NDS-only base.
+Dependencies: 79 separate DS; 84 existing warm companion lighting.
+Purpose: Correct the owner's green rendered-shell complaint, then lighten
+only the NDS lower base without changing the GBA, lid or global lighting.
+
+Tasks:
+- [x] Compare actual shell pixels under existing warm and Room lighting.
+- [x] Replace green-looking teal with brighter blue-cyan metallic paint.
+- [x] Give the NDS base separate lighter paint; retain the final lid color.
+- [x] Verify visible-shell hue, brightness and base-only rendering improvement.
+- [x] Preserve native dual LCD/input/save/lifecycle and phone framing.
+- [x] Update affected docs, actual captures and causal evidence.
+- [ ] Owner visual review.
+
+Acceptance criteria:
+The DS renders blue-cyan instead of green in both lighting modes. Its lower
+deck/rear, touch surround, cover and clips use slightly lighter blue paint
+without altering the final lid, GBA, controls, geometry, logos, lights or
+exposure. Actual shell-only sampling excludes screens, props and controls.
+The lighter base improves same-lighting weighted RGB brightness by >15%.
+Native DS functionality and resolution remain intact. No push/deployment.
+
+Completion evidence:
+35units,syntax/build pass. Uniform cyan: all5DS cases pass in1.5m.
+Final lighter base:4DS cases pass in1.4m; the new comparison fixture alone
+fails due to a nested sampler return. Correct the fixture; its focused case
+passes separately20.2s with unchanged production paint and assertions.
+Actual warm and native runtime captures reviewed and captioned in README.
+This is technical evidence, not owner approval or a full-suite result.
+Scoped sync verifies issue84 OPEN, managed body, local backlink and its
+BowserBOY Project/In progress item. Independent gh read confirms state/status.
+
+Completion log:
+2026-11-07: Owner rejects green render, requests bright blue-cyan, then
+clarifies the slightly lighter base is NDS only. Use #0077FF lid/#40A0FF
+base and reflection20, retaining .80/.35 grain/clearcoat. Hex-only trials
+remain dark/green;12/28reflection trials fail provisional visual bounds.
+Measure lid/deck separately, preserve their real lighting difference and
+require actual blue-dominant cyan rather than counting green LCD pixels.
+2026-11-07: Keep active for owner review; no physical-phone or publication
+claim. All GBA and global lighting code remain unchanged.

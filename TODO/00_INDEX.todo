@@ -85,6 +85,7 @@ BowserBOY workstreams
 83_CARTRIDGE_SPARSE_PAINTS.todo - IN_PROGRESS: fix reload insertion clock under sparse hosted paints without relaxing deadlines or sharpness.
 84_PEAR_BOY.todo - IN_PROGRESS/local: movable warm pear lamp, longer thick rope limbs, cursor/scared face and drop physics; owner review pending.
 85_MOVABLE_CONSOLES.todo - IN_PROGRESS: independent orientation-locked console relocation, drop physics and session desk positions.
+86_DS_BLUE_CYAN_BASE.todo - IN_PROGRESS: brighter blue-cyan DS and slightly lighter NDS-only lower base; owner review pending.
 
 Current pending work
 --------------------

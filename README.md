@@ -37,16 +37,23 @@ loading LCD and DS tools. The inner lid has no emblem.*
 
 ![Separate GBA and DS consoles together on the BowserBOY table](docs/images/ds-prototype-table.png)
 
-*Two separate consoles on the same table. The metallic teal DS faces the lamp,
+*Two separate consoles on the same table. The blue-cyan DS faces the lamp,
 clears the loose cartridges and keeps its lime stylus clipped to its side.
 Actual local capture with optional Room lighting; not a deployed build.*
 
 ![Twin Lab running on both physical DS displays beside its stylus](docs/images/ds-prototype-playing.png)
 
-*The remodeled 110-degree clamshell has a metallic teal body, blue D-pad and
+*The remodeled 110-degree clamshell has a blue-cyan lid, slightly lighter blue
+lower base, blue D-pad and
 lime controls. Both screens show actual DeSmuME output: buttons move the
 upper marker and pointer/stylus input draws on the lower LCD. Twin Lab is
 original project homebrew, not a commercial game or simulated video.*
+
+![Blue-cyan DS shell with its lighter base under the existing warm lamps](docs/images/ds-blue-cyan-warm.png)
+
+*The same shell with Room lighting off and the displays dark. Warm lamps,
+exposure and GBA materials are unchanged; the lower base alone uses a lighter
+blue pigment than the lid. Actual local capture, not a published build.*
 
 From the repository folder, run `npm run dev`, then open
 **http://127.0.0.1:5173**. Select **DS**, open **DS cartridges** and choose
@@ -77,8 +84,9 @@ The GBA's native shader/settings/fullscreen features are not all DS features.
 
 ![The DS moved from its original desk position, beside the unchanged GBA and pear-boy](docs/images/console-movement.png)
 
-*The DS after a real drag, depth adjustment and drop. Its desk orientation
-is unchanged; each console remembers its own placement during this session.*
+*The DS after a real drag, depth adjustment and drop, captured before the
+blue-cyan material update. Its desk orientation is unchanged; each console
+remembers its own placement during this session.*
 
 Drag either console to lift and move it in 3D; scroll for depth and release
 to drop. Both keep their original desk orientation. **Move consoles** in

@@ -8,6 +8,20 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Brighter blue-cyan DS and lighter NDS base, 2026-11-07
+
+The current `ds-prototype-table.png` and `ds-prototype-playing.png` come from
+the actual native DS browser case after the color correction and base-only
+follow-up. `ds-blue-cyan-warm.png` comes from the focused shell-color case
+with Room lighting off and the displays dark. The final warm and native
+runtime captures were visually reviewed. No game screens are composited.
+
+The earlier teal specification below is superseded by #0077FF lid paint,
+#40A0FF lower-base paint and paint-only reflection strength 20. Both retain
+.80 metalness/.35 roughness, grain and clearcoat. Global lighting/exposure,
+GBA materials, controls, geometry and artwork are unchanged. The movement
+figure remains explicitly historical. No owner approval or deployment.
+
 ### Orientation-locked console movement, 2026-11-07
 
 `docs/images/console-movement.png` is an actual Edge/Playwright capture from
@@ -39,10 +53,10 @@ The README's `docs/images/ds-prototype-table.png` and
 `docs/images/ds-prototype-playing.png` are actual Edge/Playwright captures of
 the local separate-console scene and real Twin Lab emulation. They are not
 renders composited with invented game screens. Optional Room lighting reveals
-the metallic teal/lime materials; the existing warm lamp naturally changes
-their appearance. The current images replace the rejected first model with
+the original metallic teal/lime materials; the existing warm lamp naturally changes
+their appearance. Those captures replaced the rejected first model with
 the owner's #2A9D98/.80-metalness/.35-roughness specification, 110-degree hinge,
-blue D-pad, lime controls and clipped stylus. The current desktop table/runtime,
+blue D-pad, lime controls and clipped stylus. That desktop table/runtime,
 front/rear and 390px captures were reviewed together; this is not owner approval
 or physical-phone qualification. No studio lighting or white backdrop was added.
 

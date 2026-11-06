@@ -28,7 +28,7 @@ GitHub Release.
 The owner subsequently authorized a local DS prototype in workstream79.
 Actual dual-screen/input/save/lifecycle tests and a390px viewport pass;
 physical-phone performance, commercial compatibility and owner approval remain
-unqualified. The later reference remodel uses metallic teal #2A9D98/.80/.35,
+unqualified. The later reference remodel originally uses teal #2A9D98/.80/.35,
 a110-degree hinge, blue D-pad, lime controls, clipped stylus and rear-only emblem.
 Live inspection repaint, table/pickup clearance, static GBA settings branding
 and console-themed dock have a focused9-case browser gate. Existing desk
@@ -63,3 +63,11 @@ Keep all eight workstream fields, evidence distinct from human approval, and
 issue backlinks consistent with the [tracking guide](../docs/GITHUB-TRACKING.md).
 Never publish credentials, local continuity, raw conversations or social data.
 Read current contracts and source before editing; preserve unrelated changes.
+
+Workstream86 supersedes the green-looking teal: #0077FF blue-cyan lid and
+separate #40A0FF slightly lighter NDS base, paint reflection20. Both retain
+.80/.35 grain/clearcoat; GBA/global lighting/exposure/geometry stay unchanged.
+35units,syntax/build pass. Final lighter paint passes four DS cases; the
+repaired shell-comparison fixture passes separately with actual warm/Room
+pixel checks and >15% same-lighting base improvement. Actual captures reviewed.
+Owner approval and publication remain separate.
