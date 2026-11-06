@@ -1,4 +1,5 @@
 Status: DONE (later public delivery reconciled; original missing-run record retained)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/59
 Milestone: Explicit room-renderer restart delivered and publicly requalified.
 Dependencies: Existing screen fullscreen; completed native framebuffer integration.
 

@@ -7,7 +7,7 @@ assets; their publication relies on the user's redistribution confirmation.
 
 ## Supplied demo game and box art
 
-[`demos/celias-game`](demos/celias-game/README.md) contains the supplied game,
+[`demos/celias-game`](assets/demos/celias-game/README.md) contains the supplied game,
 attributed by the user to Celia, and its unmodified box art. The user authorized
 the GitHub upload and confirmed on 2026-11-05 that the ROM is fully original or
 licensed for public redistribution. No separate upstream license text was

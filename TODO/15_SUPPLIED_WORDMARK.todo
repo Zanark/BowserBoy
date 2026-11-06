@@ -1,4 +1,5 @@
 Status: DONE (deployed and technically verified; new visual approval not claimed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/15
 Milestone: Use the supplied logo without its background and with separated words
 Dependencies: 11_STARTUP_AND_PERSISTENT_POWER
 Purpose: Replace the website wordmark with the user's purple-and-white artwork,

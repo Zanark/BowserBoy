@@ -1,8 +1,8 @@
 # BowserBOY player and developer guide
 
-[Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](../book/README.md)
+[Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](book/README.md)
 
-**First public release: [v1.0.0](../releases/v1.0.0/README.md), 2026-11-06.**
+**First public release: [v1.0.0](releases/v1.0.0/README.md), 2026-11-06.**
 The owner designated the independently qualified `c3d9dbd` application as this
 milestone. Full-resolution rendering, all53 hosted browser cases and five
 affected public cases are qualified; no automatic downscaling remains.
@@ -415,7 +415,7 @@ See [the saving guide](SAVING.md) for recovery and limitations.
 
 ## Learning the implementation
 
-The [first chaptered engineering book](../book/README.md) explains the static
+The [first chaptered engineering book](book/README.md) explains the static
 runtime boundary, cartridge/power lifecycle, save transactions, original 3D
 geometry, native pixels and lighting, input ownership, actual algorithms/data
 structures, design trade-offs and delivery evidence. Its ten numbered chapters

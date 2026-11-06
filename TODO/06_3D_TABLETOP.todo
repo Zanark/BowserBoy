@@ -1,4 +1,5 @@
 Status: DONE (local implementation); visual acceptance and publication pending
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/6
 Milestone: Real 3D tabletop handheld with pickup, inspection and native CRT Geom
 Dependencies: 05_HARDWARE_UI
 Purpose: Replace the flat hardware illustration with an actual, playable 3D

@@ -1,9 +1,9 @@
 # BowserBOY architecture
 
-[Engineering book](../book/README.md) | [Player guide](GUIDE.md) | [Verification](VERIFICATION.md)
+[Engineering book](book/README.md) | [Player guide](GUIDE.md) | [Verification](VERIFICATION.md)
 
 This is the concise implementation reference. The first
-[chaptered book](../book/README.md) adds diagram-first explanations, worked
+[chaptered book](book/README.md) adds diagram-first explanations, worked
 examples, dedicated algorithms/data-structures and design-principle chapters,
 and revision-bound source references. It describes qualified source; release
 status remains a separate verification claim.
@@ -754,7 +754,7 @@ from a trusted copy of this application.
 
 | Path | Responsibility |
 |---|---|
-| `index.html`, `styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
+| `web/index.html`, `web/styles.css`, `assets/cartridge.svg` | Scene host, projected controls and hidden tools drawer |
 | `assets/website-logo.png` | Supplied chrome BowserBOY website header/dialog identity; separate from console art |
 | `assets/logo.png`, `assets/star.png`, `assets/orbit.png`, `assets/glow.png`, `src/brand.js` | Purple GBA console branding/effects, padded sprites and checked decoding |
 | `assets/brand-mark.svg` | Original transparent handheld favicon, matching the actual shell outline |
@@ -762,7 +762,7 @@ from a trusted copy of this application.
 | `src/handheld.js`, `src/scene.js` | Original 3D geometry/textures, live LCD, picking and inspection |
 | `src/lighting.js` | Clean tripod lamp, one-map shadows, finite shade/wood light, optional room lights and sampled LCD |
 | `src/app.js` | File selection, host lifecycle, UI and user save actions |
-| `src/player.js`, `player.html` | Pinned runtime adapter and child document |
+| `src/player.js`, `web/player.html` | Pinned runtime adapter and child document |
 | `src/cartridge.js`, `src/save-store.js` | Identity, backups and checked storage |
 | `src/preferences.js`, `src/keyboard.js` | Shared controls, persistent sound/remapping/shader and held-key lifecycle |
 | `scripts/demo-rom.mjs` | Original ARM7TDMI cartridge generator |

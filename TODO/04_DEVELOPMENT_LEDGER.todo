@@ -14,6 +14,58 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Tracking backfill verified:
+  Complete81actual workstream mappings, excluding00index/04ledger. Pilot78 is
+  issue1; bulk creates80more issues and verifies issue body/state, Project item/
+  Status and local backlink for all81. Full rerun creates0/updates0 and verifies
+  the same mappings. Initial read-back may briefly omit newly created issue
+  fields; bounded retries observe the committed remote result without claiming
+  premature success. Mobile1, DS78 and boxed library79 remain open/Backlog.
+  Superseded55closes not_planned;62and74remain open with their actual evidence/
+  qualification boundaries. Synchronization completion82does not complete81's
+  pending push or start deferred features. Public report is docs/github-sync.json.
+- 2026-11-06 / Repository home and linked GitHub tracking81/82:
+  Owner authorizes a cleaner home, README path reconciliation, issue/Project
+  creation, context check-in and push, without questions. Move HTML/CSS sources
+  under web while preserving emitted URLs, book/releases under docs and supplied
+  demo media under assets. Reconcile Markdown links, active book tooling and
+  guarded release inputs; preserve PDF, cover and frozen archive/manifest bytes.
+  Publish only .agent-context/README.md and PUBLIC.md; private state, memory,
+  journal, references and social records remain ignored and outside the build.
+  Add explicit preview/apply tracking configuration and stable issue markers,
+  integrity-checked managed bodies, issue backlinks and Project status mapping.
+  First historical-schema preview rejects underlined headings; support the
+  existing headings without changing old workstreams and add a focused test.
+  Pilot creates mobile backlog issue1 and Project item; first immediate read-back
+  does not verify all fields. Inspect actual state, add bounded consistency
+  retries and precise verification diagnostics; rerun reuses issue1 with zero
+  creates/updates and verifies body/state/item/status/backlink.
+  Eighteen unit cases, three affected real-runtime/3D/static-boundary browser
+  cases, relocated book tests/source assembly and actionlint pass. Browser tests
+  regenerate five historical captures; restore only those generated changes.
+  Compare emitted entry bytes to relocated sources and normalized committed
+  content, preserving the checkout's CRLF rather than claiming git blob bytes
+  equal checkout bytes. Link inventory reports225existing local links/no broken
+  targets before final tracking receipt. Bulk backfill/publication still pending
+  at this entry; no DS/performance/library implementation or release dispatch.
+- 2026-11-06 / GitHub issue creation blocked for backlog78-80:
+  Owner explicitly requests repository issues. Confirm issues are enabled
+  and the issue list is empty; attempt separate phone-performance and DS
+  issues using the existing workstream bodies. Both createIssue calls are
+  rejected by GitHub authorization. Recheck confirms no issues were created.
+  Do not submit the dependent boxed-library issue or invent issue numbers.
+  Repository-authorized authentication is needed before retrying. All three
+  feature workstreams remain NOT_STARTED; no implementation or publication
+  of these planning edits is performed.
+- 2026-11-06 / Deferred feature backlog78-80:
+  Owner asks to register three TODOs without working on them: address a
+  user-reported approximately10FPS on phones; add DS emulation with a DS
+  console beside the GBA; add boxed GBA/NDS cartridges selected on the table
+  to load their ROMs without repeated uploads. Create separate NOT_STARTED
+  workstreams and index entries. Record71's sharpness constraint,79 as a
+  dependency only for80's DS portion, and title-specific ROM/artwork rights
+  before future distribution. No profiling, core research, ROM acquisition,
+  assets, application changes or feature tests are performed.
 - 2026-11-06 / Supplied-cover reading copy and release companion77:
   Owner supplies complete Blueprint BowserBoy Advance Cover.png and asks for
   a README cover/link and release book. Preserve exact PNG bytes, use one

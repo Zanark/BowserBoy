@@ -1,4 +1,5 @@
 Status: DONE (local implementation); visual acceptance and publication pending
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/5
 Milestone: Hardware-style GBA interface with an unobstructed LCD
 Dependencies: 01_PLAYABLE_PROTOTYPE, 02_PROGRESS_AND_BACKUPS, 03_VERIFICATION_AND_DELIVERY
 Purpose: Replace the crowded website shell with the approved indigo handheld

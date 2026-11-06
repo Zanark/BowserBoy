@@ -10,6 +10,7 @@ const vendor = new Map([
 ]);
 
 export function siteSource(file) {
+  if (['index.html', 'player.html', 'styles.css'].includes(file)) return join('web', file);
   if (file === join('assets', 'inspection-logo.png')) return join('docs', 'images', 'bowserboyadvanced-logo-glow.png');
   return vendor.get(file) ?? file;
 }

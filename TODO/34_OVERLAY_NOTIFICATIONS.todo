@@ -1,4 +1,5 @@
 Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/34
 Milestone: Overlay notifications without changing the handheld view.
 Dependencies: Completed workstream 29; explicitly supersedes its notice separation.
 

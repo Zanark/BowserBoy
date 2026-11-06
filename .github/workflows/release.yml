@@ -132,8 +132,8 @@ jobs:
               for path in sorted(Path("dist").rglob("*")):
                   if path.is_file():
                       bundle.write(path, path.relative_to("dist").as_posix())
-          book = Path("book/published/Building-a-Little-Escape.pdf")
-          expected, filename = Path("book/published/SHA256SUMS.txt").read_text(
+          book = Path("docs/book/published/Building-a-Little-Escape.pdf")
+          expected, filename = Path("docs/book/published/SHA256SUMS.txt").read_text(
               encoding="utf-8"
           ).strip().split("  ")
           checksum = hashlib.sha256(book.read_bytes()).hexdigest()

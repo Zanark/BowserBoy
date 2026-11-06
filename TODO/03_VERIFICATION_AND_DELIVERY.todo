@@ -1,4 +1,5 @@
 Status: DONE (original prototype verified, published and user-confirmed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/4
 Milestone: Reproducible local handoff
 Dependencies: 01_PLAYABLE_PROTOTYPE, 02_PROGRESS_AND_BACKUPS
 Purpose: Verify the user-visible result, document limitations and retain continuity.

@@ -1,4 +1,5 @@
 Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/17
 Milestone: Warm relaxed lighting, optional room illumination and accessible power
 Dependencies: 10_DARK_ROOM, 16_PRESSED_CONTROL_LIGHTING
 Purpose: Address the user's harsh/interrogation-room lighting feedback and

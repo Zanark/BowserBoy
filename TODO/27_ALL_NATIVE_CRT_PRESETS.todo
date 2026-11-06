@@ -1,4 +1,5 @@
 Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/27
 Milestone: All pinned native CRT presets in the Screen shader dropdown.
 Dependencies: Completed workstreams 09 and 13.
 

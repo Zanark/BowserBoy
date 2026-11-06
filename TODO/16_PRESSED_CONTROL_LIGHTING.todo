@@ -1,4 +1,5 @@
 Status: DONE (deployed and technically verified; new visual approval not claimed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/16
 Milestone: Keep pressed controls physically visible and naturally lit
 Dependencies: 07_REFERENCE_SHAPE, 10_DARK_ROOM
 Purpose: Correct the user's reported black D-pad and unrealistic action-button

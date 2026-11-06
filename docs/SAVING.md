@@ -1,6 +1,6 @@
 # BowserBOY ADVANCED: progress, backups and recovery
 
-[Player guide](GUIDE.md) | [Book chapter: saves and recovery](../book/chapters/03-saves-and-recovery/README.md)
+[Player guide](GUIDE.md) | [Book chapter: saves and recovery](book/chapters/03-saves-and-recovery/README.md)
 
 This guide covers the current GBA console on the **BowserBOY** website.
 The chrome website rebrand does not change saves, ROM identity, backup format,

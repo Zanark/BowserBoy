@@ -1,0 +1,35 @@
+Status: NOT_STARTED - deferred backlog; do not begin without a new request.
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/78
+Milestone: Playable Nintendo DS beside the existing GBA on the desk.
+Dependencies: None; retain the existing static-site and GBA behavior.
+
+Purpose:
+Add Nintendo DS emulation and a Nintendo DS console placed on the desk next
+to the GBA. This is a future feature, not currently supported functionality.
+
+Tasks:
+- [ ] Evaluate a static-hostable DS core and document compatibility,
+      licensing, browser requirements and any BIOS/firmware requirements.
+- [ ] Add the Nintendo DS desk model next to the retained GBA.
+- [ ] Define console selection and integrate DS loading, both screens,
+      touchscreen input and the appropriate physical/keyboard/touch controls.
+- [ ] Keep GBA/DS saves, active-game identity, cached ROMs and runtime
+      lifecycle isolated; do not assume simultaneous emulation is required.
+- [ ] Verify desktop and phone interaction using authorized fixtures, then
+      update supported-system documentation and affected visual references.
+
+Acceptance criteria:
+Both consoles are present on the desk. Selecting the DS can load an
+authorized NDS ROM into the matching dual-screen presentation, with working
+touchscreen and button input. GBA loading, play and saves still work without
+cross-system contamination. Hosting remains static; missing or unsupported
+ROM/BIOS/firmware requirements produce explicit guidance rather than a false
+success. Any required distributed assets have appropriate permission.
+
+Completion evidence:
+None. No DS core selection, asset research, model, runtime integration,
+dependency change or compatibility testing has been started.
+
+Completion log:
+2026-11-06: Owner requests DS support and a second console beside the GBA,
+but explicitly defers implementation. Record the workstream only.

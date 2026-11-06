@@ -1,6 +1,6 @@
 # BowserBOY media and capture provenance
 
-[Visual showcase](../README.md) | [Player and developer guide](GUIDE.md) | [Engineering book](../book/README.md)
+[Visual showcase](../README.md) | [Player and developer guide](GUIDE.md) | [Engineering book](book/README.md)
 
 The README is a visual front page: animation, images and short captions.
 Setup, controls, limitations and release history belong in the linked guides.
@@ -211,7 +211,7 @@ Reproduce with a built current checkout and an already-running local preview:
 ```powershell
 $env:BBA_CAPTURE_URL = 'http://127.0.0.1:5175/BowserBoyAdvance/'
 # Optional, explicitly authorized media-only ROM; never a test-suite input.
-$env:BBA_CAPTURE_ROM = (Resolve-Path '.\demos\celias-game\celias-game.gba').Path
+$env:BBA_CAPTURE_ROM = (Resolve-Path '.\assets\demos\celias-game\celias-game.gba').Path
 node .\scripts\capture-readme.mjs <capture-output-directory>
 ```
 
@@ -246,7 +246,7 @@ animates natively in Edge, and is referenced by the versioned public README.
 The user authorized publishing the supplied ROM and box art and confirmed the
 ROM is fully original or licensed for public redistribution. Exact originals,
 credits, byte counts and SHA-256 identities are recorded in the
-[demo directory](../demos/celias-game/README.md). The supplied PNG is not a generated or recolored derivative. The initial main
+[demo directory](../assets/demos/celias-game/README.md). The supplied PNG is not a generated or recolored derivative. The initial main
 README feature was subsequently removed at the user's request; assets and
 credits remain in the demo directory, not as a named front-page showcase.
 

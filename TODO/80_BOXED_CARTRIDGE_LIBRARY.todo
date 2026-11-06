@@ -1,0 +1,43 @@
+Status: NOT_STARTED - deferred backlog; do not begin without a new request.
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/79
+Milestone: Select a boxed GBA or NDS game on the desk and play its ROM.
+Dependencies: 79 for NDS loading; GBA library work is independent of79.
+Bundled ROMs and artwork require title-specific redistribution permission.
+
+Purpose:
+Place GBA and NDS game boxes on the table, with their cartridges inside.
+Selecting a box should load its corresponding game into the appropriate
+console without making the user provide the ROM on every play session.
+Keep the option to load the user's own ROMs.
+
+Tasks:
+- [ ] Establish the game catalogue and ROM/box-art provenance and permissions.
+      Workstream61's media-only clearance is not blanket permission for new
+      titles, runtime testing or integration.
+- [ ] Model the GBA/NDS boxes and their contained, system-appropriate
+      cartridges on the table.
+- [ ] Make boxes selectable by mouse and touch, with clear game/system
+      identification and accessible equivalent selection.
+- [ ] Map each box to its authorized ROM, load it through the existing
+      cartridge flow into the correct console and surface download errors.
+- [ ] Preserve per-game/per-system saves, switching behavior and user-ROM
+      upload; include only explicitly cleared catalogue assets in delivery.
+- [ ] Verify actual box-to-ROM gameplay, repeat selection without a file
+      picker, save isolation and unavailable-asset handling; update docs.
+
+Acceptance criteria:
+The table contains both GBA and NDS boxed cartridges. Selecting a game box
+loads that exact game's ROM into the matching console without requesting a
+local ROM each time. Switching titles does not overwrite unrelated saves.
+User-uploaded ROMs remain supported and private files are never bundled.
+Only redistribution-cleared games/artwork ship; catalogue failures are
+visible and do not claim a game has loaded.
+
+Completion evidence:
+None. No games or artwork have been selected, downloaded, executed or
+bundled; no boxes, catalogue, loading integration or tests have been started.
+
+Completion log:
+2026-11-06: Owner requests selectable boxed GBA/NDS cartridges and automatic
+ROM loading as future work only. Record the dependency on79 for the DS
+portion without unnecessarily blocking the independent GBA portion.

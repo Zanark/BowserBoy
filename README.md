@@ -4,20 +4,21 @@
   <strong>A little escape, on your desk.</strong><br>
   <a href="https://zanark.github.io/BowserBoyAdvance/"><strong>Play in your browser</strong></a>
   &nbsp;&middot;&nbsp; <a href="docs/GUIDE.md">Player guide &amp; local setup</a>
-  &nbsp;&middot;&nbsp; <a href="book/README.md">Engineering book</a>
+  &nbsp;&middot;&nbsp; <a href="docs/book/README.md">Engineering book</a>
 </p>
 
 **BowserBOY** is the umbrella project for browser-playable consoles, each with its own identity and showcase.
 
-**First public release: [v1.0.0](releases/v1.0.0/README.md)** - November 6, 2026 (Asia/Kolkata).
-[Release archive and evidence](releases/README.md) &middot;
-[Documentation and repository map](docs/README.md).
+**First public release: [v1.0.0](docs/releases/v1.0.0/README.md)** - November 6, 2026 (Asia/Kolkata).
+[Release archive and evidence](docs/releases/README.md) &middot;
+[Documentation and repository map](docs/README.md) &middot;
+[Workstream board](https://github.com/users/Zanark/projects/1).
 
 ## Read the engineering book
 
-<a href="book/published/Building-a-Little-Escape.pdf"><img src="book/editions/2026-11/cover.png" alt="Building a Little Escape - the BowserBOY engineering book, with the supplied purple handheld cover" width="360"></a>
+<a href="docs/book/published/Building-a-Little-Escape.pdf"><img src="docs/book/editions/2026-11/cover.png" alt="Building a Little Escape - the BowserBOY engineering book, with the supplied purple handheld cover" width="360"></a>
 
-*Want to explore the documentation? [Read the 96-page engineering book](book/published/Building-a-Little-Escape.pdf): architecture, saves, geometry, lighting, testing and releases. [Chapter sources and build instructions](book/editions/2026-11/README.md). The PDF is also included as a separate companion asset by the manual release workflow.*
+*Want to explore the documentation? [Read the 96-page engineering book](docs/book/published/Building-a-Little-Escape.pdf): architecture, saves, geometry, lighting, testing and releases. [Chapter sources and build instructions](docs/book/editions/2026-11/README.md). The PDF is also included as a separate companion asset by the manual release workflow.*
 
 ## Supported consoles
 
@@ -148,7 +149,7 @@
 [Playing & setup](docs/GUIDE.md) &middot;
 [Saving & backups](docs/SAVING.md) &middot;
 [Architecture](docs/ARCHITECTURE.md) &middot;
-[Engineering book](book/README.md) &middot;
+[Engineering book](docs/book/README.md) &middot;
 [Verification](docs/VERIFICATION.md) &middot;
 [Media & motion](docs/MEDIA.md) &middot;
 [Development journal](TODO/04_DEVELOPMENT_LEDGER.todo)

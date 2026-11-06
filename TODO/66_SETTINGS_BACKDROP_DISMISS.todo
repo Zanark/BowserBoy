@@ -1,4 +1,5 @@
 Status: DONE (later public delivery reconciled)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/66
 Milestone: Close settings by clicking the blurred area outside the drawer.
 Dependencies: Existing tools modal and close lifecycle.
 

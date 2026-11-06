@@ -1,0 +1,17 @@
+{
+  "repository": "Zanark/BowserBoyAdvance",
+  "projectOwner": "Zanark",
+  "projectNumber": 1,
+  "todoDirectory": "TODO",
+  "exclude": ["00_INDEX.todo", "04_DEVELOPMENT_LEDGER.todo"],
+  "report": "docs/github-sync.json",
+  "statusOptions": {
+    "NOT_STARTED": "Backlog",
+    "READY": "Ready",
+    "IN_PROGRESS": "In progress",
+    "IN_REVIEW": "In review",
+    "BLOCKED": "In progress",
+    "DONE": "Done",
+    "SUPERSEDED": "Done"
+  }
+}

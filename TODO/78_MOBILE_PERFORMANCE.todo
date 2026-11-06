@@ -1,0 +1,35 @@
+Status: NOT_STARTED - deferred backlog; do not begin without a new request.
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/1
+Milestone: Smooth, responsive gameplay on phones without sacrificing sharpness.
+Dependencies: None; preserve the completed71 full-resolution contract.
+
+Purpose:
+Address the owner's report that the website performs abysmally on a phone,
+playing at approximately10FPS. This is a user-reported symptom, not an
+independently measured baseline or an established root cause.
+
+Tasks:
+- [ ] Reproduce on agreed physical phones and record device/browser/game,
+      sustained gameplay FPS, frame times and audio/input behavior.
+- [ ] Profile native emulation and the 3D scene separately to locate the
+      actual bottlenecks before choosing optimizations.
+- [ ] Improve the measured bottlenecks while retaining71's device-aware
+      pixel density, sharp LCD, artwork, geometry and existing controls.
+- [ ] Compare before/after real-phone results and verify audio, touch,
+      loading, saves and desktop behavior remain correct.
+- [ ] Record measured results and update affected documentation.
+
+Acceptance criteria:
+Agreed target phones sustain native-speed gameplay with responsive controls
+and usable audio, supported by recorded before/after measurements. A narrow
+desktop viewport alone is not phone-performance evidence. Do not silently
+lower resolution, change native game speed or weaken existing quality gates
+to manufacture a performance improvement.
+
+Completion evidence:
+None. Only the owner's approximately10FPS report is recorded. No phone
+benchmark, profiling, optimization or runtime verification has been started.
+
+Completion log:
+2026-11-06: Owner requests this future TODO and explicitly says not to work
+on it now. Register the backlog item only; await a new implementation request.

@@ -77,9 +77,20 @@ BowserBOY workstreams
 75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
+78_MOBILE_PERFORMANCE.todo - NOT_STARTED/deferred: investigate owner's approximately10FPS phone report and improve performance without sacrificing sharpness.
+79_NINTENDO_DS_EMULATION.todo - NOT_STARTED/deferred: DS emulation and a Nintendo DS on the desk beside the GBA.
+80_BOXED_CARTRIDGE_LIBRARY.todo - NOT_STARTED/deferred: selectable boxed GBA/NDS cartridges that load cleared ROMs without repeated user uploads; NDS portion depends on79.
+81_REPOSITORY_ORGANIZATION.todo - IN_PROGRESS: cleaner source/docs layout, safe public context handoff and preserved website URLs.
+82_GITHUB_TRACKING.todo - DONE:81workstreams linked to verified issues/Project items; full rerun creates/updates zero issues.
 
 Current pending work
 --------------------
+-78/79/80: backlog registration only. Owner explicitly says not to work on
+  these now; await a new implementation request. No profiling, DS research,
+  modelling, ROM acquisition or runtime changes are authorized by this entry.
+  Authorized personal-account credentials now permit issue/Project tracking;
+  workstream82 supersedes the earlier authentication blocker. Tracking these
+  features does not change their explicit implementation deferral.
 -74: diagnose and qualify the56-case hosted suite without weakening quality,
   assertions or deadlines.55a5867/42139790805 fails reload seating and CRT
   deadlines.9ff921b/42179075618 completesFAILURE by12:45Asia/Kolkata:
@@ -98,8 +109,13 @@ Current pending work
 -62 evidence follow-through: source is public and passes hosted checks, but
   a specifically recorded independent live chip-startup result was not located.
   This is an evidence gap, not a proven sound defect or listening approval.
--This documentation reconciliation is local/uncommitted; no push, deployment,
-  workflow rerun, tag or release is authorized merely by the documentation task.
+-81: local reorganization and affected checks pass; authorized commit/push pending.
+-82:81actual workstreams have issue backlinks and Project items;00index/04ledger
+  are excluded. Full apply rerun verifies all81mappings with zero creates/updates.
+  Phone performance is issue1, DS issue78 and boxed library issue79, all Backlog.
+  Current closed issue state is not a new verification or human approval claim.
+  Owner's push authorization supersedes the earlier documentation-only no-push
+  limit; no manual release dispatch is requested.
 
 Current public milestone: v1.0.0, designated2026-11-06, qualifiedapplication
 c3d9dbd in the unchanged frozen package. Current live refinements are
@@ -107,6 +123,11 @@ c3d9dbd in the unchanged frozen package. Current live refinements are
 Earlier failed-attempt evidence is retained in each workstream and ledger.
 Current status lines above now reconcile later qualified delivery; they do not
 relabel an old failed run as successful. The62/74/75 boundaries remain explicit.
+Current layout: website entry sources are in web/, the engineering book in
+docs/book/, release receipts in docs/releases/ and supplied demo media in
+assets/demos/. Website URLs are unchanged. Historical paths below retain their
+dated meaning. Only public context README/PUBLIC are tracked; private continuity
+and social records remain excluded.
 
 Current rendered edition: book/editions/2026-11 contains the second learning
 edition and book/production the independent locked toolchain. Local delivery

@@ -1,4 +1,5 @@
 Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/41
 Milestone: Clean bezel letterforms without the exterior light contour.
 Dependencies: Completed workstream 39; retain shared normal/fullscreen artwork.
 

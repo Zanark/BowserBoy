@@ -1,4 +1,5 @@
 Status: DONE (implemented, verified and deployed; no new user acceptance claimed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/11
 Milestone: Original startup branding and an infinite-battery remembered console
 Dependencies: 08_POWER_LIFECYCLE, 09_NATIVE_SETTINGS, 10_DARK_ROOM
 Purpose: Start first visits off, remember the switch and last cartridge through

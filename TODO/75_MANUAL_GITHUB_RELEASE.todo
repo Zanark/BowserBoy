@@ -1,4 +1,5 @@
 Status: DONE (pushed/registered; first manual request safely blocked, no release)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/75
 Milestone: Manually dispatched, qualified GitHub Release creation.
 Dependencies: Existing Pages build/browser verification for the selected source.
 

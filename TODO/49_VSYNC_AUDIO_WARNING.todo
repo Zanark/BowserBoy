@@ -1,4 +1,5 @@
 Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/49
 Milestone: Warn when VSync is enabled without overriding the user's preference.
 Dependencies: 44_AUDIO_PACED_DEFAULT.todo.
 

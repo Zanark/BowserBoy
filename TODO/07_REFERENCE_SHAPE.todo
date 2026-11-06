@@ -1,4 +1,5 @@
 Status: DONE (local correction); user visual acceptance and publication pending
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/7
 Milestone: Reference-informed GBA silhouette and recessed physical details
 Dependencies: 06_3D_TABLETOP
 Purpose: Correct the rejected oval model using the user's supplied Sketchfab

@@ -1,4 +1,5 @@
 Status: BLOCKED (initial 53-case release done; latest 56-case qualification fails)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/74
 Milestone: Nineteen-way CI delivered; qualify the subsequent 56-case inventory.
 Dependencies: 71_FULL_RESOLUTION_RENDERING.todo.
 

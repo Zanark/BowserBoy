@@ -1,4 +1,5 @@
 Status: DONE (implemented, measured and deployed; human listening not claimed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/12
 Milestone: Reduce brief-stall crackles, volume clicks and overloaded audio peaks
 Dependencies: 08_POWER_LIFECYCLE, 09_NATIVE_SETTINGS, 10_DARK_ROOM
 Purpose: Address reported intermittent distorted/buzzing sound without changing

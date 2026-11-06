@@ -1,4 +1,5 @@
 Status: DONE (implementation and local verification); user-authorized release
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/8
 Milestone: Physical power off and battery-only ROM boot
 Dependencies: 07_REFERENCE_SHAPE
 Purpose: Make the physical switch behave as power, not pause, while preserving

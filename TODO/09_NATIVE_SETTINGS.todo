@@ -1,4 +1,5 @@
 Status: DONE (implemented, verified and deployed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/9
 Milestone: Native EmulatorJS settings behind Cartridges, with a clear LCD
 Dependencies: 08_POWER_LIFECYCLE
 Purpose: Restore the real native settings without recreating the live core,

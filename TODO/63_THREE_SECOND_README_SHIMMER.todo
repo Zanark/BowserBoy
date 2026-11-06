@@ -1,4 +1,5 @@
 Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/63
 Milestone: Repeat the README BowserBOY shimmer every three seconds.
 Dependencies: 56_README_LOGO_SHIMMER.todo.
 

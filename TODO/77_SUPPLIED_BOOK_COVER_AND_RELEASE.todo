@@ -1,4 +1,5 @@
 Status: DONE locally; remote release publication BLOCKED by74/75.
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/77
 Milestone: Supplied full cover, discoverable book PDF and release companion.
 Dependencies: 76 rendered book;75 manual source-qualified release workflow.
 

@@ -1,0 +1,35 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/81
+Milestone: Historical and current workstreams linked to GitHub issues and Project1.
+Dependencies: 81 for current documentation/source paths.
+Purpose: Mirror actual workstream descriptions, completion and issue backlinks;
+track the same issues on the board without starting deferred features.
+
+Tasks:
+- [x] Implement preview/apply with stable identity, explicit mappings and safe credentials.
+- [x] Verify focused tests and pilot one deferred workstream.
+- [x] Backfill historical/current workstreams, excluding index and perpetual ledger.
+- [x] Verify issue bodies/states, Project membership/status and backlinks.
+- [x] Verify a rerun is idempotent and record results.
+
+Acceptance criteria:
+Every actual workstream has one issue and Project item; completed work closes,
+superseded work closes not planned, unfinished work stays open. Blocked/in-progress
+states are honest. Human body edits cause a conflict rather than silent overwrite.
+Reruns do not duplicate issues. No private context or credential is mirrored.
+
+Completion evidence:
+Eighteen unit cases pass, including five tracking/schema/integrity/read-back
+cases. Pilot78 maps to issue1/Backlog; a repeat creates/updates zero issues.
+Bulk run verifies81workstream issue/body/state/Project/backlink mappings and
+creates80additional issues. Full repeat verifies81mappings with created=0,
+updated=0. Public receipt: docs/github-sync.json. Closed/completed versus
+closed/not_planned and open/deferred states are independently verified.
+No two-way synchronization, automatic workflow or deferred feature work added.
+
+Completion log:
+2026-11-06: Owner authorizes beginning issue/board creation and pushing repository
+changes. Preserve explicit implementation deferral for workstreams78-80.
+2026-11-06: Preview inventory, recover pilot after delayed remote read-back,
+complete historical import, and verify idempotent full rerun. Completion of
+this tracking workstream is mirrored using the same stable identity.

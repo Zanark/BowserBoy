@@ -1,4 +1,5 @@
 Status: IN_PROGRESS (delivered source; specific live-startup evidence not located)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/62
 Milestone: Give BowserBOYADVANCED a crisper 8-bit-style power-on sound.
 Dependencies: Existing original startup chime and physical power lifecycle.
 

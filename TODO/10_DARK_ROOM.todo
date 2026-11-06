@@ -1,4 +1,5 @@
 Status: DONE (implemented, verified and deployed)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/10
 Milestone: Dark tabletop room, independently switchable lamp and tactile controls
 Dependencies: 06_3D_TABLETOP, 08_POWER_LIFECYCLE, 09_NATIVE_SETTINGS
 Purpose: Match the requested unlit-room presentation while preserving actual

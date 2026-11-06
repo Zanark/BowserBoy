@@ -1,0 +1,30 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/80
+Milestone: Clean repository home with unchanged application URLs and safe public context.
+Dependencies: None; preserve frozen release and book bytes.
+Purpose: Group source entry documents and documentation artifacts, update paths,
+and publish only a sanitized context handoff rather than private continuity.
+
+Tasks:
+- [x] Move website entry sources to web, book/releases under docs and demo assets under assets.
+- [x] Update build/server mapping, active tooling, workflow paths and README links.
+- [x] Allowlist public context README/PUBLIC only; keep private files excluded.
+- [x] Verify runtime/build, navigation, frozen binary identity and Git scope.
+- [ ] Commit as Zanark and push the verified changes.
+
+Acceptance criteria:
+Root listing is cleaner; deployed index/player/CSS URLs and application behavior
+remain unchanged. README links resolve. Reviewed PDF, cover and frozen manifest
+retain their exact bytes. Private context and secrets never enter Git or dist.
+
+Completion evidence:
+Application syntax/build and18units pass. Three affected browser cases pass:
+static/private boundary, native mGBA save/restore and real3Dpickup/interaction.
+Relocated book's three tests and source assembly pass; actionlint passes.
+All225relative Markdown/HTML link targets resolve in38documents.
+PDF, cover, frozen ZIP and manifest retain recorded SHA256values.
+Only public context README/PUBLIC are in the Git allowlist. Publication pending.
+
+Completion log:
+2026-11-06: Owner authorizes reorganization, README path fixes, public context
+check-in and push. Use explicit public context allowlist; no private-store export.

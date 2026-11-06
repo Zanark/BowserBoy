@@ -1,4 +1,5 @@
 Status: DONE (later public delivery reconciled)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/67
 Milestone: Preserve the ordinary play view at50%, allow zooming into100%.
 Dependencies: 57_ORDINARY_PLAY_ZOOM.todo.
 

@@ -3,7 +3,7 @@
 The prototype has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
-The [engineering book](../book/README.md) explains the mechanisms and failure
+The [engineering book](book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
@@ -208,7 +208,7 @@ The earlier qualified public deployment below remains the application baseline.
 The owner designates the qualified application below as **v1.0.0**, the first
 publicly available release. Version metadata and repository packaging follow
 that designation; they are not a claim that the earlier deployment had a
-v1.0.0 tag. [Release notes and package identity](../releases/v1.0.0/README.md)
+v1.0.0 tag. [Release notes and package identity](releases/v1.0.0/README.md)
 separate the live site, local archive and any future GitHub Release.
 Conservative cleanup preserves source/assets/entry paths and existing media.
 

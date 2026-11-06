@@ -1,4 +1,5 @@
 Status: DONE (technical evidence; human acceptance pending)
+GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/3
 Milestone: Resume progress and carry a backup
 Dependencies: 01_PLAYABLE_PROTOTYPE
 Purpose: Make the prototype useful beyond one sitting without promising cloud sync.
