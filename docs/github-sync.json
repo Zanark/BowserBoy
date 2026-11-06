@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "87",
-      "file": "TODO/87_DS_HINGE_GAMEPLAY_POSE.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/85",
-      "number": 85,
-      "nodeId": "I_kwDOVhqp0s8AAAABdIkM2A",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGqpqg",
+      "id": "88",
+      "file": "TODO/88_DS_PRECISE_TOUCHSCREEN.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/86",
+      "number": 86,
+      "nodeId": "I_kwDOVhqp0s8AAAABdJE8Yw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGrGJw",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "9c3440d3a23f80437c93644e5388cd91473b03fbe54b0e068d78eade2401fe2d"
+      "bodySha256": "816d6a81e951e90eaab4b037749103185228488a66b76583018461d0eb25b4e4"
     }
   ]
 }

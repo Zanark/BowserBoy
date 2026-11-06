@@ -14,6 +14,32 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Exact DS stylus alignment and held input:
+  Owner's click appears above its target. A native regression fails at
+  (200,150) even with the DS flat; the old case only checked some yellow.
+  Correct Twin Lab's raw Y/24+11 and restricted drawing rectangle to the
+  pinned generated-firmware16-units/pixel axes and bounded centered8px brush.
+  Do not distort host UVs to compensate for a homebrew bug.
+  Exact corner/drag checks expose synthetic native mouse-down stealing
+  focus and triggering host blur/release. Message/release-stack tracing
+  proves it; use supported DS-only EJS_noAutoFocus. Genuine blur still releases.
+  Native bottom-right remains offscreen until inclusive browser viewport
+  sampling avoids its endpoints. Preserve native/physical coordinates.
+  Correct the fixture's initial.5/.65zoom values to actual50/65range units
+  before reproducing the native fault; this first failure is not production.
+  Syntax,35units,build and both affected native Edge cases pass together1.6m:
+  lifecycle50.7s,precision41.7s. Twelve fresh native/physical targets cover
+  four locked body/hinge poses, upside-down, exact corners, real held mouse/
+  touch drags,390x844DPR2 and50/65%zoom. Native brush stays64px and within
+  one native pixel of pointer quantization. Physical subpixel corners use
+  a3x3antialias footprint; an initial single-pixel/full-yellow sampler fails.
+  Separate old nearby marks instead of weakening native-brush count.
+  Review actual rolled-desktop/phone captures. Companion native case retains
+  folded-lid rejection, buttons, save/export/restore, power/reload and GBA
+  isolation. New demo bytes get their own content-hash save identity.
+  Scoped88sync creates canonical issue86; final rerun updates1/creates0.
+  Independently read actual body, OPEN state and Project1/In progress item.
+  Keep88active for owner/device review; no push, deploy or frozen-book change.
 - 2026-11-07 / DS articulation, pose lock and visible physical power:
   Owner requests independent Inspect body/hinge control, retained gameplay
   angles on lock, flat camera-facing unlocked default and a missing power cap.

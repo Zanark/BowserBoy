@@ -75,12 +75,12 @@ function arm9Program() {
   emit(0xe59c100c); test(1, 1); literal(3, 0xfc1f, 0);
   square('top-marker');
   emit(0xe59c1000); cmp(1, 0); branch('frame', 0);
+  // The pinned core's generated firmware maps both ADC axes to 16 units per pixel.
   emit(0xe59c4004); emit(0xe1a04224);
-  emit(0xe59c1008); mov(5, 11);
-  label('divide-y'); cmp(1, 24); branch('divide-done', 11); sub(1, 24); add(5, 1); branch('divide-y');
-  label('divide-done');
-  cmp(4, 8); mov(4, 8, 11); cmp(4, 240); mov(4, 240, 12);
-  cmp(5, 65); mov(5, 65, 11); cmp(5, 176); mov(5, 176, 12);
+  emit(0xe59c5008); emit(0xe1a05225);
+  sub(4, 4); sub(5, 4);
+  cmp(4, 0); mov(4, 0, 11); cmp(4, 248); mov(4, 248, 12);
+  cmp(5, 0); mov(5, 0, 11); cmp(5, 184); mov(5, 184, 12);
   literal(10, 0x06200000); literal(3, 0x83ff); square('stylus');
   branch('frame');
   return finish();

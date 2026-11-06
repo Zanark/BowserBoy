@@ -11,16 +11,16 @@ const stylusFits = (page, limitY = .98) => page.evaluate(async limit => {
   }
   return true;
 }, limitY);
-const framePixels = async page => (await dsFrame(page)).evaluate(async () => {
+const framePixels = async (page, point) => (await dsFrame(page)).evaluate(async point => {
   const png = await window.EJS_emulator.gameManager.screenshot();
   const bitmap = await createImageBitmap(new Blob([png], { type: 'image/png' }));
   const ctx = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
   ctx.drawImage(bitmap, 0, 0);
   const { data } = ctx.getImageData(0, 0, bitmap.width, bitmap.height);
   const pixel = (x, y) => [...data.slice((y * bitmap.width + x) * 4, (y * bitmap.width + x) * 4 + 3)];
-  const find = (color, start, end) => {
+  const find = (color, start, end, xStart = 0, xEnd = bitmap.width) => {
     let left = bitmap.width, top = end, count = 0;
-    for (let y = start; y < end; y++) for (let x = 0; x < bitmap.width; x++) {
+    for (let y = start; y < end; y++) for (let x = xStart; x < xEnd; x++) {
       if (pixel(x, y).every((value, i) => Math.abs(value - color[i]) < 10)) { count++; left = Math.min(left, x); top = Math.min(top, y); }
     }
     return { left, top, count };
@@ -28,9 +28,12 @@ const framePixels = async page => (await dsFrame(page)).evaluate(async () => {
   const result = {
     size: [bitmap.width, bitmap.height], top: pixel(0, 0), bottom: pixel(0, 192),
     marker: find([222, 214, 49], 75, 155), touch: find([255, 255, 0], 257, 353),
+    probe: point ? pixel(point.x, point.y + 192) : null,
+    brush: point ? find([255, 255, 0], Math.max(192, point.y + 180), Math.min(384, point.y + 205),
+      Math.max(0, point.x - 12), Math.min(256, point.x + 13)) : null,
   };
   bitmap.close(); return result;
-});
+}, point);
 
 test('separate DS boots original homebrew, splits both LCDs and accepts buttons and physical-screen stylus', async ({ page }, testInfo) => {
   const errors = [];
@@ -183,6 +186,97 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   await page.locator('#ds-demo').click();
   await expect(page.locator('#ds-status')).toContainText('Latest DS checkpoint resumed', { timeout: 90000 });
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(savedLeft);
+  expect(errors).toEqual([]);
+});
+
+test('DS stylus draws under the pointer across locked orientations, zoom and high-DPI touch', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-demo').click();
+  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await page.evaluate(async () => clearInterval((await import('./src/app.js')).view.dsController.autosave));
+  const poses = [
+    { rotation: [0, 0, 0], hinge: 180, points: [[200, 150], [0, 0], [255, 191]] },
+    { rotation: [-.25, .3, .25], hinge: 135, points: [[28, 32], [120, 90], [224, 184]] },
+    { rotation: [.15, -.2, Math.PI], hinge: 155, points: [[52, 60], [156, 116], [188, 180]] },
+    { rotation: [-.15, .2, -.25], hinge: 150, points: [[76, 32], [88, 136], [232, 136]], phone: true },
+  ];
+  const cdp = await page.context().newCDPSession(page);
+  for (const pose of poses) {
+    if (pose.phone) {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await cdp.send('Emulation.setDeviceMetricsOverride', {
+        width: 390, height: 844, deviceScaleFactor: 2, mobile: false,
+      });
+      expect(await page.evaluate(() => devicePixelRatio)).toBe(2);
+    }
+    await page.locator('#inspect').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+    if (await page.locator('#ds-pose-lock').getAttribute('aria-pressed') === 'true') await page.locator('#ds-pose-lock').click();
+    await page.evaluate(async ({ rotation, hinge }) => {
+      const { view } = await import('./src/app.js'), { Euler } = await import('three');
+      view.ds.root.quaternion.setFromEuler(new Euler(...rotation));
+      view.setDsHinge(hinge);
+    }, pose);
+    await page.locator('#ds-pose-lock').click();
+    await page.locator('#inspect').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+    await page.locator('#play-zoom').fill(pose.phone ? '65' : '50');
+    await page.locator('#scene-canvas').focus();
+    for (const [index, [x, y]] of pose.points.entries()) {
+      const pointer = await page.evaluate(async ({ x, y }) => {
+        const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+        const point = view.ds.screens[1].localToWorld(new Vector3(
+          ((x + .5) / 256 - .5) * 4.5, (.5 - (y + .5) / 192) * 3.375, 0,
+        )).project(view.camera);
+        const bounds = view.canvas.getBoundingClientRect();
+        const event = { clientX: bounds.left + (point.x + 1) * bounds.width / 2,
+          clientY: bounds.top + (1 - point.y) * bounds.height / 2 };
+        return { x: event.clientX, y: event.clientY, mapped: view.dsController.touchAt(event) };
+      }, { x, y });
+      expect(pointer.mapped).toEqual({ x, y });
+      expect((await framePixels(page, { x, y })).probe).not.toEqual([255, 255, 0]);
+      if (pose.phone) {
+        await cdp.send('Input.dispatchTouchEvent', { type: index ? 'touchMove' : 'touchStart', touchPoints: [{ id: 1, x: pointer.x, y: pointer.y }] });
+      } else {
+        await page.mouse.move(pointer.x, pointer.y);
+        if (!index) await page.mouse.down();
+      }
+      const actual = await page.evaluate(async () => (await import('./src/app.js')).view.dsController.lastTouch);
+      expect(Math.abs(actual.x - x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(actual.y - y)).toBeLessThanOrEqual(1);
+      await expect.poll(async () => (await framePixels(page, { x, y })).probe,
+        { message: `native stylus mark at (${x}, ${y}), rotation ${pose.rotation}` }).toEqual([255, 255, 0]);
+      await expect(page.locator('#scene-canvas')).toBeFocused();
+      expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeDefined();
+      const { brush } = await framePixels(page, { x, y });
+      expect(brush.count, `isolated native brush at (${x}, ${y})`).toBe(64);
+      expect(Math.abs(brush.left - Math.max(0, Math.min(248, x - 4)))).toBeLessThanOrEqual(1);
+      expect(Math.abs(brush.top - 192 - Math.max(0, Math.min(184, y - 4)))).toBeLessThanOrEqual(1);
+      await expect.poll(() => page.evaluate(async ({ x, y }) => {
+        const { view } = await import('./src/app.js'), bounds = view.canvas.getBoundingClientRect();
+        view.renderer.render(view.scene, view.camera);
+        const gl = view.renderer.getContext(), rgba = new Uint8Array(36);
+        // LCD corners can land between antialiased drawing-buffer pixels.
+        gl.readPixels(Math.floor((x - bounds.left) / bounds.width * view.canvas.width) - 1,
+          Math.floor((1 - (y - bounds.top) / bounds.height) * view.canvas.height) - 1,
+          3, 3, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+        return rgba.some((value, i) => i % 4 === 0 && value >= 245 && rgba[i + 1] >= 245 && rgba[i + 2] <= 10);
+      }, pointer), { message: `yellow physical LCD pixel directly under (${x}, ${y})` }).toBe(true);
+    }
+    if (pose.phone) {
+      await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+      expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    } else await page.mouse.up();
+    await page.screenshot({ path: testInfo.outputPath(pose.phone ? 'ds-precise-stylus-phone.png' : `ds-precise-stylus-${pose.hinge}.png`) });
+  }
+  await cdp.detach();
   expect(errors).toEqual([]);
 });
 

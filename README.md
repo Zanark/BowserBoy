@@ -69,7 +69,8 @@ slides into the separate DS, and both LCDs display live output.
 
 Use arrows for the D-pad; **Z/X = A/B**, **C/V = X/Y**, **A/S = L/R**,
 **Enter = Start**, **left Shift = Select**. Press the physical controls or
-click/drag the lower LCD for touchscreen input. **Escape** opens DS tools.
+click/drag the lower LCD for touchscreen input at its current orientation
+and zoom. **Escape** opens DS tools.
 Switching GBA/DS pauses the inactive core rather than running both games.
 The visible front-left **Power** button saves before powering off; press
 it again to cold-boot the retained cartridge. The orientation lock survives

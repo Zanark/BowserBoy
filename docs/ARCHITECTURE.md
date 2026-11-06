@@ -172,6 +172,14 @@ native 256x192 stylus coordinates, then the adapter dispatches mouse events at
 the corresponding lower half of the runtime canvas. Origin, frame source and
 session identity are checked on both sides.
 
+DS initialization sets the pinned loader's `EJS_noAutoFocus` option. Otherwise
+its bubbling synthetic `mousedown` focuses the hidden runtime parent, blurs
+the host and immediately releases the captured stylus. Genuine host blur still
+releases inputs. Synthetic coordinates sample the browser driver's inclusive
+`width - 1`/`height - 1` viewport, keeping away from its offscreen endpoints.
+This preserves input at the last native row/column without changing physical
+UV mapping or applying a game-specific screen offset. GBA autofocus is unchanged.
+
 The DS database stores one validated checkpoint per ROM, not ROM files.
 Portable `.bbds-save` files contain magic `BBDS0001`, little-endian metadata
 length, UTF-8 JSON identities/lengths/checksums, then binary state and optional
@@ -183,6 +191,13 @@ reselecting the same ROM resumes the stored checkpoint.
 `scripts/demo-ds-rom.mjs` generates original **Twin Lab** ARM9/ARM7 homebrew
 at build/serve time. ARM9 draws both LCDs and a button-controlled marker;
 ARM7 reads the touchscreen over SPI and shares pen coordinates with ARM9.
+The pinned, external-BIOS-disabled generated firmware uses 16 ADC units per
+pixel on both axes. ARM9 shifts both by four, centers its 8x8 brush and bounds
+the brush origin to 0-248/0-184 to avoid framebuffer overflow. The old Y
+division by 24 plus 11 and restricted drawing rectangle were demo bugs, not
+camera-dependent projection corrections. Native and physical LCD tests cover
+the conversion. Changed demo bytes produce a new content identity, leaving
+older demo checkpoints isolated rather than loading incompatible states.
 No manufacturer logo array, BIOS, firmware or third-party game bytes are
 included. Actual DeSmuME boot/input/stylus verification is bounded by
 `tests/browser/ds.spec.mjs`, not a commercial compatibility claim.

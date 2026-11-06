@@ -1,0 +1,52 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/86
+Milestone: Native touchscreen marks align with the physical pointer.
+Dependencies: 79 separate DS; 87 independent DS gameplay orientation.
+Purpose: Correct the reported Twin Lab stylus offset without distorting input
+for other games or weakening screen/lid visibility checks.
+
+Tasks:
+- [x] Reproduce the discrepancy in native output and trace coordinates end to end.
+- [x] Correct the cause rather than applying a compensating host-screen offset.
+- [x] Verify new native marks at clicked pixels across body/hinge/zoom changes.
+- [x] Cover LCD edges, upside-down pose, resizing and high-DPI touch input.
+- [x] Update affected documentation, contributor context and GitHub tracking.
+- [ ] Owner visual review.
+
+Acceptance criteria:
+The actual native lower framebuffer draws at each clicked LCD pixel, not merely
+somewhere on the screen. Physical UVs retain their original mapping in any
+visible orientation. Mouse/touch coordinates remain accurate across zoom,
+resizing and device-pixel ratios. Upper LCDs, hidden/covered/back-facing surfaces
+and points outside the LCD do not become touchscreen targets. GBA behavior,
+unrelated DS ROM bytes, pose locks and save formats remain unchanged.
+
+Completion evidence:
+The regression fails before the fix at native (200,150) in flat gameplay.
+Final35units,syntax/build and both affected native Edge cases pass together1.6m
+(50.7s lifecycle,41.7s precision). Twelve fresh native yellow-pixel targets and
+actual physical-LCD probes cover four locked body/hinge poses, upside-down,
+exact corners, held mouse/touch drags,50/65%zoom and390x844DPR2 resizing.
+Brush count remains64 with origins within one native pixel of pointer rounding;
+physical antialiased corners use a3x3drawing-buffer footprint.
+Captured stylus and host focus remain held; genuine blur releases them.
+Companion native case retains lid occlusion, buttons, backups, power/reload
+and inactive-GBA isolation. Actual rolled/phone captures reviewed.
+Owner/device review remains pending; no full-suite or deployment claim.
+Scoped synchronization verifies issue86 OPEN, Project1/In progress and backlink.
+
+Completion log:
+2026-11-07: Owner supplies a screenshot of a click near the lower-right LCD
+appearing substantially higher. Trace the existing native touch bridge and
+original Twin Lab homebrew rather than assuming a rotated-screen projection bug.
+2026-11-07: Correct demo Y conversion and restricted brush bounds. Native
+corner tests also expose synthetic mouse-down autofocus/host blur release
+and offscreen viewport endpoints. Use DS-only supported no-autofocus and
+inclusive viewport sampling, retaining physical UV mapping and real blur
+release. New demo ROM identity isolates earlier demo checkpoints.
+2026-11-07: Initial physical corner sampler requires a full-yellow pixel even
+when the LCD corner falls between antialiased pixels; correct its sampling
+footprint. Separate nearby prior marks to keep native brush assertions exact.
+Final bounded native/physical gate passes; no lights/paint/frozen-book changes.
+2026-11-07: Sync88 creates https://github.com/Zanark/BowserBoy/issues/86 and
+verifies managed body, issue state, Project membership/status and local backlink.

@@ -207,6 +207,7 @@ function initialize(data) {
     EJS_threads: false,
     EJS_disableDatabases: true,
     EJS_disableLocalStorage: true,
+    EJS_noAutoFocus: system === 'ds',
     EJS_disableAutoLang: false,
     EJS_language: 'en-US',
     EJS_volume: preferences.muted ? 0 : preferences.volume / 100,
@@ -298,9 +299,9 @@ function touch(value) {
   dsScreenRegions(canvas.width, canvas.height);
   const bounds = canvas.getBoundingClientRect();
   const options = { bubbles: true, cancelable: true, button: 0, buttons: value.pressed ? 1 : 0,
-    clientX: bounds.left + (value.x + .5) / 256 * bounds.width,
-    clientY: bounds.top + (value.y + 192 + .5) / 384 * bounds.height };
-  // The pinned browser input driver samples canvas-relative absolute mouse events.
+    clientX: bounds.left + Math.max(1, (value.x + .5) / 256 * (bounds.width - 1)),
+    clientY: bounds.top + Math.max(1, (value.y + 192 + .5) / 384 * (bounds.height - 1)) };
+  // The browser driver's inclusive viewport marks its outer endpoints as offscreen.
   canvas.dispatchEvent(new MouseEvent('mousemove', options));
   if (touchDown !== value.pressed) canvas.dispatchEvent(new MouseEvent(value.pressed ? 'mousedown' : 'mouseup', options));
   touchDown = value.pressed;

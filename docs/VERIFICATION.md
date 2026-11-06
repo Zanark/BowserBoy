@@ -9,6 +9,48 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Precise DS touchscreen input
+
+The new native regression first fails at requested pixel (200,150), even in
+flat gameplay: the clicked pixel retains its green background. The old test
+only required yellow pixels somewhere in a limited Y band. Twin Lab incorrectly
+divided raw Y by 24, added 11 and clamped drawing into a smaller rectangle.
+Correct both axes to the pinned generated-firmware calibration, center the
+8x8 brush and bound only its origin to the actual framebuffer.
+
+The stricter corner/drag checks expose two additional native-bridge defects.
+The runtime's synthetic mouse-down takes focus and triggers immediate host
+blur/release; captured message events and the release stack establish the cause.
+Disable DS autofocus through the supported pinned-loader option, not by ignoring
+real host blur. A held bottom-right touch still leaves native pen sampling off:
+the browser input driver treats its inclusive viewport endpoints as offscreen.
+Sample `width - 1`/`height - 1` away from those endpoints, retaining physical UVs.
+
+An initial fixture used `.5`/`.65` instead of the zoom range's 50/65 units;
+correcting those values let the native assertion reproduce the real fault.
+
+Final syntax, **35 units** and build pass. Both affected native Edge cases
+pass together in **1.6m** (50.7s lifecycle, 41.7s precision). The new case
+requires fresh yellow output at 12 requested native pixels across four locked
+body/hinge poses, including upside-down and the exact LCD corners. It checks
+64px brush bounds within one native pixel of pointer quantization, retained
+focus/capture and real held mouse/touch drags. A resized 390x844 viewport uses
+DPR2 and browser-dispatched touch events at 65% zoom; desktop uses 50%.
+The physical rendered LCD must also show yellow at the projected pointer,
+with a 3x3 drawing-buffer footprint for antialiased subpixel corners.
+An initial single-pixel/full-yellow physical sampler failed at a correctly
+drawn antialiased corner; retain strict native assertions and account for the
+real drawing-buffer footprint rather than changing the console geometry.
+Earlier brush probes also counted neighboring old marks; separate the sample
+locations instead of weakening the 64px native-brush requirement.
+
+The companion case retains native buttons, both physical LCDs, folded-lid
+rejection, save/export/restore, cold boot, reload and inactive-GBA isolation.
+Actual upside-down desktop and high-DPI phone-sized captures were reviewed.
+Twin Lab's content hash changes; old demo checkpoints remain isolated.
+No commercial-game, physical-phone, exhaustive-orientation, full-suite, owner
+approval or deployment claim. Lights/materials and the frozen book are unchanged.
+
 ### DS hinge, locked gameplay pose and visible power
 
 All **35 units**, application syntax and build pass. The final bounded

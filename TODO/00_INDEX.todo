@@ -87,9 +87,12 @@ BowserBOY workstreams
 85_MOVABLE_CONSOLES.todo - IN_PROGRESS: independent orientation-locked console relocation, drop physics and session desk positions.
 86_DS_BLUE_CYAN_BASE.todo - IN_PROGRESS: brighter blue-cyan DS and slightly lighter NDS-only lower base; owner review pending.
 87_DS_HINGE_GAMEPLAY_POSE.todo - IN_PROGRESS: independent DS hinge/body inspection, locked gameplay pose, flat unlocked play and visible physical power.
+88_DS_PRECISE_TOUCHSCREEN.todo - IN_PROGRESS: native touchscreen marks under the pointer across orientation, zoom and high-DPI input.
 
 Current pending work
 --------------------
+-88: native/physical touchscreen alignment is qualified locally; owner/device
+  review remains open in issue86/Project1 In progress. No push/deployment.
 -79: New owner request authorizes a local DS prototype using the supplied
   reference images/logo. This supersedes79's earlier deferral only. No push,
   release or deployment is requested. Preserve GBA and its unfinished83fix.

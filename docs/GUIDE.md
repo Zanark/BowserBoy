@@ -170,6 +170,16 @@ prototype; GBA remapping does not change them. Native gamepad behavior is not
 independently qualified. Twin Lab's upper marker moves with the D-pad;
 press/drag the lower LCD to draw yellow marks.
 
+Touch coordinates follow the lower LCD in flat, tilted or upside-down gameplay
+poses and at different zoom levels. Twin Lab's 8px brush surrounds the clicked
+native pixel, staying inside the LCD at its edges; drawing is not confined below
+the instruction text. The hidden runtime does not take focus from the desk
+while drawing. Releasing the pointer or losing window focus releases the stylus.
+
+The corrected Twin Lab is a newly generated ROM with a different content hash.
+Older demo checkpoints remain associated with the older ROM and do not resume
+into this revision. Other cartridges' checkpoints and GBA saves are unchanged.
+
 Each native LCD is 256x192. The adapter verifies stacked, gap-free 256x384
 native output, separately from its integer-scaled WebGL canvas, then copies
 the two halves to the matching physical screens. Unsupported layouts fail

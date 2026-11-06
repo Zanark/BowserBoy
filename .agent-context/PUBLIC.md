@@ -84,3 +84,18 @@ separate #40A0FF slightly lighter NDS base, paint reflection20. Both retain
 repaired shell-comparison fixture passes separately with actual warm/Room
 pixel checks and >15% same-lighting base improvement. Actual captures reviewed.
 Owner approval and publication remain separate.
+
+Workstream88/issue86 (OPEN, Project1/In progress) corrects Twin Lab stylus
+Y scaling and drawing bounds, not
+physical UVs. DS-only EJS_noAutoFocus prevents hidden-runtime focus from
+immediately releasing a drag; real host blur still releases. Inclusive
+browser viewport sampling keeps the last native row/column on screen.
+35units,syntax/build and both affected native Edge cases pass together1.6m.
+Twelve fresh native/physical targets cover four body/hinge locks, upside-down,
+exact corners, held mouse/touch drags,50/65%zoom and390x844DPR2 resizing.
+Native brush64px/origins stay within one pixel of pointer quantization;
+physical corner probes allow the3x3antialias footprint. Companion native
+case retains buttons, folded-lid rejection, saves/power/reload and GBA isolation.
+Changed original-demo ROM bytes isolate old demo checkpoints by content hash.
+Actual rolled/phone captures reviewed. Owner/device review remains pending;
+no full-suite, commercial-game or deployment claim. Frozen book unchanged.
