@@ -16,13 +16,15 @@ Tasks
 [x] Recapture all ten README interaction GIFs and associated stills.
 [x] Review final media and reconcile README, guide, architecture and provenance.
 [x] Record first milestone as November 6, 2026; update ledger and continuity.
+[x] Follow-up: add clean visible fabric weave, warm the glow and refresh every GIF.
+[x] Follow-up: shrink/green the LED, compensate dark exposure and capture all eleven GIFs/nine stills.
 
 Acceptance criteria
 -------------------
 Open clean white cylindrical shade, three splayed ash legs and no visible wire.
 Cozy warm illumination without automatic resolution reduction or handheld changes.
 Lamp/room controls, power and physical lamp interaction remain independent.
-All ten README GIFs show the current app without the removed header label.
+All eleven README GIFs show the current app without the removed header label.
 Approved chrome/purple logo animations remain intact; recordings are genuine.
 First milestone date is explicit. Frozen v1.0.0 ZIP/manifest are not rewritten.
 Local captures/qualification are not publication or human acceptance.
@@ -70,3 +72,21 @@ native/zoom checks and adding explicit label-absence coverage. Both affected
 Edge cases pass40.7s; syntax/build pass. Application/artwork/full-resolution
 rendering and all gate deadlines unchanged. Updated app deployment still
 pending; last qualified public application remainsc3d9dbd.
+2026-11-06: User requests visible cloth texture and a warmer lantern.
+Neutral periodic white weave now maps reflected/emitted color; warmer cream
+emission, same geometry/light intensities/shadow passes and full resolution.
+Existing ivory/no-seam bounds retained; add neutral-weave contrast and actual
+rendered-warmth checks. Five affected cases pass16.2s+57.5s, syntax/build and
+12units pass. New complete take2026-11-05T23:52:39.478Z has10clips/zeroerrors.
+All10GIFs freshly encoded, nine stills refreshed; all animate/<10MiB.
+Full-size table and bounded sheets reviewed; approved APNGs/frozenZIP intact.
+This is local refinement evidence, not a successful new public app deployment.
+2026-11-06: Smaller deeper-green lens (.055 radius, roughness.55) qualified in
+lit views, but final dark Inspect recording revealed white source pixels.
+Existing .018->.45 night exposure was bleaching emission, not GIF encoding.
+Compensate LED emission only; preserve real room exposure/native LCD/sharpness.
+Lamp/native pair passes35.9s before moving the dark probe into Inspect itself.
+Final take2026-11-06T00:08:27.765Z:11completeclips/zeroerrors. All11GIFs and
+nine stills refreshed; all animate/<10MiB, approved logos/frozenrelease intact.
+Bounded sheets and two full-size night poses show green LED/moving real spill.
+Final receipt/source/media hashes retained; no user aesthetic approval inferred.

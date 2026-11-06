@@ -298,9 +298,17 @@ test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch 
     const legs = [];
     view.lamp.root.traverse(object => { if (object.name.startsWith('Ash tripod leg')) legs.push(object); });
     const feet = legs.map(leg => new Box3().setFromObject(leg).min.y);
+    const fabric = shade.material.map.image;
+    const pixels = fabric.getContext('2d').getImageData(0, 0, fabric.width, fabric.height).data;
+    let min = 255, max = 0, neutral = true;
+    for (let offset = 0; offset < pixels.length; offset += 4) {
+      min = Math.min(min, pixels[offset]);
+      max = Math.max(max, pixels[offset]);
+      neutral &&= pixels[offset] === pixels[offset + 1] && pixels[offset] === pixels[offset + 2];
+    }
     return { type: shade.geometry.type, top: shade.geometry.parameters.radiusTop,
       bottom: shade.geometry.parameters.radiusBottom, legs: legs.length, feet,
-      clean: shade.material.map === null && shade.material.emissiveMap === null,
+      fabric: { min, max, neutral, luminous: shade.material.map === shade.material.emissiveMap },
       open: shade.geometry.parameters.openEnded, height: lampSize.y,
       heightRatio: lampSize.y / shellSize.x, handheldScale: view.model.root.scale.toArray() };
   });
@@ -308,7 +316,11 @@ test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch 
   expect(shape.top).toBe(shape.bottom);
   expect(shape.legs).toBe(3);
   expect(shape.feet.every(y => Math.abs(y) < .001), 'All three flat feet meet the tabletop').toBe(true);
-  expect(shape.clean, 'Neither reflected nor emitted shade color uses the rejected brown noise').toBe(true);
+  expect(shape.fabric.neutral, 'The fabric weave is neutral white, not brown speckles').toBe(true);
+  expect(shape.fabric.min).toBeGreaterThan(220);
+  expect(shape.fabric.max - shape.fabric.min, 'Fine weave must remain present without dark mottling').toBeGreaterThan(15);
+  expect(shape.fabric.max - shape.fabric.min).toBeLessThan(35);
+  expect(shape.fabric.luminous, 'The lit shade must retain its fabric weave').toBe(true);
   expect(shape.open).toBe(true);
   expect(shape.height * .017).toBeCloseTo(.30, 2);
   expect(shape.heightRatio).toBeGreaterThan(1.9);
@@ -323,6 +335,7 @@ test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch 
   const fabricColors = [];
   for (const point of shadePoints) fabricColors.push(await surfaceColor(page, point));
   expect(fabricColors.every(color => color[0] > 180), 'The lit fabric stays clean ivory, not dingy brown').toBe(true);
+  expect(fabricColors.every(color => color[0] > color[2] * 1.08), 'The lit fabric has a warm glow').toBe(true);
   for (let channel = 0; channel < 3; channel++) {
     const values = fabricColors.map(color => color[channel]);
     expect(Math.max(...values) - Math.min(...values), 'No hard diagonal self-lighting seam across the drum').toBeLessThan(15);
@@ -766,11 +779,28 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
   const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
+  const ledColor = async () => {
+    const point = await page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      const { Vector3 } = await import('three');
+      return view.model.led.localToWorld(new Vector3(0, 0, .021)).toArray();
+    });
+    return surfaceColor(page, point);
+  };
+  const ledRadius = await page.evaluate(async () =>
+    (await import('./src/app.js')).view.model.led.geometry.parameters.radiusTop);
+  expect(ledRadius, 'The power indicator stays smaller than the old oversized lens').toBeLessThan(.065);
   await page.locator('#room-toggle').click();
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'true');
+  const roomLed = await ledColor();
+  expect(roomLed[1], 'The powered LED stays visibly green under both room and lamp light').toBeGreaterThan(roomLed[0] * 1.5);
+  expect(roomLed[1]).toBeGreaterThan(roomLed[2] * 1.5);
   expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
   expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);
   await page.locator('#room-toggle').click();
+  const lampLed = await ledColor();
+  expect(lampLed[1]).toBeGreaterThan(lampLed[0] * 1.5);
+  expect(lampLed[1]).toBeGreaterThan(lampLed[2] * 1.5);
   const displacement = (id) => page.evaluate(async (action) => {
     const { view } = await import('./src/app.js');
     const { mesh } = view.model.controls.get(action);
@@ -828,11 +858,16 @@ test('mapped inputs move real button meshes and the native LCD lights the room u
   await page.locator('#lamp-toggle').click();
   expect(await runtime.evaluate(() => window.lightingIdentity)).toBe(identity);
   expect(await runtime.evaluate(() => window.EJS_emulator.paused)).toBe(false);
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.renderer.toneMappingExposure)).toBeCloseTo(.45, 4);
   await page.locator('#inspect').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
   await page.locator('#scene-canvas').hover();
   await page.mouse.wheel(0, 350);
   await page.waitForTimeout(300);
+  const darkLed = await ledColor();
+  expect(darkLed[1], 'Dark Inspect must not bleach the power indicator white').toBeGreaterThan(darkLed[0] * 1.5);
+  expect(darkLed[1]).toBeGreaterThan(darkLed[2] * 1.5);
   const nativeLight = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const { Vector3 } = await import('three');

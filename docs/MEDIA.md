@@ -8,6 +8,79 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Smaller green indicator and LCD-only reflections, 2026-11-06
+
+This final edition supersedes both takes below. All **eleven interaction GIFs
+and nine stills** were recorded again after the smaller LED, warmer fabric
+and dark-adaptation correction. Capture: `2026-11-06T00:08:27.765Z`, parent
+checkout `aa3be83512b01874ba2f706022e768dc63842c0e`; eleven complete clips,
+zero page errors. The parent identifies the checkout, not the uncommitted
+changes or a successful deployment.
+
+The new `lcd-reflections.gif` uses real Inspect dragging with the lamp and
+room lights off and the native LCD on. Its changing picture casts faint
+moving light onto the controls, desk and cartridges. No synthetic framebuffer,
+extra light, increased LCD intensity or capture-only exposure is used.
+The first LED take exposed a real defect: existing night adaptation raises
+exposure from .018 to .45 and bleached the indicator white. Compensating only
+its emissive intensity preserves green without changing the room's exposure.
+That rejected take remains private evidence, not the current README edition.
+
+| GIF | Frames | Bytes |
+|---|---:|---:|
+| `pickup-inspect.gif` | 107 | 6,670,195 |
+| `power-on.gif` | 46 | 1,283,752 |
+| `cartridge.gif` | 27 | 1,953,355 |
+| `cozy-lights.gif` | 103 | 4,534,543 |
+| `lcd-reflections.gif` | 105 | 4,064,761 |
+| `button-feedback.gif` | 33 | 1,690,351 |
+| `play-zoom.gif` | 47 | 3,938,934 |
+| `hold-space.gif` | 38 | 1,080,342 |
+| `screen-fullscreen.gif` | 30 | 2,057,883 |
+| `settings-backdrop.gif` | 17 | 681,077 |
+| `movable-dock.gif` | 59 | 2,074,255 |
+
+Encoding retains 800x618, 10 fps, 128-color Bayer, infinite looping and the
+existing half-second trim. Every GIF animates and stays below 10 MiB.
+Bounded contact sheets, all stills and two full-size dark-room poses were
+reviewed; the night LED is visibly green and the surface illumination moves.
+This is not exhaustive playback or user aesthetic approval. Original WebM,
+timing, source hashes and final media hashes are retained privately.
+The supplied ROM remains GIF-only; static game/settings stills use original
+Pixel Lab. Both approved APNG logos and frozen v1.0.0 files are unchanged.
+
+### Warm woven shade refresh, 2026-11-06
+
+This edition supersedes the earlier plain-shade capture below. All ten
+interaction GIFs and nine stills are captured again from the warm woven-shade
+working tree, checkout baseline `aa3be83512b01874ba2f706022e768dc63842c0e`.
+That identifies the parent checkout, not the uncommitted material changes
+or a successful deployment. Receipt: `2026-11-05T23:52:39.478Z`, ten complete
+clips and zero page errors. The procedural fabric is neutral white with
+fine threads; the shade/bulb glow is warmer, without brown stains.
+
+| GIF | Frames | Bytes |
+|---|---:|---:|
+| `pickup-inspect.gif` | 109 | 6,825,951 |
+| `power-on.gif` | 44 | 1,326,241 |
+| `cartridge.gif` | 27 | 2,014,591 |
+| `cozy-lights.gif` | 125 | 4,789,224 |
+| `button-feedback.gif` | 33 | 1,105,735 |
+| `play-zoom.gif` | 48 | 2,772,116 |
+| `hold-space.gif` | 38 | 1,244,723 |
+| `screen-fullscreen.gif` | 30 | 1,272,262 |
+| `settings-backdrop.gif` | 18 | 703,503 |
+| `movable-dock.gif` | 68 | 2,600,479 |
+
+Encoding retains800x618/10fps/128-color Bayer/infinite looping and the existing
+half-second trim. All ten GIFs change and have differing decoded samples;
+all stay below10MiB. Full-size rendered table and bounded middle-frame GIF/
+still sheets are reviewed, not exhaustive playback or user acceptance.
+The approved chrome/purple APNG logos are byte-identical. Original WebM,
+timing, source hashes and per-media hashes are retained privately.
+The same supplied-ROM GIF-only authorization and original Pixel Lab/no-ROM
+static-capture boundaries remain. The frozen v1.0.0 package is not regenerated.
+
 ### Clean STORSEGEL-style lamp and complete refresh, 2026-11-06
 
 All **ten interaction GIFs and nine companion stills** are freshly captured

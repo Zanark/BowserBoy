@@ -29,105 +29,111 @@
 
 ### One table. More to come.
 
-![Current BowserBOY table with a clean white tripod lamp, chrome website branding and movable tools](docs/images/readme-table.png?v=storsegel-20261106)
+![Current BowserBOY table with a warm woven-shade tripod lamp, chrome website branding and movable tools](docs/images/readme-table.png?v=woven-20261106)
 
 *The BowserBOY tabletop, featuring BowserBOYADVANCED.*
 
 ### Pick it up. Turn it over.
 
-![Pick up the handheld, inspect it with the animated purple console logo, and return to the chrome-branded table](docs/images/pickup-inspect.gif?v=storsegel-20261106)
+![Pick up the handheld, inspect it with the animated purple console logo, and return to the chrome-branded table](docs/images/pickup-inspect.gif?v=woven-20261106)
 
 *Soft engraved A/B letters. Metallic-chroma bezel. Purple console branding with orbiting stars while you inspect.*
 
 ### Purple belongs to the console.
 
-![Rear inspection with deeper purple console engraving and its animated purple inspection header](docs/images/readme-back.png?v=storsegel-20261106)
+![Rear inspection with deeper purple console engraving and its animated purple inspection header](docs/images/readme-back.png?v=woven-20261106)
 
 *Purple console identity. Larger lettering. Deeper engraving.*
 
 ### Press. Rock. Release.
 
-![Actual keyboard presses move A and B and rock the diagonal D-pad during play](docs/images/button-feedback.gif?v=storsegel-20261106)
+![Actual keyboard presses move A and B and rock the diagonal D-pad during play](docs/images/button-feedback.gif?v=woven-20261106)
 
 *Softer recessed A/B letters. Deeper presses. Rocking D-pad. Snappier return.*
 
 ### A closer look.
 
-![Ordinary play zoom moves from the fitted 50 percent view into 100 percent and back without fullscreen](docs/images/play-zoom.gif?v=storsegel-20261106)
+![Ordinary play zoom moves from the fitted 50 percent view into 100 percent and back without fullscreen](docs/images/play-zoom.gif?v=woven-20261106)
 
 *Same comfortable view at 50%. Move closer up to 100%. No fullscreen needed.*
 
 ### A little faster. Just while you hold.
 
-![Hold Space for native fast-forward, then release it to return to normal speed](docs/images/hold-space.gif?v=storsegel-20261106)
+![Hold Space for native fast-forward, then release it to return to normal speed](docs/images/hold-space.gif?v=woven-20261106)
 
 *Hold **Space** for 2x. Let go for 1x.*
 
 ### A clearer little message.
 
-![Current frosted power-on notice overlays the fitted handheld, with the play-mode header logo hidden](docs/images/readme-notice.png?v=storsegel-20261106)
+![Current frosted power-on notice overlays the fitted handheld, with the play-mode header logo hidden](docs/images/readme-notice.png?v=woven-20261106)
 
 *Frosted overlays. No shrinking or shifting the handheld. No header logo during play.*
 
 ### Power where it belongs.
 
-![The handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=storsegel-20261106)
+![The handheld tilted through Inspect controls to reveal its ribbed underside power slider](docs/images/readme-underside.png?v=woven-20261106)
 
 *Underside slider. Clear front face. Real power-off and cold boot.*
 
 ### Power on. Make some waves.
 
-![Current LCD startup with the purple console wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=storsegel-20261106)
+![Current LCD startup with the purple console wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=woven-20261106)
 
 *Purple console startup. Waving lettering. An 8-bit-style chime. Power remembered between visits.*
 
 ### Slot it in.
 
-![A selected local cartridge physically slides into the handheld during loading](docs/images/cartridge.gif?v=storsegel-20261106)
+![A selected local cartridge physically slides into the handheld during loading](docs/images/cartridge.gif?v=woven-20261106)
 
 *Bring your own local ROMs. Game files stay on your device.*
 
 ### Your room, your light.
 
-![The clean STORSEGEL-style white shade and ash tripod, independent room lights, and LCD-only darkness](docs/images/cozy-lights.gif?v=storsegel-20261106)
+![The warm STORSEGEL-style woven white shade and ash tripod, independent room lights, and LCD-only darkness](docs/images/cozy-lights.gif?v=woven-20261106)
 
 *A clean STORSEGEL-style shade. Warm ash legs. No visible cable. Cozy lamplight, room lights, or just the LCD.*
+
+### Wave the light.
+
+![Tilt the powered console in complete room darkness and watch the actual LCD's colored light move across the desk](docs/images/lcd-reflections.gif?v=green-led-20261106)
+
+*Lamp off. Room lights off. Just the green power LED, the game screen, and its moving pool of light.*
 
 *Audio-paced timing and a larger native reserve for steadier playback. [Audio notes and limits](docs/GUIDE.md).*
 
 ### Nine ways to glow.
 
-![Current sound and Screen shader settings with CRT Geom selected](docs/images/crt-presets.png?v=storsegel-20261106)
+![Current sound and Screen shader settings with CRT Geom selected](docs/images/crt-presets.png?v=woven-20261106)
 
 *Nine native CRT presets. CRT Geom by default. Unfiltered, too.*
 
 ### Just the game.
 
-![Actual game-screen fullscreen with the metallic-chroma bezel wordmark, dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=storsegel-20261106)
+![Actual game-screen fullscreen with the metallic-chroma bezel wordmark, dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=woven-20261106)
 
 *Full 3:2 picture. Dark margins. Adjustable 50-100% zoom.*
 
 ### Everything within reach.
 
-![Purple icon dock with its drag grip, collapse arrow and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=storsegel-20261106)
+![Purple icon dock with its drag grip, collapse arrow and separate desk and LCD fullscreen controls](docs/images/readme-dock.png?v=woven-20261106)
 
 *Desk or LCD fullscreen. 1x-4x speed. Sound, lighting and settings within reach.*
 
 ### Make a little room.
 
-![Drag the tools dock, collapse it into a small movable pill, move it again, expand and reset its position](docs/images/movable-dock.gif?v=storsegel-20261106)
+![Drag the tools dock, collapse it into a small movable pill, move it again, expand and reset its position](docs/images/movable-dock.gif?v=woven-20261106)
 
 *Drag the grip. Collapse with the arrow. Move it where it suits you. Focus the grip and press Home to reset.*
 
 ### Keep your progress.
 
-![Current Progress and backups panel with an original-demo checkpoint saved](docs/images/readme-saves.png?v=storsegel-20261106)
+![Current Progress and backups panel with an original-demo checkpoint saved](docs/images/readme-saves.png?v=woven-20261106)
 
 *Local in-game saves. Autosave + three checkpoint slots. Download a `.bba-save` backup. [Saving explained](docs/SAVING.md).*
 
 ### Back to your game.
 
-![Click the blurred area outside settings to close the drawer and return to the console](docs/images/settings-backdrop.gif?v=storsegel-20261106)
+![Click the blurred area outside settings to close the drawer and return to the console](docs/images/settings-backdrop.gif?v=woven-20261106)
 
 *Click outside to close. Or use Escape. Your game keeps running.*
 

@@ -132,6 +132,40 @@ try {
   await wait(700);
   end('cozy-lights');
 
+  await page.locator('#inspect').click();
+  await expect(scene).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('Home');
+  for (let step = 0; step < 3; step++) await page.keyboard.press('ArrowDown');
+  await page.locator('#lamp-toggle').click();
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(scene).toHaveAttribute('data-power', 'on');
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.screenIllumination.light.intensity)).toBeGreaterThan(0);
+  const litScreen = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.project(view.model.screen);
+  });
+  begin('lcd-reflections');
+  clips['lcd-reflections'].lighting = { lamp: 'off', room: 'off', source: 'Retained native LCD' };
+  await wait(1000);
+  await page.mouse.move(litScreen.x, litScreen.y);
+  await page.mouse.down();
+  for (let step = 1; step <= 96; step++) {
+    const phase = step / 96 * Math.PI * 2;
+    await page.mouse.move(litScreen.x + Math.sin(phase) * 145, litScreen.y + Math.sin(phase * 2) * 70);
+    await wait(65);
+  }
+  await page.mouse.up();
+  await wait(1100);
+  end('lcd-reflections');
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.press('Home');
+  await page.locator('#inspect').click();
+  await page.locator('#lamp-toggle').click();
+  await wait(700);
+
   if (await page.locator('#notice').isVisible()) await page.locator('#notice button').click();
   await page.locator('#scene-canvas').focus();
   begin('button-feedback');

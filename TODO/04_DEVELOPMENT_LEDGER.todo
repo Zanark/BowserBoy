@@ -14,6 +14,35 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Green indicator and final eleven-GIF edition:
+  Shrink lens .09->.055, deepen green albedo and reduce gloss. First dark
+  Inspect take still has near-white original video pixels: existing night
+  exposure rises .018->.45 and bleaches emission, not an encoding failure.
+  Compensate LED emission only, preserving room exposure/LCD/full resolution.
+  Final actual dark-Inspect/native-input/spill/power case passes24.3s;
+  physical lamp/native pair35.9s and12units pass. New complete capture
+  00:08:27.765Z has11clips/zeroerrors. Refresh every GIF/nine stills again,
+  add real all-lights-off native-LCD waving clip without artificial light.
+  All animate/<10MiB; bounded sheets/two full-size night poses show green
+  indicator and moving faint surface illumination. Approved APNGs and frozen
+  v1.0.0 untouched. MEDIA retains source/timing/hash boundaries. Publication
+  remains pending the genuine nineteen-way gate; no human approval inferred.
+- 2026-11-06 / Warm woven shade and nineteen isolated browser jobs:
+  Follow user requests for cloth detail, warmer lantern color and more parallel
+  CI. Add a neutral periodic white weave to both albedo/emission so lamp-on
+  glow retains detail; warm shade/bulb tint without brown mottling or changing
+  geometry, light intensities, shadows, handheld/native or full pixel ratio.
+  Five affected cases pass16.2s+57.5s; syntax/build/12units pass. Recapture all
+  ten GIFs/nine stills at23:52:39.478Z, zero page errors; all GIFs change/
+  animate/<10MiB and both approved APNGs remain identical. Review actual
+  full-size table and bounded sheets, not user acceptance or full playback.
+  Increase10->19one-worker browser jobs, plus build within20-job baseline.
+  Exact CLI audit retains all53cases once (15x3+4x2); YAML changes matrix only.
+  Prior aa3be83 run42130747520 passes nine browser jobs; fullscreen test hits
+  unchanged120s after6-8s readbacks. Reuse an already verified sample and
+  its second advancing paint, preserving both exits/input/native assertions.
+  Corrected case passes16.8s. Actual new hosted elapsed time still pending;
+  no controlled speedup, timeout relaxation or deployed-app claim.
 - 2026-11-06 / Published showcase and stale header-check recovery:
   Owner pushes6449715; actual GitHub homepage/exact-commit README serve all19
   expected images, including10fresh GIFs. Rendered table independently shows

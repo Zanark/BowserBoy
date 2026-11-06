@@ -58,6 +58,13 @@ The paper lantern and room lights are independent scene systems. The lantern's
 spot, transmitted area light and finite tabletop bounce approximate a warm
 physical source. They are intentionally not a promise of unbiased path tracing.
 
+**Fabric refinement, November 6, 2026.** The current shade uses a subtle
+neutral white weave in both color and emission maps. Mapping emission matters:
+an untextured luminous term can otherwise wash out the reflected fabric detail.
+A warmer cream emission changes the glow, not the clean fabric into brown
+stains. Actual rendered warmth, brightness and the existing no-seam bounds
+are checked without reducing renderer resolution.
+
 **Living implementation note, November 6, 2026.** The first-edition lantern
 above is replaced by a clean STORSEGEL-style white drum shade and ash tripod.
 An exterior transmitted-light plane avoids a hard seam on the fabric; soft

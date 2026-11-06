@@ -293,9 +293,9 @@ export class HandheldScene {
   }
 
   setPower(running) {
-    this.model.led.material.color.set(running ? '#bce76f' : '#495537');
+    this.model.led.material.color.set(running ? '#186f32' : '#24382b');
     this.model.led.material.emissive.set(running ? '#00b800' : '#000000');
-    this.model.led.material.emissiveIntensity = running ? 80 : 0;
+    this.model.led.material.emissiveIntensity = running ? 80 * .018 / this.renderer.toneMappingExposure : 0;
     const power = this.model.controls.get('power').mesh;
     const x = running ? .1 : -.1;
     if (power.position.x !== x) this.changed = true;
@@ -408,6 +408,10 @@ export class HandheldScene {
       this.renderer.toneMappingExposure, exposure, 4, delta);
     const adapting = Math.abs(this.renderer.toneMappingExposure - exposure) > .00001;
     if (!adapting) this.renderer.toneMappingExposure = exposure;
+    // Keep dark-room exposure adaptation from bleaching the green indicator.
+    if (this.model.led.material.emissiveIntensity > 0) {
+      this.model.led.material.emissiveIntensity = 80 * .018 / this.renderer.toneMappingExposure;
+    }
     if (this.cartridgeMotion) {
       const fraction = THREE.MathUtils.clamp((cartridgeElapsed - 850) / 1350, 0, 1);
       const ease = fraction * fraction * (3 - 2 * fraction);

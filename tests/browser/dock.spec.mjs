@@ -560,9 +560,12 @@ test('screen fullscreen returns to an advancing main-view LCD without replacing 
     await expect(page.locator('#screen-focus')).toBeHidden();
     await expect.poll(painted).toBeGreaterThan(before);
     const resumed = await painted();
+    let returned;
+    await expect.poll(async () => {
+      returned = await lcd();
+      return returned.hash;
+    }).not.toBe(original.hash);
     await expect.poll(painted).toBeGreaterThan(resumed);
-    await expect.poll(async () => (await lcd()).hash).not.toBe(original.hash);
-    const returned = await lcd();
     await page.locator('#scene-canvas').focus();
     await page.keyboard.down('ArrowLeft');
     try { await expect.poll(async () => (await lcd()).hash).not.toBe(returned.hash); }

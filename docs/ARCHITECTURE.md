@@ -338,13 +338,22 @@ delay, invented percentage or looping reinsertion during a long download.
 
 ### Dark room and screen-colored illumination
 
+The .055-radius power indicator uses a darker green lens with reduced gloss.
+Its pure-green emission compensates for the existing .018-to-.45 night
+exposure adaptation, preventing white clipping in dark Inspect. Only the LED
+emission changes; room exposure, native LCD lighting and renderer resolution
+are preserved. Power off still sets its emission to zero.
+
 `src/lighting.js` models a STORSEGEL-style open white drum shade, thin white
 rims and three splayed ash legs with flat tabletop feet. The geometry is
 authored in meters: approximately 30 cm overall height and an 18 cm shade
 diameter. One scene unit represents 0.017 meters, so the lamp body applies the
 inverse of that conversion. The camera and handheld geometry/scale are
-unchanged. The shade has no mottled color/emission texture; a subtle procedural
-grain belongs only to the wooden legs. No cable is modeled.
+unchanged. A neutral white procedural weave textures both reflected and emitted
+shade color, so switching the lamp on does not wash the fabric flat. Its
+periodic threads have no brown speckles or low-frequency dirty patches.
+Shade and bulb emission use a warmer cream tint; wooden legs retain their
+separate subtle grain. No cable is modeled.
 A broad warm downward spotlight uses
 inverse-square falloff, no arbitrary distance cutoff and one 1024-square
 shadow map. This replaces the six expensive cubemap passes of the intermediate
@@ -795,10 +804,14 @@ Only `three.module.js`, its relative `three.core.js` dependency, the unmodified
 the exact MIT license are mapped from the pinned package to public `vendor` paths.
 An import map resolves `three` relative to the document, preserving nested
 GitHub Pages hosting. No `node_modules` directory is publicly served.
-Pages deployment requires the separate syntax/unit/build job and all ten
+Pages deployment requires the separate syntax/unit/build job and all nineteen
 complete test-level browser shards on Ubuntu 24.04, with one worker per runner.
-The 53 cases run exactly once, with five or six cases per runner. Parallelism
+The 53 cases run exactly once, with two or three cases per runner. Parallelism
 is across isolated runners, not competing software-rendered games on one CPU.
+Nineteen browser jobs plus the independent build fit the documented
+[20-job GitHub Free concurrency baseline](https://docs.github.com/en/actions/reference/limits).
+This is a scheduling budget, not proof of the owner's plan or available slots:
+other workflows, provisioning and external services can still cause queues.
 The shard denominator comes from `strategy.job-total`, keeping it synchronized
 with the current single-axis shard matrix.
 Browser jobs use the official Playwright 1.64.1 Noble image pinned by manifest

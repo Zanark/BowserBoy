@@ -1,0 +1,41 @@
+Status: IN_PROGRESS
+Milestone: More independent browser jobs without quality or coverage loss.
+Dependencies: 71_FULL_RESOLUTION_RENDERING.todo.
+
+Purpose
+-------
+Reduce sequential browser work per hosted runner while preserving native
+timing, full-resolution rendering and every deployment gate.
+
+Tasks
+-----
+[x] Inspect actual prior job timings and documented runner limits.
+[x] Increase isolated browser shards from ten to nineteen, one worker each.
+[x] Prove every current case is assigned exactly once.
+[x] Remove duplicate fullscreen-frame waits without removing assertions.
+[ ] Qualify the genuine pushed workflow and record observed elapsed time.
+
+Acceptance criteria
+-------------------
+All53 browser cases run once, fifteen shards of3 and four shards of2.
+Nineteen browser jobs plus build fit the20-job baseline concurrency budget.
+Native tests do not compete on the same runner. Rendering stays sharp.
+No tests, assertions, deadlines, failure evidence or deployment gates removed.
+Do not claim a controlled speedup from one hosted run or assume account limits.
+
+Completion evidence
+-------------------
+Prior42129264382 slowest successful browser step takes6m03; quickest1m24.
+This failed run is diagnostic, not a clean performance baseline.
+Official GitHub limits document20standard concurrent jobs for Free.
+Actual CLI shard audit finds all53cases exactly once, workers1/retries0.
+YAML semantic comparison finds only the matrix expansion.
+Prior corrected-header42130747520 passes nine browser jobs; fullscreen case
+hits120s after repeated6-8s readbacks. Reuse already verified pixels rather
+than request redundant frames, retain both exit paths and all behavior checks.
+Corrected case passes locally16.8s. Hosted qualification remains pending.
+
+Completion log
+--------------
+2026-11-06: User asks for still more parallel CI. Expand runner isolation,
+not competing workers; preserve all quality/timeout gates.

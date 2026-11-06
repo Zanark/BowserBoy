@@ -50,11 +50,24 @@ export function createDeskLamp() {
   }
   mesh('Lamp shade support', new THREE.CylinderGeometry(.022, .022, .018, 24), trim,
     new THREE.Vector3(0, .162, 0));
+  const fabric = canvasTexture(1024, 256, (context, width, height) => {
+    const image = context.createImageData(width, height);
+    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+      const warp = Math.cos(x * Math.PI / 2);
+      const weft = Math.cos(y * Math.PI / 2);
+      const fiber = Math.sin(x * Math.PI / 16 + Math.sin(y * Math.PI / 8) * .35);
+      const value = Math.round(237 + 6 * warp + 6 * weft + 2 * warp * weft + fiber);
+      const offset = (y * width + x) * 4;
+      image.data[offset] = image.data[offset + 1] = image.data[offset + 2] = value;
+      image.data[offset + 3] = 255;
+    }
+    context.putImageData(image, 0, 0);
+  });
   const shade = mesh('Clean white drum shade', new THREE.CylinderGeometry(.09, .09, .15, 96, 1, true),
-    new THREE.MeshStandardMaterial({ color: '#fffefa', roughness: .95,
-      emissive: '#fff0d6', emissiveIntensity: 60, side: THREE.DoubleSide }),
+    new THREE.MeshStandardMaterial({ color: '#fffefa', map: fabric, roughness: .95,
+      emissive: '#ffd6a8', emissiveMap: fabric, emissiveIntensity: 60, side: THREE.DoubleSide }),
     new THREE.Vector3(0, .225, 0));
-  // Keep the clean fabric luminous without the old brown albedo/emission speckles.
+  // Carry the neutral weave through emitted light instead of washing it out when lit.
   shade.castShadow = false;
   for (const y of [.15, .30]) {
     const rim = mesh('White shade rim', new THREE.TorusGeometry(.0895, .0005, 8, 96), shade.material,
@@ -63,7 +76,7 @@ export function createDeskLamp() {
     rim.castShadow = false;
   }
   const diffuser = mesh('Warm lamp bulb', new THREE.SphereGeometry(.018, 20, 16),
-    new THREE.MeshStandardMaterial({ color: '#fff8ec', emissive: '#fff0d6', emissiveIntensity: 80 }),
+    new THREE.MeshStandardMaterial({ color: '#fff8ec', emissive: '#ffd6a8', emissiveIntensity: 80 }),
     new THREE.Vector3(0, .215, 0));
   diffuser.castShadow = false;
   const light = new THREE.SpotLight('#ffca8a', 12 / METERS_PER_UNIT ** 2, 0, Math.PI / 3, .65, 2);

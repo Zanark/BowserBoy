@@ -598,8 +598,8 @@ export function createHandheld() {
     button.add(anchor);
     control(id, button, 1.3, .27, anchor);
   }
-  const led = add(root, 'Power light', cylinder(.09, .04),
-    new THREE.MeshStandardMaterial({ color: '#495537', emissive: '#000000', roughness: .25 }), 2.85, 1.43, .64);
+  const led = add(root, 'Power light', cylinder(.055, .04),
+    new THREE.MeshStandardMaterial({ color: '#24382b', emissive: '#000000', roughness: .55 }), 2.85, 1.43, .64);
   for (const slot of speakerSlots) {
     const floor = add(root, 'Recessed speaker grille',
       new THREE.ShapeGeometry(roundedShape(slot.width, slot.height, .03)), dark, slot.x, slot.y, .581);

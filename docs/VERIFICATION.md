@@ -7,6 +7,53 @@ The [engineering book](../book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Smaller green LED and current eleven-GIF showcase, 2026-11-06
+
+The indicator radius is reduced from .09 to .055, with deeper green albedo
+and a less glossy lens. A real dark-room recording revealed the initial
+material change was insufficient: night adaptation increases exposure
+from .018 to .45 and bleached the green emission white. Its emissive intensity
+now compensates for that existing exposure; room exposure, LCD illumination,
+render resolution and power-off behavior are unchanged.
+
+Rendered green-dominance checks cover room-plus-lamp, lamp-only and fully
+dark-adapted Inspect, alongside the retained real native-input, LCD-spill,
+light direction and power-off checks. The lamp/native pair passes locally
+in 35.9 seconds; the final actual dark-Inspect/native case passes in 24.3
+seconds, with all twelve unit tests also passing.
+All eleven GIFs and nine stills are freshly captured after the correction;
+the new LCD-only clip uses actual room/lamp-off state and genuine dragging.
+Bounded media review confirms a green night indicator and moving faint
+surface light. See [media provenance](MEDIA.md) for the final receipt.
+Hosted and public qualification remain separate.
+
+## Warmer woven shade and nineteen-way CI, 2026-11-06
+
+The shade now has a neutral white procedural fabric weave in both its color
+and emission maps, with warmer cream shade/bulb emission. The texture is
+periodic, low-contrast and grayscale, not the rejected brown mottling.
+Actual full-size table capture is reviewed: the threads remain visible while
+lit and the ash tripod stays visible. Existing bright-ivory/no-diagonal-seam
+bounds remain; additional checks cover clean weave contrast and rendered warmth.
+The lamp case passes in16.2s; the other four affected physical-lamp,
+full-resolution, pressed-cap and native/LCD cases pass in57.5s.
+
+The preceding corrected-header run42130747520 passes nine of ten browser
+shards, but the fullscreen-return case reaches its unchanged120s deadline.
+Its trace shows repeated6-8s full-resolution frame reads. Reuse the already
+verified returned-LCD sample and let that image read also witness the second
+advancing room paint. Both Escape/button paths, native-runtime identity,
+actual LCD changes and left/right input checks remain. The corrected case
+passes locally in16.8s. No low-resolution fallback or longer deadline is used.
+
+The matrix increases from ten to nineteen independent one-worker jobs,
+leaving one slot for build within the documented20-job Free-plan baseline.
+CLI discovery proves all53 cases occur exactly once: fifteen three-case
+shards and four two-case shards. YAML semantic comparison confirms the
+matrix is the only workflow change; all deployment dependencies, retries,
+deadlines and failure artifacts remain. This is increased parallelism,
+not a measured hosted speedup. Actual pushed-run/public qualification is pending.
+
 ## Published README and header-check recovery, 2026-11-06
 
 The owner pushes commit `64497155124b8ebb9a51651a9d1a9c1b1633f235`.
@@ -333,7 +380,7 @@ The YAML parses; a semantic comparison confirms the only workflow changes are
 the container and replaced installer. Actual Linux-container qualification
 still requires the next normal gate; no local Docker execution is claimed.
 
-At the user's request for faster parallel CI, ten isolated browser jobs now
+At the user's earlier request for faster parallel CI, ten isolated browser jobs
 replace five. Each still runs one worker: native audio/frame-clock assertions
 must not compete with another WebGL/emulator test on the same runner. CLI
 discovery verifies all 53 cases exactly once, distributed
