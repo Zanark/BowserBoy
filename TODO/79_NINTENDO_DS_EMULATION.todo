@@ -1,22 +1,37 @@
-Status: NOT_STARTED - deferred backlog; do not begin without a new request.
-GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/78
+Status: IN_PROGRESS - reference remodel technically verified; owner review and physical-phone qualification pending. No push or deployment.
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/78
 Milestone: Playable Nintendo DS beside the existing GBA on the desk.
 Dependencies: None; retain the existing static-site and GBA behavior.
 
 Purpose:
-Add Nintendo DS emulation and a Nintendo DS console placed on the desk next
-to the GBA. This is a future feature, not currently supported functionality.
+Add Nintendo DS emulation and a reference-matched metallic teal console with
+stylus beside the retained GBA. The new request supersedes the earlier deferral
+for this workstream only. Deliver locally; release/public compatibility is separate.
 
 Tasks:
-- [ ] Evaluate a static-hostable DS core and document compatibility,
+- [x] Evaluate a static-hostable DS core and document compatibility,
       licensing, browser requirements and any BIOS/firmware requirements.
-- [ ] Add the Nintendo DS desk model next to the retained GBA.
-- [ ] Define console selection and integrate DS loading, both screens,
+- [x] Add the Nintendo DS desk model next to the retained GBA.
+- [x] Define console selection and integrate DS loading, both screens,
       touchscreen input and the appropriate physical/keyboard/touch controls.
-- [ ] Keep GBA/DS saves, active-game identity, cached ROMs and runtime
+- [x] Keep GBA/DS saves, active-game identity, cached ROMs and runtime
       lifecycle isolated; do not assume simultaneous emulation is required.
-- [ ] Verify desktop and phone interaction using authorized fixtures, then
-      update supported-system documentation and affected visual references.
+- [x] Verify desktop and 390px responsive interaction using original Twin Lab,
+      then update documentation, supplied transparent branding and real captures.
+- [x] Correct the rejected first model: DS Lite silhouette and thin inset panels,
+      continuous segmented front/rear hinge, fine-grain reflective metallic teal
+      shell (#2A9D98, metalness .80, roughness .35), restrained #8BFF78 accents,
+      blue D-pad, white labels and a slim molded stylus clipped to the console.
+- [x] Recheck front/rear geometry, metallic response and teal appearance under
+      default and room lighting; refresh real captures and affected regressions.
+- [x] Keep DS pickup/inspection clear of the GBA throughout motion, repaint DS
+      inspection drags immediately, use the static Advance logo in GBA settings,
+      and switch the dock between GBA purple and DS blue/cyan styling.
+- [x] Angle the open table DS toward the lamp without overlapping loose
+      cartridges, and keep the supplied DS emblem on the rear lid only.
+- [ ] Qualify a physical phone; responsive desktop automation is not device
+      performance evidence. Obtain owner review before treating this feature
+      as accepted beyond its local prototype boundary.
 
 Acceptance criteria:
 Both consoles are present on the desk. Selecting the DS can load an
@@ -25,11 +40,70 @@ touchscreen and button input. GBA loading, play and saves still work without
 cross-system contamination. Hosting remains static; missing or unsupported
 ROM/BIOS/firmware requirements produce explicit guidance rather than a false
 success. Any required distributed assets have appropriate permission.
+The owner's geometry references, rather than their alternate hardware colors,
+govern the remodel. Metallic finish and a physically docked stylus are required;
+the first prototype's disconnected hinge and loose pen are rejected. The later
+exact teal specification supersedes the earlier royal-blue shell palette.
+Do not add the suggested studio lighting/background: the owner excludes section4.
 
 Completion evidence:
-None. No DS core selection, asset research, model, runtime integration,
-dependency change or compatibility testing has been started.
+Current reference remodel: 110-degree opening, extruded rear square recesses,
+metallic teal shell, convex lime controls, blue D-pad, rear-only supplied emblem,
+clipped stylus and table-contact feet. Existing lamp/room/background unchanged.
+One focused browser gate passes9cases in1.8m: four DS cases and five affected
+GBA dock/branding/mobile-inspection cases. Actual motion samples prove no
+GBA intersection; held-pointer canvas changes prove live inspection repaint.
+Table cartridge separation, actual stylus geometry, material pixels and
+console-specific dock restoration pass. Reviewed current desktop table,
+front/rear, real Twin Lab and390px captures; refresh README screenshots.
+25units,syntax,build,diff checks pass. No full-suite/device/owner approval claim.
+Initialize DS storage before first shader compilation to retain the5s deadline.
+
+Initial prototype evidence (historical, model superseded):
+The separate turquoise/lime DS and stylus retain the GBA on the same table.
+Pinned EmulatorJS4.2.3/DeSmuME directly boots the original BIOS-free Twin Lab
+fixture. Real native frames reach both physical LCDs; button and lower-screen
+stylus input reach the core. Separate browser databases and checksummed
+.bbds-save backups preserve system/ROM identity. Console switching checkpoints
+and pauses the inactive runtime; power-on cold boots, while page reload plus
+same-ROM selection resumes its checkpoint.
+Final tests/browser/ds.spec.mjs run: three cases pass (57.2s), including native
+and physical pixels, inputs, export/import, GBA coexistence, pause isolation,
+cold boot, real reload recovery, 390px framing and CDN-error retry/reduced motion.
+Six affected GBA regression cases and both cartridge viewport cases pass across
+separate focused runs; this is not a full-suite or single eleven-case run.
+Final npm test:25pass; npm run check and npm run build pass. Details and limits
+are in docs/VERIFICATION.md; instructions and actual captures are in README.md.
+No commercial compatibility, physical-phone performance, owner approval,
+commit, deployment or new published edition is claimed.
 
 Completion log:
+2026-11-06: Owner supplies exact #2A9D98/.80/.35 teal shading and detailed
+hard-surface/control/110-degree hinge specifications, then explicitly excludes
+the proposed studio-lighting section. Apply model/material changes only;
+retain existing room lighting and note its effect on perceived color.
+Complete technical reference/interaction gate and current real captures;
+human aesthetic acceptance and physical-phone qualification remain open.
+Owner subsequently requests incremental local commits authored as Zanark;
+this is not authorization to push/deploy or include unrelated pending work.
+2026-11-06: Owner rejects the first model's geometry, greenish finish, hinge
+and loose pen-like stylus. Reopen visual acceptance within this same workstream;
+preserve the verified emulator/save behavior, separate GBA and original evidence.
+Apply the supplied blue-dominant palette and DS Lite geometry references locally.
+2026-11-06: Additional owner feedback identifies DS/GBA pickup intersection
+and frozen DS inspection paints, and requests static Advance settings branding
+and console-specific dock colors. Keep fixes in this same local workstream.
+2026-11-06: Owner also requests a lamp-facing table angle, clearance from
+loose cartridges, and no front DS emblem. Retain the supplied rear-lid logo.
+2026-11-06: Deliver the local prototype with the latest transparent supplied
+logo. Correct first-render timing, scaled framebuffer splitting, lower LCD
+direct-color mode, beveled-recess occlusion and stylus framing using actual
+runtime/visual evidence. Preserve the pre-existing GBA sparse-paint fix.
+Document save-before-replacement semantics; verify resume through actual reload
+rather than expecting a replaced checkpoint to survive a new live-session save.
+Keep the feature open for owner review and physical-phone qualification.
+2026-11-06: Owner authorizes local implementation using supplied DS front/rear,
+multi-view and logo artwork, without questions. Preserve uncommitted GBA
+sparse-paint fix and save contracts; no commit/push/deployment is authorized.
 2026-11-06: Owner requests DS support and a second console beside the GBA,
 but explicitly defers implementation. Record the workstream only.

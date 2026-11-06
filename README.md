@@ -23,8 +23,55 @@
 ## Supported consoles
 
 - [**BowserBOYADVANCED**](#bowserboyadvanced) - Game Boy Advance.
+- [**BowserBOY DS**](#bowserboy-ds-local-prototype) - Nintendo DS, local prototype.
 
-*More consoles are planned. Only BowserBOYADVANCED is available today.*
+*The DS is a local working-tree prototype, not a published Pages release.
+The existing GBA showcase below retains its historical captures.*
+
+## BowserBOY DS - local prototype
+
+![Supplied transparent BowserBOY DS neon chrome logo](assets/ds-logo.png)
+
+*The user's latest transparent DS artwork, used unchanged on the rear lid,
+loading LCD and DS tools. The inner lid has no emblem.*
+
+![Separate GBA and DS consoles together on the BowserBOY table](docs/images/ds-prototype-table.png)
+
+*Two separate consoles on the same table. The metallic teal DS faces the lamp,
+clears the loose cartridges and keeps its lime stylus clipped to its side.
+Actual local capture with optional Room lighting; not a deployed build.*
+
+![Twin Lab running on both physical DS displays beside its stylus](docs/images/ds-prototype-playing.png)
+
+*The remodeled 110-degree clamshell has a metallic teal body, blue D-pad and
+lime controls. Both screens show actual DeSmuME output: buttons move the
+upper marker and pointer/stylus input draws on the lower LCD. Twin Lab is
+original project homebrew, not a commercial game or simulated video.*
+
+From the repository folder, run `npm run dev`, then open
+**http://127.0.0.1:5173**. Select **DS**, open **DS cartridges** and choose
+**Try Twin Lab** or an authorized uncompressed `.nds` file. The game card
+slides into the separate DS, and both LCDs display live output.
+
+Use arrows for the D-pad; **Z/X = A/B**, **C/V = X/Y**, **A/S = L/R**,
+**Enter = Start**, **left Shift = Select**. Press the physical controls or
+click/drag the lower LCD for touchscreen input. **Escape** opens DS tools.
+Switching GBA/DS pauses the inactive core rather than running both games.
+
+DS checkpoints use a separate browser database and `.bbds-save` backups;
+GBA saves and `.bba-save` files remain separate. Reselect the exact same
+ROM after reload to resume its stored checkpoint. Power off saves a
+checkpoint; **Power on** cold-boots from in-game save data rather than
+resuming that checkpoint. Export before clearing browser data or changing
+origins.
+
+First launch needs internet for pinned EmulatorJS 4.2.3/DeSmuME. Original
+DS direct boot is supported; DSi, BIOS-menu boot, networking and universal
+game compatibility are not claimed. No ROM collection, BIOS or firmware
+is included. Desktop Edge and a 390px responsive browser viewport are
+tested; real-phone performance and commercial games remain unqualified.
+The GBA's native shader/settings/fullscreen features are not all DS features.
+[Full instructions and limits](docs/GUIDE.md#nintendo-ds-local-prototype).
 
 ## BowserBOYADVANCED
 

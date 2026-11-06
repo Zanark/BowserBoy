@@ -78,14 +78,17 @@ BowserBOY workstreams
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
 78_MOBILE_PERFORMANCE.todo - NOT_STARTED/deferred: investigate owner's approximately10FPS phone report and improve performance without sacrificing sharpness.
-79_NINTENDO_DS_EMULATION.todo - NOT_STARTED/deferred: DS emulation and a Nintendo DS on the desk beside the GBA.
+79_NINTENDO_DS_EMULATION.todo - IN_PROGRESS/local reference remodel verified: metallic teal DS, live dual screens, clipped stylus and isolated saves; owner/device review pending.
 80_BOXED_CARTRIDGE_LIBRARY.todo - NOT_STARTED/deferred: selectable boxed GBA/NDS cartridges that load cleared ROMs without repeated user uploads; NDS portion depends on79.
 81_REPOSITORY_ORGANIZATION.todo - DONE: cleaner source/docs layout and safe public context published as Zanark at0e1ac9f; website URLs preserved.
 82_GITHUB_TRACKING.todo - DONE:81workstreams linked to verified issues/Project items; full rerun creates/updates zero issues.
 
 Current pending work
 --------------------
--78/79/80: backlog registration only. Owner explicitly says not to work on
+-79: New owner request authorizes a local DS prototype using the supplied
+  reference images/logo. This supersedes79's earlier deferral only. No push,
+  release or deployment is requested. Preserve existing GBA behavior.
+-78/80: backlog registration only. Owner explicitly says not to work on
   these now; await a new implementation request. No profiling, DS research,
   modelling, ROM acquisition or runtime changes are authorized by this entry.
   Authorized personal-account credentials now permit issue/Project tracking;

@@ -2,6 +2,7 @@ import { validateBatterySave, validateCapture } from './cartridge.js';
 import { CONTROLS, MANAGED_SETTINGS, defaultPreferences, validateEmulatorOptions, validatePreferences, withFastForward } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
 import { configureAudioBuffer, protectAudio } from './audio.js';
+import { DS_CONTROLS, DS_OPTIONS, dsScreenRegions, validateDsBattery, validateDsCapture } from './ds-cartridge.js';
 
 // Version-specific internals are confined to this adapter; see docs/ARCHITECTURE.md.
 const DATA_PATH = 'https://cdn.emulatorjs.org/4.2.3/data/';
@@ -9,6 +10,10 @@ let session;
 let started = false;
 let inputEnabled = true;
 let settingsOpen = false;
+let system = 'gba';
+let controls = CONTROLS;
+let touchDown = false;
+let touchPoint = { x: 128, y: 96 };
 let preferences = defaultPreferences();
 const heldInputs = new Map();
 
@@ -30,7 +35,7 @@ function manager() {
 }
 
 function input(action, pressed, source) {
-  const control = CONTROLS.find(({ id }) => id === action);
+  const control = controls.find(({ id }) => id === action);
   if ((!control && action !== 'fastForward') || typeof pressed !== 'boolean' || typeof source !== 'string' || source.length > 64) {
     throw new Error('Invalid console input.');
   }
@@ -55,7 +60,7 @@ function input(action, pressed, source) {
 
 const keyboard = bindKeyboard(window, {
   enabled: () => started && inputEnabled && !settingsOpen,
-  getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
+  getBindings: () => ({ ...Object.fromEntries(controls.map(({ id, code }) => [id, code])), ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => input(action, pressed, `player-key:${code}`),
   onMenu: () => { send(settingsOpen ? 'settings-close' : 'tools'); return true; },
   blockUnmapped: true,
@@ -141,18 +146,19 @@ function setInputEnabled(enabled) {
     for (const source of [...sources]) input(action, false, source);
   }
   inputEnabled = enabled;
+  if (system === 'ds' && touchDown) touch({ ...touchPoint, pressed: false });
 }
 
 function capture() {
   const game = manager();
-  return validateCapture({
+  return (system === 'ds' ? validateDsCapture : validateCapture)({
     state: game.getState(),
     sram: game.getSaveFile(),
   });
 }
 
 function loadBattery(sram) {
-  validateBatterySave(sram);
+  (system === 'ds' ? validateDsBattery : validateBatterySave)(sram);
   if (sram === null) return;
   const game = manager();
   const path = game.getSaveFilePath();
@@ -165,7 +171,7 @@ function loadBattery(sram) {
 const renderedFrames = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
 async function restore(data) {
-  validateCapture(data);
+  (system === 'ds' ? validateDsCapture : validateCapture)(data);
   const game = manager();
   const emulator = window.EJS_emulator;
   const wasPaused = emulator.paused;
@@ -182,15 +188,18 @@ async function restore(data) {
 
 function initialize(data) {
   session = data.session;
+  if (data.system !== undefined && !['gba', 'ds'].includes(data.system)) throw new Error('Unsupported cartridge system.');
+  system = data.system ?? 'gba';
+  controls = system === 'ds' ? DS_CONTROLS : CONTROLS;
   preferences = validatePreferences(data.preferences ?? defaultPreferences());
-  const battery = validateBatterySave(data.battery);
+  const battery = (system === 'ds' ? validateDsBattery : validateBatterySave)(data.battery);
   const romUrl = URL.createObjectURL(data.rom);
   Object.assign(window, {
     EJS_player: '#game',
-    EJS_core: 'mgba',
-    EJS_controlScheme: 'gba',
+    EJS_core: system === 'ds' ? 'desmume' : 'mgba',
+    EJS_controlScheme: system === 'ds' ? 'nds' : 'gba',
     EJS_gameUrl: romUrl,
-    EJS_gameName: `bba-${data.gameId}`,
+    EJS_gameName: `${system === 'ds' ? 'bowserboy-ds' : 'bba'}-${data.gameId}`,
     EJS_pathtodata: DATA_PATH,
     EJS_color: '#bd9cff',
     EJS_backgroundColor: '#15101f',
@@ -206,10 +215,11 @@ function initialize(data) {
       ...preferences.emulatorOptions,
       'virtual-gamepad': 'disabled',
       shader: preferences.emulatorOptions?.shader ?? preferences.shader,
+      ...(system === 'ds' ? DS_OPTIONS : {}),
     },
     EJS_hideSettings: MANAGED_SETTINGS,
     EJS_defaultControls: {
-      0: Object.fromEntries(CONTROLS.map(({ button, gamepad }) => [button, { value: '', value2: gamepad }])),
+      0: Object.fromEntries(controls.map(({ button, gamepad }) => [button, { value: '', value2: gamepad }])),
       1: {}, 2: {}, 3: {},
     },
     EJS_Buttons: {
@@ -262,6 +272,12 @@ function initialize(data) {
           event.stopImmediatePropagation();
           send('notice', { message: 'Use Choose a ROM to switch games, or Import backup to restore a .bba-save file.' });
         }, true);
+        if (system === 'ds') {
+          await renderedFrames();
+          const width = manager().getVideoDimensions('width'), height = manager().getVideoDimensions('height');
+          if (width !== 256 || height !== 384) throw new Error(`The DS core returned ${width}x${height}; expected native 256x384 top/bottom with no gap.`);
+          dsScreenRegions(emulator.canvas.width, emulator.canvas.height);
+        }
         send('started');
       } catch (error) { fail(error); }
     },
@@ -270,6 +286,25 @@ function initialize(data) {
   script.src = `${DATA_PATH}loader.js`;
   script.onerror = () => fail(new Error('The emulator CDN could not be reached. Check your connection and try the ROM again.'));
   document.head.append(script);
+}
+
+function touch(value) {
+  if (system !== 'ds' || !Number.isInteger(value?.x) || !Number.isInteger(value?.y) ||
+      value.x < 0 || value.x > 255 || value.y < 0 || value.y > 191 || typeof value.pressed !== 'boolean') {
+    throw new Error('Invalid DS stylus coordinates.');
+  }
+  if ((!inputEnabled || settingsOpen) && value.pressed) return;
+  const canvas = window.EJS_emulator.canvas;
+  dsScreenRegions(canvas.width, canvas.height);
+  const bounds = canvas.getBoundingClientRect();
+  const options = { bubbles: true, cancelable: true, button: 0, buttons: value.pressed ? 1 : 0,
+    clientX: bounds.left + (value.x + .5) / 256 * bounds.width,
+    clientY: bounds.top + (value.y + 192 + .5) / 384 * bounds.height };
+  // The pinned browser input driver samples canvas-relative absolute mouse events.
+  canvas.dispatchEvent(new MouseEvent('mousemove', options));
+  if (touchDown !== value.pressed) canvas.dispatchEvent(new MouseEvent(value.pressed ? 'mousedown' : 'mouseup', options));
+  touchDown = value.pressed;
+  touchPoint = { x: value.x, y: value.y };
 }
 
 window.addEventListener('message', async (event) => {
@@ -286,12 +321,17 @@ window.addEventListener('message', async (event) => {
     catch (error) { fail(error); }
     return;
   }
+  if (data?.type === 'bba:touch' && data.session === session && started) {
+    try { touch(data.value); }
+    catch (error) { fail(error); }
+    return;
+  }
   if (data?.type !== 'bba:command' || data.session !== session) return;
   try {
     let result;
     switch (data.command) {
       case 'capture': result = capture(); break;
-      case 'battery': result = validateBatterySave(manager().getSaveFile()); break;
+      case 'battery': result = (system === 'ds' ? validateDsBattery : validateBatterySave)(manager().getSaveFile()); break;
       case 'restore': await restore(data.value); result = true; break;
       case 'configure': configure(data.value); result = true; break;
       case 'settings': result = settings(data.value); break;
@@ -299,6 +339,14 @@ window.addEventListener('message', async (event) => {
       case 'togglePause': {
         manager();
         window.EJS_emulator.togglePlaying();
+        result = window.EJS_emulator.paused;
+        break;
+      }
+      case 'setPaused': {
+        manager();
+        if (typeof data.value !== 'boolean') throw new Error('Invalid pause mode.');
+        if (data.value) window.EJS_emulator.pause();
+        else window.EJS_emulator.play();
         result = window.EJS_emulator.paused;
         break;
       }

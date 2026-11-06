@@ -6,6 +6,7 @@ import { HandheldScene } from './scene.js';
 import { playStartup, playStartupSound } from './startup.js';
 import { icon } from './icons.js';
 import { loadBrand } from './brand.js';
+import { DsController } from './ds-controller.js';
 
 const $ = (id) => document.getElementById(id);
 const store = new SaveStore();
@@ -28,6 +29,9 @@ let preferences = defaultPreferences();
 let remappingAction = null;
 let preferenceWarning = null;
 let heldFastForward = false;
+let ds = null;
+let gbaSuspended = false;
+let selectingConsole = false;
 export let view = null;
 let sceneFailure = null;
 try { preferences = readPreferences(localStorage); }
@@ -186,6 +190,7 @@ const storageReady = store.open().then(() => {
 });
 
 function updateControls() {
+  for (const id of ['select-gba', 'select-ds']) $(id).disabled = busy || selectingConsole || !!ds?.busy || !view;
   for (const id of ['upload', 'rom-file', 'demo', 'volume', 'mute', 'shader', 'reset-controls']) $(id).disabled = busy;
   for (const id of ['pause', 'fullscreen', 'export', 'import', 'native-open']) $(id).disabled = !running || busy;
   $('native-close').disabled = busy;
@@ -665,7 +670,7 @@ for (const button of document.querySelectorAll('[data-speed]')) button.addEventL
 });
 
 async function automaticCheckpoint() {
-  if (!running || !autoSave || !storageAvailable || busy) return;
+  if (!running || view?.console === 'ds' || !autoSave || !storageAvailable || busy) return;
   await operation(() => persist('automatic'));
 }
 setInterval(() => void automaticCheckpoint(), 15000);
@@ -695,9 +700,11 @@ document.addEventListener('drop', (event) => {
   event.preventDefault();
   dragDepth = 0;
   document.body.classList.remove('dragging');
-  if (busy) { notice('Wait for the current player action to finish before changing cartridges.'); return; }
-  if (event.dataTransfer.files.length !== 1) { notice('Choose one .gba cartridge at a time.', true); return; }
-  void chooseRom(event.dataTransfer.files[0]);
+  if (busy || ds?.busy || selectingConsole) { notice('Wait for the current player action to finish before changing cartridges.'); return; }
+  if (event.dataTransfer.files.length !== 1) { notice('Choose one .gba or .nds cartridge at a time.', true); return; }
+  const file = event.dataTransfer.files[0];
+  if (/\.nds$/i.test(file.name)) void ds?.operation(() => ds.load(file));
+  else void operation(async () => { await selectConsole('gba'); await loadRom(file); });
 });
 $('help-open').addEventListener('click', () => $('help').showModal());
 $('help-close').addEventListener('click', () => $('help').close());
@@ -734,6 +741,7 @@ function releaseHostInputs() {
 }
 
 function openTools() {
+  if (view?.console === 'ds') { ds?.openTools(); return; }
   if ($('tools').open || $('help').open || $('frame-host').open) return;
   releaseHostInputs();
   $('tools').showModal();
@@ -904,7 +912,7 @@ window.addEventListener('keydown', (event) => {
 }, true);
 
 const keyboard = bindKeyboard(window, {
-  enabled: (event) => running && (document.fullscreenElement === $('screen-focus') || (view?.mode === 'playing' && !view.transition)) && !$('tools').open && !$('help').open && !$('frame-host').open &&
+  enabled: (event) => view?.console !== 'ds' && running && (document.fullscreenElement === $('screen-focus') || (view?.mode === 'playing' && !view.transition)) && !$('tools').open && !$('help').open && !$('frame-host').open && !$('ds-tools').open &&
     !event.target.closest?.('button, input, select, textarea, [contenteditable="true"]'),
   getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
@@ -916,7 +924,7 @@ const keyboard = bindKeyboard(window, {
       return true;
     }
     if (document.fullscreenElement === $('screen-focus')) { closeScreenFullscreen(); return true; }
-    if ($('tools').open || $('help').open || $('frame-host').open) return false;
+    if ($('tools').open || $('help').open || $('frame-host').open || $('ds-tools').open) return false;
     openTools();
     return true;
   },
@@ -946,8 +954,41 @@ $('shader').addEventListener('change', () => void operation(() => {
 
 function changeView(mode) {
   releaseHostInputs();
+  ds?.releaseInputs();
   view?.setView(mode);
 }
+async function selectConsole(system) {
+  if (!view) throw new Error('The 3D scene is not available.');
+  if (system === view.console) {
+    if (view.mode === 'table') view.setView('playing');
+    return;
+  }
+  if (selectingConsole) throw new Error('Wait for the console switch to finish.');
+  selectingConsole = true;
+  updateControls();
+  try {
+    releaseHostInputs();
+    ds?.releaseInputs();
+    if (system === 'ds' && running) {
+      gbaSuspended = $('pause').textContent === 'Pause game';
+      if (gbaSuspended) await command('setPaused', true);
+    }
+    if (system === 'gba') await ds?.suspend();
+    for (const id of ['tools', 'ds-tools', 'help']) if ($(id).open) $(id).close();
+    $('player').dataset.console = system;
+    $('select-gba').setAttribute('aria-pressed', String(system === 'gba'));
+    $('select-ds').setAttribute('aria-pressed', String(system === 'ds'));
+    $('core-credit').textContent = system === 'ds' ? 'DeSmuME' : 'mGBA';
+    $('core-credit').href = system === 'ds' ? 'https://desmume.org/' : 'https://mgba.io/';
+    view.selectConsole(system);
+    if (system === 'ds') await ds?.resume();
+    else if (running && gbaSuspended) {
+      await command('setPaused', false); gbaSuspended = false;
+    }
+  } finally { selectingConsole = false; updateControls(); }
+}
+for (const system of ['gba', 'ds']) $(`select-${system}`).addEventListener('click', () =>
+  void operation(() => selectConsole(system)));
 function toggleLamp() {
   if (!view) return;
   view.setLamp(!view.lampOn);
@@ -974,27 +1015,33 @@ try {
   view = new HandheldScene($('scene'), {
     onTools: openTools,
     onLamp: toggleLamp,
+    onConsole: system => {
+      if (!busy && !ds?.busy) void operation(() => selectConsole(system));
+    },
     onView: (mode, moving) => {
       releaseHostInputs();
+      ds?.releaseInputs();
       const heading = document.querySelector('.desk-heading h1');
       const consoleBrand = mode === 'inspecting';
+      const dsBrand = consoleBrand && view?.console === 'ds';
       heading.toggleAttribute('data-console', consoleBrand);
       const image = heading.querySelector('img');
-      image.setAttribute('src', consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
-      image.alt = consoleBrand ? 'BowserBOYADVANCED' : 'BowserBOY';
+      image.setAttribute('src', dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
+      image.alt = dsBrand ? 'BowserBOY DS' : consoleBrand ? 'BowserBOYADVANCED' : 'BowserBOY';
       image.width = consoleBrand ? 1080 : 2148;
       image.height = consoleBrand ? 420 : 732;
-      heading.querySelector('source').srcset = consoleBrand ? './assets/logo.png' : './assets/website-logo.png';
+      heading.querySelector('source').srcset = dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/logo.png' : './assets/website-logo.png';
       $('pickup').hidden = mode !== 'table';
       $('inspect').hidden = $('put-down').hidden = mode === 'table';
       for (const id of ['pickup', 'inspect', 'put-down']) $(id).disabled = moving;
       icon($('inspect'), mode === 'inspecting' ? 'back' : 'inspect', mode === 'inspecting' ? 'Back to play' : 'Inspect handheld');
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
       $('play-zoom-control').hidden = mode !== 'playing' || moving || document.fullscreenElement === $('screen-focus');
-      $('scene-hint').textContent = mode === 'table' ? 'A quiet moment. Click the handheld to pick it up.' :
+      $('scene-hint').textContent = mode === 'table' ? 'Two separate handhelds. Click a console or use the GBA / DS selector.' :
         mode === 'inspecting' ? 'Drag to look around. Scroll to zoom. Your game keeps running.' :
-          'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
-      if (running) void command('setInputEnabled', document.fullscreenElement === $('screen-focus') || (mode === 'playing' && !moving)).catch((error) => notice(error.message, true));
+          view?.console === 'ds' ? 'BowserBOY DS / touch the lower screen. Z/X = A/B. C/V = X/Y. DS for cartridges.' :
+            'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
+      if (running) void command('setInputEnabled', view?.console !== 'ds' && (document.fullscreenElement === $('screen-focus') || (mode === 'playing' && !moving))).catch((error) => notice(error.message, true));
     },
     onError: (error) => { console.error('3D graphics:', error); notice(error.message, true); },
   });
@@ -1003,6 +1050,10 @@ try {
   wordmark.className = 'screen-focus-wordmark';
   wordmark.setAttribute('aria-hidden', 'true');
   $('screen-focus-wordmark').replaceWith(wordmark);
+  ds = new DsController(view, { selectConsole, onState: updateControls });
+  await ds.initialize();
+  // Open save storage before first-paint shader compilation can block its timeout.
+  view.setScreenFullscreen(false);
 } catch (error) {
   console.error('Creating the 3D scene:', error);
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);

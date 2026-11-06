@@ -8,6 +8,30 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### New local DS prototype, 2026-11-06
+
+The README's `docs/images/ds-prototype-table.png` and
+`docs/images/ds-prototype-playing.png` are actual Edge/Playwright captures of
+the local separate-console scene and real Twin Lab emulation. They are not
+renders composited with invented game screens. Optional Room lighting reveals
+the metallic teal/lime materials; the existing warm lamp naturally changes
+their appearance. The current images replace the rejected first model with
+the owner's #2A9D98/.80-metalness/.35-roughness specification, 110-degree hinge,
+blue D-pad, lime controls and clipped stylus. The current desktop table/runtime,
+front/rear and 390px captures were reviewed together; this is not owner approval
+or physical-phone qualification. No studio lighting or white backdrop was added.
+
+`assets/ds-logo.png` is the latest owner-supplied transparent Glowing BowserBOY DS
+logo, copied unchanged at 2149x732 RGBA. It supersedes the earlier opaque emblem
+for this prototype and appears on the tools/loading views and rear lid only.
+The model follows the supplied DS concept references; Twin Lab's code/art are
+original project fixtures. See [third-party notices](../THIRD_PARTY_NOTICES.md)
+for provenance, emulator licensing and trademark boundaries.
+
+These are unpublished working-tree captures. Historical GBA media and the
+frozen book retain their earlier evidence epoch; older GBA-only images do not
+show the new two-console scene.
+
 Current publication: implementation `1b0385b384a1329fe643607c4874af88e5259001`,
 successful Pages run42135170801. Actual GitHub homepage and immutable README
 serve all20matching images, including all11GIFs. Independent public checks

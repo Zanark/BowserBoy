@@ -1,7 +1,7 @@
 # Third-party notices and provenance
 
 This independent prototype is not affiliated with Nintendo. Game Boy Advance
-is a Nintendo trademark. No firmware/BIOS images are included. The separately
+and Nintendo DS are Nintendo trademarks. No firmware/BIOS images are included. The separately
 supplied demo ROM and box art below are not independently authored emulator
 assets; their publication relies on the user's redistribution confirmation.
 
@@ -28,6 +28,12 @@ automatically load the supplied ROM.
 - **mGBA**: the GBA emulation core selected by EmulatorJS.
   [Project/source](https://github.com/mgba-emu/mgba),
   [Mozilla Public License 2.0](https://github.com/mgba-emu/mgba/blob/master/LICENSE).
+- **DeSmuME**: the Nintendo DS core selected by the local prototype.
+  [Upstream source](https://github.com/TASEmulators/desmume),
+  [libretro core source](https://github.com/libretro/desmume),
+  [GNU GPL v2 license](https://github.com/libretro/desmume/blob/master/desmume/COPYING).
+  Runtime binaries come from the pinned EmulatorJS CDN, not a locally
+  reproduced build of those source links.
 - **RetroArch and other bundled runtime components**: delivered by the upstream
   EmulatorJS distribution, with their own notices and licenses. See
   [EmulatorJS core documentation](https://github.com/EmulatorJS/EmulatorJS/blob/v4.2.3/data/cores/README.md)
@@ -63,6 +69,20 @@ the Nintendo boot-logo array and is intended for emulator testing, not as a
 claim of booting on physical retail hardware.
 Its optional audio-test variant emits an original PSG test tone, not music or
 samples taken from a game. The ordinary bundled demo remains byte-identical.
+
+The DS prototype's **Twin Lab** generator in `scripts/demo-ds-rom.mjs` is
+original ARM9/ARM7 homebrew, including its font, pixel graphics, button logic
+and SPI touchscreen reader. It omits Nintendo logo/BIOS/firmware bytes and
+is intended for emulator testing, not certification on retail hardware.
+The build/server generates `assets/twin-lab.nds`; no external game is fetched.
+
+`assets/ds-logo.png` is the user's latest **Glowing BowserBOY DS Logo**,
+2149x732 transparent RGBA PNG, copied unchanged. It supersedes the earlier
+opaque chrome DS logo. No recoloring, background extraction, regeneration,
+independent authorship or separate upstream license is claimed. The supplied
+turquoise/lime DS front/rear/multi-view images inform original procedural
+geometry and stylus colors; those reference images and any external meshes
+are not bundled.
 
 The original handheld SVG favicon, original LCD animation code and
 three-note synthesized chime are independently authored assets. The user's

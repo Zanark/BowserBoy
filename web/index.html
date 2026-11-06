@@ -13,10 +13,14 @@
   </head>
   <body>
     <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
-    <main id="player" class="desk" aria-label="BowserBOY console table: BowserBOY ADVANCED GBA player">
+    <main id="player" class="desk" data-console="gba" aria-label="BowserBOY console table: separate GBA and Nintendo DS handhelds">
       <div id="scene" data-view="table"></div>
       <header class="desk-heading"><div class="desk-brand"><h1><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/website-logo.png"><img src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732"></picture></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div></header>
       <p id="scene-error" role="alert" hidden></p>
+      <nav class="console-picker" aria-label="Choose a console on the table">
+        <button id="select-gba" aria-pressed="true" disabled>GBA</button>
+        <button id="select-ds" aria-pressed="false" disabled>DS <span>PROTOTYPE</span></button>
+      </nav>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
         <button data-control="r" aria-label="R shoulder button" disabled hidden></button>
@@ -52,6 +56,7 @@
         <button id="quick-restart"></button>
         <span class="action-divider" aria-hidden="true"></span>
         <button id="tools-open" aria-label="Open cartridge and settings" aria-haspopup="dialog" aria-controls="tools">Cartridges <kbd>Esc</kbd></button>
+        <button id="ds-open" aria-label="Open DS cartridges and saves" aria-haspopup="dialog" aria-controls="ds-tools">DS</button>
         </div>
       </nav>
       <div id="speed-menu" popover role="dialog" aria-label="Emulation speed" class="speed-menu">
@@ -65,7 +70,7 @@
         <span id="power-led"></span><span id="power-label">POWER OFF / INFINITE BATTERY</span>
       </div>
       <dialog id="frame-host" class="runtime-source" aria-hidden="true" aria-labelledby="native-title" aria-describedby="native-description">
-        <img class="panel-logo" src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732">
+        <img class="panel-logo" src="./assets/logo.png" alt="BowserBOY Advance" width="2170" height="725">
         <div class="native-header"><div><p class="eyebrow">UNDER THE SHELL</p><h2 id="native-title">EmulatorJS settings</h2></div><button id="native-close" class="close-button" aria-label="Close EmulatorJS settings">&times;</button></div>
         <p id="native-description" class="fineprint">Native graphics, speed, capture and core options. Changes are remembered when you close. Options marked Requires restart apply on the next power on. Keys, sound and saves stay in Cartridges. Opening this panel does not pause the game.</p>
         <div id="native-notice-host"></div>
@@ -88,10 +93,10 @@
         <input id="play-zoom" type="range" min="50" max="100" step="1" value="50" aria-label="Play view zoom">
         <output id="play-zoom-value" for="play-zoom">50%</output>
       </div>
-      <footer>Independent player <span aria-hidden="true">&middot;</span> <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EmulatorJS</a> + <a href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a></footer>
+      <footer>Independent player <span aria-hidden="true">&middot;</span> <a href="https://emulatorjs.org/" target="_blank" rel="noopener noreferrer">EmulatorJS</a> + <a id="core-credit" href="https://mgba.io/" target="_blank" rel="noopener noreferrer">mGBA</a></footer>
 
     <dialog id="tools" class="tools-drawer" aria-labelledby="tools-title">
-      <img class="panel-logo" src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732">
+      <img class="panel-logo" src="./assets/logo.png" alt="BowserBOY Advance" width="2170" height="725">
       <div class="drawer-header"><div><p class="eyebrow">BEHIND THE CARTRIDGE SLOT</p><h2 id="tools-title">Make yourself at home.</h2></div><button id="tools-close" class="close-button" aria-label="Close cartridge and settings">&times;</button></div>
       <div id="drawer-notice-host"></div>
       <button id="native-open" class="button button-secondary" aria-haspopup="dialog" aria-controls="frame-host" disabled>Advanced EmulatorJS settings</button>
@@ -146,6 +151,38 @@
       <h3>Take a backup</h3><p>Export captures the current session, not the entire slot collection, to a <strong>.bba-save</strong> file. Select the matching ROM before importing. Imports replace the running session and selected manual slot, leaving other manual slots intact. Backups depend on the exact ROM bytes and EmulatorJS 4.2.3 / mGBA; they are not other emulators' .sav files.</p>
       <p class="help-warning">Saves and the current cartridge belong to this browser profile and website origin. Cleared or evicted site data and private browsing can remove them. Export regularly. The current ROM is remembered locally when storage is available; nothing is uploaded.</p>
       <p class="fineprint">Independent player, not affiliated with Nintendo. Internet is required for the pinned third-party runtime, which receives normal network metadata and executes with this site's privileges. No offline guarantee, accounts or cloud synchronization.</p>
+    </dialog>
+    <div id="ds-runtime-mount" class="ds-runtime-source" aria-hidden="true"></div>
+    <dialog id="ds-tools" class="tools-drawer ds-tools" aria-labelledby="ds-title">
+      <img class="panel-logo" src="./assets/ds-logo.png" alt="BowserBOY DS chrome neon emblem" width="2149" height="732">
+      <div class="drawer-header"><div><p class="eyebrow">A SECOND CONSOLE. THE SAME TABLE.</p><h2 id="ds-title">BowserBOY DS</h2></div><button id="ds-close" class="close-button" aria-label="Close DS cartridges">&times;</button></div>
+      <p class="fineprint">Local prototype / Nintendo DS direct boot / EmulatorJS 4.2.3 + DeSmuME. Not a replacement for the GBA.</p>
+      <p id="ds-status" class="ds-status" role="status" aria-live="polite">Insert a DS cartridge or try the original Twin Lab demo.</p>
+      <section class="drawer-section">
+        <h3>Insert a DS game card</h3>
+        <p id="ds-game" class="fineprint">No DS cartridge inserted. Uncompressed .nds, up to 512 MB.</p>
+        <button id="ds-upload" class="button button-primary">Choose a DS .nds ROM</button>
+        <input id="ds-rom-file" type="file" accept=".nds" hidden>
+        <button id="ds-demo" class="text-button">Try Twin Lab / original DS homebrew</button>
+        <p class="fineprint">Or drop one .nds file onto the desk. Files remain on your device. No commercial games, BIOS or firmware are supplied.</p>
+        <button id="ds-cancel" class="button button-secondary" hidden>Cancel DS launch</button>
+        <div class="button-pair"><button id="ds-power" class="button button-secondary" disabled>Power on DS</button><button id="ds-pause" class="button button-secondary" disabled>Pause DS</button></div>
+      </section>
+      <section class="drawer-section">
+        <h3>DS progress / separate from GBA</h3>
+        <p class="fineprint">One checkpoint per exact ROM, automatically saved every 30 seconds while playing. Choosing the same ROM resumes it. Power on after power off boots from in-game save data, not the checkpoint. ROM selection is not remembered across reloads.</p>
+        <div class="button-pair"><button id="ds-save" class="button button-primary" disabled>Save checkpoint</button><button id="ds-restore" class="button button-secondary" disabled>Restore checkpoint</button></div>
+        <div class="button-pair"><button id="ds-export" class="button button-secondary" disabled>Export checkpoint</button><button id="ds-import" class="button button-secondary" disabled>Import checkpoint</button></div>
+        <input id="ds-backup-file" type="file" accept=".bbds-save" hidden>
+        <p class="fineprint">Browser storage can be cleared or evicted. Export .bbds-save regularly. GBA .bba-save and raw .sav files are not DS checkpoint imports.</p>
+      </section>
+      <section class="drawer-section">
+        <h3>Two screens. A real touchscreen.</h3>
+        <p class="section-copy">Pick up DS to play. Click, tap or drag on its lower physical LCD to use the stylus. The slim lime stylus is clipped to the shell; touch is sent from your pointer.</p>
+        <p class="fineprint">Arrows = D-pad / Z = A / X = B / C = X / V = Y / A = L / S = R / Enter = Start / left Shift = Select. Click the scene for keyboard focus. DS keys are fixed in this prototype; GBA remapping is unchanged.</p>
+        <div class="setting-row"><label for="ds-mute">Mute DS audio</label><input id="ds-mute" type="checkbox" disabled></div>
+        <p class="fineprint">Selecting the other console pauses this one. Single-threaded WebAssembly needs internet on first load, but no isolation headers or backend. DS games can be CPU-heavy; phone speed and commercial-game compatibility are not guaranteed. DSi, microphone, lid gestures, multiplayer and BIOS-menu boot are not implemented. Unsupported ROMs and runtime/download errors are reported here.</p>
+      </section>
     </dialog>
     </main>
   </body>

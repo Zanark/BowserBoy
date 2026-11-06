@@ -10,28 +10,87 @@ status remains a separate verification claim.
 
 ## Website identity, console identity and future direction
 
-BowserBOY is the website and shared tabletop. BowserBOY ADVANCED is its one
-implemented console: the current GBA handheld. Its supplied purple artwork
+BowserBOY is the website and shared tabletop. BowserBOY ADVANCED is its
+published GBA console. Its supplied purple artwork
 still reads ADVANCE. That artwork is not the website's chrome logo.
 
 | Surface | Asset or implementation | Current ownership |
 |---|---|---|
-| Table header, tools/settings panels, README lead | `assets/website-logo.png` | BowserBOY chrome identity |
+| Table header and README lead | `assets/website-logo.png` | BowserBOY chrome identity |
+| GBA tools and native settings | `assets/logo.png` | Static Advance identity, not the animated Inspect header |
 | Inspection header | `assets/inspection-logo.png`, explicitly copied from the approved README APNG | Purple console identity with orbiting stars; static `assets/logo.png` under reduced motion |
 | GBA rear shell and idle/loading/startup LCD | `assets/logo.png` through `src/brand.js` | Original purple console identity |
 | GBA bezel and LCD-fullscreen bezel | Letter-only metallic texture | Console presentation, not website branding |
+| DS tools/Inspect, loading LCD and rear lid | `assets/ds-logo.png` | Latest supplied transparent DS identity; no inner-lid emblem |
 
-More consoles on the table are planned. There is no console picker, second
-emulator core or multi-console save model today. Do not interpret decorative
-cartridges as implemented consoles. The current single-console lifecycle below
-is intentionally unchanged; future support needs its own requirements and
-qualification rather than speculative abstractions in this branding update.
+The local DS prototype adds a separate model and stylus beside GBA, a console
+selector and independent DeSmuME session. Decorative cartridges are still
+not a downloadable game library. This working-tree addition is not deployed.
 
-The GitHub repository remains `Zanark/BowserBoyAdvance` at this documentation
-refresh. The owner will rename it to BowserBOY; current links and the local
-checkout retain their real paths until that separate action is performed.
+The repository is `Zanark/BowserBoy`; historical Pages links and the local
+checkout name remain `BowserBoyAdvance`.
 
-## One static site, one active cartridge
+## DS extension: separate consoles, one active core
+
+`src/ds-handheld.js` constructs the second clamshell, two LCD meshes,
+buttons, stylus and insertable card; it does not replace `view.model` (GBA).
+`src/scene.js` selects the active model for framing/inspection/picking.
+`src/app.js` serializes console selection, releases held inputs and pauses the
+inactive core. Each retained session has its own iframe/message session ID.
+
+The DS has a 110-degree opening and a separate presentation quaternion that
+keeps both LCDs readable. Its table pose faces the lamp, rests on underside
+rubber feet and clears the loose cartridges. Pickup remains over its own
+side of the desk. Inspection invalidation compares the active root's identity,
+position and quaternion, rather than always watching the GBA.
+
+The physical shell uses #2A9D98 teal, metalness .80, roughness .35, deterministic
+fine-grain roughness/bump and clearcoat. Lime hinge/stylus plastic is dielectric
+(.40 roughness); blue D-pad and lime convex controls use .45 roughness.
+Deep-blue slot/power trim uses .25 roughness and .50 metalness.
+The rear lid's two square recesses are extruded holes with inset floors;
+the supplied project emblem remains separate and rear-only.
+
+A 128px cube probe captures the actual existing room with both consoles hidden,
+then PMREM filters the reflection for DS paint only. Paint reflection strength
+is 3.5; lighting/background, GBA materials and renderer resolution are unchanged.
+Pose/light changes invalidate the probe; replacement maps are disposed.
+The first render starts only after DS storage initialization. Initial shader
+compilation otherwise blocked IndexedDB events beyond its unchanged 5s deadline.
+
+`src/ds-controller.js` owns DS UI, launch/cancel, lifecycle, control projection,
+touch raycasts, capture, checkpointing and 30-second autosave.
+`src/ds-cartridge.js` validates original-DS CPU ranges, content identity,
+native/display regions and `.bbds-save` binary envelopes.
+`src/ds-store.js` uses `bowserboy-ds`, separate from GBA's database.
+Keys include `emulatorjs-4.2.3-desmume` plus ROM SHA-256.
+
+The shared `src/player.js` adapter defaults to GBA; an explicit DS init selects
+non-threaded DeSmuME with external BIOS disabled. Two animation frames after
+the native start callback allow the first real framebuffer to exist.
+Native dimensions must be 256x384, stacked top/bottom with no gap.
+WebGL presentation may be an integer multiple; the controller copies its upper
+and lower halves into two 256x192 textures. Lower-mesh UV coordinates map to
+native 256x192 stylus coordinates, then the adapter dispatches mouse events at
+the corresponding lower half of the runtime canvas. Origin, frame source and
+session identity are checked on both sides.
+
+The DS database stores one validated checkpoint per ROM, not ROM files.
+Portable `.bbds-save` files contain magic `BBDS0001`, little-endian metadata
+length, UTF-8 JSON identities/lengths/checksums, then binary state and optional
+battery data. State is limited to 64 MiB, battery data to 16 MiB. Imports
+validate length, runtime, ROM and SHA-256 before restore.
+Power off captures state but Power on uses battery-only direct boot;
+reselecting the same ROM resumes the stored checkpoint.
+
+`scripts/demo-ds-rom.mjs` generates original **Twin Lab** ARM9/ARM7 homebrew
+at build/serve time. ARM9 draws both LCDs and a button-controlled marker;
+ARM7 reads the touchscreen over SPI and shares pen coordinates with ARM9.
+No manufacturer logo array, BIOS, firmware or third-party game bytes are
+included. Actual DeSmuME boot/input/stylus verification is bounded by
+`tests/browser/ds.spec.mjs`, not a commercial compatibility claim.
+
+## Existing GBA cartridge lifecycle
 
 The application is vanilla HTML, CSS and JavaScript modules, with pinned
 Three.js 0.186.1 for real-time 3D graphics. There is no

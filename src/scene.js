@@ -2,17 +2,24 @@ import * as THREE from 'three';
 import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, createWood } from './handheld.js';
 import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
 import { brandImage } from './brand.js';
+import { createDsHandheld } from './ds-handheld.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
 const playPosition = new THREE.Vector3(0, 3.5, 0);
 const tablePosition = new THREE.Vector3(-.6, .68, .4);
+const dsTablePosition = new THREE.Vector3(10.3, .32, -7.2);
+const dsTableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.4));
+const dsPlayPosition = new THREE.Vector3(10.3, 5.1, 3.5);
+const dsPlayQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.45, -.18, 0));
 
 export class HandheldScene {
-  constructor(host, { onTools, onView, onError, onLamp }) {
+  constructor(host, { onTools, onView, onError, onLamp, onConsole }) {
     this.host = host;
     this.onView = onView;
     this.onError = onError;
+    this.onConsole = onConsole;
+    this.console = 'gba';
     this.mode = 'table';
     this.nativeBusy = false;
     this.reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -75,11 +82,23 @@ export class HandheldScene {
       this.scene.add(cartridge);
     }
     this.model = createHandheld();
+    this.model.root.userData.console = 'gba';
     this.screenCurved = true;
     this.screenIllumination = new ScreenIllumination(this.model.screen);
     this.scene.add(this.model.root);
     this.model.root.position.copy(tablePosition);
     this.model.root.quaternion.copy(tableQuaternion);
+    this.ds = createDsHandheld();
+    this.ds.root.position.copy(dsTablePosition);
+    this.ds.root.quaternion.copy(dsTableQuaternion);
+    this.scene.add(this.ds.root);
+    this.dsReflectionCube = new THREE.WebGLCubeRenderTarget(128, { type: THREE.HalfFloatType });
+    this.dsReflectionCamera = new THREE.CubeCamera(.1, 1500, this.dsReflectionCube);
+    this.dsReflectionFilter = new THREE.PMREMGenerator(this.renderer);
+    this.dsReflectiveMaterials = new Set();
+    this.ds.root.traverse(object => {
+      if (object.material?.isMeshPhysicalMaterial) this.dsReflectiveMaterials.add(object.material);
+    });
     this.pressed = new Set();
     this.controlGroups = [...new Set([...this.model.controls.values()].map(({ mesh }) => mesh))]
       .filter((mesh) => mesh !== this.model.controls.get('power').mesh)
@@ -97,10 +116,18 @@ export class HandheldScene {
       this.canvas.focus({ preventScroll: true });
       const hit = this.pick(event);
       if (!this.transition && hit?.object.userData.lampToggle) { onLamp(); return; }
+      if (this.mode === 'table' && !this.transition && hit) {
+        let object = hit.object;
+        while (object && !object.userData.console) object = object.parent;
+        if (object?.userData.console && this.console !== object.userData.console) {
+          onConsole?.(object.userData.console);
+          return;
+        }
+      }
       if (this.mode === 'inspecting') {
         this.inspectionPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
         if (this.inspectionPointers.size === 1) {
-          this.drag = { id: event.pointerId, x: event.clientX, y: event.clientY, rotation: this.model.root.quaternion.clone() };
+          this.drag = { id: event.pointerId, x: event.clientX, y: event.clientY, rotation: this.activeModel.root.quaternion.clone() };
         } else if (this.inspectionPointers.size === 2) {
           const [a, b] = this.inspectionPointers.values();
           this.pinch = { distance: Math.hypot(a.x - b.x, a.y - b.y), zoom: this.zoom };
@@ -124,7 +151,7 @@ export class HandheldScene {
       } else if (this.drag?.id === event.pointerId) {
         const yaw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), (event.clientX - this.drag.x) * .008);
         const pitch = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), (event.clientY - this.drag.y) * .008);
-        this.model.root.quaternion.copy(yaw.multiply(pitch).multiply(this.drag.rotation));
+        this.activeModel.root.quaternion.copy(yaw.multiply(pitch).multiply(this.drag.rotation));
       } else {
         this.canvas.style.cursor = this.mode === 'inspecting' ? 'grab' : this.pick(event) ? 'pointer' : 'default';
       }
@@ -136,7 +163,7 @@ export class HandheldScene {
         this.pinch = null;
         if (this.inspectionPointers.size === 1) {
           const [id, point] = this.inspectionPointers.entries().next().value;
-          this.drag = { id, ...point, rotation: this.model.root.quaternion.clone() };
+          this.drag = { id, ...point, rotation: this.activeModel.root.quaternion.clone() };
         }
       });
     }
@@ -151,11 +178,11 @@ export class HandheldScene {
       if (rotations[event.code]) {
         event.preventDefault();
         const [pitch, yaw] = rotations[event.code];
-        this.model.root.quaternion.premultiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch, yaw, 0)));
+        this.activeModel.root.quaternion.premultiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch, yaw, 0)));
       } else if (['Equal', 'NumpadAdd', 'Minus', 'NumpadSubtract', 'Home'].includes(event.code)) {
         event.preventDefault();
         if (event.code === 'Home') {
-          this.model.root.quaternion.copy(playQuaternion);
+          this.activeModel.root.quaternion.copy(this.console === 'ds' ? dsPlayQuaternion : playQuaternion);
           this.setZoom(1);
         } else this.setZoom(this.zoom * (['Equal', 'NumpadAdd'].includes(event.code) ? .9 : 1.1));
       }
@@ -172,7 +199,20 @@ export class HandheldScene {
     this.resize();
     this.camera.position.copy(this.cameraTarget);
     this.lookAt.copy(this.lookTarget);
-    this.setScreenFullscreen(false);
+  }
+
+  get activeModel() { return this.console === 'ds' ? this.ds : this.model; }
+
+  selectConsole(system) {
+    if (!['gba', 'ds'].includes(system)) throw new Error('Unknown console.');
+    if (system === this.console) { this.setView('playing'); return; }
+    this.activeModel.root.position.copy(this.console === 'ds' ? dsTablePosition : tablePosition);
+    this.activeModel.root.quaternion.copy(this.console === 'ds' ? dsTableQuaternion : tableQuaternion);
+    this.transition = this.cameraMotion = null;
+    this.console = system;
+    this.host.dataset.console = system;
+    this.mode = 'table';
+    this.setView('playing');
   }
 
   setScreenFullscreen(focused) {
@@ -189,7 +229,7 @@ export class HandheldScene {
     const bounds = this.canvas.getBoundingClientRect();
     this.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.raycaster.setFromCamera(this.pointer, this.camera);
-    return this.raycaster.intersectObjects([this.model.root, this.lamp.root], true)[0];
+    return this.raycaster.intersectObjects([this.model.root, this.ds.root, this.lamp.root], true)[0];
   }
 
   resize() {
@@ -206,7 +246,7 @@ export class HandheldScene {
       this.cameraMotion = null;
       this.camera.position.copy(this.cameraTarget);
       this.lookAt.copy(this.lookTarget);
-      if (this.mode === 'playing') this.model.root.position.copy(this.playTarget);
+      if (this.mode === 'playing') this.activeModel.root.position.copy(this.playTarget);
     }
   }
 
@@ -214,7 +254,15 @@ export class HandheldScene {
     if (this.mode === 'table') {
       const scale = Math.max(1, .8 / this.camera.aspect);
       this.cameraTarget = new THREE.Vector3(2, 27, 42).multiplyScalar(scale);
-      this.lookTarget = new THREE.Vector3(-1, 5, 0);
+      this.lookTarget = new THREE.Vector3(4.2, 4, -1.5);
+    } else if (this.console === 'ds') {
+      const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
+      this.playTarget = dsPlayPosition.clone();
+      const padding = this.width < 600 ? 300 : 180;
+      const distance = Math.max(12 / this.camera.aspect, 9.8 *
+        this.height / Math.max(160, this.height - padding)) / (2 * tangent);
+      this.lookTarget = dsPlayPosition.clone().add(new THREE.Vector3(.15, -.5, 0));
+      this.cameraTarget = this.lookTarget.clone().add(new THREE.Vector3(0, 0, distance * this.zoom / (this.mode === 'playing' ? this.playZoom * 2 : 1)));
     } else {
       const tangent = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
       const padding = 180;
@@ -246,7 +294,7 @@ export class HandheldScene {
   }
 
   reframeCartridge() {
-    if (this.mode !== 'playing') return;
+    if (this.mode !== 'playing' || this.console !== 'gba') return;
     this.updateCameraTargets();
     if (this.transition) this.transition.targetPosition = this.playTarget;
     this.cameraMotion = {
@@ -277,15 +325,17 @@ export class HandheldScene {
     this.inspectionPointers.clear();
     this.pinch = null;
     this.mode = mode;
+    this.dsReflectionsDirty = true;
     this.cameraMotion = null;
     this.zoom = 1;
     this.updateCameraTargets();
     this.transition = {
       started: performance.now(), duration: this.reducedMotion.matches ? 0 : 850,
-      position: this.model.root.position.clone(), rotation: this.model.root.quaternion.clone(),
+      position: this.activeModel.root.position.clone(), rotation: this.activeModel.root.quaternion.clone(),
       camera: this.camera.position.clone(), look: this.lookAt.clone(),
-      targetPosition: mode === 'table' ? tablePosition : this.playTarget,
-      targetRotation: mode === 'table' ? tableQuaternion : playQuaternion,
+      targetPosition: mode === 'table' ? (this.console === 'ds' ? dsTablePosition : tablePosition) : this.playTarget,
+      targetRotation: mode === 'table' ? (this.console === 'ds' ? dsTableQuaternion : tableQuaternion) :
+        (this.console === 'ds' ? dsPlayQuaternion : playQuaternion),
     };
     this.host.dataset.view = 'moving';
     this.onView(mode, true);
@@ -303,6 +353,7 @@ export class HandheldScene {
   }
 
   setLamp(enabled) {
+    this.dsReflectionsDirty = true;
     this.changed = true;
     this.lampOn = enabled;
     this.lamp.light.visible = enabled;
@@ -314,10 +365,36 @@ export class HandheldScene {
   }
 
   setRoomLights(enabled) {
+    this.dsReflectionsDirty = true;
     this.changed = true;
     this.roomLightsOn = enabled;
     this.roomLighting.visible = enabled;
     this.scene.background.set(enabled ? '#201a16' : '#000000');
+  }
+
+  updateDsReflections() {
+    const models = [this.model.root, this.ds.root];
+    const visibility = models.map(model => model.visible);
+    const toneMapping = this.renderer.toneMapping;
+    try {
+      for (const model of models) model.visible = false;
+      this.ds.root.getWorldPosition(this.dsReflectionCamera.position);
+      this.renderer.toneMapping = THREE.NoToneMapping;
+      this.renderer.shadowMap.needsUpdate = true;
+      this.dsReflectionCamera.update(this.renderer, this.scene);
+      const reflection = this.dsReflectionFilter.fromCubemap(this.dsReflectionCube.texture);
+      for (const material of this.dsReflectiveMaterials) {
+        material.envMap = reflection.texture;
+        material.needsUpdate = true;
+      }
+      this.dsReflection?.dispose();
+      this.dsReflection = reflection;
+      this.dsReflectionsDirty = false;
+    } finally {
+      for (const [index, model] of models.entries()) model.visible = visibility[index];
+      this.renderer.toneMapping = toneMapping;
+      this.renderer.shadowMap.needsUpdate = true;
+    }
   }
 
   setControl(action, pressed) {
@@ -428,8 +505,8 @@ export class HandheldScene {
       const transition = this.transition;
       const fraction = transition.duration ? Math.min(1, (time - transition.started) / transition.duration) : 1;
       const ease = fraction * fraction * (3 - 2 * fraction);
-      this.model.root.position.lerpVectors(transition.position, transition.targetPosition, ease);
-      this.model.root.quaternion.slerpQuaternions(transition.rotation, transition.targetRotation, ease);
+      this.activeModel.root.position.lerpVectors(transition.position, transition.targetPosition, ease);
+      this.activeModel.root.quaternion.slerpQuaternions(transition.rotation, transition.targetRotation, ease);
       this.camera.position.lerpVectors(transition.camera, this.cameraTarget, ease);
       this.lookAt.lerpVectors(transition.look, this.lookTarget, ease);
       if (fraction === 1) {
@@ -479,6 +556,7 @@ export class HandheldScene {
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
+    this.dsController?.paint(time);
     if (!this.screenIllumination.failed) {
       const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
       try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, lightDelta, !!this.source); }
@@ -488,11 +566,14 @@ export class HandheldScene {
         this.onError(new Error(`LCD light sampling failed: ${error.message}. The game is retained; reload to retry lighting.`));
       }
     }
-    const poseChanged = !this.lastPosition?.equals(this.model.root.position) ||
-      !this.lastRotation?.equals(this.model.root.quaternion) || !this.lastCamera?.equals(this.camera.position);
-    if (!this.source && !this.cartridgeMotion && !this.changed && !poseChanged && !buttonsMoving &&
+    const activeRoot = this.activeModel.root;
+    const poseChanged = this.lastModel !== activeRoot || !this.lastPosition?.equals(activeRoot.position) ||
+      !this.lastRotation?.equals(activeRoot.quaternion) || !this.lastCamera?.equals(this.camera.position);
+    if (!this.source && !this.dsController?.running && !this.dsController?.inserting && !this.cartridgeMotion && !this.changed && !poseChanged && !buttonsMoving &&
         !adapting && this.screenIllumination.settled) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
+    // Sample the actual room once per settled pose/light change, only for DS paint.
+    if (this.dsReflectionsDirty && !this.transition) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
     if (cartridgeMotion) {
       cartridgeMotion.elapsed += cartridgeStep;
@@ -500,14 +581,15 @@ export class HandheldScene {
     }
     this.lastPaint = time;
     this.renderedLastFrame = true;
-    this.lastPosition = this.model.root.position.clone();
-    this.lastRotation = this.model.root.quaternion.clone();
+    this.lastModel = activeRoot;
+    this.lastPosition = activeRoot.position.clone();
+    this.lastRotation = activeRoot.quaternion.clone();
     this.lastCamera = this.camera.position.clone();
     this.changed = false;
     for (const [id, control] of this.model.controls) {
       const button = id === 'power' ? document.getElementById('hardware-power') : document.querySelector(`[data-control="${id}"]`);
       if (!button) continue;
-      button.hidden = this.mode !== 'playing' || !!this.transition;
+      button.hidden = this.console !== 'gba' || this.mode !== 'playing' || !!this.transition;
       if (button.hidden) continue;
       const point = this.project(control.anchor);
       const distance = this.camera.position.distanceTo(control.anchor.getWorldPosition(new THREE.Vector3()));
@@ -518,11 +600,16 @@ export class HandheldScene {
       button.style.width = `${Math.max(minimum, control.width * scale)}px`;
       button.style.height = `${Math.max(minimum, control.height * scale)}px`;
     }
+    this.dsController?.projectControls();
   }
 
   dispose() {
     this.renderer.setAnimationLoop(null);
     this.observer.disconnect();
+    this.dsReflection?.dispose();
+    this.dsReflectionCube.dispose();
+    this.dsReflectionFilter.dispose();
+    for (const material of this.dsReflectiveMaterials) material.bumpMap?.dispose();
     this.scene.traverse((object) => {
       object.geometry?.dispose();
       for (const material of Array.isArray(object.material) ? object.material : [object.material]) {

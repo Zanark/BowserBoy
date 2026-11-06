@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { siteFiles, siteSource } from './site-files.mjs';
 import { createDemoRom } from './demo-rom.mjs';
+import { createDsDemoRom } from './demo-ds-rom.mjs';
 
 const args = process.argv.slice(2);
 const value = (flag, fallback) => args.includes(flag) ? args[args.indexOf(flag) + 1] : fallback;
@@ -14,7 +15,8 @@ if (!Number.isInteger(port) || port < 1 || port > 65535 || !/^\/(?:[\w-]+\/)*$/.
 const dist = args.includes('--dist');
 const files = new Set((await siteFiles()).map((file) => file.replaceAll('\\', '/')));
 files.add('assets/pixel-lab.gba');
-const types = { html: 'text/html', css: 'text/css', js: 'text/javascript', svg: 'image/svg+xml', png: 'image/png', txt: 'text/plain', gba: 'application/octet-stream' };
+files.add('assets/twin-lab.nds');
+const types = { html: 'text/html', css: 'text/css', js: 'text/javascript', svg: 'image/svg+xml', png: 'image/png', txt: 'text/plain', gba: 'application/octet-stream', nds: 'application/octet-stream' };
 
 createServer(async (request, response) => {
   try {
@@ -26,6 +28,7 @@ createServer(async (request, response) => {
     const relative = path.startsWith(basePath) ? path.slice(basePath.length) || 'index.html' : null;
     if (!files.has(relative)) { response.writeHead(404).end('Not found'); return; }
     const data = !dist && relative === 'assets/pixel-lab.gba' ? createDemoRom() :
+      !dist && relative === 'assets/twin-lab.nds' ? createDsDemoRom() :
       await readFile(dist ? join('dist', ...relative.split('/')) : siteSource(join(...relative.split('/'))));
     response.writeHead(200, {
       'Content-Type': `${types[relative.split('.').pop()]}${relative.endsWith('.html') ? '; charset=utf-8' : ''}`,

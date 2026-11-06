@@ -8,7 +8,9 @@ export const powerOn = async (page) => {
   await page.locator('#hardware-power').click();
 };
 
-export const nativeFrame = (page) => page.frames().find((frame) => frame.url().endsWith('player.html')).evaluate(async () => {
+export const nativeFrame = async (page) => {
+  const frame = await (await page.locator('#runtime-mount iframe').elementHandle()).contentFrame();
+  return frame.evaluate(async () => {
   const png = await window.EJS_emulator.gameManager.screenshot();
   const bitmap = await createImageBitmap(new Blob([png], { type: 'image/png' }));
   const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d', { willReadFrequently: true });
@@ -25,6 +27,7 @@ export const nativeFrame = (page) => page.frames().find((frame) => frame.url().e
   const ready = bitmap.width === 240 && bitmap.height === 160 && count === 64 && right - left === 7 && bottom - top === 7;
   bitmap.close();
   return { png: [...png], ready, left };
-});
+  });
+};
 
 export const demoReady = (page) => expect.poll(async () => (await nativeFrame(page)).ready).toBe(true);

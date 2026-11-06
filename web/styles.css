@@ -39,11 +39,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 #hardware-targets button:focus-visible { outline: 2px solid #f4edc1; outline-offset: 3px; }
 .scene-hint { position: absolute; bottom: max(104px, calc(env(safe-area-inset-bottom) + 88px)); left: 16px; right: 16px; margin: 0; text-align: center; color: #bbc3cc; font: 11px/1.7 var(--sans); pointer-events: none; text-shadow: 0 1px 5px #000; }
-.scene-actions { position: absolute; bottom: max(44px, calc(env(safe-area-inset-bottom) + 28px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; border: 1px solid #c3a0ed40; border-radius: 18px; background: linear-gradient(150deg,#2c2139ef,#14121eee); box-shadow: 0 12px 35px #0008, inset 0 1px #e6ccff12; backdrop-filter: blur(20px); white-space: nowrap; z-index: 2; }
-.scene-actions button { position: relative; display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 10px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: #cdbfe0; transition: background .15s, box-shadow .15s; }
+.scene-actions { --dock-start: #2c2139ef; --dock-end: #14121eee; --dock-line: #c3a0ed40; --dock-ink: #cdbfe0; --dock-active: #b7a4ee20; --dock-bright: #e0d5ff; --dock-ring: #cdacff45; --dock-glow: #a763e51a; --dock-tooltip: #20192ef5; position: absolute; bottom: max(44px, calc(env(safe-area-inset-bottom) + 28px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; border: 1px solid var(--dock-line); border-radius: 18px; background: linear-gradient(150deg,var(--dock-start),var(--dock-end)); box-shadow: 0 12px 35px #0008, inset 0 1px var(--dock-ring); backdrop-filter: blur(20px); white-space: nowrap; z-index: 2; }
+.desk[data-console=ds] .scene-actions { --dock-start: #171a70ef; --dock-end: #080b35ee; --dock-line: #36d9ff70; --dock-ink: #b9dfff; --dock-active: #245bff45; --dock-bright: #eaf5ff; --dock-ring: #36d9ff55; --dock-glow: #245bff35; --dock-tooltip: #080b35f5; }
+.scene-actions button { position: relative; display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 10px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--dock-ink); transition: background .15s, box-shadow .15s; }
 .scene-actions svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.scene-actions button:hover:not(:disabled) { box-shadow: inset 0 0 0 1px #cdacff45, 0 0 18px #a763e51a; }
-.scene-actions button:hover::after, .scene-actions button:focus-visible::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 15px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 210px; white-space: normal; padding: 7px 10px; border: 1px solid #b18bd84d; border-radius: 8px; background: #20192ef5; color: #ede2ff; font: 11px/1.5 var(--sans); pointer-events: none; box-shadow: 0 5px 20px #0006; }
+.scene-actions button:hover:not(:disabled) { box-shadow: inset 0 0 0 1px var(--dock-ring), 0 0 18px var(--dock-glow); }
+.scene-actions button:hover::after, .scene-actions button:focus-visible::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 15px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 210px; white-space: normal; padding: 7px 10px; border: 1px solid var(--dock-line); border-radius: 8px; background: var(--dock-tooltip); color: var(--dock-bright); font: 11px/1.5 var(--sans); pointer-events: none; box-shadow: 0 5px 20px #0006; }
 .icon-badge { position: absolute; right: 3px; bottom: 1px; color: #f0d7ff; font: 8px var(--mono); background: #20172d; border-radius: 4px; padding: 1px 3px; }
 .scene-actions { width: max-content; max-width: calc(100vw - 8px); flex-wrap: wrap; }
 .dock-actions { display: contents; }
@@ -57,8 +58,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .speed-options button { flex: 1; min-height: 44px; border: 1px solid #9975bd55; border-radius: 10px; background: #33263f; font: 14px var(--mono); }
 .speed-options button[aria-pressed=true] { border-color: #bf99ed; background: #664688; box-shadow: 0 0 18px #aa66dd26; }
 .panel-logo { display: block; width: 240px; max-width: 80%; height: auto; margin: -4px 0 18px; }
+.console-picker { position: absolute; top: max(26px, env(safe-area-inset-top)); right: 24px; display: flex; gap: 6px; z-index: 4; }
+.console-picker button { min-height: 44px; padding: 8px 14px; background: #15252bd9; border: 1px solid #73bac266; border-radius: 12px; color: #c9e6ea; backdrop-filter: blur(12px); }
+.console-picker button[aria-pressed=true] { border-color: #b6df64; box-shadow: inset 0 0 16px #91db331a; color: #d3ef9a; }
+.console-picker span { display: block; font: 7px var(--mono); letter-spacing: 1px; }
+.console-picker button:disabled { opacity: .5; }
+#ds-open { display: none; }
+.desk[data-console=ds] #ds-open { display: grid; color: #c9ed71; }
+.desk[data-console=ds] :is(#quick-speed,#quick-controls,#quick-autosave,#quick-save,#quick-load,#quick-slots,#quick-restart,#quick-screen-fullscreen,#tools-open) { display: none; }
+.ds-runtime-source { position: fixed; top: 0; left: 0; width: 512px; height: 768px; opacity: 0; pointer-events: none; z-index: -1; }
+.ds-runtime-source iframe { display: block; width: 512px; height: 768px; border: 0; }
+.ds-tools { border-color: #73bac244; background: linear-gradient(155deg,#173842,#101b28 65%); }
+.ds-tools .button-primary { background: #326e7a; border-color: #75b9c3; }
+.ds-tools .button-primary:hover:not(:disabled) { background: #40818b; }
+.ds-tools .button-secondary { background: #1d384b; border-color: #76c3d144; }
+.ds-tools .text-button { color: #c9ed71; }
+.ds-tools .panel-logo { max-width: 100%; width: 340px; margin-bottom: 20px; }
+.ds-status { padding: 12px; border: 1px solid #73bac244; border-radius: 10px; background: #06222d; font-size: 11px; overflow-wrap: anywhere; }
+.ds-status.error { border-color: #e7aa85; background: #38252d; color: #ffd2be; }
 .tools-drawer > .panel-logo { margin-left: auto; margin-right: auto; }
-.scene-actions button:hover:not(:disabled), .scene-actions button[aria-pressed=true] { background: #b7a4ee20; color: #e0d5ff; }
+.scene-actions button:hover:not(:disabled), .scene-actions button[aria-pressed=true] { background: var(--dock-active); color: var(--dock-bright); }
 #lamp-toggle, #room-toggle { display: grid; }
 #lamp-toggle[aria-pressed=true], #room-toggle[aria-pressed=true] { color: #efd6a1; background: #e8bc6518; }
 .scene-actions button:disabled { opacity: .5; }
@@ -160,6 +179,8 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
 #screen-focus-close { position: absolute; top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #b18bd84d; border-radius: 12px; background: #20192ed9; color: #ede2ff; }
 #screen-focus-close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 600px) {
+  .console-picker { top: max(20px, env(safe-area-inset-top)); right: 12px; gap: 4px; }
+  .console-picker button { padding: 5px 9px; font-size: 11px; }
   .desk-heading { top: max(23px, env(safe-area-inset-top)); left: 18px; right: 18px; }
   .desk-heading h1 img { width: min(244px, calc(100vw - 130px)); }
   .desk-brand { width: min(244px, calc(100vw - 130px)); }

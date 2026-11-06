@@ -12,6 +12,7 @@
 | Create a GitHub Release manually | [Release workflow guide](releases/README.md#manual-github-releases) |
 | Current blockers and remaining work | [TODO index, Current pending work](../TODO/00_INDEX.todo) |
 | Playing, controls and local development | [Player/developer guide](GUIDE.md) |
+| Local separate-console DS prototype, controls and save limits | [DS instructions](GUIDE.md#nintendo-ds-local-prototype) |
 | Saves, recovery and portable backups | [Saving guide](SAVING.md) |
 | Current implementation and boundaries | [Architecture](ARCHITECTURE.md) |
 | Tests, actual deployment and public evidence | [Verification](VERIFICATION.md) |
@@ -29,7 +30,7 @@
 | `src/` | Application, native-runtime adapter, state/storage, controls and scene |
 | `assets/` | Runtime artwork and sprites; paths preserved |
 | `scripts/` | Allowlisted build/server/checks, original demo and media production |
-| `tests/unit/`, `tests/browser/` | Correctness checks using original Pixel Lab |
+| `tests/unit/`, `tests/browser/` | Correctness checks using original Pixel Lab (GBA) and Twin Lab (DS) |
 | `docs/`, `docs/images/` | Current guides, evidence and captioned showcase media |
 | `docs/book/` | Preserved first Markdown edition, second-edition additions and independent local production tooling |
 | `TODO/` | Stable numbered workstreams, index and development ledger |

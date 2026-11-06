@@ -12,15 +12,17 @@ See the [documentation/repository map](README.md) and
 ## Website and console names
 
 **BowserBOY** is the website/table, using the supplied chrome sparkle logo
-on the table and in tools/settings panels. **BowserBOY ADVANCED** is the first
+on the table. GBA tools/settings use the static Advance logo instead.
+**BowserBOY ADVANCED** is the first
 console: the current GBA handheld. Its original purple artwork still reads
 BowserBOY ADVANCE and stays unchanged on its rear and idle/loading/startup LCD.
-The physical bezel lettering also stays unchanged. Additional consoles on the
-table are planned, not implemented or selectable.
+The physical bezel lettering also stays unchanged. The local working tree now
+adds a separate **BowserBOY DS** metallic teal/lime console, clipped stylus and selector;
+this DS prototype has not been published to Pages.
 
-The owner will rename the GitHub repository separately. Until then the existing
-repository and Pages URLs remain valid; this branding change does not rename
-storage, modify saves, or move the local checkout.
+The repository is now `Zanark/BowserBoy`; historical Pages URLs and the local
+`BowserBoyAdvance` checkout name are retained. The DS does not rename or
+modify GBA storage.
 
 **Earlier release and picture provenance:** source `f5bc639` was independently verified
 live after the full 41-case hosted gate and exact 29-public-asset match.
@@ -62,14 +64,106 @@ header position. A soft
 silver highlight and glow sweep left to right for 1.8 seconds every six seconds.
 The shimmer pauses while hidden and is disabled for reduced-motion users.*
 
-**A little escape, on your desk.** BowserBOY currently offers one local-first
-GBA player inside an actual 3D indigo handheld, built for GitHub Pages.
+**A little escape, on your desk.** The published GBA player is inside an actual
+3D indigo handheld, built for GitHub Pages. The following GBA figures predate
+the local DS prototype described below.
 
 ![Current local-build table with chrome website branding, a white tripod lamp and movable tools](images/readme-table.png?v=storsegel-20261106)
 
-*The current-build desk: chrome BowserBOY header, first purple console and
+*The earlier GBA-only desk: chrome BowserBOY header, first purple console and
 clean STORSEGEL-style white shade and ash tripod. The other objects are
 cartridges, not additional consoles.*
+
+## Nintendo DS local prototype
+
+Start the existing development server with `npm run dev` and open
+**http://127.0.0.1:5173**. Both consoles share the desk but are separate models.
+Use the **GBA / DS** selector or click either console on the table.
+With DS selected, **DS cartridges** opens its own tools; **Escape** also opens
+them during play. Pick up, put down, Inspect, zoom and room/lamp controls
+operate on the selected console. Inspection drags repaint immediately.
+The table DS faces the lamp without covering the loose cartridges; its pickup
+and return path stay beside the GBA rather than passing through it.
+
+The latest shell specification supersedes the earlier royal-blue paint:
+**#2A9D98 teal, metalness 0.80, roughness 0.35**, with fine-grain bump/roughness
+and clearcoat. The D-pad is electric blue; face/system buttons, hinge caps and
+clipped stylus are lime. The clamshell opens to approximately 110 degrees.
+The supplied emblem stays on the rear lid only; two small rear square
+recesses are actual geometry. GBA settings use the static Advance logo and
+the action dock changes from GBA purple to DS blue/cyan.
+
+The existing warm lamp, optional **Room** lighting and background are unchanged:
+no studio-light rig or white backdrop was added. Those warm sources still
+shift the teal appearance and leave shadowed faces dark. Exact material
+values do not imply a lighting-independent match to the white-background
+reference photographs.
+
+Choose **Try Twin Lab** for the original dual-CPU homebrew or **Choose .nds**.
+You can also drop an authorized uncompressed `.nds` file onto the page.
+Only original DS headers with valid ARM9/ARM7 ranges and files from
+512 bytes through 512 MiB are accepted. DSi-enhanced/DSi-only files are
+rejected explicitly; filename/header checks do not certify game compatibility.
+Selecting a cartridge powers on the DS. First launch downloads the pinned
+non-threaded EmulatorJS 4.2.3 DeSmuME runtime. External BIOS and BIOS-menu boot
+are disabled. Twin Lab boots without supplied BIOS/firmware, not proof that
+every game will. No commercial games are included or used as test fixtures.
+
+| DS input | Keyboard / pointer |
+|---|---|
+| D-pad | Arrow keys |
+| A / B | Z / X |
+| X / Y | C / V |
+| L / R | A / S |
+| Start / Select | Enter / left Shift |
+| Touchscreen | Click or touch and drag the lower physical LCD |
+
+Projected buttons follow the physical DS caps. Pointer release, cancellation
+and focus loss release inputs. DS keyboard mappings are fixed in this
+prototype; GBA remapping does not change them. Native gamepad behavior is not
+independently qualified. Twin Lab's upper marker moves with the D-pad;
+press/drag the lower LCD to draw yellow marks.
+
+Each native LCD is 256x192. The adapter verifies stacked, gap-free 256x384
+native output, separately from its integer-scaled WebGL canvas, then copies
+the two halves to the matching physical screens. Unsupported layouts fail
+explicitly. This does not lower the Three.js renderer's resolution.
+
+**Progress:** the independent `bowserboy-ds` IndexedDB database stores one
+checkpoint per exact ROM SHA-256 and runtime identity. Running, unpaused
+sessions auto-save every 30 seconds; **Save checkpoint** saves immediately.
+**Restore checkpoint** replaces current progress with that stored checkpoint.
+Reopening the same ROM after a page reload resumes it; the ROM itself is
+not persisted. Selecting another cartridge saves the old session first.
+Storage errors are visible, disable browser checkpoint controls, and leave
+**Export checkpoint** available while the runtime is healthy.
+
+**Portable backup:** export downloads `.bbds-save` with binary core state,
+optional in-game save data, ROM/runtime identities and SHA-256 checksums.
+Load the matching ROM before importing and confirm replacement. Wrong ROMs,
+GBA backups, raw `.sav` files, corrupted data and incompatible runtime
+identities are rejected. There are no accounts or cloud saves. Browser
+storage is tied to the exact origin; export before clearing it or moving
+between local and public URLs.
+
+**Power and selection:** Pause preserves the running instance. Power off
+checkpoints and removes the DS iframe; Power on starts a fresh core using
+retained in-game save data, not the instant checkpoint. Selecting the same ROM
+instead resumes its stored checkpoint. Switching consoles checkpoints and
+pauses the inactive DS or pauses the inactive GBA; switching back resumes it
+without replacing either ROM. GBA and DS databases/backups are never mixed.
+With DS storage unavailable, switching to GBA retains the paused DS only in
+memory and warns that export is needed; saving/replacing/powering off is
+blocked rather than silently discarding progress.
+
+**Scope:** local, unpublished prototype for original DS direct boot.
+No DSi, wireless/multiplayer, firmware-menu boot, offline-first guarantee or
+universal commercial-game compatibility. The GBA's CRT presets, advanced
+settings, three save slots, speed controls and LCD-only fullscreen are not
+promised for DS. Desktop Edge and a 390px responsive viewport are checked;
+real-phone touch/performance, microphone/camera support, commercial
+compatibility and long-duration audio remain unqualified. Runtime CDN code
+still executes with the page's origin privileges.
 
 ## Lights out
 

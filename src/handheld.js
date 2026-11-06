@@ -25,9 +25,11 @@ function solid(shape, depth, bevel = .035) {
   return geometry;
 }
 
-function box(width, height, depth, radius = .08) {
-  return solid(roundedShape(width, height, radius), depth);
+function box(width, height, depth, radius = .08, bevel = .035) {
+  return solid(roundedShape(width, height, radius), depth, bevel);
 }
+
+export { box as roundedBox, roundedShape };
 
 function crtShape(width, height) {
   const shape = new THREE.Shape();

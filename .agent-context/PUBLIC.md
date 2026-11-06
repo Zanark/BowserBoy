@@ -1,8 +1,9 @@
 # BowserBOY contributor context
 
-BowserBOY is a static browser GBA player with an interactive Three.js desk.
-The runtime is EmulatorJS/mGBA; saves belong to the browser origin.
-Only the original Pixel Lab demo is included in the website build.
+BowserBOY is a static browser emulator with separate GBA and DS consoles on
+an interactive Three.js desk. EmulatorJS runs mGBA and DeSmuME in independent
+iframes; saves belong to separate browser-origin databases. Only the original
+Pixel Lab (GBA) and Twin Lab (DS) demos are included in the website build.
 
 ## Source and verification
 
@@ -24,8 +25,16 @@ existing exact-source release gate. Historical qualification is not a new
 successful run. A local book or completed release workflow is not a published
 GitHub Release.
 
-Phone performance, DS emulation and boxed cartridges remain deferred in
-workstreams 78-80. Creating their issues does not authorize implementation.
+The owner subsequently authorized a local DS prototype in workstream79.
+Actual dual-screen/input/save/lifecycle tests and a390px viewport pass;
+physical-phone performance, commercial compatibility and owner approval remain
+unqualified. The later reference remodel uses metallic teal #2A9D98/.80/.35,
+a110-degree hinge, blue D-pad, lime controls, clipped stylus and rear-only emblem.
+Live inspection repaint, table/pickup clearance, static GBA settings branding
+and console-themed dock have a focused9-case browser gate. Existing desk
+lighting/background and full resolution are retained.
+This prototype is not pushed/deployed. Phone-performance work78
+and boxed cartridges80 remain deferred.
 Supplied demo media permissions are not blanket rights for new ROMs or testing.
 
 Keep all eight workstream fields, evidence distinct from human approval, and

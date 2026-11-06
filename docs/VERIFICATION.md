@@ -9,6 +9,85 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-06
 
+### Current local DS reference remodel
+
+The rejected first model is superseded by the owner's later teal material
+specification: #2A9D98, .80 metalness, .35 roughness, fine-grain clearcoat;
+blue D-pad, lime controls, white labels, deep-blue slot trim and a clipped
+stylus. The opening is approximately 110 degrees. The existing desk lighting,
+background, GBA materials and full renderer resolution remain unchanged.
+Warm lighting still affects perceived color and shadow brightness; this is
+not a claim of a white-studio-render match or owner aesthetic approval.
+
+One focused Edge gate passes **9 cases in 1.8m**: all four DS cases plus GBA
+dock mouse/touch movement, animated/reduced-motion Inspect branding, separate
+website/static-settings/DS branding and real mobile GBA inspection/input.
+The DS cases retain real native/physical LCD pixels, touchscreen/buttons,
+checkpoints/backups, both cores, pause isolation, cold boot, reload and CDN retry.
+The added regression samples actual pickup/return renders for GBA clearance,
+checks table cartridge separation and contact height, proves visible repaint
+while the inspection pointer remains held down, and checks rear-only branding,
+clipped stylus, teal physical pixels and dock theme restoration.
+The 390px check projects all eight corners of the actual stylus bounds,
+not endpoints from the superseded loose pen.
+
+`npm test` passes **25 cases**; syntax, build and whitespace checks pass.
+The nine-case browser gate is not a fresh full-suite result. Current table,
+front/rear, real-runtime and mobile captures were visually reviewed together.
+README screenshots now show this model. Historical GBA media and the frozen
+96-page book were not regenerated.
+
+An intermediate run exposed first-paint shader compilation starving IndexedDB
+events beyond the existing 5s open deadline. Start rendering after DS storage
+initialization instead of extending the timeout. The earlier blue-dominance
+pixel assertion was replaced with teal-channel checks when the owner supplied
+the new teal specification; real emulator and rendering assertions remain.
+Physical phones, commercial games, timed DS autosave and owner approval remain
+unqualified. No push or deployment is claimed.
+
+### First DS prototype evidence (superseded visual model)
+
+This working-tree milestone supersedes earlier DS-deferral statements, not the
+published GBA evidence below. These observations preceded local commits; they
+do not establish publication. The original BIOS-free **Twin Lab** ROM runs in the actual pinned
+EmulatorJS 4.2.3/DeSmuME core; frames and input are not mocked.
+
+- Final `npx playwright test ds.spec.mjs`: **3 passed in 57.2s**. Desktop checks
+  actual native and physical LCD colors, buttons, touchscreen coordinates,
+  checkpoint/export/import, both databases, GBA coexistence, pause isolation,
+  power-off/cold boot and checkpoint recovery after a real page reload.
+- The 390px case checks both separate models, both DS displays, controls and
+  stylus endpoints without reducing renderer resolution. This is a desktop
+  browser viewport, not qualification of physical-phone speed or touch hardware.
+- The failure case aborts the runtime CDN, checks a visible retryable error,
+  then boots successfully after retry. Reduced motion skips the insertion
+  animation without skipping real loading.
+- Six affected GBA cases passed in a separate broader gate: animated Inspect
+  logo; quick actions/slots/restart; responsive shell/errors/private boundaries;
+  native mGBA input/resume/export; physical/mixed input/fullscreen; and physical
+  power/cold boot/reload. Both 1440px and 390px cartridge insertion cases also
+  passed in focused gates. These are **11 distinct affected cases across runs**,
+  not one complete eleven-case run or a fresh full-suite result.
+- Final `npm test`: **25 passed**. `npm run check`, `npm run build` and
+  `git diff --check` pass. The frozen 96-page book remains unchanged at SHA-256
+  `25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad`.
+
+Actual failures determined the fixes: the runtime start callback precedes its
+first frame; the native 256x384 layout differs from the scaled WebGL canvas;
+subscreen BG3 needs direct-color mode; and beveled recess geometry initially
+occluded the physical LCD planes. Visual checks also exposed clipped stylus
+framing. No render-resolution reduction or relaxed deadline was used.
+
+An expanded lifecycle fixture initially expected an old checkpoint after
+selecting the already-running cold-booted ROM. That contradicted intentional
+save-before-replacement behavior. The corrected test proves actual reload
+recovery instead. Its manual-save sequence disables DS background autosave to
+avoid a separate 30-second overwrite race; this does not independently qualify
+the DS automatic interval. Commercial games, gamepads and physical phones have
+not been independently qualified. Owner aesthetic approval remains separate.
+
+### Earlier hosted observations
+
 Documentation audit, final hosted observation at 12:45 Asia/Kolkata:
 
 - The owner has committed/pushed the manual release workflow as

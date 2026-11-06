@@ -14,6 +14,47 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / DS reference remodel and interaction correction:
+  Owner rejects the first shell/hinge/stylus, then supplies exact teal PBR
+  #2A9D98/.80/.35 and110-degree hinge specifications. Studio-lighting section
+  is explicitly excluded: retain existing lamp, room, background and GBA look.
+  Add fine-grain metallic clearcoat, extruded rear square recesses, convex
+  lime controls/white labels, blue D-pad and docked molded stylus. Keep supplied
+  emblem rear-only. Rest DS on feet behind cartridges facing the lamp; lift
+  beside GBA and invalidate paints from the active model's actual pose.
+  Use static Advance logos in GBA settings and console-specific dock colors.
+  First reflection/shader compilation exposed an IndexedDB5s starvation race;
+  start the render loop after storage initialization, retaining the deadline.
+  One focused9-case browser gate passes in1.8m, including all4DS cases and5
+  affected GBA mouse/touch-dock, branding and mobile inspection cases.25units,
+  syntax/build/diff checks pass. Review current table, front/rear, real-runtime
+  and390px captures together; replace only current DS README images.
+  Preserve historical GBA media, frozen book and unrelated pending work.
+  Keep79/issue78 open for owner/device review. Owner requests incremental
+  commits as Zanark; no push or deployment authorization.
+- 2026-11-06 / Separate DS local prototype:
+  Owner explicitly authorizes implementation beside the retained GBA, without
+  questions, and supplies updated transparent branding. Deliver a turquoise/
+  lime clamshell, stylus, dual LCDs, DS cartridge validation/loading, physical/
+  keyboard/touch input, independent checkpoints/backups and pause coordination.
+  Original BIOS-free Twin Lab boots the actual pinned DeSmuME core. Correct
+  first-frame timing, native/scaled layout, BG3 direct color, beveled LCD
+  occlusion and camera/stylus framing from observed failures.
+  Final three DS browser cases pass in57.2s; six affected GBA cases and two
+  cartridge cases pass across separate gates, not one full-suite run. Final
+  25units, syntax/build and diff checks pass. Expanded lifecycle test initially
+  expected an old checkpoint after intentional save-before-replacement; correct
+  the expectation and verify actual reload resume instead. Manual DS backup
+  fixture disables background autosave; automatic interval not timed here.
+  Update README, guides, architecture, provenance, notices and verification,
+  preserving historical captures and the frozen96-page PDF. Keep79/issue78
+  In progress for owner review and physical-phone qualification. Commercial
+  compatibility, human approval, commit/push/deployment remain unclaimed.
+  Scoped79apply subsequently reuses issue78 and its existing Project1 item,
+  verifies description/state/status/backlink and creates nothing. Independent
+  issue read and complete GraphQL Project inventory confirm open/In progress.
+  gh project item-list's unknown-owner error is a CLI discovery failure, not
+  evidence of absent Project permission.
 - 2026-11-06 / Repository publication verified:
   Commit0e1ac9ff9dd5b256207a72e36eace39fe13fed5c uses Zanark's repository-local
   author/committer identity and is pushed to origin/main. Remote branch lookup

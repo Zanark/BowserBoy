@@ -207,19 +207,24 @@ test('inspection shows the animated purple console logo, with static reduced-mot
   await expect(image).toHaveAttribute('src', './assets/website-logo.png');
 });
 
-test('BowserBOY website branding is separate from the purple GBA console artwork', async ({ page }) => {
+test('BowserBOY website branding is separate from static GBA settings and DS artwork', async ({ page }) => {
   await page.goto('./');
   await ready(page);
   await expect(page).toHaveTitle('BowserBOY');
-  const logos = page.locator('.desk-heading h1 img, .panel-logo');
-  await expect(logos).toHaveCount(3);
-  for (const logo of await logos.all()) {
-    await expect(logo).toHaveAttribute('src', './assets/website-logo.png');
-    await expect(logo).toHaveAttribute('alt', 'BowserBOY');
+  await expect(page.locator('.desk-heading h1 img, .panel-logo')).toHaveCount(4);
+  for (const [selector, file, alt, width, height] of [
+    ['.desk-heading h1 img', 'website-logo.png', 'BowserBOY', 2148, 732],
+    ['#tools > .panel-logo', 'logo.png', 'BowserBOY Advance', 2170, 725],
+    ['#frame-host > .panel-logo', 'logo.png', 'BowserBOY Advance', 2170, 725],
+    ['#ds-tools > .panel-logo', 'ds-logo.png', 'BowserBOY DS chrome neon emblem', 2149, 732],
+  ]) {
+    const logo = page.locator(selector);
+    await expect(logo).toHaveAttribute('src', `./assets/${file}`);
+    await expect(logo).toHaveAttribute('alt', alt);
     expect(await logo.evaluate(async image => {
       await image.decode();
       return { width: image.naturalWidth, height: image.naturalHeight };
-    })).toEqual({ width: 2148, height: 732 });
+    })).toEqual({ width, height });
   }
   const consoleBrand = await page.evaluate(async () => {
     const { brandImage } = await import('./src/brand.js');
