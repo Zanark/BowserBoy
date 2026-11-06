@@ -48,6 +48,11 @@ resolution reduction or longer deadline is used. Current discovery audits
 The upload fixture also waits for actual scene startup readiness, rather
 than an upload control briefly enabled before persisted-cartridge restoration.
 Four focused local cases pass in31.3s/11.4s/14.9s/17.5s.
+Run42138825789 subsequently reaches120s awaiting that backup case's final
+automatic checkpoint; a reload-insertion case separately reaches its15s
+seating assertion. The actual automatic interval is now its own native case,
+retaining its20s expectation and the120s case deadline. Current inventory is
+56 cases in nineteen jobs (18x3+1x2). Insertion checks/deadlines are unchanged.
 
 The local/pending statements in earlier attempt records below describe their
 original stage; this publication record supersedes them.

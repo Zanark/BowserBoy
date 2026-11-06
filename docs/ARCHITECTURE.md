@@ -806,7 +806,7 @@ An import map resolves `three` relative to the document, preserving nested
 GitHub Pages hosting. No `node_modules` directory is publicly served.
 Pages deployment requires the separate syntax/unit/build job and all nineteen
 complete test-level browser shards on Ubuntu 24.04, with one worker per runner.
-The 55 cases run exactly once, with two or three cases per runner. Parallelism
+The 56 cases run exactly once, with two or three cases per runner. Parallelism
 is across isolated runners, not competing software-rendered games on one CPU.
 Nineteen browser jobs plus the independent build fit the documented
 [20-job GitHub Free concurrency baseline](https://docs.github.com/en/actions/reference/limits).

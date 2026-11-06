@@ -14,6 +14,12 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Independent real automatic interval:
+  e1bcd34/42138825789 reaches120s awaiting the final automatic checkpoint;
+  reload insertion also misses its existing15s seated expectation.
+  Separate the actual automatic interval into a fresh native case rather
+  than lengthen deadlines or alter rendering/insertion assertions. Current
+  inventory56cases/19jobs, all original behavior checks retained.
 - 2026-11-06 / Independent native scenarios within unchanged deadlines:
   Follow-up53a3a0e/42137195674 still reaches120s in compound backup/ROM flow
   and final native-light screenshot. Split the two compound cases into four

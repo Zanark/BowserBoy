@@ -349,9 +349,19 @@ test('real mGBA renders, responds to input, resumes and restores exported progre
   await expect(page.locator('#notice')).toContainText('latest checkpoint has been restored');
   await expect.poll(() => image(page)).toBe(checkpointImage);
   await expect(page.locator('#game-title')).toHaveText('Renamed cartridge');
+  expect(methods.every((method) => ['GET', 'HEAD'].includes(method))).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test('native automatic checkpoint interval stores moved progress without pressing Save', async ({ page }) => {
+  const errors = [];
+  const methods = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('request', (request) => methods.push(request.method()));
+  await page.goto('./');
+  await startDemo(page);
   // The actual automatic interval must write without pressing Save.
   await openTools(page);
-  await page.locator('#autosave-toggle').click();
   await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'true');
   const beforeAutomatic = (await readStored(page))[0]?.automatic?.createdAt;
   await move(page, 'ArrowUp', 100);

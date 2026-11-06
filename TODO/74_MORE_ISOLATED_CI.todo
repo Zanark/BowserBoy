@@ -17,7 +17,7 @@ Tasks
 
 Acceptance criteria
 -------------------
-All55 browser cases run once, seventeen shards of3 and two shards of2.
+All56 browser cases run once, eighteen shards of3 and one shard of2.
 Nineteen browser jobs plus build fit the20-job baseline concurrency budget.
 Native tests do not compete on the same runner. Rendering stays sharp.
 No tests, assertions, deadlines, failure evidence or deployment gates removed.
@@ -45,6 +45,11 @@ scenarios, retaining all original behavior assertions. Current CLI audit:
 55cases exactly once (17x3+2x2), same19jobs/workers1/retries0/deadlines.
 Upload fixtures await actual scene startup readiness before cartridge choice.
 Four focused local cases pass31.3s/11.4s/14.9s/17.5s. No app/media change.
+Run42138825789 reaches120s while the backup/resume case awaits its final
+automatic checkpoint, and a separate reload-insertion case reaches its15s
+seating assertion. Separate the real automatic interval into its own native
+case; preserve both unchanged deadlines and all insertion assertions.
+Current inventory56cases across19jobs (18x3+1x2); no rendering change.
 
 Completion log
 --------------
