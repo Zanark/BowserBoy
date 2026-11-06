@@ -962,10 +962,10 @@
       "number": 80,
       "nodeId": "I_kwDOVhqp0s8AAAABc_xc-Q",
       "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGiEQE",
-      "state": "open",
-      "reason": null,
-      "projectStatus": "In progress",
-      "bodySha256": "adc9419788b8cb9edef946c86dbcda60a85cd23ef2c460e3426cae89bc589320"
+      "state": "closed",
+      "reason": "completed",
+      "projectStatus": "Done",
+      "bodySha256": "e234f02c79cd9a5a36bb35c51ff92b199267cb23bf63af41b35165d084a90289"
     },
     {
       "id": "82",

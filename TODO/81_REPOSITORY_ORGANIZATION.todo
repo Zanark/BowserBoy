@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoyAdvance/issues/80
 Milestone: Clean repository home with unchanged application URLs and safe public context.
 Dependencies: None; preserve frozen release and book bytes.
@@ -10,7 +10,7 @@ Tasks:
 - [x] Update build/server mapping, active tooling, workflow paths and README links.
 - [x] Allowlist public context README/PUBLIC only; keep private files excluded.
 - [x] Verify runtime/build, navigation, frozen binary identity and Git scope.
-- [ ] Commit as Zanark and push the verified changes.
+- [x] Commit as Zanark and push the verified changes.
 
 Acceptance criteria:
 Root listing is cleaner; deployed index/player/CSS URLs and application behavior
@@ -23,8 +23,14 @@ static/private boundary, native mGBA save/restore and real3Dpickup/interaction.
 Relocated book's three tests and source assembly pass; actionlint passes.
 All225relative Markdown/HTML link targets resolve in38documents.
 PDF, cover, frozen ZIP and manifest retain recorded SHA256values.
-Only public context README/PUBLIC are in the Git allowlist. Publication pending.
+Only public context README/PUBLIC are in the Git allowlist.
+Commit0e1ac9ff9dd5b256207a72e36eace39fe13fed5c is authored by Zanark and
+pushed to origin/main; remote refs/heads/main matches the exact commit.
+This verifies repository publication, not completion of the new Pages gate.
 
 Completion log:
 2026-11-06: Owner authorizes reorganization, README path fixes, public context
 check-in and push. Use explicit public context allowlist; no private-store export.
+2026-11-06: Verify application/doc/path/privacy gates and publish0e1ac9f.
+Update tracking completion after the observed push, rather than claiming the
+push succeeded before it ran. No history rewrite or manual release dispatch.
