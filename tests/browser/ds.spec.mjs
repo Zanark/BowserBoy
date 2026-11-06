@@ -250,6 +250,31 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   expect(table.facingLamp).toBeGreaterThan(.6);
   expect(table.restingHeight).toBeGreaterThanOrEqual(-.01);
   expect(table.restingHeight).toBeLessThan(.02);
+  const transparency = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const image = view.dsController.logo;
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    let transparent = 0, glow = 0, solid = 0;
+    for (let i = 3; i < pixels.length; i += 4) {
+      if (!pixels[i]) transparent++;
+      else if (pixels[i] < 240) glow++;
+      else solid++;
+    }
+    return { size: [canvas.width, canvas.height], corners: [
+      pixels[3], pixels[(canvas.width - 1) * 4 + 3],
+      pixels[(canvas.height - 1) * canvas.width * 4 + 3], pixels.at(-1),
+    ], transparent, glow, solid };
+  });
+  expect(transparency.size).toEqual([2149, 732]);
+  expect(transparency.corners).toEqual([0, 0, 0, 0]);
+  expect(transparency.transparent).toBeGreaterThan(10000);
+  expect(transparency.glow).toBeGreaterThan(10000);
+  expect(transparency.solid).toBeGreaterThan(10000);
   await page.locator('#room-toggle').click();
   await page.locator('#select-ds').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');

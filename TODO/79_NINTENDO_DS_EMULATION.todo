@@ -47,6 +47,13 @@ exact teal specification supersedes the earlier royal-blue shell palette.
 Do not add the suggested studio lighting/background: the owner excludes section4.
 
 Completion evidence:
+Latest transparent Chrome Neon emblem: actual browser-loaded2149x732RGBA,
+transparent corners and preserved bright artwork pass. All4DS cases pass
+again in the final10-case DS/pear gate (1.9m), including real Twin Lab,
+390px framing, controls, saves, lifecycle and retry. Inspection remains clear
+of the seated pear after a modest forward pickup adjustment; no new light rig.
+Owner aesthetic approval and physical-phone qualification remain open.
+
 Current reference remodel: 110-degree opening, extruded rear square recesses,
 metallic teal shell, convex lime controls, blue D-pad, rear-only supplied emblem,
 clipped stylus and table-contact feet. Existing lamp/room/background unchanged.
@@ -78,6 +85,11 @@ No commercial compatibility, physical-phone performance, owner approval,
 commit, deployment or new published edition is claimed.
 
 Completion log:
+2026-11-07: Owner supplies BowserBOY DS Chrome Neon Emblem and requests black
+background removal. Convert the 2149x732 RGB black matte to transparent RGBA,
+preserving geometry and glow without redrawing. Update shared UI intrinsic
+dimensions and rear-lid proportions; retain rear-only hardware branding.
+Review dark/light composites and check actual browser-loaded alpha.
 2026-11-06: Owner supplies BOWSERBOY DS Neon Orbital Logo. Copy the original
 2151x731 RGBA unchanged to the existing shared asset path; update tools,
 Inspect intrinsic dimensions and rear-plane proportions. Retain rear-only

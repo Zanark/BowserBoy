@@ -130,7 +130,7 @@ export function createDsHandheld() {
   text(hinge, 'MIC', .24, 0, .12, .247, '#EAF5FF', .07);
   for (const x of [3.72, 3.85]) mesh(hinge, 'Hinge indicator recess', roundedBox(.037, .14, .012, .01), dark, x, .035, .25);
   const branding = [
-    mesh(lid, 'Supplied transparent DS rear emblem', new THREE.PlaneGeometry(3.2, 3.2 * 731 / 2151),
+    mesh(lid, 'Supplied transparent DS rear emblem', new THREE.PlaneGeometry(3.2, 3.2 * 732 / 2149),
       new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false }), 0, 2.43, -.197),
   ];
   branding[0].rotation.y = Math.PI;
