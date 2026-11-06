@@ -304,6 +304,11 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
   await startDemo(page);
+  // Isolate manual backup actions from the periodic checkpoint's busy controls.
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await closeTools(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await expect(canvas(page)).toBeVisible();
   const initial = await image(page);
@@ -344,6 +349,9 @@ test('real mGBA renders, responds to input, resumes, isolates ROMs and restores 
   await expect.poll(() => image(page)).toBe(checkpointImage);
   await expect(page.locator('#game-title')).toHaveText('Renamed cartridge');
   // The actual automatic interval must write without pressing Save.
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'true');
   const beforeAutomatic = (await readStored(page))[0]?.automatic?.createdAt;
   await move(page, 'ArrowUp', 100);
   await expect.poll(async () => (await readStored(page))[0]?.automatic?.createdAt, { timeout: 20000 }).not.toBe(beforeAutomatic);

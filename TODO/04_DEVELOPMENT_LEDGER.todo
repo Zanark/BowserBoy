@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-06 / Follow-up native backup fixture isolation:
+  Evidence-only e5e14fc run42136082685 fails verify9 awaiting export download;
+  deploy correctly skips, qualified visual release1b0385b remains live.
+  Trace shows export enabled before click/disabled immediately after, no
+  export notice/download, and later automatic checkpoints. Isolate manual
+  backup actions with autosave off, then explicitly reenable before the real
+  interval assertion. Preserve export/import/ROM isolation/quota-failure
+  coverage and all deadlines. Do not claim a new application defect proved
+  solely by this intermittent timer/actionability race.
+  Corrected real-native case passes locally33.8s with actual backup download/
+  import/reload/automatic interval/ROM isolation/quota-failure checks retained.
 - 2026-11-06 / Warm lamp, green LED and nineteen-way release public:
   Commit/push1b0385b succeeds. Genuine42135170801 passes build/all19browser
   shards/deploy in4m33s; browser steps28s-3m27s, no controlled speedup claim.

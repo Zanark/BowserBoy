@@ -27,6 +27,17 @@ unchanged approved logos. The new LCD-only GIF uses genuine native light.
 The frozen v1.0.0 package and November 6 milestone date are unchanged.
 Technical/public qualification does not imply user aesthetic approval.
 
+The evidence-only follow-up `e5e14fc` subsequently fails run42136082685 in
+the existing native export test; deployment correctly skips. The trace shows
+the export control enabled just before clicking and disabled immediately
+after, no download/export notice, and continuing automatic checkpoints.
+The fixture now disables background autosaving during manual backup checks,
+then explicitly reenables it before verifying the real automatic interval.
+Export/import/ROM isolation/storage-failure assertions, resolution, retries
+and deadlines are retained. The successful visual release above remains live.
+The corrected real-native case passes locally in33.8s, including actual
+export/import, reload/resume, automatic saving, ROM isolation and quota failure.
+
 The local/pending statements in earlier attempt records below describe their
 original stage; this publication record supersedes them.
 
