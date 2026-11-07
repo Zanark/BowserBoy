@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "96",
-      "file": "TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/95",
-      "number": 95,
-      "nodeId": "I_kwDOVhqp0s8AAAABdOXMCw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGvs78",
+      "id": "97",
+      "file": "TODO/97_DS_DIRECTIONAL_DPAD.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/96",
+      "number": 96,
+      "nodeId": "I_kwDOVhqp0s8AAAABdOhscg",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGv2ew",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "6dea395b5c60f231f2a6770ab146149291d3efd07361f26881263c25866abced"
+      "bodySha256": "540618b7f710544f0e232a161985fbab2e9af4e72b459b0939b9afc3e6ec61ab"
     }
   ]
 }

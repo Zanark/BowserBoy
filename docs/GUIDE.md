@@ -181,6 +181,11 @@ prototype; GBA remapping does not change them. Native gamepad behavior is not
 independently qualified. Twin Lab's upper marker moves with the D-pad;
 press/drag the lower LCD to draw yellow marks.
 
+The DS D-pad rocks toward the held arrow: the pressed edge lowers and the
+opposite edge rises. The held direction's existing mark lights lime so it stays
+readable in the dark room. Diagonals lean between directions; opposite arrows
+cancel that axis. Release clears the marks and springs the cross back to neutral.
+
 Touch coordinates follow the lower LCD in flat, tilted or upside-down gameplay
 poses and at different zoom levels. Twin Lab's 8px brush surrounds the clicked
 native pixel, staying inside the LCD at its edges; drawing is not confined below

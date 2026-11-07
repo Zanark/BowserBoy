@@ -9,6 +9,36 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### DS directional D-pad: local qualification, publication pending
+
+The shared physical cross now rocks once per paint toward native held
+directions rather than depressing flat four times. Diagonal tilt is bounded;
+opposite inputs cancel their axis. Reduced center compression keeps the
+visible cap above the deck, and elapsed-time damping returns it to exact rest.
+The existing held-direction marks turn lime for dark-room readability, with
+no added geometry, lights, render passes or animation loop. Native input and
+GBA motion remain unchanged.
+
+The complete native case forwards original `simulateInput` calls and checks
+exact native4/5/6/7press/release from both scene and runtime keyboard focus.
+Actual root-local edge heights prove which side lowers. Diagonal/opposite
+holds, individual mark states, mixed pointer/keyboard ownership, release and
+blur pass. Two focused units also cover deck clearance, ordinary caps,
+elapsed-time motion and exact neutral/idle settling. Actual held/rest
+screenshots were reviewed; the final held capture shows the readable mark.
+
+Final source passes syntax/all59units/build/browser syntax/whitespace.
+The new D-pad case, original complete DS placement/branding case and existing
+native GBA remapping/sound/release case pass **Edge together1.2m**. Both DS
+cases pass **explicit full-size SwiftShader together2.6m**, original
+deadlines/retries0/quality. An earlier version passed the same coverage
+before the actual visual review motivated the dark-room cue; final-source
+qualification was repeated after that change, not a failed-case retry.
+There are99browser cases using the unchanged19shards. The frozen published
+PDF is unchanged. Actual issue96/Project1 membership/status/body/backlink
+are verified OPEN/In progress. Exact-source deployment and owner acceptance
+are not established by this local evidence.
+
 ### DS button clearance and A/S face keys: local qualification
 
 Shift the complete ABXY diamond outward by0.2model units, retaining the cap
@@ -28,10 +58,17 @@ overlays GBA preferences onto fixed DS bindings. GBA defaults/remapping remain.
 Both expanded geometry and new native-key cases pass Edge together40.6s and
 explicit full-size SwiftShader together1.2m, original deadlines and retries0.
 The existing real GBA remapping/sound/pointer-release case passes Edge22.3s.
-Syntax,57unit tests, build, browser syntax and whitespace pass. The suite now
+Syntax,57unit tests, build, browser syntax and whitespace pass. The source revision's suite
 contains98cases; existing19shards and release gates are retained. The frozen
-published PDF is unchanged. Current-source hosted qualification, publication
-and owner acceptance remain separate and pending.
+published PDF is unchanged. Exact `89d905fd0a31de6f7364e75a73e0c607885497f9`
+[Pages42348904006](https://github.com/Zanark/BowserBoy/actions/runs/42348904006)
+finishes **89passed/9failed, deployment skipped**. Both directly affected
+native-key and expanded-clearance cases pass hosted. Seven DS cases, scene
+CRT final reload-readiness and Pear Boy's edge-foot sleeping/dangling predicate
+fail; the latter is newly observed relative to the preceding run. GBA cold-boot
+passes this time. No cause is established by these failures. Actual issue95's
+[outcome receipt](https://github.com/Zanark/BowserBoy/issues/95#issuecomment-6703695208)
+was independently verified. Publication and owner acceptance remain open.
 
 ### DS rear markings: local qualification, publication pending
 

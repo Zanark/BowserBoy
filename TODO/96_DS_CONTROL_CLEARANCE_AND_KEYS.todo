@@ -13,7 +13,7 @@ Tasks:
 - [x] Qualify real native down/up transitions from scene and runtime focus.
 - [x] Update directly affected help, guide, architecture and local evidence.
 - [x] Synchronize actual GitHub issue and Project membership/status/backlink.
-- [ ] Commit/push as Zanark and monitor the exact-source Pages release gate.
+- [x] Commit/push as Zanark and monitor the exact-source Pages release gate.
 
 Acceptance criteria:
 Every DS face cap and recessed socket clears the actual beveled touchscreen
@@ -37,8 +37,12 @@ deadlines/retries0. Existing native GBA remapping/sound/release case passes
 Edge22.3s. Syntax,57units, build, browser syntax and whitespace pass.
 98browser cases, existing19shards; frozen PDF unchanged. Actual issue95 is
 OPEN with Project1 In progress; body/state/membership/status/backlink read
-back after scoped synchronization as verified Zanark. Current-source hosted
-qualification and publication pending.
+back after scoped synchronization as verified Zanark. Commit89d905f pushed
+as Zanark; exact Pages42348904006 monitored to89PASS/9FAIL, deploy skipped.
+Both directly affected native-key and expanded-clearance cases PASS HOSTED.
+Verified issue95 outcome:
+https://github.com/Zanark/BowserBoy/issues/95#issuecomment-6703695208
+Publication and full-suite qualification remain blocked, not accomplished.
 
 Completion log:
 2026-11-07: Owner's close-up shows the Y socket intruding into the touchscreen
@@ -51,3 +55,9 @@ keys with GBA shoulders when the iframe has focus. Restrict that preference
 overlay to GBA. Native scene/runtime and unchanged GBA cases pass locally.
 2026-11-07: Actual issue95 and Project item created as Zanark; managed
 body/state/membership/status/backlink read back. No publication claimed.
+2026-11-07: Push89d905f as Zanark; exact automatic Pages42348904006
+finishes89passed/9failed, deploy skipped. Seven DS cases, scene CRT final
+reload-readiness and newly observed Pear Boy edge-foot settling fail.
+GBA cold-boot passes this run. Both changed DS cases pass hosted. Actual
+issue95 outcome comment6703695208 verified author/body/URL; OPEN/Project1
+In progress confirmed. No new cause proved, retry, bypass or gate weakening.

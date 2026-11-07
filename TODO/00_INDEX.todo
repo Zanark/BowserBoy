@@ -96,10 +96,20 @@ BowserBOY workstreams
 94_PRE_CARTRIDGE_CRT.todo - IN_PROGRESS: cached built-in CRT pixels; native video replaces the effect without stacking.
 95_DS_REAR_MARKINGS.todo - IN_PROGRESS: centered actual lid recesses and lower-body underside emblem, locally qualified.
 96_DS_CONTROL_CLEARANCE_AND_KEYS.todo - IN_PROGRESS: caps/sockets clear the touchscreen; DS A/S=Y/X, Q/W=L/R; local native scene/runtime and GBA regression pass.
+97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: directional DS cross rocking and dark-room held marks; native Edge/software and GBA regression qualified, publication pending.
 
 Current pending work
 --------------------
--96: Expanded actual geometry and new native keyboard cases pass Edge40.6s/
+-97: Native directional rocking and held marks qualified: Edge3cases1.2m,
+  explicit full-size SwiftShader2cases2.6m,59units/check/build pass.
+  Diagonal/opposite axes, mixed holds, release/blur and actual cap visibility
+  pass; GBA unchanged.99cases/19shards retained. Actual issue96 verified.
+  Commit/push as Zanark and monitor exact-source gate; no publication claimed.
+-96: Exact89d905f/Pages42348904006 finishes89PASS/9FAIL, deploy skipped.
+  Both changed cases pass hosted; actual issue95 outcome6703695208 verified.
+  Seven DS, scene CRT readiness and new Pear edge-foot settling failures
+  remain unresolved; GBA cold-boot passes this run.
+  Expanded actual geometry and new native keyboard cases pass Edge40.6s/
   explicit SwiftShader1.2m; GBA remapping passes22.3s.57units pass,98browser
   cases/19shards retained. Actual front capture reviewed. Publication pending.
 -95: Exact6f5083a/Pages42346966278 fails88PASS/9FAIL, deploy skipped.

@@ -175,6 +175,94 @@ test('DS A/S face keys and Q/W shoulders reach native buttons from the scene and
   expect(errors).toEqual([]);
 });
 
+test('DS D-pad rocks toward native directions, combines holds and springs back after pointer release or blur', async ({ page }, testInfo) => {
+  const errors = await bootDsDemo(page);
+  const frame = await dsFrame(page);
+  await frame.evaluate(() => {
+    const manager = window.EJS_emulator.gameManager;
+    const simulate = manager.simulateInput.bind(manager);
+    window.dsPadTransitions = [];
+    manager.simulateInput = (...args) => {
+      window.dsPadTransitions.push(args);
+      return simulate(...args);
+    };
+  });
+  const pose = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    const pad = view.ds.controls.get('up').mesh;
+    const height = (x, y) => view.ds.root.worldToLocal(pad.localToWorld(new Vector3(x, y, .068))).z;
+    return {
+      vertical: height(0, .5) - height(0, -.5),
+      horizontal: height(.5, 0) - height(-.5, 0),
+      depression: pad.userData.restZ - pad.position.z,
+      tilt: Math.hypot(pad.rotation.x, pad.rotation.y),
+      highlighted: [...view.ds.controls].filter(([, control]) =>
+        control.indicator && control.indicator.material === control.pressedMaterial).map(([id]) => id),
+    };
+  });
+  const expectRock = (vertical, horizontal, held = true) => expect.poll(async () => {
+    const pad = await pose();
+    return (vertical ? pad.vertical * vertical > .1 : Math.abs(pad.vertical) < .00001) &&
+      (horizontal ? pad.horizontal * horizontal > .1 : Math.abs(pad.horizontal) < .00001) &&
+      (held ? pad.depression > .011 : pad.depression === 0) && pad.tilt <= .16001;
+  }).toBe(true);
+  for (const [focus, target] of [
+    ['scene', page.locator('#scene-canvas')], ['runtime', frame.locator('canvas').first()],
+  ]) {
+    await target.focus();
+    for (const [key, button, vertical, horizontal] of [
+      ['ArrowUp', 4, -1, 0], ['ArrowDown', 5, 1, 0],
+      ['ArrowLeft', 6, 0, 1], ['ArrowRight', 7, 0, -1],
+    ]) {
+      await frame.evaluate(() => { window.dsPadTransitions = []; });
+      await page.keyboard.down(key);
+      await expect.poll(() => frame.evaluate(() => window.dsPadTransitions)).toEqual([[0, button, 1]]);
+      await expectRock(vertical, horizontal);
+      expect((await pose()).highlighted).toEqual([key.replace('Arrow', '').toLowerCase()]);
+      if (focus === 'scene' && key === 'ArrowRight') {
+        await page.screenshot({ path: testInfo.outputPath('ds-dpad-right.png') });
+      }
+      await page.keyboard.up(key);
+      await expect.poll(() => frame.evaluate(() => window.dsPadTransitions)).toEqual([[0, button, 1], [0, button, 0]]);
+      await expectRock(0, 0, false);
+      expect((await pose()).highlighted).toEqual([]);
+    }
+  }
+  await page.locator('#scene-canvas').focus();
+  await page.keyboard.down('ArrowUp');
+  await page.keyboard.down('ArrowRight');
+  await expectRock(-1, -1);
+  expect((await pose()).highlighted).toEqual(['up', 'right']);
+  await page.keyboard.down('ArrowDown');
+  await expectRock(0, -1);
+  expect((await pose()).highlighted).toEqual(['up', 'down', 'right']);
+  await page.keyboard.up('ArrowRight');
+  await expectRock(0, 0);
+  await page.keyboard.up('ArrowUp');
+  await expectRock(1, 0);
+  await page.keyboard.up('ArrowDown');
+  await expectRock(0, 0, false);
+  expect((await pose()).highlighted).toEqual([]);
+  await frame.evaluate(() => { window.dsPadTransitions = []; });
+  await page.locator('[data-ds-control="right"]').hover();
+  await page.mouse.down();
+  await expectRock(0, -1);
+  await page.keyboard.down('ArrowRight');
+  await page.mouse.up();
+  await expectRock(0, -1);
+  expect(await frame.evaluate(() => window.dsPadTransitions)).toEqual([[0, 7, 1]]);
+  await page.keyboard.up('ArrowRight');
+  await expectRock(0, 0, false);
+  await expect.poll(() => frame.evaluate(() => window.dsPadTransitions)).toEqual([[0, 7, 1], [0, 7, 0]]);
+  await page.keyboard.down('ArrowDown');
+  await expectRock(1, 0);
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expectRock(0, 0, false);
+  await page.keyboard.up('ArrowDown');
+  await page.screenshot({ path: testInfo.outputPath('ds-dpad-rest.png') });
+  expect(errors).toEqual([]);
+});
+
 test('DS native backups restore the saved framebuffer after further input', async ({ page }, testInfo) => {
   const errors = await bootDsDemo(page);
   const savedLeft = (await framePixels(page)).marker.left;

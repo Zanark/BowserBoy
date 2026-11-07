@@ -568,7 +568,7 @@ export class DsController {
     this.view.changed ||= !this.heldStylus.position.equals(position);
     this.heldStylus.position.copy(position);
   }
-  paint(time) {
+  paint(time, delta) {
     if (this.inserting) {
       const motion = this.inserting;
       motion.elapsed += Math.max(0, time - (motion.lastPaint ?? time));
@@ -579,9 +579,32 @@ export class DsController {
       this.view.changed = true;
       if (fraction === 1) { this.inserting = null; this.view.host.dataset.dsCartridge = 'seated'; }
     }
-    for (const [id, control] of this.model.controls) {
-      const pressed = [...this.model.controls].some(([key, value]) => value.mesh === control.mesh && this.pressed.has(key));
-      control.mesh.position.z = control.mesh.userData.restZ - (pressed ? .065 : 0);
+    const dpad = this.model.controls.get('up').mesh;
+    const x = Number(this.pressed.has('down')) - Number(this.pressed.has('up'));
+    const y = Number(this.pressed.has('right')) - Number(this.pressed.has('left'));
+    const held = ['up', 'down', 'left', 'right'].some(id => this.pressed.has(id));
+    const magnitude = Math.max(1, Math.hypot(x, y));
+    const pitch = x * .16 / magnitude, yaw = y * .16 / magnitude;
+    const z = dpad.userData.restZ - (held ? .012 : 0);
+    const previousX = dpad.rotation.x, previousY = dpad.rotation.y, previousZ = dpad.position.z;
+    const response = held ? 50 : 80;
+    dpad.rotation.x = THREE.MathUtils.damp(previousX, pitch, response, delta);
+    dpad.rotation.y = THREE.MathUtils.damp(previousY, yaw, response, delta);
+    dpad.position.z = THREE.MathUtils.damp(previousZ, z, response, delta);
+    if (Math.abs(dpad.rotation.x - pitch) < .00001) dpad.rotation.x = pitch;
+    if (Math.abs(dpad.rotation.y - yaw) < .00001) dpad.rotation.y = yaw;
+    if (Math.abs(dpad.position.z - z) < .00001) dpad.position.z = z;
+    this.view.changed ||= dpad.rotation.x !== previousX || dpad.rotation.y !== previousY || dpad.position.z !== previousZ;
+    for (const [id, { mesh, indicator, restMaterial, pressedMaterial }] of this.model.controls) {
+      const pressed = this.pressed.has(id);
+      if (mesh !== dpad) mesh.position.z = mesh.userData.restZ - (pressed ? .065 : 0);
+      if (indicator) {
+        const material = pressed ? pressedMaterial : restMaterial;
+        if (indicator.material !== material) {
+          indicator.material = material;
+          this.view.changed = true;
+        }
+      }
     }
   }
   paintScreens() {

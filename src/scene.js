@@ -1186,8 +1186,8 @@ export class HandheldScene {
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
-    this.dsController?.paint(time);
     const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
+    this.dsController?.paint(time, lightDelta);
     if (!this.screenIllumination.failed) {
       try { this.screenIllumination.update(this.source ?? this.model.screen.material.map?.image, time, lightDelta, !!this.source); }
       catch (error) {

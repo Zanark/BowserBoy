@@ -1,0 +1,52 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/96
+Milestone: Clearly readable DS D-pad direction through physical rocking.
+Dependencies: 79 DS model/input; 74 full hosted release qualification.
+Purpose: Make the actual molded DS cross tilt toward the pressed direction,
+not move flat as one undifferentiated button. Preserve GBA and native input.
+
+Tasks:
+- [x] Rock the shared cross once per paint from authoritative held inputs.
+- [x] Combine diagonals, cancel opposite axes and spring back on release.
+- [x] Highlight existing held-direction marks for dark-room readability.
+- [x] Qualify actual native keys/pointer and visible physical edge movement.
+- [x] Update affected guides, technical evidence and development history.
+- [x] Verify actual GitHub issue/Project/body/status and local backlink.
+- [ ] Commit/push as Zanark and monitor exact-source Pages qualification.
+
+Acceptance criteria:
+The pressed edge visibly lowers and the opposite edge rises for all four
+directions. Diagonals lean along both axes at bounded total tilt; opposing
+directions cancel that axis while retaining both held marks. Existing
+direction marks highlight without new lights, geometry or render passes.
+Releasing/cancelling clears marks and returns to the exact rest
+pose without delaying native input. Held pointer and keyboard sources share
+the native authoritative state. The visible cap surface stays above the deck;
+physical hit anchors follow the cross. No GBA, screen, lighting, quality,
+native assertion, deadline, retry or deployment-gate changes.
+
+Completion evidence:
+Final source: syntax/all59units/build/browser syntax/whitespace pass.
+The new complete native D-pad case, original full DS placement/branding
+case and existing native GBA remapping/release case pass Edge together1.2m.
+Both DS cases pass explicit full-size SwiftShader together2.6m. Original
+deadlines/retries0/full rendering quality retained. Actual held/rest captures
+reviewed; final held capture confirms the dark-room direction cue is readable.
+The new case forwards original native4/5/6/7down/up under scene/runtime
+focus and checks real physical edge heights, diagonal/opposite axes,
+individual held marks, mixed pointer/key ownership, release and blur.
+99browser cases use the unchanged19shards. Frozen published PDF unchanged.
+Actual issue96 OPEN/Project1 In progress/body/membership/backlink verified.
+This is local qualification; exact-source publication and owner acceptance
+are not established. The final monitored outcome belongs in the actual issue
+receipt, not a claim that the source snapshot is already deployed.
+
+Completion log:
+2026-11-07: Owner reports that D-pad arrow direction is visually unclear.
+The DS paint path depressed all four shared entries identically, with no
+directional rotation. Replace that repeated flat translation with one
+bounded directional rock and elapsed-time compression/release damping.
+First Edge3cases and explicit full-size SwiftShader2cases pass. Actual
+held/rest screenshots reveal that physical tilt alone remains difficult to
+read in the dark room. Add held-direction highlighting to the existing
+engravings; repeat the affected qualification against the final source.

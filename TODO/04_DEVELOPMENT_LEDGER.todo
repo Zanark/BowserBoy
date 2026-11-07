@@ -14,6 +14,29 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / DS directional D-pad rocking:
+  Owner cannot visually distinguish the pressed arrow. DS animation moves
+  the entire shared cross flat and repeats it for four map entries. Animate
+  once per room paint: native held directions select pitch/yaw, bounded
+  diagonals lean between axes and opposite keys cancel. Reuse elapsed-time
+  compression/release damping; reduced center travel keeps the tilted cap
+  surface above the deck. Retain projected physical anchors and GBA motion.
+  Initial native Edge/software passes and actual screenshots show physical
+  rocking alone is hard to read in the dark room. Highlight the existing
+  held-direction engraving with one unlit lime material; no new geometry,
+  lights, passes or animation loop. Opposite held marks remain individual.
+  Final2focused units and syntax/all59units/build/browser syntax/whitespace
+  pass. Complete native D-pad + original DS placement + native GBA remapping/
+  release pass Edge1.2m; both DS cases pass explicit full-size SwiftShader
+  2.6m. Forward real native4/5/6/7down/up in scene/runtime focus and check
+  physical edge heights, diagonal/opposite holds, marks, mixed sources,
+  release and blur. Actual final held capture reviewed; readable lime cue.
+  99cases/19shards/original quality/deadlines/retries0 and frozen PDF retained.
+  Actual issue96 OPEN/Project1 In progress/body/membership/backlink verified;
+  exact-source publication and owner acceptance remain open.
+  Reconcile previous89d905f/Pages42348904006:89PASS/9FAIL, deploy skipped;
+  both96regressions pass hosted, seven DS + scene readiness + new Pear
+  edge-foot settling failures remain. Exact issue95 receipt verified.
 - 2026-11-07 / DS control clearance and A/S face keys:
   Owner's close-up identifies the Y socket overlapping the touchscreen
   border. Move the whole diamond outward0.2units, preserving cap sizes,

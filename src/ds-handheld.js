@@ -169,13 +169,17 @@ export function createDsHandheld() {
   const crossGeometry = new THREE.ExtrudeGeometry(cross, { depth: .085, bevelEnabled: true, bevelSize: .018, bevelThickness: .018, bevelSegments: 3, steps: 1 });
   crossGeometry.translate(0, 0, -.035);
   mesh(dpad, 'Single molded cross D-pad', crossGeometry, dpadPlastic);
-  for (const [x, y, vertical] of [[0, .36, true], [0, -.36, true], [-.36, 0, false], [.36, 0, false]]) {
-    mesh(dpad, 'D-pad direction engraving', new THREE.BoxGeometry(vertical ? .022 : .12, vertical ? .12 : .022, .003), rim, x, y, .071);
+  const directionMarks = new Map();
+  const pressedDirection = new THREE.MeshBasicMaterial({ color: '#8BFF78', toneMapped: false });
+  for (const [id, x, y, vertical] of [['up', 0, .36, true], ['down', 0, -.36, true], ['left', -.36, 0, false], ['right', .36, 0, false]]) {
+    directionMarks.set(id, mesh(dpad, 'D-pad direction engraving',
+      new THREE.BoxGeometry(vertical ? .022 : .12, vertical ? .12 : .022, .003), rim, x, y, .071));
   }
   for (const [id, x, y] of [['up', 0, .4], ['down', 0, -.4], ['left', -.4, 0], ['right', .4, 0]]) {
     const anchor = new THREE.Object3D();
     anchor.position.set(x, y, .1); dpad.add(anchor);
-    controls.set(id, { mesh: dpad, anchor, width: .43, height: .43 });
+    controls.set(id, { mesh: dpad, anchor, width: .43, height: .43,
+      indicator: directionMarks.get(id), restMaterial: rim, pressedMaterial: pressedDirection });
   }
   for (const [id, y] of [['start', -3.4], ['select', -3.9]]) {
     cap(id, 2.83, y, .095, buttonPlastic, '');

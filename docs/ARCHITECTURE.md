@@ -173,6 +173,21 @@ The ABXY diamond is offset outward as a unit so both caps and recessed sockets
 clear the actual beveled touchscreen border without leaving the control deck.
 Targets still project from their physical cap anchors; no independent hitbox
 offset or per-frame collision correction is added. The D-pad also clears the border.
+Its shared cross is animated once per room paint from native `bba:control`
+feedback, including combined keyboard/pointer holds. Down-minus-up and
+right-minus-left select pitch/yaw; normalized diagonal axes bound the total
+tilt to0.16radians. The center depresses0.012units, not the other caps'
+0.065units, keeping the visible tilted surface above the deck. Existing
+elapsed-time damping rates50/80 give quick compression/release with an exact
+rest snap; moving transforms invalidate paints, settled feedback does not.
+The existing four direction engravings share one unlit lime material while
+their native direction is held, restoring their original rim material on
+release. This small, exposure-independent cue keeps the selected edge readable
+in a dark room without new geometry, lights, render passes or an animation loop.
+Only changed marker assignments invalidate the view; opposing held arrows
+remain individually marked even when their net tilt cancels.
+Hit anchors inherit the cross transform. Native input is not delayed, and
+GBA's separate motion path is unchanged.
 Touch raycasts require the lower LCD to be the first actual DS surface,
 preventing stylus input through a folded lid or the rear shell.
 
