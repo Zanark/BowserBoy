@@ -29,6 +29,22 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Pages3448449/42317015074 fails: build and11browser shards pass,8fail,
+deploy skips. The exact trace passes both desktop quick-tap batches in
+145.8/169.7ms, but projects three upside-down phone targets outside the canvas
+(clientX about-1,-43,-79). Resize/zoom changed camera positions while inverse
+and world matrices waited for an eligible room paint. Synchronize camera and
+active-model matrices at those changes, without waiting for GPU rendering.
+A new deferred-paint phone regression fails before correction (32,80 maps to
+65,56), then passes alongside all12native quick contacts on Edge in34s.
+Syntax,44units/build pass. Software deferred-paint mapping passes; quick-tap
+second-batch pixels are correct only after2200.5ms, beyond1500ms. Preserve
+that failure and the original deadlines; hosted/public qualification is pending.
+Final Edge gate passes9cases/2.5m: four native precision poses, deferred-camera
+mapping, quick taps, hinge locking, placement/branding and shell lighting.
+GPU-aware fixtures recover through production scheduling without fake paints.
+Software sparse-console and complete dark-room recovery cases now pass.
+
 The software denial fixture now retains its CDP session; detaching restores
 prompt, as an isolated probe proves. Native GBA manual restoration passes with
 denial asserted. DS also boots under denial and records all four quick-tap

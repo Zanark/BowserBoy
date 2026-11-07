@@ -11,6 +11,37 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact source `34484498de6be19a48c5191c4d717035bf84a320`,
+[Pages42317015074](https://github.com/Zanark/BowserBoy/actions/runs/42317015074),
+also finishes **failure**: build and eleven browser shards pass, eight fail,
+and deployment is skipped. The exact quick-tap trace now passes both desktop
+batches in145.8ms/169.7ms. Its upside-down phone batch projects three targets
+outside the canvas (clientX about-1,-43,-79); those contacts never reach native
+input. This is distinct from the earlier successful-but-late pixel reads.
+
+Resize and zoom move the camera immediately, but its world/inverse matrices
+and model descendants previously waited for rendering. Synchronize those
+matrices at camera changes, even while the GPU paint gate is closed.
+A new no-paint, upside-down phone regression fails before the correction:
+the intended(32,80) ray maps to(65,56), and the other two probes also shift.
+After correction, that case and the complete native quick-tap case pass
+together on Edge in34s; syntax,44units and build pass. The software regression
+also passes, but quick taps still miss1500ms: second-batch native/copied marks
+are correct after2200.5ms. This is not a software responsiveness pass.
+Final Edge gate passes9cases/2.5m: all four native precision poses, deferred
+camera mapping, quick taps, hinge locking, placement/branding and shell lighting.
+GPU-aware fixtures now wait for actual completed room frames and recover
+through production timing rather than clearing fences or fake submissions.
+Synthetic request time must not lag behind actual transition creation; the
+stationary1000ms recovery contract does not apply to an unfinished transition.
+The software sparse-console fixture passes, then the complete dark-room
+recovery case passes43.8s after baselining its outstanding insertion recovery.
+The original six other passing software cases include both cap-light groups
+and physical compression. Quick-tap latency is still not qualified.
+Stable file/title/project inventory assigns all93cases exactly once across
+19shards (17x5+2x4), with no missing, extra or duplicate identities.
+Hosted recovery remains required; no new publication is claimed.
+
 Exact source `728739eac4a168095ba095a6fbcab02d826bbadd`,
 [Pages42306381192](https://github.com/Zanark/BowserBoy/actions/runs/42306381192),
 finishes **failure**: build succeeds, eight browser shards pass, eleven fail,

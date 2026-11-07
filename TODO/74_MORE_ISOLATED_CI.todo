@@ -30,6 +30,20 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Pages3448449/42317015074 finishesFAILURE: build and11browser shards pass,
+8fail and deploy skips. Trace exposes offscreen phone touch projections,
+not lost desktop contacts: both desktop quick batches pass145.8/169.7ms.
+Correct stale camera matrices between deferred room paints; new regression
+fails before correction and passes afterward. Edge mapping/native quick
+gate passes2cases/34s. Software mapping passes but native quick-read latency
+still exceeds1500ms at2200.5ms. Final Edge native/camera/hinge/placement/shell
+gate passes9cases/2.5m. GPU-aware sparse-console and complete dark-room
+recovery fixtures now pass software, retaining production waits and original
+assertions. Pressed-cap/physical fixtures already pass the six-case subset.
+Final stable file/title/project audit assigns all93cases exactly once to
+19shards (17x5+2x4), with no missing, extra or duplicate identities.
+Keep native quick software latency unresolved; hosted recovery is required.
+
 Previous recovery audit:83cases assigned exactly once across19shards
 (7x5+12x4), using the workflow's fully-parallel shard selection, workers1,
 retries0 and unchanged120s/15s deadlines. Previous0fdd81b run42299473861

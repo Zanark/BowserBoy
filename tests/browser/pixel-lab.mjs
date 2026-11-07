@@ -1,5 +1,28 @@
 import { expect } from '@playwright/test';
 
+export const installRoomPaintFixture = page => page.evaluate(async () => {
+  const { view } = await import('./src/app.js');
+  window.roomPaintFixture = {
+    async waitForGpu() {
+      const gl = view.renderer.getContext();
+      while (view.paintFence) {
+        const status = gl.clientWaitSync(view.paintFence, 0, 0);
+        if (status === gl.WAIT_FAILED || gl.isContextLost()) throw new Error('Room fixture GPU synchronization failed.');
+        if (status !== gl.TIMEOUT_EXPIRED) return;
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
+    },
+    async paint(time) {
+      await this.waitForGpu();
+      view.render(time);
+      // Let production consume its fence and enforce its synthetic-time recovery.
+      if (!view.renderedLastFrame && !view.paintFence && view.nextPaint > time) view.render(view.nextPaint);
+      if (!view.renderedLastFrame) throw new Error('Room fixture did not submit the intended complete frame.');
+      // Callers can read the default framebuffer now, before another browser task.
+    },
+  };
+});
+
 export const denyScreenWakeLock = async (page) => {
   const cdp = await page.context().newCDPSession(page);
   const { targetInfo } = await cdp.send('Target.getTargetInfo');

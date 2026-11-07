@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
-import { demoReady, powerOn } from './pixel-lab.mjs';
+import { demoReady, installRoomPaintFixture, powerOn } from './pixel-lab.mjs';
 
 const sceneState = (page) => page.evaluate(async () => {
   const { view } = await import('./src/app.js');
@@ -154,17 +154,22 @@ test('sparse room paints lower the console before seating the cartridge', async 
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await installRoomPaintFixture(page);
   const frames = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
     view.lastRender = null;
-    view.nextPaint = 0;
-    view.renderedLastFrame = false;
     view.insertCartridge('sparse-paint-regression');
-    const start = performance.now();
+    let start = performance.now();
     const painted = [];
     for (const offset of [0, 2600, 2900, 5500, 5800]) {
-      view.render(start + offset);
+      if (offset === 0) {
+        await window.roomPaintFixture.paint(start);
+        start = view.lastRender;
+      } else {
+        await window.roomPaintFixture.waitForGpu();
+        view.render(start + offset);
+      }
       if (view.renderedLastFrame) {
         painted.push({
           phase: view.host.dataset.cartridge,
@@ -230,36 +235,41 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   }
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
+  await installRoomPaintFixture(page);
   const budgets = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
-    const tick = (milliseconds) => {
+    const tick = async (milliseconds) => {
+      await window.roomPaintFixture.waitForGpu();
       view.changed = true;
       view.render(view.lastRender + milliseconds);
     };
-    return [1, 2].map(ratio => {
+    const budgets = [];
+    for (const ratio of [1, 2]) {
       view.renderer.setPixelRatio(ratio);
       view.setControl('a', false);
-      view.renderedLastFrame = false;
-      view.nextPaint = 0;
-      tick(16);
+      view.changed = true;
+      await window.roomPaintFixture.paint(view.lastRender + 16);
       const beforeRecovery = view.renderer.info.render.frame;
-      tick(100);
+      await tick(100);
       const duringRecovery = view.renderer.info.render.frame;
-      tick(201); tick(16);
+      await tick(201); await tick(16);
       const singleStallRatio = view.renderer.getPixelRatio();
-      tick(1000); tick(201);
+      await tick(1000); await tick(201);
       const severeStallRatio = view.renderer.getPixelRatio();
-      for (let i = 0; i < 6; i++) { tick(100); tick(201); }
+      for (let i = 0; i < 6; i++) { await tick(100); await tick(201); }
       const beforeIdle = view.renderer.info.render.frame;
+      await window.roomPaintFixture.waitForGpu();
       view.render(view.lastRender + 1000);
+      await window.roomPaintFixture.waitForGpu();
       view.render(view.lastRender + 201);
       const afterIdle = view.renderer.info.render.frame;
       view.setControl('a', true);
-      tick(100);
-      return { ratio, singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
-        width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press };
-    });
+      await tick(100);
+      budgets.push({ ratio, singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
+        width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press });
+    }
+    return budgets;
   });
   for (const budget of budgets) {
     expect(budget.singleStallRatio).toBe(budget.ratio);
@@ -272,16 +282,21 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   }
   const playingRecovery = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
-    const tick = gap => { view.changed = true; view.render(view.lastRender + gap); };
+    const tick = async gap => {
+      await window.roomPaintFixture.waitForGpu();
+      view.changed = true;
+      view.render(view.lastRender + gap);
+    };
     view.setView('playing');
-    view.renderedLastFrame = false;
-    view.nextPaint = 0;
-    view.lastRender = performance.now();
-    tick(1000);
+    view.changed = true;
+    // GPU waits advance wall time independently of the earlier synthetic ticks.
+    const start = Math.max(view.lastRender, view.transition?.started ?? 0);
+    await window.roomPaintFixture.paint(start + 1000);
+    if (view.transition) throw new Error('Stationary recovery requires a completed playing transition.');
     const before = view.renderer.info.render.frame;
-    tick(1000); tick(201);
+    await tick(1000); await tick(201);
     const during = view.renderer.info.render.frame;
-    tick(800);
+    await tick(800);
     return { before, during, after: view.renderer.info.render.frame, ratio: view.renderer.getPixelRatio() };
   });
   expect(playingRecovery.during, 'A stalled, stationary handheld must leave time for the native core').toBe(playingRecovery.before);
@@ -297,10 +312,10 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     };
     try {
       view.insertCartridge('presented-clock-regression');
-      view.renderedLastFrame = false;
-      view.nextPaint = 0;
       for (let frame = 0; frame < 6; frame++) {
+        await window.roomPaintFixture.waitForGpu();
         view.render(view.lastRender + 1000);
+        await window.roomPaintFixture.waitForGpu();
         view.render(view.lastRender + 201);
       }
       return { presented, state: view.host.dataset.cartridge, ratio: view.renderer.getPixelRatio() };
@@ -313,11 +328,13 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(insertion.ratio).toBe(2);
   const nativeOperation = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
+    // Isolate native-operation gating from the insertion's existing recovery.
+    view.changed = true;
+    await window.roomPaintFixture.paint(view.lastRender + 16);
+    await window.roomPaintFixture.waitForGpu();
     const before = view.renderer.info.render.frame;
     view.nativeBusy = true;
     view.changed = true;
-    view.renderedLastFrame = false;
-    view.nextPaint = 0;
     view.render(view.lastRender + 16);
     const during = view.renderer.info.render.frame;
     view.nativeBusy = false;
@@ -613,6 +630,7 @@ async function prepareControlLighting(page) {
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await installRoomPaintFixture(page);
   await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
@@ -625,9 +643,7 @@ const sampleControlLighting = (page, id, pressed) => page.evaluate(async ({ id, 
   const { Vector3 } = await import('three');
   view.setControl(id, pressed);
   view.changed = true;
-  view.nextPaint = 0;
-  view.renderedLastFrame = false;
-  view.render(view.lastRender + 250);
+  await window.roomPaintFixture.paint(view.lastRender + 250);
   const mesh = view.model.controls.get(id).mesh;
   const points = ['up', 'down', 'left', 'right'].includes(id) ?
     [[0, .48, .05], [0, -.48, .05], [-.48, 0, .05], [.48, 0, .05]] :
@@ -694,19 +710,17 @@ test('physical cap compression, release and unlit response retain their bounds',
   const response = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const { mesh } = view.model.controls.get('a');
-    const advance = (pressed, milliseconds) => {
+    const advance = async (pressed, milliseconds) => {
       view.setControl('a', pressed);
       view.changed = true;
-      view.nextPaint = 0;
-      view.renderedLastFrame = false;
-      view.render(view.lastRender + milliseconds);
+      await window.roomPaintFixture.paint(view.lastRender + milliseconds);
       return mesh.userData.motion.restPosition.z - mesh.position.z;
     };
-    advance(false, 250);
-    const compressing = advance(true, 32);
-    const pressed = advance(true, 250);
-    const releasing = advance(false, 32);
-    const released = advance(false, 250);
+    await advance(false, 250);
+    const compressing = await advance(true, 32);
+    const pressed = await advance(true, 250);
+    const releasing = await advance(false, 32);
+    const released = await advance(false, 250);
     return { compressing, pressed, releasing, released };
   });
   await testInfo.attach('physical-press-response', { body: JSON.stringify(response), contentType: 'application/json' });

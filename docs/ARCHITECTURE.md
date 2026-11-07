@@ -661,6 +661,12 @@ The existing lamp, screen-light and shadow invalidation paths are unchanged.
 
 ### Rendering without starving the core
 
+Camera changes synchronize view/inverse matrices and active-model world
+transforms immediately, independent of GPU eligibility. Resize, zoom and DS
+hinge reframing must not leave pointer rays using the prior camera pose while
+the native core and screen copies continue. Rendering also updates the camera
+inverse after `lookAt`, before a pending-fence early return.
+
 Unchanged shadows are cached and idle static scenes stop painting once motion
 and illumination settle. Model, lamp, power, resize and button changes invalidate
 the relevant state. Modal tools suspend 3D uploads/readbacks and painting behind

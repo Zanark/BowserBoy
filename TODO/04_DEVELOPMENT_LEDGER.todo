@@ -14,6 +14,24 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Hosted phone trace exposes stale camera matrices:
+  Exact3448449/42317015074 fails: build and11browser shards pass,8fail,
+  deployment skips. Both desktop quick-tap batches pass145.8/169.7ms, while
+  upside-down phone target projections leave the canvas. The three offscreen
+  contacts cannot reach native input. Resize/zoom moves camera/model poses,
+  but world/inverse matrices previously waited for an eligible room paint.
+  Add a no-paint phone regression: before correction (32,80) maps to(65,56).
+  Synchronize camera and active-model matrices at changes; regression and
+  complete native quick-tap case pass together on Edge34s. Syntax/44units/
+  build pass. Software no-paint mapping passes; second-batch quick pixels
+  are correct after2200.5ms and still fail1500ms. Keep exact failure evidence.
+  Delegate only GPU-aware synchronous render fixture repairs; parent keeps
+  production camera/native lane. No resolution, lighting or deadline change.
+  Final Edge gate passes9cases/2.5m; software sparse-console and complete
+  dark-room recovery pass after fixtures respect actual request times and
+  outstanding GPU recovery. Existing cap/physical software cases pass.
+  Stable file/title/project audit assigns93cases exactly once across19shards,
+  17x5+2x4, without missing/extra/duplicate identities. Hosted gate remains.
 - 2026-11-07 / Minimal full-frame recovery qualifies Edge, not all software:
   Fresh syntax,44units and build pass. Nine actual Edge cases pass2.8m:
   four locked precise poses, quick mouse/touch contacts, held pen, independent

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { installRoomPaintFixture } from './pixel-lab.mjs';
 
 async function state(page, system) {
   return page.evaluate(async system => {
@@ -31,9 +32,16 @@ async function keyboardMove(page, system) {
 
 test('sparse console paints retain the lift and only publish completion with aligned controls', async ({ page }) => {
   await ready(page);
+  await installRoomPaintFixture(page);
   const result = await page.evaluate(async () => {
     const { view } = await import('./src/app.js'), { Box3 } = await import('three');
     view.renderer.setAnimationLoop(null);
+    await window.roomPaintFixture.waitForGpu();
+    if (view.paintFence) {
+      // Finish the old room frame's recovery before starting the lift clock.
+      view.render(Math.max(performance.now(), view.paintSubmitted + 51));
+    }
+    while (performance.now() < view.nextPaint) await new Promise(resolve => setTimeout(resolve, 0));
     const originalRender = view.renderer.render.bind(view.renderer);
     const samples = [];
     view.renderer.render = (scene, camera) => {
@@ -43,22 +51,18 @@ test('sparse console paints retain the lift and only publish completion with ali
       });
       return originalRender(scene, camera);
     };
-    const paint = time => {
-      view.renderedLastFrame = false;
-      view.nextPaint = 0;
-      view.render(time);
-    };
+    const paint = time => window.roomPaintFixture.paint(time);
     try {
-      const time = performance.now();
       view.selectConsole('ds');
-      paint(time);
+      const time = view.transition.started;
+      await paint(time);
       view.nativeBusy = true;
       view.render(time + 5000);
       const deferred = { mode: view.host.dataset.view, elapsed: view.transition?.elapsed };
       view.nativeBusy = false;
-      paint(time + 10000);
+      await paint(time + 10000);
       const midpoint = view.host.dataset.view;
-      paint(time + 15000);
+      await paint(time + 15000);
       const button = document.querySelector('#ds-hardware-power').getBoundingClientRect();
       const canvas = view.canvas.getBoundingClientRect();
       const point = view.project(view.ds.controls.get('power').anchor);
@@ -83,11 +87,10 @@ test('a stalled Inspect transition completes on its next eligible real paint', a
   await ready(page);
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await installRoomPaintFixture(page);
   const result = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
-    view.renderedLastFrame = false;
-    view.nextPaint = 0;
     view.setView('inspecting');
     const time = performance.now();
     const before = view.renderer.info.render.frame;
@@ -96,7 +99,7 @@ test('a stalled Inspect transition completes on its next eligible real paint', a
       view.render(time + 2000);
       const deferred = { mode: view.host.dataset.view, frame: view.renderer.info.render.frame };
       view.nativeBusy = false;
-      view.render(time + 4000);
+      await window.roomPaintFixture.paint(time + 4000);
       return { before, deferred, mode: view.host.dataset.view, frame: view.renderer.info.render.frame };
     } finally {
       view.nativeBusy = false;

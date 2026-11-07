@@ -418,6 +418,14 @@ export class HandheldScene {
     this.ds.root.position.copy(this.playTarget);
     this.camera.position.copy(this.cameraTarget);
     this.lookAt.copy(this.lookTarget);
+    this.updateViewMatrices();
+  }
+
+  updateViewMatrices() {
+    // Projection and touch rays must not depend on the next eligible GPU paint.
+    this.camera.lookAt(this.lookAt);
+    this.camera.updateWorldMatrix(true, false);
+    this.activeModel.root.updateWorldMatrix(true, true);
   }
 
   dsPoseBounds(rotation, hinge) {
@@ -679,6 +687,7 @@ export class HandheldScene {
       this.lookAt.copy(this.lookTarget);
       if (this.mode === 'playing') this.activeModel.root.position.copy(this.playTarget);
     }
+    this.updateViewMatrices();
   }
 
   updateCameraTargets() {
@@ -751,6 +760,7 @@ export class HandheldScene {
     this.updateCameraTargets();
     this.camera.position.copy(this.cameraTarget);
     if (this.console === 'ds') this.lookAt.copy(this.lookTarget);
+    this.updateViewMatrices();
   }
 
   setPlayZoom(value) {
@@ -760,6 +770,7 @@ export class HandheldScene {
     if (!this.transition && !this.cameraMotion) {
       this.camera.position.copy(this.cameraTarget);
       if (this.console === 'ds') this.lookAt.copy(this.lookTarget);
+      this.updateViewMatrices();
     }
     this.changed = true;
   }
@@ -1019,6 +1030,7 @@ export class HandheldScene {
       }
     }
     this.camera.lookAt(this.lookAt);
+    this.camera.updateWorldMatrix(true, false);
     let buttonsMoving = false;
     for (const { mesh, ids } of this.controlGroups) {
       const motion = mesh.userData.motion;

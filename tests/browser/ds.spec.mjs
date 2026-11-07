@@ -317,6 +317,50 @@ test(`DS stylus draws under the pointer across locked orientations, zoom and hig
 });
 }
 
+test('DS resize and zoom keep touch rays aligned while room painting is deferred', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#select-ds')).toBeEnabled();
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Euler } = await import('three');
+    view.ds.root.quaternion.setFromEuler(new Euler(.15, -.2, Math.PI));
+    view.setDsHinge(155);
+  });
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+    view.nativeBusy = true;
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  const targets = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    view.resize();
+    view.setPlayZoom(.65);
+    const bounds = view.canvas.getBoundingClientRect();
+    const camera = view.camera.clone();
+    camera.lookAt(view.lookAt);
+    camera.updateMatrixWorld();
+    return [[32, 80], [128, 96], [212, 160]].map(([x, y]) => {
+      const point = view.ds.screens[1].localToWorld(new Vector3(
+        ((x + .5) / 256 - .5) * 4.5, (.5 - (y + .5) / 192) * 3.375, 0,
+      )).project(camera);
+      const clientX = bounds.left + (point.x + 1) * bounds.width / 2;
+      const clientY = bounds.top + (1 - point.y) * bounds.height / 2;
+      return { x, y, visible: clientX >= bounds.left && clientX < bounds.right &&
+        clientY >= bounds.top && clientY < bounds.bottom,
+        touch: view.dsController.touchAt({ clientX, clientY }) };
+    });
+  });
+  expect(targets).toEqual([[32, 80], [128, 96], [212, 160]].map(([x, y]) =>
+    ({ x, y, visible: true, touch: { x, y } })));
+});
+
 test('DS quick taps reach their clicked pixels without holding, with and without the pen', async ({ page }, testInfo) => {
   await page.goto('./');
   await denyScreenWakeLock(page);
