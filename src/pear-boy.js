@@ -21,6 +21,9 @@ export function createPearBoy() {
   const green = new THREE.MeshStandardMaterial({ color: '#52851d', roughness: .65 });
   const ink = new THREE.MeshBasicMaterial({ color: '#20140e' });
   const freckles = new THREE.MeshBasicMaterial({ color: '#d88724', toneMapped: false });
+  const blush = new THREE.MeshBasicMaterial({ color: '#ff8fc3', toneMapped: false });
+  const pink = new THREE.MeshBasicMaterial({ color: '#f16b85', toneMapped: false });
+  const white = new THREE.MeshBasicMaterial({ color: '#f4f6f2', toneMapped: false });
   const braid = canvasTexture(64, 128, (context, width, height) => {
     context.fillStyle = '#b98b47';
     context.fillRect(0, 0, width, height);
@@ -38,14 +41,18 @@ export function createPearBoy() {
   const cord = new THREE.MeshStandardMaterial({ color: '#ead8a8', map: braid, roughness: .95 });
   const limbs = [];
   const face = {
-    root: new THREE.Group(), calm: new THREE.Group(), scared: new THREE.Group(), eyes: [],
+    root: new THREE.Group(), calm: new THREE.Group(), scared: new THREE.Group(),
+    angry: new THREE.Group(), sad: new THREE.Group(), eyes: [],
     anchor: new THREE.Object3D(), gaze: new THREE.Vector2(), lifted: false, elapsed: 0,
+    reacting: false, presented: false,
   };
   face.calm.name = 'pear-boy curious face';
   face.scared.name = 'pear-boy scared-of-heights face';
   face.scared.visible = false;
+  face.angry.name = 'pear-boy angry landing face';
+  face.sad.name = 'pear-boy sad recovery face';
   face.root.name = 'pear-boy pointer-following face';
-  face.root.add(face.calm, face.scared);
+  face.root.add(face.calm, face.scared, face.angry, face.sad);
   root.add(face.root);
   function mesh(name, geometry, material, position = new THREE.Vector3()) {
     const object = new THREE.Mesh(geometry, material);
@@ -79,6 +86,25 @@ export function createPearBoy() {
     return mesh(name, new THREE.TubeGeometry(
       new THREE.CatmullRomCurve3(points), 24, radius, 8, false), material);
   }
+  function facePatch(name, shape, material, inset = .06) {
+    const shapeGeometry = new THREE.ShapeGeometry(shape, 16);
+    const triangles = shapeGeometry.toNonIndexed();
+    shapeGeometry.dispose();
+    let points = Array.from({ length: triangles.attributes.position.count }, (_, index) =>
+      new THREE.Vector3().fromBufferAttribute(triangles.attributes.position, index));
+    triangles.dispose();
+    // Broad filled expressions must follow the shell, not cut through its curved surface.
+    for (let level = 0; level < 2; level++) {
+      const subdivided = [];
+      for (let i = 0; i < points.length; i += 3) {
+        const [a, b, c] = points.slice(i, i + 3);
+        const ab = a.clone().lerp(b, .5), bc = b.clone().lerp(c, .5), ca = c.clone().lerp(a, .5);
+        subdivided.push(a, ab, ca, ab, b, bc, ca, bc, c, ab, bc, ca);
+      }
+      points = subdivided;
+    }
+    return mesh(name, new THREE.BufferGeometry().setFromPoints(points.map(point => front(point.x, point.y, inset))), material);
+  }
   face.anchor.position.copy(front(0, 4.5));
   root.add(face.anchor);
   function limb(name, points, tip, tipRadius, tipFloor = tipRadius) {
@@ -100,11 +126,44 @@ export function createPearBoy() {
     face.calm.add(eye);
     face.eyes.push({ mesh: eye, side });
     const squint = tube('pear-boy squeezed-shut eye', [
-      front(side * .98, 4.86, .06),
-      front(side * .58, 4.5, .06),
-      front(side * .84, 4.2, .06),
-    ], .055, ink);
+      front(side * .98, 4.84, .07),
+      front(side * .56, 4.43, .07),
+      front(side * 1.04, 4.43, .07),
+    ], .07, ink);
     face.scared.add(squint);
+    const cheek = new THREE.Shape();
+    cheek.absellipse(side * 1.06, 4.1, .24, .17, 0, Math.PI * 2);
+    face.scared.add(facePatch('pear-boy rosy scream cheek', cheek, blush, .025));
+    const angryEye = new THREE.Shape();
+    angryEye.moveTo(side * .37, 4.84);
+    angryEye.bezierCurveTo(side * .72, 4.73, side * 1.15, 4.98, side * 1.45, 5.19);
+    angryEye.bezierCurveTo(side * 1.39, 4.61, side * 1.12, 4.3, side * .76, 4.43);
+    angryEye.bezierCurveTo(side * .53, 4.51, side * .4, 4.67, side * .37, 4.84);
+    face.angry.add(facePatch('pear-boy angry eye outline', angryEye, ink));
+    const angryWhite = new THREE.Shape();
+    angryWhite.moveTo(side * .61, 4.7);
+    angryWhite.quadraticCurveTo(side * .95, 4.73, side * 1.24, 4.97);
+    angryWhite.bezierCurveTo(side * 1.16, 4.59, side * .93, 4.43, side * .73, 4.59);
+    angryWhite.quadraticCurveTo(side * .66, 4.64, side * .61, 4.7);
+    face.angry.add(facePatch('pear-boy angry eye white', angryWhite, white, .085));
+    for (const x of [.95, 1.13, 1.31]) {
+      face.angry.add(tube('pear-boy angry blush stroke', [
+        front(side * x, 3.84, .055), front(side * (x - .04), 3.63, .055),
+      ], .035, pink));
+    }
+    const sadEye = mesh('pear-boy sad glossy eye', new THREE.SphereGeometry(1, 24, 16), ink, front(side * .72, 4.64, .06));
+    sadEye.scale.set(.34, .38, .12);
+    face.sad.add(sadEye);
+    const glint = mesh('pear-boy sad eye glint', new THREE.SphereGeometry(.075, 12, 10), white,
+      front(side * .72 - .08, 4.76, .19));
+    glint.scale.z = .4;
+    face.sad.add(glint);
+    face.sad.add(tube('pear-boy worried eyebrow', [
+      front(side * 1.11, 4.83, .07), front(side * .73, 5.03, .07), front(side * .36, 5.12, .07),
+    ], .07, ink));
+    const sadCheek = new THREE.Shape();
+    sadCheek.absellipse(side * 1.08, 4.04, .34, .12, 0, Math.PI * 2, false, side * .15);
+    face.sad.add(facePatch('pear-boy sad rosy cheek', sadCheek, pink, .025));
     for (const [x, y] of [[1.05, 4.25], [1.16, 4.03], [.92, 4.04]]) {
       const dot = mesh('pear-boy cheek freckle', new THREE.SphereGeometry(.055, 10, 8), freckles, front(side * x, y));
       dot.scale.z = .4;
@@ -134,35 +193,99 @@ export function createPearBoy() {
   face.calm.add(smile);
   face.mouth = tube('pear-boy frightened wobbly mouth', Array.from({ length: 33 }, (_, index) => {
     const t = index / 32;
-    return front(-.72 + t * 1.44, 3.48 + Math.cos(t * Math.PI * 6) * .095, .08);
-  }), .055, ink);
-  face.scared.add(face.mouth);
-  function setFaceLifted(lifted) {
-    face.lifted = lifted;
-    face.calm.visible = !lifted;
-    face.scared.visible = lifted;
+    return front(-.6 + t * 1.2, 3.6 + Math.cos(t * Math.PI * 6) * .075, .08);
+  }), .065, ink);
+  const openMouth = new THREE.Shape();
+  openMouth.moveTo(-.64, 3.6);
+  openMouth.bezierCurveTo(-.64, 3.9, -.35, 3.98, -.12, 3.83);
+  openMouth.bezierCurveTo(-.05, 3.78, .05, 3.78, .12, 3.83);
+  openMouth.bezierCurveTo(.35, 3.98, .64, 3.9, .64, 3.6);
+  openMouth.bezierCurveTo(.64, 3.3, .35, 3.22, .12, 3.37);
+  openMouth.bezierCurveTo(.05, 3.42, -.05, 3.42, -.12, 3.37);
+  openMouth.bezierCurveTo(-.35, 3.22, -.64, 3.3, -.64, 3.6);
+  face.openMouth = facePatch('pear-boy open scream mouth', openMouth, ink);
+  face.scared.add(face.mouth, face.openMouth);
+  const angryMouth = new THREE.Shape();
+  angryMouth.moveTo(-.42, 3.92);
+  angryMouth.quadraticCurveTo(0, 3.84, .42, 3.95);
+  angryMouth.quadraticCurveTo(.5, 3.7, .43, 3.35);
+  angryMouth.quadraticCurveTo(0, 3.25, -.43, 3.35);
+  angryMouth.quadraticCurveTo(-.5, 3.7, -.42, 3.92);
+  face.angry.add(facePatch('pear-boy angry shouting mouth', angryMouth, ink));
+  const tongue = new THREE.Shape();
+  tongue.moveTo(-.29, 3.48);
+  tongue.lineTo(.29, 3.48);
+  tongue.lineTo(.29, 3.66);
+  tongue.quadraticCurveTo(0, 3.77, -.29, 3.66);
+  tongue.closePath();
+  face.angry.add(facePatch('pear-boy angry pink tongue', tongue, pink, .085));
+  for (const points of [
+    [[-1.28, 5.08], [-1.1, 5.26], [-1.16, 5.47]],
+    [[-.96, 5.65], [-.91, 5.38], [-.68, 5.32]],
+    [[-.65, 5.15], [-.91, 5.12], [-.99, 4.95]],
+  ]) face.angry.add(tube('pear-boy anger mark', points.map(([x, y]) => front(x, y + .42, .07)), .055, ink));
+  face.sad.add(tube('pear-boy sad wavy frown', [
+    front(-.56, 3.5, .07), front(-.2, 3.7, .07), front(.22, 3.38, .07), front(.55, 3.57, .07),
+  ], .065, ink));
+  function showExpression(expression) {
+    face.calm.visible = expression === 'curious';
+    face.scared.visible = expression === 'scared';
+    face.angry.visible = expression === 'angry';
+    face.sad.visible = expression === 'sad';
+    face.mouth.visible = true;
+    face.openMouth.visible = false;
     face.elapsed = 0;
-    face.mouth.position.set(0, 0, 0);
-    root.userData.expression = lifted ? 'scared' : 'curious';
+    face.presented = false;
+    root.userData.expression = expression;
+  }
+  function setFaceLifted(lifted, { reset = false } = {}) {
+    face.lifted = lifted;
+    if (lifted || reset) face.reacting = false;
+    if (!face.reacting) showExpression(lifted ? 'scared' : 'curious');
+  }
+  function reactToImpact(speed) {
+    if (speed < 10 || face.reacting) return;
+    face.reacting = true;
+    showExpression('angry');
+  }
+  function acknowledgeFacePaint() {
+    face.presented = true;
   }
   function updateFace(delta, target, reducedMotion) {
     const previousX = face.gaze.x, previousY = face.gaze.y;
     const blend = reducedMotion ? 1 : 1 - Math.exp(-12 * delta);
     face.gaze.lerp(target, blend);
     if (face.gaze.distanceToSquared(target) < 1e-7) face.gaze.copy(target);
-    const changed = face.gaze.x !== previousX || face.gaze.y !== previousY;
+    let changed = face.gaze.x !== previousX || face.gaze.y !== previousY;
     if (changed) {
       face.root.position.y = face.gaze.y * .18;
       face.root.rotation.y = face.gaze.x * .22;
       const radius = radiusAt(4.5 + face.root.position.y) / radiusAt(4.5);
       face.root.scale.set(radius, 1, radius);
     }
-    if (face.lifted) {
-      face.elapsed += Math.min(delta, .05);
-      face.mouth.position.x = reducedMotion ? 0 : Math.sin(face.elapsed * 25) * .035;
-      face.mouth.position.y = reducedMotion ? 0 : Math.sin(face.elapsed * 19) * .025;
+    if (face.lifted || face.reacting) {
+      face.elapsed += Math.max(0, delta);
+      if (face.reacting) {
+        const angry = root.userData.expression === 'angry';
+        if (face.elapsed >= (angry ? .9 : 1.25) && face.presented) {
+          face.reacting = angry;
+          showExpression(angry ? 'sad' : face.lifted ? 'scared' : 'curious');
+          changed = true;
+        }
+      } else if (!reducedMotion && face.elapsed >= .24 && face.presented) {
+        face.openMouth.visible = !face.openMouth.visible;
+        face.mouth.visible = !face.openMouth.visible;
+        face.elapsed = 0;
+        face.presented = false;
+        changed = true;
+      }
     }
-    return changed || (face.lifted && !reducedMotion);
+    if (reducedMotion && face.openMouth.visible) {
+      face.openMouth.visible = false;
+      face.mouth.visible = true;
+      changed = true;
+    }
+    return changed || face.reacting || (face.lifted && !reducedMotion);
   }
   setFaceLifted(false);
   tube('pear-boy brown stem', [
@@ -255,5 +378,6 @@ export function createPearBoy() {
     return changed;
   }
   resetLimbs();
-  return { root, body, light, lights, bounds, contact, limbs, resetLimbs, updateLimbs, face, setFaceLifted, updateFace };
+  return { root, body, light, lights, bounds, contact, limbs, resetLimbs, updateLimbs,
+    face, setFaceLifted, reactToImpact, acknowledgeFacePaint, updateFace };
 }

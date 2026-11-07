@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
-import { powerOn } from './pixel-lab.mjs';
+import { powerOn, waitForDesk } from './pixel-lab.mjs';
 
 const audioReady = async (page) => {
   const frame = page.frames().find(item => item.url().endsWith('player.html'));
@@ -78,6 +78,7 @@ test('power-on chime renders a crisp chip arpeggio with volume, mute and context
     };
   });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await waitForDesk(page, { expandDock: true });
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await powerOn(page);
@@ -190,6 +191,7 @@ test('audio-paced default retains live PCM reserve and normal cartridge speed th
   await powerOn(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   const frame = await audioReady(page);
+  await waitForDesk(page, { expandDock: true });
   // Isolate bounded audio stalls from multi-second software-GPU draws.
   await page.locator('#tools-open').click();
   await page.locator('#shader').selectOption('disabled');
@@ -259,6 +261,7 @@ test('real native audio buffers brief stalls and smooths volume without restarti
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   const frame = await audioReady(page);
   const identity = await frame.evaluate(() => window.audioIdentity = crypto.randomUUID());
+  await waitForDesk(page, { expandDock: true });
   await page.locator('#tools-open').click();
   await page.locator('#autosave-toggle').click();
   await page.locator('#native-open').click();

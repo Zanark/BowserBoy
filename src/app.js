@@ -49,7 +49,7 @@ for (const [id, name, label] of [
   ['quick-fullscreen', 'fullscreen', 'Fullscreen player'], ['quick-controls', 'keys', 'Change control keybindings'],
   ['quick-screen-fullscreen', 'screen', 'Fullscreen game screen'], ['screen-focus-close', 'close', 'Exit screen fullscreen'],
   ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
-  ['dock-drag', 'drag', 'Move tools dock'], ['dock-toggle', 'collapse', 'Collapse tools dock'],
+  ['dock-drag', 'drag', 'Move tools dock'], ['dock-toggle', 'expand', 'Expand tools dock'],
   ['consoles-open', 'drag', 'Move consoles'],
 ]) icon($(id), name, label);
 
@@ -57,6 +57,7 @@ const dock = $('action-dock');
 const dockHandle = $('dock-drag');
 let dockPosition = null;
 let dockDrag = null;
+let dockMode = 'table';
 function positionDock(x, y) {
   const bounds = $('player').getBoundingClientRect();
   const margin = Math.min(8, Math.max(0, (bounds.width - dock.offsetWidth) / 2));
@@ -117,16 +118,16 @@ dockHandle.addEventListener('keydown', (event) => {
     positionDock(box.left - bounds.left + x * step, box.top - bounds.top + y * step);
   }
 });
-$('dock-toggle').addEventListener('click', () => {
+function setDockCollapsed(collapsed) {
   finishDockDrag();
   closeSpeedMenu();
-  const collapsed = !$('dock-actions').hidden;
   $('dock-actions').hidden = collapsed;
   dock.toggleAttribute('data-collapsed', collapsed);
   $('dock-toggle').setAttribute('aria-expanded', String(!collapsed));
   icon($('dock-toggle'), collapsed ? 'expand' : 'collapse', `${collapsed ? 'Expand' : 'Collapse'} tools dock`);
   fitDock();
-});
+}
+$('dock-toggle').addEventListener('click', () => setDockCollapsed(!$('dock-actions').hidden));
 document.querySelector('.skip-link').addEventListener('click', () => {
   if ($('dock-actions').hidden) $('dock-toggle').click();
 });
@@ -921,7 +922,9 @@ const keyboard = bindKeyboard(window, {
     if (view?.consoleMove) { view.finishConsoleMove(true); return true; }
     if ($('console-controls').matches(':popover-open')) { $('console-controls').hidePopover(); return true; }
     if (view?.pearMove) { view.finishPearMove(true); return true; }
+    if (view?.axolotlMove) { view.finishAxolotlMove(true); return true; }
     if ($('pear-controls').matches(':popover-open')) { $('pear-controls').hidePopover(); return true; }
+    if ($('axolotl-controls').matches(':popover-open')) { $('axolotl-controls').hidePopover(); return true; }
     if (dockDrag) {
       const previous = dockDrag.previous;
       resetDockPosition();
@@ -965,6 +968,7 @@ function changeView(mode) {
 }
 async function selectConsole(system) {
   if (!view) throw new Error('The 3D scene is not available.');
+  setDockCollapsed(false);
   if (system === view.console) {
     if (view.mode === 'table') view.setView('playing');
     return;
@@ -1014,8 +1018,8 @@ function updatePearControls() {
   if (view.pearMove) $('scene-hint').textContent = view.host.dataset.pearPlacement === 'blocked' ?
     'That spot is occupied. Move pear-boy to clear desk space.' :
     'Move pear-boy in 3D: drag, scroll for depth; arrows move, Page Up/Down lift. Release or Enter drops; Escape cancels.';
-  else if (view.mode === 'table' && !view.consoleMove) $('scene-hint').textContent =
-    'Drag consoles or pear-boy to move them. Click a console to play; click pear-boy for light.';
+  else if (view.mode === 'table' && !view.consoleMove && !view.axolotlMove) $('scene-hint').textContent =
+    'Drag consoles, pear-boy or axolotl to move them. Click a console to play; click a companion for light.';
 }
 function updateConsoleMovement() {
   if (!view) return;
@@ -1041,7 +1045,29 @@ $('pear-move').addEventListener('click', () => {
   $('pear-controls').hidePopover();
   view?.beginPearMove();
 });
-$('pear-home').addEventListener('click', () => view?.resetPearPosition());
+$('pear-home').addEventListener('click', () => void operation(() => view?.resetPearPosition()));
+function updateAxolotlControls() {
+  if (!view) return;
+  $('axolotl-toggle').setAttribute('aria-pressed', String(view.axolotlOn));
+  $('axolotl-open').toggleAttribute('data-lit', view.axolotlOn);
+  $('axolotl-sleep').setAttribute('aria-pressed', String(view.axolotlBrightness === .5));
+  $('axolotl-bright').setAttribute('aria-pressed', String(view.axolotlBrightness === 1));
+  $('axolotl-move').setAttribute('aria-pressed', String(!!view.axolotlMove));
+  if (view.axolotlMove) $('scene-hint').textContent = view.host.dataset.axolotlPlacement === 'blocked' ?
+    'That spot is occupied. Move axolotl to clear desk space.' :
+    'Move axolotl in 3D: drag, scroll for depth; arrows move, Page Up/Down lift. Release or Enter drops; Escape cancels.';
+  else updatePearControls();
+}
+icon($('axolotl-open'), 'axolotl', 'Axolotl lighting controls');
+$('scene').addEventListener('axolotl-change', updateAxolotlControls);
+$('axolotl-toggle').addEventListener('click', () => view?.setAxolotlEnabled(!view.axolotlOn));
+$('axolotl-sleep').addEventListener('click', () => view?.setAxolotlBrightness(.5));
+$('axolotl-bright').addEventListener('click', () => view?.setAxolotlBrightness(1));
+$('axolotl-move').addEventListener('click', () => {
+  $('axolotl-controls').hidePopover();
+  view?.beginAxolotlMove();
+});
+$('axolotl-home').addEventListener('click', () => void operation(() => view?.resetAxolotlPosition()));
 $('room-toggle').addEventListener('click', () => {
   if (!view) return;
   view.setRoomLights(!view.roomLightsOn);
@@ -1081,6 +1107,8 @@ try {
       if (!busy && !ds?.busy) void operation(() => selectConsole(system));
     },
     onView: (mode, moving) => {
+      if (mode !== 'table' && dockMode === 'table') setDockCollapsed(false);
+      dockMode = mode;
       releaseHostInputs();
       ds?.releaseInputs();
       const heading = document.querySelector('.desk-heading h1');
@@ -1089,7 +1117,7 @@ try {
       if (consoleBrand) heading.dataset.console = view.console;
       else delete heading.dataset.console;
       const image = heading.querySelector('img');
-      image.setAttribute('src', dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
+      image.setAttribute('src', dsBrand ? './assets/ds-logo-shimmer.png' : consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
       image.alt = dsBrand ? 'BowserBOY DS' : consoleBrand ? 'BowserBOYADVANCED' : 'BowserBOY';
       image.width = dsBrand ? 2149 : consoleBrand ? 1080 : 2148;
       image.height = dsBrand ? 732 : consoleBrand ? 420 : 732;
@@ -1104,7 +1132,7 @@ try {
       $('inspect').setAttribute('aria-pressed', String(mode === 'inspecting'));
       updateDsPoseControls();
       $('play-zoom-control').hidden = mode !== 'playing' || moving || document.fullscreenElement === $('screen-focus');
-      $('scene-hint').textContent = mode === 'table' ? 'Drag consoles or pear-boy to move them. Click a console to play; click pear-boy for light.' :
+      $('scene-hint').textContent = mode === 'table' ? 'Drag consoles, pear-boy or axolotl to move them. Click a console to play; click a companion for light.' :
         mode === 'inspecting' ? (view?.console === 'ds' ?
           'Rotate body or choose Move hinge. Lock pose, then Back to play. Unlocked returns flat.' :
           'Drag to look around. Scroll to zoom. Your game keeps running.') :
@@ -1125,8 +1153,10 @@ try {
   view.setScreenFullscreen(false);
   await view.waitForFirstPaint();
   $('pear-open').disabled = false;
+  $('axolotl-open').disabled = false;
   $('consoles-open').disabled = false;
   updatePearControls();
+  updateAxolotlControls();
 } catch (error) {
   console.error('Creating the 3D scene:', error);
   sceneFailure = new Error(`The 3D handheld needs WebGL 2 and could not start: ${error.message}`);

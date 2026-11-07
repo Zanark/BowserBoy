@@ -1,0 +1,47 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/110
+Milestone: Move the axolotl around the desk like pear-boy.
+Dependencies: 110_SMALL_AXOLOTL_LAMP.todo; existing DeskMotion and desk clearance.
+Purpose: Give the smaller companion the same real pointer/touch dragging,
+depth adjustment, keyboard placement and gravity while preserving lighting.
+
+Tasks:
+- [x] Reuse DeskMotion and shared companion gesture handling.
+- [x] Preserve short-click power; dragging never toggles the glow.
+- [x] Add keyboard Move and Reset controls, cancellation and desk bounds.
+- [x] Integrate moving bounds into console collision, clearance and focus poses.
+- [x] Qualify desktop rendered fall/bounce and phone touch/keyboard regression.
+- [x] Update affected documentation, tracking and owned continuity.
+
+Acceptance criteria:
+Actual desktop and touch gestures move the axolotl in 3D without moving
+pear-boy or opening console tools. Wheel adjusts depth. Release/Enter shows
+the falling and bouncing model before settling; no below-table penetration.
+Escape, pointer cancellation, blur and resize restore pickup position.
+Lighting stays independent and follows the body; a click still toggles.
+The original tripod and companion block overlap; table consoles yield.
+Focused GBA/DS transitions can clear the body without losing its table pose.
+No new face/rope animation, persistence or emulator changes.
+
+Completion evidence:
+Desktop actual drag/depth/rendered fall+bounce/cancel/yield and phone real
+touch/keyboard/resize cases pass, alongside retained Pear light/movement.
+The preceding gate passes six other UI/lighting/shimmer cases;61units,
+syntax and build pass. An independent real-browser check moves the lamp
+through GBA/DS Play/Inspect/table, verifies six clear poses and restores
+its selected table coordinates. Companion rejection, blur cancellation,
+occupied Pear home error, both lamp resets and console reset also pass;
+no page errors. Publication belongs to112, not this local completion.
+
+Completion log:
+2026-11-07: Owner explicitly requests movement after the fixed lamp in110.
+Supersede that fixed-position constraint, not its original completion evidence.
+Extract common companion gesture handling instead of copying pear movement;
+use actual rotated body bounds with existing fixed-step DeskMotion.
+2026-11-07: First tests expose a Vector3/Object3D helper error and actual
+console reset seeds predating lamp clearance. Fix projection and save the
+first collision-free console homes; all three repaired cases pass.
+Prevent Pear reset from overlapping the moved axolotl, with explicit
+operation error reporting. Separate console wheel-only fixture fails,
+one attempted fixture repair is rejected, and that exact CI case is parked
+under105 per owner instruction. Its coverage is not claimed restored.

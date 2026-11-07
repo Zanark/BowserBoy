@@ -1,0 +1,39 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/111
+Milestone: Publish the outstanding desk refinements with monitored Pages CI.
+Dependencies: 106_BOTTOM_LEFT_SCENE_TEXT.todo; 107_PEAR_BOY_EXPRESSIONS.todo;
+108_COLLAPSED_CONSOLE_DOCK.todo; 109_DS_SCREEN_SHIMMER.todo;
+110_SMALL_AXOLOTL_LAMP.todo; 111_MOVABLE_AXOLOTL.todo.
+Purpose: Commit as Zanark, publish the approved application changes and
+observe the actual pipeline and live site instead of stopping at a push.
+
+Tasks:
+- [x] Qualify source/build/units and focused movement/UI browser coverage.
+- [ ] Commit and push scoped work as Zanark with unrelated media preserved.
+- [ ] Monitor all19browser shards, build and actual deployment.
+- [ ] Investigate observed failures and make bounded corrections.
+- [ ] Verify public runtime bytes and affected live interaction.
+- [ ] Reconcile TODOs, issue/Project tracking and private continuity.
+
+Acceptance criteria:
+Exact pushed source and Pages run are recorded. All retained tests execute
+successfully and deployment succeeds. Existing17parked scenarios plus the
+one bounded-repair console fixture remain explicit coverage debt, not passes. No weakened assertions,
+timeouts or workflow gate to manufacture success. The deployed source and
+actual axolotl movement are independently checked. Unrelated nine existing
+screenshots and frozen published PDF are preserved.
+
+Completion evidence:
+Authorized by the owner; qualification and publication pending.
+
+Completion log:
+2026-11-07: Owner authorizes Zanark commits, push, deployment and monitored
+CI without interactive questions. Latest axolotl movement joins this release.
+No new cartridge-location change: Nintendo DS research is clarification only.
+2026-11-07:61units/check/build pass. Six initial browser cases pass; new
+movement helper fails Object3D/Vector3 projection, and retained Pear reset
+exposes pre-clearance console home coordinates. Correct projection and save
+the initial collision-free console homes. All three repaired cases pass.
+The extra console cancellation/wheel case fails its newly obstructed path;
+one attempted fixture repair is rejected, so park only that case under105.
+Current114declarations imply96retained/18parked on CI; hosted result pending.

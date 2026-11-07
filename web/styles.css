@@ -51,7 +51,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #hardware-targets button:focus-visible { outline: 2px solid #f4edc1; outline-offset: 3px; }
 #hardware-targets #ds-stylus { cursor: grab; }
 #hardware-targets #ds-stylus[aria-pressed=true] { border: 1px solid var(--ds-accent); background: #080b35e6; color: var(--ds-accent); font: 9px var(--sans); cursor: pointer; }
-.scene-hint { position: absolute; bottom: max(28px, calc(env(safe-area-inset-bottom) + 24px)); left: max(12px, env(safe-area-inset-left)); right: 12px; margin: 0; text-align: left; color: #bbc3cc; font: 11px/1.3 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; text-shadow: 0 1px 5px #000; }
+.scene-hint { position: absolute; bottom: max(28px, calc(env(safe-area-inset-bottom) + 24px)); left: max(12px, env(safe-area-inset-left)); right: 12px; margin: 0; text-align: left; color: #bbc3cc; font: 9px/1.3 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; text-shadow: 0 1px 5px #000; }
 .icon-dock { --dock-start: #2c2139ef; --dock-end: #14121eee; --dock-line: #c3a0ed40; --dock-ink: #cdbfe0; --dock-active: #b7a4ee20; --dock-bright: #e0d5ff; --dock-ring: #cdacff45; --dock-glow: #a763e51a; --dock-tooltip: #20192ef5; position: absolute; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; border: 1px solid var(--dock-line); border-radius: 18px; background: linear-gradient(150deg,var(--dock-start),var(--dock-end)); box-shadow: 0 12px 35px #0008, inset 0 1px var(--dock-ring); backdrop-filter: blur(20px); white-space: nowrap; z-index: 2; }
 .desk[data-console=ds] .scene-actions { --dock-start: #171a70ef; --dock-end: #080b35ee; --dock-line: #36d9ff70; --dock-ink: #b9dfff; --dock-active: #245bff45; --dock-bright: #eaf5ff; --dock-ring: #36d9ff55; --dock-glow: #245bff35; --dock-tooltip: #080b35f5; }
 .icon-dock button { position: relative; display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 10px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--dock-ink); transition: background .15s, box-shadow .15s; }
@@ -66,6 +66,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .dock-actions { display: contents; }
 .scene-actions[data-moved] { left: var(--dock-x); top: var(--dock-y); bottom: auto; transform: none; }
 .scene-actions[data-collapsed] { width: max-content; }
+.scene-actions[data-collapsed]:not([data-moved]) { left: max(12px, env(safe-area-inset-left)); transform: none; }
 #dock-drag { cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
 .scene-actions[data-dragging] #dock-drag { cursor: grabbing; }
 .runtime-source[open] > .panel-logo { width: 170px; margin: -4px 0 -8px; }
@@ -75,7 +76,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .pear-controls output { float: right; font: 11px var(--mono); }
 .pear-controls .volume-slider { accent-color: #efc06e; }
 #pear-open { color: #edcc83; }
-#pear-open[data-lit] { background: #e8bc6518; }
+#axolotl-open { color: #f3aec0; }
+:is(#pear-open,#axolotl-open)[data-lit] { background: #e8bc6518; }
+#axolotl-controls .button-pair button[aria-pressed=true] { border-color: #f3aec0; background: #623745; color: #fff0ef; }
 .speed-options { display: flex; gap: 8px; }
 .speed-options button { flex: 1; min-height: 44px; border: 1px solid #9975bd55; border-radius: 10px; background: #33263f; font: 14px var(--mono); }
 .speed-options button[aria-pressed=true] { border-color: #bf99ed; background: #664688; box-shadow: 0 0 18px #aa66dd26; }
@@ -122,7 +125,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .icon-dock button:disabled { opacity: .5; }
 .action-divider { width: 1px; height: 17px; background: #8c9aaa45; margin: 0 4px; }
 kbd { margin-left: 7px; font: 8px var(--mono); border: 1px solid #78839466; border-radius: 3px; padding: 1px 4px; color: #b7becc; }
-footer { position: absolute; bottom: max(13px, env(safe-area-inset-bottom)); width: 100%; text-align: center; font-size: 9px; color: #a0a9b5; }
+footer { position: absolute; bottom: max(13px, env(safe-area-inset-bottom)); left: max(12px, env(safe-area-inset-left)); right: 12px; text-align: left; font-size: 9px; color: #a0a9b5; }
 footer > span { margin: 0 5px; }
 footer a:hover { color: #d0c0ff; text-decoration: underline; }
 .runtime-source { display: block; position: fixed; inset: 0 auto auto 0; width: 720px; height: 480px; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; opacity: 0; pointer-events: none; z-index: -1; }
@@ -231,7 +234,6 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
   .action-divider { display: none; }
   .speed-menu { bottom: max(156px,calc(env(safe-area-inset-bottom) + 140px)); }
   .scene-actions kbd, #lamp-label, #room-label { display: none; }
-  .scene-hint { font-size: 10px; }
   .tools-drawer { padding: 22px; }
 }
 @media (max-height: 500px) {

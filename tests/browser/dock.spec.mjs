@@ -3,8 +3,8 @@ import { createDemoRom } from '../../scripts/demo-rom.mjs';
 import { powerOn, demoReady, nativeFrame, waitForDesk } from './pixel-lab.mjs';
 
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
-const ready = async page => {
-  await waitForDesk(page);
+const ready = async (page, { expandDock = true } = {}) => {
+  await waitForDesk(page, { expandDock });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 };
 
@@ -36,6 +36,45 @@ const demoWithAutosaveOff = async page => {
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
 };
+
+test('tools dock starts collapsed at bottom-left and either console reveals its actions', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  for (const [width, height] of [[1440, 1100], [390, 844], [844, 390]]) {
+    await page.setViewportSize({ width, height });
+    await page.goto('./');
+    await ready(page, { expandDock: false });
+    const dock = page.locator('#action-dock');
+    const toggle = page.locator('#dock-toggle');
+    await expect(page.locator('#dock-actions')).toBeHidden();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggle).toHaveAccessibleName('Expand tools dock');
+    const box = await dock.boundingBox();
+    expect(box.x).toBeCloseTo(12, 0);
+    expect(box.y).toBeGreaterThan(height / 2);
+    expect(box.width).toBeLessThan(120);
+    expect(box.y + box.height).toBeLessThanOrEqual(height);
+    await page.locator('#room-toggle').click();
+    await page.locator('#pear-open').click();
+    await expect(page.locator('#dock-actions')).toBeHidden();
+    await page.keyboard.press('Escape');
+    const point = await page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      return view.project(view.model.screen);
+    });
+    await page.mouse.click(point.x, point.y);
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+    await expect(page.locator('#dock-actions')).toBeVisible();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await toggle.click();
+    await page.locator('#select-ds').click();
+    await expect(page.locator('#player')).toHaveAttribute('data-console', 'ds');
+    await expect(page.locator('#dock-actions')).toBeVisible();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await expectSeparateDocks(page);
+  }
+  expect(errors).toEqual([]);
+});
 
 test('tools dock drags, collapses, cancels and resets without firing its actions', async ({ page }) => {
   await page.goto('./');
@@ -558,8 +597,8 @@ test('lighting dock controls shared lights independently of GBA and DS tools, vi
   await page.goto('./');
   await ready(page);
   const lighting = page.getByRole('navigation', { name: 'Room and desk lighting', exact: true });
-  await expect(lighting.locator('button')).toHaveCount(3);
-  await expect(page.locator('#action-dock').locator('#lamp-toggle, #room-toggle, #pear-open')).toHaveCount(0);
+  await expect(lighting.locator('button')).toHaveCount(4);
+  await expect(page.locator('#action-dock').locator('#lamp-toggle, #room-toggle, #pear-open, #axolotl-open')).toHaveCount(0);
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await page.locator('#dock-toggle').click();
@@ -573,9 +612,9 @@ test('lighting dock controls shared lights independently of GBA and DS tools, vi
   await expect(page.locator('#pear-level')).toHaveText('10%');
   const lights = () => page.evaluate(async () => {
     const { view } = await import('./src/app.js');
-    return [view.lampOn, view.roomLightsOn, view.pearOn, view.pearBrightness];
+    return [view.lampOn, view.roomLightsOn, view.pearOn, view.pearBrightness, view.axolotlOn, view.axolotlBrightness];
   });
-  expect(await lights()).toEqual([false, true, false, .1]);
+  expect(await lights()).toEqual([false, true, false, .1, true, .5]);
   await page.keyboard.press('Escape');
   await expect(page.locator('#pear-controls')).toBeHidden();
   await expect(page.locator('#dock-actions')).toBeHidden();
@@ -586,11 +625,11 @@ test('lighting dock controls shared lights independently of GBA and DS tools, vi
   await page.locator('#select-ds').click();
   await expect(page.locator('#player')).toHaveAttribute('data-console', 'ds');
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
-  expect(await lights()).toEqual([false, true, false, .1]);
+  expect(await lights()).toEqual([false, true, false, .1, true, .5]);
   await page.locator('#dock-toggle').click();
   await lighting.locator('#lamp-toggle').click();
   await lighting.locator('#room-toggle').click();
-  expect(await lights()).toEqual([true, false, false, .1]);
+  expect(await lights()).toEqual([true, false, false, .1, true, .5]);
   await expect(page.locator('#dock-actions')).toBeHidden();
   await page.locator('#dock-toggle').click();
   for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
@@ -602,6 +641,7 @@ test('lighting dock controls shared lights independently of GBA and DS tools, vi
     }, { width, height }), { message: 'DS room has painted at the new viewport size' }).toBe(true);
     await expect(page.locator('#ds-hardware-power')).toBeInViewport();
     await expect(lighting.locator('#pear-open')).toBeInViewport();
+    await expect(lighting.locator('#axolotl-open')).toBeInViewport();
     if (width === 1440 || width === 320) {
       await page.screenshot({ path: test.info().outputPath(`ds-lighting-dock-${width}.png`) });
     }
@@ -617,6 +657,233 @@ test('lighting dock controls shared lights independently of GBA and DS tools, vi
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   await expect(lighting).toBeVisible();
   await expectSeparateDocks(page);
+});
+
+test('small axolotl lamp has real mesh switching, independent sleep and bright glow, and solid desk clearance', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await ready(page, { expandDock: false });
+  const geometry = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const THREE = await import('three');
+    const bounds = new THREE.Box3().setFromObject(view.axolotl.root);
+    const pear = new THREE.Box3().setFromObject(view.pear.root);
+    const size = bounds.getSize(new THREE.Vector3());
+    const target = view.axolotl.head.localToWorld(new THREE.Vector3(0, .1, .9)).project(view.camera);
+    const rect = view.canvas.getBoundingClientRect();
+    const point = { x: rect.x + (target.x + 1) * rect.width / 2, y: rect.y + (1 - target.y) * rect.height / 2 };
+    return {
+      point, picked: view.pick({ clientX: point.x, clientY: point.y })?.object.userData.axolotlLamp,
+      heightRatio: size.y / pear.getSize(new THREE.Vector3()).y,
+      gills: view.axolotl.root.children.filter(child => child.name === 'axolotl pink gill petal').length,
+      feet: view.axolotl.root.children.filter(child => child.name === 'axolotl tiny pink foot').length,
+      overlap: [view.model.root, view.ds.root, view.pear.root, view.lamp.root, ...view.deskObjects]
+        .some(root => bounds.intersectsBox(new THREE.Box3().setFromObject(root))),
+    };
+  });
+  expect(geometry.heightRatio).toBeLessThan(.4);
+  expect(geometry.gills).toBe(6);
+  expect(geometry.feet).toBe(4);
+  expect(geometry.overlap).toBe(false);
+  expect(geometry.picked).toBe(true);
+  await page.mouse.click(geometry.point.x, geometry.point.y);
+  await expect(page.locator('#axolotl-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#dock-actions')).toBeHidden();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await page.mouse.click(geometry.point.x, geometry.point.y);
+  await expect(page.locator('#axolotl-toggle')).toHaveAttribute('aria-pressed', 'true');
+  const collisions = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const THREE = await import('three');
+    const bounds = new THREE.Box3().setFromObject(view.axolotl.root);
+    view.beginConsoleMove('gba');
+    const origin = view.model.root.position.clone();
+    const accepted = view.moveConsoleTo(view.axolotl.root.position.clone().setY(origin.y));
+    const unchanged = origin.equals(view.model.root.position);
+    view.finishConsoleMove(true);
+    return { accepted, unchanged, pearBlocked: view.pearObstacles().some(box => box.equals(bounds)) };
+  });
+  expect(collisions).toEqual({ accepted: false, unchanged: true, pearBlocked: true });
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setLamp(false); view.setRoomLights(false); view.setPearEnabled(false);
+  });
+  const samples = [];
+  for (const [level, button] of [[.5, 'axolotl-sleep'], [1, 'axolotl-bright']]) {
+    await page.locator('#axolotl-open').click();
+    await page.locator(`#${button}`).click();
+    await expect(page.locator(`#${button}`)).toHaveAttribute('aria-pressed', 'true');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#axolotl-controls')).toBeHidden();
+    await expect(page.locator('#dock-actions')).toBeHidden();
+    await expect.poll(() => page.evaluate(async level => {
+      const { view } = await import('./src/app.js');
+      return view.axolotlOn && view.axolotlBrightness === level && view.axolotl.light.visible &&
+        !view.lampOn && !view.roomLightsOn && !view.pearOn &&
+        Math.abs(view.renderer.toneMappingExposure - .018) < .00001 && !view.changed && !view.paintFence;
+    }, level)).toBe(true);
+    const clip = { x: Math.round(geometry.point.x - 6), y: Math.round(geometry.point.y - 6), width: 12, height: 12 };
+    const image = await page.screenshot({ clip });
+    samples.push(await page.evaluate(async bytes => {
+      const image = await createImageBitmap(new Blob([new Uint8Array(bytes)], { type: 'image/png' }));
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width; canvas.height = image.height;
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0);
+      const pixels = context.getImageData(0, 0, image.width, image.height).data;
+      image.close();
+      let total = 0;
+      for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
+      return total / (canvas.width * canvas.height * 3);
+    }, [...image]));
+    await page.screenshot({ path: test.info().outputPath(`axolotl-${level === .5 ? 'sleep' : 'bright'}.png`) });
+  }
+  expect(samples[1], 'The actual glowing shell is visibly brighter at 100%').toBeGreaterThan(samples[0] + 5);
+  await page.locator('#axolotl-open').click();
+  await page.locator('#axolotl-toggle').click();
+  await expect(page.locator('#axolotl-toggle')).toHaveAttribute('aria-pressed', 'false');
+  expect(await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return [view.axolotl.light.intensity, view.axolotl.silicone.emissiveIntensity, view.axolotl.pink.emissiveIntensity];
+  })).toEqual([0, 0, 0]);
+  await page.locator('#axolotl-sleep').click();
+  await expect(page.locator('#axolotl-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await page.keyboard.press('Escape');
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.renderer.toneMappingExposure)).toBeCloseTo(.45, 4);
+  expect(errors).toEqual([]);
+});
+
+async function axolotlState(page) {
+  return page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    const point = view.axolotl.head.localToWorld(new Vector3(0, .1, .9)).project(view.camera);
+    const body = { x: (point.x + 1) * view.width / 2, y: (1 - point.y) * view.height / 2 };
+    return {
+      body, position: view.axolotl.root.position.toArray(), on: view.axolotlOn,
+      moving: !!view.axolotlMove, pointerId: view.axolotlMove?.pointerId,
+      sleeping: view.axolotlMotion.sleeping,
+    };
+  });
+}
+
+test('axolotl drags in 3D, paints its fall and bounce, cancels and makes consoles yield', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await ready(page, { expandDock: false });
+  const { body, position: home } = await axolotlState(page);
+  const pearHome = await page.evaluate(async () => (await import('./src/app.js')).view.pear.root.position.toArray());
+  await page.mouse.move(body.x, body.y);
+  await page.mouse.down();
+  await page.mouse.move(body.x + 30, body.y - 150, { steps: 8 });
+  const raised = await axolotlState(page);
+  expect(raised.moving).toBe(true);
+  expect(raised.position[0]).toBeGreaterThan(home[0]);
+  expect(raised.position[1]).toBeGreaterThan(2);
+  expect(raised.position[2]).toBeLessThan(home[2]);
+  await page.mouse.wheel(0, -120);
+  expect((await axolotlState(page)).position[2]).toBeGreaterThan(raised.position[2]);
+  const height = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    window.axolotlFallPaints = [];
+    const render = view.renderer.render;
+    view.renderer.render = function (...args) {
+      const result = render.apply(this, args);
+      if (args[0] === view.scene && args[1] === view.camera && !view.axolotlMotion.held) {
+        window.axolotlFallPaints.push({ y: view.axolotl.root.position.y, vy: view.axolotlMotion.velocity.y });
+      }
+      return result;
+    };
+    window.stopAxolotlPaints = () => { view.renderer.render = render; };
+    return view.axolotl.root.position.y;
+  });
+  await page.waitForTimeout(120);
+  await page.mouse.up();
+  await expect.poll(async () => (await axolotlState(page)).sleeping).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.axolotlFallPaints.at(-1)?.y)).toBe(0);
+  const paints = await page.evaluate(() => { window.stopAxolotlPaints(); return window.axolotlFallPaints; });
+  expect(paints.some(pose => pose.y > 0 && pose.y < height - .1 && pose.vy < 0)).toBe(true);
+  expect(paints.some(pose => pose.y > 0 && pose.vy > 0)).toBe(true);
+  expect(paints.every(pose => pose.y >= 0)).toBe(true);
+  const landed = await axolotlState(page);
+  expect(landed.on).toBe(true);
+  expect(landed.moving).toBe(false);
+  const start = landed.body;
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(start.x - 20, start.y - 60, { steps: 5 });
+  const { pointerId } = await axolotlState(page);
+  await page.locator('#scene-canvas').dispatchEvent('pointercancel', { pointerId });
+  await page.mouse.up();
+  expect((await axolotlState(page)).position).toEqual(landed.position);
+  expect((await axolotlState(page)).on).toBe(true);
+  await page.locator('#axolotl-open').click();
+  await page.locator('#axolotl-home').click();
+  expect((await axolotlState(page)).position).toEqual(home);
+  await page.locator('#axolotl-move').click();
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('PageUp');
+  expect((await axolotlState(page)).position[1]).toBeGreaterThan(0);
+  await page.keyboard.press('Escape');
+  expect((await axolotlState(page)).position).toEqual(home);
+  const placement = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.beginAxolotlMove();
+    const desired = view.model.root.position.clone().setY(0);
+    return { accepted: view.moveAxolotlTo(desired), desired: desired.toArray(), paint: view.lastPaint };
+  });
+  expect(placement.accepted).toBe(true);
+  await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.lastPaint)).toBeGreaterThan(placement.paint);
+  expect(await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Box3 } = await import('three');
+    const bounds = new Box3().setFromObject(view.axolotl.root);
+    return [view.model.root, view.ds.root].every(root => !bounds.intersectsBox(new Box3().setFromObject(root)));
+  })).toBe(true);
+  expect((await axolotlState(page)).position).toEqual(placement.desired);
+  await page.keyboard.press('Escape');
+  expect((await axolotlState(page)).position).toEqual(home);
+  expect(await page.evaluate(async () => (await import('./src/app.js')).view.pear.root.position.toArray())).toEqual(pearHome);
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await expect(page.locator('#dock-actions')).toBeHidden();
+  expect(errors).toEqual([]);
+});
+
+test.describe('axolotl touch', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
+  test('phone axolotl supports touch relocation, keyboard drop and resize cancellation', async ({ page }) => {
+    await page.goto('./');
+    await ready(page, { expandDock: false });
+    const { body, position: home } = await axolotlState(page);
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: body.x, y: body.y, id: 1 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: body.x + 15, y: body.y - 45, id: 1 }] });
+    await expect.poll(async () => (await axolotlState(page)).position[1]).toBeGreaterThan(0);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await expect.poll(async () => (await axolotlState(page)).sleeping).toBe(true);
+    expect((await axolotlState(page)).on).toBe(true);
+    await page.locator('#axolotl-open').tap();
+    await page.locator('#axolotl-home').tap();
+    await page.locator('#axolotl-move').tap();
+    await page.keyboard.press('ArrowLeft');
+    await page.keyboard.press('PageUp');
+    await page.keyboard.press('Enter');
+    await expect.poll(async () => (await axolotlState(page)).sleeping).toBe(true);
+    expect((await axolotlState(page)).position[0]).toBeLessThan(home[0]);
+    await page.locator('#axolotl-open').tap();
+    await page.locator('#axolotl-home').tap();
+    await page.locator('#axolotl-move').tap();
+    await page.keyboard.press('PageUp');
+    await page.setViewportSize({ width: 844, height: 390 });
+    await expect.poll(async () => (await axolotlState(page)).moving).toBe(false);
+    expect((await axolotlState(page)).position).toEqual(home);
+    expect((await axolotlState(page)).on).toBe(true);
+    await expect(page.locator('#dock-actions')).toBeHidden();
+    await cdp.detach();
+  });
 });
 
 test('three checkpoint slots stay independent and reject invalid slots without changing legacy saves', async ({ page }) => {

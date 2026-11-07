@@ -137,6 +137,9 @@ area beside the battery cover, now approximately41%larger without changing
 its proportions; neither lid face carries the colorful logo. The selected
 DS header has a steady blue halo and darker blue edge to separate it from
 the warm lantern; this does not add a scene light or animate the glow.
+Only the two screen rectangles shimmer in the README and DS Inspect header.
+Reduced motion selects the original static logo; the physical underside,
+loading LCD and DS tools retain their static artwork.
 GBA settings use the static Advance logo and
 the action dock changes from GBA purple to DS blue/cyan.
 
@@ -283,16 +286,20 @@ Keyboard steps place him deliberately without accumulating throwing speed.
 
 The longer, thick braided rope arms and legs swing and settle. His entire face
 (eyes, smile and freckles together) tracks
-mouse/pen movement, and his squeezed eyes/wobbly mouth remain frightened while
-held or falling. Reduced motion removes decorative swinging and trembling,
-not the gravity needed to complete a drop.
+mouse/pen movement. While held or falling, his squeezed eyes and pink cheeks
+accompany alternating wobbly closed and peanut-shaped open scream mouths.
+A hard landing changes his face from angry to worried, then back to normal;
+a small drop does not trigger that reaction. The signature three freckles on
+each cheek remain visible throughout. Reduced motion removes decorative
+swinging and mouth alternation, not gravity or the static recovery expressions.
 
 ![pear-boy with squeezed eyes while lifted above the table](images/pear-boy-scared.png)
 
 *Actual local rendering of the scared expression and hanging rope limbs,
 not an edited reference image.*
 
-Movement stays within a bounded tabletop workspace and rejects the fixed lamp.
+Movement stays within a bounded tabletop workspace and rejects the tripod
+and the axolotl's current position.
 On the table, loose props and consoles yield to pear-boy rather than blocking
 his chosen position. Clearance uses current-orientation boxes and keeps him
 upright; this is not a rotating rigid-body engine or full cloth simulation.
@@ -300,16 +307,45 @@ Ropes collide with the pear body and the desk's top/front edge, not every prop
 surface. Reduced motion keeps a settled edge-aware pose rather than swinging.
 Physical-phone performance and owner visual acceptance remain unqualified.
 
+## Small axolotl night-light
+
+The smaller cream axolotl in front of the consoles has three pink gills on
+each side, four tiny pink feet, a raised pink-tipped tail and a wavy smile.
+Click its model to switch its warm glow, or open **Axolotl** in the separate
+**Lighting** dock. **Sleep 50%** and **Bright 100%** select its two brightness
+levels without changing the other lamps or console power. Selecting brightness
+while off leaves it off.
+
+![The small axolotl lamp at full brightness, with cream body and pale pink gills](images/axolotl-bright-close.png)
+
+*Actual local render, cropped from an explicitly staged close camera to show
+the face, gills, feet and tail. This is not a new user-facing Inspect mode.*
+
+It starts on at 50%. Position, power and brightness reset on reload.
+Drag its body to lift and move it in 3D; scroll while holding it for depth.
+Release to drop it with gravity and a soft bounce. A short click still only
+switches the light. **Move axolotl** also supports arrows and Page Up/Down,
+with Enter to drop and Escape to cancel. **Reset position** restores its
+original spot, unless another lamp occupies it. Cancellation, focus loss and
+resizing restore the pickup position without changing power. The lamp keeps
+its orientation; it does not gain pear-boy's animated face or rope limbs.
+The tripod and pear-boy block occupied placements, tabletop consoles yield,
+and GBA/DS view changes preserve the chosen tabletop position.
+Clicking it leaves the console tools collapsed and does not pick up a console. This local
+addition is not deployed; physical-phone performance and owner visual
+acceptance remain unqualified.
+
 ## Lights out
 
 Use the separate warm **Lighting** dock at the upper right for **Lamp**,
-**Room** and **Pear Boy**. These shared controls stay available when you
+**Room**, **Pear Boy** and **Axolotl**. These shared controls stay available when you
 switch GBA/DS or move/collapse the console tools dock. On phones during play,
 lighting sits directly below the header, above the handheld.
 
-The room starts with the warm STORSEGEL-style lamp and pear-boy on, and **Room**
-lights off. Switch pear-boy off too when you want LCD-only darkness.
-Click its shade or use **Lamp** to switch it independently of the game. **Room**
+The room starts with the warm STORSEGEL-style lamp, pear-boy and the axolotl
+on; the axolotl starts at 50%, and **Room** lights start off. For LCD-only
+darkness, switch all three lamps and Room off.
+Click the tripod shade or use **Lamp** to switch it independently of the game. **Room**
 adds optional ceiling/reflected illumination without changing console power.
 The lamp has a clean white open drum shade and three splayed ash legs, modeled
 at approximately 30 cm high with an 18 cm shade diameter. No cable is visible.
@@ -327,7 +363,8 @@ desk reflection and preserves faint control visibility with darker pictures.
 
 ![Current local recording of the clean tripod lamp, optional room lights and LCD-only darkness](images/cozy-lights.gif?v=storsegel-20261106)
 
-*Put the handheld down to see the clean shade and warm wooden legs; switch room
+*Earlier capture, before the axolotl addition. Put the handheld down to see
+the clean shade and warm wooden legs; switch room
 and lamp light independently, then pick it up again. This local working-tree
 capture is newer than the frozen v1.0.0 release.*
 
@@ -496,6 +533,9 @@ Rotating the model naturally hides its front-facing game display.*
 *Named, keyboard-accessible 44px icon controls, with hover/focus labels. On
 phones the same actions fit two rows; 320px uses three after adding dock controls.*
 
+The tools dock starts collapsed at the bottom-left on each reload. Clicking
+either console reveals its actions; the expand arrow also opens it manually.
+Lighting and Pear controls do not expand console tools.
 Drag the dotted grip with mouse or touch to move the dock. Its arrow collapses
 the actions into a small movable grip/expander; click again to restore them.
 Focus the grip and use arrows to move, Shift for larger steps, or Home to
@@ -504,7 +544,7 @@ settings. Position and collapse last for this page session, not across reloads.
 Expansion, resize and fullscreen changes keep the dock within the player.
 The settings drawer's chrome logo is centered independently of this position.
 
-The dock exposes inspection, put-down, lamp/room lighting and Cartridges, plus
+The dock exposes inspection, put-down and Cartridges, plus
 whole-desk fullscreen, separate **Screen fullscreen**, **1x/2x/3x/4x native speed**,
 keybindings, a persistent autosave toggle,
 save/load for the selected checkpoint slot, slot selection and **safe off/on

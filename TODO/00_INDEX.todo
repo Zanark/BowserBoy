@@ -1,6 +1,13 @@
 BowserBOY workstreams
 ====================
-105_PARKED_BROWSER_CASES.todo - BLOCKED: seventeen explicitly parked cases (fifteen CI-only, two also local); restore coverage later.
+112_MONITORED_UI_RELEASE.todo - IN_PROGRESS: qualify outstanding UI work, commit as Zanark, deploy and monitor all actual CI jobs and the public site.
+111_MOVABLE_AXOLOTL.todo - DONE locally: desktop/touch drag/drop, depth, cancellation, rendered bounce, collision and actual GBA/DS focus restoration qualify; publication tracked by112.
+110_SMALL_AXOLOTL_LAMP.todo - DONE locally: smaller cream/pink fixed lamp, mesh power, independent50%/100% brightness, clearance and five focused browser cases; not deployed.
+109_DS_SCREEN_SHIMMER.todo - DONE locally: two screen interiors shimmer in README/Inspect; unchanged surrounding artwork/alpha and static reduced motion verified, not deployed.
+108_COLLAPSED_CONSOLE_DOCK.todo - DONE locally: bottom-left collapsed startup, actual console-click expansion and preserved manual/touch tools; not deployed.
+107_PEAR_BOY_EXPRESSIONS.todo - DONE locally: cute alternating screams and angry/worried recovery; three visible dots per cheek verified across expressions/gaze, not deployed.
+106_BOTTOM_LEFT_SCENE_TEXT.todo - DONE: bottom-left player credits and smaller9px scene hint; desktop/phone geometry and crops qualified locally, not deployed.
+105_PARKED_BROWSER_CASES.todo - BLOCKED: eighteen explicitly parked cases (sixteen CI-only, two also local), including the newly obstructed console wheel fixture; restore coverage later.
 104_BOUNDED_CI_RECOVERY.todo - DONE:7154546 publishes through92PASS/17SKIP/0FAIL/0NOT_RUN;46public byte checks and two public startup cases pass; build-only marker exception recorded.
 01_PLAYABLE_PROTOTYPE.todo - Local-ROM player and polished static shell.
 02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.

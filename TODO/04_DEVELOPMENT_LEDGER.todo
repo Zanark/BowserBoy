@@ -14,6 +14,67 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Movable axolotl (111), authorized monitored release (112):
+  Owner explicitly authorizes unattended Zanark commits, pushes, deployments,
+  monitoring and bounded repairs without questions. Give axolotl the same
+  shared pointer/touch/keyboard gesture and fixed-step DeskMotion as Pear.
+  Preserve short-click power; add depth, Move/Reset and cancellation. Bounds
+  include actual yaw; table consoles yield and focus restores chosen position.
+  Initial nine-case run: six pass, two new cases expose a test projection
+  error, and retained Pear exposes console reset seeds predating clearance.
+  Correct projection and record initial collision-free console homes.
+  Three repaired cases pass, including actual rendered fall/bounce and touch.
+  Independent browser verification passes six GBA/DS Play/Inspect/table poses,
+  selected-coordinate restoration, companion rejection, blur, occupied-home
+  error and lamp/console resets, with no page errors.61units/check/build pass.
+  Additional console wheel-only case is now obstructed by the lamp; one
+  attempted fixture repair is rejected. Park that one CI case under105,
+  retaining original assertions.114declarations; hosted96retained/18parked
+  is expected, not yet observed. Publication and live verification pending.
+- 2026-11-07 / Small axolotl night-light (110), local only:
+  Add an original smaller cream/pink procedural model in free front-center
+  tabletop space. Fixed position; mesh-click power and separate Lighting
+  popover with50%/100% brightness, initially on at50%, reset on reload.
+  Add occupied space to console/pear movement clearance. Preserve existing
+  lamp states, collapsed tools, pear freckles/expressions and prior dirty work.
+  First rendered-brightness probe incorrectly divides by dimensions read
+  after ImageBitmap.close; retain canvas dimensions. Corrected probe then
+  catches real shell saturation from an external emitter. Move the actual
+  point light inside the body; keep the stronger pixel assertion unchanged.
+  Final visual review catches dark wine gills; adjust only pink material/
+  emission to pale pink. Final syntax/build and all5focused browser cases
+  pass1.1minutes; earlier61units pass. New regression covers actual clicks,
+  independent power/brightness, rendered50%/100% difference, all-off exposure
+  and initial/movement clearance. Update dark-room/LCD-only fixtures to
+  disable the new companion too; do not rerun or unpark historical native
+  cases. Inventory112; existing17parked cases/workflow/deadlines unchanged.
+  Review final four-state contact sheet and document actual default/staged
+  camera images. Fixed lamp, not a second movable physics character.
+  No full-browser/physical-phone/owner-approval or new publication claim.
+- 2026-11-07 / Pear expressions, collapsed tools and DS screen shimmer (107-109):
+  Preserve three permanent dots per cheek through cute closed/open screams
+  and actual hard-landing angry -> worried -> normal recovery. Support-impact
+  reporting leaves trajectories intact. Rendered close-ups catch angry-eye
+  occlusion; stronger gaze probes catch sad-eye occlusion. Correct geometry,
+  not depth tests or assertions; final pickup/drop cases and all61units pass.
+  Tools start collapsed bottom-left. Actual active-GBA clicks bypass selection;
+  fix the real view callback as well. New three-viewport regression and
+  existing desktop/touch drag cases pass; representative sparse pickup,
+  responsive shell and real mesh/Inspect/return cases also pass.
+  Generate a20-frame/3-second DS APNG; both screen interiors change while
+  outside pixels and all alpha remain identical. Initial alpha discrepancy
+  corrected explicitly. Actual Inspect animation, static reduced motion and
+  GBA branding separation pass. README/guide updated. Browser inventory111,
+  existing17parked cases unchanged. No new skip, workflow or timeout edit.
+  Technical local completion only; no owner approval or new commit/deployment.
+- 2026-11-07 / Bottom-left scene text (106), local only:
+  Align player credits with the existing hint's safe-area-aware left edge.
+  Reduce hint11px desktop/10px phone to9px; preserve truncation, links,
+  vertical spacing and short-screen hiding. Syntax/build pass. Existing
+  responsive hint scenario passes once14.9s at1440x1100,390x844,320x740,
+  including actual footer geometry and reduced-font assertions. Review
+  desktop/320px bottom-edge crops. No new test, skip, workflow or emulator
+  changes; no new commit/push/deployment. Preserve nine dirty PNGs and PDF.
 - 2026-11-07 / Retained gate and actual public publication succeed:
   Exact71545469be6956687dc2166a33e30ba48bd346a1/Pages42363020619
   completes92PASS/17SKIP/0FAIL/0NOT_RUN across all19actual shard logs.

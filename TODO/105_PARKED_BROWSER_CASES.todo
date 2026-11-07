@@ -22,10 +22,11 @@ Tasks:
 - [ ] Restore independent framebuffer-colored spill from both DS LCDs (DS).
 - [ ] Restore the original 1000ms light-switch paint bound (scene).
 - [ ] Restore experimental GBA LCD/control spill within its original deadline (scene).
+- [ ] Restore console wheel-only placement with the additional companion clearance (console movement).
 
 Acceptance criteria:
 Each exact case passes its original assertions, resolution and deadlines on the
-hosted browser before removing its skip. Fifteen cases remain runnable locally;
+hosted browser before removing its skip. Sixteen cases remain runnable locally;
 side-stylus and physical-cap cases are parked locally too after recurring there.
 Passing retained gates or separate focused checks does not restore skipped CI
 coverage. Do not silently drop, broaden or convert these cases to passing tests.
@@ -72,3 +73,12 @@ confirms17SKIP/0FAIL; this is exclusion verification, not restored coverage.
 aborted cases pass without being skipped. Public runtime bytes and two
 startup scenarios qualify the delivered release, not these17parked cases.
 Keep this workstream BLOCKED/open until each original hosted case is restored.
+2026-11-07: Movable-axolotl qualification exposes an additional console
+wheel-only fixture failure: the forward move is blocked by the new lamp.
+One attempt to place the companion clear is itself rejected by the occupied
+placement check. Respect the owner's bounded-repair instruction and park this
+one CI case; remove the unsuccessful setup, retain every original assertion.
+Earlier rejection/cancellation portions ran, but the complete case is not
+qualified. This is coverage debt, not a proven console movement defect or fix.
+Current inventory114;18CI skips (16CI-only,2also local),96retained CI cases.
+The new desktop/touch axolotl cases and retained Pear light/movement pass.

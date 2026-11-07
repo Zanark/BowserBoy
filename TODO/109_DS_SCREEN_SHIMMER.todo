@@ -1,0 +1,37 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/108
+Milestone: Shimmer only the two DS-logo screens in the README and Inspect heading.
+Dependencies: Supplied static DS artwork and existing reduced-motion picture source.
+Purpose: Animate the two highlighted DS screen rectangles without carrying
+the reference annotation into the artwork or moving the surrounding logo.
+
+Tasks:
+- [x] Generate a transparent APNG derivative from the original clean logo.
+- [x] Restrict the moving reflection to both screen interiors.
+- [x] Use it in the README and DS Inspect heading, with static reduced motion.
+- [x] Leave physical underside, loading LCD and tools artwork unchanged.
+- [x] Verify decoded pixels, actual browser animation and static fallback.
+
+Acceptance criteria:
+Both screen interiors visibly shimmer. Lettering, chrome borders, orbit and
+transparency remain unchanged. README and DS Inspect select animated art;
+reduced motion selects the static original. GBA branding stays independent.
+Technical local completion does not establish GitHub publication or approval.
+
+Completion evidence:
+python scripts/render-readme.py --ds-screen-shimmer produces
+assets/ds-logo-shimmer.png:2149x732,20frames,3-second infinite loop,
+2,320,614bytes. Every decoded frame preserves source alpha and all pixels
+outside the two screen masks; both interiors change. Reviewed a frame
+contact sheet. Focused unparked browser case passes normal-motion Inspect
+pixel change, reduced-motion currentSrc/static equality and GBA separation.
+Syntax/build and all61unit tests pass. Browser inventory is111cases in8files;
+the existing17parked cases and CI workflow are untouched.
+
+Completion log:
+2026-11-07: Extend existing Pillow/APNG tooling with a dedicated render mode.
+Frame-level validation catches blending changing source alpha inside screens;
+preserve the original alpha explicitly and regenerate. All frame invariants
+then pass, as does real Inspect/reduced-motion browser coverage.
+README picture/caption and relevant guide text updated. Original DS artwork
+and frozen published book preserved. Local/uncommitted/undeployed.

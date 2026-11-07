@@ -1,0 +1,35 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/107
+Milestone: Start with discreet bottom-left tools and reveal them on console activation.
+Dependencies: Existing movable console-tools dock and scene view notifications.
+Purpose: Keep the initial desk unobstructed, revealing console tools when
+either console is clicked without changing the separate Lighting/Pear controls.
+
+Tasks:
+- [x] Start with hidden actions and matching accessible expand-button state.
+- [x] Place the unmoved collapsed grip at the safe-area-aware bottom-left.
+- [x] Expand for console selection and real active-console model clicks.
+- [x] Preserve dragging, keyboard operation and manual collapse/expansion.
+- [x] Qualify desktop, phone, short landscape and dependent tools scenarios.
+
+Acceptance criteria:
+Reload starts collapsed at bottom-left. Either console reveals its actions,
+including an already-active console picked directly in the 3D scene.
+Lighting/Pear controls do not expand it. User-moved positioning persists
+for this session; putting a console down does not force another collapse.
+No claim of new public publication or physical-device qualification.
+
+Completion evidence:
+The new initial-state/model-activation browser scenario passes at1440x1100,
+390x844 and844x390. Existing desktop and real-touch dock drag/cancellation/
+resize cases pass. Sparse console pickup, responsive shell and real mesh
+pickup/inspection/return cases pass with explicit toolbar setup.
+Syntax/build and all61unit tests pass. No skip, timeout or CI-workflow edit.
+
+Completion log:
+2026-11-07: Implement initial DOM/ARIA state, shared collapse helper and
+bottom-left unmoved positioning. First regression catches active GBA clicks
+bypassing app-level console selection; expand on table-to-console view
+notifications as well. The repaired scenario passes. Update only directly
+dependent browser setup to expand tools explicitly; default-state coverage
+still observes the real collapsed startup. Local/uncommitted/undeployed.

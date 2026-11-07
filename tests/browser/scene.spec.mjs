@@ -87,7 +87,7 @@ for (const reduced of [false, true]) {
       await expect(cover).toBeVisible();
       await expect(page.locator('#player')).toHaveJSProperty('inert', true);
       await page.evaluate(() => { window.holdStartupGpu = false; });
-      await waitForDesk(page);
+      await waitForDesk(page, { expandDock: true });
       await expect(cover).toBeHidden();
       await expect(page.locator('#player')).toHaveAttribute('aria-busy', 'false');
       await expect(page.locator('#player')).toHaveJSProperty('inert', false);
@@ -116,7 +116,7 @@ for (const resource of ['src/app.js', 'assets/ds-logo.png']) {
     await expect(page.locator('#player')).toHaveJSProperty('inert', true);
     await page.unroute(pattern);
     await page.getByRole('button', { name: 'Reload and try again', exact: true }).click();
-    await waitForDesk(page);
+    await waitForDesk(page, { expandDock: true });
     await expect(page.locator('#scene-loading')).toBeHidden();
     await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
     await page.locator('#pickup').click();
@@ -127,7 +127,7 @@ for (const resource of ['src/app.js', 'assets/ds-logo.png']) {
 test('light switches paint before reflection refresh, bypass recovery without queueing GPU work, and brighten the room', async ({ page }, testInfo) => {
   test.skip(!!process.env.CI, 'Parked after failed CI repair: original 1000ms light-switch paint bound; follow-up https://github.com/Zanark/BowserBoy/issues/104');
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene-loading')).toBeHidden();
   await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
@@ -238,7 +238,7 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
     });
     try {
       await page.goto('./');
-      await waitForDesk(page);
+      await waitForDesk(page, { expandDock: true });
       await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
       await page.locator('#pickup').click();
       await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -281,7 +281,7 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
         page.on('dialog', dialog => dialog.accept());
         download = new Promise(resolve => { release = resolve; });
         await page.reload();
-        await waitForDesk(page);
+        await waitForDesk(page, { expandDock: true });
         await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'inserting');
         await expect(page.locator('#scene')).not.toHaveAttribute('data-booting', 'true');
         await expect.poll(() => page.evaluate(() => window.cartridgeSamples.some(sample =>
@@ -314,7 +314,7 @@ for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844
 
 test('sparse room paints lower the console before seating the cartridge', async ({ page }) => {
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -357,9 +357,12 @@ test('sparse room paints lower the console before seating the cartridge', async 
 
 test('dark room has a working physical lamp, actual light falloff and a narrow accessible toolbar', async ({ page }) => {
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
-  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false); view.setAxolotlEnabled(false);
+  });
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('dark');
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
   await expect.poll(() => page.evaluate(async () => {
@@ -409,9 +412,12 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
 test('room GPU fences preserve sharpness, recovery boundaries and native-operation gating', async ({ page }) => {
   await page.setViewportSize({ width: 844, height: 390 });
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
-  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false); view.setAxolotlEnabled(false);
+  });
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
   await installRoomPaintFixture(page);
   const budgets = await page.evaluate(async () => {
@@ -578,9 +584,12 @@ test('room GPU fences preserve sharpness, recovery boundaries and native-operati
 test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch independently without powering the console', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1920, height: 1100 });
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
-  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false); view.setAxolotlEnabled(false);
+  });
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
   const color = await surfaceColor(page, [0, 0, 4]);
@@ -702,13 +711,13 @@ test('clean STORSEGEL-style tripod lamp gives warm light and room lights switch 
   await page.locator('#room-toggle').click();
   await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
   await page.reload();
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
 });
 
 test('larger LCD halves bezel gaps and the underside power slider works at desktop and phone sizes', async ({ page }, testInfo) => {
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -859,7 +868,7 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
 
 async function prepareControlLighting(page) {
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -979,10 +988,11 @@ test('physical cap compression, release and unlit response retain their bounds',
     'Release progresses farther than compression over the same elapsed time').toBeGreaterThan(response.compressing / response.pressed + .1);
   expect(response.released).toBeLessThan(.0001);
   await page.locator('#lamp-toggle').click();
-  // The companion is an independent room light, not artificial cap illumination.
+  // Companion lamps are independent room lights, not artificial cap illumination.
   await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.setPearEnabled(false);
+    view.setAxolotlEnabled(false);
   });
   for (const id of ['a', 'up']) {
     expect(Math.max(...await sample(id, true)), 'An unlit cap cannot acquire artificial press illumination').toBeLessThan(5);
@@ -993,9 +1003,12 @@ test('physical cap compression, release and unlit response retain their bounds',
 test('experimental LCD spill barely reveals nearby controls in darkness and follows screen color and power', async ({ page }, testInfo) => {
   test.skip(!!process.env.CI, 'Parked after failed CI repair: GBA framebuffer/control spill within original case deadline; follow-up https://github.com/Zanark/BowserBoy/issues/104');
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
-  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false); view.setAxolotlEnabled(false);
+  });
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);
@@ -1106,7 +1119,7 @@ test('mapped inputs move real button meshes and release after remapping and focu
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
@@ -1172,9 +1185,12 @@ test('mapped inputs move real button meshes and release after remapping and focu
 
 async function prepareNativeLighting(page) {
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
-  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false); view.setAxolotlEnabled(false);
+  });
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);
@@ -1303,7 +1319,7 @@ test('real 3D mesh picking, pickup, back inspection, return and responsive physi
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
   const resting = await sceneState(page);
   expect(resting.y).toBeLessThan(1);
@@ -1391,7 +1407,7 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);
@@ -1516,7 +1532,7 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
   await page.locator('#shader').selectOption('disabled');
   await expect(page.locator('#shader')).toBeEnabled();
   await page.reload();
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#tools-open').click();
   await expect(page.locator('#shader')).toHaveValue('disabled');
@@ -1526,7 +1542,7 @@ test('CRT Geom is active natively and its retained live framebuffer textures the
 test('reduced motion skips the pickup tween and unavailable WebGL fails explicitly', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect.poll(async () => (await sceneState(page))?.triangles).toBeGreaterThan(1000);
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -1550,7 +1566,7 @@ test.describe('mobile 3D inspection', () => {
   test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
   test('touch inspection rotates and pinches without sending game input, then returns to play', async ({ page }) => {
     await page.goto('./');
-    await waitForDesk(page);
+    await waitForDesk(page, { expandDock: true });
     await page.locator('#tools-open').tap();
     await page.locator('#demo').tap();
     await powerOn(page);

@@ -15,6 +15,7 @@ export class DeskMotion {
   reset(position) {
     this.position.copy(position);
     this.velocity.set(0, 0, 0);
+    this.impactSpeed = 0;
     this.accumulator = 0;
     this.presentation = null;
     this.held = false;
@@ -26,6 +27,7 @@ export class DeskMotion {
     this.held = true;
     this.sleeping = false;
     this.velocity.set(0, 0, 0);
+    this.impactSpeed = 0;
     this.lastMove = -Infinity;
     this.accumulator = 0;
     this.presentation = null;
@@ -45,6 +47,7 @@ export class DeskMotion {
     this.held = false;
     this.sleeping = false;
     this.accumulator = 0;
+    this.impactSpeed = 0;
     this.presentation = requirePaint ? { phase: 'fall', height: this.position.y, pending: false } : null;
   }
 
@@ -54,6 +57,7 @@ export class DeskMotion {
   }
 
   update(seconds, obstacles) {
+    this.impactSpeed = 0;
     if (this.held || this.sleeping) return false;
     // Cover multi-second software-render stalls, bounded to 600 steps after suspension.
     this.accumulator += Math.max(0, Math.min(seconds, 5));
@@ -68,6 +72,7 @@ export class DeskMotion {
       this.position.addScaledVector(this.velocity, step);
       let supported = false, supportHeight = this.workspace.min.y;
       if (this.position.y <= this.workspace.min.y) {
+        this.impactSpeed = Math.max(this.impactSpeed, -this.velocity.y);
         this.position.y = this.workspace.min.y;
         this.velocity.y = Math.abs(this.velocity.y) > 1.2 ? Math.abs(this.velocity.y) * .23 : 0;
         supported = true;
@@ -93,6 +98,7 @@ export class DeskMotion {
         }
         if (p.y + this.bounds.min.y >= box.max.y || p.y + this.bounds.max.y <= box.min.y) continue;
         if (before.y + this.bounds.min.y >= box.max.y) {
+          this.impactSpeed = Math.max(this.impactSpeed, -this.velocity.y);
           p.y = box.max.y - this.bounds.min.y;
           this.velocity.y = Math.abs(this.velocity.y) > 1.2 ? Math.abs(this.velocity.y) * .23 : 0;
           supported = true;

@@ -1,0 +1,39 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/106
+Milestone: Reference-inspired cute screams and hard-landing face recovery.
+Dependencies: Existing Pear BOY model, face tracking and drop lifecycle.
+Purpose: Alternate the supplied scream expressions while lifted or falling,
+then show angry, worried and normal faces after a hard landing without
+losing the signature three dots on either cheek.
+
+Tasks:
+- [x] Add squeezed eyes, pink cheeks and alternating closed/open scream mouths.
+- [x] Report downward support impacts without changing the existing trajectory.
+- [x] Present angry, worried and normal recovery states in order.
+- [x] Preserve all six permanent freckles, cancellation and reduced motion.
+- [x] Review rendered close-ups and qualify actual drops and face clearance.
+
+Acceptance criteria:
+Lifted/falling Pear alternates scream mouths; hard support contact produces
+angry, worried, then normal recovery. Minor drops and horizontal collisions
+do not trigger anger. Every expression retains three visible dots per cheek.
+Reduced motion holds the scream mouth still and permits static recovery.
+Local technical verification is not user visual approval or deployment.
+
+Completion evidence:
+Syntax/build and all61unit tests pass, including two new support-impact
+tests. Existing browser pickup and actual-painted-drop scenarios pass.
+The drop records scared -> angry -> sad -> curious, with angry rebound.
+Existing pickup coverage also verifies reduced-motion mouth stability and
+frontmost freckle geometry in all four expressions at three gaze positions.
+Reviewed actual rendered close-ups of normal, both scream mouths, angry
+and worried faces. All six freckle centers are unobstructed in each.
+
+Completion log:
+2026-11-07: Add curved-shell facial geometry and paint-aware expression timing.
+Close-up review finds angry eyes cover freckles; raise the eyes and move
+blush marks below the dots. Correct worried brows to rise toward the center.
+Expanded gaze-clearance regression finds a sad eye covering one freckle at
+extreme gaze; raise sad eyes/glints. The repaired case passes with all
+six dots frontmost at every tested expression/gaze. No new skip or timeout.
+Changes remain local, uncommitted and undeployed; owner acceptance unrecorded.

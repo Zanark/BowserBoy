@@ -540,6 +540,7 @@ test('both DS LCDs cast independent framebuffer-colored spill and go dark with b
     const { view } = await import('./src/app.js');
     clearInterval(view.dsController.autosave);
     view.setPearEnabled(false);
+    view.setAxolotlEnabled(false);
   });
   if (await page.locator('#lamp-toggle').getAttribute('aria-pressed') === 'true') await page.locator('#lamp-toggle').click();
   await page.locator('#lamp-toggle').blur();
@@ -627,7 +628,7 @@ test('both DS LCDs cast independent framebuffer-colored spill and go dark with b
   expect(errors).toEqual([]);
 });
 
-test('gameplay hints stay on one bottom-left line instead of covering the LCD', async ({ page }) => {
+test('gameplay hints stay on one bottom-left line instead of covering the LCD', async ({ page }, testInfo) => {
   await page.goto('./');
   await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
@@ -638,7 +639,7 @@ test('gameplay hints stay on one bottom-left line instead of covering the LCD', 
     const hint = await page.locator('#scene-hint').evaluate(element => {
       const rect = element.getBoundingClientRect(), style = getComputedStyle(element);
       return { x: rect.x, bottom: innerHeight - rect.bottom, height: rect.height,
-        lineHeight: Number.parseFloat(style.lineHeight), align: style.textAlign,
+        lineHeight: Number.parseFloat(style.lineHeight), fontSize: Number.parseFloat(style.fontSize), align: style.textAlign,
         wrap: style.whiteSpace, events: style.pointerEvents };
     });
     expect(hint.x).toBe(12);
@@ -646,6 +647,19 @@ test('gameplay hints stay on one bottom-left line instead of covering the LCD', 
     expect(hint.height).toBeCloseTo(hint.lineHeight, 1);
     expect(hint.align).toBe('left'); expect(hint.wrap).toBe('nowrap');
     expect(hint.events).toBe('none');
+    expect(hint.fontSize).toBeLessThan(width > 600 ? 11 : 10);
+    const credits = await page.locator('footer').evaluate(element => {
+      const rect = element.getBoundingClientRect();
+      return { x: rect.x, right: rect.right, top: rect.top, bottom: rect.bottom,
+        align: getComputedStyle(element).textAlign };
+    });
+    expect(credits.x).toBe(hint.x);
+    expect(credits.align).toBe('left');
+    expect(credits.top).toBeGreaterThanOrEqual(height - hint.bottom);
+    expect(credits.right).toBeLessThanOrEqual(width - 12);
+    expect(credits.bottom).toBeLessThanOrEqual(height - 13);
+    await page.screenshot({ path: testInfo.outputPath(`bottom-left-${width}.png`),
+      clip: { x: 0, y: height - 52, width, height: 52 } });
   }
 });
 
@@ -976,12 +990,40 @@ test('phone keeps both models on one table and DS LCDs and controls fit without 
   await page.screenshot({ path: testInfo.outputPath('ds-phone-playing.png') });
 });
 
+test('DS Inspect logo animates its two screens and uses static artwork for reduced motion', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('./');
+  await waitForDesk(page);
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  const logo = page.locator('.desk-heading h1 img');
+  await expect(logo).toHaveAttribute('src', './assets/ds-logo-shimmer.png');
+  await expect.poll(() => logo.evaluate(image => image.complete && image.currentSrc.endsWith('/assets/ds-logo-shimmer.png'))).toBe(true);
+  const still = await logo.screenshot();
+  await expect.poll(async () => (await logo.screenshot()).equals(still)).toBe(false);
+  await testInfo.attach('ds-screen-shimmer-inspect', { body: await logo.screenshot(), contentType: 'image/png' });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => logo.evaluate(image => image.complete && image.currentSrc.endsWith('/assets/ds-logo.png'))).toBe(true);
+  const reduced = await logo.screenshot();
+  await page.waitForTimeout(500);
+  expect((await logo.screenshot()).equals(reduced)).toBe(true);
+  await page.locator('#select-gba').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await expect(logo).toHaveAttribute('src', './assets/inspection-logo.png');
+  expect(errors).toEqual([]);
+});
+
 test('DS placement clears props and pickup, inspection repaints live, and console branding follows selection', async ({ page }, testInfo) => {
   test.skip(!!process.env.CI, 'Parked after failed CI repair: DS readiness/placement completion; follow-up https://github.com/Zanark/BowserBoy/issues/104');
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('./');
-  await waitForDesk(page);
+  await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#tools-open').click();
   const logo = page.locator('#tools > .panel-logo');

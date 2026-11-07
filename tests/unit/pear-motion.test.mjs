@@ -40,6 +40,40 @@ test('a lifted pear falls, bounces and settles instead of snapping onto the desk
   assert.deepEqual(motion.velocity.toArray(), [0, 0, 0]);
 });
 
+test('support impacts report incoming speed even when one update contains the entire fall', () => {
+  for (const support of [0, 3]) {
+    const motion = new PearMotion(new Vector3(15, 10, -5));
+    const obstacles = support ? [new Box3(new Vector3(12, 0, -8), new Vector3(18, support, -2))] : [];
+    motion.drop(200);
+    motion.update(3, obstacles);
+    assert.ok(motion.impactSpeed > 20);
+    assert.equal(motion.position.y, support);
+    assert.equal(motion.sleeping, true);
+    motion.update(0, obstacles);
+    assert.equal(motion.impactSpeed, 0);
+    motion.reset(new Vector3(15, 10, -5));
+    motion.update(3, obstacles);
+    assert.ok(motion.impactSpeed > 20);
+    motion.pickUp();
+    assert.equal(motion.impactSpeed, 0);
+    motion.drop(400);
+    assert.equal(motion.impactSpeed, 0);
+  }
+});
+
+test('minor drops and horizontal workspace collisions do not report hard support impacts', () => {
+  const motion = new PearMotion(new Vector3(24, .1, 0));
+  motion.drop(200);
+  motion.velocity.x = 22;
+  motion.update(.1, []);
+  assert.ok(motion.impactSpeed > 0 && motion.impactSpeed < 10);
+  motion.reset(new Vector3(24, 10, 0));
+  motion.drop(400);
+  motion.velocity.x = 22;
+  motion.update(.1, []);
+  assert.equal(motion.impactSpeed, 0);
+});
+
 test('paint-aware drops retain falling and rising poses and pending physics until each is painted', () => {
   const motion = new PearMotion(new Vector3(20, 10, -8));
   motion.drop(200, { requirePaint: true });

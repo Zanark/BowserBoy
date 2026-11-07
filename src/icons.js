@@ -8,6 +8,7 @@ const paths = {
   back: 'm9 4-6 6 6 6M3 10h10a7 7 0 0 1 7 7v3',
   lamp: 'M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z',
   pear: 'M12 5c-4 0-3 4-6 7-5 6-1 10 6 10s11-4 6-10c-3-3-2-7-6-7zm0 0V2m0 2c1-3 4-3 5-2-1 3-3 3-5 2M9 14h.01M15 14h.01m-6 3q3 3 6 0',
+  axolotl: 'M6 8C3 8 3 18 7 19h10c4-1 4-11 1-11H6zM5 9 2 6m3 6H1m4 3-3 3M19 9l3-3m-3 6h4m-4 3 3 3M8 12h.01M16 12h.01m-6 3q2 2 4 0',
   room: 'M12 2v3M6 5h12l3 6H3zM6 16l-2 3m8-3v5m6-5 2 3',
   cartridge: 'M3 7h3V4h12v3h3v13H3V7zm4 3h10v6H7v-6zm0 10v-2m3 2v-2m4 2v-2m3 2v-2',
   fullscreen: 'M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5',

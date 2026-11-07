@@ -1,0 +1,56 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/109
+Milestone: Add one smaller cream-and-pink axolotl night-light to the tabletop.
+Dependencies: Existing shared Lighting dock, fixed-light rendering and desk clearance.
+Purpose: Add a cute smaller lamp inspired by the six supplied axolotl references
+without replacing pear-boy or changing the independent console controls.
+
+Tasks:
+- [x] Build original procedural cream head/body, pink gills, feet and raised tail.
+- [x] Place the smaller lamp in free tabletop space, clear of existing objects.
+- [x] Add real mesh-click power and accessible independent Lighting controls.
+- [x] Provide Sleep50% and Bright100%, initially on at50%, reset on reload.
+- [x] Include the fixed lamp in console and pear-boy movement obstacles.
+- [x] Qualify actual rendered brightness, all-off exposure and responsive controls.
+- [x] Update affected lighting fixtures, hints, visual README, guide and provenance.
+
+Acceptance criteria:
+The smaller axolotl has a cream body, pink features and a gentle smile.
+Mesh clicks toggle only its power without opening console tools. Its two
+brightness levels visibly differ; off extinguishes both emissions and the
+point emitter. Brightness selection while off leaves power off. GBA/DS
+transitions preserve independent states. Existing consoles, props and pear-boy
+do not initially overlap it; console and pear-boy movement respect its fixed
+position. No new movement API, reference-image overlay or external asset.
+Technical local completion does not imply owner approval or publication.
+
+Completion evidence:
+Final npm run check and npm run build pass. The final focused browser run
+passes all5selected cases in1.1minutes: collapsed startup/real console clicks,
+responsive shared Lighting dock across GBA/DS, new axolotl mesh/control/glow/
+clearance case, physical tripod falloff/toolbar and independent tripod/Room.
+The axolotl case compares actual rendered shell pixels:100% exceeds50% by
+more than5meanRGB units. Sole axolotl lighting retains.018exposure; all off
+returns.45. No page errors. Earlier all61unit tests pass.
+LCD-only fixtures explicitly switch off both companion lamps; affected
+native/GPU/parked scenarios were not all rerun. Inventory112cases in8files;
+existing17parked cases, assertions, deadlines and CI workflow unchanged.
+Reviewed final default tabletop and staged50%/100%/off contact sheet.
+New README/guide images have exact default-versus-staged-camera provenance.
+No full-browser, physical-phone, owner-acceptance or deployment claim.
+
+Completion log:
+2026-11-07 follow-up: Owner now requests pear-boy-style movement. Workstream
+111 supersedes the fixed-position constraint below; original local evidence
+remains historical. Workstream112 owns newly authorized monitored publication.
+2026-11-07: Choose a fixed smaller tabletop model with independent power and
+two reference-inspired brightness levels. Preserve pear-boy and prior dirty
+work. First glow probe fails because ImageBitmap dimensions reset on close;
+retain canvas dimensions rather than relaxing the rendered-pixel assertion.
+The corrected probe then exposes real overexposure: the point light outside
+the face saturates both levels. Move it inside the body; unchanged stronger
+assertion passes. Final contact sheet reveals overly dark wine-colored gills;
+correct pink material/emission only, then all5focused cases pass. Update
+LCD-only setups to disable the new independent light, not weaken assertions.
+Document fixed position, reload resets, independent lighting and actual media.
+Keep old screenshots and frozen PDF untouched. Local/uncommitted/undeployed.

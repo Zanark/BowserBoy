@@ -8,6 +8,24 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Small axolotl night-light, 2026-11-07
+
+`docs/images/axolotl-table.png` is an actual Edge/Playwright screenshot of the
+local default tabletop, with the axolotl on at 50%. The tripod lamp, consoles,
+pear-boy and loose props retain their normal placement and lighting.
+`docs/images/axolotl-bright-close.png` is a crop of the actual canvas at 100%,
+using an explicitly staged close camera, not an available Inspect view.
+No scene objects or other lights were hidden or rearranged for that close-up.
+The images contain no composited reference art or invented game screens.
+
+The original procedural cream-and-pink geometry follows the owner's six
+axolotl lamp references, rather than importing a product model or image.
+The final default, 50%, 100% and off captures were reviewed together after
+moving the point emitter inside the body and correcting the dark pink glow.
+These are unpublished local captures, not owner approval or physical-device
+qualification. Older media retain their historical lighting epoch; the frozen
+published book is unchanged.
+
 ### DS articulation and gameplay orientation, 2026-11-07
 
 `ds-prototype-playing.png` is now the actual flat, fully open Twin Lab capture

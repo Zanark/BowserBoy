@@ -1,0 +1,34 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/105
+Milestone: Keep the scene hint and player credits discreet in the bottom-left.
+Dependencies: None.
+Purpose: Follow the owner's two screenshots: move Independent player credits
+from the center to the bottom-left and reduce the drag/click instruction size.
+
+Tasks:
+- [x] Align player credits with the existing bottom-left hint and safe-area inset.
+- [x] Reduce the scene hint to9px on desktop and phone without changing its text.
+- [x] Preserve credit links, single-line truncation and short-screen hiding.
+- [x] Qualify actual desktop/phone placement and separation in the browser.
+
+Acceptance criteria:
+Credits align with the hint at the left edge, below it without overlapping.
+The hint is smaller than the preceding11px desktop/10px phone text. Credits
+remain inside the viewport. No emulator, scene-lighting or interaction changes.
+Local qualification is not deployment or owner visual acceptance.
+
+Completion evidence:
+npm run check and npm run build pass. The expanded existing Playwright
+scenario, selected with --grep "gameplay hints stay on one bottom-left line",
+passes once in14.9s at1440x1100,390x844 and320x740. Actual geometry verifies
+left alignment, reduced font size, separate lines and viewport containment.
+Reviewed desktop and320px-wide crops; credits remain legible below the hint,
+and the phone hint stays truncated on one line. Local source preview5173
+serves the9px rule. This is a local change, not a new public deployment.
+
+Completion log:
+2026-11-07: Owner supplies screenshots requesting bottom-left credits and
+smaller drag/click instructions. Change only the relevant CSS and expand the
+existing responsive hint scenario; preserve the109-case browser inventory.
+- 2026-11-07: Targeted responsive scenario passes; reviewed desktop/phone
+  crops. No skipped case, timeout, workflow or emulator behavior changed.

@@ -305,7 +305,7 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
       smile: center(view.pear.root.getObjectByName('pear-boy smile')),
       freckles: face.root.children.filter(mesh => mesh.name === 'pear-boy cheek freckle').map(center),
       calm: face.calm.visible, scared: face.scared.visible,
-      mouth: face.mouth.position.toArray(),
+      mouthOpen: face.openMouth.visible,
     };
   });
   await page.mouse.move(20, 850);
@@ -317,6 +317,7 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
   await expect.poll(async () => (await face()).gaze[0]).toBeGreaterThan(.2);
   await expect.poll(async () => (await face()).gaze[1]).toBeGreaterThan(.9);
   const right = await face();
+  expect(right.freckles).toHaveLength(6);
   for (let i = 0; i < 2; i++) {
     expect(right.eyes[i][0]).toBeGreaterThan(left.eyes[i][0] + .1);
     expect(right.eyes[i][1]).toBeGreaterThan(left.eyes[i][1] + .1);
@@ -335,7 +336,7 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
   await expect.poll(async () => (await face()).scared).toBe(true);
   expect((await face()).calm).toBe(false);
   const held = await face();
-  await expect.poll(async () => (await face()).mouth).not.toEqual(held.mouth);
+  await expect.poll(async () => (await face()).mouthOpen).not.toBe(held.mouthOpen);
   await page.screenshot({ path: testInfo.outputPath('pear-boy-scared.png') });
   await page.mouse.up();
   await expect.poll(async () => (await face()).calm).toBe(true);
@@ -350,11 +351,40 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
   await page.locator('#pear-move').click();
   expect((await face()).scared).toBe(true);
   expect((await state(page)).position[1]).toBe(0);
-  const still = (await face()).mouth;
+  const still = (await face()).mouthOpen;
   await page.waitForTimeout(100);
-  expect((await face()).mouth).toEqual(still);
+  expect((await face()).mouthOpen).toBe(still);
   await page.keyboard.press('Enter');
   await expect.poll(async () => (await face()).calm).toBe(true);
+  const freckles = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Raycaster, Vector2, Vector3 } = await import('three');
+    view.renderer.setAnimationLoop(null);
+    const { pear } = view;
+    const raycaster = new Raycaster();
+    const origin = pear.root.localToWorld(new Vector3(0, 4.5, 11));
+    const visibility = [];
+    const inspect = () => {
+      for (const gaze of [-1, 0, 1]) {
+        pear.updateFace(0, new Vector2(gaze, gaze), true);
+        pear.root.updateWorldMatrix(true, true);
+        visibility.push(pear.face.root.children.filter(mesh => mesh.name === 'pear-boy cheek freckle').map(dot => {
+          raycaster.set(origin, dot.getWorldPosition(new Vector3()).sub(origin).normalize());
+          return raycaster.intersectObject(pear.root, true).find(({ object }) => {
+            for (let parent = object; parent; parent = parent.parent) if (!parent.visible) return false;
+            return true;
+          })?.object.name;
+        }));
+      }
+    };
+    pear.setFaceLifted(false, { reset: true }); inspect();
+    pear.setFaceLifted(true); inspect();
+    pear.reactToImpact(20); inspect();
+    pear.acknowledgeFacePaint();
+    pear.updateFace(1, new Vector2(), false); inspect();
+    return visibility;
+  });
+  for (const visible of freckles) expect(visible).toEqual(Array(6).fill('pear-boy cheek freckle'));
   expect(errors).toEqual([]);
 });
 
@@ -384,6 +414,9 @@ test('pear-boy moves in all three axes and falls through visible frames before a
     const read = () => ({
       y: view.pear.root.position.y, vy: view.pearMotion.velocity.y,
       scared: view.pear.face.scared.visible, sleeping: view.pearMotion.sleeping,
+      expression: view.pear.root.userData.expression,
+      freckles: view.pear.face.root.children.filter(mesh => mesh.name === 'pear-boy cheek freckle')
+        .map(mesh => mesh.visible && mesh.parent.visible),
     });
     const originalRender = view.renderer.render;
     view.renderer.render = function (...args) {
@@ -413,13 +446,20 @@ test('pear-boy moves in all three axes and falls through visible frames before a
   expect((await state(page)).position[1]).toBe(0);
   await expect.poll(() => page.evaluate(() =>
     window.pearFallPaints.some(frame => frame.y === 0 && frame.vy === 0 && frame.sleeping))).toBe(true);
+  await expect.poll(() => page.evaluate(() =>
+    window.pearFallPaints.at(-1)?.expression)).toBe('curious');
   const paints = await page.evaluate(() => {
     window.stopPearFallPaints();
     return window.pearFallPaints;
   });
   expect(paints.some(frame => frame.y > 0 && frame.y < samples - .1 && frame.vy < 0 && frame.scared)).toBe(true);
-  expect(paints.some(frame => frame.y > 0 && frame.vy > 0 && frame.scared)).toBe(true);
+  expect(paints.some(frame => frame.y > 0 && frame.vy > 0 && frame.expression === 'angry')).toBe(true);
   expect(paints.every(frame => frame.y >= 0)).toBe(true);
+  expect([...new Set(paints.map(frame => frame.expression))]).toEqual(['scared', 'angry', 'sad', 'curious']);
+  expect(paints.every(frame => frame.freckles.length === 6 && frame.freckles.every(Boolean))).toBe(true);
+  await testInfo.attach('pear-boy-painted-landing-sequence', {
+    body: JSON.stringify(paints), contentType: 'application/json',
+  });
   await page.locator('#pear-open').click();
   await page.locator('#pear-home').click();
   await page.locator('#pear-move').click();

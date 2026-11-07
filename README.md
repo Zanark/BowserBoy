@@ -30,10 +30,15 @@ The existing GBA showcase below retains its historical captures.*
 
 ## BowserBOY DS - local prototype
 
-![Supplied transparent BowserBOY DS neon chrome logo](assets/ds-logo.png)
+<picture>
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/ds-logo.png">
+  <img src="assets/ds-logo-shimmer.png" alt="BowserBOY DS neon chrome logo with a shimmering reflection across its two screen rectangles">
+</picture>
 
-*The user's latest transparent DS artwork, used unchanged on the lower-body underside,
-loading LCD and DS tools. The inner lid has no emblem.*
+*A moving reflection shimmers across the two DS screen rectangles here and in the
+Inspect heading; the lettering, orbit and chrome borders stay still. Reduced motion
+uses the original static artwork. The lower-body underside, loading LCD and DS tools
+retain that static artwork. The inner lid has no emblem.*
 
 ![Separate GBA and DS consoles together on the BowserBOY table](docs/images/ds-prototype-table.png)
 
@@ -124,6 +129,10 @@ to play; **Put down** returns to the moved position. **Inspect** still rotates
 normally. Positions last until reload. [Movement controls and limits](docs/GUIDE.md#move-the-consoles).
 This addition is local, not deployed.
 
+Console tools start collapsed as a small grip at the bottom-left. Click either
+console to reveal its actions, or use the grip's expand arrow. Lighting remains
+in its separate dock.
+
 ## pear-boy - local desk companion
 
 ![pear-boy beside the separate GBA and DS, lighting the desk](docs/images/pear-boy-table.png)
@@ -132,10 +141,26 @@ This addition is local, not deployed.
 desk. He sits on the front-right edge with his rope legs dangling below it.*
 
 Drag him upward or sideways, scroll for depth, then release to drop and bounce.
-His whole face follows the cursor; being picked up brings out his scared face.
+His whole face follows the cursor. While held or falling, his cute squeezed eyes
+and rosy cheeks accompany alternating closed/open scream mouths. A hard landing
+brings an angry face, then a worried face, then his normal smile. All expressions
+retain the signature three dots on each cheek. Reduced motion keeps the scream
+mouth still.
 Move him farther back to rest his feet on the table.
 The pear dock button controls power, brightness, movement and reset.
 [Controls and physics limits](docs/GUIDE.md#pear-boy).
+This addition is local, not deployed.
+
+## A smaller axolotl night-light - local addition
+
+![Small cream-and-pink axolotl lamp in front of the consoles, beside pear-boy](docs/images/axolotl-table.png)
+
+*Actual local tabletop capture: a smaller axolotl joins pear-boy, with pink
+gills, tiny feet, a raised tail and a soft cream glow.*
+
+Click it for power, or use its **Lighting** dock button for **Sleep 50%**
+and **Bright 100%**. Drag, lift and drop it like pear-boy; the other lights remain
+independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 This addition is local, not deployed.
 
 ## BowserBOYADVANCED
