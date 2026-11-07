@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 
 export const installRoomPaintFixture = page => page.evaluate(async () => {
   const { view } = await import('./src/app.js');
+  let recovery;
   window.roomPaintFixture = {
     async waitForGpu() {
       const gl = view.renderer.getContext();
@@ -12,8 +13,22 @@ export const installRoomPaintFixture = page => page.evaluate(async () => {
         await new Promise(resolve => setTimeout(resolve, 0));
       }
     },
+    async waitForRecovery() {
+      // Synthetic render timestamps do not advance the real recovery wait.
+      const delay = Math.max(0, view.nextPaint - (view.lastRender ?? view.nextPaint));
+      if (!Number.isFinite(delay) || delay > 1000 + 1e-6)
+        throw new Error('Room fixture recovery must be finite and at most one second.');
+      if (!delay) { recovery = null; return; }
+      if (!recovery || recovery.nextPaint !== view.nextPaint || recovery.lastPaint !== view.lastPaint)
+        recovery = { nextPaint: view.nextPaint, lastPaint: view.lastPaint, until: performance.now() + delay };
+      while (performance.now() < recovery.until)
+        await new Promise(resolve => setTimeout(resolve, recovery.until - performance.now()));
+    },
     async paint(time) {
       await this.waitForGpu();
+      await this.waitForRecovery();
+      if (!Number.isFinite(time) || time < view.nextPaint)
+        throw new Error('Room fixture timestamp precedes the eligible recovery boundary.');
       view.render(time);
       if (!view.renderedLastFrame) throw new Error('Room fixture did not submit the intended complete frame.');
       // Callers can read the default framebuffer now, before another browser task.

@@ -966,8 +966,10 @@ export class HandheldScene {
         if (status === gl.WAIT_FAILED) {
           this.failRoomPaint();
         } else {
-          // A completed fence already guarantees room GPU work has drained.
-          this.nextPaint = time;
+          const elapsed = Math.max(0, time - this.paintSubmitted);
+          const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion ? 1000 : 200;
+          // Moderate frames need no extra idle; severe stalls still need native-runtime headroom.
+          this.nextPaint = time + (elapsed > 100 ? Math.min(recoveryLimit, elapsed * 2) : 0);
         }
       }
     } else if (this.renderedLastFrame) {

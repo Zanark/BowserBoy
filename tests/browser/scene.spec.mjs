@@ -158,6 +158,9 @@ test('sparse room paints lower the console before seating the cartridge', async 
   const frames = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
+    await window.roomPaintFixture.waitForGpu();
+    view.render(performance.now());
+    await window.roomPaintFixture.waitForRecovery();
     view.lastRender = null;
     view.insertCartridge('sparse-paint-regression');
     let start = performance.now();
@@ -168,7 +171,9 @@ test('sparse room paints lower the console before seating the cartridge', async 
         start = view.lastRender;
       } else {
         await window.roomPaintFixture.waitForGpu();
-        view.render(start + offset);
+        // Observe completion separately; the deferred attempt is not a painted pose.
+        view.render(view.lastPaint + 101);
+        await window.roomPaintFixture.paint(start + offset);
       }
       if (view.renderedLastFrame) {
         painted.push({
@@ -249,25 +254,35 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
       view.renderer.setPixelRatio(ratio);
       view.setControl('a', false);
       view.changed = true;
-      await window.roomPaintFixture.paint(view.lastRender + 16);
+      await window.roomPaintFixture.waitForGpu();
+      if (view.paintFence) view.render(view.lastPaint + 101);
+      await window.roomPaintFixture.paint(Math.ceil(Math.max(view.nextPaint, view.lastRender + 16)));
       const beforeStall = view.renderer.info.render.frame;
       const fencedBeforeStall = !!view.paintFence;
       await tick(100);
       const afterStall = view.renderer.info.render.frame;
       const fencedAfterStall = !!view.paintFence;
-      await tick(201); await tick(16);
+      await tick(201);
+      await window.roomPaintFixture.paint(view.nextPaint);
+      await tick(16);
       const singleStallRatio = view.renderer.getPixelRatio();
-      await tick(1000); await tick(201);
+      await tick(1000);
+      await window.roomPaintFixture.paint(view.nextPaint);
+      await tick(100);
       const severeStallRatio = view.renderer.getPixelRatio();
-      for (let i = 0; i < 6; i++) { await tick(100); await tick(201); }
+      for (let i = 0; i < 6; i++) {
+        await tick(100);
+        await tick(201);
+        await window.roomPaintFixture.paint(view.nextPaint);
+      }
       const beforeIdle = view.renderer.info.render.frame;
       await window.roomPaintFixture.waitForGpu();
       view.render(view.lastRender + 1000);
-      await window.roomPaintFixture.waitForGpu();
-      view.render(view.lastRender + 201);
+      await window.roomPaintFixture.waitForRecovery();
+      view.render(view.nextPaint);
       const afterIdle = view.renderer.info.render.frame;
       view.setControl('a', true);
-      await tick(100);
+      await window.roomPaintFixture.paint(view.lastRender + 250);
       budgets.push({ ratio, singleStallRatio, severeStallRatio, beforeStall, afterStall, fencedBeforeStall, fencedAfterStall, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
         width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press });
     }
@@ -278,7 +293,7 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     expect(budget.severeStallRatio, 'Scheduling stalls must never reduce handheld sharpness').toBe(budget.ratio);
     expect(budget.afterIdle, 'A severe scheduling gap must not wake a settled, idle scene').toBe(budget.beforeIdle);
     expect(budget.fencedBeforeStall, 'The baseline room frame must retain a real GPU fence').toBe(true);
-    expect(budget.afterStall, 'A completed GPU fence must not add another idle interval after a scheduling stall').toBeGreaterThan(budget.beforeStall);
+    expect(budget.afterStall, 'A completed GPU fence observed at 100ms must not add another idle interval').toBeGreaterThan(budget.beforeStall);
     expect(budget.fencedAfterStall, 'The next room frame must also retain a real GPU fence').toBe(true);
     expect(budget.slowRatio, 'Sustained slow frames must retain full resolution').toBe(budget.ratio);
     expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.ratio));
@@ -291,47 +306,81 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
       view.changed = true;
       view.render(view.lastRender + gap);
     };
+    await window.roomPaintFixture.waitForGpu();
+    if (view.paintFence) view.render(view.lastPaint + 101);
     view.setView('playing');
     view.changed = true;
     // GPU waits advance wall time independently of the earlier synthetic ticks.
     const start = Math.max(view.lastRender, view.transition?.started ?? 0);
-    await window.roomPaintFixture.paint(start + 1000);
+    await window.roomPaintFixture.paint(Math.ceil(start + 1000));
     if (view.transition) throw new Error('Stationary fence regression requires a completed playing transition.');
     const before = view.renderer.info.render.frame;
-    await tick(1000);
-    const afterStall = view.renderer.info.render.frame;
-    await tick(201);
+    const fencedBefore = !!view.paintFence;
+    await tick(100);
+    const afterModerate = view.renderer.info.render.frame;
+    await tick(100);
     const afterNext = view.renderer.info.render.frame;
-    await tick(800);
-    return { before, afterStall, afterNext, after: view.renderer.info.render.frame, ratio: view.renderer.getPixelRatio() };
+    await tick(101);
+    const afterThreshold = view.renderer.info.render.frame;
+    const thresholdRecovery = view.nextPaint - view.lastRender;
+    let invalidTimeRejected = false;
+    try { await window.roomPaintFixture.paint(view.nextPaint - 1); }
+    catch (error) { invalidTimeRejected = error.message === 'Room fixture timestamp precedes the eligible recovery boundary.'; }
+    const afterInvalidTime = view.renderer.info.render.frame;
+    await window.roomPaintFixture.paint(view.nextPaint);
+    const beforeSevere = view.renderer.info.render.frame;
+    await tick(1000);
+    const afterSevere = view.renderer.info.render.frame;
+    const severeRecovery = view.nextPaint - view.lastRender;
+    const recoveryBoundary = view.nextPaint;
+    await window.roomPaintFixture.waitForRecovery();
+    view.render(recoveryBoundary - 1);
+    const beforeBoundary = view.renderer.info.render.frame;
+    await window.roomPaintFixture.paint(recoveryBoundary);
+    return { before, fencedBefore, afterModerate, afterNext, afterThreshold, thresholdRecovery, invalidTimeRejected, afterInvalidTime,
+      beforeSevere, afterSevere, severeRecovery, beforeBoundary,
+      after: view.renderer.info.render.frame, fencedAfter: !!view.paintFence, ratio: view.renderer.getPixelRatio() };
   });
-  expect(playingFence.afterStall, 'A stationary handheld must repaint when its real GPU fence completes, without another one-second idle').toBeGreaterThan(playingFence.before);
-  expect(playingFence.afterNext, 'Each subsequent completed fence must permit the next room frame').toBeGreaterThan(playingFence.afterStall);
-  expect(playingFence.after).toBeGreaterThan(playingFence.afterNext);
+  expect(playingFence.fencedBefore).toBe(true);
+  expect(playingFence.afterModerate, 'A stationary fence observed at 100ms must permit an immediate room paint').toBeGreaterThan(playingFence.before);
+  expect(playingFence.afterNext, 'Successive moderate completed fences must permit successive stationary room frames').toBeGreaterThan(playingFence.afterModerate);
+  expect(playingFence.afterThreshold, 'A completed fence observed beyond 100ms must retain severe-load recovery').toBe(playingFence.afterNext);
+  expect(playingFence.thresholdRecovery).toBe(202);
+  expect(playingFence.invalidTimeRejected, 'Waiting must not fabricate a later fixture timestamp').toBe(true);
+  expect(playingFence.afterInvalidTime, 'An invalid timestamp must not submit an extra room frame').toBe(playingFence.afterThreshold);
+  expect(playingFence.afterSevere).toBe(playingFence.beforeSevere);
+  expect(playingFence.severeRecovery, 'Stationary severe-load recovery retains its one-second ceiling').toBe(1000);
+  expect(playingFence.beforeBoundary, 'The frame immediately before recovery expires must remain gated').toBe(playingFence.beforeSevere);
+  expect(playingFence.after).toBeGreaterThan(playingFence.beforeSevere);
+  expect(playingFence.fencedAfter).toBe(true);
   expect(playingFence.ratio).toBe(2);
   const insertion = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const render = view.renderer.render.bind(view.renderer);
     const presented = [];
+    const motionRecoveries = [];
     view.renderer.render = (...args) => {
       render(...args);
       presented.push(view.model.cartridge.position.y);
     };
     try {
       view.insertCartridge('presented-clock-regression');
-      for (let frame = 0; frame < 6; frame++) {
+      for (let frame = 0; frame < 6 && view.cartridgeMotion; frame++) {
         await window.roomPaintFixture.waitForGpu();
+        const moving = !!view.cartridgeMotion;
         view.render(view.lastRender + 1000);
-        await window.roomPaintFixture.waitForGpu();
-        view.render(view.lastRender + 201);
+        if (moving) motionRecoveries.push(view.nextPaint - view.lastRender);
+        await window.roomPaintFixture.paint(view.nextPaint);
       }
-      return { presented, state: view.host.dataset.cartridge, ratio: view.renderer.getPixelRatio() };
+      return { presented, motionRecoveries, state: view.host.dataset.cartridge, ratio: view.renderer.getPixelRatio() };
     } finally { view.renderer.render = render; }
   });
   expect(insertion.presented[0]).toBe(3.8);
   expect(insertion.presented.some(y => y > 1.52 && y < 3.8)).toBe(true);
   expect(insertion.presented.at(-1), 'The finishing paint must present the seated pose, not the previous clock step').toBe(1.52);
   expect(insertion.state).toBe('seated');
+  expect(insertion.motionRecoveries.length).toBeGreaterThan(0);
+  expect(insertion.motionRecoveries.every(delay => delay === 200), 'Moving severe-load recovery retains its 200ms ceiling').toBe(true);
   expect(insertion.ratio).toBe(2);
   const nativeOperation = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
@@ -648,6 +697,9 @@ async function prepareControlLighting(page) {
 const sampleControlLighting = (page, id, pressed) => page.evaluate(async ({ id, pressed }) => {
   const { view } = await import('./src/app.js');
   const { Vector3 } = await import('three');
+  // Retire the previous pose's fence before starting this input interval.
+  await window.roomPaintFixture.waitForGpu();
+  if (view.paintFence) view.render(view.lastPaint + 101);
   view.setControl(id, pressed);
   view.changed = true;
   await window.roomPaintFixture.paint(view.lastRender + 250);
@@ -718,6 +770,10 @@ test('physical cap compression, release and unlit response retain their bounds',
     const { view } = await import('./src/app.js');
     const { mesh } = view.model.controls.get('a');
     const advance = async (pressed, milliseconds) => {
+      if (milliseconds > 100) {
+        await window.roomPaintFixture.waitForGpu();
+        if (view.paintFence) view.render(view.lastPaint + 101);
+      }
       view.setControl('a', pressed);
       view.changed = true;
       await window.roomPaintFixture.paint(view.lastRender + milliseconds);

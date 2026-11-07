@@ -14,6 +14,27 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Restore severe-stall headroom without moderate-frame idle:
+  Exact046defd/Pages42327809794 fails: build/shard1 pass,18browser
+  shards fail,deploy skipped. Traces show protocol observation delays,
+  not proof of native ready:false or core starvation. Actual local fence
+  observations on hardware median56.7ms,p9579.7,max95.1ms; SwiftShader
+  completion gaps6.778/14.210s,287native frames/12.129s. Restore original
+  capped2xelapsed recovery only above100ms; native copying/input and quality
+  remain unchanged. Guarded hardware20.580roomFPS/598native frames/10.107s.
+  Syntax/44units/build pass. Guarded software11of12pass7.1m, including
+  all four native/physical poses, four recovery/motion cases and three native
+  GBA lighting/readiness cases. Quick1500ms still fails: first native/copied
+  pixel predicate returns all yellow after2309ms. Caching its controller also
+  fails; rejected and reverted, no DS fixture change. Edge21of23pass5.7m
+  includes every DS case and native GBA CRT. Two manual-paint submission
+  checks fail because completion observation can submit an extra frame and
+  insertion loops continue after seating. Observe only a pending fence and
+  stop when motion ends. All four affected cases pass Edge39.7s and
+  SwiftShader1.7m afterward;93distinct cases remain. Hosted pending.
+  Isolated zero-intensity-light hiding gives18.330/18.467/20.782roomFPS
+  across original/hidden/restored, with a6.494s shader-compilation longtask
+  on switching. No established benefit; rejected, no lighting source change.
 - 2026-11-07 / Remove measured redundant completed-fence idle:
   Exact8b46c2c/Pages42324913149 fails: build/12browser shards pass,7fail,
   8cases fail,deploy skipped. Flat physical probe returns true after11307.7ms,

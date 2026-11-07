@@ -690,9 +690,13 @@ Model geometry, artwork, materials, anti-aliasing and native GBA resolution
 are unchanged. Performance optimizations must preserve this visual contract.
 On contexts with GPU synchronization support, each complete room draw submits
 one fence. Later callbacks poll it with a zero timeout and do not submit another
-room draw until it completes. Successful completion permits the next paint
-immediately: adding twice the already elapsed GPU time as further idle time
-unnecessarily reduced DS room refresh. Fence failures surface through the
+room draw until it completes. Successful completion observed within100ms
+permits the next paint immediately: twice-elapsed idle on moderate frames
+unnecessarily reduced DS room refresh. Completions observed after100ms retain
+the original twice-elapsed recovery, capped1000ms for stationary play and200ms
+otherwise, to leave native/runtime headroom during severe rendering stalls.
+Observation elapsed includes callback scheduling, not just GPU execution.
+Fence failures surface through the
 existing error notice; context restoration resets scheduling.
 The renderer still draws the complete scene at its original resolution, without
 a tiled presentation canvas or retained parent drawing buffer.

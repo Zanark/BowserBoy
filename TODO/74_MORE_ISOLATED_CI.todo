@@ -30,6 +30,25 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Pages046defd/42327809794 regresses: build/shard1 pass,18browser
+shards fail,deploy skipped. Readiness traces exhaust15s resolving frames;
+they do not establish native ready:false or core starvation.
+Actual full-DPR2 fence observations separate hardware56.7msmedian/
+79.7msp95/95.1msmax from software6.778/14.210s completions.
+Restore original severe-stall200ms motion/1000ms play ceilings above100ms,
+retaining immediate moderate-fence eligibility. Guarded hardware20.580FPS,
+598native frames/10.107s. Syntax/44units/build pass. Guarded software11of12
+pass7.1m, including all four native/physical poses, four recovery/motion
+cases and three native GBA lighting/readiness cases. Quick1500ms still fails:
+first predicate returns correct native/copied pixels after2309ms.
+Caching its controller also fails; rejected, no test change.
+First guarded Edge21of23pass5.7m: every DS case and native CRT pass.
+Correct the two manual-paint fixture failures: observe only a pending fence;
+stop mandatory insertion paints once motion ends. All four affected cases
+then pass Edge39.7s/SwiftShader1.7m. Inventory remains93distinct cases.
+Hosted pending.
+No changed quality, deadlines, retries or inventory.
+
 Pages8b46c2c/42324913149 finishesFAILURE: build/12browser shards pass,
 7fail,8failed cases,deploy skipped. Final flat physical probe returnstrue
 after11307.7ms; deadline exhaustion is not a wrong-coordinate result.

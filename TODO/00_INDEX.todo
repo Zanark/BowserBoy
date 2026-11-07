@@ -73,7 +73,7 @@ BowserBOY workstreams
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:93cases/19shards;8b46c2c gate fails12passing/7failed shards; redundant completed-fence idle removed, software quick/hosted recovery unresolved.
+74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:93cases/19shards;046defd gate fails18browser shards; moderate-fence speedup retained with severe-stall guard; software quick/hosted recovery unresolved.
 75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
@@ -107,13 +107,16 @@ Current pending work
   workstream82 supersedes the earlier authentication blocker. Tracking these
   features does not change their explicit implementation deferral.
 -74: diagnose and qualify the current93-case suite without weakening quality,
-  assertions or deadlines. Latest8b46c2c/42324913149 finishesFAILURE:
-  build/twelve browser shards pass, seven fail and deployment skips.
-  Isolated full-resolution profiling exposes redundant idle after completed
-  GPU fences. Removing it raises measured Edge/AMD780M room refresh from
-  about4.3to20.9FPS while native advances remain about60FPS. This is local
-  hardware evidence, not an all-device guarantee. Software four precision
-  and four recovery cases pass; quick-tap1500ms gate still fails.
+  assertions or deadlines. Latest046defd/42327809794 finishesFAILURE:
+  build/shard1 pass,18browser shards fail and deployment skips.
+  Keep immediate completed-fence eligibility up to100ms; restore original
+  capped recovery for severe observations above100ms. Guarded full-DPR2
+  Edge/AMD780M measures20.580roomFPS/598native frames in10.107s.
+  This is local hardware evidence, not an all-device guarantee.
+  Guarded software11of12pass; quick-tap1500ms still fails despite correct
+  pixels returned after2309ms. Edge21of23pass, every DS case included;
+  after correcting two manual-paint completion conditions, all four affected
+  scheduling/motion cases pass Edge39.7s/SwiftShader1.7m.
   A fresh pushed hosted gate remains pending. Historical
   reload/CRT failures remain in74 and the ledger. No new deployment is claimed.
 -75 operational follow-through: successful hosted packaging/publication has

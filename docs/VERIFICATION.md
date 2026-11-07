@@ -11,6 +11,38 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact source `046defd56b42eb57de2941a01a49d39a1e5ea627`,
+[Pages42327809794](https://github.com/Zanark/BowserBoy/actions/runs/42327809794),
+regresses to **failure**: build and browser shard1 pass,18browser shards fail,
+deployment is skipped. Readiness traces spend their15s budgets resolving the
+native iframe; they do not establish native `ready:false` or core starvation.
+Unconditional immediate post-fence painting is therefore not qualified.
+
+A bounded follow-up retains immediate eligibility for completed-fence
+observations up to100ms and restores original severe-stall headroom above
+that boundary (twice elapsed, capped1000ms stationary/200ms moving).
+Actual full-DPR2 hardware observations before this guard are median56.7ms,
+p9579.7ms,max95.1ms; the same SwiftShader workload observes6.778/14.210s
+completion gaps and only287native frames in12.129s. These include callback
+scheduling, not pure GPU timers or hosted measurements.
+The guard retains20.580roomFPS and598native frames in10.107s on AMD780M.
+The guarded SwiftShader gate passes11of12cases in7.1m: four real
+native/physical precision poses, four scheduling/motion cases and three
+native GBA lighting/readiness cases. Quick taps still fail the unchanged
+1500ms deadline: the first predicate returns all four native/copied marks
+yellow only after2309ms. This is late correct output, not a passed latency gate.
+Caching the controller instead of importing it inside the predicate also
+fails; that experiment is rejected and leaves no test change.
+The first guarded Edge gate passes21of23cases in5.7m, including every DS
+case and native GBA CRT. Two manual-paint fixtures initially fail their actual
+submission checks: an unnecessary completion observation can submit an extra
+frame, and a fixed insertion loop requests mandatory paints after seating.
+Observe only a pending fence and stop insertion work when motion ends.
+All four affected scheduling/motion cases then pass Edge39.7s and
+SwiftShader1.7m, retaining actual fences, DPR1/2, deadlines and one submission
+per explicit fixture paint. The current inventory remains93distinct cases.
+Actual hosted delivery remains pending.
+
 Exact source `8b46c2c8eccf72331aef8b8fb221cf33d30385df`,
 [Pages42324913149](https://github.com/Zanark/BowserBoy/actions/runs/42324913149),
 finishes **failure**: build and12browser shards pass, seven fail, deployment
@@ -24,14 +56,14 @@ AMD Radeon780M,1440x1100CSS,DPR2. With every original light/material retained,
 an original/bypass/restored experiment measures4.381/12.368/4.298actual roomFPS;
 native frame advances remain612/605/607over roughly10seconds each. The bypass
 changes only redundant recovery scheduling, retaining actual GPU fences.
-Remove the extra twice-elapsed idle after a successfully completed fence.
-The resulting production path measures20.902FPS, with612native frames in10.047s;
+The earlier unguarded experiment removes extra twice-elapsed idle after every
+successfully completed fence and measures20.902FPS, with612native frames in10.047s;
 two further phases measure22.660/20.319roomFPS and597/607native frames.
 These are local hardware observations, not a60FPS or all-device guarantee.
 No resolution, lighting, material, native-copy or input-queue change is made.
 The no-fence fallback retains its previous recovery.
 
-Existing browser regressions now require immediate successful-fence eligibility,
+That earlier revision's browser regressions require immediate successful-fence eligibility,
 including successive stationary draws and real DPR1/2fences. Manual-paint
 fixtures no longer retry at a future recovery timestamp. Syntax,44units and
 build pass. A nine-case full-resolution SwiftShader gate passes all four

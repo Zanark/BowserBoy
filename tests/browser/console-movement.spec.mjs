@@ -36,6 +36,9 @@ test('sparse console paints retain the lift and only publish completion with ali
   const result = await page.evaluate(async () => {
     const { view } = await import('./src/app.js'), { Box3 } = await import('three');
     view.renderer.setAnimationLoop(null);
+    await window.roomPaintFixture.waitForGpu();
+    view.render(performance.now());
+    await window.roomPaintFixture.waitForRecovery();
     const originalRender = view.renderer.render.bind(view.renderer);
     const samples = [];
     view.renderer.render = (scene, camera) => {
@@ -54,8 +57,12 @@ test('sparse console paints retain the lift and only publish completion with ali
       view.render(time + 5000);
       const deferred = { mode: view.host.dataset.view, elapsed: view.transition?.elapsed };
       view.nativeBusy = false;
+      await window.roomPaintFixture.waitForGpu();
+      view.render(time + 5001);
       await paint(time + 10000);
       const midpoint = view.host.dataset.view;
+      await window.roomPaintFixture.waitForGpu();
+      view.render(time + 10101);
       await paint(time + 15000);
       const button = document.querySelector('#ds-hardware-power').getBoundingClientRect();
       const canvas = view.canvas.getBoundingClientRect();
@@ -93,6 +100,8 @@ test('a stalled Inspect transition completes on its next eligible real paint', a
       view.render(time + 2000);
       const deferred = { mode: view.host.dataset.view, frame: view.renderer.info.render.frame };
       view.nativeBusy = false;
+      await window.roomPaintFixture.waitForGpu();
+      if (view.paintFence) view.render(time + 2001);
       await window.roomPaintFixture.paint(time + 4000);
       return { before, deferred, mode: view.host.dataset.view, frame: view.renderer.info.render.frame };
     } finally {

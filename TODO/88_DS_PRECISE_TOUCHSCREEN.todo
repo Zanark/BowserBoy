@@ -29,6 +29,22 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Pages046defd/42327809794 fails: build/shard1 pass,18browser shards
+fail,deploy skipped. Many readiness polls exhaust15s resolving the native
+frame; no observed ready:false or proven core starvation follows from that.
+Actual local full-DPR2 software completion gaps6.778/14.210s contrast with
+hardware median56.7ms,p9579.7,max95.1ms. Restore original severe-stall
+headroom above100ms while retaining immediate moderate-fence eligibility.
+Guarded hardware20.580roomFPS/598native frames/10.107s. Syntax/44units/
+build pass. Guarded software11of12pass7.1m, including all four actual
+native/physical poses. Quick still fails1500ms; first predicate returns
+all native/copied marks yellow only after2309ms. A cached-controller
+experiment also fails and is rejected, leaving no DS test change.
+Guarded Edge21of23pass5.7m includes every DS case and native GBA CRT.
+After correcting two manual-paint fixture completion conditions, all four
+affected scheduling/motion cases pass Edge39.7s/SwiftShader1.7m.
+Actual hosted/public qualification remains pending.
+
 Pages8b46c2c/42324913149 fails: build/12browser shards pass,7fail,
 deploy skipped. Quick taps pass this run, but flat/upside-down physical
 probes exhaust120s; final flat probe istrue only after11307.7ms.
