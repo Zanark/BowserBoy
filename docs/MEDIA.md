@@ -118,6 +118,12 @@ hashes or captured receipts. Recorder syntax, Python compilation and focused
 mock encoding tests pass. Temporary encoder tooling is removed and capture
 browsers are closed. Exact publication qualification remains in progress under
 [workstream120](../TODO/120_UNTOUCHED_INTRO_README_MEDIA.todo).
+Zanark `c3b211eb55dd8d1908e4895b2a11a8c624703970` is public: actual GitHub
+rendering contains all26scene GIFs, and all26public branch GIFs return200 with
+exact committed bytes. Its Pages run42388336737fails one unchanged fullscreen
+test and skips deployment; the bounded fixture qualification is tracked in
+[Verification](VERIFICATION.md). Public media delivery is not a successful
+exact-revision Pages deployment.
 
 ### Earlier fresh GBA, DS and all lights, 2026-11-07 (superseded footage)
 

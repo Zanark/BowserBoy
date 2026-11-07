@@ -44,7 +44,17 @@ files unchanged; independent logo/PDF checks pass. All26READMEhashes match;
 all49relative file targets exist. Six reproduction scripts have no personal
 paths/private hashes/receipt payloads; recorder syntax and focused mock
 encoding tests pass. Replay limits and reproduction documented in Media.
-ROMs/raw videos/stores/receipts remain private. Exact publication pending.
+ROMs/raw videos/stores/receipts remain private.
+Zanark c3b211eb55dd8d1908e4895b2a11a8c624703970 pushed. Actual GitHub
+README renders all26scene GIFs; every public branch GIF returns200 and exact
+committed bytes,76,919,967bytes. Pages42388336737 fails one fullscreen-return
+case:119declared/97PASS/21SKIP/1FAIL/0UNRUN; deploy skipped. Its exact trace
+shows the second exit's changed LCD hash completing just after the120s test
+deadline, not a confirmed stuck LCD. One bounded test-only attempt switches
+off unrelated companion lamps, retaining both exits, original resolution,
+assertions and deadlines. Exact local case passes30.8s, no retry; hosted
+qualification pending.48public runtime/entry/demo byte checks still match;
+strict49-check verifier exits1 for the recorded build-only.nojekyll404.
 
 Completion log:
 2026-11-07: Owner specifies untouched30/90second openings,2.5/8second lead-in
@@ -54,3 +64,6 @@ sources before reusing their verified windows for live scene choreography.
 2026-11-07: Native capture, all26scene replacements, bounded visual review
 and full output-integrity qualification complete. Preserve full82s by
 reducing only DS showcase frame rate/palette, not its duration or dimensions.
+2026-11-07: All26GIFs are publicly byte-verified on GitHub. Inspect the exact
+failed deployment trace before the single bounded fullscreen fixture attempt;
+if this exact case fails again, park it explicitly under105instead of looping.

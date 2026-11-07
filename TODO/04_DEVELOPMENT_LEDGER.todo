@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Media public; exact CI fixture recovery (120):
+  c3b211eGitHub README renders all26GIFs; all26public branch GIFs return200
+  and exact bytes,76,919,967total. Pages42388336737 fails one fullscreen-return
+  case:119declared/97PASS/21SKIP/1FAIL/0UNRUN; deployment skipped. Exact
+  shard5trace shows both exits reach a painted returned LCD; final changed
+  hash completes after the120s deadline. Not proof of a stuck runtime.
+  One bounded fixture-only attempt disables unrelated Pear/axolotl lamps
+  using existing scene methods, as other native-LCD fixtures do. Keep both
+  fullscreen exits, all original input/runtime/pixel assertions, viewport,
+  resolution and deadlines. Exact local case passes30.8s, no retry; hosted
+  qualification pending. If it repeats, park this exact CI case under105,
+  retaining local execution and assertions. No second repair loop.
 - 2026-11-07 / Untouched opening media locally complete (120):
   Native game-start callback captures30.014s/90.037s with zero game-input
   presses. Exact showcase windows27.5s/82s, no tail trim/wrap. Real browser

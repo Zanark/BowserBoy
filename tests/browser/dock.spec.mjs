@@ -915,6 +915,11 @@ test('three checkpoint slots stay independent and reject invalid slots without c
 test('screen fullscreen returns to an advancing main-view LCD without replacing the runtime', async ({ page }) => {
   await page.goto('./');
   await ready(page);
+  // Isolate LCD recovery from unrelated companion-lamp shading.
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false); view.setAxolotlEnabled(false);
+  });
   await page.locator('#quick-autosave').click();
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();

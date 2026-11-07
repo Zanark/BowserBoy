@@ -9,6 +9,24 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Untouched-opening GIFs public; fullscreen fixture qualification pending
+
+Zanark `c3b211eb55dd8d1908e4895b2a11a8c624703970` publishes all26fresh
+scene GIFs. The actual GitHub README renders all26; every public branch GIF
+returns200 and exact committed bytes,76,919,967bytes total. Native capture,
+exact27.5s/82s showcases and bounded visual review are documented in
+[Media](MEDIA.md). All2719output frames decode and all infinite-loop/duration/
+dimension checks pass. No ROMs, raw recordings or browser stores are published.
+
+[Pages42388336737](https://github.com/Zanark/BowserBoy/actions/runs/42388336737)
+does **not** deploy:119declared/97passed/21skipped/1failed/0unrun. Its exact
+fullscreen-return trace completes the changed LCD read just after the original
+120s deadline. A single bounded fixture attempt disables unrelated companion
+lamps, retaining both fullscreen exit paths and every original assertion,
+viewport, resolution and deadline. It passes locally in30.8s without retry;
+hosted qualification remains pending. If the exact case fails again, follow
+the owner's explicit parking policy rather than making repeated repairs.
+
 ### Wider Pear gaze and bounded input-test recovery
 
 Zanark source `dd269dea6f5cc6ada0038a2245b0ec3a420768c5`,
