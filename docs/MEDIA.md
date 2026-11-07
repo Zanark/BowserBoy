@@ -8,6 +8,81 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Fresh GBA, DS and all lights, 2026-11-07
+
+The README refresh replaces **all eleven existing interaction GIFs**, adds
+**eight DS recordings** and **six desk/lighting recordings**, and embeds a fresh
+default-table still. The approved animated website, GBA and DS logos remain
+byte-for-byte unchanged. Earlier still references retain their historical
+captions; this does not revise the frozen published engineering book.
+
+The actual source preview uses application revision
+`9be851e96098e0dfd4beedffd911185cf33a11a6`, including the upright DS lamp-pool
+placement. Capture/encoding and documentation changes do not change runtime
+geometry, paint, exposure, lighting strength, render scheduling or native cores.
+All footage is actual Edge/Playwright browser video, not a render with pasted-in
+game screens. The owner's selected local **Celia's GAME** supplies the GBA's
+post-insertion interaction footage; **Pokemon HeartGold** supplies the DS's
+native intro/display and input footage. Pickup, empty-slot startup and desk-only
+lighting naturally need no game running. The DS loading clip ends before native
+readiness: the complete boot wait is outside that short clip, not accelerated
+to imply faster startup.
+
+| Coverage | Fresh GIFs in `docs/images/` |
+|---|---|
+| GBA pickup, original startup, insertion | `pickup-inspect.gif`, `power-on.gif`, `cartridge.gif` |
+| GBA live controls, ordinary zoom, held fast-forward | `button-feedback.gif`, `play-zoom.gif`, `hold-space.gif` |
+| GBA room/lamp switches and true LCD-only Inspect | `cozy-lights.gif`, `lcd-reflections.gif` |
+| GBA LCD fullscreen, settings dismissal, movable dock | `screen-fullscreen.gif`, `settings-backdrop.gif`, `movable-dock.gif` |
+| DS immediate loading and real native displays | `ds-cartridge.gif`, `ds-gameplay.gif` |
+| DS physical controls, touchscreen and removable stylus | `ds-controls.gif`, `ds-stylus.gif` |
+| DS body/hinge/pose lock and fitted zoom | `ds-inspect.gif`, `ds-play-zoom.gif` |
+| DS upright lamp/room combinations and LCD-only Inspect | `ds-lighting.gif`, `ds-lcd-reflections.gif` |
+| Fixed tripod + independent room lights, including all-off | `lighting-overview.gif` |
+| Pear 10/40/70/100%, off/on and real lift/depth/drop/recovery | `pear-lighting.gif`, `pear-movement.gif` |
+| Axolotl Sleep50%/Bright100%, off/on and real lift/depth/drop | `axolotl-lighting.gif`, `axolotl-movement.gif` |
+| Separate orientation-preserving console placement | `console-movement.gif` |
+
+`desk-fresh-table.png` is the actual default tabletop, with the tripod on,
+Room off, Pear at70% and axolotl at50%. Isolated brightness clips switch off
+the other lamps through their real UI; movement clips restore the tripod for
+readable silhouettes and show real moving light pools. Both LCD-only clips
+explicitly switch off the tripod, room, Pear and axolotl. The fixed tripod is
+not advertised as movable. Pear's three freckles per cheek remain unchanged.
+
+Reproduction uses `scripts/capture-readme.mjs` for GBA and
+`scripts/capture-desk-showcase.mjs <private-output> ds|lighting` for the
+supplemental footage. Set `BBA_CAPTURE_URL` to the source preview,
+`BBA_CAPTURE_ROM` for GBA, and `BBA_CAPTURE_DS_ROM` for DS. These environment
+variables select local files; the capture scripts do not copy them into the
+repository. Every post-insertion GBA GIF, including settings and the dock, now
+retains the selected cartridge. Only after all interaction clips finish does
+the GBA script switch to original Pixel Lab for private static UI references.
+
+Encode each private `capture.json` with
+`python scripts/render-readme.py --capture <receipt> --ffmpeg <executable>`.
+Capture-only encoding no longer regenerates the orbital artwork.
+The established encoding is retained: **800x618, 10fps, 128-color Bayer,
+infinite loop, half-second tail trim**, with each GIF below10MiB.
+Raw WebM videos, local paths, timing receipts and detailed source/media hashes
+stay session-private. ROM binaries, browser databases, backups and private
+receipts are not publication assets.
+
+Frame decoding and byte identity establish media integrity, not visual quality.
+Bounded contact sheets check framing and native displays; extra temporal samples
+are reserved for movement and light transitions. The recordings demonstrate the
+shown states only, not complete-game correctness, audio quality, universal
+compatibility, physical-phone performance or owner aesthetic approval.
+Final local verification decodes all25GIFs, checks changing frames and infinite
+loops, and confirms that all11GBAassets differ from the preceding revision.
+The GIFs total55,608,062bytes; the largest is6,751,933bytes. Temporal review
+caught an axolotl panel obscuring its lamp and a settings clip missing its
+drawer. Complete replacement takes now show unobstructed50/100/off/on states
+and an explicitly visible settings drawer followed by outside-click dismissal.
+Approved logo/orbital bytes and the frozen PDF remain unchanged.
+Publication and deployment require a separate exact-revision receipt in the
+workstream's linked issue; local recording alone is not public delivery.
+
 ### Small axolotl night-light, 2026-11-07
 
 `docs/images/axolotl-table.png` is an actual Edge/Playwright screenshot of the

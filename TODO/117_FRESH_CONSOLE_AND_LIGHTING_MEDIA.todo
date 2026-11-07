@@ -1,0 +1,52 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/116
+Milestone: Fresh README recordings for both consoles and every desk lighting option.
+Dependencies: 111, 113, 115, 116.
+Purpose: Replace all eleven interaction GIFs with current GBA recordings, add
+real DS recordings and show independent lamps, brightness, movement and reactions.
+
+Tasks:
+- [x] Record all eleven GBA interactions with the owner's selected local game.
+- [x] Record DS loading, native displays, input, Inspect, zoom and lighting.
+- [x] Record room/table lighting, both companion brightness controls and movement.
+- [x] Encode and inspect actual footage; update README embeds and media provenance.
+- [ ] Verify preservation, publish with Zanark and monitor exact-SHA deployment.
+
+Acceptance criteria:
+Every existing README interaction GIF is freshly recorded, with new DS and
+lighting demonstrations and useful captions. Actual native game frames come
+from the owner's supplied GBA and DS cartridges, never a composited display.
+Show the fixed tripod lamp, independent room lights, Pear 10-100% and off,
+Axolotl Sleep50%/Bright100% and off, movable light pools and lifted/dropped
+companions. Do not imply the fixed tripod is movable. Preserve six Pear
+freckles, approved animated logos, unrelated dirty PNGs and the frozen book.
+Keep ROMs, raw videos and private receipts local; publish only intended media.
+Keep rendering/material defaults and existing CI gates. Separate media capture
+from universal game compatibility, audio, phone performance or owner approval.
+
+Completion evidence:
+25 actual browser GIFs: 11 fresh GBA, 8 DS and 6 desk/lighting. Each is
+800x618, infinitely looping, decodable and contains changing frames; each is
+below10MiB. Combined55,608,062bytes; largest6,751,933bytes. All11GBAassets
+differ from the preceding revision. Actual native DS output is256x192 per LCD.
+Bounded contact sheets inspect framing, native screens, movement and lighting;
+extra temporal review confirms visible settings drawer/outside dismissal and
+unobstructed axolotl50/100/off/on. No fabricated screens or owner approval.
+Approved logos/orbital artwork/frozen book match the preceding revision.
+All64relative README file targets exist;25unique GIF embeds. Correct the three
+obsolete public-play links: old endpoint404, canonical BowserBoy endpoint200.
+Recorder syntax, existing61units and build pass. No runtime/core/CI changes.
+Publication and actual hosted CI/deployment are still pending; local media
+verification does not close this workstream.
+
+Completion log:
+2026-11-07: Owner explicitly supplies local GBA/DS games and requests fresh
+README GIFs for both consoles plus every lighting/movable-lamp option.
+Reused the existing Playwright recording and palette encoding pipeline.
+Located the existing session-private FFmpeg/Pillow tools; no dependency install.
+2026-11-07: First review found the axolotl panel hiding its lamp and a GBA
+settings clip too short to show its drawer. Hide the panel between brightness
+states; assert and hold the drawer before outside-click dismissal. Record
+complete corrected lighting/GBA takes, encode and recheck all25GIFs.
+Keep local ROMs, original WebMs and detailed receipts private. Preserve the
+nine pre-existing dirty PNGs and approved artwork; publish only scoped media.

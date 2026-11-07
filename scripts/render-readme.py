@@ -193,10 +193,10 @@ if __name__ == "__main__":
         shimmering_logo()
     elif args.glow_logos:
         glowing_logos()
+    elif args.capture:
+        if not args.ffmpeg:
+            parser.error("--capture requires ffmpeg on PATH or an explicit --ffmpeg path")
+        clips(args.capture, args.ffmpeg)
     else:
         banner()
-        if args.capture:
-            if not args.ffmpeg:
-                parser.error("--capture requires ffmpeg on PATH or an explicit --ffmpeg path")
-            clips(args.capture, args.ffmpeg)
     print("README media rendered in", OUTPUT)

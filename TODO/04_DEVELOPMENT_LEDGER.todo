@@ -14,6 +14,26 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Fresh dual-console and lighting README recordings (117):
+  Replace all11existing interaction GIFs with the owner's selected GBA game;
+  add8actual DS clips and6desk/lighting clips plus a fresh default-table still.
+  Reuse browser WebM and800x618/10fps palette encoding, not composited LCDs.
+  Capture-only encoding preserves approved animated logos. All post-insertion
+  GBA footage keeps the supplied cartridge; DS intro/native screens, physical
+  controls, stylus, hinge, fitted zoom, loading and lamp combinations are real.
+  Both LCD-only clips turn off every desk/room lamp. Show independent tripod/
+  room states, Pear10/40/70/100/off, axolotl50/100/off, lift/depth/drop and
+  actual moving light pools. Console placement is honestly captioned keyboard
+  input. First temporal review catches obscured axolotl and missing settings
+  drawer; corrected complete takes show both subjects before publishing.
+  Decode all25GIFs, verify changing frames/loops/800x618 and<10MiB per asset:
+  total55,608,062bytes, largest6,751,933. All11GBAhashes change; approved
+  logos/orbital/frozen PDF do not. All64relative README file targets exist.
+  Fix three stale public-play links after observing old404/canonical200.
+  Recorder syntax,61units/build pass; runtime, native cores and CI unchanged.
+  Preserve9unrelated dirty PNGs. ROMs, raw WebMs and detailed receipts stay
+  private. No game-completion, audio, phone or owner-approval claim.
+  Local recording/review complete; exact-SHA publication/deployment pending.
 - 2026-11-07 / Straight DS table-lamp illumination (116):
   Reproduce near-black upright lid/deck under the actual default lamp:
   lamp-only blue9/10. The front-facing DS atz8 is ahead of the lamp,

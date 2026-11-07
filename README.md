@@ -1,8 +1,8 @@
-[![BowserBOY - updated chrome orbit and sparkle logo shimmering left to right every three seconds](docs/images/bowserboy-logo-shimmer.png?v=shimmer-3s-20261105)](https://zanark.github.io/BowserBoyAdvance/)
+[![BowserBOY - updated chrome orbit and sparkle logo shimmering left to right every three seconds](docs/images/bowserboy-logo-shimmer.png?v=shimmer-3s-20261105)](https://zanark.github.io/BowserBoy/)
 
 <p align="center">
   <strong>A little escape, on your desk.</strong><br>
-  <a href="https://zanark.github.io/BowserBoyAdvance/"><strong>Play in your browser</strong></a>
+  <a href="https://zanark.github.io/BowserBoy/"><strong>Play in your browser</strong></a>
   &nbsp;&middot;&nbsp; <a href="docs/GUIDE.md">Player guide &amp; local setup</a>
   &nbsp;&middot;&nbsp; <a href="docs/book/README.md">Engineering book</a>
 </p>
@@ -16,8 +16,8 @@
 
 **Desk update, November 7:** BowserBOY DS is a supported console, with
 movable companions, slower Pear expressions and collapsed console tools.
-[Monitored deployment](https://github.com/Zanark/BowserBoy/actions/runs/42374138539):
-94 browser cases passed; 21 exact scenarios remain explicitly parked
+[Monitored lighting deployment](https://github.com/Zanark/BowserBoy/actions/runs/42380481108):
+98 browser cases passed; 21 exact scenarios remain explicitly parked
 for later repair. Physical-phone performance and commercial-game compatibility
 remain unqualified.
 
@@ -49,26 +49,61 @@ Inspect heading; the lettering, orbit and chrome borders stay still. Reduced mot
 uses the original static artwork. The lower-body underside, loading LCD and DS tools
 retain that static artwork. The inner lid has no emblem.*
 
-![Separate GBA and DS consoles together on the BowserBOY table](docs/images/ds-prototype-table.png)
+![Current separate GBA and DS consoles together with all three desk lamps](docs/images/desk-fresh-table.png?v=dual-console-20261107)
 
 *Two separate consoles on the same table. The blue-cyan DS faces the lamp,
 clears the loose cartridges and keeps its lime stylus clipped to its side.
-Actual local capture with optional Room lighting; not a deployed build.*
+Fresh local-source capture: tripod, Pear and axolotl on; Room off.*
 
-![Twin Lab running on both physical DS displays beside its stylus](docs/images/ds-prototype-playing.png)
+![HeartGold running on both real DS displays in the current upright play view](docs/images/ds-gameplay.gif?v=dual-console-20261107)
 
-*The unlocked, fully open DS faces the camera, with a blue-cyan lid, slightly lighter blue
-lower base, blue D-pad and
-lime controls. Both screens show actual DeSmuME output: buttons move the
-upper marker and pointer/stylus input draws on the lower LCD. Twin Lab is
-original project homebrew, not a commercial game or simulated video.
-Optional Room lighting is on; the front-left power button is functional.*
+*Fresh recording with the owner's local Pokemon HeartGold cartridge.
+Both LCDs show actual DeSmuME output, not pasted-in video. The blue-cyan shell
+sits in the existing table lamp's light; no extra camera light.*
 
-![Independent DS hinge control and locked orientation in Inspect](docs/images/ds-hinge-inspect.png)
+### A cartridge, not a frozen sidebar.
+
+![Selecting an NDS file immediately enters DS play view while the cartridge and loading LCD animate](docs/images/ds-cartridge.gif?v=dual-console-20261107)
+
+*Choose a cartridge and return to the DS immediately. The card enters from
+below; the lower LCD animates while reading and native startup continue.
+This short clip shows loading, not the complete startup time.*
+
+### Buttons and a touchscreen.
+
+![Real DS button presses and pointer input on the lower physical touchscreen](docs/images/ds-controls.gif?v=dual-console-20261107)
+
+*Keyboard controls travel with the physical buttons. Click or drag the lower
+screen for touch input; what the game does depends on its current screen.*
+
+![Hover the side stylus, pick it up, use it on the lower DS display and return it](docs/images/ds-stylus.gif?v=dual-console-20261107)
+
+*The lime stylus is a real movable scene object. Its tip follows the pointer;
+Escape puts it back into the side clip.*
+
+### Open it your way.
+
+![Rotate the DS body, adjust its hinge and retain the pose for native gameplay](docs/images/ds-inspect.gif?v=dual-console-20261107)
 
 *Choose Rotate body or Move hinge, adjust the opening, then Lock pose and
 Back to play. Both angles stay fixed for gameplay. Without a lock, gameplay
-returns to a flat, camera-facing DS. Actual local capture; no deployment.*
+returns to a flat, camera-facing DS. Fresh recording with HeartGold still running.*
+
+![Adjust the live DS play-view zoom without cropping the two LCDs](docs/images/ds-play-zoom.gif?v=dual-console-20261107)
+
+*Both screens, one fitted view. Move between 50% and 100% zoom.*
+
+### The same desk, a different light.
+
+![The upright DS under the table lamp, room lighting and their independent combinations](docs/images/ds-lighting.gif?v=dual-console-20261107)
+
+*Lamp only, lamp + room, room only, and back. The companion lamps remain
+independently controlled; the console's paint and screen brightness do not change.*
+
+![Tilt the running DS with the tripod, room, Pear and axolotl lights all switched off](docs/images/ds-lcd-reflections.gif?v=dual-console-20261107)
+
+*Every room and desk lamp off. The two native LCDs cast their own colored light
+while the console tilts in Inspect.*
 
 ![Centered rear-lid recesses and the DS logo on the lower-body underside](docs/images/ds-rear-markings.png)
 
@@ -120,17 +155,17 @@ First launch needs internet for pinned EmulatorJS 4.2.3/DeSmuME. Original
 DS direct boot is supported; DSi, BIOS-menu boot, networking and universal
 game compatibility are not claimed. No ROM collection, BIOS or firmware
 is included. Desktop Edge and a 390px responsive browser viewport are
-tested; real-phone performance and commercial games remain unqualified.
+tested; real-phone performance and complete commercial-game compatibility remain
+unqualified. These recordings establish only the shown screens and interactions.
 The GBA's native shader/settings/fullscreen features are not all DS features.
 [Full instructions and limits](docs/GUIDE.md#nintendo-ds).
 
 ## Rearrange the desk
 
-![The DS moved from its original desk position, beside the unchanged GBA and pear-boy](docs/images/console-movement.png)
+![Lift, move and drop the current blue DS and purple GBA with the console placement controls](docs/images/console-movement.gif?v=dual-console-20261107)
 
-*The DS after a real drag, depth adjustment and drop, captured before the
-blue-cyan material update. Its desk orientation is unchanged; each console
-remembers its own placement during this session.*
+*Move each console independently. This recording uses the dock's keyboard
+placement controls; each console keeps its desk orientation and session position.*
 
 Drag either console to lift and move it in 3D; scroll for depth and release
 to drop. Both keep their original desk orientation. **Move consoles** in
@@ -144,10 +179,15 @@ in its separate dock.
 
 ## pear-boy - desk companion
 
-![pear-boy beside the separate GBA and DS, lighting the desk](docs/images/pear-boy-table.png)
+![Adjust Pear's warm light through 10, 40, 70 and 100 percent, then switch it off and on](docs/images/pear-lighting.gif?v=dual-console-20261107)
 
-*Actual local capture: pear-boy spreads warm light across the right side of the
-desk. He sits on the front-right edge with his rope legs dangling below it.*
+*Pear alone: 10%, 40%, 70%, 100%, off, and back on. His real light pool
+responds; the other lamps are switched off for this demonstration.*
+
+![Lift pear-boy, move him in depth and drop him through his scream, bounce and landing recovery](docs/images/pear-movement.gif?v=dual-console-20261107)
+
+*Lift, hold, scroll for depth, then let go. His light moves with him.
+Scream, small angry eyes, squeezed-eye pout, normal smile; always three dots per cheek.*
 
 Drag him upward or sideways, scroll for depth, then release to drop and bounce.
 His whole face follows the cursor. While held or falling, his cute squeezed eyes
@@ -162,32 +202,47 @@ The pear dock button controls power, brightness, movement and reset.
 
 ## A smaller axolotl night-light
 
-![Small cream-and-pink axolotl lamp in front of the consoles, beside pear-boy](docs/images/axolotl-table.png)
+![Switch the axolotl between Sleep 50 percent, Bright 100 percent and off](docs/images/axolotl-lighting.gif?v=dual-console-20261107)
 
-*Actual local tabletop capture: a smaller axolotl joins pear-boy, with pink
-gills, tiny feet, a raised tail and a soft cream glow.*
+*Axolotl alone: Sleep 50%, Bright 100%, off and back on. Cream body,
+pink gills, tiny feet, raised tail and a real warm glow.*
+
+![Lift and move the axolotl lamp, adjust its depth, then release it to fall and bounce](docs/images/axolotl-movement.gif?v=dual-console-20261107)
+
+*A smaller movable light. Drag, lift, scroll for depth, drop; its light
+follows its actual position rather than staying painted on the desk.*
 
 Click it for power, or use its **Lighting** dock button for **Sleep 50%**
 and **Bright 100%**. Drag, lift and drop it like pear-boy; the other lights remain
 independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 
+## Every light, independently
+
+![Switch the fixed woven tripod and room lights independently, including complete lamp darkness](docs/images/lighting-overview.gif?v=dual-console-20261107)
+
+*Tripod only, tripod + room, room only, all lamps off, tripod again.
+Pear and axolotl are off here. The woven tripod stays fixed; the two companion
+lamps are movable. Each console's live LCDs are another real light source.*
+
 ## BowserBOYADVANCED
 
 [![BowserBOYADVANCED - purple animated console logo with glow](docs/images/bowserboyadvanced-logo-glow.png)](assets/logo.png)
 
-*Your Game Boy Advance, on the BowserBOY tabletop. [Play BowserBOYADVANCED](https://zanark.github.io/BowserBoyAdvance/).*
+*Your Game Boy Advance, on the BowserBOY tabletop. [Play BowserBOYADVANCED](https://zanark.github.io/BowserBoy/).*
 
-*Animated console banner above; current local-build recordings and UI captures below. [Media origins](docs/MEDIA.md#clean-storsegel-style-lamp-and-complete-refresh-2026-11-06).*
+*Fresh November 7 recordings use the owner's local Celia's GAME cartridge.
+The animated branding and explicitly historical still references are preserved.
+[Recording coverage and provenance](docs/MEDIA.md#fresh-gba-ds-and-all-lights-2026-11-07).*
 
-### One table. More to come.
+### One table. Two consoles.
 
-![Current BowserBOY table with a warm woven-shade tripod lamp, chrome website branding and movable tools](docs/images/readme-table.png?v=woven-20261106)
+![Current BowserBOY table with the woven tripod, Pear, axolotl and both separate consoles](docs/images/desk-fresh-table.png?v=dual-console-20261107)
 
-*The BowserBOY tabletop, featuring BowserBOYADVANCED.*
+*The current BowserBOY tabletop. Purple GBA, blue DS, and three independent desk lamps.*
 
 ### Pick it up. Turn it over.
 
-![Pick up the handheld, inspect it with the animated purple console logo, and return to the chrome-branded table](docs/images/pickup-inspect.gif?v=woven-20261106)
+![Pick up the handheld, inspect it with the animated purple console logo, and return to the chrome-branded table](docs/images/pickup-inspect.gif?v=dual-console-20261107)
 
 *Soft engraved A/B letters. Metallic-chroma bezel. Purple console branding with orbiting stars while you inspect.*
 
@@ -199,19 +254,19 @@ independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 
 ### Press. Rock. Release.
 
-![Actual keyboard presses move A and B and rock the diagonal D-pad during play](docs/images/button-feedback.gif?v=woven-20261106)
+![Actual keyboard presses move A and B and rock the diagonal D-pad during play](docs/images/button-feedback.gif?v=dual-console-20261107)
 
 *Softer recessed A/B letters. Deeper presses. Rocking D-pad. Snappier return.*
 
 ### A closer look.
 
-![Ordinary play zoom moves from the fitted 50 percent view into 100 percent and back without fullscreen](docs/images/play-zoom.gif?v=woven-20261106)
+![Ordinary play zoom moves from the fitted 50 percent view into 100 percent and back without fullscreen](docs/images/play-zoom.gif?v=dual-console-20261107)
 
 *Same comfortable view at 50%. Move closer up to 100%. No fullscreen needed.*
 
 ### A little faster. Just while you hold.
 
-![Hold Space for native fast-forward, then release it to return to normal speed](docs/images/hold-space.gif?v=woven-20261106)
+![Hold Space for native fast-forward, then release it to return to normal speed](docs/images/hold-space.gif?v=dual-console-20261107)
 
 *Hold **Space** for 2x. Let go for 1x.*
 
@@ -229,27 +284,29 @@ independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 
 ### Power on. Make some waves.
 
-![Current LCD startup with the purple console wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=woven-20261106)
+![Current LCD startup with the purple console wordmark, complete sparkles and a spacious glowing orbit](docs/images/power-on.gif?v=dual-console-20261107)
 
 *Purple console startup. Waving lettering. An 8-bit-style chime. Power remembered between visits.*
 
 ### Slot it in.
 
-![A selected local cartridge physically slides into the handheld during loading](docs/images/cartridge.gif?v=woven-20261106)
+![A selected local cartridge physically slides into the handheld during loading](docs/images/cartridge.gif?v=dual-console-20261107)
 
 *Bring your own local ROMs. Game files stay on your device.*
 
 ### Your room, your light.
 
-![The warm STORSEGEL-style woven white shade and ash tripod, independent room lights, and LCD-only darkness](docs/images/cozy-lights.gif?v=woven-20261106)
+![The warm STORSEGEL-style woven white shade and ash tripod with independently switched room lights](docs/images/cozy-lights.gif?v=dual-console-20261107)
 
-*A clean STORSEGEL-style shade. Warm ash legs. No visible cable. Cozy lamplight, room lights, or just the LCD.*
+*A clean STORSEGEL-style shade. Warm ash legs. No visible cable.
+Switch the tripod and room lights without changing the companion lamps.*
 
 ### Wave the light.
 
-![Tilt the powered console in complete room darkness and watch the actual LCD's colored light move across the desk](docs/images/lcd-reflections.gif?v=green-led-20261106)
+![Tilt the powered console in complete room darkness and watch the actual LCD's colored light move across the desk](docs/images/lcd-reflections.gif?v=dual-console-20261107)
 
-*Lamp off. Room lights off. Just the green power LED, the game screen, and its moving pool of light.*
+*Tripod, room, Pear and axolotl all off. Just the green power LED,
+Celia's GAME, and the screen's moving pool of light.*
 
 *Audio-paced timing and a larger native reserve for steadier playback. [Audio notes and limits](docs/GUIDE.md).*
 
@@ -261,7 +318,7 @@ independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 
 ### Just the game.
 
-![Actual game-screen fullscreen with the metallic-chroma bezel wordmark, dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=woven-20261106)
+![Actual game-screen fullscreen with the metallic-chroma bezel wordmark, dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=dual-console-20261107)
 
 *Full 3:2 picture. Dark margins. Adjustable 50-100% zoom.*
 
@@ -273,7 +330,7 @@ independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 
 ### Make a little room.
 
-![Drag the tools dock, collapse it into a small movable pill, move it again, expand and reset its position](docs/images/movable-dock.gif?v=woven-20261106)
+![Drag the tools dock, collapse it into a small movable pill, move it again, expand and reset its position](docs/images/movable-dock.gif?v=dual-console-20261107)
 
 *Drag the grip. Collapse with the arrow. Move it where it suits you. Focus the grip and press Home to reset.*
 
@@ -285,7 +342,7 @@ independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
 
 ### Back to your game.
 
-![Click the blurred area outside settings to close the drawer and return to the console](docs/images/settings-backdrop.gif?v=woven-20261106)
+![Click the blurred area outside settings to close the drawer and return to the console](docs/images/settings-backdrop.gif?v=dual-console-20261107)
 
 *Click outside to close. Or use Escape. Your game keeps running.*
 

@@ -1,4 +1,4 @@
-import { chromium, expect } from '@playwright/test';
+import { chromium, expect as baseExpect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -6,8 +6,9 @@ import { execFileSync } from 'node:child_process';
 const output = process.argv[2];
 if (!output) throw new Error('Provide an output directory for the original capture and timing receipt.');
 await mkdir(output, { recursive: true });
-const baseURL = process.env.BBA_CAPTURE_URL || 'https://zanark.github.io/BowserBoyAdvance/';
+const baseURL = process.env.BBA_CAPTURE_URL || 'https://zanark.github.io/BowserBoy/';
 const mediaRom = process.env.BBA_CAPTURE_ROM;
+const expect = baseExpect.configure({ timeout: 30000 });
 const checkoutCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge' });
 const context = await browser.newContext({
@@ -28,6 +29,7 @@ const scene = page.locator('#scene');
 try {
   await page.goto(baseURL);
   await expect(scene).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
+  await page.locator('#scene-loading').waitFor({ state: 'hidden', timeout: 90000 });
   await wait(1200);
   await page.screenshot({ path: resolve(output, '3d-table.png') });
   begin('pickup-inspect');
@@ -132,6 +134,11 @@ try {
   await wait(700);
   end('cozy-lights');
 
+  for (const lamp of ['pear', 'axolotl']) {
+    await page.locator(`#${lamp}-open`).click();
+    await page.locator(`#${lamp}-toggle`).click();
+    await page.keyboard.press('Escape');
+  }
   await page.locator('#inspect').click();
   await expect(scene).toHaveAttribute('data-view', 'inspecting');
   await page.locator('#scene-canvas').focus();
@@ -208,23 +215,18 @@ try {
   await wait(1200);
   end('screen-fullscreen');
   await page.locator('#screen-focus-close').click();
+  await expect(page.locator('#screen-focus')).not.toBeVisible();
 
-  // Keep the supplied ROM exclusively in GIF footage, not static settings captures.
-  if (mediaRom) {
-    await page.locator('#tools-open').click();
-    await page.locator('#demo').click();
-    await expect(page.locator('#game-title')).toHaveText('Pixel Lab', { timeout: 90000 });
-    await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
-    await expect(scene).toHaveAttribute('data-cartridge', 'seated', { timeout: 30000 });
-    if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
-    await wait(1500);
-  }
-  await page.locator('#quick-controls').click();
   begin('settings-backdrop');
-  await wait(1200);
+  await wait(700);
+  await page.locator('#quick-controls').click();
+  await expect(page.locator('#tools')).toBeVisible();
+  await wait(2500);
+  await page.screenshot({ path: resolve(output, 'readme-settings-backdrop.png') });
   const drawer = await page.locator('#tools').boundingBox();
   await page.mouse.click(drawer.x / 2, 400);
-  await wait(1000);
+  await expect(page.locator('#tools')).not.toBeVisible();
+  await wait(1500);
   end('settings-backdrop');
 
   begin('movable-dock');
@@ -250,6 +252,16 @@ try {
   await wait(800);
   end('movable-dock');
 
+  // All interaction GIFs use the supplied game; static UI references use homebrew.
+  if (mediaRom) {
+    await page.locator('#tools-open').click();
+    await page.locator('#demo').click();
+    await expect(page.locator('#game-title')).toHaveText('Pixel Lab', { timeout: 90000 });
+    await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+    await expect(scene).toHaveAttribute('data-cartridge', 'seated', { timeout: 30000 });
+    if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
+    await wait(1500);
+  }
   await page.mouse.move(10, 10);
   await page.locator('.scene-actions').screenshot({ path: resolve(output, 'readme-dock.png') });
   await page.locator('#tools-open').click();
