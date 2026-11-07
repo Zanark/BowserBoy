@@ -73,7 +73,7 @@ BowserBOY workstreams
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:97cases/19shards;85c0cc9 gate85PASS/11FAIL; full recovery/deployment not yet requalified.
+74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:97cases/19shards;120d9bd gate88PASS/9FAIL, deployment skipped; full recovery not yet requalified.
 75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
@@ -97,11 +97,12 @@ BowserBOY workstreams
 Current pending work
 --------------------
 -93: Actual mode-based separation locally qualified:3new geometry cases pass
-  Edge/verified SwiftShader and hosted3.85c0cc9/42338001528 overall85PASS/
-  11FAIL skips deployment. Follow-up55units and actual4-case motion gate pass;
- 6of7software follow-ups pass; unchanged1500ms software quick probe fails.
-  Dark-room contracts split with all assertions retained; both pass80.393s.
- 97cases assigned exactly once across19shards; new publication pending.
+  Edge/verified SwiftShader and hosted.120d9bd/42340494361 overall88PASS/
+  9FAIL skips deployment; actual-paint Pear case passes hosted too. One-ULP
+  inactive DS restoration gets source boundary-rounding fix, not relaxed
+  pose assertions:56units, actual GBA return26.9s and3clearance cases44.5s pass.
+  Unchanged1500ms software quick probe still fails; measured GPU room completion
+  exceeds2s.97cases/19shards and original quality/gates retained; no publication.
 -92: logo-themed selector colors pass the existing real branding case and
   focused responsive/focus checks. Supplied art and physical consoles unchanged.
   Exact617e8d2/Pages42334881724 branding case passes hosted9; overall

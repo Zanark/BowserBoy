@@ -14,6 +14,26 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Exact edge restoration and measured DS GPU stalls:
+  Zanark source120d9bd/Pages42340494361 finishes88PASS/9FAIL; build and
+  14/19verification shards pass, deploy skipped. New clearance and actual
+  Pear paint regressions pass hosted. GBA movement fails only the inactive
+  DS exact-return check: X drifts11.314174109565958to11.31417410956596.
+  A formerly legal forbidden-rectangle edge can become strict interior
+  after one-ULP bounds reconstruction. Apply a scale-relative8*EPSILON
+  boundary allowance; keep exact saved-pose assertions/full geometric gap.
+  New negative control fails against120d9bd, passes after; genuine.01
+  penetration still repositions clear. Syntax/56units/build/whitespace pass.
+  Actual GBA exact-return software case passes26.9s;3clearance cases44.5s.
+  DS hosted evaluates6-8s/transitions12-15s remain unresolved. Disabling
+  trace screencasts still fails original1500ms quick deadline, rejected.
+  CPU wrappers find LCD copies/clearance/light sampling cheap, not a root
+  cause. Explicit readPixels measures real full-size room cost2139.8-
+  2206.7ms; gl.finish-only1-5ms did not drain that work and was misleading.
+  Native readback drains queued room work in2963.8ms; after draining,3.8ms.
+  Zero-emitter exclusion steady1825.1-1905.5ms, first variant4669.1ms:
+  insufficient for latency gate, no lighting/source quality change retained.
+  No DS latency improvement or successful publication claimed.
 - 2026-11-07 / Clearance hosted failure and actual-paint recovery:
   Zanark source85c0cc9/automatic Pages42338001528 finishes85PASS/11FAIL;
   build/12browser shards pass,7fail, deploy skipped. Three new clearance

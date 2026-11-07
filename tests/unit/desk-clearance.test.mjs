@@ -88,3 +88,36 @@ test('rebuilding moved world bounds does not flip a prop between equidistant cle
   assert.ok(second instanceof Vector3);
   assert.ok(second.equals(first), `A world/local roundtrip moved the prop ${first.distanceTo(second)} units`);
 });
+
+test('a legal edge survives a one-ULP bounds roundtrip without accepting genuine overlap', () => {
+  const envelope = box([-.3, 0, -.5], [.5, 1, .5]);
+  const allowed = box([0, 0, -2], [2, 20, 2]);
+  const obstacle = box([-10, 2, -10], [.4, 5, 10]);
+  const first = nearestDeskPosition(envelope, new Vector3(0, 3, .2), allowed, [obstacle]);
+  assert.ok(first instanceof Vector3);
+  assert.deepEqual(first.toArray(), [.95, 3, .2]);
+
+  // Translating to the returned edge and back changes min X by one representable value.
+  const reconstructed = envelope.clone().translate(first).translate(first.clone().negate());
+  const originals = [reconstructed.clone(), first.clone(), allowed.clone(), obstacle.clone()];
+  const reused = nearestDeskPosition(reconstructed, first, allowed, [obstacle]);
+  assert.ok(reused instanceof Vector3);
+  assert.notStrictEqual(reused, first);
+  assert.deepEqual(reused.toArray(), first.toArray());
+  assert.ok(!reconstructed.clone().translate(reused).intersectsBox(obstacle));
+
+  const overlapping = first.clone().add(new Vector3(-.01, 0, 0));
+  const requested = overlapping.clone();
+  const cleared = nearestDeskPosition(reconstructed, overlapping, allowed, [obstacle]);
+  assert.ok(cleared instanceof Vector3);
+  assert.ok(cleared.x > overlapping.x);
+  assert.equal(cleared.y, overlapping.y);
+  assert.equal(cleared.z, overlapping.z);
+  assert.ok(allowed.containsPoint(cleared));
+  assert.ok(reconstructed.clone().translate(cleared).min.x >= obstacle.max.x + .25);
+  assert.ok(overlapping.equals(requested));
+  assert.ok(reconstructed.equals(originals[0]));
+  assert.ok(first.equals(originals[1]));
+  assert.ok(allowed.equals(originals[2]));
+  assert.ok(obstacle.equals(originals[3]));
+});

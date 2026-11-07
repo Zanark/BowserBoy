@@ -27,6 +27,21 @@ All existing native/pixel deadlines, retries0, full-resolution rendering,
 materials, lighting and deployment gates remain unchanged.
 
 Completion evidence:
+Exact corrective120d9bd/Pages42340494361 finishesFAILURE: build and14/19
+verification shards pass;88PASS/9FAIL; deployment skipped. All3clearance
+cases and actual-paint Pear regression pass hosted. Inactive DS exact table
+restoration fails by one ULP in X,11.314174109565958to11.31417410956596;
+the moved GBA's exact restoration passes. Strict obstacle-interior checks
+can reject a formerly legal edge after world/local bounds reconstruction.
+Use only a scale-relative8*Number.EPSILON boundary allowance, preserving the
+full.25-unit gap and exact requested positions rather than weakening assertions.
+New negative-control unit fails against120d9bd and passes with the source
+fix; genuine.01-unit penetration still moves clear. Syntax,56units, build
+and whitespace pass. Actual software GBA movement/exact restoration passes
+26.9s and all3actual clearance cases pass44.5s, full1440x1100/retries0.
+DS systemic software latency is not repaired by this rounding correction;
+the exact97-case hosted publication gate remains open.
+
 Exact clearance source85c0cc9, automatic Pages42338001528, finishesFAILURE:
 build/12browser shards pass,7fail;85cases pass/11fail; deployment skipped.
 All3new clearance cases pass hosted shard3. This does not qualify publication.
@@ -75,6 +90,11 @@ No new publication or owner visual acceptance is claimed. Historical
 617e8d2/Pages42334881724 remains failed88PASS/5FAIL with deployment skipped.
 
 Completion log:
+2026-11-07:120d9bd/Pages42340494361 fails88PASS/9FAIL; deployment skipped.
+Preserve actual hosted clearance/Pear successes and inactive DS one-ULP
+restoration failure. Correct floating-point edge classification in production,
+not the exact-pose test. Focused software and56unit gates pass as above.
+Do not claim DS responsiveness or publication from this bounded fix.
 2026-11-07:85c0cc9 is committed/pushed as Zanark and monitored to85PASS/
 11FAIL with deployment skipped. Preserve actual hosted failures. Follow-up
 fixes invisible physical motion rather than substituting RAF-only samples;

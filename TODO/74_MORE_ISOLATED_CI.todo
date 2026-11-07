@@ -30,6 +30,24 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Corrective120d9bd/Pages42340494361 finishesFAILURE: build and14/19
+verification shards pass;88PASS/9FAIL; deployment skipped. Failed shards
+2/7/8/9/10 retain9failures. The3clearance cases and actual-paint Pear
+regression pass hosted. One inactive DS exact-return mismatch is a one-ULP
+X drift; scale-relative boundary rounding correction passes56units and the
+actual full-quality software GBA movement plus3clearance cases separately.
+DS traces still show6-8s protocol/evaluate operations and12-15s mode changes;
+the quick1500ms probe expires while its first evaluate takes3265ms.
+Disabling only trace screencasts does not fix that exact test and is rejected.
+Full-size software readPixels forces real room completion in2139.8-2206.7ms;
+gl.finish alone reports1-5ms and is not valid evidence of that GPU workload.
+Native framebuffer readback can drain pending room work:2963.8ms measured,
+versus3.8ms after the room queue is drained. Zero-intensity-light exclusion
+only reaches1825.1-1905.5ms steady and incurs4669.1ms first variant; no such
+production lighting change is retained or general latency fix claimed.
+All97cases/19shards, deadlines, retries0, fullDPR and trace settings remain.
+Current full hosted recovery/deployment is still unqualified.
+
 Latest pushed clearance85c0cc9/Pages42338001528 finishesFAILURE: build and
 12browser shards pass,7fail;85cases pass/11fail, deployment skipped.
 All3clearance cases pass hosted3. Preserve this failed run and its boundaries.

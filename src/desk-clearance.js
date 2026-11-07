@@ -18,9 +18,16 @@ export function nearestDeskPosition(bounds, position, workspace, obstacles, gap 
   let nearest = null, distance = Infinity;
   for (const x of xs) for (const z of zs) {
     const squared = (x - position.x) ** 2 + (z - position.z) ** 2;
+    const inside = box => {
+      // Reconstructing world/local bounds can move a legal edge a few ULPs.
+      const tolerance = 8 * Number.EPSILON * Math.max(1,
+        Math.abs(x), Math.abs(z), Math.abs(box.minX), Math.abs(box.maxX),
+        Math.abs(box.minZ), Math.abs(box.maxZ));
+      return x > box.minX + tolerance && x < box.maxX - tolerance &&
+        z > box.minZ + tolerance && z < box.maxZ - tolerance;
+    };
     // World-to-local rounding must not swap otherwise equidistant sides.
-    if (squared >= distance - 1e-9 || blocked.some(box =>
-      x > box.minX && x < box.maxX && z > box.minZ && z < box.maxZ)) continue;
+    if (squared >= distance - 1e-9 || blocked.some(inside)) continue;
     nearest = new Vector3(x, position.y, z);
     distance = squared;
   }

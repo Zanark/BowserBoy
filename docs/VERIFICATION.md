@@ -9,6 +9,40 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Exact boundary restoration; DS software latency remains open
+
+Corrective `120d9bd5a3e785d24a9bdc5e96d6e9b332613510`,
+[Pages42340494361](https://github.com/Zanark/BowserBoy/actions/runs/42340494361),
+finishes **failure:88passed/9failed**: build and14of19verification shards
+pass; deployment is skipped. All three clearance cases and the actual-paint
+Pear regression pass hosted. There is no new qualified publication.
+
+The GBA movement failure is its *inactive DS* exact return: X changes from
+`11.314174109565958` to `11.31417410956596`, one ULP. Moved GBA restoration
+passes. A focused negative control reproduces an old legal edge becoming
+strict obstacle interior after reconstructed bounds move one ULP. Production
+boundary classification now allows only scale-relative `8*Number.EPSILON`
+roundoff, not a smaller geometric gap or weaker pose assertions. Genuine
+`.01`-unit penetration still displaces the model clear. Syntax,56units, build
+and whitespace pass; full-size verified-software actual GBA move/exact return
+passes26.9s and all three actual clearance cases pass44.5s.
+
+DS traces still expose6-8s input/evaluate operations and12-15s mode changes.
+The quick probe takes3265ms against its original1500ms deadline. Disabling
+trace screencasts also fails that unchanged case; the experiment is rejected.
+Full-resolution software profiling measures2139.8-2206.7ms actual room
+completion using `readPixels`. Earlier1-5ms `gl.finish`-only timings did not
+drain that workload and do not establish fast rendering. Native readback can
+drain queued room work in2963.8ms, versus3.8ms after the queue is drained.
+Excluding only zero-intensity emitters reaches1825.1-1905.5ms steady but costs
+4669.1ms on the first new shader variant, still insufficient for the quick
+gate; no production lighting change is retained. Copies, light sampling and
+clearance are not measured CPU hotspots. These are bounded observations,
+not a completed general performance diagnosis or correction.
+
+All97cases/19shards, original native/physical assertions, deadlines, retries0,
+fullDPR, materials, lighting and public trace settings remain unchanged.
+
 ### Clearance recovery: local results are not publication
 
 Exact clearance source `85c0cc9ed8f9083868df77b01adb5e80c49435df`,
