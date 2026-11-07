@@ -1,4 +1,4 @@
-Status: IN_PROGRESS - reference remodel technically verified; owner review and physical-phone qualification pending. No push or deployment.
+Status: IN_PROGRESS - reference remodel technically verified locally; owner review, physical-phone qualification and publication pending.
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/78
 Milestone: Playable Nintendo DS beside the existing GBA on the desk.
 Dependencies: None; retain the existing static-site and GBA behavior.
@@ -28,7 +28,8 @@ Tasks:
       inspection drags immediately, use the static Advance logo in GBA settings,
       and switch the dock between GBA purple and DS blue/cyan styling.
 - [x] Angle the open table DS toward the lamp without overlapping loose
-      cartridges, and keep the supplied DS emblem on the rear lid only.
+      cartridges. Workstream95 supersedes rear-lid branding: center the lid
+      recesses and place the supplied DS emblem on the lower-body underside.
 - [ ] Qualify a physical phone; responsive desktop automation is not device
       performance evidence. Obtain owner review before treating this feature
       as accepted beyond its local prototype boundary.
@@ -54,7 +55,7 @@ again in the final10-case DS/pear gate (1.9m), including real Twin Lab,
 of the seated pear after a modest forward pickup adjustment; no new light rig.
 Owner aesthetic approval and physical-phone qualification remain open.
 
-Current reference remodel: 110-degree opening, extruded rear square recesses,
+Original reference remodel (rear branding superseded by95): 110-degree opening, extruded rear square recesses,
 metallic teal shell, convex lime controls, blue D-pad, rear-only supplied emblem,
 clipped stylus and table-contact feet. Existing lamp/room/background unchanged.
 One focused browser gate passes9cases in1.8m: four DS cases and five affected
@@ -85,6 +86,11 @@ No commercial compatibility, physical-phone performance, owner approval,
 commit, deployment or new published edition is claimed.
 
 Completion log:
+2026-11-07: Owner's rear screenshots supersede rear-lid emblem placement.
+Workstream95 centers both actual lid holes/floors and mounts the unchanged
+logo on the lower-body underside beside the battery cover. Full existing
+placement/branding regression passes Edge24.5s and explicit SwiftShader48.1s;
+reviewed actual rear capture. Owner acceptance and publication stay separate.
 2026-11-07: Owner supplies BowserBOY DS Chrome Neon Emblem and requests black
 background removal. Convert the 2149x732 RGB black matte to transparent RGBA,
 preserving geometry and glow without redrawing. Update shared UI intrinsic

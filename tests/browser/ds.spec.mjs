@@ -1062,11 +1062,17 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   })).toBe(true);
   const surfaces = await page.evaluate(async () => {
     const { view } = await import('./src/app.js'), { Vector3, Raycaster, Box3 } = await import('three');
-    const hit = (point, direction) => {
-      const origin = view.ds.lid.localToWorld(new Vector3(...point));
-      const ray = new Vector3(...direction).transformDirection(view.ds.lid.matrixWorld);
-      return new Raycaster(origin, ray).intersectObject(view.ds.lid, true)[0]?.object.name;
+    const hit = (parent, point, direction) => {
+      const origin = parent.localToWorld(new Vector3(...point));
+      const ray = new Vector3(...direction).transformDirection(parent.matrixWorld);
+      return new Raycaster(origin, ray).intersectObject(parent, true)[0]?.object.name;
     };
+    const emblem = view.ds.branding[0];
+    emblem.geometry.computeBoundingBox();
+    const emblemBounds = emblem.geometry.boundingBox.clone().applyMatrix4(emblem.matrix);
+    const battery = view.ds.root.getObjectByName('Underside right battery cover');
+    battery.geometry.computeBoundingBox();
+    const batteryBounds = battery.geometry.boundingBox.clone().applyMatrix4(battery.matrix);
     const stylus = new Box3().setFromObject(view.ds.stylus);
     const deck = new Box3().setFromObject(view.ds.root.getObjectByName('Metallic blue control deck'));
     view.renderer.render(view.scene, view.camera);
@@ -1076,11 +1082,20 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
       gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2), Math.round((point.y + 1) * view.canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
       return [...rgba].slice(0, 3);
     });
-    return { front: hit([0, .37, 1], [0, 0, -1]), rear: hit([0, 2.43, -1], [0, 0, 1]),
+    return { front: hit(view.ds.lid, [0, .37, 1], [0, 0, -1]),
+      rear: hit(view.ds.lid, [0, 2.43, -1], [0, 0, 1]),
+      recesses: [-.38, .38].map(y => hit(view.ds.lid, [0, 2.43 + y, -1], [0, 0, 1])),
+      underside: hit(view.ds.root, [-1.65, -2.43, -1], [0, 0, 1]),
+      emblemOnBase: emblem.parent === view.ds.root,
+      batteryGap: batteryBounds.min.x - emblemBounds.max.x,
       dockGap: stylus.min.x - deck.max.x, withinBase: stylus.min.y > deck.min.y && stylus.max.y < deck.max.y, cyan };
   });
   expect(surfaces.front).not.toContain('emblem');
-  expect(surfaces.rear).toBe('Supplied transparent DS rear emblem');
+  expect(surfaces.rear).toBe('Metallic blue outer lid');
+  expect(surfaces.recesses).toEqual(['Debossed double-square inset floor', 'Debossed double-square inset floor']);
+  expect(surfaces.underside).toBe('Supplied transparent DS underside emblem');
+  expect(surfaces.emblemOnBase, 'Underside branding must follow the lower body, not the hinge').toBe(true);
+  expect(surfaces.batteryGap, 'The underside emblem must not overlap the battery cover').toBeGreaterThan(0);
   expect(surfaces.dockGap).toBeLessThan(.15);
   expect(surfaces.withinBase).toBe(true);
   for (const [red, green, blue] of surfaces.cyan) {

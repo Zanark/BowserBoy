@@ -32,7 +32,7 @@ The existing GBA showcase below retains its historical captures.*
 
 ![Supplied transparent BowserBOY DS neon chrome logo](assets/ds-logo.png)
 
-*The user's latest transparent DS artwork, used unchanged on the rear lid,
+*The user's latest transparent DS artwork, used unchanged on the lower-body underside,
 loading LCD and DS tools. The inner lid has no emblem.*
 
 ![Separate GBA and DS consoles together on the BowserBOY table](docs/images/ds-prototype-table.png)
@@ -55,6 +55,12 @@ Optional Room lighting is on; the front-left power button is functional.*
 *Choose Rotate body or Move hinge, adjust the opening, then Lock pose and
 Back to play. Both angles stay fixed for gameplay. Without a lock, gameplay
 returns to a flat, camera-facing DS. Actual local capture; no deployment.*
+
+![Centered rear-lid recesses and the DS logo on the lower-body underside](docs/images/ds-rear-markings.png)
+
+*The two recessed squares are centered on the upper lid. The unchanged supplied
+logo sits on the lower half's underside, beside rather than over the battery
+cover. Actual local Inspect capture with Room lighting on; not a deployed build.*
 
 ![Blue-cyan DS shell with its lighter base under the existing warm lamps](docs/images/ds-blue-cyan-warm.png)
 

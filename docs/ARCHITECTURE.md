@@ -21,7 +21,7 @@ still reads ADVANCE. That artwork is not the website's chrome logo.
 | Inspection header | `assets/inspection-logo.png`, explicitly copied from the approved README APNG | Purple console identity with orbiting stars; static `assets/logo.png` under reduced motion |
 | GBA rear shell and idle/loading/startup LCD | `assets/logo.png` through `src/brand.js` | Original purple console identity |
 | GBA bezel and LCD-fullscreen bezel | Letter-only metallic texture | Console presentation, not website branding |
-| DS tools/Inspect, loading LCD and rear lid | `assets/ds-logo.png` | Latest supplied transparent DS identity; no inner-lid emblem |
+| DS tools/Inspect, loading LCD and lower-body underside | `assets/ds-logo.png` | Latest supplied transparent DS identity; no lid emblem |
 
 The local DS prototype adds a separate model and stylus beside GBA, a console
 selector and independent DeSmuME session. Decorative cartridges are still
@@ -208,8 +208,11 @@ The physical shell uses #0077FF blue-cyan, metalness .80, roughness .35, determi
 fine-grain roughness/bump and clearcoat. Lime hinge/stylus plastic is dielectric
 (.40 roughness); blue D-pad and lime convex controls use .45 roughness.
 Deep-blue slot trim uses .25 roughness and .50 metalness.
-The rear lid's two square recesses are extruded holes with inset floors;
-the supplied project emblem remains separate and rear-only.
+The rear lid's two square recesses are extruded holes with inset floors,
+centered on the lid's X axis and paired around its vertical center.
+The supplied project emblem is parented to the lower-body root, facing
+outward from its underside in the clear area beside the battery cover.
+It does not follow the upper hinge or appear on either lid face.
 
 A 128px cube probe captures the actual existing room with both consoles hidden,
 then PMREM filters the reflection for DS paint only. Paint reflection strength

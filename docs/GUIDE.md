@@ -124,8 +124,10 @@ metalness 0.80, roughness 0.35**, with fine-grain bump/roughness
 and clearcoat. The D-pad is electric blue; face/system buttons, hinge caps and
 clipped stylus are lime. The resting table hinge opens to approximately 110 degrees;
 unlocked gameplay opens fully to 180 degrees, flat and facing the camera.
-The supplied emblem stays on the rear lid only; two small rear square
-recesses are actual geometry. GBA settings use the static Advance logo and
+The two small square recesses are centered on the outer lid and are actual
+geometry. The supplied emblem is on the lower half's underside, in the clear
+area beside the battery cover; neither lid face carries the colorful logo.
+GBA settings use the static Advance logo and
 the action dock changes from GBA purple to DS blue/cyan.
 
 The existing warm lamp, optional **Room** lighting and background are unchanged:

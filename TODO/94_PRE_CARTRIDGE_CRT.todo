@@ -12,7 +12,7 @@ Tasks:
 - [x] Qualify startup/idle pixels, caching and native/unfiltered bypass.
 - [x] Update affected guides and causal development history.
 - [x] Synchronize actual issue/Project and local backlink.
-- [ ] Commit/push as Zanark and monitor exact-source Pages outcome.
+- [x] Commit/push as Zanark and monitor exact-source Pages outcome.
 
 Acceptance criteria:
 The original GBA startup and empty/loading screen have visible scanlines,
@@ -26,6 +26,13 @@ for this effect. Preserve full resolution, materials, lights, native
 deadlines, retries0 and the complete deployment gate.
 
 Completion evidence:
+Zanark06e9c82/Pages42345206094 completes87PASS/10FAIL; build and14/19
+verification shards pass, deploy skipped. Both expanded CRT cases pass
+hosted. Nine DS cases and the existing scene CRT case's final15s reload
+readiness fail; its complete original case subsequently passes locally38.3s
+with explicit SwiftShader and unchanged assertions/deadlines/retries0.
+Hosted cause/remedy not established. Exact outcome comment independently
+verified on actual issue93; issue OPEN and Project In progress.
 Syntax,56units, build and whitespace pass. Existing startup/native CRT
 cases pass Edge33.1s and explicitly verified SwiftShader71.441s at1440x1100,
 original deadlines/retries0. Expanded startup checks pass Edge18.6s and
@@ -42,6 +49,10 @@ Two bounded fills are added to existing placeholder drawing, not zero
 startup cost; no extra animation, render pass or per-game-frame work.
 
 Completion log:
+2026-11-07: Exact automatic Pages42345206094 is monitored to terminal
+failure87PASS/10FAIL, deployment skipped. Actual issue93 outcome receipt:
+https://github.com/Zanark/BowserBoy/issues/93#issuecomment-6703244856.
+No blind rerun, gate relaxation or publication claim follows this result.
 2026-11-07: Owner identifies unfiltered startup/empty LCDs and requests a
 lightweight local CRT effect that disappears when native video takes over.
 Choose baked canvas treatment over extra room/postprocessing passes or

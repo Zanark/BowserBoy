@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Centered DS lid recesses and underside branding:
+  Owner's rear screenshots reject offset paired squares and the colorful
+  logo on the upper lid. Center both extruded cutouts and inset floors;
+  move the unchanged transparent logo to the lower-body underside, clear
+  of the battery cover and independent of the hinge. No palette/material/
+  lighting/runtime change. Expanded original actual-model case passes
+  Edge24.5s and explicit SwiftShader48.1s, full quality/deadlines/retries0;
+  real rays verify centered recesses/plain intervening shell/outward
+  underside logo. Base parenting and positive battery gap pass. Original
+  motion, live Inspect, stylus, pixels and palette assertions retained.
+  Rear capture visually reviewed; README/guides updated. Syntax/56units/
+  build/browser syntax pass; frozen PDF and97cases/19shards unchanged.
+  Previous CRT06e9c82/Pages42345206094 fails87PASS/10FAIL, deploy skipped;
+  both expanded CRT cases pass hosted. Nine DS and final scene15s reload
+  readiness remain unresolved. Original scene case passes locally38.3s;
+  hosted cause/remedy unproved. Actual issue93 outcome receipt verified.
 - 2026-11-07 / Cached pre-cartridge CRT, native ownership preserved:
   Owner identifies smooth startup/INSERT CARTRIDGE screens. Bake a tiny
   repeating RGB phosphor/scanline tile and cached radial vignette into

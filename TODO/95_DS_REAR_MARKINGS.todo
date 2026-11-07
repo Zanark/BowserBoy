@@ -1,0 +1,53 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/94
+Milestone: Reference-correct DS rear lid and lower-body branding.
+Dependencies: 79 DS model; 74 complete hosted qualification for publication.
+Purpose: Center the two rear-lid recesses and move the supplied DS emblem
+to the underside of the lower half, as requested in the owner's screenshots.
+
+Tasks:
+- [x] Center both actual lid cutouts and their inset floors.
+- [x] Move the supplied transparent emblem onto the lower-body underside.
+- [x] Keep the emblem clear of the battery cover and attached to the base.
+- [x] Qualify the actual model, preserved interactions and rear appearance.
+- [x] Update affected documentation and synchronize issue/Project tracking.
+- [ ] Commit/push as Zanark and monitor exact-source Pages qualification.
+
+Acceptance criteria:
+The two vertically paired square recesses are centered horizontally and
+symmetrically placed around the outer lid's center. Their actual inset
+floors remain behind the cutouts, not floating over the shell. The supplied
+BowserBOY DS artwork appears only on the underside of the lower body,
+centered in the clear area beside the battery cover. It faces outward,
+is not occluded by the shell, does not overlap the cover, and does not
+follow the upper hinge. Retain the artwork bytes/aspect, shell colors,
+materials, lighting, screens, controls, stylus and full rendering quality.
+Preserve original deadlines, retries0 and the complete deployment gate.
+Local verification, owner acceptance and publication remain separate.
+
+Completion evidence:
+Syntax,56units, build and browser syntax pass. Expanded complete actual
+DS placement/branding regression passes Edge24.5s and explicit SwiftShader
+48.1s, full-size quality/original deadlines/retries0. Actual rays hit both
+inset floors on the lid centerline, plain shell between them, and the
+outward-facing underside emblem; base parenting and positive battery-cover
+clearance pass. Original pickup/return clearance, live inspection repaint,
+stylus, shell pixels, transparency and console palette assertions retained.
+Rear capture visually reviewed and included in the README. Existing97cases/
+19shards unchanged; frozen published PDF unchanged. Fresh trusted identity
+is Zanark. Actual issue94 is OPEN with Project1 In progress; managed body,
+state, membership/status and local backlink read back. Affected79/94
+workstreams likewise synchronize to actual issues78/93. Owner acceptance
+and current-source hosted qualification remain separate.
+
+Completion log:
+2026-11-07: Owner supplies three screenshots identifying off-center paired
+lid recesses and requests moving the colorful DS emblem to the lower
+half's bottom side. Move both cutouts and floors, not just their visible
+decoration; mount the unchanged supplied logo on the base underside.
+2026-11-07: Expanded original actual-model case passes on both backends.
+Initial anchored grep selects no tests; corrected selector executes once
+per backend, not a retry of an executed failure. No geometry, material,
+lighting, runtime, deadline, assertion or quality workaround was required.
+2026-11-07: Actual issue94 and Project item created and verified as Zanark;
+documentation and existing affected issues synchronized, not merely queued.

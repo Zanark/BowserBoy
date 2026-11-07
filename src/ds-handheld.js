@@ -73,10 +73,10 @@ export function createDsHandheld() {
   const lidOutline = roundedShape(8.5, 4.65, .14);
   for (const y of [-.38, .38]) {
     const points = roundedShape(.54, .54, .055).getPoints(8)
-      .map(point => point.add(new THREE.Vector2(-2.8, y)));
+      .map(point => point.add(new THREE.Vector2(0, y)));
     lidOutline.holes.push(new THREE.Path(points));
     mesh(lid, 'Debossed double-square inset floor', roundedBox(.56, .56, .008, .055),
-      shell, -2.8, 2.43 + y, -.14);
+      shell, 0, 2.43 + y, -.14);
   }
   const lidGeometry = new THREE.ExtrudeGeometry(lidOutline, {
     depth: .12, steps: 1, bevelEnabled: true, bevelSize: .02,
@@ -132,8 +132,8 @@ export function createDsHandheld() {
   text(hinge, 'MIC', .24, 0, .12, .247, '#EAF5FF', .07);
   for (const x of [3.72, 3.85]) mesh(hinge, 'Hinge indicator recess', roundedBox(.037, .14, .012, .01), dark, x, .035, .25);
   const branding = [
-    mesh(lid, 'Supplied transparent DS rear emblem', new THREE.PlaneGeometry(3.2, 3.2 * 732 / 2149),
-      new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false }), 0, 2.43, -.197),
+    mesh(root, 'Supplied transparent DS underside emblem', new THREE.PlaneGeometry(3.2, 3.2 * 732 / 2149),
+      new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false }), -1.65, -2.43, -.265),
   ];
   branding[0].rotation.y = Math.PI;
   for (const emblem of branding) { emblem.visible = false; emblem.castShadow = false; }

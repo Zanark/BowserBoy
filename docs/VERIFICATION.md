@@ -9,6 +9,28 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### DS rear markings: local qualification, publication pending
+
+The two actual outer-lid cutouts and inset floors are centered together.
+The unchanged supplied transparent DS emblem now belongs to the lower-body
+underside, facing outward in the clear area beside the battery cover rather
+than following the upper hinge. Shell colors, materials, lights, screens,
+controls and runtime paths are unchanged.
+
+The expanded complete DS placement/branding case passes **Edge24.5s** and
+**explicit SwiftShader48.1s**, full size/quality, original deadlines and
+retries0. Actual rays hit both inset floors on the centerline, plain lid
+between them, and the underside emblem. Base parenting and positive
+battery-cover clearance pass. Existing pickup/return clearance, held-pointer
+Inspect repaint, stylus geometry, material pixels, image alpha and console
+palette assertions remain. The actual rear capture was visually reviewed
+and added to the README. An initial anchored grep selected no cases; the
+corrected selector executed once per backend, not a failed-case retry.
+
+Syntax,56units, build, browser syntax and whitespace pass. Existing97cases/
+19shards remain unchanged. The frozen published PDF is unchanged. Current
+source publication and owner acceptance remain open.
+
 ### Pre-cartridge CRT: local qualification, publication pending
 
 The built-in startup and GBA/DS status canvases now bake a cached RGB
@@ -38,6 +60,19 @@ The preceding `6b5d2c552e6b3206bfb3ae36d845896773147a1c` run,
 finishes **failure:87passed/10failed**, deployment skipped. Nine DS cases
 and one Pear case remain unresolved; CRT styling does not claim to fix them.
 Current-source hosted qualification and owner visual acceptance remain open.
+
+Subsequent exact `06e9c8240b6f3a8c5e2c91a408db0be61ccdfef2`
+[Pages42345206094](https://github.com/Zanark/BowserBoy/actions/runs/42345206094)
+completes **failure:87passed/10failed**, build and14verification shards
+passing, deployment skipped. Both expanded CRT cases pass hosted. Nine
+DS cases and the existing scene CRT case's final reload-readiness assertion
+at line1341 fail. Its earlier native framebuffer, border, shader-switching
+and Unfiltered checks reach the final reload; the full original case then
+passes locally once38.3s using the explicit SwiftShader configuration and
+unchanged full-quality assertions/deadlines/retries0. The hosted failure is
+not reproduced or causally resolved. Actual issue93
+[outcome receipt](https://github.com/Zanark/BowserBoy/issues/93#issuecomment-6703244856)
+is independently verified; local success does not replace this failed gate.
 
 ### Exact boundary restoration; DS software latency remains open
 

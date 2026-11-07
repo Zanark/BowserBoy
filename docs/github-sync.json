@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "94",
-      "file": "TODO/94_PRE_CARTRIDGE_CRT.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/93",
-      "number": 93,
-      "nodeId": "I_kwDOVhqp0s8AAAABdOBKLw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGvYt4",
+      "id": "95",
+      "file": "TODO/95_DS_REAR_MARKINGS.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/94",
+      "number": 94,
+      "nodeId": "I_kwDOVhqp0s8AAAABdOMQbw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGvh7w",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "23b1f31a9925d073fa864fc4b89a4a4b5a8646824286acceb1f516406f0703e7"
+      "bodySha256": "ad4f4b9122630280bff0edd9483cedb117cdcf268876c7e3d94719e9bc53925f"
     }
   ]
 }
