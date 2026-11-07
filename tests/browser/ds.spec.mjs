@@ -1506,6 +1506,7 @@ test('DS native backups restore the saved framebuffer after further input', asyn
 });
 
 test('DS and GBA retain isolated cores and saves while DS power starts cold', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 960, height: 720 });
   const errors = await bootDsDemo(page);
   await page.locator('#scene-canvas').focus();
   await page.keyboard.down('ArrowRight');

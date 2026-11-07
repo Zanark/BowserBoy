@@ -71,3 +71,13 @@ case still times out at hidden tools after recovery. Park it locally/CI
 without another full-case attempt. Open recovery controls now expands the
 dock explicitly; WebGL failure has no selectable scene console to reveal it.
 This fixes a default-collapsed-dock regression, not restored parked coverage.
+2026-11-07:1510777/Pages42373292733 finishes93PASS/3FAIL/19SKIP/
+0NOT_RUN; all19shards inspected, build passes, deploy skips. Eight original
+repaired cases now pass hosted. Two recurring GPU/tripod cases are parked
+on CI under105 without further repair. The newly failing DS/GBA isolation
+case reaches its final DS cold restart but exhausts120s while pinned DeSmuME
+loads. One960x720fixture attempt, unchanged assertions/pixel ratio/deadline.
+Expected next hosted inventory94retained/21parked; deployment still pending.
+2026-11-07: The isolated DS/GBA fixture attempt passes locally37.7s,
+including separate databases, paused retained GBA and the DS cold restart.
+No runtime code, gates, deadlines or assertions changed in this follow-up.

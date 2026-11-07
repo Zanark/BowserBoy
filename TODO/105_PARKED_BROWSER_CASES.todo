@@ -24,6 +24,8 @@ Tasks:
 - [ ] Restore experimental GBA LCD/control spill within its original deadline (scene).
 - [ ] Restore console wheel-only placement with the additional companion clearance (console movement).
 - [ ] Restore the complete reduced-motion pickup and unavailable-WebGL recovery scenario (scene).
+- [ ] Restore original GPU-fence, high-DPI and native-operation gating scenario (scene).
+- [ ] Restore original tripod and independent-room-light switching/reload scenario (scene).
 
 Acceptance criteria:
 Each exact case passes its original assertions, resolution and deadlines on the
@@ -96,3 +98,11 @@ this complete parked scenario's coverage.
 The new focused recovery-entry regression passes, as does the normal desktop
 startup/DS-label case; this does not restore the full parked scenario.
 Inventory115;19CI skips (16CI-only,3also local),96retained hosted cases.
+2026-11-07:1510777/Pages42373292733 completes93PASS/3FAIL/19SKIP/
+0NOT_RUN across19shards; build passes, deploy skips. All shard logs read.
+GPU-fence/native-operation and tripod/reload cases fail again after their
+allowed attempt. Park exactly these two on CI, retaining their original
+viewports/assertions/deadlines and local execution. DS/GBA isolation is a
+new failure at the final DS cold restart; give that case one bounded fixture
+attempt instead of automatically parking it. Inventory115,21CI skips
+(18CI-only,3also local),94retained hosted cases expected.

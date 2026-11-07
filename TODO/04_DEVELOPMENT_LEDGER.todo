@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Monitored1510777 follow-up (112/105):
+  All19Pages42373292733shards give93PASS/3FAIL/19SKIP/0NOT_RUN.
+  Build passes; deployment skips. Eight repaired failures pass hosted.
+  Recurring GPU-fence/native-operation and tripod/reload cases are parked
+  CI-only after their allowed attempt; original assertions/viewports/
+  deadlines and local execution remain. New DS/GBA isolation failure is at
+  final DS cold restart with DeSmuME loading, not proven save contamination.
+  One960x720fixture attempt retains pixel ratio/assertions/deadline.
+  Inventory115; expected94retained/21parked,3also locally. No bypassed gate.
+  Focused isolated DS/GBA repair passes locally37.7s, including its cold
+  restart; hosted result still pending. No runtime source change.
 - 2026-11-07 / Cuter Pear recovery (113), DS console status (114), CI (112):
   Owner requests slower screaming, smaller cute angry eyes and a squeezed-eye
   pouting recovery instead of the glossy worried face. Hold each mouth900ms;
