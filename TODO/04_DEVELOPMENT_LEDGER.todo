@@ -14,6 +14,33 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-08 / Modeling hosting recovered; delivery complete (123):
+  Owner requests push. Fresh API/deployment-log inspection observes exact
+  c613465 Pages42398430974 attempt3 already SUCCESS; hosting reports success,
+  job128497711814 ends19:00:03Z and overall run19:00:04Z. All19original browser
+  shards/build remain successful,119declared/98PASS/21SKIP/0FAIL/0UNRUN.
+  Public https://zanark.github.io/BowserBoy/ freshly returnsHTTP200.
+  No new retry, runtime/test/gate change or inferred hosting root cause.
+  Attempts1/2 remain failed history;21skips remain coverage debt.
+  Delivery acceptance satisfied;123DONE, actual issue/Project sync before push.
+- 2026-11-07 / Modeling delivery qualified; hosting blocked (123):
+  All8owned reference-thread bodies match source/index and both real browser
+  views, including final edition hashes/pinned URLs; no browser errors/attention.
+  Material Pages42398430974 attempt2 also times out after10minutes with empty
+  hosting status. Original19shards/build succeed; independent attempt1 logs
+  account119declared/98PASS/21SKIP/0FAIL/0UNRUN. Overall workflow FAILURE
+  remains explicit.123BLOCKED, not DONE; verified repository book downloads
+  remain available. No further hosting retry or unrelated application repair.
+- 2026-11-07 / Modeling handbook public; hosting retry (123):
+  Zanark c61346594396c115a0eec29d656866a0c57ece57 publishes105allowlisted
+  files. All15published public commit-file bytes match, actual rendered root
+  and book README navigation qualifies, playerHTTP200;148local targets exist.
+  Final whitespace cleanup triggered full requalification; all328native pages
+  pixel/text/link/bookmark-equivalent to the inspected edition. Both working
+  and committed input receipts distinguish61Windows newline normalizations
+  across83inputs, two installed-only dependencies. Pages42398430974 attempt1:
+  all19browser shards/build pass, hosting times out in syncing_files.
+  One failed-job-only retry, no source/assertion/gate changes; closure pending.
 - 2026-11-07 / Modeling reference thread verified (123):
   Requested owned professional-English question and six detailed replies are
   indexed through checked Mesh refresh. Real side panel and Threads tab match

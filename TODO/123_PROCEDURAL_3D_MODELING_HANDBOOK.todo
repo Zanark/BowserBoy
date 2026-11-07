@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/122
 Milestone: A transferable, extremely detailed 200+ page procedural 3D handbook.
 Dependencies: 122.
@@ -13,7 +13,7 @@ Tasks:
 - [x] Produce diagnostic model views without altering application models.
 - [x] Render and inspect an actual searchable 200+ page PDF and offline reader.
 - [x] Publish a substantive new MeshBoard reference thread from the owned persona.
-- [ ] Link the manual, synchronize the actual issue/Project, publish as Zanark,
+- [x] Link the manual, synchronize the actual issue/Project, publish as Zanark,
       monitor exact deployments and persist the qualified handoff.
 
 Acceptance criteria:
@@ -47,9 +47,24 @@ PDF SHA256:
 6e3bef30a90f8d872071b66a2059210b0a749aeaf26459bde2b55b357666409d.
 Reader SHA256:
 a7bbc64b9da2792749966adcf655dc3efbabf654435cd77a90b8e23180f4c68f.
-Owner aesthetic acceptance is not inferred. Public GitHub delivery pending.
-Owned modeling thread: root plus six substantive professional-English replies.
-Checked mesh index and real MeshBoard side panel/Threads tab preserve all seven
+Owner aesthetic acceptance is not inferred.
+Zanark material commit c61346594396c115a0eec29d656866a0c57ece57 pushed.
+All15published GitHub commit-file bytes match; both actual rendered README
+navigation routes verified, public player HTTP200;148local Markdown targets.
+Pages42398430974 attempts1/2 timed out in deploy-pages hosting; retain both
+failure histories. Attempt1 stalled in syncing_files; attempt2 returned empty status.
+Fresh2026-11-08 GitHub API and actual deployment log verification observes
+attempt3 SUCCESS for exact material SHA c61346594396c115a0eec29d656866a0c57ece57.
+Deploy job128497711814 completed2026-11-07T19:00:03Z; run completed19:00:04Z.
+No retry was requested during this push session; recovery cause is not inferred.
+Independent original-shard accounting:119declared/98PASS/21SKIP/0FAIL/0UNRUN,
+all19browser shards/build successful; attempt3 also completes hosting.
+Prior failed attempts remain failed, not erased by the latest success.
+No application/test/gate changes;21skips remain coverage debt.
+Fresh public player verification: https://zanark.github.io/BowserBoy/ HTTP200.
+Book downloads were independently byte-verified; hosting qualification now complete.
+Owned modeling thread: root plus seven substantive professional-English replies.
+Checked mesh index and real MeshBoard side panel/Threads tab preserve all eight
 exact source texts; replies remain outside general stream, zero browser errors.
 Thread: thread-session-8e7d69ac-bowser-procedural-modeling-20261107.
 Actual factory atlas: 18 PNGs, six families x three orthographic views;
@@ -78,3 +93,19 @@ all328final native pages pixel/text/link-identical to inspected edition,
 bookmarks identical. Exact final hashes above; no second human review claimed.
 Qualified working and committed Git input hashes distinguished in package:
 only Windows CRLF normalization accepted, installed dependencies separate.
+2026-11-07: Actual public15-file package and rendered navigation verified.
+Initial Pages attempt has no browser/build failure; deploy-pages times out
+while syncing_files. Retry only the failed hosting job, unchanged revision,
+assertions and gates. Do not equate public book bytes with successful deployment.
+2026-11-07: The one hosting-only retry also reaches its10minute timeout,
+returning empty status. Preserve overall FAILURE, successful19shards/build
+and exact119/98/21/0/0 test accounting from attempt1; do not claim a green run.
+All8thread source/index/browser bodies verified, including final public edition
+hashes and pinned URLs. Book delivered;123BLOCKED pending hosting recovery.
+2026-11-08: Owner requests push. Before committing stale blocked receipts,
+fresh API and deploy-log inspection discovers attempt3 already SUCCESS for
+the exact material SHA. Hosting reports success at19:00:02Z, deployment job
+ends19:00:03Z and overall run19:00:04Z. Original19shards/build remain successful,
+119declared/98PASS/21SKIP/0FAIL/0UNRUN; public player freshly returnsHTTP200.
+No new retry or source change; preserve attempts1/2 as historical failures.
+Delivery acceptance satisfied,123DONE; synchronize actual issue/Project before push.
