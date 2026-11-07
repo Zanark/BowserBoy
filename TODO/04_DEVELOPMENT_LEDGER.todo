@@ -14,6 +14,20 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Guarded hosted outcome and first cap-sample timing:
+  Exact836fc09/Pages42331132482 fails: build/11browser shards pass,
+  8fail;81cases pass/12fail,deploy skipped. Complete quick taps and
+  upside-down/high-DPI precision pass, but other DS lifecycle/flat/rolled/
+  shell, GBA pause/reload, dark-room budget and pear bounce remain failed.
+  Three cap cases fail their first timestamp precondition: real recovery
+  waiting leaves lastRender stale. Start the first interval from actual
+  performance.now() after recovery; retain later intervals, supplied-time
+  validation, single-render contract and original pixel assertions.
+  Three affected cases pass Edge26.384s/SwiftShader84.202s serially,
+  retries0. Syntax/44units/build/whitespace pass; inventory93cases/19shards.
+  Private opaque-sort experiment changes134pixels; depth prepass gives
+  no qualified software benefit. Both rejected, no production change.
+  No general performance or deployment repair is inferred.
 - 2026-11-07 / Restore severe-stall headroom without moderate-frame idle:
   Exact046defd/Pages42327809794 fails: build/shard1 pass,18browser
   shards fail,deploy skipped. Traces show protocol observation delays,

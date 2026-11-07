@@ -691,6 +691,11 @@ async function prepareControlLighting(page) {
     const { view } = await import('./src/app.js');
     view.renderer.setAnimationLoop(null);
     view.renderer.setPixelRatio(1);
+    await window.roomPaintFixture.waitForGpu();
+    if (view.paintFence) view.render(view.lastPaint + 101);
+    await window.roomPaintFixture.waitForRecovery();
+    // The animation loop may have stopped inside an inherited recovery interval.
+    window.controlLightingStart = performance.now();
   });
 }
 
@@ -702,7 +707,8 @@ const sampleControlLighting = (page, id, pressed) => page.evaluate(async ({ id, 
   if (view.paintFence) view.render(view.lastPaint + 101);
   view.setControl(id, pressed);
   view.changed = true;
-  await window.roomPaintFixture.paint(view.lastRender + 250);
+  await window.roomPaintFixture.paint((window.controlLightingStart ?? view.lastRender) + 250);
+  window.controlLightingStart = null;
   const mesh = view.model.controls.get(id).mesh;
   const points = ['up', 'down', 'left', 'right'].includes(id) ?
     [[0, .48, .05], [0, -.48, .05], [-.48, 0, .05], [.48, 0, .05]] :
@@ -776,7 +782,8 @@ test('physical cap compression, release and unlit response retain their bounds',
       }
       view.setControl('a', pressed);
       view.changed = true;
-      await window.roomPaintFixture.paint(view.lastRender + milliseconds);
+      await window.roomPaintFixture.paint((window.controlLightingStart ?? view.lastRender) + milliseconds);
+      window.controlLightingStart = null;
       return mesh.userData.motion.restPosition.z - mesh.position.z;
     };
     await advance(false, 250);

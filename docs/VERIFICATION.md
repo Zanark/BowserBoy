@@ -11,6 +11,27 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact guarded source `836fc093bc4e72b06898e983cdf524c8fe772047`,
+[Pages42331132482](https://github.com/Zanark/BowserBoy/actions/runs/42331132482),
+finishes **failure**: build and11browser shards pass, eight fail, with
+81passed/12failed cases overall; deployment is skipped. Complete quick taps,
+upside-down/high-DPI precision, pen, hinge and independent LCD spill pass in
+this run. Flat/rolled precision and other DS lifecycle/shell cases still
+exhaust deadlines; GBA pause/reload and pear bounce also fail. Changing
+hosted outcomes do not establish that the remaining performance problem is fixed.
+
+Three cap-lighting cases fail a distinct fixture precondition on their first
+rest sample: real recovery waiting does not advance `lastRender`, so a
+timestamp based on `lastRender + 250` can precede `nextPaint`.
+The follow-up establishes that first interval from actual `performance.now()`
+after recovery; subsequent intervals and strict supplied-time validation remain.
+No synthetic future timestamp, extra render, relaxed assertion or deadline
+is introduced. All three affected cases pass serially on Edge26.384s and
+SwiftShader84.202s, retries0. Syntax,44unit tests, build and whitespace pass;
+the inventory stays93cases/19shards. This qualifies the bounded fixture
+correction, not the remaining software latency or hosted failures.
+Full hosted recovery and new publication remain unqualified.
+
 Exact source `046defd56b42eb57de2941a01a49d39a1e5ea627`,
 [Pages42327809794](https://github.com/Zanark/BowserBoy/actions/runs/42327809794),
 regresses to **failure**: build and browser shard1 pass,18browser shards fail,
@@ -41,7 +62,7 @@ Observe only a pending fence and stop insertion work when motion ends.
 All four affected scheduling/motion cases then pass Edge39.7s and
 SwiftShader1.7m, retaining actual fences, DPR1/2, deadlines and one submission
 per explicit fixture paint. The current inventory remains93distinct cases.
-Actual hosted delivery remains pending.
+Its actual failed hosted outcome is recorded above.
 
 Exact source `8b46c2c8eccf72331aef8b8fb221cf33d30385df`,
 [Pages42324913149](https://github.com/Zanark/BowserBoy/actions/runs/42324913149),

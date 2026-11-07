@@ -30,6 +30,18 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Guarded836fc09/Pages42331132482 finishesFAILURE: build and11browser
+shards pass,8fail;81cases pass/12fail,deploy skipped. Quick taps and
+upside-down/high-DPI precision pass this run, not full hosted qualification.
+DS lifecycle/flat/rolled/shell, GBA pause/reload, dark-room budget and pear
+bounce remain failed. Three cap cases separately expose first-sample
+timestamps based on stale lastRender after actual recovery waiting.
+Establish the first interval from real performance.now() after recovery;
+retain subsequent timing, exact supplied-time validation and one render.
+Three affected cases pass Edge26.384s and SwiftShader84.202s serially,
+retries0. Syntax/44units/build/whitespace pass;93cases/19shards retained.
+Remaining hosted failures/software quick latency remain unqualified.
+
 Pages046defd/42327809794 regresses: build/shard1 pass,18browser
 shards fail,deploy skipped. Readiness traces exhaust15s resolving frames;
 they do not establish native ready:false or core starvation.
@@ -46,7 +58,7 @@ First guarded Edge21of23pass5.7m: every DS case and native CRT pass.
 Correct the two manual-paint fixture failures: observe only a pending fence;
 stop mandatory insertion paints once motion ends. All four affected cases
 then pass Edge39.7s/SwiftShader1.7m. Inventory remains93distinct cases.
-Hosted pending.
+That source's actual hosted failure is recorded above.
 No changed quality, deadlines, retries or inventory.
 
 Pages8b46c2c/42324913149 finishesFAILURE: build/12browser shards pass,

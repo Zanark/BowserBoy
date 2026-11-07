@@ -29,6 +29,13 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Guarded836fc09/Pages42331132482 fails overall: build/11browser shards
+pass,8fail;81cases pass/12fail,deploy skipped. Complete quick taps,
+upside-down/high-DPI precision, held pen, hinge and LCD spill pass this
+run; flat/rolled precision and other DS lifecycle/shell cases exhaust
+deadlines. Do not extrapolate this hosted quick pass to the failed local
+software latency result or claim deployed/owner acceptance.
+
 Pages046defd/42327809794 fails: build/shard1 pass,18browser shards
 fail,deploy skipped. Many readiness polls exhaust15s resolving the native
 frame; no observed ready:false or proven core starvation follows from that.
@@ -43,7 +50,7 @@ experiment also fails and is rejected, leaving no DS test change.
 Guarded Edge21of23pass5.7m includes every DS case and native GBA CRT.
 After correcting two manual-paint fixture completion conditions, all four
 affected scheduling/motion cases pass Edge39.7s/SwiftShader1.7m.
-Actual hosted/public qualification remains pending.
+Actual hosted failure is recorded above; public qualification remains blocked.
 
 Pages8b46c2c/42324913149 fails: build/12browser shards pass,7fail,
 deploy skipped. Quick taps pass this run, but flat/upside-down physical
