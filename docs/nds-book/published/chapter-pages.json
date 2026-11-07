@@ -1,0 +1,106 @@
+[
+  {
+    "id": "ND01",
+    "title": "A second console",
+    "part": 1,
+    "openingPage": 6,
+    "startPage": 7,
+    "endPage": 11
+  },
+  {
+    "id": "ND02",
+    "title": "The development journey",
+    "part": 1,
+    "openingPage": 12,
+    "startPage": 13,
+    "endPage": 17
+  },
+  {
+    "id": "ND03",
+    "title": "Static host, native core",
+    "part": 2,
+    "openingPage": 19,
+    "startPage": 20,
+    "endPage": 23
+  },
+  {
+    "id": "ND04",
+    "title": "Cartridge, loading and power",
+    "part": 2,
+    "openingPage": 24,
+    "startPage": 25,
+    "endPage": 28
+  },
+  {
+    "id": "ND05",
+    "title": "One framebuffer, two live screens",
+    "part": 2,
+    "openingPage": 29,
+    "startPage": 30,
+    "endPage": 33
+  },
+  {
+    "id": "ND06",
+    "title": "Touch, controls and the stylus",
+    "part": 2,
+    "openingPage": 34,
+    "startPage": 35,
+    "endPage": 38
+  },
+  {
+    "id": "ND07",
+    "title": "Saves, identity and recovery",
+    "part": 2,
+    "openingPage": 39,
+    "startPage": 40,
+    "endPage": 44
+  },
+  {
+    "id": "ND08",
+    "title": "The DS on the desk",
+    "part": 3,
+    "openingPage": 46,
+    "startPage": 47,
+    "endPage": 52
+  },
+  {
+    "id": "ND09",
+    "title": "Algorithms and data structures",
+    "part": 3,
+    "openingPage": 53,
+    "startPage": 54,
+    "endPage": 57
+  },
+  {
+    "id": "ND10",
+    "title": "Design principles and failure boundaries",
+    "part": 3,
+    "openingPage": 58,
+    "startPage": 59,
+    "endPage": 62
+  },
+  {
+    "id": "ND11",
+    "title": "Tests, releases and honest evidence",
+    "part": 4,
+    "openingPage": 64,
+    "startPage": 65,
+    "endPage": 69
+  },
+  {
+    "id": "ND12",
+    "title": "Visual documentation",
+    "part": 4,
+    "openingPage": 70,
+    "startPage": 71,
+    "endPage": 76
+  },
+  {
+    "id": "ND13",
+    "title": "The maintainer field guide",
+    "part": 4,
+    "openingPage": 77,
+    "startPage": 78,
+    "endPage": 82
+  }
+]

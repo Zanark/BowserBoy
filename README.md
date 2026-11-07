@@ -4,7 +4,8 @@
   <strong>A little escape, on your desk.</strong><br>
   <a href="https://zanark.github.io/BowserBoy/"><strong>Play in your browser</strong></a>
   &nbsp;&middot;&nbsp; <a href="docs/GUIDE.md">Player guide &amp; local setup</a>
-  &nbsp;&middot;&nbsp; <a href="docs/book/README.md">Engineering book</a>
+  &nbsp;&middot;&nbsp; <a href="docs/nds-book/README.md">NDS book</a>
+  &nbsp;&middot;&nbsp; <a href="docs/book/README.md">GBA book</a>
   &nbsp;&middot;&nbsp; <a href="docs/README.md">All documentation</a>
 </p>
 
@@ -57,7 +58,7 @@ Two consoles. Three desk lamps. Your own local games.
 
 *Lights out. Just the two LCDs lighting their surroundings.*
 
-[DS controls, saves &amp; compatibility limits](docs/GUIDE.md#nintendo-ds)
+[DS controls, saves &amp; compatibility limits](docs/GUIDE.md#nintendo-ds) &middot; [Development journey &amp; PDF](docs/nds-book/README.md)
 
 ## BowserBOYADVANCED
 

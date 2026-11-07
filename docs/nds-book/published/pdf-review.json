@@ -1,0 +1,26 @@
+{
+  "pdfSha256": "0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f",
+  "pages": 85,
+  "geometry": "A4",
+  "bookmarks": 21,
+  "internalLinks": 58,
+  "externalLinks": 143,
+  "badLinks": [],
+  "learningMarkers": 52,
+  "missingLearningMarkers": [],
+  "browserTextBlocks": 605,
+  "missingTextBlocks": [],
+  "sourceTextBlocks": 598,
+  "missingSourceBlocks": [],
+  "diagramLabels": 158,
+  "missingDiagramLabels": [],
+  "nativeOverflow": [],
+  "embeddedFonts": 7,
+  "preservedBookSha256": "25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad",
+  "tools": {
+    "PyMuPDF": "1.28.0",
+    "Pillow": "12.2.0"
+  },
+  "failures": [],
+  "visualReview": "Native raster outputs are inspection candidates, not claimed visual review."
+}

@@ -13,3 +13,5 @@ test-results/
 docs/releases/**/*.zip
 /docs/book/output/
 /docs/book/production/.candidate/
+/docs/book/production/.nds-candidate/
+/docs/nds-book/output/

@@ -27,7 +27,7 @@ export async function confined(root, relative) {
 }
 
 export function checkLearning(text, id) {
-  const markers = [...text.matchAll(/^#{2,3} (CH\d{2}-[WRQA]\d{2})\b/gm)].map(match => match[1]);
+  const markers = [...text.matchAll(/^#{2,3} ((?:CH|ND)\d{2}-[WRQA]\d{2})\b/gm)].map(match => match[1]);
   if (new Set(markers).size !== markers.length) throw new Error(`Duplicate learning marker in ${id}`);
   for (const role of ['W', 'R', 'Q', 'A']) {
     if (!markers.includes(`${id}-${role}01`)) throw new Error(`Missing ${id}-${role}01`);

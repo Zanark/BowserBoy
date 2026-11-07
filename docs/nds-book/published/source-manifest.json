@@ -1,0 +1,718 @@
+{
+  "title": "Two Screens, One Little Escape",
+  "stem": "Two-Screens-One-Little-Escape",
+  "edition": "First NDS edition / 2026-11",
+  "sourceBase": "61845372142b41992916f3732ea102cc0f4c8edf",
+  "identityNote": "Runtime cutoff is pinned; exact manuscript and production hashes identify this later book.",
+  "chapters": [
+    {
+      "id": "ND01",
+      "title": "A second console",
+      "part": 1,
+      "source": "docs\\nds-book\\chapters\\01-a-second-console\\README.md"
+    },
+    {
+      "id": "ND02",
+      "title": "The development journey",
+      "part": 1,
+      "source": "docs\\nds-book\\chapters\\02-development-journey\\README.md"
+    },
+    {
+      "id": "ND03",
+      "title": "Static host, native core",
+      "part": 2,
+      "source": "docs\\nds-book\\chapters\\03-runtime-boundary\\README.md"
+    },
+    {
+      "id": "ND04",
+      "title": "Cartridge, loading and power",
+      "part": 2,
+      "source": "docs\\nds-book\\chapters\\04-cartridge-and-power\\README.md"
+    },
+    {
+      "id": "ND05",
+      "title": "One framebuffer, two live screens",
+      "part": 2,
+      "source": "docs\\nds-book\\chapters\\05-two-live-screens\\README.md"
+    },
+    {
+      "id": "ND06",
+      "title": "Touch, controls and the stylus",
+      "part": 2,
+      "source": "docs\\nds-book\\chapters\\06-touch-and-controls\\README.md"
+    },
+    {
+      "id": "ND07",
+      "title": "Saves, identity and recovery",
+      "part": 2,
+      "source": "docs\\nds-book\\chapters\\07-saves-and-recovery\\README.md"
+    },
+    {
+      "id": "ND08",
+      "title": "The DS on the desk",
+      "part": 3,
+      "source": "docs\\nds-book\\chapters\\08-physical-ds\\README.md"
+    },
+    {
+      "id": "ND09",
+      "title": "Algorithms and data structures",
+      "part": 3,
+      "source": "docs\\nds-book\\chapters\\09-algorithms\\README.md"
+    },
+    {
+      "id": "ND10",
+      "title": "Design principles and failure boundaries",
+      "part": 3,
+      "source": "docs\\nds-book\\chapters\\10-design-principles\\README.md"
+    },
+    {
+      "id": "ND11",
+      "title": "Tests, releases and honest evidence",
+      "part": 4,
+      "source": "docs\\nds-book\\chapters\\11-tests-and-releases\\README.md"
+    },
+    {
+      "id": "ND12",
+      "title": "Visual documentation",
+      "part": 4,
+      "source": "docs\\nds-book\\chapters\\12-visual-documentation\\README.md"
+    },
+    {
+      "id": "ND13",
+      "title": "The maintainer field guide",
+      "part": 4,
+      "source": "docs\\nds-book\\chapters\\13-maintainer-field-guide\\README.md"
+    }
+  ],
+  "parts": [
+    {
+      "number": 1,
+      "title": "Becoming a console"
+    },
+    {
+      "number": 2,
+      "title": "Making it run"
+    },
+    {
+      "number": 3,
+      "title": "Making it feel physical"
+    },
+    {
+      "number": 4,
+      "title": "Evidence and maintenance"
+    }
+  ],
+  "sections": [
+    {
+      "id": "orientation",
+      "title": "Before opening the DS",
+      "source": "docs\\nds-book\\orientation.md"
+    },
+    {
+      "id": "sources",
+      "title": "Source register and limits",
+      "source": "docs\\nds-book\\SOURCES.md"
+    }
+  ],
+  "tocItems": [
+    {
+      "id": "orientation",
+      "title": "Before opening the DS"
+    },
+    {
+      "id": "part-1",
+      "title": "Part 1 - Becoming a console",
+      "part": true
+    },
+    {
+      "id": "opening-ND01",
+      "title": "ND01 - A second console"
+    },
+    {
+      "id": "opening-ND02",
+      "title": "ND02 - The development journey"
+    },
+    {
+      "id": "part-2",
+      "title": "Part 2 - Making it run",
+      "part": true
+    },
+    {
+      "id": "opening-ND03",
+      "title": "ND03 - Static host, native core"
+    },
+    {
+      "id": "opening-ND04",
+      "title": "ND04 - Cartridge, loading and power"
+    },
+    {
+      "id": "opening-ND05",
+      "title": "ND05 - One framebuffer, two live screens"
+    },
+    {
+      "id": "opening-ND06",
+      "title": "ND06 - Touch, controls and the stylus"
+    },
+    {
+      "id": "opening-ND07",
+      "title": "ND07 - Saves, identity and recovery"
+    },
+    {
+      "id": "part-3",
+      "title": "Part 3 - Making it feel physical",
+      "part": true
+    },
+    {
+      "id": "opening-ND08",
+      "title": "ND08 - The DS on the desk"
+    },
+    {
+      "id": "opening-ND09",
+      "title": "ND09 - Algorithms and data structures"
+    },
+    {
+      "id": "opening-ND10",
+      "title": "ND10 - Design principles and failure boundaries"
+    },
+    {
+      "id": "part-4",
+      "title": "Part 4 - Evidence and maintenance",
+      "part": true
+    },
+    {
+      "id": "opening-ND11",
+      "title": "ND11 - Tests, releases and honest evidence"
+    },
+    {
+      "id": "opening-ND12",
+      "title": "ND12 - Visual documentation"
+    },
+    {
+      "id": "opening-ND13",
+      "title": "ND13 - The maintainer field guide"
+    },
+    {
+      "id": "sources",
+      "title": "Source register and limits",
+      "source": "docs\\nds-book\\SOURCES.md"
+    }
+  ],
+  "expectedDiagrams": 13,
+  "learningMarkers": [
+    "ND01-W01",
+    "ND01-R01",
+    "ND01-Q01",
+    "ND01-A01",
+    "ND02-W01",
+    "ND02-R01",
+    "ND02-Q01",
+    "ND02-A01",
+    "ND03-W01",
+    "ND03-R01",
+    "ND03-Q01",
+    "ND03-A01",
+    "ND04-W01",
+    "ND04-R01",
+    "ND04-Q01",
+    "ND04-A01",
+    "ND05-W01",
+    "ND05-R01",
+    "ND05-Q01",
+    "ND05-A01",
+    "ND06-W01",
+    "ND06-R01",
+    "ND06-Q01",
+    "ND06-A01",
+    "ND07-W01",
+    "ND07-R01",
+    "ND07-Q01",
+    "ND07-A01",
+    "ND08-W01",
+    "ND08-R01",
+    "ND08-Q01",
+    "ND08-A01",
+    "ND09-W01",
+    "ND09-R01",
+    "ND09-Q01",
+    "ND09-A01",
+    "ND10-W01",
+    "ND10-R01",
+    "ND10-Q01",
+    "ND10-A01",
+    "ND11-W01",
+    "ND11-R01",
+    "ND11-Q01",
+    "ND11-A01",
+    "ND12-W01",
+    "ND12-R01",
+    "ND12-Q01",
+    "ND12-A01",
+    "ND13-W01",
+    "ND13-R01",
+    "ND13-Q01",
+    "ND13-A01"
+  ],
+  "sources": [
+    {
+      "path": "docs/nds-book/orientation.md",
+      "sha256": "332e783592eafc6907cb983172d0c90270e8c5ca97a0c189dfd7df71f46754d9",
+      "bytes": 3244
+    },
+    {
+      "path": "docs/nds-book/chapters/01-a-second-console/README.md",
+      "sha256": "b189bfa5455180aae71caf4622907c7d26da5566323c40c1542ebb549648ab6d",
+      "bytes": 9973
+    },
+    {
+      "path": "docs/nds-book/chapters/02-development-journey/README.md",
+      "sha256": "1cf411d29021cfa09436c501c70e69cc30f3f9944702d99c7042acc0e61d39f1",
+      "bytes": 11126
+    },
+    {
+      "path": "docs/nds-book/chapters/03-runtime-boundary/README.md",
+      "sha256": "490b98a280ae62ef95ab37a4f9d3580e8653f386408acf196dea739eccd5a80c",
+      "bytes": 6094
+    },
+    {
+      "path": "docs/nds-book/chapters/04-cartridge-and-power/README.md",
+      "sha256": "d18b868adb40e9d196d16a95b2b626965d86c4689262115a370b1c73eb225072",
+      "bytes": 6948
+    },
+    {
+      "path": "docs/nds-book/chapters/05-two-live-screens/README.md",
+      "sha256": "ace54fd1505c35237586893c699ebc2f9a3b1db922300915375e971475e3fa12",
+      "bytes": 5666
+    },
+    {
+      "path": "docs/nds-book/chapters/06-touch-and-controls/README.md",
+      "sha256": "83c1998c240293a2b74fc2379e1047c97a9d1d50f3c5e75547cf7e3293e58390",
+      "bytes": 6817
+    },
+    {
+      "path": "docs/nds-book/chapters/07-saves-and-recovery/README.md",
+      "sha256": "14506104184a9aca5f5e79ff4eba9f80af812d09c8774cf8c711d0a73a61c0c5",
+      "bytes": 7466
+    },
+    {
+      "path": "docs/nds-book/chapters/08-physical-ds/README.md",
+      "sha256": "b753b4854b0df4c7c08e8d03d120b751fc0c91e21804598703787b02b9b1be05",
+      "bytes": 12593
+    },
+    {
+      "path": "docs/images/ds-inspect.gif",
+      "sha256": "7cce16a53f899daff7c7302439d37f8349c0d8c706df1e57b92b6413e3643b94",
+      "bytes": 2286338
+    },
+    {
+      "path": "docs/images/ds-lighting.gif",
+      "sha256": "8e79adc9474cdc8fd5471f22b854a129cf05bfa142a9f0ce2938b3f9646df64b",
+      "bytes": 1355991
+    },
+    {
+      "path": "docs/nds-book/chapters/09-algorithms/README.md",
+      "sha256": "25bb0316bdb49bb0f38de420092ad4f7ebbaa44470b03a79abaa3480cd537e37",
+      "bytes": 7436
+    },
+    {
+      "path": "docs/nds-book/chapters/10-design-principles/README.md",
+      "sha256": "b3f532f0686822dbc609bf2c7e146fa0a8efc5dfbb19c6f7cfea50f4f1f36714",
+      "bytes": 6172
+    },
+    {
+      "path": "docs/nds-book/chapters/11-tests-and-releases/README.md",
+      "sha256": "413626832dfaeef3742065541be45a25e58f98c500acf455d5c8a8d944ccf4a7",
+      "bytes": 11758
+    },
+    {
+      "path": "docs/nds-book/chapters/12-visual-documentation/README.md",
+      "sha256": "321df1112b9c8a5a05615828ce2b3b7870282af63a1c55c2fb752cd7a2de8245",
+      "bytes": 13282
+    },
+    {
+      "path": "docs/images/ds-gameplay.gif",
+      "sha256": "9dbbcf00ed0eb7a5111a58e7d0ec2ce15b660f158ac41c3a064d3bd38df27330",
+      "bytes": 9408517
+    },
+    {
+      "path": "docs/images/axolotl-movement.gif",
+      "sha256": "95a7073ed961eb1d3a6444dd729f5d1d6ecc63c4a00204aaa3a0e55390c3f00e",
+      "bytes": 2213454
+    },
+    {
+      "path": "docs/nds-book/chapters/13-maintainer-field-guide/README.md",
+      "sha256": "18c1a5f0e2c44fff6801284e39843f0cd2b0cca97f6beae5efd999d2c187973d",
+      "bytes": 6521
+    },
+    {
+      "path": "docs/nds-book/SOURCES.md",
+      "sha256": "e6c4f9a2b61f8fde01f83f18840866c13cd40292b1650ccc50526e0fed58e76c",
+      "bytes": 6941
+    },
+    {
+      "path": "assets/ds-logo.png",
+      "sha256": "b170d9a5c89b7e1d84670c466180533a5cda4da64ff583836d4b557fc8fac76e",
+      "bytes": 1337735
+    },
+    {
+      "path": "docs/book/production/build-nds.mjs",
+      "sha256": "503bca40f9728e2fe806e235f3a0a139ebbb35d1fd4e299b987a8b0185252fe8",
+      "bytes": 9919
+    },
+    {
+      "path": "docs/book/production/render.mjs",
+      "sha256": "38f2e802e7a59cc1ff30cd5edd18316bf39a4e2aed0ec8467fc66df8ae1a9f7c",
+      "bytes": 18364
+    },
+    {
+      "path": "docs/book/production/bootstrap.mjs",
+      "sha256": "92aa00c53aca9123c0392a77188f25d644601d1932d65ac80f0c01ab484ca801",
+      "bytes": 4166
+    },
+    {
+      "path": "docs/book/production/lib.mjs",
+      "sha256": "e9279a7ce7b206ec2c7aa77319e1042d85ad4e5a562b417a2e170066c9198cd5",
+      "bytes": 2676
+    },
+    {
+      "path": "docs/book/production/print.css",
+      "sha256": "4711e207f2541fa4f214b7af3600199077423b7d8b44cff9960c467c895029e7",
+      "bytes": 5592
+    },
+    {
+      "path": "docs/book/production/nds.css",
+      "sha256": "9197d8da2c080c310eb9d8273be7a3c209e6054501ea8b06a5a3b801c8081534",
+      "bytes": 949
+    },
+    {
+      "path": "docs/book/production/review-nds.py",
+      "sha256": "c223697b70c9bcdf48e149e6bfca9bb779b1e54c5ef08c5b644f360ef0dfe738",
+      "bytes": 7843
+    },
+    {
+      "path": "docs/book/production/package.json",
+      "sha256": "274cc40f7108bd788fe4c170eb42c478c66d681407cf7b56dbef401ea0187110",
+      "bytes": 456
+    },
+    {
+      "path": "docs/book/production/package-lock.json",
+      "sha256": "6056a2ad6bb374cc2c3ea7f79f8be54d216ecc0e34177f24b627a5a5896a2e4a",
+      "bytes": 58809
+    },
+    {
+      "path": "docs/book/production/requirements.txt",
+      "sha256": "8134699e9eeda1be9b7bf8d6ee9b74b1abac05bcdcd0b4d4e0185dfe38d2a0c7",
+      "bytes": 33
+    },
+    {
+      "path": "docs/nds-book/catalogue.mjs",
+      "sha256": "4e3369f99e2240bcb60bd281020df353168ab5c9445ae5bac0064d9750f00705",
+      "bytes": 2025
+    }
+  ],
+  "images": [
+    {
+      "source": "docs/images/ds-inspect.gif",
+      "transform": "frame zero only, PNG",
+      "sha256": "560e0b005372e88083afffe26176936d82b2b11fa7ae9c83912450d7839bcf1c"
+    },
+    {
+      "source": "docs/images/ds-lighting.gif",
+      "transform": "frame zero only, PNG",
+      "sha256": "f6b9eaf15071ba40b0ed47070af5bd6a8f9427f7fe5f91659dff6097e7694f9f"
+    },
+    {
+      "source": "docs/images/ds-gameplay.gif",
+      "transform": "frame zero only, PNG",
+      "sha256": "8d05f53359270c797beb290016d74a69e66cdce8e9dc8b4ce97f1a7c37bc5c43"
+    },
+    {
+      "source": "docs/images/axolotl-movement.gif",
+      "transform": "frame zero only, PNG",
+      "sha256": "9b3a4ba2bdd156b48abe94e315c8db9a3b25a8e692b6b31a3a2fcce4f6be207f"
+    }
+  ],
+  "sourceReferences": [
+    {
+      "path": "TODO/79_NINTENDO_DS_EMULATION.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "fa0bd1c7844816b97f3d06f8676341286de824fffa015cffccdb017997f09624",
+      "lines": 132
+    },
+    {
+      "path": "TODO/114_DS_CONSOLE_STATUS.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "bdd0f41225d03e193171a1737923e70eb8d9068a1f0cea97408555e79e8e96e7",
+      "lines": 35
+    },
+    {
+      "path": "src/ds-cartridge.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "811124d86338203c9d6e6a4d81ace0ef045dcf6732c72edce8037f5299f2854f",
+      "lines": 116
+    },
+    {
+      "path": "docs/GUIDE.md",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "b86889b18466c42b61caebf809e1815594fa792bf935c603c3cbbed93e8e5a5d",
+      "lines": 815
+    },
+    {
+      "path": "TODO/115_DS_IMMEDIATE_LOADING.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "466bebfc802fef43a163dfcaeeebe3eae691cf3da1d999ca39fe8ebaf0288994",
+      "lines": 47
+    },
+    {
+      "path": "TODO/105_PARKED_BROWSER_CASES.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "e4a1696a89d4b8b8c4509d410f45c5ca823dc69e24e03edcf404bb5c1b355aca",
+      "lines": 109
+    },
+    {
+      "path": "TODO/85_MOVABLE_CONSOLES.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "551b76a7b6135a18fc520948c18d4cffe34eaa2f85d9038cc57795b952c0042f",
+      "lines": 74
+    },
+    {
+      "path": "TODO/87_DS_HINGE_GAMEPLAY_POSE.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "100722fef315cc470b128f8dce1636450a01ec9a9d6bc7c079cd29ef685683dd",
+      "lines": 70
+    },
+    {
+      "path": "TODO/89_PICKABLE_DS_STYLUS.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "9d5a399bf420027b0d4d007ac60d70f21712e41c36e160fa176348c2c725a1fc",
+      "lines": 44
+    },
+    {
+      "path": "TODO/80_BOXED_CARTRIDGE_LIBRARY.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "d4cb749bf32e4fc567cdc4f7ca465b09d8f2dee5af7a09be3d541d07a35e6282",
+      "lines": 44
+    },
+    {
+      "path": "TODO/88_DS_PRECISE_TOUCHSCREEN.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "c02138e488e10df776466be3d554025f8759ece89c43eb22193cbab5a77145d7",
+      "lines": 228
+    },
+    {
+      "path": "TODO/116_DS_UPRIGHT_LIGHTING.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "5b711f93260abfffc6e122fe31739ed5b506355dfc1dba24c88401d92fe4f5b4",
+      "lines": 57
+    },
+    {
+      "path": "TODO/86_DS_BLUE_CYAN_BASE.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "c099da19b62c6d437b3e79c8be8d298c260dd7a1d3fe446c54a7a380a6f39daa",
+      "lines": 44
+    },
+    {
+      "path": "src/ds-controller.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "6acc6b3ed13ba23be3bc91d6bbbce512713a5c6c31a8cab89dcb41d88289f1b3",
+      "lines": 720
+    },
+    {
+      "path": "src/player.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "498dfa56a73b7d1e16122c0dadd87bd878017594f092ca252cfede99a0127b87",
+      "lines": 394
+    },
+    {
+      "path": "src/ds-touch.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "9cbee0ba33db86b824778e47ec2d1f613cc44206f4a1d79228562af258fb6b7e",
+      "lines": 49
+    },
+    {
+      "path": "src/ds-store.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "8107bc9771f4982bee509b9ee53c8ca59fe55066d13b5a40498d1cdb7286776d",
+      "lines": 50
+    },
+    {
+      "path": "src/ds-handheld.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "de02d5aa30ef7a04273b3e28032f6f09e8f95cd4b40f799f1e08bbfd6bd99949",
+      "lines": 276
+    },
+    {
+      "path": "src/scene.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "eede4292c441624af5ae67ea8e93f8529065e6cd394851d980d1ee42bd5b2b04",
+      "lines": 1452
+    },
+    {
+      "path": "src/desk-clearance.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "1425cd2f3d1c9eb46e665c9060884e8efe934d5cf458d47b6760adfdf4b1c8cd",
+      "lines": 36
+    },
+    {
+      "path": "src/axolotl-lamp.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "41df9be765fac8ee987f2e82187f3915605485a1fbe7ea15bd52e270ee552005",
+      "lines": 92
+    },
+    {
+      "path": "src/pear-motion.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "ce34d78bad36d38635a14f4d993deba14fb8c27a1bedbb27cddca9112d610d1b",
+      "lines": 158
+    },
+    {
+      "path": "TODO/93_MODE_BASED_MODEL_CLEARANCE.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "4e964695984accc00a79bd0be9895b442fdf6aa16bdc1733c57843464bffee3f",
+      "lines": 110
+    },
+    {
+      "path": "TODO/95_DS_REAR_MARKINGS.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "07465f848637befd3d19acf542cbfe3deeafa0ee630b0b3b342161ae1ff2d04a",
+      "lines": 54
+    },
+    {
+      "path": "TODO/100_LARGER_DS_REAR_EMBLEM.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "4f1c069ed3cfd6dda40f44003e1ed30f0a7558227eb30d6df4ce3819dbfbdde3",
+      "lines": 40
+    },
+    {
+      "path": "TODO/103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "a426c00353eebf04fb58d6c28acee7ac8ac1063e35d9837aed6c15810ffd16f0",
+      "lines": 50
+    },
+    {
+      "path": "TODO/110_SMALL_AXOLOTL_LAMP.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "ed91f255036029356ed1a14ba059b0d4ef887c16b612566147ed75c566c75935",
+      "lines": 59
+    },
+    {
+      "path": "TODO/111_MOVABLE_AXOLOTL.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "a64f5a047dc3b0270b06603ea082a077a2c606a6004e7638cd62644870c75e19",
+      "lines": 51
+    },
+    {
+      "path": "docs/VERIFICATION.md",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "74fffe6793d9d63b0ca614f66ed687b04819c8c092f3488836fc8aa4b904f541",
+      "lines": 3353
+    },
+    {
+      "path": "TODO/112_MONITORED_UI_RELEASE.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "90013896b3c22ac81d9432b4d1b6a7b6c2940f8572b895cf6969fe97c6e314b7",
+      "lines": 114
+    },
+    {
+      "path": "TODO/104_BOUNDED_CI_RECOVERY.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "ed678ee99940a5bd8109d6598e35a84c14a05eedd41ad1567c334771e0179025",
+      "lines": 80
+    },
+    {
+      "path": "TODO/117_FRESH_CONSOLE_AND_LIGHTING_MEDIA.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "8593ba59897b69950f873ea828821b1c298524a05304d9483da58fbb45eb5e4c",
+      "lines": 61
+    },
+    {
+      "path": "TODO/120_UNTOUCHED_INTRO_README_MEDIA.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "a35fdfcece07c0acc3999d0c390f91a2d6436cffb6034b5009961841194c5862",
+      "lines": 82
+    },
+    {
+      "path": "tests/browser/dock.spec.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "a0903f7b287f0f0405e67017bc31cd74db0965eb1d125d9913f3b391f01fa029",
+      "lines": 1753
+    },
+    {
+      "path": "TODO/04_DEVELOPMENT_LEDGER.todo",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "604d998f82bb8fa55f94917c39ae91fd57fb72d02161c0c99f2488056d73c3b7",
+      "lines": 2676
+    },
+    {
+      "path": "docs/MEDIA.md",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "28095bab6e25ca91c259a3c98ae4566a62a2884b3c83b45c0cad90a245c8bc90",
+      "lines": 1053
+    },
+    {
+      "path": "scripts/capture-native-openings.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "5a39694b1cd1ff3288e2144d362f9471a74566772632bbeff461680089d95cd7",
+      "lines": 125
+    },
+    {
+      "path": "scripts/capture-opening-replay.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "de6788cd01a062c5dca6ddce5e410f0e1bd0f7bab3f84db0d32318d92b4782e4",
+      "lines": 114
+    },
+    {
+      "path": "scripts/capture-desk-showcase.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "69ad826153c64db4836a89d0becbd70d49e805971583d95c120a2ade736d3eac",
+      "lines": 316
+    },
+    {
+      "path": "scripts/render-readme.py",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "b1d709d1271d5385757b12c3804fe8b06f33a47006f52adb6dd7ee3a55b8c082",
+      "lines": 240
+    },
+    {
+      "path": "scripts/capture-opening-showcases.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "9d9144d6adf711a73fdd28af5851a8ea5da528c359d0b5084161ceab2cadf898",
+      "lines": 55
+    },
+    {
+      "path": "package.json",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "ad8189b9fee384bcb51f56a4eb6dd0f9c33f61e0ae8a90d79eed71fa905f26b8",
+      "lines": 25
+    },
+    {
+      "path": "tests/browser/ds.spec.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "d339a073c1fea57a441df92008ee976a50f91bed4c6157b73fc5a3b4871ee288",
+      "lines": 1765
+    },
+    {
+      "path": "tests/unit/ds-touch.test.mjs",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "6177da2bd27d342d0a5e376fc8d1737cf47ceceeeda5663b7af9581a2f2e7420",
+      "lines": 73
+    },
+    {
+      "path": "src/preferences.js",
+      "revision": "61845372142b41992916f3732ea102cc0f4c8edf",
+      "sha256": "3d91ee7122a4da7076d60c822ed9c7c2028d43171d7e8ebcf362e153309bcd6f",
+      "lines": 118
+    }
+  ],
+  "preservedBook": {
+    "path": "docs/book/published/Building-a-Little-Escape.pdf",
+    "sha256": "25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad"
+  },
+  "exclusions": [
+    "GBA-specific chapters",
+    "private context",
+    "raw chats",
+    "ROMs and firmware",
+    "raw recordings",
+    "unrelated dirty images"
+  ]
+}

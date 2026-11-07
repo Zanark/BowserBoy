@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Independent NDS engineering book qualified locally (122):
+  Two Screens, One Little Escape contains85native A4 pages,13chapters,
+  13diagrams/4captioned first-frame stills/52learning markers.45pinned
+  implementation/history files checked at6184537; separate authoring hashes.
+  Correct DS bindings, input/storage/runtime limits and actual parked-test
+  debt retained. No GBA hardware/runtime chapters or replacement of old PDF.
+  Native coverage/fonts/anchors/bounds pass;8.5749ptminimum diagram labels.
+  Offline reader has zero scripts or external requests. Three full contact
+  sheets plus seven native pages inspected; no human acceptance inferred.
+  Caption separation and figure legibility corrected at source, gates intact.
+  Four publishing regressions and JavaScript syntax pass. Publication pending.
 - 2026-11-07 / Untouched opening media delivered (120):
   Zanark387537b602f44a5bc85d10ee0196d0ccb099e968 deploys through exact
   Pages42389431053:119declared/98PASS/21SKIP/0FAIL/0UNRUN; all19browser

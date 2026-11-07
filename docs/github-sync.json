@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "120",
-      "file": "TODO/120_UNTOUCHED_INTRO_README_MEDIA.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/119",
-      "number": 119,
-      "nodeId": "I_kwDOVhqp0s8AAAABdSmCVA",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGzafk",
-      "state": "closed",
-      "reason": "completed",
-      "projectStatus": "Done",
-      "bodySha256": "c0e62f68c01557caf4507fac64248ba872a56cd7ec8e288d2ee8decaf0c08213"
+      "id": "122",
+      "file": "TODO/122_NDS_DEVELOPMENT_BOOK.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/121",
+      "number": 121,
+      "nodeId": "I_kwDOVhqp0s8AAAABdTbyCw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhG0Iwg",
+      "state": "open",
+      "reason": null,
+      "projectStatus": "In progress",
+      "bodySha256": "82ff613e2d021cecb8546a1630dbb2c471cc76bb196f9aa1b1064aa96d6a823d"
     }
   ]
 }

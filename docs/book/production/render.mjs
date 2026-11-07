@@ -8,9 +8,11 @@ import { confined, escape, sha256 } from './lib.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..', '..', '..');
-const candidate = path.join(here, '.candidate');
-const output = path.join(root, 'docs', 'book', 'output', '2026-11');
-const stem = 'Building-a-Little-Escape';
+const nds = process.argv.includes('--nds');
+const candidate = path.join(here, nds ? '.nds-candidate' : '.candidate');
+const output = nds ? path.join(root, 'docs', 'nds-book', 'output', '2026-11') :
+  path.join(root, 'docs', 'book', 'output', '2026-11');
+const stem = nds ? 'Two-Screens-One-Little-Escape' : 'Building-a-Little-Escape';
 const input = JSON.parse(await fs.readFile(path.join(candidate, 'source-manifest.json'), 'utf8'));
 for (const source of input.sources) {
   const bytes = await fs.readFile(await confined(root, source.path));
@@ -29,7 +31,8 @@ if (!browserPath) {
   }
 }
 if (!browserPath) throw new Error('Set BOOK_BROWSER to an installed supported Chromium browser.');
-const css = await fs.readFile(path.join(here, 'print.css'), 'utf8');
+const css = await fs.readFile(path.join(here, 'print.css'), 'utf8') +
+  (nds ? '\n' + await fs.readFile(path.join(here, 'nds.css'), 'utf8') : '');
 const errors = [];
 const routes = new Map([
   ['/', [candidate, 'manuscript.html', 'text/html']],
@@ -46,7 +49,7 @@ const server = http.createServer(async (request, response) => {
       route = [path.join(here, 'node_modules', 'mermaid', 'dist'), name.slice('/mermaid/'.length), 'text/javascript'];
     }
     if (!route) { response.writeHead(404); response.end('Not an approved book resource'); return; }
-    const bytes = await fs.readFile(await confined(route[0], route[1]));
+    const bytes = name === '/print.css' ? css : await fs.readFile(await confined(route[0], route[1]));
     response.writeHead(200, { 'Content-Type': route[2], 'Cache-Control': 'no-store' });
     response.end(bytes);
   } catch (error) {
@@ -142,7 +145,7 @@ try {
       pages: pages.querySelectorAll('.pagedjs_page').length,
       diagrams: pages.querySelectorAll('.diagram svg').length,
       images: pages.querySelectorAll('.image-frame img').length,
-      learningMarkers: [...pages.querySelectorAll('h2[id],h3[id]')].map(node => node.id).filter(id => /^CH\d{2}-[WRQA]\d{2}$/.test(id)),
+      learningMarkers: [...pages.querySelectorAll('h2[id],h3[id]')].map(node => node.id).filter(id => /^(?:CH|ND)\d{2}-[WRQA]\d{2}$/.test(id)),
       pageMap, missingLinks: [...new Set(missingLinks)], missingImages, overflow, blankPages,
       minimumDiagramPoints, diagramScales, textBlocks, contentBounds
     };
@@ -167,10 +170,10 @@ try {
   for (const chapter of input.chapters) {
     if (!report.pageMap[chapter.id] || !report.pageMap[`opening-${chapter.id}`]) throw new Error(`Missing chapter: ${chapter.id}`);
   }
-  const reader = await page.evaluate(printCss => {
+  const reader = await page.evaluate(({ printCss, title }) => {
     const styles = [...document.querySelectorAll('head style')].map(element => element.outerHTML).join('\n');
-    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Building a Little Escape - reading edition</title><style>${printCss}</style>${styles}</head><body>${document.querySelector('#pages').outerHTML}</body></html>`;
-  }, css);
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title} - reading edition</title><style>${printCss}</style>${styles}</head><body>${document.querySelector('#pages').outerHTML}</body></html>`;
+  }, { printCss: css, title: escape(input.title) });
   if (/<script\b/i.test(reader) || /\b(?:src|href)="(?:https?:)?\/\//i.test(reader.replace(/<a\b[^>]*>/gi, ''))) {
     throw new Error('Instant reader contains a script or external resource.');
   }
@@ -206,7 +209,7 @@ try {
   }));
   await fs.writeFile(path.join(candidate, 'chapter-pages.json'), JSON.stringify(chapterPages, null, 2));
   const review = process.env.BOOK_REVIEW_DIR;
-  const arguments_ = [path.join(here, 'review.py'), candidate];
+  const arguments_ = [path.join(here, nds ? 'review-nds.py' : 'review.py'), candidate];
   if (review) arguments_.push(review);
   console.log(execFileSync('python', arguments_, { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }).trim());
   const pdfReview = JSON.parse(await fs.readFile(path.join(candidate, 'pdf-review.json'), 'utf8'));
@@ -229,8 +232,8 @@ try {
   };
   await fs.writeFile(path.join(candidate, 'edition-manifest.json'), JSON.stringify(manifest, null, 2));
   await fs.writeFile(path.join(candidate, 'REVIEW.md'), `# Edition review\n\nPDF SHA-256: \`${manifest.pdf.sha256}\`\n\nMechanical checks passed for ${report.pages} native A4 pages, ${pdfReview.bookmarks} bookmarks and ${report.diagrams} diagrams. Visual review is **pending** for this exact PDF. Rendering or generating review images does not constitute visual inspection, human acceptance or publication clearance.\n\nA rebuild replaces this note so that an earlier review cannot silently qualify different bytes.\n`);
-  await fs.writeFile(path.join(candidate, 'chapter-concordance.html'), `<!doctype html><meta charset="utf-8"><title>Chapter page map</title><h1>Building a Little Escape - chapter page map</h1><p>The first Markdown edition has no printed page numbers. Stable IDs map to this PDF only.</p><table><tr><th>ID</th><th>Title</th><th>Opening</th><th>Content pages</th></tr>${chapterPages.map(item => `<tr><td>${item.id}</td><td>${escape(item.title)}</td><td>${item.openingPage}</td><td>${item.startPage}-${item.endPage}</td></tr>`).join('')}</table>`);
-  await fs.writeFile(path.join(candidate, 'index.html'), `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(input.title)}</title><style>body{max-width:48rem;margin:10vh auto;padding:2rem;color:#302a3b;background:#faf7f0;font:1.15rem/1.6 Georgia,serif}h1{font-size:3rem;color:#51416a}a{color:#51416a}li{margin:1rem 0}</style><h1>${escape(input.title)}</h1><p>The BowserBOY engineering book. Second edition, November 2026.</p><ul><li><a href="${stem}.pdf">Read the PDF - ${report.pages} pages</a></li><li><a href="Reading-Edition.html">Open the instant offline reader</a></li><li><a href="chapter-concordance.html">Chapter page map</a></li><li><a href="edition-manifest.json">Exact edition and checks</a></li><li><a href="REVIEW.md">Review scope and limits</a></li><li><a href="THIRD_PARTY_NOTICES.md">Project artwork and dependency provenance</a></li></ul><p>Fourteen chapters, ${report.diagrams} rendered diagrams, worked examples, changed-condition retries and explained exercises. Fixed A4 reading view; no commercial ROM or firmware included. Local delivery, not a hosted publication.</p></html>`);
+  await fs.writeFile(path.join(candidate, 'chapter-concordance.html'), `<!doctype html><meta charset="utf-8"><title>Chapter page map</title><h1>${escape(input.title)} - chapter page map</h1><p>The Markdown edition has no printed page numbers. Stable IDs map to this PDF only.</p><table><tr><th>ID</th><th>Title</th><th>Opening</th><th>Content pages</th></tr>${chapterPages.map(item => `<tr><td>${item.id}</td><td>${escape(item.title)}</td><td>${item.openingPage}</td><td>${item.startPage}-${item.endPage}</td></tr>`).join('')}</table>`);
+  await fs.writeFile(path.join(candidate, 'index.html'), `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(input.title)}</title><style>body{max-width:48rem;margin:10vh auto;padding:2rem;color:#302a3b;background:#faf7f0;font:1.15rem/1.6 Georgia,serif}h1{font-size:3rem;color:#51416a}a{color:#51416a}li{margin:1rem 0}</style><h1>${escape(input.title)}</h1><p>${escape(nds ? 'The separate BowserBOY DS development-journey and engineering book. First NDS edition, November 2026.' : 'The BowserBOY engineering book. Second edition, November 2026.')}</p><ul><li><a href="${stem}.pdf">Read the PDF - ${report.pages} pages</a></li><li><a href="Reading-Edition.html">Open the instant offline reader</a></li><li><a href="chapter-concordance.html">Chapter page map</a></li><li><a href="edition-manifest.json">Exact edition and checks</a></li><li><a href="REVIEW.md">Review scope and limits</a></li><li><a href="THIRD_PARTY_NOTICES.md">Project artwork and dependency provenance</a></li></ul><p>${input.chapters.length} chapters, ${report.diagrams} rendered diagrams, worked examples, changed-condition retries and explained exercises. Fixed A4 reading view; no commercial ROM or firmware included. Local delivery, not a hosted publication.</p></html>`);
   await fs.copyFile(path.join(root, 'THIRD_PARTY_NOTICES.md'), path.join(candidate, 'THIRD_PARTY_NOTICES.md'));
   const selection = [
     'index.html', `${stem}.pdf`, 'Reading-Edition.html', 'chapter-concordance.html',

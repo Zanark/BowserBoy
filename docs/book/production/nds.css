@@ -1,0 +1,19 @@
+:root { --purple: #21585d; --rust: #82572f; --ink: #203239; }
+@page {
+  @top-left { content: 'TWO SCREENS, ONE LITTLE ESCAPE'; }
+}
+.cover.nds-cover {
+  background: #102b38; color: #e6f4ee; padding: 37mm 23mm 25mm;
+  border-bottom: 12mm solid #8fcdb8;
+}
+.nds-cover .eyebrow { color: #a4e4d8; font-size: 11pt; letter-spacing: 3px; }
+.nds-cover h1 { color: #f0fff6; font: 40pt/1.12 Georgia, serif; margin: 14mm 0 8mm; }
+.nds-cover .subtitle { color: #b7ddd7; font: 16pt/1.45 Arial, sans-serif; max-width: 154mm; }
+.nds-cover .cover-logo { width: 150mm; height: 55mm; object-fit: contain; margin: 15mm 0 10mm; }
+.nds-cover .edition { color: #b7ddd7; border-top: 1pt solid #649495; padding-top: 6mm; font: 11pt/1.5 Arial, sans-serif; }
+.chapter-opening { background: #edf5f0; }
+.part-opening { background: #21585d; }
+.chapter-kicker { color: #21585d; }
+th { background: #e2efea; }
+a { color: #21585d; }
+.epoch { background: #f1f5ed; }

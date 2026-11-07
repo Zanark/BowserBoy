@@ -37,3 +37,11 @@ test('fence checks catch swallowed chapter content without rejecting nested shor
   checkFences('````js\n```\n````', 'valid');
   assert.throws(() => checkFences('```mermaid\nA --> B\n', 'broken'), /Unclosed.*broken/);
 });
+
+test('independent NDS learning IDs retain pairing checks and reject cross-book markers', () => {
+  const valid = ['W01', 'R01', 'Q01', 'A01'].map(suffix => `## ND06-${suffix} - Example`).join('\n');
+  assert.equal(checkLearning(valid, 'ND06').length, 4);
+  assert.throws(() => checkLearning(`${valid}\n## CH06-Q02 - Other book`, 'ND06'), /Wrong chapter/);
+  assert.throws(() => checkLearning(`${valid}\n## ND06-Q02 - Unanswered`, 'ND06'), /Unanswered/);
+  assert.throws(() => checkLearning(`${valid}\n## ND06-A02 - Orphan`, 'ND06'), /Orphan/);
+});

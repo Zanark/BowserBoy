@@ -17,8 +17,8 @@
 | Current implementation and boundaries | [Architecture](ARCHITECTURE.md) |
 | Tests, actual deployment and public evidence | [Verification](VERIFICATION.md) |
 | Capture editions, artwork and motion provenance | [Media](MEDIA.md) |
-| Chaptered technical explanation | [Engineering book](book/README.md) |
-| Rendered PDF, offline reader and current lessons | [Read the PDF](book/published/Building-a-Little-Escape.pdf), [second edition/build](book/editions/2026-11/README.md), [review record](book/editions/2026-11/REVIEW.md) |
+| NDS development journey and engineering, including shared infrastructure | [Two Screens, One Little Escape](nds-book/README.md), [PDF](nds-book/published/Two-Screens-One-Little-Escape.pdf), [offline reader](nds-book/published/Reading-Edition.html), [review](nds-book/REVIEW.md) |
+| Preserved GBA engineering book | [Building a Little Escape](book/README.md), [PDF](book/published/Building-a-Little-Escape.pdf), [second edition/build](book/editions/2026-11/README.md), [historical review](book/editions/2026-11/REVIEW.md) |
 | Workstreams and causal development history | [TODO index](../TODO/00_INDEX.todo), [ledger](../TODO/04_DEVELOPMENT_LEDGER.todo) |
 | Dependencies and supplied artwork | [Third-party notices](../THIRD_PARTY_NOTICES.md) |
 
@@ -43,6 +43,7 @@ policy for this repository.
 | `tests/unit/`, `tests/browser/` | Correctness checks using original Pixel Lab (GBA) and Twin Lab (DS) |
 | `docs/`, `docs/images/` | Current guides, evidence and captioned showcase media |
 | `docs/book/` | Preserved first Markdown edition, second-edition additions and independent local production tooling |
+| `docs/nds-book/` | Independent DS manuscript, source register and separately published PDF/offline reader; no GBA-specific chapters |
 | `TODO/` | Stable numbered workstreams, index and development ledger |
 | `docs/releases/` | Versioned public milestones, package manifests and checksums |
 | `assets/demos/` | Separately authorized media/demo assets, not correctness fixtures or static build inputs |
@@ -57,6 +58,9 @@ artifacts, not Pages inputs or additional checked-in editions.
 `docs/book/published/` holds the separately tracked reviewed PDF/checksum for README
 readers and manual release attachment. This does not add the book to the static
 application build or change the frozen first-release archive.
+`docs/nds-book/published/` holds the independent DS PDF, scriptless offline reader
+and edition receipts; `docs/nds-book/output/` and `.nds-candidate/` are ignored.
+Neither book is part of the emulator's Pages application payload.
 Release ZIPs are generated local artifacts. All are ignored by Git.
 Old failure evidence is archived outside the repository before cleanup, not
 silently treated as current evidence. Private context state, memory, journal,

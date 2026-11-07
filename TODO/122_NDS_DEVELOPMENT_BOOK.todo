@@ -1,0 +1,54 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/121
+Milestone: A separate NDS development-journey and engineering book.
+Dependencies: 79, 114, 115, 116, 120.
+Purpose: Explain the Nintendo DS implementation, its causal development
+journey and relevant shared systems without repackaging the GBA book.
+
+Tasks:
+- [x] Author a source-pinned, chaptered NDS-only manuscript with diagrams,
+      algorithms, design principles, worked examples and explained exercises.
+- [x] Explain historical failures, compatibility boundaries and parked tests.
+- [x] Reuse the locked local book toolchain to create a new searchable PDF
+      and self-contained HTML reader without replacing the existing book.
+- [x] Inspect native content, links, fonts, clipping and rendered pages.
+- [x] Update documentation/navigation without expanding the GIF-first README.
+- [ ] Verify preservation, synchronize the issue/Project and publish as Zanark.
+
+Acceptance criteria:
+The NDS journey and technical reference have independent paths under
+docs/nds-book. No GBA hardware/runtime chapters are included. Shared systems
+are explained only where relevant to NDS. The original published GBA PDF
+retains SHA256 25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad.
+No private ROM, recording, transcript or context enters the deliverables.
+Source citations use the actual implementation revision. All selected
+chapters, diagrams, illustrations, exercises and references appear in the
+real PDF/HTML. Report structural, native and bounded visual review separately
+from human approval. Keep the existing 21 parked browser cases explicit.
+
+Completion evidence:
+Implementation source cutoff: 61845372142b41992916f3732ea102cc0f4c8edf.
+Initial worktree contains only nine unrelated dirty historical PNGs; retain
+them without staging or reverting them. Existing published book hash checked.
+Independent manuscript and actual PDF/offline reader complete:85A4 pages,
+13chapters/13diagrams/4captioned stills/52learning markers.45pinned source
+files verified. Native PDF has21bookmarks/58internal/143HTTPS links,
+7embedded fonts,598source blocks/605paginated blocks/158diagram labels
+covered, zero overflow/missing content/bad links. Minimum diagram8.5749pt;
+8ptgate retained. Offline HTML85pages/zero scripts/external requests.
+PDF SHA256:0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f.
+HTML SHA256:fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894.
+All85pages contact-sheet inspected; native pages1/2/26/38/51/80/83 reviewed.
+Four publishing regressions and repository JavaScript syntax checks pass.
+Preserved original PDF hash unchanged. Actual review/limits in
+docs/nds-book/REVIEW.md. Repository publication and hosted follow-through
+remain pending; local rendering does not prove deployment or human approval.
+
+Completion log:
+2026-11-07: Owner requests a new book dedicated to NDS development and
+documentation, allowing common infrastructure but excluding GBA documentation.
+Separate edition paths and a source-pinned evidence boundary established.
+2026-11-07: Actual rendering caught paragraph-adjacent image captions and
+undersized diagram labels. Fixed manuscript separation/concise node labels
+and restored shared180mmfigure allowance without weakening any review gate.
+Qualified independent edition promoted locally with original GBA book intact.

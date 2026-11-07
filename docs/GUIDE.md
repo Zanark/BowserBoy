@@ -118,6 +118,10 @@ spacing, not drawing through objects. Game boxes are not implemented yet.
 
 ## Nintendo DS
 
+Read the separate [NDS development journey and engineering book](nds-book/README.md)
+for the DS history, runtime, dual screens, touch, saves, geometry and release evidence.
+It does not replace the preserved GBA book.
+
 Open [BowserBOY online](https://zanark.github.io/BowserBoy/), or start the
 development server with `npm run dev` and open **http://127.0.0.1:5173**.
 Both consoles share the desk but are separate models.
