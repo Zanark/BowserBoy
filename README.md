@@ -32,7 +32,6 @@ Two consoles. Three desk lamps. Your own local games.
 *One shared desk. Separate consoles, saves and controls.*
 
 <a id="bowserboy-ds-local-prototype"></a>
-<a id="bowserboy-ds"></a>
 
 <details>
 <summary><h2>BowserBOY DS</h2></summary>
@@ -77,8 +76,6 @@ Two consoles. Three desk lamps. Your own local games.
 [DS controls, saves &amp; compatibility limits](docs/GUIDE.md#nintendo-ds) &middot; [Development journey &amp; PDF](docs/nds-book/README.md)
 
 </details>
-
-<a id="bowserboyadvanced"></a>
 
 <details>
 <summary><h2>BowserBOYADVANCED</h2></summary>
@@ -137,16 +134,12 @@ Two consoles. Three desk lamps. Your own local games.
 
 </details>
 
-<a id="make-the-desk-yours"></a>
-
 <details>
 <summary><h2>Make the desk yours</h2></summary>
 
 ![Switch the tripod and room through independent combinations and complete lamp darkness](docs/images/lighting-overview.gif?v=untouched-opening-20261107)
 
 *Tripod only. Both. Room only. All off. The tripod stays fixed.*
-
-<a id="pear-boy"></a>
 
 <details>
 <summary><h3>Pear boy</h3></summary>
@@ -160,8 +153,6 @@ Two consoles. Three desk lamps. Your own local games.
 *Scream. Bounce. Tiny angry eyes. Pout. Smile. Always three dots per cheek.*
 
 </details>
-
-<a id="the-little-axolotl"></a>
 
 <details>
 <summary><h3>The little axolotl</h3></summary>

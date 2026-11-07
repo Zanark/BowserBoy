@@ -33,7 +33,8 @@ supplied cover, retain85/328pages and make zero script/external requests.
 GitHub GFM plus Edge verifies three decoded linked covers in GBA/modeling/NDS
 order, matching PDF labels, five closed disclosures including two nested
 companions, all five open/close interactions, retained26GIFs and390px fit.
-Explicit heading anchors preserve the README's section navigation.
+Actual GitHub adds heading permalinks inside summaries; avoid duplicate
+explicit aliases, which the Markdown API preview alone did not expose.
 Nine publishing regressions and both builder syntax checks pass.
 All12NDS and15modeling package files are accounted for by checksum manifests;
 all34NDS and84modeling working inputs match their recorded hashes and staged

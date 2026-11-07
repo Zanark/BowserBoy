@@ -22,10 +22,16 @@ Completion log:
   GBA remains byte-identical. Nine publishing regressions pass, gates intact.
   GitHub GFM/Edge verifies ordered GBA/modeling/NDS linked cover shelf,26GIFs,
   five default-closed sections/two nested companions and390px layout.
-  Add explicit anchors for section links; keep common desk links outside
+  Keep common desk links outside
   axolotl's child disclosure. No chapter rewrite or runtime acceptance claim.
   Prior editions remain at immutablec613465. Repository publication pending;
   unrelated prior Pages42404649055 failure is not repaired by these changes.
+- 2026-11-08 / Actual GitHub anchor correction (124):
+  Public964c67a matches all30package/cover/README files byte-for-byte.
+  Actual GitHub adds heading permalink IDs to raw summary headings, unlike
+  the Markdown API preview. Remove five redundant explicit aliases instead
+  of accepting duplicate IDs. Original legacy DS anchor remains intact.
+  Books are unchanged; actual public README interaction recheck follows.
 - 2026-11-08 / Modeling hosting recovered; delivery complete (123):
   Owner requests push. Fresh API/deployment-log inspection observes exact
   c613465 Pages42398430974 attempt3 already SUCCESS; hosting reports success,
