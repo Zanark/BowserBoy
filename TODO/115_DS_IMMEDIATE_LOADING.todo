@@ -1,0 +1,46 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/114
+Milestone: Show the DS and cartridge-loading animation immediately after ROM selection.
+Dependencies: None.
+Purpose: Leave the cartridge sidebar before slow local ROM identification or
+native-core startup, with visible loading feedback on the physical DS LCD.
+
+Tasks:
+- [x] Enter DS play view and close cartridge tools before reading the upload.
+- [x] Paint an original looping cartridge insertion on the loading LCD.
+- [x] Stop loading on native startup, failure or cancellation; respect reduced motion.
+- [x] Preserve the current DS session if a replacement ROM is rejected.
+- [x] Verify actual upload events, rendered loading, native handoff and recovery.
+- [x] Update the guide, ledger, index and verified issue/Project backlink.
+
+Acceptance criteria:
+The local upload event reveals DS play view while ROM reading is still pending.
+The physical lower LCD animates while reading and booting; reduced motion uses
+a static cartridge. Native pixels replace loading on success. Invalid files
+surface the established error UI without losing an existing DS session.
+Cancel remains usable during native startup. No commercial ROM fixture,
+third-party animation, gate bypass, reduced renderer sharpness or frozen-book edit.
+Technical completion and monitored publication are recorded separately.
+
+Completion evidence:
+Local technical completion: syntax check, all 61 unit tests and static build
+pass. Both new browser cases pass (31.2s): held real upload read, immediate
+sidebar exit/DS framing, animated LCD, actual DeSmuME homebrew handoff, invalid
+replacement retention, reduced motion and cancelled startup. Strengthened
+native-pixel restoration assertion passes on a separate positive run (29.9s).
+The three existing DS backup, GBA-isolation and checkpoint-reload cases pass
+together (1.1m). A rendered 960x720 loading screenshot was inspected; this is
+technical/visual inspection, not owner approval.
+Issue/Project synchronization initially verified the open/In progress mapping.
+Completion synchronization runs before the authorized commit.
+Publication is pending, independently of local completion; the actual exact-SHA
+deployment and live checks belong in the issue's final publication receipt.
+
+Completion log:
+2026-11-07: Owner reports slow NDS selection leaves the sidebar visible.
+Inspection finds full-file ROM digest and storage lookup precede launch's
+sidebar closure; existing LCD loading is static.
+2026-11-07: Local implementation and five focused scenarios complete without
+new skips, relaxed assertions, timeout changes or repeated failure repairs.
+An initial Windows path-regex selector selected no tests; basename selection
+executed the actual cases. Existing nine dirty PNGs and frozen book untouched.

@@ -294,6 +294,7 @@ export class DsController {
     this.view.changed = true;
   }
   clear() {
+    this.loading = null;
     this.releaseInputs();
     this.running = false; this.paused = false;
     this.frame?.remove(); this.frame = null;
@@ -301,26 +302,75 @@ export class DsController {
     for (const { reject, timer } of this.pending.values()) { clearTimeout(timer); reject(new Error('The DS cartridge session ended.')); }
     this.pending.clear();
   }
+  loadingStatus(detail) {
+    if (!this.running) this.status('LOADING CARTRIDGE', detail);
+    this.loading = { detail, frame: null };
+    this.paintLoading(0);
+  }
+  paintLoading(time) {
+    if (!this.loading) return;
+    const frame = this.view.reducedMotion.matches ? 0 : Math.floor(time / 160) % 12;
+    if (frame === this.loading.frame) return;
+    this.loading.frame = frame;
+    const map = this.model.screens[1].material.map;
+    const ctx = map.image.getContext('2d');
+    ctx.save();
+    ctx.scale(map.image.width / 512, map.image.height / 384);
+    ctx.fillStyle = '#081d2b'; ctx.fillRect(0, 0, 512, 384);
+    ctx.fillStyle = '#4d8b98'; ctx.fillRect(186, 190, 140, 24);
+    ctx.fillStyle = '#020d17'; ctx.fillRect(198, 190, 116, 10);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, 512, 194); ctx.clip();
+    const y = 52 + Math.min(frame / 8, 1) * 148;
+    ctx.fillStyle = '#a4e4d8'; ctx.fillRect(208, y, 96, 108);
+    ctx.fillStyle = '#183c50'; ctx.fillRect(216, y + 8, 80, 74);
+    ctx.fillStyle = '#c9ed71';
+    ctx.textAlign = 'center'; ctx.font = 'bold 28px monospace';
+    ctx.fillText('DS', 256, y + 54);
+    for (let pin = 0; pin < 6; pin++) ctx.fillRect(218 + pin * 13, y + 92, 9, 16);
+    ctx.restore();
+    ctx.textAlign = 'center'; ctx.fillStyle = '#c9ed71';
+    ctx.font = 'bold 26px monospace'; ctx.fillText('LOADING CARTRIDGE', 256, 268, 488);
+    ctx.fillStyle = '#8ed6e0'; ctx.font = '17px monospace';
+    ctx.fillText(this.loading.detail, 256, 304, 488);
+    for (let dot = 0; dot < 3; dot++) {
+      ctx.fillStyle = dot === Math.floor(frame / 4) ? '#c9ed71' : '#345967';
+      ctx.fillRect(232 + dot * 20, 334, 9, 9);
+    }
+    ctx.restore();
+    drawLcdCrt(ctx, 192);
+    map.needsUpdate = true;
+    this.view.changed = true;
+  }
   async load(file) {
-    const game = await identifyDsRom(file);
-    if (this.running) await this.save();
+    if ($('ds-tools').open) $('ds-tools').close();
     await this.selectConsole('ds');
-    const saved = this.storageAvailable ? await this.store.get(game.id) : null;
-    this.clear();
-    this.cartridge = file; this.game = game;
-    this.battery = saved?.sram ?? null;
-    $('ds-game').textContent = `${game.title} / ${(game.size / 1024 / 1024).toFixed(2)} MB / LOCAL NDS`;
-    this.model.cartridge.visible = true;
-    const moving = !this.view.reducedMotion.matches;
-    this.model.cartridge.position.y = moving ? 3.1 : .44;
-    this.inserting = moving ? { elapsed: 0, lastPaint: null } : null;
-    this.view.host.dataset.dsCartridge = moving ? 'inserting' : 'seated';
-    await this.launch(saved, null);
+    if (this.view.mode !== 'playing') this.view.setView('playing');
+    this.loadingStatus('READING LOCAL ROM');
+    this.feedback('Reading DS cartridge in the background. Your ROM stays in this browser.');
+    try {
+      const game = await identifyDsRom(file);
+      if (this.running) await this.save();
+      const saved = this.storageAvailable ? await this.store.get(game.id) : null;
+      this.clear();
+      this.cartridge = file; this.game = game;
+      this.battery = saved?.sram ?? null;
+      $('ds-game').textContent = `${game.title} / ${(game.size / 1024 / 1024).toFixed(2)} MB / LOCAL NDS`;
+      this.model.cartridge.visible = true;
+      const moving = !this.view.reducedMotion.matches;
+      this.model.cartridge.position.y = moving ? 3.1 : .44;
+      this.inserting = moving ? { elapsed: 0, lastPaint: null } : null;
+      this.view.host.dataset.dsCartridge = moving ? 'inserting' : 'seated';
+      await this.launch(saved, null);
+    } catch (error) {
+      if (this.loading && !this.running) this.status('DS COULD NOT LOAD', 'OPEN DS CARTRIDGES TO RETRY');
+      throw error;
+    } finally { this.loading = null; this.view.changed = true; }
   }
   async launch(restore, battery) {
     this.clear();
     this.powered = true;
-    this.status('READING DS CARTRIDGE', 'DOWNLOADING DESMUME');
+    this.loadingStatus('STARTING DESMUME');
     if ($('ds-tools').open) $('ds-tools').close();
     this.feedback('Loading pinned DeSmuME. First launch requires internet; Cancel is available.');
     this.session = crypto.randomUUID();
@@ -372,6 +422,7 @@ export class DsController {
         const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
         if (!gl?.getContextAttributes().preserveDrawingBuffer) throw new Error('The DS framebuffer could not be retained for its physical screens.');
         this.source = canvas;
+        this.loading = null;
         this.outputs = this.model.screens.map(screen => {
           const map = canvasTexture(256, 192, () => {});
           map.minFilter = map.magFilter = THREE.NearestFilter; map.generateMipmaps = false;
@@ -569,6 +620,7 @@ export class DsController {
     this.heldStylus.position.copy(position);
   }
   paint(time, delta) {
+    this.paintLoading(time);
     if (this.inserting) {
       const motion = this.inserting;
       motion.elapsed += Math.max(0, time - (motion.lastPaint ?? time));
@@ -608,7 +660,7 @@ export class DsController {
     }
   }
   paintScreens() {
-    if (!this.source) return;
+    if (this.loading || !this.source) return;
     try {
       const regions = dsScreenRegions(this.source.width, this.source.height);
       for (const [i, region] of regions.entries()) {

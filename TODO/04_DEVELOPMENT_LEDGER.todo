@@ -14,6 +14,20 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Immediate DS loading handoff (115):
+  Move DS selection, play framing and sidebar closure ahead of ROM header,
+  digest and saved-checkpoint awaits. The delay remains real; expose it rather
+  than claim faster emulation. Reuse the lower LCD canvas for an original
+  twelve-frame cartridge loop, updating only at 160ms frame boundaries.
+  The existing eligible-paint path requests room redraws without another
+  animation timer or texture allocation per frame. Reduced motion is static.
+  Keep an existing native source and output canvases during replacement-ROM
+  checking, then resume their normal copies if validation fails. Clear loading
+  on success, failed startup or cancel. Syntax,61unit tests and build pass.
+  Two new browser cases pass31.2s; the stronger native-pixel restoration
+  assertion passes29.9s. Existing DS backups, GBA isolation and saved reload
+  pass together1.1m. Inspect the rendered960x720loading screenshot; no owner
+  visual approval implied. No new skips or relaxed gates. Publication pending.
 - 2026-11-07 / Bounded documentation-deploy fixture follow-up (112):
   b243686/Pages42375153724 finishes92PASS/2FAIL/21SKIP/0NOT_RUN;
   build passes, deploy skips. All19logs inspected; prior0f979b8 stays live.

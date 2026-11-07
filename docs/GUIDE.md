@@ -176,7 +176,15 @@ You can also drop an authorized uncompressed `.nds` file onto the page.
 Only original DS headers with valid ARM9/ARM7 ranges and files from
 512 bytes through 512 MiB are accepted. DSi-enhanced/DSi-only files are
 rejected explicitly; filename/header checks do not certify game compatibility.
-Selecting a cartridge powers on the DS. First launch downloads the pinned
+Selecting a cartridge powers on the DS.
+The cartridge sidebar closes immediately after upload selection and the DS
+enters play view before reading the ROM. An original looping cartridge graphic
+on the lower LCD covers local identification and native startup, then yields to
+the game. Reduced motion keeps the loading cartridge still. This feedback does
+not make the core download faster. Open DS cartridges to cancel native startup
+or retry an error; a rejected replacement file retains the current DS session.
+
+First launch downloads the pinned
 non-threaded EmulatorJS 4.2.3 DeSmuME runtime. External BIOS and BIOS-menu boot
 are disabled. Twin Lab boots without supplied BIOS/firmware, not proof that
 every game will. No commercial games are included or used as test fixtures.

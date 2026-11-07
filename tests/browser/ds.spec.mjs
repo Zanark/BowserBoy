@@ -58,6 +58,113 @@ async function bootDsDemo(page) {
   return errors;
 }
 
+async function holdDsUpload(page) {
+  const response = await page.request.get(new URL('assets/twin-lab.nds', page.url()).href);
+  expect(response.ok()).toBe(true);
+  await page.evaluate(() => {
+    const read = File.prototype.arrayBuffer;
+    const gate = new Promise(resolve => { window.releaseDsRomRead = resolve; });
+    File.prototype.arrayBuffer = function () {
+      if (this.name !== 'Loading Test.nds') return read.call(this);
+      File.prototype.arrayBuffer = read;
+      window.dsRomReadWaiting = true;
+      return gate.then(() => read.call(this));
+    };
+  });
+  await page.locator('#ds-rom-file').setInputFiles({
+    name: 'Loading Test.nds', mimeType: 'application/octet-stream', buffer: await response.body(),
+  });
+  await expect.poll(() => page.evaluate(() => window.dsRomReadWaiting)).toBe(true);
+}
+
+test('DS upload leaves the sidebar before ROM reading, animates its LCD and hands off to native pixels', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 960, height: 720 });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await waitForDesk(page);
+  await page.locator('#select-ds').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#ds-open').click();
+  await holdDsUpload(page);
+  await expect(page.locator('#ds-tools')).not.toBeVisible();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const loadingLcd = () => page.evaluate(async () =>
+    (await import('./src/app.js')).view.ds.screens[1].material.map.image.toDataURL());
+  const first = await loadingLcd();
+  await expect.poll(loadingLcd).not.toBe(first);
+  await page.screenshot({ path: testInfo.outputPath('ds-cartridge-loading.png') });
+  await page.evaluate(() => window.releaseDsRomRead());
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.dsController.running), { timeout: 90000 }).toBe(true);
+  const lcdCorners = () => page.evaluate(async () => {
+    const ds = (await import('./src/app.js')).view.dsController;
+    return ds.outputs.map(canvas => Array.from(canvas.getContext('2d')
+      .getImageData(0, 0, 1, 1).data).slice(0, 3));
+  });
+  await expect.poll(async () => {
+    const [top, bottom] = await lcdCorners();
+    return top.some((value, i) => value !== bottom[i]);
+  }).toBe(true);
+  const nativeCorners = await lcdCorners();
+  await page.evaluate(async () => {
+    const ds = (await import('./src/app.js')).view.dsController;
+    clearInterval(ds.autosave);
+    window.previousDsSession = { source: ds.source, frame: ds.frame, game: ds.game.id };
+  });
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-rom-file').setInputFiles({
+    name: 'Broken.nds', mimeType: 'application/octet-stream', buffer: Buffer.alloc(10),
+  });
+  await expect(page.locator('#ds-status')).toContainText('between 512 bytes and 512 MB');
+  expect(await page.evaluate(async () => {
+    const ds = (await import('./src/app.js')).view.dsController;
+    return ds.running && !ds.busy && !ds.loading && ds.source === window.previousDsSession.source &&
+      ds.frame === window.previousDsSession.frame && ds.game.id === window.previousDsSession.game;
+  })).toBe(true);
+  await page.locator('#ds-close').click();
+  await expect.poll(lcdCorners).toEqual(nativeCorners);
+  expect(errors).toEqual([]);
+});
+
+test('DS loading respects reduced motion and stops when native startup is cancelled', async ({ page }) => {
+  await page.setViewportSize({ width: 960, height: 720 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.route('**/player.html', route => route.fulfill({
+    contentType: 'text/html', body: '<!doctype html><title>Deferred DS runtime fixture</title>',
+  }));
+  await page.goto('./');
+  await waitForDesk(page);
+  await page.locator('#select-ds').click();
+  await page.locator('#ds-open').click();
+  await holdDsUpload(page);
+  await expect(page.locator('#ds-tools')).not.toBeVisible();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect(await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const lcd = view.ds.screens[1].material.map.image;
+    const before = lcd.toDataURL();
+    view.dsController.paintLoading(160 * 5);
+    return lcd.toDataURL() === before;
+  })).toBe(true);
+  await page.evaluate(() => window.releaseDsRomRead());
+  await expect.poll(() => page.evaluate(async () =>
+    !!(await import('./src/app.js')).view.dsController.launchCallbacks)).toBe(true);
+  await page.locator('#ds-open').click();
+  await page.locator('#ds-cancel').click();
+  await expect(page.locator('#ds-status')).toContainText('DS launch cancelled');
+  expect(await page.evaluate(async () => {
+    const ds = (await import('./src/app.js')).view.dsController;
+    return !ds.loading && !ds.busy && !ds.running && !ds.powered && !ds.frame;
+  })).toBe(true);
+  await page.locator('#ds-rom-file').setInputFiles({
+    name: 'Broken.nds', mimeType: 'application/octet-stream', buffer: Buffer.alloc(10),
+  });
+  await expect(page.locator('#ds-status')).toContainText('between 512 bytes and 512 MB');
+  expect(await page.evaluate(async () => !(await import('./src/app.js')).view.dsController.loading)).toBe(true);
+});
+
 test('separate DS boots original homebrew, splits both LCDs and accepts buttons and physical-screen stylus', async ({ page }, testInfo) => {
   test.skip(!!process.env.CI, 'Parked after failed CI repair: native framebuffer evaluation timeout; follow-up https://github.com/Zanark/BowserBoy/issues/104');
   const errors = [];

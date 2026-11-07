@@ -1,5 +1,6 @@
 BowserBOY workstreams
 ====================
+115_DS_IMMEDIATE_LOADING.todo - DONE locally: immediate DS upload handoff and animated LCD; five focused scenarios pass; monitored publication pending.
 114_DS_CONSOLE_STATUS.todo - DONE: supported-console copy and DS selector verified on the live site through112; compatibility limits preserved.
 113_PEAR_BOY_CUTER_RECOVERY.todo - DONE: slower screams, compact angry eyes and squeezed-eye pout, six freckles; rendered and live qualification through112.
 112_MONITORED_UI_RELEASE.todo - DONE:0f979b8/Pages42374138539 deploys with94PASS/21SKIP/0FAIL/0UNRUN;48public byte checks and six live browser cases pass; marker exception explicit.
