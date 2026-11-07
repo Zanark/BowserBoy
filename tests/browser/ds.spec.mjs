@@ -44,8 +44,16 @@ async function bootDsDemo(page) {
   await page.locator('#select-ds').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await page.locator('#ds-open').click();
+  await page.evaluate(() => {
+    window.dsBootStatuses = [];
+    new MutationObserver(records => {
+      window.dsBootStatuses.push(...records.flatMap(record =>
+        Array.from(record.addedNodes, node => node.textContent)));
+    }).observe(document.getElementById('ds-status'), { childList: true });
+  });
   await page.locator('#ds-demo').click();
-  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
+  await expect.poll(() => page.evaluate(() => window.dsBootStatuses.join('\n')), { timeout: 90000 })
+    .toContain('DS cartridge running');
   await page.evaluate(async () => clearInterval((await import('./src/app.js')).view.dsController.autosave));
   return errors;
 }

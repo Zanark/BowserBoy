@@ -98,3 +98,16 @@ desktop/touch relocation and Pear timing/freckles/painted recovery. No owner
 visual approval, parked coverage restoration or real-phone claim.
 Close112/113/114and reconcile published availability; monitor the resulting
 documentation-only deployment without creating an endless receipt-commit loop.
+2026-11-07: Documentation b243686/Pages42375153724 finishes92PASS/
+2FAIL/21SKIP/0NOT_RUN across19shards; build passes, deploy skips.
+The preceding0f979b8release remains live. Newly failing DS native backup
+misses its transient running status after autosave replaces it; observe actual
+status mutations before Demo with the same90s bound and original assertions.
+All three shared-helper cases pass locally1.2m. Native settings trace reaches
+final reload/startup near its120s deadline. One960x720native-operation
+fixture retains320/1440layout checks,720px iframe and every behavior/deadline/
+pixel-ratio assertion; its single local attempt passes33.4s. Screenshot goes
+to per-test evidence instead of overwriting protected native-settings.png.
+Both new failures received one bounded fixture repair; none newly parked.
+Publish and monitor this test-only follow-up; keep final run receipt in
+owned continuity/remotes rather than another documentation-only deployment.

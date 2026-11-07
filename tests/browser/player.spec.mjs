@@ -87,6 +87,8 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   await page.setViewportSize({ width: 320, height: 568 });
   await expect(nativeSettings).toBeInViewport({ ratio: 1 });
   await page.setViewportSize({ width: 1440, height: 1100 });
+  await expect(nativeSettings).toBeInViewport({ ratio: 1 });
+  await page.setViewportSize({ width: 960, height: 720 });
   await startDemo(page);
   const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
   const identity = await runtime.evaluate(() => window.settingsIdentity = crypto.randomUUID());
@@ -115,7 +117,7 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   await page.keyboard.press('ArrowRight');
   expect(await runtime.evaluate(() => window.settingsInputs)).toEqual([]);
   await runtime.getByRole('button', { name: 'Graphics Settings', exact: true }).click();
-  await page.locator('#frame-host').screenshot({ path: 'docs/images/native-settings.png' });
+  await page.locator('#frame-host').screenshot({ path: test.info().outputPath('native-settings.png') });
   await runtime.getByRole('button', { name: 'Speed Options', exact: true }).click();
   await runtime.getByRole('button', { name: /^Fast Forward Ratio/ }).click();
   await runtime.getByRole('button', { name: '2.0', exact: true }).click();
@@ -149,7 +151,7 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   await page.locator('#shader').selectOption('crt-geom.glslp');
   await expect(page.locator('#native-open')).toBeEnabled();
   expect(await runtime.evaluate(() => window.EJS_emulator.getSettingValue('shader'))).toBe('crt-geom.glslp');
-  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.setViewportSize({ width: 960, height: 720 });
   await closeTools(page);
   expect(await page.locator('#frame-host iframe').evaluate((frame) => frame.clientWidth)).toBe(720);
   await page.locator('#hardware-power').click();
