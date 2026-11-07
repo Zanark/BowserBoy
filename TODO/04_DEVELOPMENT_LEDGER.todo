@@ -14,6 +14,31 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Selector palettes follow the actual supplied console logos:
+  Owner's pictured GBA/DS controls previously share teal and selected lime.
+  Inspect supplied assets rather than assume manufacturer branding: GBA is
+  purple/magenta/lavender; DS electric blue/cyan/white. Add scoped gradient,
+  border/text and interaction colors with selected-only glow; keep44px
+  targets, disabled behavior and PROTOTYPE. No logo or3Dmaterial changes.
+  Extend the existing real branding case: Edge24.4s passes both palettes,
+  selection glows and exact GBA restoration. Actual-markup/style fixture
+  passes1440/390px containment, hover,3px keyboard focus and disabled state;
+  inspect a crop from the actual full-app capture, not just color constants.
+  Syntax/44units/build/browser syntax/whitespace pass. A backslash path
+  selector first matches no cases; unique-title selection corrects it.
+  Workstream92tracks normal publication separately;74/88recovery persists.
+- 2026-11-07 / Cap correction passes hosted; full recovery remains blocked:
+  Commit7bc93c56fc63efd647a7ee6f4115011542e14fa4 author/committer Zanark,
+  required trailers verified and pushed. Exact automatic Pages42333210355
+  finishesFAILURE: build/11browser shards pass,8fail;81cases pass/12fail,
+  deploy skipped. Three corrected cap cases pass hosted shard17.
+  Shell/fullscreen pause also passes hosted and unchanged local Edge20.4s/
+  SwiftShader33.4s; no root-cause repair inferred for its previous failure.
+  DS transitions/pose/placement remain moving after15s; physical precision
+  in three poses, quick taps, pen/shell and dark-room work exhaust120s.
+  Pear visible descent and CRT reload readiness also fail. Do not mask
+  failures by lowering quality, extending deadlines, retries or manual reruns.
+  Exact latest receipt/failed logs retained; no new publication claimed.
 - 2026-11-07 / Guarded hosted outcome and first cap-sample timing:
   Exact836fc09/Pages42331132482 fails: build/11browser shards pass,
   8fail;81cases pass/12fail,deploy skipped. Complete quick taps and

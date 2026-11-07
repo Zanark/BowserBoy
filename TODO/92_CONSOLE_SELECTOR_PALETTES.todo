@@ -1,0 +1,42 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/91
+Milestone: Console selectors reflect their supplied BowserBOY logos.
+Dependencies: 47 separate website/console identities; 79 DS selector;
+74 passing hosted gate for publication.
+Purpose: Replace the shared teal/lime picker colors with GBA purple/magenta
+and DS electric blue/cyan, without recoloring the consoles or supplied logos.
+
+Tasks:
+- [x] Apply console-specific gradients, text, borders, hover and focus accents.
+- [x] Preserve a distinct selected glow, disabled state and PROTOTYPE label.
+- [x] Extend the existing real-console branding regression without a new case.
+- [x] Check desktop/mobile targets, keyboard focus and actual rendered colors.
+- [x] Update the index, development ledger and verification evidence.
+- [ ] Qualify the normal automatic Pages deployment.
+
+Acceptance criteria:
+Both buttons retain their own logo palette in either selection state; only
+the selected button has the active glow. The real console switch restores
+the previous GBA appearance. Keyboard focus remains visible, targets remain
+at least44px high at desktop/mobile widths and labels/layout are unchanged.
+Supplied art, physical materials, native input and all deployment gates remain.
+
+Completion evidence:
+Syntax,44unit tests, build, browser-file syntax and whitespace pass.
+The existing real 3D/branding selection case passes Edge24.4s, including
+purple/cyan border relationships, selected-only glows and exact GBA restore.
+A separate actual-markup/stylesheet fixture passes1440/390px containment,
+44px targets, both selections, hover/keyboard accent agreement, visible3px
+focus and disabled opacity. This fixture is styling evidence, not native input.
+An actual full-app DS-selected capture is visually reviewed: purple GBA,
+electric blue/cyan DS, white text and retained PROTOTYPE. No owner approval
+or successful new publication is inferred. Existing74/88recovery remains open.
+
+Completion log:
+2026-11-07: Owner requests selectors matching each console's logo. Inspect
+the actual supplied assets: GBA is purple/magenta/lavender; DS is blue/cyan/
+white, not stock Nintendo red. Reuse the existing console-specific dock
+language through local picker variables; retain sizing and behavior.
+2026-11-07: A Windows backslash test-path argument matches no cases; rerun
+by the existing unique test title, which passes. No deadline, retry, case
+count, shard inventory or render-quality change.

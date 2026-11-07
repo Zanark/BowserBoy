@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "88",
-      "file": "TODO/88_DS_PRECISE_TOUCHSCREEN.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/86",
-      "number": 86,
-      "nodeId": "I_kwDOVhqp0s8AAAABdJE8Yw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGrGJw",
+      "id": "92",
+      "file": "TODO/92_CONSOLE_SELECTOR_PALETTES.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/91",
+      "number": 91,
+      "nodeId": "I_kwDOVhqp0s8AAAABdM-rLQ",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGuiCM",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "2ae1f057894ebe5a092282a402d72b4cac13e2f73f747740a47767bfe6ec207a"
+      "bodySha256": "c38eb61aa664f0ce211601608fc7e4a9d5d13114702d842da9b6107c60e900e6"
     }
   ]
 }

@@ -30,6 +30,15 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Cap-fixture7bc93c5/Pages42333210355 finishesFAILURE: build and11browser
+shards pass,8fail;81cases pass/12fail,deploy skipped. Three corrected cap
+cases pass hosted shard17. Shell/fullscreen also passes hosted and unchanged
+local Edge20.4s/SwiftShader33.4s; no prior failure diagnosis inferred.
+DS lifecycle/pose/placement, flat/rolled/upside-down precision, quick taps,
+held pen/shell, pear descent, dark-room and GBA CRT reload remain failed.
+Preserve93cases/19shards, retries0 and every original assertion/deadline.
+No new qualified deployment; remaining software/hosted latency unresolved.
+
 Guarded836fc09/Pages42331132482 finishesFAILURE: build and11browser
 shards pass,8fail;81cases pass/12fail,deploy skipped. Quick taps and
 upside-down/high-DPI precision pass this run, not full hosted qualification.

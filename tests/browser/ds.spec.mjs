@@ -931,6 +931,20 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
     return { background: style.backgroundImage, border: style.borderColor };
   });
   const gbaDock = await dockStyle();
+  const pickerStyle = () => page.locator('.console-picker button').evaluateAll(buttons => buttons.map(button => {
+    const style = getComputedStyle(button);
+    return { border: style.borderColor.match(/[\d.]+/g).map(Number), shadow: style.boxShadow };
+  }));
+  const expectLogoPalettes = ([gba, ds]) => {
+    expect(gba.border[0]).toBeGreaterThan(gba.border[1]);
+    expect(gba.border[2]).toBeGreaterThan(gba.border[0]);
+    expect(ds.border[1]).toBeGreaterThan(ds.border[0]);
+    expect(ds.border[2]).toBeGreaterThan(ds.border[1]);
+  };
+  const gbaPicker = await pickerStyle();
+  expectLogoPalettes(gbaPicker);
+  expect(gbaPicker[0].shadow).not.toBe('none');
+  expect(gbaPicker[1].shadow).toBe('none');
   const table = await page.evaluate(async () => {
     const { view } = await import('./src/app.js'), { Vector3, Box3 } = await import('three');
     const footprint = mesh => {
@@ -998,6 +1012,10 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   await page.locator('#select-ds').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   expect(await dockStyle()).not.toEqual(gbaDock);
+  const dsPicker = await pickerStyle();
+  expectLogoPalettes(dsPicker);
+  expect(dsPicker[0].shadow).toBe('none');
+  expect(dsPicker[1].shadow).not.toBe('none');
   const clearance = await page.evaluate(async () => {
     const { view } = await import('./src/app.js'), { Box3, Vector3 } = await import('three');
     let radius = 0;
@@ -1082,6 +1100,7 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   await page.locator('#select-gba').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   expect(await dockStyle()).toEqual(gbaDock);
+  expect(await pickerStyle()).toEqual(gbaPicker);
   expect(errors).toEqual([]);
 });
 

@@ -9,7 +9,41 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Console selector logo palettes
+
+The GBA/DS picker now follows the supplied BowserBOY artwork: purple/magenta/
+lavender for GBA, electric blue/cyan/white for DS. Only the selected button
+glows; hover and keyboard focus use that button's accent. The artwork,
+physical console materials, layout and PROTOTYPE label are unchanged.
+
+Syntax,44unit tests, build, browser-file syntax and whitespace pass. The
+existing real placement/branding case passes Edge24.4s, including each
+button's hue relationships, selected-only glows and exact GBA restoration.
+A separate actual-markup/stylesheet fixture passes1440/390px containment,
+at-least44px targets, both selections, hover, visible3px keyboard focus and
+disabled state. A crop from the actual full-app screenshot is visually
+reviewed. Styling-fixture results do not establish native input performance,
+owner aesthetic acceptance or publication. Workstream92retains that boundary;
+the existing recovery failures below remain open.
+
 ### Hosted recovery remains blocked
+
+Exact cap-fixture source `7bc93c56fc63efd647a7ee6f4115011542e14fa4`,
+[Pages42333210355](https://github.com/Zanark/BowserBoy/actions/runs/42333210355),
+finishes **failure**: build and11browser shards pass, eight fail;
+81cases pass/12fail and deployment is skipped. All three corrected cap cases
+now pass hosted shard17. Shell/fullscreen pause also passes this run and
+passes unchanged local Edge20.4s/SwiftShader33.4s; its previous hosted
+failure is not reproduced or diagnosed by those local successes.
+
+DS Inspect/pose/placement transitions still exceed15s in `moving`.
+Flat/rolled/upside-down physical precision, quick taps, held-pen lifecycle,
+shell lighting and dark-room work exhaust120s; pear visible descent and GBA
+CRT reload readiness also fail. The earlier hosted quick pass is not
+reproducible across these runs. No new wrong-coordinate diagnosis follows
+from timeout alone. Preserve the failures and all original deadlines,
+93cases,19shards, retries0 and full-resolution rendering.
+No successful current-source deployment or public touchscreen qualification.
 
 Exact guarded source `836fc093bc4e72b06898e983cdf524c8fe772047`,
 [Pages42331132482](https://github.com/Zanark/BowserBoy/actions/runs/42331132482),

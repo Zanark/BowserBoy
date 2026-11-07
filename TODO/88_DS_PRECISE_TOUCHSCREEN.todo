@@ -29,6 +29,14 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Cap-fixture7bc93c5/Pages42333210355 fails overall: build/11browser shards
+pass,8fail;81cases pass/12fail,deploy skipped. Unlike836fc09, complete
+quick taps and upside-down precision fail120s in this run; flat/rolled
+precision also exhaust120s. DS Inspect/pose/placement still exceeds15s
+in moving; pen/shell cases fail. All three corrected cap cases pass shard17.
+Do not treat variable hosted passes as stable responsiveness or new mapping
+evidence. No new public deployment or owner acceptance; all gates retained.
+
 Guarded836fc09/Pages42331132482 fails overall: build/11browser shards
 pass,8fail;81cases pass/12fail,deploy skipped. Complete quick taps,
 upside-down/high-DPI precision, held pen, hinge and LCD spill pass this

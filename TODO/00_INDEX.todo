@@ -73,7 +73,7 @@ BowserBOY workstreams
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:93cases/19shards; guarded836fc09 gate81PASS/12FAIL,8failed shards; first cap-sample repair3PASS each Edge/software; hosted recovery unresolved.
+74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:93cases/19shards;7bc93c5 gate81PASS/12FAIL,8failed shards; corrected cap cases now pass hosted17; full recovery/deployment blocked.
 75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.
@@ -91,9 +91,14 @@ BowserBOY workstreams
 89_PICKABLE_DS_STYLUS.todo - IN_PROGRESS: hover glow, pickup and camera-facing pen input.
 90_DS_SCREEN_LIGHT_SPILL.todo - IN_PROGRESS: independent framebuffer-driven spill from both DS LCDs.
 91_DS_STARTUP_CHIME.todo - IN_PROGRESS: original soft-glass DS power-on sound, distinct from GBA.
+92_CONSOLE_SELECTOR_PALETTES.todo - IN_PROGRESS: GBA purple/magenta and DS blue/cyan selectors locally verified; normal publication pending.
 
 Current pending work
 --------------------
+-92: logo-themed selector colors pass the existing real branding case and
+  focused responsive/focus checks. Supplied art and physical consoles unchanged.
+  Follow the normal exact-source hosted gate;74/88failures are not repaired
+  by styling. No owner visual acceptance or new live publication claimed.
 -88-91: native/physical alignment, pickable pen, screen spill and startup chime
   retain separate technical qualification and owner/device acceptance.
   Owner now explicitly authorizes commit/push and monitored Pages deployment.
@@ -107,7 +112,14 @@ Current pending work
   workstream82 supersedes the earlier authentication blocker. Tracking these
   features does not change their explicit implementation deferral.
 -74: diagnose and qualify the current93-case suite without weakening quality,
-  assertions or deadlines. Latest836fc09/42331132482 finishesFAILURE:
+  assertions or deadlines. Latest7bc93c5/42333210355 finishesFAILURE:
+  build/11browser shards pass,8fail;81cases pass/12fail and deploy skips.
+  All three corrected cap cases now pass hosted17; shell/fullscreen also
+  passes. DS transitions, three physical precision poses, quick taps,
+  pen/shell, dark-room, pear descent and GBA CRT reload remain failed.
+  Unlike836fc09, quick taps/upside-down precision do not pass this run.
+  No new current-source publication; retain every original gate.
+  Previous836fc09/42331132482 finishesFAILURE:
   build/11browser shards pass,8fail;81cases pass/12fail and deploy skips.
   Complete hosted quick taps and upside-down/high-DPI precision pass this
   run, but flat/rolled precision, lifecycle/shell, GBA pause/reload,

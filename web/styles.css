@@ -67,8 +67,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .speed-options button[aria-pressed=true] { border-color: #bf99ed; background: #664688; box-shadow: 0 0 18px #aa66dd26; }
 .panel-logo { display: block; width: 240px; max-width: 80%; height: auto; margin: -4px 0 18px; }
 .console-picker { position: absolute; top: max(26px, env(safe-area-inset-top)); right: 24px; display: flex; gap: 6px; z-index: 4; }
-.console-picker button { min-height: 44px; padding: 8px 14px; background: #15252bd9; border: 1px solid #73bac266; border-radius: 12px; color: #c9e6ea; backdrop-filter: blur(12px); }
-.console-picker button[aria-pressed=true] { border-color: #b6df64; box-shadow: inset 0 0 16px #91db331a; color: #d3ef9a; }
+.console-picker button { --picker-top: #492166ed; --picker-bottom: #190d30ed; --picker-edge: #c58aef80; --picker-accent: #e5a0ff; --picker-ink: #ede3ff; --picker-bright: #fff2ff; --picker-glow: #ab44ff40; min-height: 44px; padding: 8px 14px; background: linear-gradient(155deg,var(--picker-top),var(--picker-bottom)); border: 1px solid var(--picker-edge); border-radius: 12px; color: var(--picker-ink); backdrop-filter: blur(12px); }
+.console-picker #select-ds { --picker-top: #173c8fed; --picker-bottom: #080f40ed; --picker-edge: #51cfff80; --picker-accent: #68eaff; --picker-ink: #e6f8ff; --picker-bright: #f2fcff; --picker-glow: #2575ff40; }
+.console-picker button:hover:not(:disabled) { border-color: var(--picker-accent); color: var(--picker-bright); }
+.console-picker button[aria-pressed=true] { border-color: var(--picker-accent); box-shadow: inset 0 1px #ffffff26, inset 0 0 16px var(--picker-glow), 0 0 14px var(--picker-glow); color: var(--picker-bright); }
+.console-picker button:focus-visible { outline-color: var(--picker-accent); }
 .console-picker span { display: block; font: 7px var(--mono); letter-spacing: 1px; }
 .console-picker button:disabled { opacity: .5; }
 #ds-open { display: none; }
