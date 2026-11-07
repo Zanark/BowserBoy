@@ -496,10 +496,17 @@
       "lineEndingsNormalized": true
     },
     {
+      "path": "docs/modeling-book/assets/cover.png",
+      "qualifiedWorkingSha256": "6845aa20542dd8c4a378343f8f1e0b39e92889e7b76246f6a177e4ff3ede05ab",
+      "committedGitSha256": "6845aa20542dd8c4a378343f8f1e0b39e92889e7b76246f6a177e4ff3ede05ab",
+      "bytes": 3098998,
+      "lineEndingsNormalized": false
+    },
+    {
       "path": "docs/book/production/build-models.mjs",
-      "qualifiedWorkingSha256": "61e9831d08407b11e153ce2548215d3cf01bb534978e6f0aea5a3b05ffbff090",
-      "committedGitSha256": "30eb0fcc25fd5f7c487fe28a8943472bfbbeccfa58b7174c2c5b052baffc1a67",
-      "bytes": 17100,
+      "qualifiedWorkingSha256": "a4a3bb623fcbe9fed943382d2a4d24bf3836be782e6087e5a081a4b751a93854",
+      "committedGitSha256": "3fc394fcd2a4c0dabc76066f4c5b8e1c796bfc6cb76b7fc55563cc96e4c3d5ab",
+      "bytes": 17216,
       "lineEndingsNormalized": true
     },
     {
@@ -532,9 +539,9 @@
     },
     {
       "path": "docs/book/production/models.css",
-      "qualifiedWorkingSha256": "a3418365b3f6d3970e757959fe23ab5e54130b16f58488b802a67b577acda6d3",
-      "committedGitSha256": "e076ab2e4d3a4c9dfad05af4f1795e15c142e727099c04052cfb7c2c46178965",
-      "bytes": 958,
+      "qualifiedWorkingSha256": "446ad668efcc35ed82e1b12cd18a415007082ece4da5cb9e1bed62153c9e3529",
+      "committedGitSha256": "68a1e4b3c4c77b98b07d32eb6d254d874193e7132568c47087104c75f6afdede",
+      "bytes": 427,
       "lineEndingsNormalized": true
     },
     {

@@ -1,0 +1,50 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/123
+Milestone: Supplied covers, linked book shelf and default-collapsed README.
+Dependencies: 122, 123.
+Purpose: Use the owner's two exact cover images in both published PDF and
+offline-reader editions, with GBA, 3D modeling and NDS covers beside each other.
+
+Tasks:
+- [x] Preserve supplied artwork as canonical book cover assets.
+- [x] Wire the cover assets into each independent publishing route.
+- [x] Add the README shelf in GBA, 3D Modeling, NDS order.
+- [x] Make every section from BowserBOY DS onward collapsible, closed by default.
+- [x] Render and qualify both books; compare unchanged interior pages.
+- [x] Reconcile manifests, checksums, review scope and actual issue/Project.
+- [ ] Commit/push as Zanark, verify public bytes and monitor exact revision.
+
+Acceptance criteria:
+The supplied images appear uncropped on page one of the corresponding PDF
+and offline reader. The GBA edition and all existing README GIFs are preserved.
+The three covers appear in one README row with respective PDF links below.
+All headings from BowserBOY DS onward retain their content in default-closed
+disclosures, including the nested Pear boy and axolotl sections.
+No rewritten chapters, new gameplay capture, changed application behavior or
+owner acceptance of unrelated features is inferred from this cover update.
+Preserve earlier editions through pinned Git history and retain review limits.
+
+Completion evidence:
+The85-page NDS and328-page modeling PDF/reader editions use the owner's exact
+PNG bytes. All84/327interior pages remain pixel-identical at1.3x, with exact
+text, navigation and bookmarks; regenerated PDF xref IDs alone are excluded.
+Both native covers were inspected. Both offline readers decode the exact
+supplied cover, retain85/328pages and make zero script/external requests.
+GitHub GFM plus Edge verifies three decoded linked covers in GBA/modeling/NDS
+order, matching PDF labels, five closed disclosures including two nested
+companions, all five open/close interactions, retained26GIFs and390px fit.
+Explicit heading anchors preserve the README's section navigation.
+Nine publishing regressions and both builder syntax checks pass.
+All12NDS and15modeling package files are accounted for by checksum manifests;
+all34NDS and84modeling working inputs match their recorded hashes and staged
+Git bytes, with only declared text newline normalization and installed-only
+dependencies allowed. Updated reviews distinguish old cover inspection from
+the current native cover and unchanged interiors.
+The GBA PDF retains25875bea...; chapter counts/content are not rewritten.
+Pending exact repository publication and workflow observation.
+The user explicitly authorizes both supplied covers and commit/push.
+
+Completion log:
+2026-11-08: Began the requested cover-only revision and ordered README shelf.
+Starting worktree clean at659651e; prior unrelated README/PNG edits were already
+committed externally. No existing changes reverted or silently included.

@@ -2,6 +2,11 @@
 
 ## BowserBOY DS: development journey and engineering
 
+![Supplied engraved blue DS cover for Two Screens, One Little Escape](assets/cover.png)
+
+*Figure ND-C. Owner-supplied cover, used unchanged in the PDF and offline reader.
+This November 8 cover revision preserves the first NDS edition's interior.*
+
 An independent Nintendo DS book. The existing GBA engineering book and its
 published PDF are preserved unchanged. Shared infrastructure appears here
 only where it explains the DS experience.

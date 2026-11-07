@@ -14,9 +14,9 @@ const preservedBooks = [
   { path: 'docs/book/published/Building-a-Little-Escape.pdf',
     sha256: '25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad' },
   { path: 'docs/nds-book/published/Two-Screens-One-Little-Escape.pdf',
-    sha256: '0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f' },
+    sha256: '3bc15e839769c786de2d123e8a733bcda9a1a9a9ba560cc86f8e3162a8e825bf' },
   { path: 'docs/nds-book/published/Reading-Edition.html',
-    sha256: 'fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894' },
+    sha256: '629a5ec40d54d642087caa30dd2d0bfcae134bcee4eb8b4c2813abb644f91d39' },
 ];
 for (const item of preservedBooks) {
   if (sha256(await fs.readFile(await confined(root, item.path))) !== item.sha256) {
@@ -232,7 +232,8 @@ if (proseWords < 52000) throw new Error(`Manuscript has ${proseWords} chapter pr
 for (const section of sections.slice(1)) {
   blocks.push(`<article id="${section.id}" class="reference">${await render((await read(section.source)).toString('utf8'), section.source, section.id)}</article>`);
 }
-const cover = await cleanImage('docs\\modeling-book\\assets\\model-atlas.png');
+const coverPath = 'docs\\modeling-book\\assets\\cover.png';
+const cover = await read(coverPath);
 for (const file of ['build-models.mjs', 'render.mjs', 'bootstrap.mjs', 'lib.mjs', 'edition.mjs',
   'print.css', 'models.css', 'review-native.py', 'native_rules.py', 'package.json', 'package-lock.json', 'requirements.txt']) {
   await read(`docs\\book\\production\\${file}`);
@@ -244,12 +245,15 @@ const tocItems = [{ id: sections[0].id, title: sections[0].title },
     ...chapters.filter(item => item.part === part.number).map(item => ({ id: `opening-${item.id}`, title: `${item.id} - ${item.title}` }))]),
   ...sections.slice(1)];
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escape(title)}</title><link rel="stylesheet" href="/print.css"></head><body><main id="manuscript">
-<section class="cover models-cover" id="cover"><p class="eyebrow">The BowserBOY procedural modeling handbook</p><h1>From Shapes<br>to a Living Desk</h1><p class="subtitle">${escape(subtitle)}</p><img class="cover-models" src="data:image/png;base64,${cover.toString('base64')}" alt="Six original procedural models captured under documented neutral studio lighting"><p class="edition">First modeling edition / November 2026<br>Geometry, materials, movement and evidence.<br>Written for people and reconstructing agents.</p></section>
+<section class="cover models-cover" id="cover" aria-label="From Shapes to a Living Desk - supplied illustrated cover"><img class="cover-page" src="data:image/png;base64,${cover.toString('base64')}" alt="From Shapes to a Living Desk. The Complete BowserBOY Procedural Modeling Handbook. Supplied engraved desk cover by Zanark."></section>
 <section class="contents" id="contents"><h1>Contents</h1><p>Thirty-eight source-pinned chapters. Detailed mechanisms, construction recipes, worked examples and explained exercises.</p><ol>${tocItems.map(item => `<li class="${item.part ? 'toc-part' : ''}"><a href="#${item.id}"><span>${escape(item.title)}</span><b data-page-for="${item.id}">000</b></a></li>`).join('')}</ol></section>
 ${blocks.join('\n')}</main><div id="pages"></div><script type="module" src="/bootstrap.mjs"></script></body></html>`;
 await fs.writeFile(path.join(candidate, 'manuscript.html'), html);
 await fs.writeFile(path.join(candidate, 'source-manifest.json'), JSON.stringify({
-  title, subtitle, stem, edition: 'First modeling edition / 2026-11', sourceBase,
+  title, subtitle, stem, edition: 'Supplied-cover revision / 2026-11-08', sourceBase,
+  cover: { path: urlPath(coverPath), sha256: sha256(cover),
+    provenance: 'Owner-supplied artwork, used unchanged. Cover lettering is raster artwork; interior remains searchable.',
+    scope: 'Cover revision only; the supplied Second Edition label does not imply rewritten chapters.' },
   subject: 'Independent procedural 3D modeling, construction workflow and agent reconstruction handbook',
   identityNote: 'Runtime cutoff is pinned; exact manuscript, atlas and production hashes identify this later book. Supplemental main-branch links are explicitly living, not cutoff evidence.',
   chapters, parts, sections, tocItems, expectedDiagrams: diagrams, learningMarkers: markers,

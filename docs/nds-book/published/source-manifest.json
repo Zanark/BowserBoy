@@ -1,8 +1,14 @@
 {
   "title": "Two Screens, One Little Escape",
   "stem": "Two-Screens-One-Little-Escape",
-  "edition": "First NDS edition / 2026-11",
+  "edition": "Supplied-cover revision / 2026-11-08",
   "sourceBase": "61845372142b41992916f3732ea102cc0f4c8edf",
+  "cover": {
+    "path": "docs/nds-book/assets/cover.png",
+    "sha256": "7f3bc490a53933538210beb4106947e7c090a8ac0385d72d3af67ab1c95363d4",
+    "provenance": "Owner-supplied artwork, used unchanged. Cover lettering is raster artwork; interior remains searchable.",
+    "scope": "Cover revision only; the supplied Second Edition label does not imply rewritten chapters."
+  },
   "identityNote": "Runtime cutoff is pinned; exact manuscript and production hashes identify this later book.",
   "chapters": [
     {
@@ -349,29 +355,34 @@
       "bytes": 6941
     },
     {
-      "path": "assets/ds-logo.png",
-      "sha256": "b170d9a5c89b7e1d84670c466180533a5cda4da64ff583836d4b557fc8fac76e",
-      "bytes": 1337735
+      "path": "docs/nds-book/assets/cover.png",
+      "sha256": "7f3bc490a53933538210beb4106947e7c090a8ac0385d72d3af67ab1c95363d4",
+      "bytes": 2501807
     },
     {
       "path": "docs/book/production/build-nds.mjs",
-      "sha256": "503bca40f9728e2fe806e235f3a0a139ebbb35d1fd4e299b987a8b0185252fe8",
-      "bytes": 9919
+      "sha256": "d0b6286d8097fc37d40144db4129faaee583bbbf62e2c6e108babb1d664ef934",
+      "bytes": 10223
     },
     {
       "path": "docs/book/production/render.mjs",
-      "sha256": "38f2e802e7a59cc1ff30cd5edd18316bf39a4e2aed0ec8467fc66df8ae1a9f7c",
-      "bytes": 18364
+      "sha256": "d1e923fb1b1ac6efe304c78bbca18d25b2e121b2923dfef4f0b6f66b173ed0ef",
+      "bytes": 18283
     },
     {
       "path": "docs/book/production/bootstrap.mjs",
-      "sha256": "92aa00c53aca9123c0392a77188f25d644601d1932d65ac80f0c01ab484ca801",
-      "bytes": 4166
+      "sha256": "4b026b1d73c5f86675bd0da9ba41f9e59ee9dbf2e3f9526aba3b59bdd15121c2",
+      "bytes": 4169
     },
     {
       "path": "docs/book/production/lib.mjs",
-      "sha256": "e9279a7ce7b206ec2c7aa77319e1042d85ad4e5a562b417a2e170066c9198cd5",
-      "bytes": 2676
+      "sha256": "0d706c9ff279d12c2a0f7c23c204e5104d17f03fa24dd9afb3d9029aec9239f7",
+      "bytes": 2983
+    },
+    {
+      "path": "docs/book/production/edition.mjs",
+      "sha256": "eaad48053de96f52476002c37b2c0300c2ae02ebf406fff2a511711fd0e6ddad",
+      "bytes": 2799
     },
     {
       "path": "docs/book/production/print.css",
@@ -380,13 +391,23 @@
     },
     {
       "path": "docs/book/production/nds.css",
-      "sha256": "9197d8da2c080c310eb9d8273be7a3c209e6054501ea8b06a5a3b801c8081534",
-      "bytes": 949
+      "sha256": "e5a645ba482f275dcf723824049324b1543f5a82b1686949ae8b603b4c10b88f",
+      "bytes": 410
     },
     {
       "path": "docs/book/production/review-nds.py",
-      "sha256": "c223697b70c9bcdf48e149e6bfca9bb779b1e54c5ef08c5b644f360ef0dfe738",
-      "bytes": 7843
+      "sha256": "9174f2f3c2c6aa35fd1cc7c3fd3dbcfc5e57ec1751600fde0b61c9ac64e1e0ef",
+      "bytes": 130
+    },
+    {
+      "path": "docs/book/production/review-native.py",
+      "sha256": "d2b01830793067d510440fa470c414edfce9d6a654bbbd86c43c21e266cfb85b",
+      "bytes": 8493
+    },
+    {
+      "path": "docs/book/production/native_rules.py",
+      "sha256": "efb58f526aba44ad17701c0624b6883266e3001bc864593a140c22474bce3d8b",
+      "bytes": 931
     },
     {
       "path": "docs/book/production/package.json",

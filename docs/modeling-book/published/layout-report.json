@@ -3427,22 +3427,6 @@
   ],
   "textBlocks": [
     {
-      "page": 1,
-      "text": "THE BOWSERBOY PROCEDURAL MODELING HANDBOOK"
-    },
-    {
-      "page": 1,
-      "text": "From Shapes\nto a Living Desk"
-    },
-    {
-      "page": 1,
-      "text": "Procedural 3D modeling: the complete BowserBOY agent handbook"
-    },
-    {
-      "page": 1,
-      "text": "First modeling edition / November 2026\nGeometry, materials, movement and evidence.\nWritten for people and reconstructing agents."
-    },
-    {
       "page": 2,
       "text": "Thirty-eight source-pinned chapters. Detailed mechanisms, construction recipes, worked examples and explained exercises."
     },
@@ -14432,10 +14416,6 @@
   "blockedRequests": 0,
   "browser": "157.0.4341.42",
   "sourceTextBlocks": [
-    "THE BOWSERBOY PROCEDURAL MODELING HANDBOOK",
-    "From Shapes\nto a Living Desk",
-    "Procedural 3D modeling: the complete BowserBOY agent handbook",
-    "First modeling edition / November 2026\nGeometry, materials, movement and evidence.\nWritten for people and reconstructing agents.",
     "Thirty-eight source-pinned chapters. Detailed mechanisms, construction recipes, worked examples and explained exercises.",
     "How to use this reconstruction manual",
     "Part 1 - Foundations and the Game Boy Advance",

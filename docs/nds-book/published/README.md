@@ -1,4 +1,4 @@
-# Two Screens, One Little Escape: first NDS edition
+# Two Screens, One Little Escape: supplied-cover revision
 
 [Read/download the PDF](Two-Screens-One-Little-Escape.pdf) |
 [download the offline HTML reader](Reading-Edition.html) |
@@ -7,6 +7,10 @@
 
 85 A4 pages, 13 chapters, 13 diagrams and 52 learning markers.
 NDS development and relevant shared systems only; the GBA book is preserved.
+
+The November 8 revision replaces only the cover with the owner's supplied
+artwork. All 84 interior PDF pages are unchanged. The artwork's "Second Edition"
+label does not imply rewritten chapters; see the dated review for exact scope.
 
 Download `Reading-Edition.html` and open it locally. Its images and diagrams
 are embedded; it needs no scripts or network resources. GitHub's source viewer

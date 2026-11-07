@@ -2,6 +2,11 @@
 
 ## The complete BowserBOY procedural modeling handbook
 
+![Supplied engraved desk cover for From Shapes to a Living Desk](assets/cover.png)
+
+*Figure M-C. Owner-supplied cover, used unchanged in the PDF and offline reader.
+This November 8 cover revision preserves the original modeling-book interior.*
+
 An independent, detailed construction manual for the GBA, Nintendo DS, cartridges, stylus, Pear Boy, axolotl, tripod lamp, desk and room. It explains actual libraries, geometry, material and texture techniques, transform ownership, movement, lighting, debugging, algorithms, design principles and a reusable agent workflow.
 
 ![Six actual procedural models in the original diagnostic cover plate](assets/model-atlas.png)

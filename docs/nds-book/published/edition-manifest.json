@@ -1,17 +1,17 @@
 {
   "title": "Two Screens, One Little Escape",
-  "edition": "First NDS edition / 2026-11",
-  "generatedAt": "2026-11-07T16:40:53.973Z",
+  "edition": "Supplied-cover revision / 2026-11-08",
+  "generatedAt": "2026-11-07T20:33:47.993Z",
   "sourceBase": "61845372142b41992916f3732ea102cc0f4c8edf",
-  "sourceManifestSha256": "71ff53d79f9762494ddeca620bd00e990a34c7e11be04d3bb84ec52d11cf044f",
+  "sourceManifestSha256": "93cdbad1c7c70175db067b20f40312b15cf6f6a9e048a5a31c70ab017d15cd30",
   "pdf": {
     "file": "Two-Screens-One-Little-Escape.pdf",
-    "sha256": "0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f",
+    "sha256": "3bc15e839769c786de2d123e8a733bcda9a1a9a9ba560cc86f8e3162a8e825bf",
     "pages": 85
   },
   "reader": {
     "file": "Reading-Edition.html",
-    "sha256": "fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894",
+    "sha256": "629a5ec40d54d642087caa30dd2d0bfcae134bcee4eb8b4c2813abb644f91d39",
     "pages": 85,
     "images": true,
     "scripts": 0,
@@ -124,6 +124,7 @@
       "endPage": 82
     }
   ],
+  "chapterContentPages": 61,
   "diagrams": 13,
   "learningMarkers": 52,
   "tools": {
@@ -138,9 +139,9 @@
   },
   "review": {
     "mechanical": "passed",
-    "visual": "Three full contact sheets and native pages 1, 2, 26, 38, 51, 80, 83 inspected. See ../REVIEW.md for the exact PDF hash and bounded scope.",
+    "visual": "New native cover inspected; all 84 interior pages pixel-identical at 1.3x to the previously reviewed PDF, with exact text/navigation/bookmarks; see dated review. Original PNG decoded in the zero-script, zero-network offline reader.",
     "humanAcceptance": "not requested or claimed",
-    "publication": "Separate repository artifact; delivery receipts are recorded in workstream 122 and the development ledger. Not an emulator Pages resource.",
+    "publication": "Separately tracked repository artifact; exact remote publication evidence belongs in workstream 124. Not part of the emulator Pages payload.",
     "limitations": [
       "not a fresh-machine rebuild",
       "not byte-for-byte reproducibility",

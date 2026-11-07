@@ -1,5 +1,5 @@
 {
-  "pdfSha256": "6e3bef30a90f8d872071b66a2059210b0a749aeaf26459bde2b55b357666409d",
+  "pdfSha256": "7924b81ab067bfeff283d53c052f7baf461e51226439b219a1660aecc07cc746",
   "pages": 328,
   "geometry": "A4",
   "bookmarks": 47,
@@ -10,9 +10,9 @@
   "badLinks": [],
   "learningMarkers": 152,
   "missingLearningMarkers": [],
-  "browserTextBlocks": 2012,
+  "browserTextBlocks": 2008,
   "missingTextBlocks": [],
-  "sourceTextBlocks": 1981,
+  "sourceTextBlocks": 1977,
   "missingSourceBlocks": [],
   "diagramLabels": 416,
   "missingDiagramLabels": [],
@@ -26,11 +26,11 @@
     },
     {
       "path": "docs/nds-book/published/Two-Screens-One-Little-Escape.pdf",
-      "sha256": "0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f"
+      "sha256": "3bc15e839769c786de2d123e8a733bcda9a1a9a9ba560cc86f8e3162a8e825bf"
     },
     {
       "path": "docs/nds-book/published/Reading-Edition.html",
-      "sha256": "fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894"
+      "sha256": "629a5ec40d54d642087caa30dd2d0bfcae134bcee4eb8b4c2813abb644f91d39"
     }
   ],
   "tools": {

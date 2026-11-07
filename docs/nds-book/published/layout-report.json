@@ -827,22 +827,6 @@
   ],
   "textBlocks": [
     {
-      "page": 1,
-      "text": "THE BOWSERBOY DS BOOK"
-    },
-    {
-      "page": 1,
-      "text": "Two Screens,\nOne Little Escape"
-    },
-    {
-      "page": 1,
-      "text": "Development journey\nand engineering"
-    },
-    {
-      "page": 1,
-      "text": "First NDS edition / November 2026\nFrom local cartridge to a living, two-screen desk."
-    },
-    {
       "page": 2,
       "text": "A separate NDS book. Source-pinned chapters, worked examples and explained exercises."
     },
@@ -4017,10 +4001,6 @@
   "blockedRequests": 0,
   "browser": "157.0.4341.42",
   "sourceTextBlocks": [
-    "THE BOWSERBOY DS BOOK",
-    "Two Screens,\nOne Little Escape",
-    "Development journey\nand engineering",
-    "First NDS edition / November 2026\nFrom local cartridge to a living, two-screen desk.",
     "A separate NDS book. Source-pinned chapters, worked examples and explained exercises.",
     "Before opening the DS",
     "Part 1 - Becoming a console",

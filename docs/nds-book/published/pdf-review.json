@@ -1,22 +1,30 @@
 {
-  "pdfSha256": "0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f",
+  "pdfSha256": "3bc15e839769c786de2d123e8a733bcda9a1a9a9ba560cc86f8e3162a8e825bf",
   "pages": 85,
   "geometry": "A4",
   "bookmarks": 21,
+  "chapterContentPages": 61,
+  "proseWords": null,
   "internalLinks": 58,
   "externalLinks": 143,
   "badLinks": [],
   "learningMarkers": 52,
   "missingLearningMarkers": [],
-  "browserTextBlocks": 605,
+  "browserTextBlocks": 601,
   "missingTextBlocks": [],
-  "sourceTextBlocks": 598,
+  "sourceTextBlocks": 594,
   "missingSourceBlocks": [],
   "diagramLabels": 158,
   "missingDiagramLabels": [],
   "nativeOverflow": [],
   "embeddedFonts": 7,
   "preservedBookSha256": "25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad",
+  "preservedBooks": [
+    {
+      "path": "docs/book/published/Building-a-Little-Escape.pdf",
+      "sha256": "25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad"
+    }
+  ],
   "tools": {
     "PyMuPDF": "1.28.0",
     "Pillow": "12.2.0"

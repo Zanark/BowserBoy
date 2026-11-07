@@ -1,4 +1,32 @@
-# First NDS edition: production and review
+# NDS edition: production and review
+
+## Supplied-cover revision: November 8, 2026
+
+The current 85-page PDF uses the owner's unchanged
+[supplied cover](assets/cover.png). The same original PNG bytes are embedded
+in page one of the offline reader, fitted without cropping. The cover's
+"Second Edition" lettering is supplied artwork, not a claim of rewritten
+chapters, new runtime qualification or an independent artwork-rights audit.
+Raster cover lettering is not searchable; the interior remains searchable.
+
+- PDF SHA-256: `3bc15e839769c786de2d123e8a733bcda9a1a9a9ba560cc86f8e3162a8e825bf`
+- Offline reader SHA-256: `629a5ec40d54d642087caa30dd2d0bfcae134bcee4eb8b4c2813abb644f91d39`
+
+The unchanged production gates passed. All **84 interior pages** match the
+previous published PDF pixel-for-pixel at 1.3x native raster scale, with exact
+extracted text, link rectangles/destinations and bookmarks. Only regenerated
+PDF cross-reference object IDs are excluded from link comparison. The new
+native cover was inspected; the previous bounded interior inspection below
+carries forward through this equivalence, not a second full visual review.
+The offline reader was opened in Edge with the exact original cover decoded,
+85 pages, zero scripts and zero external requests. The GBA PDF remains unchanged.
+
+The old edition remains available at immutable commit
+`c61346594396c115a0eec29d656866a0c57ece57`. Current repository publication
+is tracked separately in [workstream 124](../../TODO/124_SUPPLIED_BOOK_COVERS.todo).
+Neither PDF is added to the emulator's Pages application payload.
+
+## Historical first-edition review
 
 Reviewed November 7, 2026. **Two Screens, One Little Escape** is an independent
 DS development-journey and engineering book, not a replacement or revision of

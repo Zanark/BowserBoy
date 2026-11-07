@@ -1,11 +1,13 @@
 {
   "pages": 328,
+  "excludedCoverPage": 1,
   "nativeRasterScale": 1.3,
-  "pixelIdenticalPages": 328,
-  "textAndLinksIdenticalPages": 328,
+  "pixelIdenticalInteriorPages": 327,
+  "textAndNavigationIdenticalInteriorPages": 327,
+  "navigationComparison": "excludes regenerated PDF xref object IDs only",
   "bookmarksIdentical": true,
-  "previousSha256": "0ce1926b180ed17bf2dda733153296c72baf500783cdbc2dcd76ea872d5d46df",
-  "finalSha256": "6e3bef30a90f8d872071b66a2059210b0a749aeaf26459bde2b55b357666409d",
-  "finalReaderSha256": "a7bbc64b9da2792749966adcf655dc3efbabf654435cd77a90b8e23180f4c68f",
-  "reason": "Only final edition.mjs blank-at-EOF cleanup; complete native rerender/requalification with unchanged gates. Exact native page equivalence carries the recorded visual inspection forward without claiming a second human review."
+  "previousSha256": "6e3bef30a90f8d872071b66a2059210b0a749aeaf26459bde2b55b357666409d",
+  "finalSha256": "7924b81ab067bfeff283d53c052f7baf461e51226439b219a1660aecc07cc746",
+  "finalReaderSha256": "29fec7114bd43c9c3e7aa4f1daba88959c1c9e37eef4a59d6593a18707342f73",
+  "reason": "Owner-supplied cover replaces page 1. Every interior page is unchanged; previous interior visual qualification carries forward without claiming a second full human review."
 }

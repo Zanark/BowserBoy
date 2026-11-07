@@ -1,17 +1,17 @@
 {
   "title": "From Shapes to a Living Desk",
-  "edition": "First modeling edition / 2026-11",
-  "generatedAt": "2026-11-07T17:50:12.675Z",
+  "edition": "Supplied-cover revision / 2026-11-08",
+  "generatedAt": "2026-11-07T20:35:47.302Z",
   "sourceBase": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
-  "sourceManifestSha256": "a8a6b4cc317766d3137df6bd9a16f1b5f06e6e766bca10d9863a9def7b455cf7",
+  "sourceManifestSha256": "14c737831308220993b0f298607b0e3f04678cadc1c50a21fe52bc390334e337",
   "pdf": {
     "file": "From-Shapes-to-a-Living-Desk.pdf",
-    "sha256": "6e3bef30a90f8d872071b66a2059210b0a749aeaf26459bde2b55b357666409d",
+    "sha256": "7924b81ab067bfeff283d53c052f7baf461e51226439b219a1660aecc07cc746",
     "pages": 328
   },
   "reader": {
     "file": "Reading-Edition.html",
-    "sha256": "a7bbc64b9da2792749966adcf655dc3efbabf654435cd77a90b8e23180f4c68f",
+    "sha256": "29fec7114bd43c9c3e7aa4f1daba88959c1c9e37eef4a59d6593a18707342f73",
     "pages": 328,
     "images": true,
     "scripts": 0,
@@ -340,9 +340,9 @@
   },
   "review": {
     "mechanical": "passed",
-    "visual": "All 328 pages thumbnail-reviewed and five native pages inspected; final rerender is pixel/text/link/bookmark-equivalent. See REVIEW.md and final-page-equivalence.json.",
+    "visual": "New native cover inspected; all 327 interior pages pixel-identical at 1.3x to the previously reviewed PDF, with exact text/navigation/bookmarks; see dated review. Original PNG decoded in the zero-script, zero-network offline reader.",
     "humanAcceptance": "not requested or claimed",
-    "publication": "Repository distribution package; public commit-byte and deployment verification are recorded in workstream 123.",
+    "publication": "Separately tracked repository artifact; exact remote publication evidence belongs in workstream 124. Not part of the emulator Pages payload.",
     "limitations": [
       "not a fresh-machine rebuild",
       "not byte-for-byte reproducibility",

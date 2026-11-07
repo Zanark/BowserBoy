@@ -4,11 +4,24 @@
   <strong>A little escape, on your desk.</strong><br>
   <a href="https://zanark.github.io/BowserBoy/"><strong>Play in your browser</strong></a>
   &nbsp;&middot;&nbsp; <a href="docs/GUIDE.md">Player guide &amp; local setup</a>
-  &nbsp;&middot;&nbsp; <a href="docs/nds-book/README.md">NDS book</a>
   &nbsp;&middot;&nbsp; <a href="docs/book/README.md">GBA book</a>
   &nbsp;&middot;&nbsp; <a href="docs/modeling-book/README.md">3D modeling book</a>
+  &nbsp;&middot;&nbsp; <a href="docs/nds-book/README.md">NDS book</a>
   &nbsp;&middot;&nbsp; <a href="docs/README.md">All documentation</a>
 </p>
+
+<table>
+  <tr>
+    <td align="center" width="33%"><a href="docs/book/published/Building-a-Little-Escape.pdf"><img src="docs/book/editions/2026-11/cover.png" width="280" alt="Building a Little Escape - GBA engineering book cover"></a></td>
+    <td align="center" width="33%"><a href="docs/modeling-book/published/From-Shapes-to-a-Living-Desk.pdf"><img src="docs/modeling-book/assets/cover.png" width="280" alt="From Shapes to a Living Desk - 3D modeling handbook cover"></a></td>
+    <td align="center" width="33%"><a href="docs/nds-book/published/Two-Screens-One-Little-Escape.pdf"><img src="docs/nds-book/assets/cover.png" width="280" alt="Two Screens, One Little Escape - NDS engineering book cover"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="docs/book/published/Building-a-Little-Escape.pdf"><strong>GBA Book</strong></a></td>
+    <td align="center"><a href="docs/modeling-book/published/From-Shapes-to-a-Living-Desk.pdf"><strong>3D Modeling Book</strong></a></td>
+    <td align="center"><a href="docs/nds-book/published/Two-Screens-One-Little-Escape.pdf"><strong>NDS Book</strong></a></td>
+  </tr>
+</table>
 
 Two consoles. Three desk lamps. Your own local games.
 
@@ -19,8 +32,10 @@ Two consoles. Three desk lamps. Your own local games.
 *One shared desk. Separate consoles, saves and controls.*
 
 <a id="bowserboy-ds-local-prototype"></a>
+<a id="bowserboy-ds"></a>
 
-## BowserBOY DS
+<details>
+<summary><h2>BowserBOY DS</h2></summary>
 
 <picture>
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/ds-logo.png">
@@ -61,7 +76,12 @@ Two consoles. Three desk lamps. Your own local games.
 
 [DS controls, saves &amp; compatibility limits](docs/GUIDE.md#nintendo-ds) &middot; [Development journey &amp; PDF](docs/nds-book/README.md)
 
-## BowserBOYADVANCED
+</details>
+
+<a id="bowserboyadvanced"></a>
+
+<details>
+<summary><h2>BowserBOYADVANCED</h2></summary>
 
 [![BowserBOYADVANCED - animated purple console logo](docs/images/bowserboyadvanced-logo-glow.png)](assets/logo.png)
 
@@ -115,13 +135,21 @@ Two consoles. Three desk lamps. Your own local games.
 
 [Controls &amp; settings](docs/GUIDE.md) &middot; [Saving &amp; backups](docs/SAVING.md)
 
-## Make the desk yours
+</details>
+
+<a id="make-the-desk-yours"></a>
+
+<details>
+<summary><h2>Make the desk yours</h2></summary>
 
 ![Switch the tripod and room through independent combinations and complete lamp darkness](docs/images/lighting-overview.gif?v=untouched-opening-20261107)
 
 *Tripod only. Both. Room only. All off. The tripod stays fixed.*
 
-### Pear boy
+<a id="pear-boy"></a>
+
+<details>
+<summary><h3>Pear boy</h3></summary>
 
 ![Adjust Pear's light through 10, 40, 70 and 100 percent, then off and on](docs/images/pear-lighting.gif?v=untouched-opening-20261107)
 
@@ -131,7 +159,12 @@ Two consoles. Three desk lamps. Your own local games.
 
 *Scream. Bounce. Tiny angry eyes. Pout. Smile. Always three dots per cheek.*
 
-### The little axolotl
+</details>
+
+<a id="the-little-axolotl"></a>
+
+<details>
+<summary><h3>The little axolotl</h3></summary>
 
 ![Switch the axolotl between Sleep 50 percent, Bright 100 percent and off](docs/images/axolotl-lighting.gif?v=untouched-opening-20261107)
 
@@ -141,9 +174,13 @@ Two consoles. Three desk lamps. Your own local games.
 
 *Move the lamp. Its light follows.*
 
+</details>
+
 [Desk movement](docs/GUIDE.md#move-the-consoles) &middot;
 [Pear controls](docs/GUIDE.md#pear-boy) &middot;
 [Axolotl controls](docs/GUIDE.md#small-axolotl-night-light)
+
+</details>
 
 ---
 

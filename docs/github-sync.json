@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "123",
-      "file": "TODO/123_PROCEDURAL_3D_MODELING_HANDBOOK.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/122",
-      "number": 122,
-      "nodeId": "I_kwDOVhqp0s8AAAABdT5iaw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhG0jVU",
-      "state": "closed",
-      "reason": "completed",
-      "projectStatus": "Done",
-      "bodySha256": "cc8bbee666c58e22bae79b6e7791f6ce8161107c676dfef87b47484b636ca132"
+      "id": "124",
+      "file": "TODO/124_SUPPLIED_BOOK_COVERS.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/123",
+      "number": 123,
+      "nodeId": "I_kwDOVhqp0s8AAAABdVsmEw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhG2cqc",
+      "state": "open",
+      "reason": null,
+      "projectStatus": "In progress",
+      "bodySha256": "23c740af6cef89696e44ae93ef4825092589814e3c07ce50d6676bf76805caaf"
     }
   ]
 }

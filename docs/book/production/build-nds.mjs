@@ -114,7 +114,8 @@ for (const part of parts) {
 for (const section of sections.slice(1)) {
   blocks.push(`<article id="${section.id}" class="reference">${await render((await read(section.source)).toString('utf8'), section.source, section.id)}</article>`);
 }
-const logo = (await read('assets\\ds-logo.png')).toString('base64');
+const coverPath = 'docs\\nds-book\\assets\\cover.png';
+const cover = await read(coverPath);
 for (const file of ['build-nds.mjs', 'render.mjs', 'bootstrap.mjs', 'lib.mjs', 'edition.mjs', 'print.css', 'nds.css',
   'review-nds.py', 'review-native.py', 'native_rules.py', 'package.json', 'package-lock.json', 'requirements.txt']) await read(`docs\\book\\production\\${file}`);
 await read('docs\\nds-book\\catalogue.mjs');
@@ -123,12 +124,15 @@ const tocItems = [{ id: 'orientation', title: 'Before opening the DS' },
     ...chapters.filter(item => item.part === part.number).map(item => ({ id: `opening-${item.id}`, title: `${item.id} - ${item.title}` }))]),
   ...sections.slice(1)];
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escape(title)}</title><link rel="stylesheet" href="/print.css"></head><body><main id="manuscript">
-<section class="cover nds-cover" id="cover"><p class="eyebrow">The BowserBOY DS book</p><h1>Two Screens,<br>One Little Escape</h1><p class="subtitle">Development journey<br>and engineering</p><img class="cover-logo" src="data:image/png;base64,${logo}" alt="Existing supplied BowserBOY DS logo"><p class="edition">First NDS edition / November 2026<br>From local cartridge to a living, two-screen desk.</p></section>
+<section class="cover nds-cover" id="cover" aria-label="Two Screens, One Little Escape - supplied illustrated cover"><img class="cover-page" src="data:image/png;base64,${cover.toString('base64')}" alt="Two Screens, One Little Escape. BowserBOY DS: Development Journey and Engineering. Supplied engraved blue DS cover by Zanark."></section>
 <section class="contents" id="contents"><h1>Contents</h1><p>A separate NDS book. Source-pinned chapters, worked examples and explained exercises.</p><ol>${tocItems.map(item => `<li class="${item.part ? 'toc-part' : ''}"><a href="#${item.id}"><span>${escape(item.title)}</span><b data-page-for="${item.id}">000</b></a></li>`).join('')}</ol></section>
 ${blocks.join('\n')}</main><div id="pages"></div><script type="module" src="/bootstrap.mjs"></script></body></html>`;
 await fs.writeFile(path.join(candidate, 'manuscript.html'), html);
 await fs.writeFile(path.join(candidate, 'source-manifest.json'), JSON.stringify({
-  title, stem, edition: 'First NDS edition / 2026-11', sourceBase,
+  title, stem, edition: 'Supplied-cover revision / 2026-11-08', sourceBase,
+  cover: { path: urlPath(coverPath), sha256: sha256(cover),
+    provenance: 'Owner-supplied artwork, used unchanged. Cover lettering is raster artwork; interior remains searchable.',
+    scope: 'Cover revision only; the supplied Second Edition label does not imply rewritten chapters.' },
   identityNote: 'Runtime cutoff is pinned; exact manuscript and production hashes identify this later book.',
   chapters, parts, sections, tocItems, expectedDiagrams: diagrams, learningMarkers: markers,
   sources: [...receipt.values()], images, sourceReferences: [...sourceReferences.values()],

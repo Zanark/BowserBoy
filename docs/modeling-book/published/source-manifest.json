@@ -2,8 +2,14 @@
   "title": "From Shapes to a Living Desk",
   "subtitle": "Procedural 3D modeling: the complete BowserBOY agent handbook",
   "stem": "From-Shapes-to-a-Living-Desk",
-  "edition": "First modeling edition / 2026-11",
+  "edition": "Supplied-cover revision / 2026-11-08",
   "sourceBase": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+  "cover": {
+    "path": "docs/modeling-book/assets/cover.png",
+    "sha256": "6845aa20542dd8c4a378343f8f1e0b39e92889e7b76246f6a177e4ff3ede05ab",
+    "provenance": "Owner-supplied artwork, used unchanged. Cover lettering is raster artwork; interior remains searchable.",
+    "scope": "Cover revision only; the supplied Second Edition label does not imply rewritten chapters."
+  },
   "subject": "Independent procedural 3D modeling, construction workflow and agent reconstruction handbook",
   "identityNote": "Runtime cutoff is pinned; exact manuscript, atlas and production hashes identify this later book. Supplemental main-branch links are explicitly living, not cutoff evidence.",
   "chapters": [
@@ -1129,9 +1135,14 @@
       "bytes": 8038
     },
     {
+      "path": "docs/modeling-book/assets/cover.png",
+      "sha256": "6845aa20542dd8c4a378343f8f1e0b39e92889e7b76246f6a177e4ff3ede05ab",
+      "bytes": 3098998
+    },
+    {
       "path": "docs/book/production/build-models.mjs",
-      "sha256": "61e9831d08407b11e153ce2548215d3cf01bb534978e6f0aea5a3b05ffbff090",
-      "bytes": 17363
+      "sha256": "a4a3bb623fcbe9fed943382d2a4d24bf3836be782e6087e5a081a4b751a93854",
+      "bytes": 17483
     },
     {
       "path": "docs/book/production/render.mjs",
@@ -1155,8 +1166,8 @@
     },
     {
       "path": "docs/book/production/models.css",
-      "sha256": "a3418365b3f6d3970e757959fe23ab5e54130b16f58488b802a67b577acda6d3",
-      "bytes": 978
+      "sha256": "446ad668efcc35ed82e1b12cd18a415007082ece4da5cb9e1bed62153c9e3529",
+      "bytes": 441
     },
     {
       "path": "docs/book/production/review-native.py",
@@ -3162,11 +3173,11 @@
     },
     {
       "path": "docs/nds-book/published/Two-Screens-One-Little-Escape.pdf",
-      "sha256": "0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f"
+      "sha256": "3bc15e839769c786de2d123e8a733bcda9a1a9a9ba560cc86f8e3162a8e825bf"
     },
     {
       "path": "docs/nds-book/published/Reading-Edition.html",
-      "sha256": "fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894"
+      "sha256": "629a5ec40d54d642087caa30dd2d0bfcae134bcee4eb8b4c2813abb644f91d39"
     }
   ],
   "atlasPolicy": "Original procedural factory geometry; neutral studio lighting; model lights hidden and material emission disabled to inspect base surfaces; ACES exposure 1; orthographic views; DS returned lid group rotated 15 degrees around local X. Not application-room photometry, lamp-power appearance, animation, historical artwork or gameplay evidence.",
