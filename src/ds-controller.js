@@ -197,7 +197,7 @@ export class DsController {
       map.colorSpace = THREE.SRGBColorSpace; map.needsUpdate = true;
       for (const emblem of this.model.branding) { emblem.material.map = map; emblem.material.needsUpdate = true; emblem.visible = true; }
       if (!this.powered) this.showPowerOff();
-    } catch (error) { console.error('DS branding:', error); this.feedback(error.message, true); }
+    } catch (error) { console.error('DS branding:', error); this.feedback(error.message, true); throw error; }
     this.update();
   }
 

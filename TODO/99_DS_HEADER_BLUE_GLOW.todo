@@ -1,0 +1,34 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/98
+Milestone: Keep the selected DS header readable over the warm lantern.
+Dependencies: 92 console palettes; 74 release qualification.
+Purpose: Add the owner's requested blue halo without changing the supplied
+artwork, GBA branding, header layout or play-mode visibility.
+
+Tasks:
+- [x] Add a steady blue halo and dark-blue edge to the selected DS header.
+- [x] Serve the working change through the owner's existing local preview.
+- [x] Qualify actual pixels against a warm background and review real captures.
+- [x] Preserve reduced-motion behavior, original artwork and other branding.
+- [ ] Complete qualification under the bounded CI recovery policy in104.
+- [x] Synchronize the actual GitHub issue/Project and local backlink.
+- [ ] Commit/push as Zanark and monitor exact-source publication.
+
+Acceptance criteria:
+The DS header has a visible blue halo and contrasting edge over the lantern.
+The effect is static; no new animation, scene light, shader or render loop.
+Original artwork/aspect, GBA/website styling and play-mode header hiding remain.
+Technical checks and local preview are not owner acceptance or deployment.
+
+Completion evidence:
+The DS-specific CSS rule adds three static alpha-shaped drop shadows.
+Actual warm-background halo pixels pass. Original artwork, other console
+branding and play-mode hiding remain covered. The current final-source local
+suite is running; hosted publication remains pending under104's bounded policy.
+
+Completion log:
+2026-11-07: Owner supplies a screenshot where the lantern obscures the DS
+header and requests a bluish glow. Add a DS-only dark-blue edge, inner blue
+halo and softer outer bloom. Existing source preview serves the new rule.
+The owner's later bounded-repair/parking instruction supersedes local-first
+publication; see104 for the actual hosted outcome.

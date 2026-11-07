@@ -3,6 +3,7 @@
   --ink: #e0e5e9;
   --muted: #a3adba;
   --line: #9c7bc133;
+  --ds-accent: #c5f2b1;
   --mono: "Cascadia Code", Consolas, monospace;
   --sans: "Segoe UI", Arial, sans-serif;
 }
@@ -17,6 +18,14 @@ a { color: inherit; text-decoration: none; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #b2a1ed; outline-offset: 4px; }
 .sr-only, .skip-link:not(:focus) { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .skip-link:focus { position: fixed; top: 12px; left: 12px; z-index: 20; padding: 12px; background: #17212c; }
+.scene-loading { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: max(24px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left)); overflow: auto; background: #080c12; text-align: center; }
+.scene-loading-content { width: min(100%,520px); margin: auto; }
+.scene-loading-logo { position: relative; width: min(100%,440px); margin: 0 auto 32px; }
+.scene-loading-logo img { display: block; width: 100%; height: auto; filter: drop-shadow(0 0 16px #b8cfff30); }
+.scene-loading #scene-loading-status { margin: 0 0 8px; color: #e0e5e9; font-size: 16px; }
+#scene-loading-detail { margin: 0; color: var(--muted); }
+#scene-loading-retry, #scene-loading-recover { margin: 24px auto 0; }
+.scene-loading[data-failed] .scene-loading-logo::after { animation-play-state: paused; }
 .desk { position: relative; width: 100%; height: 100dvh; min-height: 280px; isolation: isolate; overflow: hidden; }
 #scene, #hardware-targets { position: absolute; inset: 0; }
 #scene-canvas { display: block; width: 100%; height: 100%; touch-action: none; outline-offset: -5px; }
@@ -27,10 +36,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .desk-heading h1 { position: relative; margin: 0; line-height: 1; }
 #scene[data-view="playing"] ~ .desk-heading h1 { visibility: hidden; }
 .desk-heading h1 img { display: block; width: clamp(220px, 32vw, 420px); height: auto; filter: drop-shadow(0 1px 2px #080c12d9) drop-shadow(0 0 9px #dce5ef45); }
-.desk-heading h1::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("./assets/website-logo.png") center / 100% 100% no-repeat; filter: brightness(1.7) drop-shadow(0 0 5px #f4fbff) drop-shadow(0 0 11px #cee8ffb3); mask-image: linear-gradient(90deg, transparent 42%, #000 50%, transparent 58%); mask-size: 300% 100%; mask-repeat: no-repeat; animation: website-logo-shimmer 6s linear infinite; }
+.desk-heading h1::after, .scene-loading-logo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("./assets/website-logo.png") center / 100% 100% no-repeat; filter: brightness(1.7) drop-shadow(0 0 5px #f4fbff) drop-shadow(0 0 11px #cee8ffb3); mask-image: linear-gradient(90deg, transparent 42%, #000 50%, transparent 58%); mask-size: 300% 100%; mask-repeat: no-repeat; animation: website-logo-shimmer 6s linear infinite; }
+.scene-loading-logo::after { animation-duration: 2s; animation-delay: -1.3s; }
 #scene[data-view="playing"] ~ .desk-heading h1::after { animation-play-state: paused; }
 .desk-heading h1[data-console]::after { display: none; }
 .desk-heading h1[data-console] img { filter: none; }
+.desk-heading h1[data-console="ds"] img { filter: drop-shadow(0 1px 2px #071a42) drop-shadow(0 0 5px #1358df) drop-shadow(0 0 14px #2498ffb3); }
 @keyframes website-logo-shimmer {
   0%, 65% { mask-position: 100% 0; }
   95%, 100% { mask-position: 0% 0; }
@@ -39,7 +50,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #hardware-targets button { position: absolute; transform: translate(-50%, -50%); padding: 0; border: 0; border-radius: 20%; background: transparent; pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 #hardware-targets button:focus-visible { outline: 2px solid #f4edc1; outline-offset: 3px; }
 #hardware-targets #ds-stylus { cursor: grab; }
-#hardware-targets #ds-stylus[aria-pressed=true] { border: 1px solid #8bff78; background: #080b35e6; color: #b8ff8a; font: 9px var(--sans); cursor: pointer; }
+#hardware-targets #ds-stylus[aria-pressed=true] { border: 1px solid var(--ds-accent); background: #080b35e6; color: var(--ds-accent); font: 9px var(--sans); cursor: pointer; }
 .scene-hint { position: absolute; bottom: max(28px, calc(env(safe-area-inset-bottom) + 24px)); left: max(12px, env(safe-area-inset-left)); right: 12px; margin: 0; text-align: left; color: #bbc3cc; font: 11px/1.3 var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; text-shadow: 0 1px 5px #000; }
 .icon-dock { --dock-start: #2c2139ef; --dock-end: #14121eee; --dock-line: #c3a0ed40; --dock-ink: #cdbfe0; --dock-active: #b7a4ee20; --dock-bright: #e0d5ff; --dock-ring: #cdacff45; --dock-glow: #a763e51a; --dock-tooltip: #20192ef5; position: absolute; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; border: 1px solid var(--dock-line); border-radius: 18px; background: linear-gradient(150deg,var(--dock-start),var(--dock-end)); box-shadow: 0 12px 35px #0008, inset 0 1px var(--dock-ring); backdrop-filter: blur(20px); white-space: nowrap; z-index: 2; }
 .desk[data-console=ds] .scene-actions { --dock-start: #171a70ef; --dock-end: #080b35ee; --dock-line: #36d9ff70; --dock-ink: #b9dfff; --dock-active: #245bff45; --dock-bright: #eaf5ff; --dock-ring: #36d9ff55; --dock-glow: #245bff35; --dock-tooltip: #080b35f5; }
@@ -80,7 +91,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 #ds-open { display: none; }
 .ds-inspect-controls { position: absolute; top: max(185px, env(safe-area-inset-top)); left: 24px; z-index: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px; width: min(270px,calc(100vw - 24px)); padding: 12px; border: 1px solid #36d9ff70; border-radius: 14px; background: #080b35ee; box-shadow: 0 8px 25px #0006; font-size: 11px; }
 .ds-inspect-controls :is(select,button) { min-width: 0; min-height: 44px; padding: 6px 9px; border: 1px solid #36d9ff55; border-radius: 9px; background: #171a70; color: #eaf5ff; }
-.ds-inspect-controls button[aria-pressed=true] { border-color: #8bff78; color: #8bff78; }
+.ds-inspect-controls button[aria-pressed=true] { border-color: var(--ds-accent); color: var(--ds-accent); }
 .ds-inspect-controls label:not(.sr-only), .ds-inspect-controls input, .ds-inspect-controls p { grid-column: 1 / -1; }
 .ds-inspect-controls output { float: right; }
 .ds-inspect-controls input { width: 100%; height: 30px; margin: 0; accent-color: #36d9ff; }
@@ -92,7 +103,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .ds-inspect-controls { top: 90px; left: 12px; width: 220px; }
   .scene-actions { gap: 3px; }
 }
-.desk[data-console=ds] #ds-open { display: grid; color: #c9ed71; }
+.desk[data-console=ds] #ds-open { display: grid; color: var(--ds-accent); }
 .desk[data-console=ds] :is(#quick-speed,#quick-controls,#quick-autosave,#quick-save,#quick-load,#quick-slots,#quick-restart,#quick-screen-fullscreen,#tools-open) { display: none; }
 .ds-runtime-source { position: fixed; top: 0; left: 0; width: 512px; height: 768px; opacity: 0; pointer-events: none; z-index: -1; }
 .ds-runtime-source iframe { display: block; width: 512px; height: 768px; border: 0; }
@@ -231,5 +242,5 @@ body.dragging #scene-canvas { outline: 4px solid #f6e5aa; outline-offset: -4px; 
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
-  .desk-heading h1::after { content: none; animation: none; }
+  .desk-heading h1::after, .scene-loading-logo::after { content: none; animation: none; }
 }

@@ -14,6 +14,58 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Bounded CI recovery takes priority:
+  Owner explicitly requests commit, push and completed deployment, authorizing
+  one repair attempt per failing case and then tracked skips if it recurs.
+  This supersedes the preceding all-local-cases-first delivery restriction.
+  Download and inspect all nine actual e042d17 hosted failure traces. Select
+  explicit full-resolution ANGLE SwiftShader in CI, matching the existing
+  local software qualifier rather than automatic Chromium fallback. Preserve
+  120s/15s deadlines, retries0, all assertions and nineteen gated shards.
+  Backend selection is a bounded qualification attempt, not a proven diagnosis.
+  New startup/lighting/DS workstreams have actual issue/Project/backlink
+  verification: 101->issue100, 102->issue101, 103->issue102.
+- 2026-11-07 / Startup, responsive lighting and DS finish/rear refinement:
+  Complete baseline103/103 locally before qualifying newer source. Cover
+  construction behind the shimmering logo and wait for actual assets, scene
+  reflections and GPU presentation. Delayed/failing resources, desktop/phone
+  and explicit WebGL recovery pass. Switch fixed light intensities rather
+  than changing shader counts; paint direct changes before PMREM and bypass
+  only artificial recovery. Preserve real GPU/native/modal gates. Larger
+  room increases wash out the DS lid under unchanged cyan assertions; settle
+  on132/22,10%above original120/20, with actual brighter tabletop pixels.
+  Owner's pale green first makes labels too faint and looks dull. Use navy
+  control legends, light shell labels, livelier pale pistachio, bounded plastic
+  brightness compensation and metallic hinge paint sharing existing room
+  reflections. Clarify that two rear green rectangles are L/R controls;
+  owner approves top-edge relocation instead of removal. Rotate local
+  assemblies to reuse native press animation along the top edge. Replace
+  four black feet with matte green squares. A test edit initially destructures
+  the wrong existing result; correct it, then repeat affected cases rather
+  than treating that failure as evidence against rendering. Three final DS
+  cases pass in1.1m, including native Q/W, physical presses/releases, real
+  color/letter pixels and rear geometry. Review actual underside capture.
+  Full final-source local gate now runs serially; no publication is claimed.
+- 2026-11-07 / DS branding readability and rear scale:
+  Owner sees the warm lantern behind the DS header and asks for a bluish glow.
+  Add a static DS-only dark-blue edge and layered blue halo without changing
+  artwork, GBA/website branding, play hiding, scene lights or rendering loops.
+  Owner then requests a bigger underside logo. Increase the existing plane
+  from3.2 to4.5units (approximately41%), preserving2149:732aspect, center,
+  orientation and original material. Current-source preview serves both.
+  Actual pixel/bounds/render qualification is pending; do not rebuild assets
+  beneath the already-running full baseline. All local tests must pass before
+  deployment. No performance, owner-acceptance or publication claim is made.
+- 2026-11-07 / Separate Lighting hosted outcome and local-first direction:
+  Exact Zanark e042d17/Pages42354807179 completes: build success,19browser
+  summaries94PASS/9FAIL, deployment skipped. New Lighting and responsive
+  dock cases pass hosted; actual issue97 receipt6704481532 independently
+  verified. Other native speed, DS framebuffer/input/view/screenshot, Pear
+  feet and CRT readiness failures have observed locations, not proven causes.
+  Owner requests all tests pass locally before deployment and a persistent
+  local view. Host current source on5173; verify HTTP/current markup/CSS.
+  Check/59units/fresh build pass; full103-case Edge baseline runs serially
+  against its separate built server on5174. It does not include later edits.
 - 2026-11-07 / Separate shared lighting dock:
   Owner requests lighting outside the dedicated GBA/DS dock. Move the original
   Lamp/Room/Pear buttons into a warm upper-right accessible nav. Share icon

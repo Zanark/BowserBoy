@@ -1,5 +1,6 @@
 BowserBOY workstreams
 ====================
+104_BOUNDED_CI_RECOVERY.todo - IN_PROGRESS: one CI repair attempt, then explicitly tracked recurring-case skips; actual deployment required.
 01_PLAYABLE_PROTOTYPE.todo - Local-ROM player and polished static shell.
 02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.
 03_VERIFICATION_AND_DELIVERY.todo - Real-runtime evidence and documentation.
@@ -97,16 +98,33 @@ BowserBOY workstreams
 95_DS_REAR_MARKINGS.todo - IN_PROGRESS: centered actual lid recesses and lower-body underside emblem, locally qualified.
 96_DS_CONTROL_CLEARANCE_AND_KEYS.todo - IN_PROGRESS: caps/sockets clear the touchscreen; DS A/S=Y/X, Q/W=L/R; local native scene/runtime and GBA regression pass.
 97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: all four corrected native D-pad scenarios pass hosted at5b250f2;95PASS/7FAIL skips publication.
-98_SEPARATE_LIGHTING_DOCK.todo - IN_PROGRESS: independent shared Lighting dock locally qualified in both renderers; monitored delivery pending.
+98_SEPARATE_LIGHTING_DOCK.todo - IN_PROGRESS: independent Lighting case passes hosted at e042d17;94PASS/9FAIL skips publication.
+99_DS_HEADER_BLUE_GLOW.todo - IN_PROGRESS: static blue DS header halo/edge in local preview; actual render qualification pending.
+100_LARGER_DS_REAR_EMBLEM.todo - IN_PROGRESS: existing underside emblem approximately41%larger, original aspect/position preserved; actual clearance/render qualification pending.
+101_SHIMMERING_SCENE_STARTUP.todo - IN_PROGRESS: delayed assets/GPU, shimmer, phone and failure/recovery cases pass; full final-source gate running.
+102_RESPONSIVE_BRIGHTER_ROOM_LIGHTING.todo - IN_PROGRESS: natural-frame switching and brighter tabletop pass; original GPU and DS cyan requirements retained.
+103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo - IN_PROGRESS: brighter pale accents, navy legends, metallic trim, top-edge L/R and four square green rubber pads; three affected DS cases pass.
 
 Current pending work
 --------------------
+-101/102/103: New startup, lighting and DS finish/layout cases are locally
+  qualified. Room light output rises10%, preserving the original cyan test;
+  larger increases washed out the lid. Top-edge L/R native presses and the
+  actual rear capture pass/reviewed. Final-source full local suite is running
+  against frozen rebuilt assets; no deployment before it passes.
+-99/100: Owner requests more readable DS header branding and a larger rear
+  emblem. Changes are served through the local source preview. Preserve the
+  blue halo's actual pixels and the enlarged emblem's actual bounds/clearance
+  now pass. The preceding baseline completed103/103 before newer edits; it
+  does not qualify final source. All local tests must pass before deployment.
 -98: Lamp/Room/Pear controls now use a separate warm, accessible Lighting dock;
   console tools retain their themed movement/collapse. Phone play placement
   avoids the DS upper screen; table/Inspect retain space for the visible brand.
   Final rebuilt responsive pair passes Edge38.4s/SwiftShader46.5s; actual DS
   phone capture reviewed.59units/103browser cases/19shards retained.
-  Exact-source monitored delivery and owner acceptance pending.
+  Zanark e042d17/Pages42354807179 completes94PASS/9FAIL, deployment skipped.
+  New Lighting and responsive dock cases pass hosted; actual issue97 final
+  receipt6704481532 verified. Full publication/owner acceptance pending.
 -97: Zanark5b250f2/Pages42352239845 finishes95PASS/7FAIL, deploy SKIPPED.
   All four corrected native D-pad scenarios PASS hosted. Original assertions,
   deadlines/retries0/quality and19shards retained. Audio reserve, DS isolation,

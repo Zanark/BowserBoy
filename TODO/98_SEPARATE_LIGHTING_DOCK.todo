@@ -13,7 +13,7 @@ Tasks:
 - [x] Qualify the final layout, actual light state and responsive room paints.
 - [x] Update affected player/architecture guides and causal development history.
 - [x] Verify actual GitHub issue/Project/body/status and local backlink.
-- [ ] Commit/push as Zanark and monitor the exact automatic Pages gate.
+- [x] Commit/push as Zanark and monitor the exact automatic Pages gate.
 
 Acceptance criteria:
 Lighting is independently labeled and reachable with named 44px controls.
@@ -38,8 +38,10 @@ repeat both affected responsive/light-state cases: Edge38.4s, SwiftShader46.5s.
 Actual final DS320px capture reviewed: the console is painted and lighting is
 above its upper screen. Check/all59units/build/browser syntax/whitespace pass.
 103browser cases in8files; original19shards/deadlines/retries0/quality retained.
-Frozen published PDF unchanged. Exact-source deployment and owner acceptance
-remain pending.
+Frozen published PDF unchanged. Zanark e042d1793365cfd2591f078e72a6f1d74bf4cedb
+was pushed; exact Pages42354807179 completed94PASS/9FAIL, deployment SKIPPED.
+New Lighting and responsive dock cases pass hosted. Full publication and
+owner acceptance remain pending.
 Actual issue97 OPEN/Project1 In progress/body/membership/backlink verified.
 
 Completion log:
@@ -58,3 +60,9 @@ source checks and all59units pass. Publication is a separate monitored gate.
 2026-11-07: Trusted identity verified Zanark. Scoped sync creates actual issue97
 and verifies its managed body, open state, Project1 membership/In progress and
 local backlink after GitHub read-back consistency settles.
+2026-11-07: Exact automatic Pages42354807179 completes: build success and
+all19browser summaries total94PASS/9FAIL. New lighting case and responsive
+dock case pass; deployment is skipped. Actual issue97 final receipt verified:
+https://github.com/Zanark/BowserBoy/issues/97#issuecomment-6704481532
+Keep issue/Project In progress. Owner now requests all tests pass locally
+before deployment, with a persistent local preview while work continues.

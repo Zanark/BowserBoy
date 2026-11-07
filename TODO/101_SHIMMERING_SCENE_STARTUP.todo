@@ -1,0 +1,34 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/100
+Milestone: Reveal a complete desk instead of partially loaded models.
+Dependencies: 74 release qualification; 99 DS header glow.
+Purpose: Keep a shimmering BowserBOY cover visible until scene assets,
+reflections and the first completed GPU paint are ready.
+
+Tasks:
+- [x] Present an opaque startup cover before importing the application.
+- [x] Reuse the website shimmer and respect reduced motion.
+- [x] Wait for branding, reflections, GPU completion and browser presentation.
+- [x] Surface startup failures with retry and explicit WebGL recovery controls.
+- [x] Exercise delayed assets/GPU, desktop/phone and real failure/reload paths.
+- [ ] Complete qualification under the bounded CI recovery policy in104.
+- [ ] Verify actual GitHub issue/Project synchronization and publication.
+
+Acceptance criteria:
+The initial desk remains inert behind the cover until its complete first
+frame is ready. A failure is not presented as a successful scene. Startup
+polling ends after completion; ROM-loading UI and existing recovery remain.
+Technical qualification, owner acceptance and deployment are separate.
+
+Completion evidence:
+The four new startup cases and existing unavailable-WebGL recovery case pass
+locally at original quality/deadlines with retries0. Delayed real branding
+and held GPU fences keep the cover visible. Desktop shimmer and reduced-
+motion phone coverage pass. All59 units and a fresh static build pass.
+The preceding103-case baseline passed before these changes; the new full
+final-source run remains pending and is not qualified by that baseline.
+
+Completion log:
+2026-11-07: Owner requests a startup cover using the shimmering website logo.
+Separate initial presentation from app construction, wait for real completion,
+and keep failure/retry/recovery explicit instead of revealing a partial desk.

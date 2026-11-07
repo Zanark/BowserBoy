@@ -20,6 +20,13 @@ The physical bezel lettering also stays unchanged. The local working tree now
 adds a separate **BowserBOY DS** metallic teal/lime console, clipped stylus and selector;
 this DS prototype has not been published to Pages.
 
+The current local DS uses bright pale-pistachio green instead of neon lime.
+Green hinge trim has metallic room reflections; buttons retain a softer finish
+and dark navy legends. START/SELECT/POWER labels stay light against the blue
+shell. L/R now sit on the top edge, with the original Q/W bindings retained.
+Four matte green square rubber pads replace the black underside feet.
+These working-tree refinements remain separate from the published GBA release.
+
 The repository is now `Zanark/BowserBoy`; historical Pages URLs and the local
 `BowserBoyAdvance` checkout name are retained. The DS does not rename or
 modify GBA storage.
@@ -126,7 +133,10 @@ clipped stylus are lime. The resting table hinge opens to approximately 110 degr
 unlocked gameplay opens fully to 180 degrees, flat and facing the camera.
 The two small square recesses are centered on the outer lid and are actual
 geometry. The supplied emblem is on the lower half's underside, in the clear
-area beside the battery cover; neither lid face carries the colorful logo.
+area beside the battery cover, now approximately41%larger without changing
+its proportions; neither lid face carries the colorful logo. The selected
+DS header has a steady blue halo and darker blue edge to separate it from
+the warm lantern; this does not add a scene light or animate the glow.
 GBA settings use the static Advance logo and
 the action dock changes from GBA purple to DS blue/cyan.
 

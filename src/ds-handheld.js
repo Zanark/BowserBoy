@@ -32,8 +32,12 @@ export function createDsHandheld() {
   const baseShell = paint('#40A0FF');
   const rim = shell;
   const edge = metal('#171A70', .42, .25);
-  const lime = metal('#8BFF78', .40, 0);
-  const buttonPlastic = metal('#8BFF78', .45, 0);
+  const accent = '#C5F2B1';
+  const lime = paint(accent);
+  lime.metalness = .55;
+  const buttonPlastic = metal(accent, .45, 0);
+  buttonPlastic.emissive.set(accent);
+  buttonPlastic.emissiveIntensity = 4;
   const dpadPlastic = metal('#245BFF', .45, 0);
   const lavender = metal('#B9B8E8', .4, .08);
   const dark = metal('#080B35', .64, .04);
@@ -54,7 +58,7 @@ export function createDsHandheld() {
       ctx.fillText(title, w / 2, h / 2, w - 24);
     });
     return mesh(parent, title, new THREE.PlaneGeometry(width, height),
-      new THREE.MeshStandardMaterial({ map, transparent: true, depthWrite: false, roughness: .7 }), x, y, z);
+      new THREE.MeshBasicMaterial({ map, transparent: true, depthWrite: false, toneMapped: false }), x, y, z);
   }
   function circle(parent, name, radius, depth, material, x, y, z) {
     const geometry = new THREE.CylinderGeometry(radius, radius, depth, 24);
@@ -132,7 +136,7 @@ export function createDsHandheld() {
   text(hinge, 'MIC', .24, 0, .12, .247, '#EAF5FF', .07);
   for (const x of [3.72, 3.85]) mesh(hinge, 'Hinge indicator recess', roundedBox(.037, .14, .012, .01), dark, x, .035, .25);
   const branding = [
-    mesh(root, 'Supplied transparent DS underside emblem', new THREE.PlaneGeometry(3.2, 3.2 * 732 / 2149),
+    mesh(root, 'Supplied transparent DS underside emblem', new THREE.PlaneGeometry(4.5, 4.5 * 732 / 2149),
       new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false }), -1.65, -2.43, -.265),
   ];
   branding[0].rotation.y = Math.PI;
@@ -147,7 +151,7 @@ export function createDsHandheld() {
     const button = mesh(root, `${title} button`, geometry, material, x, y, .29);
     button.userData.restZ = button.position.z;
     controls.set(id, { mesh: button, anchor: button, width: radius * 2.25, height: radius * 2.25 });
-    if (title) text(button, title, radius * 1.22, 0, 0, .052, '#EAF5FF', radius * 1.06);
+    if (title) text(button, title, radius * 1.22, 0, 0, .052, '#080B35', radius * 1.06);
     return button;
   };
   for (const [id, x, y] of [['x', 3.3, -1.32], ['a', 3.84, -1.87], ['b', 3.3, -2.41], ['y', 2.75, -1.87]]) {
@@ -170,7 +174,7 @@ export function createDsHandheld() {
   crossGeometry.translate(0, 0, -.035);
   mesh(dpad, 'Single molded cross D-pad', crossGeometry, dpadPlastic);
   const directionMarks = new Map();
-  const pressedDirection = new THREE.MeshBasicMaterial({ color: '#8BFF78', toneMapped: false });
+  const pressedDirection = new THREE.MeshBasicMaterial({ color: accent, toneMapped: false });
   for (const [id, x, y, vertical] of [['up', 0, .36, true], ['down', 0, -.36, true], ['left', -.36, 0, false], ['right', .36, 0, false]]) {
     directionMarks.set(id, mesh(dpad, 'D-pad direction engraving',
       new THREE.BoxGeometry(vertical ? .022 : .12, vertical ? .12 : .022, .003), rim, x, y, .071));
@@ -186,25 +190,30 @@ export function createDsHandheld() {
     text(root, id.toUpperCase(), .52, 3.43, y, .255, '#EAF5FF', .12);
   }
   for (const [id, x] of [['l', -3.4], ['r', 3.4]]) {
-    const button = mesh(root, `${id.toUpperCase()} rear shoulder`, roundedBox(1.05, .40, .20, .075), lime, x, -.25, -.18);
-    button.userData.restZ = -.18;
+    const shoulder = new THREE.Group();
+    shoulder.name = `${id.toUpperCase()} top-edge shoulder housing`;
+    shoulder.position.set(x, .08, -.255);
+    shoulder.rotation.x = -Math.PI / 2;
+    root.add(shoulder);
+    mesh(shoulder, 'Recessed shoulder socket', roundedBox(1.12, .10, .24, .03), edge, 0, 0, -.06);
+    const button = mesh(shoulder, `${id.toUpperCase()} top-edge shoulder`, roundedBox(1.05, .09, .08, .03), buttonPlastic, 0, 0, .09);
+    button.userData.restZ = .09;
     const anchor = new THREE.Object3D();
-    anchor.position.set(x, -.38, .28);
-    root.add(anchor);
-    controls.set(id, { mesh: button, anchor, width: 1.05, height: .40 });
-    const mark = text(button, id.toUpperCase(), .23, 0, 0, -.14);
-    mark.rotation.y = Math.PI;
+    anchor.position.z = .14;
+    shoulder.add(anchor);
+    controls.set(id, { mesh: button, anchor, width: 1.05, height: .22 });
+    text(button, id.toUpperCase(), .23, 0, 0, .047, '#080B35', .06);
   }
   const power = cap('power', -3.3, -4.22, .20, buttonPlastic, '');
   power.name = 'Front DS power button';
-  const powerMark = new THREE.MeshBasicMaterial({ color: '#EAF5FF', toneMapped: false });
+  const powerMark = new THREE.MeshBasicMaterial({ color: '#080B35', toneMapped: false });
   const powerIcon = mesh(power, 'Power button icon ring', new THREE.TorusGeometry(.075, .012, 8, 24, Math.PI * 1.65),
     powerMark, 0, 0, .066);
   powerIcon.rotation.z = Math.PI * .675;
   mesh(power, 'Power button icon stem', roundedBox(.018, .09, .012, .006), powerMark, 0, .065, .066);
   text(root, 'POWER', .5, -3.3, -4.60, .255, '#EAF5FF', .09);
   const led = mesh(hinge, 'DS green hinge power indicator', roundedBox(.025, .10, .004, .008),
-    new THREE.MeshStandardMaterial({ color: '#8BFF78', emissive: '#00c82d', emissiveIntensity: 0 }), 3.72, .035, .263);
+    new THREE.MeshStandardMaterial({ color: accent, emissive: '#00c82d', emissiveIntensity: 0 }), 3.72, .035, .263);
   const expansion = mesh(root, 'Front navy expansion slot', roundedBox(3.9, .30, .025, .025), slot, -.12, -4.842, -.015);
   expansion.rotation.x = Math.PI / 2;
   const headphones = new THREE.Group();
@@ -222,8 +231,10 @@ export function createDsHandheld() {
     circle(root, 'Underside screw recess', .07, .012, dark, x, y, z);
     mesh(root, 'Screw head slot', new THREE.BoxGeometry(.06, .015, .006), lavender, x, y, z - .008);
   }
+  const rubber = buttonPlastic.clone();
+  rubber.roughness = .9;
   for (const x of [-3.65, 3.65]) for (const y of [-.70, -4.30]) {
-    mesh(root, 'Underside rubber table foot', roundedBox(.30, .22, .024, .05), dark, x, y, -.30);
+    mesh(root, 'Pale green square underside rubber pad', roundedBox(.30, .30, .024, .035), rubber, x, y, -.30);
   }
   const cartridge = new THREE.Group();
   cartridge.name = 'Insertable DS game card';
@@ -238,7 +249,7 @@ export function createDsHandheld() {
   stylus.name = 'Docked molded DS stylus with short rounded nib';
   stylus.position.set(4.39, -2.43, -.025);
   root.add(stylus);
-  const stylusPlastic = lime.clone();
+  const stylusPlastic = buttonPlastic.clone();
   mesh(root, 'Stylus side docking channel', roundedBox(.24, 4.22, .075, .05), edge, 4.27, -2.43, -.075);
   mesh(stylus, 'Molded lime stylus shaft', new THREE.CylinderGeometry(.073, .065, 3.64, 24), stylusPlastic, 0, -.03);
   mesh(stylus, 'Flat stylus pull tab', roundedBox(.24, .38, .13, .06), stylusPlastic, 0, 1.86, .015);

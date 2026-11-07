@@ -113,11 +113,11 @@ export function createDeskLamp() {
 export function createRoomLighting() {
   const root = new THREE.Group();
   root.name = 'Switchable room lighting';
-  const ceiling = new THREE.RectAreaLight('#ffe5c7', 120, 14, 12);
+  const ceiling = new THREE.RectAreaLight('#ffe5c7', 132, 14, 12);
   ceiling.name = 'Diffuse ceiling light';
   ceiling.position.set(0, 10, 5);
   ceiling.lookAt(0, 0, 0);
-  const reflected = new THREE.HemisphereLight('#ffe3bf', '#654333', 20);
+  const reflected = new THREE.HemisphereLight('#ffe3bf', '#654333', 22);
   reflected.name = 'Room reflected light';
   root.add(ceiling, reflected);
   return root;

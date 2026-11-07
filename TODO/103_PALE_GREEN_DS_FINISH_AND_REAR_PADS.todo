@@ -1,0 +1,44 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/102
+Milestone: Bright pale-green DS accents, readable controls and a cleaner rear.
+Dependencies: 100 larger DS rear emblem; 102 responsive/brighter lighting;
+74 release qualification.
+Purpose: Replace neon lime without making the DS dull or its legends unreadable,
+and implement the owner's approved top-edge L/R and square rear rubber pads.
+
+Tasks:
+- [x] Use a brighter pale pistachio accent without changing the blue shell/GBA.
+- [x] Make face/shoulder lettering and the power symbol dark navy.
+- [x] Keep shell-mounted START/SELECT/POWER labels light and readable.
+- [x] Give green hinge trim real metallic paint and existing room reflections.
+- [x] Keep button/stylus plastic bright without adding scene lights or loops.
+- [x] Move L/R from broad underside rectangles to working top-edge buttons.
+- [x] Replace four black rectangular feet with matte pale-green square pads.
+- [x] Check actual pixels, labels, rear geometry and native shoulder presses.
+- [ ] Complete qualification under the bounded CI recovery policy in104.
+- [ ] Verify actual GitHub issue/Project synchronization and publication.
+
+Acceptance criteria:
+Green stays pale but lively. Navy legends remain darker than their button
+surfaces under warm and room lighting. Metallic trim remains distinct from
+matte rubber pads. Four square pads replace the old black feet; the rear no
+longer has large green L/R rectangles. Q/W and native L/R remain functional,
+with physical presses into the top edge. Publication is not owner acceptance.
+
+Completion evidence:
+Three affected DS browser cases pass locally in1.1minutes: real scene/runtime
+native key transitions and top-edge shoulder movement/release; placement,
+rear pad geometry/hits and larger-emblem clearance; original blue-cyan shell
+photometry plus new pale-accent brightness/saturation, dark-label pixels and
+shared metallic reflection checks. Actual underside capture reviewed: four
+green squares, unobstructed enlarged emblem and top-edge shoulder housings.
+No new lights, reflection captures or animation loop are introduced. A fresh
+build passes. Full final-source browser qualification is running, not passed.
+
+Completion log:
+2026-11-07: Owner selects DS-only accents, then requests darker text, pale but
+bright green, and metallic green body trim. Keep existing blue/GBA colors.
+Owner identifies rear rectangles as pads; clarify they are L/R buttons and
+receive explicit direction to move L/R onto the top edge instead of removing
+the controls. Rotate their local assembly so the existing depression animation
+presses into that edge; replace the four rear feet with matte green squares.

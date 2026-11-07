@@ -9,11 +9,21 @@
     <link rel="icon" href="./assets/brand-mark.svg" type="image/svg+xml" sizes="any">
     <link rel="stylesheet" href="./styles.css">
     <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
-    <script type="module" src="./src/app.js"></script>
+    <script type="module" src="./src/boot.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
-    <main id="player" class="desk" data-console="gba" aria-label="BowserBOY console table: separate GBA and Nintendo DS handhelds">
+    <section id="scene-loading" class="scene-loading" aria-label="Starting BowserBOY">
+      <div class="scene-loading-content">
+        <div class="scene-loading-logo"><img src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732" fetchpriority="high"></div>
+        <p id="scene-loading-status" role="status">Setting up your little escape...</p>
+        <p id="scene-loading-detail">Preparing the desk, consoles and lighting.</p>
+        <button id="scene-loading-retry" class="button button-secondary" hidden>Reload and try again</button>
+        <button id="scene-loading-recover" class="button button-secondary" hidden>Open recovery controls</button>
+        <noscript><p>JavaScript is required to load the 3D desk. Enable it and reload this page.</p></noscript>
+      </div>
+    </section>
+    <main id="player" class="desk" data-console="gba" aria-busy="true" inert aria-label="BowserBOY console table: separate GBA and Nintendo DS handhelds">
+      <a class="skip-link" href="#tools-open">Skip to cartridge and settings</a>
       <div id="scene" data-view="table"></div>
       <header class="desk-heading"><div class="desk-brand"><h1><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/website-logo.png"><img src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732"></picture></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div></header>
       <p id="scene-error" role="alert" hidden></p>

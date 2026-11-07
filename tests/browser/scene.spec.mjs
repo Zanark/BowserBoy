@@ -41,6 +41,163 @@ const surfaceColor = (page, position, lcdIntensity) => page.evaluate(async ({ po
 const surfaceLight = async (page, position, lcdIntensity) =>
   (await surfaceColor(page, position, lcdIntensity)).reduce((a, b) => a + b) / 3;
 
+for (const reduced of [false, true]) {
+  test(`startup cover waits for assets and GPU paint with ${reduced ? 'reduced-motion phone branding' : 'the shimmering BowserBOY logo'}`, async ({ page }, testInfo) => {
+    if (reduced) {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+    } else await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.addInitScript(() => {
+      window.holdStartupGpu = true;
+      const wait = WebGL2RenderingContext.prototype.clientWaitSync;
+      WebGL2RenderingContext.prototype.clientWaitSync = function (...args) {
+        if (window.holdStartupGpu) { window.startupGpuWaits = (window.startupGpuWaits ?? 0) + 1; return this.TIMEOUT_EXPIRED; }
+        return wait.apply(this, args);
+      };
+    });
+    let release;
+    const asset = new Promise(resolve => { release = resolve; });
+    await page.route('**/assets/ds-logo.png', async route => { await asset; await route.continue(); });
+    try {
+      await page.goto('./', { waitUntil: 'domcontentloaded' });
+      const cover = page.locator('#scene-loading');
+      const logo = cover.locator('.scene-loading-logo');
+      await expect(cover).toBeVisible();
+      await expect(page.locator('#player')).toHaveJSProperty('inert', true);
+      await expect(page.locator('#scene-canvas')).toBeAttached();
+      await logo.locator('img').evaluate(image => image.decode());
+      const box = await cover.boundingBox();
+      expect(box).toMatchObject({ x: 0, y: 0, ...page.viewportSize() });
+      expect(await cover.evaluate(element => getComputedStyle(element).backgroundColor)).toBe('rgb(8, 12, 18)');
+      if (reduced) {
+        expect(await logo.evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(0);
+      } else {
+        await logo.evaluate(element => {
+          const shimmer = element.getAnimations({ subtree: true }).find(animation => animation.animationName === 'website-logo-shimmer');
+          if (!shimmer) throw new Error('The loading logo must use the existing website shimmer.');
+          shimmer.pause(); shimmer.currentTime = 0;
+        });
+        const first = await logo.screenshot();
+        await logo.evaluate(element => { element.getAnimations({ subtree: true })[0].currentTime = 400; });
+        expect((await logo.screenshot()).equals(first), 'The shimmer must change actual logo pixels').toBe(false);
+      }
+      await page.screenshot({ path: testInfo.outputPath('startup-cover.png') });
+      release();
+      await expect.poll(() => page.evaluate(() => window.startupGpuWaits ?? 0)).toBeGreaterThan(0);
+      await expect(cover).toBeVisible();
+      await expect(page.locator('#player')).toHaveJSProperty('inert', true);
+      await page.evaluate(() => { window.holdStartupGpu = false; });
+      await expect(cover).toBeHidden();
+      await expect(page.locator('#player')).toHaveAttribute('aria-busy', 'false');
+      await expect(page.locator('#player')).toHaveJSProperty('inert', false);
+      await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+      expect(await page.evaluate(async () => {
+        const { view } = await import('./src/app.js');
+        return !!view.model.root.visible && view.ds.root.visible && view.pear.root.visible &&
+          view.ds.branding.every(emblem => emblem.visible && emblem.material.map.image.complete) &&
+          !view.dsReflectionsDirty && view.lastPaint > 0 && view.renderer.info.render.triangles > 1000;
+      })).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath('startup-complete-desk.png') });
+      await page.locator('#pickup').click();
+      await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+      await expect(cover).toBeHidden();
+    } finally { release(); }
+  });
+}
+
+for (const resource of ['src/app.js', 'assets/ds-logo.png']) {
+  test(`startup failure of ${resource} is explicit and reload recovers`, async ({ page }) => {
+    const pattern = `**/${resource}`;
+    await page.route(pattern, route => route.abort('failed'));
+    await page.goto('./', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('#scene-loading-status')).toHaveAttribute('role', 'alert');
+    await expect(page.locator('#scene-loading-status')).toHaveText('The desk could not finish loading.');
+    await expect(page.locator('#player')).toHaveJSProperty('inert', true);
+    await page.unroute(pattern);
+    await page.getByRole('button', { name: 'Reload and try again', exact: true }).click();
+    await expect(page.locator('#scene-loading')).toBeHidden();
+    await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+    await page.locator('#pickup').click();
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  });
+}
+
+test('light switches paint before reflection refresh, bypass recovery without queueing GPU work, and brighten the room', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await expect(page.locator('#scene-loading')).toBeHidden();
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Vector3 } = await import('three');
+    window.lightSamples = [];
+    window.lightProbe = () => {
+      const point = new Vector3(0, 0, 4).project(view.camera), gl = view.renderer.getContext();
+      const pixels = new Uint8Array(5 * 5 * 4);
+      gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2) - 2,
+        Math.round((point.y + 1) * view.canvas.height / 2) - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      let total = 0;
+      for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
+      return total / 75;
+    };
+    const render = view.renderer.render.bind(view.renderer);
+    view.renderer.render = (scene, camera) => {
+      const output = render(scene, camera);
+      if (camera === view.camera && window.lightRequest) {
+        window.lightSamples.push({ lamp: view.lampOn, room: view.roomLightsOn,
+          elapsed: performance.now() - window.lightRequest, brightness: window.lightProbe(),
+          reflectionsPending: view.dsReflectionsDirty, programs: view.renderer.info.programs.length });
+        window.lightRequest = null;
+      }
+      return output;
+    };
+    document.addEventListener('click', event => {
+      if (event.target.closest('#lamp-toggle, #room-toggle')) {
+        window.lightRequest = performance.now();
+        view.nextPaint = performance.now() + 10000;
+      }
+    }, true);
+    window.lightPrograms = view.renderer.info.programs.length;
+  });
+  for (const [index, id] of ['lamp-toggle', 'room-toggle', 'room-toggle', 'lamp-toggle'].entries()) {
+    await page.locator(`#${id}`).click();
+    await expect.poll(() => page.evaluate(() => window.lightSamples.length), { timeout: 1000 }).toBe(index + 1);
+  }
+  const samples = await page.evaluate(() => window.lightSamples);
+  expect(samples.map(({ lamp, room }) => [lamp, room])).toEqual([[false, false], [false, true], [false, false], [true, false]]);
+  for (const sample of samples) {
+    expect(sample.elapsed, 'The direct-light frame should not wait for reflection capture or idle recovery').toBeLessThan(1000);
+    expect(sample.reflectionsPending).toBe(true);
+    expect(sample.programs, 'Switching lights must not introduce new shader variants').toBe(await page.evaluate(() => window.lightPrograms));
+  }
+  expect(samples[1].brightness).toBeGreaterThan(samples[0].brightness + 20);
+  expect(samples[3].brightness).toBeGreaterThan(samples[2].brightness + 20);
+  await page.evaluate(() => {
+    document.getElementById('lamp-toggle').click();
+    document.getElementById('lamp-toggle').click();
+    document.getElementById('lamp-toggle').click();
+  });
+  await expect.poll(() => page.evaluate(() => window.lightSamples.length), { timeout: 1000 }).toBe(5);
+  expect(await page.evaluate(() => window.lightSamples[4].lamp)).toBe(false);
+  await page.locator('#room-toggle').click();
+  await expect.poll(() => page.evaluate(() => window.lightSamples.length), { timeout: 1000 }).toBe(6);
+  const brighter = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const current = window.lightSamples[5].brightness;
+    const levels = view.roomLighting.children.map(light => light.intensity);
+    try {
+      for (const [index, light] of view.roomLighting.children.entries()) light.intensity = [120, 20][index];
+      view.renderer.render(view.scene, view.camera);
+      return { current, previous: window.lightProbe() };
+    } finally {
+      for (const [index, light] of view.roomLighting.children.entries()) light.intensity = levels[index];
+      view.changed = true;
+    }
+  });
+  expect(brighter.current, 'Actual tabletop pixels must be brighter than the preceding room-light levels').toBeGreaterThan(brighter.previous * 1.02);
+  await expect.poll(() => page.evaluate(async () => !(await import('./src/app.js')).view.dsReflectionsDirty)).toBe(true);
+  await testInfo.attach('lighting-switch-paints', { body: JSON.stringify({ samples, brighter }), contentType: 'application/json' });
+  await page.screenshot({ path: testInfo.outputPath('brighter-room.png') });
+});
+
 for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844 }]) {
   test(`physical cartridge slides into the top slot during real loading at ${viewport.width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize(viewport);
@@ -1359,6 +1516,7 @@ test('reduced motion skips the pickup tween and unavailable WebGL fails explicit
   });
   await page.reload();
   await expect(page.locator('#scene-error')).toContainText('needs WebGL 2');
+  await page.getByRole('button', { name: 'Open recovery controls', exact: true }).click();
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await expect(page.locator('#notice')).toContainText('needs WebGL 2');

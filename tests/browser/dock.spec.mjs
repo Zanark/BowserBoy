@@ -226,6 +226,49 @@ test('inspection shows the animated purple console logo, with static reduced-mot
   await expect(image).toHaveAttribute('src', './assets/website-logo.png');
 });
 
+test('DS inspection header has an actual blue halo over warm light without changing other branding', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await ready(page);
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  const heading = page.locator('.desk-heading h1');
+  const image = heading.locator('img');
+  await expect(heading).toHaveAttribute('data-console', 'ds');
+  await image.evaluate(image => image.decode());
+  await heading.evaluate(element => { element.style.background = '#aa6c34'; });
+  const glowing = await heading.screenshot();
+  await image.evaluate(image => { image.style.filter = 'none'; });
+  const plain = await heading.screenshot();
+  const bluePixels = await page.evaluate(async ([glowing, plain]) => {
+    const pixels = async base64 => {
+      const bytes = Uint8Array.from(atob(base64), value => value.charCodeAt(0));
+      const bitmap = await createImageBitmap(new Blob([bytes], { type: 'image/png' }));
+      const context = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
+      context.drawImage(bitmap, 0, 0); bitmap.close();
+      return context.getImageData(0, 0, context.canvas.width, context.canvas.height).data;
+    };
+    const [on, off] = await Promise.all([pixels(glowing), pixels(plain)]);
+    let blue = 0;
+    for (let i = 0; i < on.length; i += 4) {
+      if (on[i + 2] - off[i + 2] > 8 && on[i + 2] - off[i + 2] > on[i] - off[i]) blue++;
+    }
+    return blue;
+  }, [glowing.toString('base64'), plain.toString('base64')]);
+  expect(bluePixels, 'The halo must add blue pixels around the actual artwork on a warm backdrop').toBeGreaterThan(100);
+  await image.evaluate(image => image.style.removeProperty('filter'));
+  await heading.evaluate(element => element.style.removeProperty('background'));
+  await page.screenshot({ path: testInfo.outputPath('ds-blue-header.png') });
+  await page.locator('#inspect').click();
+  await expect(heading).toBeHidden();
+  await page.locator('#select-gba').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#inspect').click();
+  await expect(image).toHaveAttribute('src', './assets/inspection-logo.png');
+  expect(await image.evaluate(image => getComputedStyle(image).filter)).toBe('none');
+});
+
 test('BowserBOY website branding is separate from static GBA settings and DS artwork', async ({ page }) => {
   await page.goto('./');
   await ready(page);

@@ -382,6 +382,45 @@ export class HandheldScene {
 
   get activeModel() { return this.console === 'ds' ? this.ds : this.model; }
 
+  async waitForFirstPaint() {
+    const gl = this.renderer.getContext();
+    let fence = null;
+    try {
+      await new Promise((resolve, reject) => {
+        const check = () => {
+          try {
+            if (gl.isContextLost() || this.paintSyncFailed) {
+              reject(new Error('The first 3D frame could not finish. Reload to retry graphics.'));
+              return;
+            }
+            if (this.lastPaint === undefined || this.changed || this.dsReflectionsDirty) {
+              requestAnimationFrame(check);
+              return;
+            }
+            if (!this.paintSyncAvailable) { resolve(); return; }
+            if (!fence) {
+              fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+              if (!fence) {
+                reject(new Error('The first 3D frame could not be synchronized.'));
+                return;
+              }
+              gl.flush();
+            }
+            const status = gl.clientWaitSync(fence, 0, 0);
+            if (status === gl.WAIT_FAILED) reject(new Error('The first 3D frame did not complete.'));
+            else if (status === gl.TIMEOUT_EXPIRED) requestAnimationFrame(check);
+            else resolve();
+          } catch (error) {
+            reject(error);
+          }
+        };
+        requestAnimationFrame(check);
+      });
+    } finally {
+      if (fence) gl.deleteSync(fence);
+    }
+  }
+
   get dsHinge() { return 180 - THREE.MathUtils.radToDeg(this.ds.lid.rotation.x); }
 
   beginInspectionDrag(id, event) {
@@ -914,21 +953,25 @@ export class HandheldScene {
 
   setLamp(enabled) {
     this.dsReflectionsDirty = true;
-    this.changed = true;
+    this.changed = this.lightingChanged = true;
     this.lampOn = enabled;
-    this.lamp.light.visible = enabled;
-    this.lamp.diffuse.visible = enabled;
-    this.lamp.underShade.visible = enabled;
-    this.lamp.bounce.visible = enabled;
+    // Keep shader light counts stable instead of compiling a new scene per switch.
+    for (const light of [this.lamp.light, this.lamp.diffuse, this.lamp.underShade, this.lamp.bounce]) {
+      light.userData.enabledIntensity ??= light.intensity;
+      light.intensity = enabled ? light.userData.enabledIntensity : 0;
+    }
     this.lamp.diffuser.material.emissiveIntensity = enabled ? 80 : 0;
     this.lamp.shade.material.emissiveIntensity = enabled ? 60 : 0;
   }
 
   setRoomLights(enabled) {
     this.dsReflectionsDirty = true;
-    this.changed = true;
+    this.changed = this.lightingChanged = true;
     this.roomLightsOn = enabled;
-    this.roomLighting.visible = enabled;
+    for (const light of this.roomLighting.children) {
+      light.userData.enabledIntensity ??= light.intensity;
+      light.intensity = enabled ? light.userData.enabledIntensity : 0;
+    }
     this.scene.background.set(enabled ? '#201a16' : '#000000');
   }
 
@@ -1071,7 +1114,7 @@ export class HandheldScene {
       this.nextPaint = time + (delta > .05 ? Math.min(recoveryLimit, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
-    const paintDue = !this.paintFence && !this.paintSyncFailed && time >= (this.nextPaint ?? 0) &&
+    const paintDue = !this.paintFence && !this.paintSyncFailed && (this.lightingChanged || time >= (this.nextPaint ?? 0)) &&
       !this.nativeBusy && !document.querySelector('dialog[open]');
     const cartridgeMotion = this.cartridgeMotion;
     const cartridgeElapsed = cartridgeMotion ? nextCartridgeElapsed(cartridgeMotion, time, paintDue) : 0;
@@ -1221,9 +1264,10 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled && this.dsScreenIllumination.every(light => light.settled)) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     // Sample the actual room once per settled pose/light change, only for DS paint.
-    if (this.dsReflectionsDirty && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&
+    if (this.dsReflectionsDirty && !this.lightingChanged && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&
         !consolesMoving && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
+    this.lightingChanged = false;
     this.pearMotion.acknowledgePaint();
     for (const motion of Object.values(this.consoleMotions)) motion.acknowledgePaint();
     // Canvas light readbacks can drain the entire GPU queue. Wait without blocking

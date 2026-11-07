@@ -14,7 +14,10 @@ test('relocated entry documents keep public URLs and all build sources resolve',
   assert.ok(files.every(file => !/^(?:web|docs|TODO|\.agent-context|demos)[\\/]/.test(file)));
   assert.ok(files.every(file => !file.includes('demos')));
   const html = await readFile(siteSource('index.html'), 'utf8');
-  for (const url of ['./styles.css', './src/app.js', './assets/brand-mark.svg']) {
+  for (const url of ['./styles.css', './src/boot.js', './assets/brand-mark.svg']) {
     assert.ok(html.includes(url), `Missing preserved URL ${url}`);
   }
+  assert.ok(files.includes(join('src', 'app.js')), 'The existing app module URL remains public');
+  const boot = await readFile(join('src', 'boot.js'), 'utf8');
+  assert.ok(boot.includes("import('./app.js')"), 'Startup loads the existing application module');
 });

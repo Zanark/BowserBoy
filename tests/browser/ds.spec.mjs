@@ -165,11 +165,18 @@ test('DS A/S face keys and Q/W shoulders reach native buttons from the scene and
   for (const target of [page.locator('#scene-canvas'), frame.locator('canvas').first()]) {
     await target.focus();
     for (const [key, button] of [['KeyA', 1], ['KeyS', 9], ['KeyQ', 10], ['KeyW', 11]]) {
+      const shoulderPosition = () => page.evaluate(async id => {
+        const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+        return view.ds.root.worldToLocal(view.ds.controls.get(id).mesh.getWorldPosition(new Vector3())).toArray();
+      }, key === 'KeyQ' ? 'l' : 'r');
+      const rest = button >= 10 ? await shoulderPosition() : null;
       await frame.evaluate(() => { window.dsKeyTransitions = []; });
       await page.keyboard.down(key);
       await expect.poll(() => frame.evaluate(() => window.dsKeyTransitions)).toEqual([[0, button, 1]]);
+      if (rest) await expect.poll(async () => (await shoulderPosition())[1]).toBeLessThan(rest[1] - .05);
       await page.keyboard.up(key);
       await expect.poll(() => frame.evaluate(() => window.dsKeyTransitions)).toEqual([[0, button, 1], [0, button, 0]]);
+      if (rest) await expect.poll(shoulderPosition).toEqual(rest);
     }
   }
   expect(errors).toEqual([]);
@@ -1233,7 +1240,21 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
       underside: hit(view.ds.root, [-1.65, -2.43, -1], [0, 0, 1]),
       emblemOnBase: emblem.parent === view.ds.root,
       batteryGap: batteryBounds.min.x - emblemBounds.max.x,
+      emblemFill: (emblemBounds.max.x - emblemBounds.min.x) / (batteryBounds.min.x - shell.min.x),
+      emblemMargins: [emblemBounds.min.x - shell.min.x, shell.max.y - emblemBounds.max.y, emblemBounds.min.y - shell.min.y],
       faceButtons, dpadGap: bezel.min.x - baseBounds('Electric blue cross D-pad').max.x,
+      shoulders: ['l', 'r'].map(id => {
+        const button = view.ds.controls.get(id).mesh;
+        const point = view.ds.root.worldToLocal(button.getWorldPosition(new Vector3()));
+        return { y: point.y, normal: new Vector3(0, 0, 1).applyQuaternion(button.parent.quaternion).toArray() };
+      }),
+      pads: view.ds.root.children.filter(object => object.name === 'Pale green square underside rubber pad').map(pad => {
+        pad.geometry.computeBoundingBox();
+        const size = pad.geometry.boundingBox.getSize(new Vector3());
+        return { square: size.x / size.y, matte: pad.material.roughness > .8 && pad.material.metalness === 0,
+          green: pad.material.color.g > pad.material.color.r && pad.material.color.r > .4,
+          rearHit: hit(view.ds.root, [pad.position.x, pad.position.y, -1], [0, 0, 1]) };
+      }),
       dockGap: stylus.min.x - deck.max.x, withinBase: stylus.min.y > deck.min.y && stylus.max.y < deck.max.y, cyan };
   });
   expect(surfaces.front).not.toContain('emblem');
@@ -1242,11 +1263,25 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   expect(surfaces.underside).toBe('Supplied transparent DS underside emblem');
   expect(surfaces.emblemOnBase, 'Underside branding must follow the lower body, not the hinge').toBe(true);
   expect(surfaces.batteryGap, 'The underside emblem must not overlap the battery cover').toBeGreaterThan(0);
+  expect(surfaces.emblemFill, 'The larger rear logo should fill most of the clear area beside the battery').toBeGreaterThan(.8);
+  expect(surfaces.batteryGap).toBeGreaterThan(.25);
+  for (const margin of surfaces.emblemMargins) expect(margin, 'The enlarged emblem must remain comfortably inside the lower shell').toBeGreaterThan(.25);
   for (const button of surfaces.faceButtons) {
     expect(button.screenGap, `${button.name} must clear the actual beveled touchscreen bezel`).toBeGreaterThan(.05);
     expect(button.shellGap, `${button.name} must remain inside the control deck`).toBeGreaterThan(.1);
   }
   expect(surfaces.dpadGap, 'The D-pad must also clear the touchscreen bezel').toBeGreaterThan(.05);
+  for (const shoulder of surfaces.shoulders) {
+    expect(shoulder.y, 'L/R must sit on the top edge rather than the underside').toBeGreaterThan(0);
+    expect(shoulder.normal[1], 'L/R must press into the top edge').toBeGreaterThan(.99);
+  }
+  expect(surfaces.pads).toHaveLength(4);
+  for (const pad of surfaces.pads) {
+    expect(pad.square).toBeCloseTo(1, 5);
+    expect(pad.matte).toBe(true);
+    expect(pad.green).toBe(true);
+    expect(pad.rearHit).toBe('Pale green square underside rubber pad');
+  }
   expect(surfaces.dockGap).toBeLessThan(.15);
   expect(surfaces.withinBase).toBe(true);
   for (const [red, green, blue] of surfaces.cyan) {
@@ -1255,6 +1290,23 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
     expect(blue).toBeGreaterThan(35);
   }
   await page.screenshot({ path: testInfo.outputPath('ds-reference-front.png') });
+  const frontPose = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const quaternion = view.ds.root.quaternion.toArray();
+    view.ds.root.rotateY(Math.PI);
+    view.dsReflectionsDirty = view.changed = true;
+    return quaternion;
+  });
+  await expect.poll(() => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.lastRotation.equals(view.ds.root.quaternion) && !view.dsReflectionsDirty;
+  })).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath('ds-reference-underside.png') });
+  await page.evaluate(async quaternion => {
+    const { view } = await import('./src/app.js');
+    view.ds.root.quaternion.fromArray(quaternion);
+    view.dsReflectionsDirty = view.changed = true;
+  }, frontPose);
   await page.locator('#put-down').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   const returned = await page.evaluate(() => window.dsLiftSamples);
@@ -1319,7 +1371,7 @@ test('DS shell retains bright blue-cyan in its reference lighting pose under war
       const { view } = await import('./src/app.js');
       return view.transition === null && view.screenIllumination.settled && !view.dsReflectionsDirty;
     })).toBe(true);
-    const surfaces = await page.evaluate(async () => {
+    const { surfaces, accents } = await page.evaluate(async () => {
       const { view } = await import('./src/app.js');
       const { Vector2, Vector3, Raycaster } = await import('three');
       const shell = view.ds.root.getObjectByName('Metallic blue control deck').material;
@@ -1352,7 +1404,57 @@ test('DS shell retains bright blue-cyan in its reference lighting pose under war
         shell.color.copy(color);
         view.renderer.render(view.scene, view.camera);
       }
-      return surfaces;
+      const buttons = ['a', 'b', 'x', 'y'].map(id => view.ds.controls.get(id).mesh);
+      const sampleAccents = () => buttons.map(button => {
+        const point = button.localToWorld(new Vector3(-.14, 0, .04)).project(view.camera);
+        ray.setFromCamera(new Vector2(point.x, point.y), view.camera);
+        const rgba = new Uint8Array(4);
+        gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2),
+          Math.round((point.y + 1) * view.canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+        return { visibleButton: ray.intersectObjects(view.scene.children, true)[0]?.object === button,
+          rgb: [...rgba].slice(0, 3) };
+      });
+      const accents = { current: sampleAccents() };
+      accents.letters = buttons.map(button => {
+        const label = button.children.find(child => child.material?.map);
+        const image = label.material.map.image;
+        const { data } = image.getContext('2d').getImageData(0, 0, image.width, image.height);
+        let closest = Infinity, glyph;
+        for (let y = 1; y < image.height - 1; y++) for (let x = 1; x < image.width - 1; x++) {
+          const distance = (x - image.width / 2) ** 2 + (y - image.height / 2) ** 2;
+          if (distance >= closest) continue;
+          if ([-1, 0, 1].every(dy => [-1, 0, 1].every(dx => data[((y + dy) * image.width + x + dx) * 4 + 3] === 255))) {
+            closest = distance; glyph = [x, y];
+          }
+        }
+        if (!glyph) throw new Error('DS button label has no opaque lettering to sample.');
+        const point = label.localToWorld(new Vector3(
+          ((glyph[0] + .5) / image.width - .5) * label.geometry.parameters.width,
+          (.5 - (glyph[1] + .5) / image.height) * label.geometry.parameters.height, 0)).project(view.camera);
+        const rgba = new Uint8Array(4);
+        gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2),
+          Math.round((point.y + 1) * view.canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+        return [...rgba].slice(0, 3);
+      });
+      const trim = view.ds.root.getObjectByName('Right lime hinge end cap').material;
+      accents.metallicTrim = trim.isMeshPhysicalMaterial && trim.metalness > .5 &&
+        trim.clearcoat > 0 && trim.envMap === shell.envMap && !!trim.roughnessMap;
+      const buttonMaterial = buttons[0].material, buttonColor = buttonMaterial.color.clone();
+      const emissiveIntensity = buttonMaterial.emissiveIntensity;
+      try {
+        buttonMaterial.emissiveIntensity = 0;
+        buttonMaterial.color.set('#C8EDBA');
+        view.renderer.render(view.scene, view.camera);
+        accents.dull = sampleAccents();
+        buttonMaterial.color.set('#8BFF78');
+        view.renderer.render(view.scene, view.camera);
+        accents.previous = sampleAccents();
+      } finally {
+        buttonMaterial.color.copy(buttonColor);
+        buttonMaterial.emissiveIntensity = emissiveIntensity;
+        view.renderer.render(view.scene, view.camera);
+      }
+      return { surfaces, accents };
     });
     for (const [index, surface] of surfaces.entries()) {
       expect(surface.visibleShell, `${lighting}: sample shell, not screens, controls or props`).toBe(true);
@@ -1363,6 +1465,18 @@ test('DS shell retains bright blue-cyan in its reference lighting pose under war
         .toBeGreaterThan(lighting === 'warm' ? (index === 0 ? 100 : 30) : (index === 0 ? 140 : 60));
     }
     const luminance = rgb => rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
+    expect(accents.metallicTrim, `${lighting}: green body trim shares the shell's real room reflections`).toBe(true);
+    for (const [index, button] of accents.current.entries()) {
+      expect(button.visibleButton, `${lighting}: sample the button, not its lettering or deck`).toBe(true);
+      const greenness = ([r, g, b]) => (g - (r + b) / 2) / g;
+      expect(greenness(button.rgb), `${lighting}: pale green must be less neon than the preceding lime`)
+        .toBeLessThan(greenness(accents.previous[index].rgb) * .65);
+      expect(greenness(button.rgb), `${lighting}: retain a visible green accent`).toBeGreaterThan(0);
+      expect(luminance(button.rgb), `${lighting}: the pale green must not look dull`)
+        .toBeGreaterThan(luminance(accents.dull[index].rgb) * 1.15);
+      expect(luminance(accents.letters[index]), `${lighting}: dark lettering must stand out from the pale button`)
+        .toBeLessThan(luminance(button.rgb) * .6);
+    }
     expect(luminance(surfaces[1].mean), `${lighting}: lighter NDS base in the same lighting`)
       .toBeGreaterThan(luminance(surfaces[1].darkerMean) * 1.15);
     await page.screenshot({ path: testInfo.outputPath(`ds-blue-cyan-${lighting}.png`) });

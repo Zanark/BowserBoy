@@ -33,7 +33,7 @@ let ds = null;
 let gbaSuspended = false;
 let selectingConsole = false;
 export let view = null;
-let sceneFailure = null;
+export let sceneFailure = null;
 try { preferences = readPreferences(localStorage); }
 catch (error) {
   console.error('Player preferences:', error);
@@ -1086,7 +1086,8 @@ try {
       const heading = document.querySelector('.desk-heading h1');
       const consoleBrand = mode === 'inspecting';
       const dsBrand = consoleBrand && view?.console === 'ds';
-      heading.toggleAttribute('data-console', consoleBrand);
+      if (consoleBrand) heading.dataset.console = view.console;
+      else delete heading.dataset.console;
       const image = heading.querySelector('img');
       image.setAttribute('src', dsBrand ? './assets/ds-logo.png' : consoleBrand ? './assets/inspection-logo.png' : './assets/website-logo.png');
       image.alt = dsBrand ? 'BowserBOY DS' : consoleBrand ? 'BowserBOYADVANCED' : 'BowserBOY';
@@ -1122,6 +1123,7 @@ try {
   await ds.initialize();
   // Open save storage before first-paint shader compilation can block its timeout.
   view.setScreenFullscreen(false);
+  await view.waitForFirstPaint();
   $('pear-open').disabled = false;
   $('consoles-open').disabled = false;
   updatePearControls();

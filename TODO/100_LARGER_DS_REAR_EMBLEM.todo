@@ -1,0 +1,35 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/99
+Milestone: Make the DS lower-body underside emblem more prominent.
+Dependencies: 95 DS rear markings; 74 release qualification.
+Purpose: Enlarge the requested rear logo without moving it onto the battery
+cover, lid, hinge hardware or outside the lower shell.
+
+Tasks:
+- [x] Enlarge the existing underside plane while preserving its aspect ratio.
+- [x] Preserve center, orientation, original texture and material behavior.
+- [x] Verify the local source preview serves the enlarged model.
+- [x] Qualify actual model bounds, battery clearance and reviewed rear capture.
+- [ ] Complete qualification under the bounded CI recovery policy in104.
+- [x] Synchronize the actual GitHub issue/Project and local backlink.
+- [ ] Commit/push as Zanark and monitor exact-source publication.
+
+Acceptance criteria:
+The rear logo is visibly larger and fills most of the clear lower-body area
+beside the battery cover. It remains on the underside with its original
+proportions and orientation; it clears shell edges, feet and hinge hardware.
+No new geometry count, light, animation or native-emulator behavior is added.
+Technical checks and local preview are not owner acceptance or deployment.
+
+Completion evidence:
+The existing plane increases from3.2 to4.5model units, approximately41%wider
+and taller. Its supplied2149:732aspect, center(-1.65,-2.43,-.265), rear
+orientation and original material remain unchanged. Syntax/whitespace and
+served-source checks pass. Actual emblem bounds/battery/edge clearance pass;
+the latest rear capture is reviewed with the four square pads and relocated
+shoulders. Full final-source local and hosted qualification remain pending.
+
+Completion log:
+2026-11-07: Owner supplies an underside screenshot and requests a bigger rear
+logo. Enlarge only the existing lower-body emblem, keeping the clear area
+beside the battery cover. The persistent source preview serves the change.

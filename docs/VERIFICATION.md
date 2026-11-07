@@ -9,6 +9,63 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Deployment recovery: one attempt, then explicitly park recurring failures
+
+The owner's latest instruction supersedes the earlier requirement for every
+local case to pass before deployment. Attempt a repair once; if the same case
+fails again, explicitly skip and track it for later. Skipped coverage is not
+fixed coverage. Keep the build and remaining browser verification as deployment
+prerequisites, with unchanged assertions, rendering resolution and deadlines.
+
+The nine failures from Pages42354807179 have been inspected through their
+actual trace artifacts. The first bounded CI repair selects ANGLE SwiftShader
+explicitly instead of relying on Chromium's automatic software fallback.
+This is the same full-resolution backend used for local software qualification;
+it is not a proven root-cause correction. Existing startup/GPU-readiness and
+lighting-scheduling changes accompany this run. Record exact-SHA hosted
+results before deciding which individual cases need parking.
+
+### Current source: focused checks pass; full local gate running
+
+The preceding unmodified103-case baseline passed locally. It does not qualify
+later edits. The rebuilt final source adds six browser cases, retaining the
+original quality, deadlines, retries0 and19hosted shards. The complete local
+suite is currently running; **nothing new is deployed**.
+
+Focused startup checks pass for real delayed assets/GPU completion, desktop
+shimmer, reduced-motion phone, module/branding failures and reload recovery.
+Existing unavailable-WebGL recovery also passes. Real light switching paints
+before reflection refresh, bypasses artificial recovery without weakening
+GPU/native/modal gates, handles rapid input and introduces no switch-time
+shader variant. The original strict GPU scheduling case passes.
+
+A50%room-light increase washed out the DS lid; a20%increase also failed the
+original cyan requirement. Final ceiling/fill132/22 is10%above original120/20.
+Actual tabletop brightness and the unchanged warm/room DS color case pass.
+No shell-material, exposure or existing color-assertion change masks this.
+
+The three final affected DS cases pass in1.1minutes. Coverage includes actual
+pale-green pixel saturation/brightness against prior variants, dark printed
+legend pixels, metallic trim sharing real room reflections, square matte rear
+pads and native Q/W from both scene/runtime focus. Rotated shoulder assemblies
+press into the top edge and release correctly. Actual underside capture
+reviewed: four green squares and a clear enlarged rear emblem; L/R no longer
+form broad green rectangles on the underside. Owner acceptance remains open.
+
+### DS header glow and larger rear emblem: focused qualification passes
+
+The selected DS header gains a static dark-blue edge and blue halo; original
+artwork, GBA/website styling and play hiding remain unchanged. The existing
+underside plane increases from3.2 to4.5units with the original aspect,
+center, orientation and material. Actual warm-background halo pixels and
+emblem bounds/battery/edge clearance now pass; the rear capture is reviewed.
+
+The owner's earlier local-first requirement is superseded by the bounded
+repair/explicit-parking instruction above. The source
+preview is available while work continues. The103-case baseline completed
+before the newer edits; the final-source run is separate. Check/all59units/
+fresh build pass. Do not rebuild dist underneath the active final-source run.
+
 ### Separate lighting dock: locally qualified, publication pending
 
 Lamp, Room and Pear Boy now belong to their own warm, named Lighting dock.
@@ -26,6 +83,13 @@ Syntax, all59units, build, browser syntax and whitespace pass. The inventory is
 103browser cases in8files; original19shards, deadlines, retries0 and full rendering
 quality are retained. The published PDF is unchanged. Exact-source publication
 and owner acceptance remain separate and unestablished.
+
+Exact source **e042d1793365cfd2591f078e72a6f1d74bf4cedb** was pushed as Zanark.
+[Automatic Pages42354807179](https://github.com/Zanark/BowserBoy/actions/runs/42354807179)
+completed with build success and all19browser summaries totaling
+**94passed /9failed; deployment SKIPPED**. The new lighting and responsive
+dock cases pass hosted. The [actual issue97 final receipt](https://github.com/Zanark/BowserBoy/issues/97#issuecomment-6704481532)
+records all nine observed failures; their root causes remain unestablished.
 
 ### DS directional D-pad: all four corrected scenarios pass hosted
 

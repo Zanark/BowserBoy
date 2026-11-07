@@ -1,0 +1,38 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/101
+Milestone: Predictable light switches and a brighter room.
+Dependencies: 98 separate Lighting dock; 74 release qualification.
+Purpose: Remove unpredictable switching delay without weakening GPU safety
+or washing out the DS's approved blue-cyan shell.
+
+Tasks:
+- [x] Keep lamp/room shader light counts stable across switches.
+- [x] Paint direct-light changes before expensive reflection refresh.
+- [x] Bypass artificial recovery delay, retaining actual GPU/native/modal gates.
+- [x] Increase room ceiling/fill output while preserving warm colors/exposure.
+- [x] Check natural-frame response, rapid last-state-wins input and real pixels.
+- [x] Preserve existing DS cyan and strict GPU scheduling assertions.
+- [ ] Complete qualification under the bounded CI recovery policy in104.
+- [ ] Verify actual GitHub issue/Project synchronization and publication.
+
+Acceptance criteria:
+Real lighting responds without queued stale states or extra shader variants.
+Actual tabletop pixels are brighter than the preceding120/20 room levels.
+DS blue-cyan color and GPU safety retain their original assertions; no reduced
+rendering quality, retry or deadline extension substitutes for a passing gate.
+
+Completion evidence:
+The natural-frame switching/brightness case and original GPU-fence/native-
+gating case pass. A50% increase to180/30 washed out the DS lid and failed the
+unchanged cyan assertion. A20% increase was also insufficiently color-safe.
+The final132/22 levels increase both original light outputs10%; the actual
+tabletop brightness comparison and original warm/room DS color case pass.
+No DS shell color/material or renderer exposure was changed to mask that
+regression. Full final-source local qualification and publication are pending.
+
+Completion log:
+2026-11-07: Owner reports slow unpredictable light switches and requests a
+brighter room. Prioritize eligible direct-light paints and defer cube/PMREM
+refresh rather than queueing work ahead of the visible response. Retain the
+fixed light objects to avoid switch-time shader-count compilation. Bound the
+brightness increase using the existing cyan requirement, not a relaxed test.

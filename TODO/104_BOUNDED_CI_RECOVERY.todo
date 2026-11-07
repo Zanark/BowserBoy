@@ -1,0 +1,32 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/103
+Milestone: Complete the owner's requested Pages deployment without endless retries.
+Dependencies: 74 current hosted qualification; 101 startup; 102 lighting; 103 DS finish.
+Purpose: Attempt one bounded repair of the observed hosted failures, then
+explicitly park recurring cases instead of blocking deployment indefinitely.
+
+Tasks:
+- [x] Inspect all nine failed-case traces from Pages42354807179.
+- [x] Select explicit full-resolution ANGLE SwiftShader for CI qualification.
+- [ ] Observe the exact-source hosted repair attempt.
+- [ ] Park only recurring failed cases with explicit reasons and follow-up tracking.
+- [ ] Pass the retained build/browser gates and complete Pages deployment.
+- [ ] Verify actual deployed source and report passing/skipped coverage honestly.
+
+Acceptance criteria:
+The actual Pages deployment succeeds. Every skipped case has a named, visible
+follow-up and failure receipt. No blanket verification bypass, continue-on-error,
+assertion relaxation, reduced resolution or deadline extension. Passing a gate
+with parked cases does not establish those scenarios or owner visual acceptance.
+
+Completion evidence:
+Historical source e042d17/Pages42354807179: 94 passed, 9 failed, deploy skipped.
+Downloaded and inspected actual failure traces: native speed clock; DS boot;
+DS quick taps; DS side stylus; DS hinge; DS placement; DS reference lighting;
+Pear edge feet; GBA CRT reload readiness. Explicit CI SwiftShader is the first
+bounded environment repair, not a confirmed cause or a claim of passing.
+The current 109-case local run remains active; final results are pending.
+
+Completion log:
+2026-11-07: Owner prioritizes pipeline recovery, authorizes one repair attempt
+then parking if the case fails again, and explicitly requests commit/push/deploy.
