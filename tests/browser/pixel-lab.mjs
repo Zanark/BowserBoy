@@ -15,8 +15,6 @@ export const installRoomPaintFixture = page => page.evaluate(async () => {
     async paint(time) {
       await this.waitForGpu();
       view.render(time);
-      // Let production consume its fence and enforce its synthetic-time recovery.
-      if (!view.renderedLastFrame && !view.paintFence && view.nextPaint > time) view.render(view.nextPaint);
       if (!view.renderedLastFrame) throw new Error('Room fixture did not submit the intended complete frame.');
       // Callers can read the default framebuffer now, before another browser task.
     },

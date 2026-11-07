@@ -30,6 +30,25 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Pages8b46c2c/42324913149 finishesFAILURE: build/12browser shards pass,
+7fail,8failed cases,deploy skipped. Final flat physical probe returnstrue
+after11307.7ms; deadline exhaustion is not a wrong-coordinate result.
+Isolated full-DPR2 Edge/AMD780M profiling retains all original lighting:
+original/bypass/restored recovery4.381/12.368/4.298actual roomFPS, native
+612/605/607frames in about10s each. Remove redundant twice-elapsed idle
+after successful GPU-fence completion, preserving actual nonblocking fences.
+Production measurement20.902roomFPS/612native frames in10.047s. No quality
+reduction; fallback without fences remains unchanged, not performance-qualified.
+Existing cases cover immediate completed-fence eligibility and real DPR1/2
+fences without synthetic future recovery retries. Syntax/44units/build pass.
+Software8of9pass: all four native/physical poses and four recovery/motion
+cases pass; quick taps still fail1500ms in second batch. First batch500.2ms
+passes; second predicate1162.3ms finds incomplete native/copied marks.
+Preserve all deadlines,93cases,19shards and the unresolved software result.
+Subsequent Edge23PASS5.4m covers the full DS suite, movement/recovery and
+actual GBA native CRT/reload. Inventory audit assigns all93file/title/project
+identities exactly once to19shards (17x5+2x4), zero missing/extra/duplicates.
+
 Pages5b34678/42323482361 finishesFAILURE: build/13browser shards pass,
 6fail,8failed cases,deploy skipped. Native reload, flat/rolled precision,
 fast-forward and CRT reload pass this run. DS lifecycle/upside-down/quick/

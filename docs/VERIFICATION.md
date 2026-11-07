@@ -11,6 +11,42 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact source `8b46c2c8eccf72331aef8b8fb221cf33d30385df`,
+[Pages42324913149](https://github.com/Zanark/BowserBoy/actions/runs/42324913149),
+finishes **failure**: build and12browser shards pass, seven fail, deployment
+is skipped. Eight failed cases cover DS lifecycle, flat/upside-down physical
+probes, held pen, hinge, cyan-shell screenshot, pear bounce and CRT reload.
+The final flat physical probe actually returns true after11307.7ms; earlier
+probes return true after5689.2/5747.2ms. Late correct pixels do not pass deadlines.
+
+The owner's DS-lag report prompted isolated full-resolution profiling on Edge,
+AMD Radeon780M,1440x1100CSS,DPR2. With every original light/material retained,
+an original/bypass/restored experiment measures4.381/12.368/4.298actual roomFPS;
+native frame advances remain612/605/607over roughly10seconds each. The bypass
+changes only redundant recovery scheduling, retaining actual GPU fences.
+Remove the extra twice-elapsed idle after a successfully completed fence.
+The resulting production path measures20.902FPS, with612native frames in10.047s;
+two further phases measure22.660/20.319roomFPS and597/607native frames.
+These are local hardware observations, not a60FPS or all-device guarantee.
+No resolution, lighting, material, native-copy or input-queue change is made.
+The no-fence fallback retains its previous recovery.
+
+Existing browser regressions now require immediate successful-fence eligibility,
+including successive stationary draws and real DPR1/2fences. Manual-paint
+fixtures no longer retry at a future recovery timestamp. Syntax,44units and
+build pass. A nine-case full-resolution SwiftShader gate passes all four
+native/physical precision poses and all four recovery/motion cases, but
+**fails quick taps at the unchanged1500ms deadline**. Its first batch passes
+in500.2ms; the second predicate takes1162.3ms with only the first native mark
+yellow and the copied marks still green. The phone batch is not reached.
+Do not report software/native responsiveness or deployment as qualified.
+The subsequent Edge gate passes23cases in5.4m: full DS lifecycle, saves and
+reload, all four precise poses, deferred-camera mapping, twelve quick contacts,
+pen, spill, hinge/pose lock, phone framing, shell/branding, failure handling,
+console movement, recovery regressions and actual native GBA CRT/reload.
+The inventory audit still assigns93distinct file/title/project identities
+exactly once to19shards (17x5+2x4). No deadline or retry changed.
+
 Exact event-time-fixture source `5b34678bd7174feb16dc1d42818a5ffd8acc2391`,
 [Pages42323482361](https://github.com/Zanark/BowserBoy/actions/runs/42323482361),
 finishes **failure**: build and13browser shards pass, six fail; deployment

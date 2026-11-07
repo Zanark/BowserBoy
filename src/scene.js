@@ -966,9 +966,8 @@ export class HandheldScene {
         if (status === gl.WAIT_FAILED) {
           this.failRoomPaint();
         } else {
-          const elapsed = time - this.paintSubmitted;
-          const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion ? 1000 : 200;
-          this.nextPaint = time + (elapsed > 50 ? Math.min(recoveryLimit, elapsed * 2) : 0);
+          // A completed fence already guarantees room GPU work has drained.
+          this.nextPaint = time;
         }
       }
     } else if (this.renderedLastFrame) {

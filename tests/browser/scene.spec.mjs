@@ -162,7 +162,7 @@ test('sparse room paints lower the console before seating the cartridge', async 
     view.insertCartridge('sparse-paint-regression');
     let start = performance.now();
     const painted = [];
-    for (const offset of [0, 2600, 2900, 5500, 5800]) {
+    for (const offset of [0, 2900, 5800]) {
       if (offset === 0) {
         await window.roomPaintFixture.paint(start);
         start = view.lastRender;
@@ -250,9 +250,11 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
       view.setControl('a', false);
       view.changed = true;
       await window.roomPaintFixture.paint(view.lastRender + 16);
-      const beforeRecovery = view.renderer.info.render.frame;
+      const beforeStall = view.renderer.info.render.frame;
+      const fencedBeforeStall = !!view.paintFence;
       await tick(100);
-      const duringRecovery = view.renderer.info.render.frame;
+      const afterStall = view.renderer.info.render.frame;
+      const fencedAfterStall = !!view.paintFence;
       await tick(201); await tick(16);
       const singleStallRatio = view.renderer.getPixelRatio();
       await tick(1000); await tick(201);
@@ -266,7 +268,7 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
       const afterIdle = view.renderer.info.render.frame;
       view.setControl('a', true);
       await tick(100);
-      budgets.push({ ratio, singleStallRatio, severeStallRatio, beforeRecovery, duringRecovery, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
+      budgets.push({ ratio, singleStallRatio, severeStallRatio, beforeStall, afterStall, fencedBeforeStall, fencedAfterStall, beforeIdle, afterIdle, slowRatio: view.renderer.getPixelRatio(),
         width: view.canvas.width, cssWidth: view.width, press: view.model.controls.get('a').mesh.userData.motion.press });
     }
     return budgets;
@@ -275,12 +277,14 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     expect(budget.singleStallRatio).toBe(budget.ratio);
     expect(budget.severeStallRatio, 'Scheduling stalls must never reduce handheld sharpness').toBe(budget.ratio);
     expect(budget.afterIdle, 'A severe scheduling gap must not wake a settled, idle scene').toBe(budget.beforeIdle);
-    expect(budget.duringRecovery).toBe(budget.beforeRecovery);
+    expect(budget.fencedBeforeStall, 'The baseline room frame must retain a real GPU fence').toBe(true);
+    expect(budget.afterStall, 'A completed GPU fence must not add another idle interval after a scheduling stall').toBeGreaterThan(budget.beforeStall);
+    expect(budget.fencedAfterStall, 'The next room frame must also retain a real GPU fence').toBe(true);
     expect(budget.slowRatio, 'Sustained slow frames must retain full resolution').toBe(budget.ratio);
     expect(budget.width).toBe(Math.floor(budget.cssWidth * budget.ratio));
     expect(budget.press).toBeGreaterThan(.99);
   }
-  const playingRecovery = await page.evaluate(async () => {
+  const playingFence = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const tick = async gap => {
       await window.roomPaintFixture.waitForGpu();
@@ -292,16 +296,19 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     // GPU waits advance wall time independently of the earlier synthetic ticks.
     const start = Math.max(view.lastRender, view.transition?.started ?? 0);
     await window.roomPaintFixture.paint(start + 1000);
-    if (view.transition) throw new Error('Stationary recovery requires a completed playing transition.');
+    if (view.transition) throw new Error('Stationary fence regression requires a completed playing transition.');
     const before = view.renderer.info.render.frame;
-    await tick(1000); await tick(201);
-    const during = view.renderer.info.render.frame;
+    await tick(1000);
+    const afterStall = view.renderer.info.render.frame;
+    await tick(201);
+    const afterNext = view.renderer.info.render.frame;
     await tick(800);
-    return { before, during, after: view.renderer.info.render.frame, ratio: view.renderer.getPixelRatio() };
+    return { before, afterStall, afterNext, after: view.renderer.info.render.frame, ratio: view.renderer.getPixelRatio() };
   });
-  expect(playingRecovery.during, 'A stalled, stationary handheld must leave time for the native core').toBe(playingRecovery.before);
-  expect(playingRecovery.after).toBeGreaterThan(playingRecovery.before);
-  expect(playingRecovery.ratio).toBe(2);
+  expect(playingFence.afterStall, 'A stationary handheld must repaint when its real GPU fence completes, without another one-second idle').toBeGreaterThan(playingFence.before);
+  expect(playingFence.afterNext, 'Each subsequent completed fence must permit the next room frame').toBeGreaterThan(playingFence.afterStall);
+  expect(playingFence.after).toBeGreaterThan(playingFence.afterNext);
+  expect(playingFence.ratio).toBe(2);
   const insertion = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const render = view.renderer.render.bind(view.renderer);
@@ -328,7 +335,7 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
   expect(insertion.ratio).toBe(2);
   const nativeOperation = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
-    // Isolate native-operation gating from the insertion's existing recovery.
+    // Establish a known submitted frame before exercising native-operation gating.
     view.changed = true;
     await window.roomPaintFixture.paint(view.lastRender + 16);
     await window.roomPaintFixture.waitForGpu();

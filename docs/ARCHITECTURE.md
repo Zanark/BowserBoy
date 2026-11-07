@@ -688,21 +688,19 @@ stalls never reduce it. The former adaptive-resolution mitigation was visibly
 rejected and is removed, not hidden behind another automatic quality setting.
 Model geometry, artwork, materials, anti-aliasing and native GBA resolution
 are unchanged. Performance optimizations must preserve this visual contract.
-A slow paint also leaves recovery time before the next 3D paint, giving native
-emulation scheduling headroom. The ceiling is 1000 ms in playing mode without
-a view transition or cartridge animation, and 200 ms otherwise. Frames taking
-50 ms or less add no recovery delay; slow frames retain the same two-times-gap
-calculation. This changes scheduling under load, never backing resolution. Cheap
-pose/button calculations still advance and retain dirty shadows across skipped
-paints. Light damping uses elapsed time since the actual previous paint.
-
 On contexts with GPU synchronization support, each complete room draw submits
 one fence. Later callbacks poll it with a zero timeout and do not submit another
-room draw until it completes. Recovery uses elapsed submission-to-completion
-time, not merely the CPU duration of `renderer.render()`. Fence failures surface
-through the existing error notice; context restoration resets scheduling.
+room draw until it completes. Successful completion permits the next paint
+immediately: adding twice the already elapsed GPU time as further idle time
+unnecessarily reduced DS room refresh. Fence failures surface through the
+existing error notice; context restoration resets scheduling.
 The renderer still draws the complete scene at its original resolution, without
 a tiled presentation canvas or retained parent drawing buffer.
+Only the no-fence fallback retains the older slow-callback recovery: twice the
+callback gap above50ms, capped at1000ms for stationary play and200ms otherwise.
+This fallback is not covered by the measured completed-fence speedup.
+Cheap pose/button calculations still advance and retain dirty shadows across
+skipped paints. Light damping uses elapsed time since the actual previous paint.
 DS native framebuffer halves copy before the room-paint gate, so recovery does
 not leave the copied LCDs stale. Correct copies and bounded GPU submissions do
 not themselves establish that native readbacks meet the responsiveness deadline.

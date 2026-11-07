@@ -29,6 +29,22 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Pages8b46c2c/42324913149 fails: build/12browser shards pass,7fail,
+deploy skipped. Quick taps pass this run, but flat/upside-down physical
+probes exhaust120s; final flat probe istrue only after11307.7ms.
+DS-lag profiling isolates redundant post-completed-fence idle without
+changing native copying/input or rendering quality. Full-DPR2 Edge/AMD780M
+original/bypass/restored4.381/12.368/4.298roomFPS; production correction
+20.902roomFPS/612native frames in10.047s. Not an all-device guarantee.
+All four native/physical precision poses pass fresh SwiftShader; software
+quick still fails unchanged1500ms in second batch. First batch500.2ms
+passes; next predicate1162.3ms has incomplete native/copied marks, and the
+phone batch is not reached. Syntax/44units/build and four recovery cases pass.
+No software responsiveness, hosted/public delivery or owner approval claimed.
+The subsequent Edge gate passes23cases/5.4m, including every DS case,
+all four precise poses, twelve quick contacts, pen and native GBA CRT/reload.
+The93case/19shard identity audit remains exact, with no changed deadlines.
+
 Pages5b34678/42323482361 fails: build/13browser shards pass,6fail,
 deploy skipped. Flat/rolled native precision passes; upside-down physical
 sampling and the complete quick case exhaust120s. Do not extrapolate the

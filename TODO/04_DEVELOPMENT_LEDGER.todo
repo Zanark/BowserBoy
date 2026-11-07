@@ -14,6 +14,23 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Remove measured redundant completed-fence idle:
+  Exact8b46c2c/Pages42324913149 fails: build/12browser shards pass,7fail,
+  8cases fail,deploy skipped. Flat physical probe returns true after11307.7ms,
+  too late, not demonstrated wrong mapping. Respond to actual DS-lag report
+  with isolated full-DPR2 Edge/AMD780M original/bypass/restored experiment:
+  4.381/12.368/4.298roomFPS and612/605/607native frames in about10s each.
+  Retain every original light/material and nonblocking GPU fence. Remove only
+  redundant twice-elapsed idle after successful completion. Production path
+  measures20.902FPS/612native frames in10.047s; no quality reduction.
+  Existing fixtures assert immediate completed-fence draws, real DPR1/2
+  fences and exact supplied paint times; no future-recovery retry.
+  Syntax/44units/build pass. Software8of9pass: four native/physical poses
+  and four recovery/motion cases. Quick taps fail unchanged1500ms in second
+  batch, with incomplete native/copied marks; first batch passes500.2ms.
+  Preserve the failure; no software/public acceptance or60FPS claim.
+  Subsequent Edge23PASS5.4m covers every DS case, movement/recovery and GBA
+  CRT/reload. Exact audit retains93cases/19shards, no missing/extra/duplicates.
 - 2026-11-07 / Stable native-frame handles and loop-aware image observation:
   Pages5b34678/42323482361 fails overall: build/13browser shards
   pass,6fail,8failed cases,deploy skipped. Pear real descent remains failed;

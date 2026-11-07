@@ -36,12 +36,6 @@ test('sparse console paints retain the lift and only publish completion with ali
   const result = await page.evaluate(async () => {
     const { view } = await import('./src/app.js'), { Box3 } = await import('three');
     view.renderer.setAnimationLoop(null);
-    await window.roomPaintFixture.waitForGpu();
-    if (view.paintFence) {
-      // Finish the old room frame's recovery before starting the lift clock.
-      view.render(Math.max(performance.now(), view.paintSubmitted + 51));
-    }
-    while (performance.now() < view.nextPaint) await new Promise(resolve => setTimeout(resolve, 0));
     const originalRender = view.renderer.render.bind(view.renderer);
     const samples = [];
     view.renderer.render = (scene, camera) => {
