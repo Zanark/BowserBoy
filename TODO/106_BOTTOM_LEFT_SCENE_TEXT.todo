@@ -18,6 +18,8 @@ remain inside the viewport. No emulator, scene-lighting or interaction changes.
 Local qualification is not deployment or owner visual acceptance.
 
 Completion evidence:
+Published through0f979b8/Pages42374138539 under112; runtime bytes match.
+The initial local qualification below predates that deployment.
 npm run check and npm run build pass. The expanded existing Playwright
 scenario, selected with --grep "gameplay hints stay on one bottom-left line",
 passes once in14.9s at1440x1100,390x844 and320x740. Actual geometry verifies

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/112
 Milestone: Slower screams and smaller, cuter landing and recovery faces.
 Dependencies: 107_PEAR_BOY_EXPRESSIONS.todo.
@@ -11,7 +11,7 @@ Tasks:
 - [x] Replace glossy worried eyes/frown with squeezed eyes and a tiny pout.
 - [x] Qualify timing, actual landing paints and all-expression freckle clearance.
 - [x] Review rendered faces and update docs, tracking and owned continuity.
-- [ ] Commit as Zanark and monitor the deployed revision through112.
+- [x] Commit as Zanark and monitor the deployed revision through112.
 
 Acceptance criteria:
 Each scream mouth remains for900ms and reduced motion remains still.
@@ -26,10 +26,14 @@ Check, all61unit tests, build and both focused Pear browser cases pass.
 Reviewed actual closed/open scream, compact angry eyes and squeezed-eye pout
 renders; six freckles remain visible. Deterministic900ms dwell, reduced motion
 and actual painted landing/recovery remain covered. This is not owner approval.
-Commit/deployment and public verification remain pending through112.
+Committed as Zanark in1510777, published through0f979b8/Pages42374138539.
+Runtime source bytes match; both Pear scenarios pass against the actual public
+site, including900ms/reduced-motion/freckle and painted landing/recovery checks.
 
 Completion log:
 2026-11-07: Owner rejects rapid scream changes, large angry eyes and the
 glossy worried recovery. Use the supplied small round-eye alternative and
 squeezed-eye pout references; preserve freckles and existing motion.
 2026-11-07: Local qualification and actual four-state render review pass.
+2026-11-07: Actual successful deployment and both live Pear cases verified
+through112. Technical/publication completion is not owner aesthetic approval.

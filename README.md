@@ -14,6 +14,13 @@
 [Documentation and repository map](docs/README.md) &middot;
 [Workstream board](https://github.com/users/Zanark/projects/1).
 
+**Desk update, November 7:** BowserBOY DS is a supported console, with
+movable companions, slower Pear expressions and collapsed console tools.
+[Monitored deployment](https://github.com/Zanark/BowserBoy/actions/runs/42374138539):
+94 browser cases passed; 21 exact scenarios remain explicitly parked
+for later repair. Physical-phone performance and commercial-game compatibility
+remain unqualified.
+
 ## Read the engineering book
 
 <a href="docs/book/published/Building-a-Little-Escape.pdf"><img src="docs/book/editions/2026-11/cover.png" alt="Building a Little Escape - the BowserBOY engineering book, with the supplied purple handheld cover" width="360"></a>
@@ -130,13 +137,12 @@ to drop. Both keep their original desk orientation. **Move consoles** in
 the dock also provides keyboard placement and reset. Click without dragging
 to play; **Put down** returns to the moved position. **Inspect** still rotates
 normally. Positions last until reload. [Movement controls and limits](docs/GUIDE.md#move-the-consoles).
-This addition is local, not deployed.
 
 Console tools start collapsed as a small grip at the bottom-left. Click either
 console to reveal its actions, or use the grip's expand arrow. Lighting remains
 in its separate dock.
 
-## pear-boy - local desk companion
+## pear-boy - desk companion
 
 ![pear-boy beside the separate GBA and DS, lighting the desk](docs/images/pear-boy-table.png)
 
@@ -153,9 +159,8 @@ mouth still.
 Move him farther back to rest his feet on the table.
 The pear dock button controls power, brightness, movement and reset.
 [Controls and physics limits](docs/GUIDE.md#pear-boy).
-This addition is local, not deployed.
 
-## A smaller axolotl night-light - local addition
+## A smaller axolotl night-light
 
 ![Small cream-and-pink axolotl lamp in front of the consoles, beside pear-boy](docs/images/axolotl-table.png)
 
@@ -165,7 +170,6 @@ gills, tiny feet, a raised tail and a soft cream glow.*
 Click it for power, or use its **Lighting** dock button for **Sleep 50%**
 and **Bright 100%**. Drag, lift and drop it like pear-boy; the other lights remain
 independent. [Controls and limits](docs/GUIDE.md#small-axolotl-night-light).
-This addition is local, not deployed.
 
 ## BowserBOYADVANCED
 

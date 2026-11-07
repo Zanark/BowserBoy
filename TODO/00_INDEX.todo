@@ -1,15 +1,15 @@
 BowserBOY workstreams
 ====================
-114_DS_CONSOLE_STATUS.todo - IN_PROGRESS: DS is a supported console, not a prototype; current copy corrected, publication tracked by112.
-113_PEAR_BOY_CUTER_RECOVERY.todo - IN_PROGRESS: slower scream changes, small round angry eyes and squeezed-eye pout, preserving all cheek dots.
-112_MONITORED_UI_RELEASE.todo - IN_PROGRESS: qualify outstanding UI work, commit as Zanark, deploy and monitor all actual CI jobs and the public site.
-111_MOVABLE_AXOLOTL.todo - DONE locally: desktop/touch drag/drop, depth, cancellation, rendered bounce, collision and actual GBA/DS focus restoration qualify; publication tracked by112.
-110_SMALL_AXOLOTL_LAMP.todo - DONE locally: smaller cream/pink fixed lamp, mesh power, independent50%/100% brightness, clearance and five focused browser cases; not deployed.
-109_DS_SCREEN_SHIMMER.todo - DONE locally: two screen interiors shimmer in README/Inspect; unchanged surrounding artwork/alpha and static reduced motion verified, not deployed.
-108_COLLAPSED_CONSOLE_DOCK.todo - DONE locally: bottom-left collapsed startup, actual console-click expansion and preserved manual/touch tools; not deployed.
-107_PEAR_BOY_EXPRESSIONS.todo - DONE locally: cute alternating screams and angry/worried recovery; three visible dots per cheek verified across expressions/gaze, not deployed.
-106_BOTTOM_LEFT_SCENE_TEXT.todo - DONE: bottom-left player credits and smaller9px scene hint; desktop/phone geometry and crops qualified locally, not deployed.
-105_PARKED_BROWSER_CASES.todo - BLOCKED: eighteen explicitly parked cases (sixteen CI-only, two also local), including the newly obstructed console wheel fixture; restore coverage later.
+114_DS_CONSOLE_STATUS.todo - DONE: supported-console copy and DS selector verified on the live site through112; compatibility limits preserved.
+113_PEAR_BOY_CUTER_RECOVERY.todo - DONE: slower screams, compact angry eyes and squeezed-eye pout, six freckles; rendered and live qualification through112.
+112_MONITORED_UI_RELEASE.todo - DONE:0f979b8/Pages42374138539 deploys with94PASS/21SKIP/0FAIL/0UNRUN;48public byte checks and six live browser cases pass; marker exception explicit.
+111_MOVABLE_AXOLOTL.todo - DONE: desktop/touch dragging, depth, rendered fall/bounce, cancellation and view restoration; published through112.
+110_SMALL_AXOLOTL_LAMP.todo - DONE: smaller cream/pink lamp, independent50%/100% glow and clearance; published through112, movement added by111.
+109_DS_SCREEN_SHIMMER.todo - DONE: two-screen shimmer in README/Inspect, unchanged artwork and static reduced motion; published through112.
+108_COLLAPSED_CONSOLE_DOCK.todo - DONE: bottom-left collapsed startup, console-click expansion and explicit recovery entry; published through112.
+107_PEAR_BOY_EXPRESSIONS.todo - DONE: alternating screams and painted landing recovery with three dots per cheek; refined by113, published through112.
+106_BOTTOM_LEFT_SCENE_TEXT.todo - DONE: bottom-left player credits and9px hint, desktop/phone qualification; published through112.
+105_PARKED_BROWSER_CASES.todo - BLOCKED: twenty-one exact parked cases (eighteen CI-only, three also local); skips are coverage debt, not fixes.
 104_BOUNDED_CI_RECOVERY.todo - DONE:7154546 publishes through92PASS/17SKIP/0FAIL/0NOT_RUN;46public byte checks and two public startup cases pass; build-only marker exception recorded.
 01_PLAYABLE_PROTOTYPE.todo - Local-ROM player and polished static shell.
 02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.

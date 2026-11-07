@@ -21,6 +21,8 @@ Reduced motion holds the scream mouth still and permits static recovery.
 Local technical verification is not user visual approval or deployment.
 
 Completion evidence:
+Published through0f979b8/Pages42374138539 under112; latest faces refined
+by113and qualified against the real public site. Initial local evidence:
 Syntax/build and all61unit tests pass, including two new support-impact
 tests. Existing browser pickup and actual-painted-drop scenarios pass.
 The drop records scared -> angry -> sad -> curious, with angry rebound.

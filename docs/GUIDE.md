@@ -104,7 +104,7 @@ the separate mode for rotation. Positions are session-only and reset on reload.
 The bounded workspace prevents desk-edge falls. Collisions use fixed
 world-axis-aligned bounding boxes, not arbitrary rotating rigid bodies;
 moving supports, stacking stability and dynamic prop pushing are not simulated.
-This feature is local and has not been published.
+Console movement is available on the published desk.
 
 Clearance depends on the view: **play/Inspect prioritizes the selected console
 and other console before pear-boy**; **table prioritizes pear-boy, then loose
@@ -336,9 +336,9 @@ resizing restore the pickup position without changing power. The lamp keeps
 its orientation; it does not gain pear-boy's animated face or rope limbs.
 The tripod and pear-boy block occupied placements, tabletop consoles yield,
 and GBA/DS view changes preserve the chosen tabletop position.
-Clicking it leaves the console tools collapsed and does not pick up a console. This local
-addition is not deployed; physical-phone performance and owner visual
-acceptance remain unqualified.
+Clicking it leaves the console tools collapsed and does not pick up a console.
+The lamp and its movement are available online; physical-phone performance
+and owner visual acceptance remain unqualified.
 
 ## Lights out
 

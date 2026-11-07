@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "112",
-      "file": "TODO/112_MONITORED_UI_RELEASE.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/111",
-      "number": 111,
-      "nodeId": "I_kwDOVhqp0s8AAAABdQ5XbQ",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGx4eQ",
-      "state": "open",
-      "reason": null,
-      "projectStatus": "In progress",
-      "bodySha256": "e0f4ac5de1658fbed5ac39af069cb0fe61f8b115e8c335e2bd2bb9273b3e9bf2"
+      "id": "114",
+      "file": "TODO/114_DS_CONSOLE_STATUS.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/113",
+      "number": 113,
+      "nodeId": "I_kwDOVhqp0s8AAAABdRH6jA",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGyGbo",
+      "state": "closed",
+      "reason": "completed",
+      "projectStatus": "Done",
+      "bodySha256": "4ee5503a9a7fc5fed73c6b81e3e054789b1ad02a9c386418a91de5f68ae9f221"
     }
   ]
 }

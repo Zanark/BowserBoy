@@ -19,6 +19,8 @@ reduced motion selects the static original. GBA branding stays independent.
 Technical local completion does not establish GitHub publication or approval.
 
 Completion evidence:
+Published through0f979b8/Pages42374138539 under112; actual public APNG
+and runtime bytes match. Initial local/rendered qualification below predates it.
 python scripts/render-readme.py --ds-screen-shimmer produces
 assets/ds-logo-shimmer.png:2149x732,20frames,3-second infinite loop,
 2,320,614bytes. Every decoded frame preserves source alpha and all pixels

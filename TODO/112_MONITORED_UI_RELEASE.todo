@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/111
 Milestone: Publish the outstanding desk refinements with monitored Pages CI.
 Dependencies: 106_BOTTOM_LEFT_SCENE_TEXT.todo; 107_PEAR_BOY_EXPRESSIONS.todo;
@@ -11,21 +11,30 @@ observe the actual pipeline and live site instead of stopping at a push.
 Tasks:
 - [x] Qualify source/build/units and focused movement/UI browser coverage.
 - [x] Commit and push scoped work as Zanark with unrelated media preserved.
-- [ ] Monitor all19browser shards, build and actual deployment.
-- [ ] Investigate observed failures and make bounded corrections.
-- [ ] Verify public runtime bytes and affected live interaction.
-- [ ] Reconcile TODOs, issue/Project tracking and private continuity.
+- [x] Monitor all19browser shards, build and actual deployment.
+- [x] Investigate observed failures and make bounded corrections.
+- [x] Verify public runtime bytes and affected live interaction.
+- [x] Reconcile TODOs, issue/Project tracking and private continuity.
 
 Acceptance criteria:
 Exact pushed source and Pages run are recorded. All retained tests execute
-successfully and deployment succeeds. Existing17parked scenarios plus the
-bounded-repair console fixture and combined reduced-motion/WebGL case remain
+successfully and deployment succeeds. The21exact parked scenarios remain
 explicit coverage debt, not passes. No weakened assertions,
 timeouts or workflow gate to manufacture success. The deployed source and
 actual axolotl movement are independently checked. Unrelated nine existing
 screenshots and frozen published PDF are preserved.
 
 Completion evidence:
+Published0f979b89673b6ba4a069c496ea7d60c6ae46d9e6 through actual
+Pages42374138539:94PASS/0FAIL/21SKIP/0NOT_RUN across19shards; build
+and deploy succeed. Every shard log collected.48actual public application/
+entry/demo byte checks match committed source; only known build-only
+.nojekyll marker returns404. The strict verifier exits1 for that marker;
+do not call the whole verifier green or silently exclude the exception.
+Six real-public-site cases pass: desktop/touch axolotl movement, Pear900ms
+mouth/freckle and painted landing/recovery, startup/DS copy and recovery tools.
+Nine unrelated dirty screenshots and frozen PDF remain untouched.
+Preceding attempts and their bounded failures are recorded below.
 First pushed source f10fab1/Pages42371648234 completes85PASS/11FAIL/
 18SKIP/0NOT_RUN across19shards. Build passes; deployment is skipped.
 The prior public source remains51658ad until independently verified otherwise.
@@ -81,3 +90,11 @@ Expected next hosted inventory94retained/21parked; deployment still pending.
 2026-11-07: The isolated DS/GBA fixture attempt passes locally37.7s,
 including separate databases, paused retained GBA and the DS cold restart.
 No runtime code, gates, deadlines or assertions changed in this follow-up.
+2026-11-07:0f979b8/Pages42374138539 succeeds94PASS/21SKIP/0FAIL/
+0NOT_RUN, build and real deploy green. All19logs inspected.48public byte
+checks match; known.nojekyll404remains explicit, strict verifier exits1.
+Six live browser cases pass50.3s, including current DS labels, real axolotl
+desktop/touch relocation and Pear timing/freckles/painted recovery. No owner
+visual approval, parked coverage restoration or real-phone claim.
+Close112/113/114and reconcile published availability; monitor the resulting
+documentation-only deployment without creating an endless receipt-commit loop.

@@ -24,6 +24,9 @@ Focused GBA/DS transitions can clear the body without losing its table pose.
 No new face/rope animation, persistence or emulator changes.
 
 Completion evidence:
+Published through0f979b8/Pages42374138539 under112. Both desktop and touch
+movement cases pass on the actual live site; runtime bytes match.
+The initial local qualification below predates publication.
 Desktop actual drag/depth/rendered fall+bounce/cancel/yield and phone real
 touch/keyboard/resize cases pass, alongside retained Pear light/movement.
 The preceding gate passes six other UI/lighting/shimmer cases;61units,
