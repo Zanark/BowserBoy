@@ -5,6 +5,20 @@ import { powerOn, demoReady, nativeFrame } from './pixel-lab.mjs';
 const runtime = page => page.frames().find(frame => frame.url().endsWith('player.html'));
 const ready = page => expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
 
+const expectSeparateDocks = async page => {
+  const [tools, lighting] = await page.locator('.icon-dock').evaluateAll(docks =>
+    docks.map(dock => dock.getBoundingClientRect().toJSON()));
+  const { width, height } = page.viewportSize();
+  for (const box of [tools, lighting]) {
+    expect(box.left).toBeGreaterThanOrEqual(0);
+    expect(box.top).toBeGreaterThanOrEqual(0);
+    expect(box.right).toBeLessThanOrEqual(width);
+    expect(box.bottom).toBeLessThanOrEqual(height);
+  }
+  expect(tools.left < lighting.right && tools.right > lighting.left &&
+    tools.top < lighting.bottom && tools.bottom > lighting.top, 'Lighting and console docks do not overlap').toBe(false);
+};
+
 const demoWithAutosaveOff = async page => {
   page.on('dialog', dialog => dialog.accept());
   await page.goto('./');
@@ -26,6 +40,7 @@ test('tools dock drags, collapses, cancels and resets without firing its actions
   const dock = page.locator('#action-dock');
   const handle = page.getByRole('button', { name: 'Move tools dock', exact: true });
   const toggle = page.locator('#dock-toggle');
+  const lighting = await page.locator('#lighting-dock').boundingBox();
   const original = await dock.boundingBox();
   const grip = await handle.boundingBox();
   await page.mouse.move(grip.x + 22, grip.y + 22);
@@ -35,6 +50,7 @@ test('tools dock drags, collapses, cancels and resets without firing its actions
   const moved = await dock.boundingBox();
   expect(moved.x).toBeCloseTo(original.x + 100, 0);
   expect(moved.y).toBeCloseTo(original.y - 200, 0);
+  expect(await page.locator('#lighting-dock').boundingBox()).toEqual(lighting);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   await expect(page.locator('#tools')).toBeHidden();
   await page.locator('#room-toggle').click();
@@ -43,6 +59,8 @@ test('tools dock drags, collapses, cancels and resets without firing its actions
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await expect(toggle).toHaveAccessibleName('Expand tools dock');
   await expect(page.locator('#dock-actions')).toBeHidden();
+  await expect(page.locator('#lighting-dock')).toBeVisible();
+  expect(await page.locator('#lighting-dock').boundingBox()).toEqual(lighting);
   expect((await dock.boundingBox()).width).toBeLessThan(120);
   await expect(handle).toBeVisible();
   const collapsedGrip = await handle.boundingBox();
@@ -438,7 +456,8 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
     await page.setViewportSize({ width, height });
-    const controls = await page.locator('.scene-actions button:visible').evaluateAll(buttons => buttons.map(button => {
+    await expectSeparateDocks(page);
+    const controls = await page.locator('.icon-dock button:visible').evaluateAll(buttons => buttons.map(button => {
       const box = button.getBoundingClientRect();
       return { label: button.getAttribute('aria-label'), icons: button.querySelectorAll('svg').length,
         width: box.width, height: box.height, left: box.left, right: box.right, bottom: box.bottom };
@@ -454,7 +473,7 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
     }
     if (width <= 390) {
       const dock = await page.locator('.scene-actions').boundingBox();
-      expect(dock.height, 'Independent desk-companion controls fit in at most three rows without shrinking touch targets')
+      expect(dock.height, 'Console controls fit in at most three rows without shrinking touch targets')
         .toBeLessThan(150);
       await expect.poll(async () => {
         const power = await page.locator('#hardware-power').boundingBox();
@@ -475,6 +494,7 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
   await page.locator('#tools-close').click();
   await page.locator('#quick-fullscreen').click();
   await expect.poll(() => page.evaluate(() => document.fullscreenElement?.id)).toBe('player');
+  await expect(page.locator('#lighting-dock')).toBeVisible();
   await page.evaluate(() => document.exitFullscreen());
   await page.locator('#put-down').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
@@ -486,6 +506,71 @@ test('icon dock fits phone and desktop, exposes named touch controls and opens t
   await expect(page.locator('#console-controls')).toBeVisible();
   await expect(page.locator('#move-gba')).toBeInViewport();
   await expect(page.locator('#move-ds')).toBeInViewport();
+});
+
+test('lighting dock controls shared lights independently of GBA and DS tools, view and screen size', async ({ page }) => {
+  await page.goto('./');
+  await ready(page);
+  const lighting = page.getByRole('navigation', { name: 'Room and desk lighting', exact: true });
+  await expect(lighting.locator('button')).toHaveCount(3);
+  await expect(page.locator('#action-dock').locator('#lamp-toggle, #room-toggle, #pear-open')).toHaveCount(0);
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#dock-toggle').click();
+  await expect(page.locator('#dock-actions')).toBeHidden();
+  await lighting.locator('#lamp-toggle').click();
+  await lighting.locator('#room-toggle').click();
+  await lighting.locator('#pear-open').click();
+  await expect(page.locator('#pear-controls')).toBeVisible();
+  await page.locator('#pear-toggle').click();
+  await page.locator('#pear-brightness').press('Home');
+  await expect(page.locator('#pear-level')).toHaveText('10%');
+  const lights = () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return [view.lampOn, view.roomLightsOn, view.pearOn, view.pearBrightness];
+  });
+  expect(await lights()).toEqual([false, true, false, .1]);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#pear-controls')).toBeHidden();
+  await expect(page.locator('#dock-actions')).toBeHidden();
+  await page.locator('#dock-toggle').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await expect(lighting).toBeVisible();
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#player')).toHaveAttribute('data-console', 'ds');
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  expect(await lights()).toEqual([false, true, false, .1]);
+  await page.locator('#dock-toggle').click();
+  await lighting.locator('#lamp-toggle').click();
+  await lighting.locator('#room-toggle').click();
+  expect(await lights()).toEqual([true, false, false, .1]);
+  await expect(page.locator('#dock-actions')).toBeHidden();
+  await page.locator('#dock-toggle').click();
+  for (const [width, height] of [[1440, 1100], [844, 390], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    await expectSeparateDocks(page);
+    await expect.poll(() => page.evaluate(async ({ width, height }) => {
+      const { view } = await import('./src/app.js');
+      return view.width === width && view.height === height && !view.changed;
+    }, { width, height }), { message: 'DS room has painted at the new viewport size' }).toBe(true);
+    await expect(page.locator('#ds-hardware-power')).toBeInViewport();
+    await expect(lighting.locator('#pear-open')).toBeInViewport();
+    if (width === 1440 || width === 320) {
+      await page.screenshot({ path: test.info().outputPath(`ds-lighting-dock-${width}.png`) });
+    }
+  }
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await expect(page.locator('#ds-inspect-controls')).toBeVisible();
+  const lightBox = await lighting.boundingBox();
+  const poseBox = await page.locator('#ds-inspect-controls').boundingBox();
+  expect(poseBox.y).toBeGreaterThan(lightBox.y + lightBox.height);
+  await expectSeparateDocks(page);
+  await page.locator('#put-down').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+  await expect(lighting).toBeVisible();
+  await expectSeparateDocks(page);
 });
 
 test('three checkpoint slots stay independent and reject invalid slots without changing legacy saves', async ({ page }) => {

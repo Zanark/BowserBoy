@@ -1,0 +1,60 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/97
+Milestone: Separate shared room lighting from console-specific tools.
+Dependencies: 69 movable tools dock; 84 Pear Boy; 79 DS controls; 74 release qualification.
+Purpose: Keep Lamp, Room and Pear Boy together in their own accessible dock
+while GBA/DS tools retain their console identity and movement/collapse behavior.
+
+Tasks:
+- [x] Move the existing three lighting controls without changing their handlers.
+- [x] Share icon styling while retaining a singular movable console tools dock.
+- [x] Keep lighting available across console switches, views and dock collapse.
+- [x] Position phone play lighting above the console and inspection controls below it.
+- [x] Qualify the final layout, actual light state and responsive room paints.
+- [x] Update affected player/architecture guides and causal development history.
+- [x] Verify actual GitHub issue/Project/body/status and local backlink.
+- [ ] Commit/push as Zanark and monitor the exact automatic Pages gate.
+
+Acceptance criteria:
+Lighting is independently labeled and reachable with named 44px controls.
+Moving or collapsing console tools does not move or hide lighting. Lamp,
+Room and Pear Boy continue changing the existing actual scene state, including
+Pear brightness and Escape dismissal. GBA/DS selection and play/Inspect/table
+retain shared settings. Both docks fit supported desktop, portrait-phone and
+landscape sizes without overlapping each other; mobile inspection controls
+remain below lighting. Whole-player fullscreen retains the lighting dock.
+No native input, runtime, renderer, light/shader, quality, deadline, retry or
+deployment-gate changes. Technical qualification is not owner acceptance.
+
+Completion evidence:
+Implementation changes HTML/CSS only; existing app IDs/handlers are retained.
+Browser coverage observes actual imported scene state, independent main-dock
+movement/collapse, real fullscreen and physical DS power reachability.
+Responsive capture readiness requires the current renderer dimensions and a
+completed natural room paint, rather than only potentially stale DOM anchors.
+Four dock regressions pass Edge51.8s and explicit full-size SwiftShader1.3m.
+After the final phone-play placement adjustment, rebuild the static site and
+repeat both affected responsive/light-state cases: Edge38.4s, SwiftShader46.5s.
+Actual final DS320px capture reviewed: the console is painted and lighting is
+above its upper screen. Check/all59units/build/browser syntax/whitespace pass.
+103browser cases in8files; original19shards/deadlines/retries0/quality retained.
+Frozen published PDF unchanged. Exact-source deployment and owner acceptance
+remain pending.
+Actual issue97 OPEN/Project1 In progress/body/membership/backlink verified.
+
+Completion log:
+2026-11-07: Owner requests a separate lighting dock. Extract shared icon styles,
+move Lamp/Room/Pear controls into a warm upper-right nav and leave console tools
+in the existing movable themed dock. Preserve all original SVGs and handlers.
+An initial DS phone capture shows only UI despite passing DOM checks; require
+the resized scene to finish its natural paint. A subsequent actual capture
+shows the DS and exposes lighting covering the upper screen: move phone-play
+lighting directly below the header, retaining lower placement for table/Inspect.
+No production render-loop or artificial test-render change is made.
+2026-11-07: Browser configuration serves dist, not working-tree CSS. Rebuild
+after the last placement change before qualifying the final responsive pair
+and reviewing its actual DS phone capture. Final pair passes both renderers;
+source checks and all59units pass. Publication is a separate monitored gate.
+2026-11-07: Trusted identity verified Zanark. Scoped sync creates actual issue97
+and verifies its managed body, open state, Project1 membership/In progress and
+local backlink after GitHub read-back consistency settles.

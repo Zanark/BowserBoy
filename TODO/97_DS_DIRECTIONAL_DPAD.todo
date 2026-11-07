@@ -14,7 +14,7 @@ Tasks:
 - [x] Verify actual GitHub issue/Project/body/status and local backlink.
 - [x] Commit/push as Zanark and monitor the initial exact-source Pages gate.
 - [x] Inspect the failed D-pad trace and isolate independent native scenarios.
-- [ ] Commit/push the qualified test correction and monitor its exact gate.
+- [x] Commit/push the qualified test correction and monitor its exact gate.
 
 Acceptance criteria:
 The pressed edge visibly lowers and the opposite edge rises for all four
@@ -53,6 +53,12 @@ All four corrected cases pass Edge55.5s and explicit SwiftShader2.8m.
 The suite now has102cases. This correction changes tests, not production
 motion or rendering performance. Exact-source publication and owner
 acceptance remain unestablished.
+Correction5b250f2222d059828e3ee953d581550afe8098b3, exact Pages42352239845,
+finishes95PASS/7FAIL with deployment SKIPPED. All four corrected D-pad
+scenarios pass hosted. Remaining failures: audio reserve, DS isolation,
+flat/upside-down stylus pixels, DS shell-lighting, Pear edge feet and final
+scene CRT reload readiness. Their causes/remedies are not established.
+Actual issue96 receipt6704140938 verified; OPEN/Project1 In progress retained.
 
 Completion log:
 2026-11-07: Owner reports that D-pad arrow direction is visually unclear.
@@ -71,3 +77,7 @@ the sixth native down is forwarded only as the test's overall budget expires.
 Independently boot four distinct behaviors so each gets the original
 deadline and failure isolation without dropping assertions or reducing
 render quality. All four pass Edge and explicit full-size SwiftShader.
+2026-11-07: Push the correction as Zanark and monitor exact Pages42352239845
+to completion: all four D-pad cases PASS; overall95PASS/7FAIL, deployment
+SKIPPED. Record and verify the actual issue96 outcome receipt. Full release
+qualification and owner acceptance remain open, not D-pad scenario delivery.

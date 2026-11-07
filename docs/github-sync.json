@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "97",
-      "file": "TODO/97_DS_DIRECTIONAL_DPAD.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/96",
-      "number": 96,
-      "nodeId": "I_kwDOVhqp0s8AAAABdOhscg",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGv2ew",
+      "id": "98",
+      "file": "TODO/98_SEPARATE_LIGHTING_DOCK.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/97",
+      "number": 97,
+      "nodeId": "I_kwDOVhqp0s8AAAABdPAc_A",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGwRx8",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "7754648fd15739a3d41f802dc95e9d6150140a5c2087a3fac11db150f49be57f"
+      "bodySha256": "536c24b1b3442eac5d8b88d644fda5d136af9716a2a78e59ef326049fda586e3"
     }
   ]
 }

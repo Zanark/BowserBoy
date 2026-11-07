@@ -30,6 +30,16 @@ not a downloadable game library. This working-tree addition is not deployed.
 The repository is `Zanark/BowserBoy`; historical Pages links and the local
 checkout name remain `BowserBoyAdvance`.
 
+## Console tools and shared lighting
+
+`web/index.html` keeps the singular `#action-dock.scene-actions` responsible
+for movable/collapsible console tools. The independent `#lighting-dock` owns
+the original Lamp, Room and Pear Boy buttons, preserving their IDs and existing
+`src/app.js` handlers. Both use shared `.icon-dock` styling; only console tools
+inherit the selected console's palette and drag/collapse behavior. Lighting
+uses its own warm palette and responsive placement. No scene lights, room
+render passes, animation loops or event handlers are added.
+
 ## Orientation-locked console relocation
 
 `DeskMotion` in `src/pear-motion.js` shares upright 120Hz body integration

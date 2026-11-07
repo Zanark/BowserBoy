@@ -292,6 +292,11 @@ Physical-phone performance and owner visual acceptance remain unqualified.
 
 ## Lights out
 
+Use the separate warm **Lighting** dock at the upper right for **Lamp**,
+**Room** and **Pear Boy**. These shared controls stay available when you
+switch GBA/DS or move/collapse the console tools dock. On phones during play,
+lighting sits directly below the header, above the handheld.
+
 The room starts with the warm STORSEGEL-style lamp and pear-boy on, and **Room**
 lights off. Switch pear-boy off too when you want LCD-only darkness.
 Click its shade or use **Lamp** to switch it independently of the game. **Room**

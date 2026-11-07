@@ -96,18 +96,22 @@ BowserBOY workstreams
 94_PRE_CARTRIDGE_CRT.todo - IN_PROGRESS: cached built-in CRT pixels; native video replaces the effect without stacking.
 95_DS_REAR_MARKINGS.todo - IN_PROGRESS: centered actual lid recesses and lower-body underside emblem, locally qualified.
 96_DS_CONTROL_CLEARANCE_AND_KEYS.todo - IN_PROGRESS: caps/sockets clear the touchscreen; DS A/S=Y/X, Q/W=L/R; local native scene/runtime and GBA regression pass.
-97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: directional DS cross/marks; initial hosted D-pad case exhausts total budget; four isolated native scenarios locally qualified, publication blocked.
+97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: all four corrected native D-pad scenarios pass hosted at5b250f2;95PASS/7FAIL skips publication.
+98_SEPARATE_LIGHTING_DOCK.todo - IN_PROGRESS: independent shared Lighting dock locally qualified in both renderers; monitored delivery pending.
 
 Current pending work
 --------------------
--97: Zanarkc59de69/Pages42350879338 finishes92PASS/7FAIL, deploy SKIPPED.
-  The new D-pad case fails too. Exact trace shows five correct directions
-  and releases, then overall120s exhaustion at runtime Down after slow
-  repeated pose evaluations. Four independently booted behavior cases retain
-  every native/physical assertion and original deadlines/retries0/quality.
-  Corrected cases pass Edge55.5s/explicit full-size SwiftShader2.8m.
- 102cases/unchanged19shards;59units previously pass, production unchanged.
-  Actual issue96 remains open; corrective source delivery/monitoring pending.
+-98: Lamp/Room/Pear controls now use a separate warm, accessible Lighting dock;
+  console tools retain their themed movement/collapse. Phone play placement
+  avoids the DS upper screen; table/Inspect retain space for the visible brand.
+  Final rebuilt responsive pair passes Edge38.4s/SwiftShader46.5s; actual DS
+  phone capture reviewed.59units/103browser cases/19shards retained.
+  Exact-source monitored delivery and owner acceptance pending.
+-97: Zanark5b250f2/Pages42352239845 finishes95PASS/7FAIL, deploy SKIPPED.
+  All four corrected native D-pad scenarios PASS hosted. Original assertions,
+  deadlines/retries0/quality and19shards retained. Audio reserve, DS isolation,
+  two stylus poses, DS shell lighting, Pear edge feet and scene reload remain
+  unresolved. Actual issue96 outcome receipt6704140938 verified; still open.
 -96: Exact89d905f/Pages42348904006 finishes89PASS/9FAIL, deploy skipped.
   Both changed cases pass hosted; actual issue95 outcome6703695208 verified.
   Seven DS, scene CRT readiness and new Pear edge-foot settling failures

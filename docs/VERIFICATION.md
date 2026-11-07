@@ -9,7 +9,25 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
-### DS directional D-pad: hosted failure investigated, correction qualified locally
+### Separate lighting dock: locally qualified, publication pending
+
+Lamp, Room and Pear Boy now belong to their own warm, named Lighting dock.
+The movable/collapsible console dock keeps GBA/DS-specific tools and palettes.
+Existing handlers, light state, native input and rendering are unchanged.
+Focused browser coverage checks actual lighting and brightness, both consoles,
+play/Inspect/table, fullscreen, dock independence and responsive geometry.
+Resize captures wait for the real scene to paint at its new dimensions, not
+only for HTML control targets to fit. Four dock regressions pass Edge51.8s
+and explicit full-size SwiftShader1.3m. After the final phone-play placement
+change, rebuild the static site and repeat the two affected responsive/light-state
+cases: **Edge38.4s / SwiftShader46.5s**. The final actual DS320px capture was
+reviewed: the room and console are painted, and lighting clears the upper screen.
+Syntax, all59units, build, browser syntax and whitespace pass. The inventory is
+103browser cases in8files; original19shards, deadlines, retries0 and full rendering
+quality are retained. The published PDF is unchanged. Exact-source publication
+and owner acceptance remain separate and unestablished.
+
+### DS directional D-pad: all four corrected scenarios pass hosted
 
 The shared physical cross now rocks once per paint toward native held
 directions rather than depressing flat four times. Diagonal tilt is bounded;
@@ -54,7 +72,15 @@ It preserves every original native transition/physical edge/mark assertion,
 120s case and15s expectation deadlines, retries0, full viewport/rendering
 quality and19shards. All four pass **Edge55.5s** and **explicit full-size
 SwiftShader2.8m**. The inventory is now102cases. Production source is unchanged;
-the corrected exact-source hosted gate and publication remain pending.
+the corrected exact-source hosted gate was then monitored to completion.
+Exact `5b250f2222d059828e3ee953d581550afe8098b3`,
+[Pages42352239845](https://github.com/Zanark/BowserBoy/actions/runs/42352239845),
+finishes **95 passed / 7 failed; deployment skipped**. **All four corrected
+D-pad cases pass hosted.** The seven remaining failures concern audio reserve,
+DS isolation, flat/upside-down stylus pixels, DS shell lighting, Pear edge feet
+and final scene CRT reload readiness; this run establishes no remedy for them.
+Actual issue96's [outcome receipt](https://github.com/Zanark/BowserBoy/issues/96#issuecomment-6704140938)
+was verified. Full release qualification, publication and owner acceptance remain open.
 
 ### DS button clearance and A/S face keys: local qualification
 

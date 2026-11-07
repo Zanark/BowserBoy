@@ -14,6 +14,31 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Separate shared lighting dock:
+  Owner requests lighting outside the dedicated GBA/DS dock. Move the original
+  Lamp/Room/Pear buttons into a warm upper-right accessible nav. Share icon
+  styling without duplicating console dock movement/collapse or changing IDs,
+  handlers, actual lights, native input or rendering. Keep console palettes.
+  Add real lighting/brightness/console-switch/view coverage; preserve drag,
+  touch cancellation, fullscreen and responsive control checks. An early DS
+  phone capture is blank despite DOM checks: require current renderer size and
+  completed natural paint before capture. The next actual image shows the DS
+  but lighting overlays its upper screen; lift phone-play lighting below the
+  header while retaining table/Inspect branding space and separate DS controls.
+  Four dock regressions pass Edge51.8s/explicit full-size SwiftShader1.3m.
+  Browser tests serve dist: rebuild after the final phone-play CSS adjustment,
+  then repeat both affected cases, Edge38.4s/SwiftShader46.5s. Review the actual
+  final DS320px capture: room/console painted, lighting above the upper screen.
+  Syntax/all59units/build/browser syntax/whitespace pass;103cases/8files and
+  original19shards/deadlines/retries0/quality retained. Frozen PDF unchanged.
+  Exact-source monitored delivery and owner acceptance remain pending.
+- 2026-11-07 / Corrected D-pad hosted outcome:
+  Zanark5b250f2/Pages42352239845 finishes95PASS/7FAIL, deployment SKIPPED.
+  All four independently booted D-pad scenarios pass hosted with unchanged
+  assertions, deadlines/retries0, quality and19shards. Seven remaining failures
+  concern audio reserve, DS isolation, flat/upside-down stylus pixels, DS shell
+  lighting, Pear edge feet and final scene reload readiness. No cause/remedy
+  is established by the run. Actual issue96 receipt6704140938 verified.
 - 2026-11-07 / DS D-pad hosted failure and scenario isolation:
   Zanarkc59de69/Pages42350879338 fails92PASS/7FAIL, deploy SKIPPED.
   The newly introduced complete D-pad case also fails, not only older cases.

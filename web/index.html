@@ -44,7 +44,7 @@
         <input id="ds-hinge" type="range" min="30" max="180" step="1" value="180">
         <p id="ds-pose-status" role="status">Unlocked: Back to play resets flat.</p>
       </div>
-      <nav id="action-dock" class="scene-actions" aria-label="Handheld and cartridge tools">
+      <nav id="action-dock" class="scene-actions icon-dock" aria-label="Handheld and cartridge tools">
         <button id="dock-drag" aria-describedby="dock-help"></button>
         <button id="dock-toggle" aria-expanded="true" aria-controls="dock-actions"></button>
         <span id="dock-help" class="sr-only">Drag to move the dock, or use arrow keys while focused. Home resets its position. Escape cancels a drag.</span>
@@ -53,9 +53,6 @@
         <button id="inspect" aria-pressed="false" hidden>Inspect</button>
         <button id="put-down" hidden>Put down</button>
         <button id="consoles-open" popovertarget="console-controls" aria-haspopup="dialog" aria-label="Move consoles" disabled></button>
-        <button id="lamp-toggle" aria-pressed="true" aria-label="Turn desk lamp off"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z"/></svg><span id="lamp-label">Lamp on</span></button>
-        <button id="room-toggle" aria-pressed="false" aria-label="Turn room lights on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2v3M6 5h12l3 6H3zM6 16l-2 3m8-3v5m6-5 2 3"/></svg><span id="room-label">Room off</span></button>
-        <button id="pear-open" popovertarget="pear-controls" aria-haspopup="dialog" aria-label="pear-boy lighting controls" disabled></button>
         <button id="quick-fullscreen"></button>
         <button id="quick-screen-fullscreen"></button>
         <button id="quick-speed" popovertarget="speed-menu" aria-haspopup="dialog"></button>
@@ -69,6 +66,12 @@
         <button id="tools-open" aria-label="Open cartridge and settings" aria-haspopup="dialog" aria-controls="tools">Cartridges <kbd>Esc</kbd></button>
         <button id="ds-open" aria-label="Open DS cartridges and saves" aria-haspopup="dialog" aria-controls="ds-tools">DS</button>
         </div>
+      </nav>
+      <nav id="lighting-dock" class="lighting-actions icon-dock" aria-label="Room and desk lighting">
+        <span class="lighting-label" aria-hidden="true">Lighting</span>
+        <button id="lamp-toggle" aria-pressed="true" aria-label="Turn desk lamp off"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z"/></svg><span id="lamp-label">Lamp on</span></button>
+        <button id="room-toggle" aria-pressed="false" aria-label="Turn room lights on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2v3M6 5h12l3 6H3zM6 16l-2 3m8-3v5m6-5 2 3"/></svg><span id="room-label">Room off</span></button>
+        <button id="pear-open" popovertarget="pear-controls" aria-haspopup="dialog" aria-label="pear-boy lighting controls" disabled></button>
       </nav>
       <div id="console-controls" popover role="dialog" aria-labelledby="console-move-title" class="pear-controls">
         <p class="eyebrow">MAKE THE DESK YOURS</p>
