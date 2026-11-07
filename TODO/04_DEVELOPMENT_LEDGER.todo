@@ -14,6 +14,17 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Independent NDS engineering book delivered (122):
+  Zanark029c129935c99d6da197dec3d73e6aca24cddb48 publishes the separate
+  85-page/13-chapter PDF and offline HTML. All11GitHub artifact bytes match,
+  actual root/book articles render navigation;131local targets exist.
+  Published attributes retain exact qualified bytes across Windows Git.
+  Pages42392917980 independently accounts119declared/98PASS/21SKIP/0FAIL/
+  0UNRUN; all19shards/build/deploy succeed, public player200. Books are
+  repository downloads, not added to the allowlisted Pages application.
+  Original GBA PDF and nine unrelated dirty PNGs preserved.122DONE,
+  actualissue121 tracked through scoped sync receipt docs/github-sync.json.
+  One bounded completion receipt follows; no further receipt-only cycle.
 - 2026-11-07 / Independent NDS engineering book qualified locally (122):
   Two Screens, One Little Escape contains85native A4 pages,13chapters,
   13diagrams/4captioned first-frame stills/52learning markers.45pinned

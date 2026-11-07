@@ -14,10 +14,10 @@
       "number": 121,
       "nodeId": "I_kwDOVhqp0s8AAAABdTbyCw",
       "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhG0Iwg",
-      "state": "open",
-      "reason": null,
-      "projectStatus": "In progress",
-      "bodySha256": "82ff613e2d021cecb8546a1630dbb2c471cc76bb196f9aa1b1064aa96d6a823d"
+      "state": "closed",
+      "reason": "completed",
+      "projectStatus": "Done",
+      "bodySha256": "8adcebc361af666fc5f8b075b1b6499902b62ca99f00b8142b588c00084f8aa4"
     }
   ]
 }

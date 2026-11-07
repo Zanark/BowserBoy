@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/121
 Milestone: A separate NDS development-journey and engineering book.
 Dependencies: 79, 114, 115, 116, 120.
@@ -13,7 +13,7 @@ Tasks:
       and self-contained HTML reader without replacing the existing book.
 - [x] Inspect native content, links, fonts, clipping and rendered pages.
 - [x] Update documentation/navigation without expanding the GIF-first README.
-- [ ] Verify preservation, synchronize the issue/Project and publish as Zanark.
+- [x] Verify preservation, synchronize the issue/Project and publish as Zanark.
 
 Acceptance criteria:
 The NDS journey and technical reference have independent paths under
@@ -41,8 +41,16 @@ HTML SHA256:fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894.
 All85pages contact-sheet inspected; native pages1/2/26/38/51/80/83 reviewed.
 Four publishing regressions and repository JavaScript syntax checks pass.
 Preserved original PDF hash unchanged. Actual review/limits in
-docs/nds-book/REVIEW.md. Repository publication and hosted follow-through
-remain pending; local rendering does not prove deployment or human approval.
+docs/nds-book/REVIEW.md. Zanark029c129935c99d6da197dec3d73e6aca24cddb48
+published the edition. All11public GitHub artifact bytes, including PDF,
+offline HTML, manifests and checksums, match; actual root/book Markdown
+articles render navigation. Published Git attributes preserve sealed bytes
+across Windows checkouts. All131relative documentation targets exist.
+Exact Pages42392917980 succeeds:119declared/98PASS/21SKIP/0FAIL/0UNRUN,
+all19browser shards/build/deploy independently accounted; public player200.
+Books remain repository downloads, not Pages application assets. No human
+approval or repair of the21parked cases inferred. Scoped issue/Project
+completion receipt: docs/github-sync.json.
 
 Completion log:
 2026-11-07: Owner requests a new book dedicated to NDS development and
@@ -52,3 +60,7 @@ Separate edition paths and a source-pinned evidence boundary established.
 undersized diagram labels. Fixed manuscript separation/concise node labels
 and restored shared180mmfigure allowance without weakening any review gate.
 Qualified independent edition promoted locally with original GBA book intact.
+2026-11-07: Published as Zanark029c129; exact public artifact/navigation
+verification and Pages42392917980 qualification complete. Preserve the frozen
+GBA edition and nine unrelated dirty PNGs. One bounded tracking-completion
+receipt follows; do not create an endless receipt-only publication loop.
