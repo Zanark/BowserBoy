@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/117
 Milestone: Wider cursor-following Pear face travel.
 Dependencies: 113.
@@ -9,7 +9,7 @@ Tasks:
 - [x] Increase horizontal travel using the existing shell-following face rotation.
 - [x] Verify actual pointer travel, expressions and unobstructed cheek freckles.
 - [x] Review the visible extremes and update affected documentation/evidence.
-- [ ] Commit/push as Zanark and monitor exact-revision deployment.
+- [x] Commit/push as Zanark and monitor exact-revision deployment.
 
 Acceptance criteria:
 The cursor at far left moves both eyes, mouth and cheeks noticeably farther
@@ -28,7 +28,12 @@ landing coverage pass together:2passed,27.6s. All six freckles are foremost
 ray hits in every expression at all nine X/Y gaze combinations.61unit tests,
 application syntax and static build pass. Actual default rendered curious face
 reviewed with eyes, smile and three dots per cheek visible; no owner approval.
-Monitored publication pending.
+Published through Zanark dd269dea6f5cc6ada0038a2245b0ec3a420768c5.
+Pages42387259958 succeeds:119declared/98PASS/21SKIP/0FAIL/0UNRUN,
+all19shards and deployment. Actual public pointer checks verify both eyes'
+leftward world/screen travel, rightward response, six freckles and0page errors.
+48public runtime/entry/demo byte checks match. The additional build-only
+.nojekyll check returns404; the strict49-check verifier exits1, not all-green.
 Requalified with121's later upward-only increase: both Pear cases and the
 bounded remapping repair pass together3/3in55.8s without retries. All36
 expression/gaze combinations retain six foremost freckles.
@@ -39,3 +44,4 @@ Increase horizontal face rotation2.5x rather than translating facial meshes
 off their curved shell. Strengthen existing pointer-following coverage and
 check six freckles across all nine horizontal/vertical gaze combinations
 for calm, frightened, angry and recovering faces.
+2026-11-07: Deployed/public qualification above closes this workstream.

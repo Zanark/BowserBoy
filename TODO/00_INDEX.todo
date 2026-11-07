@@ -1,9 +1,9 @@
 BowserBOY workstreams
 ====================
-121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo - IN_PROGRESS: whole face looks farther upward; preserve downward range and all six freckles.
+121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo - DONE: dd269de/Pages42387259958 and actual public upward eye/mouth/six-freckle motion qualify.
 120_UNTOUCHED_INTRO_README_MEDIA.todo - IN_PROGRESS: untouched GBA/DS opening windows throughout every freshly captured README scene GIF.
-119_GIF_FIRST_README.todo - IN_PROGRESS: all25 GIFs, short captions and linked guides instead of front-page deep dives.
-118_PEAR_BOY_FACE_TRAVEL.todo - IN_PROGRESS: wider cursor-following face travel across the shell; preserve expressions and six cheek freckles.
+119_GIF_FIRST_README.todo - DONE: GIF-first layout publicly rendered and deployed through dd269de;120supersedes its footage.
+118_PEAR_BOY_FACE_TRAVEL.todo - DONE: wider shell-following travel verified locally/publicly; dd269de/Pages42387259958 succeeds.
 117_FRESH_CONSOLE_AND_LIGHTING_MEDIA.todo - DONE:25fresh GIFs publicly byte-verified; bfa6582/Pages42383181752 succeeds98PASS/21SKIP/0FAIL/0UNRUN.
 116_DS_UPRIGHT_LIGHTING.todo - DONE locally: straight DS uses the actual lamp pool with full rotation clearance; six focused scenarios pass; monitored publication pending.
 115_DS_IMMEDIATE_LOADING.todo - DONE locally: immediate DS upload handoff and animated LCD; five focused scenarios pass; monitored publication pending.

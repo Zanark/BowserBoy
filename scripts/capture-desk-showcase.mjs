@@ -2,6 +2,7 @@ import { chromium, expect as baseExpect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { openingReplay, replayTime, replayReceipt } from './capture-opening-replay.mjs';
 
 const output = process.argv[2];
 const mode = process.argv[3];
@@ -17,6 +18,7 @@ const started = Date.now();
 const page = await context.newPage();
 const scene = page.locator('#scene');
 const errors = [], clips = {}, observations = {};
+let replay;
 const expect = baseExpect.configure({ timeout: 30000 });
 page.on('pageerror', error => errors.push(error.message));
 page.on('dialog', dialog => dialog.accept());
@@ -24,12 +26,21 @@ const wait = milliseconds => page.waitForTimeout(milliseconds);
 const screenshot = name => page.screenshot({ path: resolve(output, `${name}.png`) });
 async function clip(name, action) {
   clips[name] = { start: (Date.now() - started) / 1000 };
+  const replayState = () => page.evaluate(() => Object.fromEntries(
+    Object.entries(window.__openingReplay.videos).map(([system, video]) =>
+      [system, { time: video.currentTime, paused: video.paused, ended: video.ended }])));
+  clips[name].lcdStart = await replayState();
   console.log(`Recording ${name}`);
   await wait(600);
   await action();
   await page.mouse.move(10, 10);
   await wait(900);
   clips[name].duration = (Date.now() - started) / 1000 - clips[name].start;
+  clips[name].lcdEnd = await replayState();
+  for (const [system, video] of Object.entries(clips[name].lcdEnd)) {
+    if (video.paused || video.ended || video.time === clips[name].lcdStart[system].time)
+      throw new Error(`${name}: ${system} opening replay stopped advancing`);
+  }
 }
 async function toggle(id, enabled) {
   const control = page.locator(`#${id}`);
@@ -91,22 +102,24 @@ async function dsCapture() {
     await wait(5000);
     await screenshot('ds-fresh-loading');
   });
-  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 180000 });
-  await wait(20000);
-  observations.nativeBefore = await dsPixels();
-  expect(observations.nativeBefore.every(screen => screen.width === 256 && screen.height === 192)).toBe(true);
-  expect(observations.nativeBefore.some(screen => screen.nonuniform > 100)).toBe(true);
-  await clip('ds-gameplay', async () => {
-    await wait(6500);
-    await screenshot('ds-fresh-playing');
-  });
-  observations.nativeAfter = await dsPixels();
-  expect(observations.nativeAfter).not.toEqual(observations.nativeBefore);
-  await page.locator('#scene-canvas').focus();
-  for (const key of ['Enter', 'z']) {
-    await page.keyboard.press(key);
-    await wait(2500);
+  await expect.poll(() => page.evaluate(async () => {
+    const ds = (await import('./src/app.js')).view.dsController;
+    return !!(ds.running && !ds.loading && ds.source);
+  }), { timeout: 180000 }).toBe(true);
+  await wait(1000);
+  observations.lcdReplayBefore = await dsPixels();
+  expect(observations.lcdReplayBefore.every(screen => screen.width === 256 && screen.height === 192)).toBe(true);
+  expect(observations.lcdReplayBefore.some(screen => screen.nonuniform > 100)).toBe(true);
+  if (process.env.BBA_CAPTURE_SCENES_ONLY !== '1') {
+    await replayTime(page, 'ds', 0, false);
+    clips['ds-gameplay'] = { start: (Date.now() - started) / 1000, encodedDuration: 82, sourceWindow: [8, 90] };
+    await wait(82000);
+    clips['ds-gameplay'].duration = (Date.now() - started) / 1000 - clips['ds-gameplay'].start;
   }
+  await replayTime(page, 'ds', 0);
+  await expect.poll(dsPixels, { timeout: 15000 }).not.toEqual(observations.lcdReplayBefore);
+  observations.lcdReplayAfter = await dsPixels();
+  expect(observations.lcdReplayAfter).not.toEqual(observations.lcdReplayBefore);
   await clip('ds-controls', async () => {
     await page.locator('#scene-canvas').focus();
     for (const key of ['Enter', 'z', 'x', 'ArrowRight', 'ArrowDown']) {
@@ -188,7 +201,7 @@ async function dsCapture() {
       await wait(650);
     }
   });
-  observations.nativeFinal = await dsPixels();
+  observations.lcdReplayFinal = await dsPixels();
 }
 async function lightingCapture() {
   await screenshot('desk-fresh-table');
@@ -253,7 +266,8 @@ async function lightingCapture() {
   });
   await companion('pear', () => toggle('pear-toggle', true));
   await screenshot('desk-fresh-axolotl');
-  await page.locator('#dock-toggle').click();
+  if (await page.locator('#dock-toggle').getAttribute('aria-expanded') !== 'true')
+    await page.locator('#dock-toggle').click();
   await clip('console-movement', async () => {
     for (const system of ['ds', 'gba']) {
       await page.locator('#consoles-open').click();
@@ -278,8 +292,10 @@ try {
   await expect(scene).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await page.locator('#scene-loading').waitFor({ state: 'hidden', timeout: 90000 });
   await wait(1500);
+  await openingReplay(page);
   if (mode === 'ds') await dsCapture();
   else await lightingCapture();
+  replay = await replayReceipt(page);
   if (errors.length) throw new Error(errors.join('\n'));
 } catch (error) {
   errors.push(error.message);
@@ -287,12 +303,13 @@ try {
   throw error;
 } finally {
   const video = await page.video().path();
+  replay ??= await replayReceipt(page).catch(() => null);
   await context.close();
   await browser.close();
   await writeFile(resolve(output, 'capture.json'), JSON.stringify({
-    baseURL, checkoutCommit, capturedAt: new Date().toISOString(), mode, video, clips, errors, observations, viewport,
-    showcaseRom: mode === 'ds' ? 'Owner-selected local DS cartridge; binary excluded.' : 'No cartridge needed for desk lighting.',
-    note: 'Actual browser recording and UI inputs. No scene/material/exposure overrides. Loading clip ends before native readiness; startup wait is outside the clip. This is visual documentation, not universal compatibility, audio or performance qualification.',
+    baseURL, checkoutCommit, capturedAt: new Date().toISOString(), mode, video, clips, errors, observations, viewport, replay,
+    showcaseRom: 'Both LCDs replay newly recorded supplied native opening footage; no replay is saved to cartridge/browser storage.',
+    note: 'Actual browser scene recording and UI inputs, with harness-only native-opening replay. Button/stylus clips do not establish native game response. No scene/material/exposure overrides.',
   }, null, 2));
 }
 console.log(`Captured ${Object.keys(clips).length} clips in ${resolve(output, 'capture.json')}`);

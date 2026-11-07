@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/120
 Milestone: More expressive upward cursor-following Pear face travel.
 Dependencies: 118.
@@ -9,7 +9,7 @@ Tasks:
 - [x] Increase upward travel while preserving the previous downward range.
 - [x] Extend actual-pointer coverage for both eyes, smile and all six freckles.
 - [x] Qualify the rendered face at combined gaze extremes in every expression.
-- [ ] Commit/push as Zanark and monitor exact-revision deployment.
+- [x] Commit/push as Zanark and monitor exact-revision deployment.
 
 Acceptance criteria:
 The upward cursor moves the whole face visibly farther toward the forehead.
@@ -27,9 +27,17 @@ cover all9X/Ygaze combinations in all4expressions. Cursor, rendered landing
 and exact remapping-repair scenarios pass together:3passed in55.8s, no retries.
 All six freckles remain foremost ray hits at all36expression/gaze combinations.
 Rendered curious face reviewed: both eyes, smile and three dots per cheek
-remain visible.61unit tests, syntax and static build pass. Publication pending.
+remain visible.61unit tests, syntax and static build pass.
+Zanark dd269dea6f5cc6ada0038a2245b0ec3a420768c5 is deployed through
+Pages42387259958:119declared/98PASS/21SKIP/0FAIL/0UNRUN, all19shards pass.
+Actual public pointer verifies upward eye/mouth/all6freckle travel, unchanged
+anchor, horizontal travel and0page errors.48public runtime/entry/demo byte
+checks match. Additional build-only.nojekyll returns404; strict verifier
+exits1 with that explicit exception, not49passes. Existing21parks remain debt.
 
 Completion log:
 2026-11-07: Owner also requests more upward movement and marks the forehead
 region. Increase only the positive vertical range, retaining existing shell
 following instead of translating the whole lamp or changing its expressions.
+2026-11-07: Local rendered and actual public checks qualify the changed
+movement; exact source build, full CI and deployment monitored successfully.

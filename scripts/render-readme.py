@@ -161,25 +161,62 @@ def clips(receipt, ffmpeg):
     for name, clip in capture["clips"].items():
         if "duration" not in clip:
             raise RuntimeError(f"Incomplete capture: {name}")
+        encoding = clip.get("encoding", {})
+        fps, colors = encoding.get("fps", 10), encoding.get("colors", 128)
+        if not isinstance(fps, (int, float)) or not 0 < fps <= 60:
+            raise ValueError(f"Invalid frame rate for {name}: {fps}")
+        if not isinstance(colors, int) or not 4 <= colors <= 256:
+            raise ValueError(f"Invalid palette size for {name}: {colors}")
+        duration = clip.get("encodedDuration", clip["duration"] - .5)
+        gif_options = []
+        if "encodedDuration" in clip:
+            # GIF timestamps use centiseconds; keep full-window totals exact at 8fps too.
+            last_frame = math.ceil(duration * fps) - 1
+            final_delay = round(duration * 100) - math.floor(last_frame * 100 / fps + .5)
+            gif_options = ["-final_delay", str(final_delay)]
         subprocess.run([
             ffmpeg, "-hide_banner", "-loglevel", "error", "-y",
-            "-ss", str(clip["start"]), "-t", str(clip["duration"] - .5), "-i", capture["video"],
+            "-ss", str(clip["start"]), "-t", str(duration), "-i", capture["video"],
             "-filter_complex",
-            "fps=10,scale=800:-1:flags=lanczos,split[a][b];"
-            "[a]palettegen=max_colors=128:stats_mode=diff[p];"
+            f"fps={fps},scale=800:-1:flags=lanczos,split[a][b];"
+            f"[a]palettegen=max_colors={colors}:stats_mode=diff[p];"
             "[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle",
-            "-loop", "0", str(OUTPUT / f"{name}.gif"),
+            "-loop", "0", *gif_options, str(OUTPUT / f"{name}.gif"),
+        ], check=True)
+
+
+def native_openings(directory, ffmpeg):
+    """Prepare exact no-input source windows in the private capture directory."""
+    for system in ("gba", "ds"):
+        receipt = json.loads((directory / f"{system}-native.json").read_text(encoding="utf-8"))
+        if receipt["errors"] or any(event["pressed"] for event in receipt["timing"]["inputEvents"]):
+            raise RuntimeError(f"Native {system} acquisition has errors or game input.")
+        subprocess.run([
+            ffmpeg, "-hide_banner", "-loglevel", "error", "-y",
+            "-ss", str(receipt["trim"]), "-i", receipt["video"], "-t", str(receipt["duration"]),
+            "-an", "-vf", "tpad=stop_mode=clone:stop_duration=1,fps=30",
+            "-c:v", "libvpx-vp9", "-crf", "18", "-b:v", "0", "-cpu-used", "6",
+            "-row-mt", "1", "-threads", "4", str(directory / f"{system}-opening.webm"),
         ], check=True)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--capture", type=Path, help="capture.json from capture-readme.mjs")
+    parser.add_argument("--native-openings", type=Path, help="Prepare exact private source windows from capture-native-openings.mjs receipts; hold the last frame through the window end")
     parser.add_argument("--ffmpeg", default=shutil.which("ffmpeg"), help="Path to an FFmpeg executable")
     parser.add_argument("--glow-logos", action="store_true", help="Only render README logo glows; preserve original media")
     parser.add_argument("--shimmer-logo", action="store_true", help="Only animate the current BowserBOY website logo for the README")
     parser.add_argument("--ds-screen-shimmer", action="store_true", help="Only animate the two DS logo screen interiors for the README and Inspect")
     args = parser.parse_args()
+    if args.native_openings:
+        if args.capture or args.glow_logos or args.shimmer_logo or args.ds_screen_shimmer:
+            parser.error("--native-openings cannot be combined with another render mode")
+        if not args.ffmpeg:
+            parser.error("--native-openings requires ffmpeg")
+        native_openings(args.native_openings, args.ffmpeg)
+        print("Private opening replays prepared in", args.native_openings)
+        raise SystemExit(0)
     if args.glow_logos and args.capture:
         parser.error("--glow-logos cannot be combined with --capture")
     if args.shimmer_logo and (args.glow_logos or args.capture):

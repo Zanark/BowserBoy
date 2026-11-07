@@ -8,7 +8,118 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
-### Fresh GBA, DS and all lights, 2026-11-07
+### Untouched opening edition, 2026-11-07
+
+The owner rejected the earlier tutorial/controls screens and explicitly
+requested replacement footage in **every README section**, including the
+desk, lamps and movement clips. The source acquisition uses the selected
+local Celia's GAME and the newly selected local HeartGold cartridge.
+No Start, A/B, direction or touchscreen input belongs in those source takes.
+
+| Source | Native opening recorded | Excluded lead-in | Reusable window |
+|---|---|---|---|
+| Celia's GAME, GBA | First30seconds | First2.5seconds | 2.5-30seconds,27.5seconds total |
+| HeartGold, DS | First90seconds | First8seconds | 8-90seconds,82seconds total |
+
+DS cartridge download, insertion and loading are outside native opening
+time. Both windows retain the games' original ordering and pacing; they
+are not footage obtained by pressing through the title into a tutorial.
+The full opening showcases use the complete trimmed windows. Shorter
+feature demonstrations reuse portions of these same verified sources.
+
+**Recorded LCD content, live scene interactions.** The capture harness replays
+the recorded openings on the consoles while browser actions demonstrate
+pickup, inspection, physical button travel, stylus movement, zoom, docking
+and lighting. This intentionally keeps game inputs from replacing the intro
+with the rejected menus. It is not evidence that a running game responds
+to the depicted button/stylus actions, nor that recorded footage speeds up
+when the fast-forward control is held. Actual native-input and speed behavior
+have separate tests. Capture-only replay must not enter the shipping player.
+
+Every scene GIF is replaced, not just the two introductions. The desk/light
+takes include both consoles with these opening sources. The approved website,
+GBA and DS animated logos are artwork, not game-footage scenes, and remain
+unchanged. ROMs, raw source videos, browser stores and detailed timing/hash
+receipts stay private; only reviewed scene GIFs and reproduction scripts
+are publication assets. The frozen engineering PDF is not rebuilt.
+
+Native time begins at entry to `EJS_onGameStart`, after core/cartridge loading,
+not at page launch or the later host-ready notification. The private recorder
+starts in that same browser-intercepted callback. The shipping player is not
+edited. Actual source takes last30.014/90.037seconds and record zero game-input
+presses. Derivation excludes the specified lead-ins and holds the last captured
+native frame through each exact endpoint, never synthesizing gameplay.
+
+The replay harness serves private videos through intercepted browser routes.
+Off-DOM videos draw the newly recorded native openings into capture canvases;
+an instance-only GBA screen wrapper and DS source accessor feed the existing
+scene LCD paths. Geometry, material parameters, lighting and shipping code stay
+unchanged. Fresh isolated browser contexts are discarded. Full opening clips
+play once without wrapping; shorter feature clips loop excerpts within the
+requested windows. The initial GBA feature takes used a27.466second decode of
+the same window; the dedicated complete showcase retains the full27.5seconds.
+
+**Local result:**26new scene GIFs,76,919,967bytes total, each below10MiB and
+800x618. All25previous scene hashes change and the GBA full opening is added.
+Full showcases retain exactly27.5seconds/275frames and82seconds/656frames.
+The normal encoding is10fps/128colors; only the full DS showcase uses
+8fps/64colors,9,408,517bytes, to retain all82seconds below10MiB. Full-showcase
+receipts bypass the ordinary half-second feature-clip tail trim and correct
+GIF centisecond rounding. Every output loops infinitely.
+
+The capture review covers native temporal samples, all26scene first frames
+and additional bounded GBA/dark-reflection samples where needed, not exhaustive
+visual review of every frame. A separate integrity pass force-decodes all2719
+GIF frames and checks dimensions, durations and `loop=0`; three temporal samples
+per clip differ. All canonical capture page-error arrays are empty. The agent's
+51-file protected baseline is unchanged; independent checks retain all three
+approved logos and the frozen PDF. README's26unique GIFs match the output hashes,
+and all49relative file targets exist. These checks do not imply owner approval
+or live game-input correctness.
+
+### Reproduce this edition
+
+Use Node dependencies already declared by the project, Python with Pillow,
+an FFmpeg executable and a running source preview. Choose private output and
+legally obtained local ROM files; never put those files under published assets.
+PowerShell7, from the repository root:
+
+```powershell
+$P = '<private-output-directory>'
+$F = '<ffmpeg-executable>'
+$env:BBA_CAPTURE_URL = 'http://127.0.0.1:5173/'
+$env:BROWSER_CHANNEL = 'msedge'
+$env:BBA_CAPTURE_ROM = '<gba-rom-file>'
+$env:BBA_CAPTURE_DS_ROM = '<ds-rom-file>'
+$env:BBA_CAPTURE_INTROS = $P
+
+node scripts\capture-native-openings.mjs $P
+python scripts\render-readme.py --native-openings $P --ffmpeg $F
+node scripts\capture-readme.mjs "$P\gba"
+$env:BBA_CAPTURE_SCENES_ONLY = '1'
+node scripts\capture-desk-showcase.mjs "$P\ds" ds
+node scripts\capture-desk-showcase.mjs "$P\lighting" lighting
+node scripts\capture-opening-showcases.mjs "$P\openings"
+
+# Keep both complete showcases, with the smaller palette only for DS.
+$r = Get-Content "$P\openings\capture.json" -Raw | ConvertFrom-Json
+Add-Member -InputObject $r.clips.'ds-gameplay' `
+    -NotePropertyName encoding -NotePropertyValue @{fps=8; colors=64}
+$r | ConvertTo-Json -Depth 30 |
+    Set-Content "$P\openings\encoding.json" -Encoding utf8NoBOM
+foreach ($name in 'gba','ds','lighting') {
+    python scripts\render-readme.py --capture "$P\$name\capture.json" --ffmpeg $F
+}
+python scripts\render-readme.py --capture "$P\openings\encoding.json" --ffmpeg $F
+```
+
+The six reproduction scripts contain no personal absolute paths, private
+hashes or captured receipts. Recorder syntax, Python compilation and focused
+mock encoding tests pass. Temporary encoder tooling is removed and capture
+browsers are closed. Exact publication qualification remains in progress under
+[workstream120](../TODO/120_UNTOUCHED_INTRO_README_MEDIA.todo).
+
+### Earlier fresh GBA, DS and all lights, 2026-11-07 (superseded footage)
 
 The README refresh replaces **all eleven existing interaction GIFs**, adds
 **eight DS recordings** and **six desk/lighting recordings**, and embeds a fresh

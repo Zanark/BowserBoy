@@ -6,12 +6,12 @@ Purpose: Replace the owner's rejected tutorial/menu screens in every README
 section with the supplied games' unmodified opening animations.
 
 Tasks:
-- [ ] Record the first30seconds of the supplied GBA opening without game input.
-- [ ] Record the first90seconds of the supplied DS opening after native startup.
-- [ ] Exclude the first2.5GBAseconds and first8DSseconds from reusable footage.
-- [ ] Newly record every scene GIF, including desk/lamp/movement sections.
-- [ ] Document recorded-LCD replay versus live scene and native-input evidence.
-- [ ] Review encoded openings and all scene GIFs; preserve approved artwork.
+- [x] Record the first30seconds of the supplied GBA opening without game input.
+- [x] Record the first90seconds of the supplied DS opening after native startup.
+- [x] Exclude the first2.5GBAseconds and first8DSseconds from reusable footage.
+- [x] Newly record every scene GIF, including desk/lamp/movement sections.
+- [x] Document recorded-LCD replay versus live scene and native-input evidence.
+- [x] Review encoded openings and all scene GIFs; preserve approved artwork.
 - [ ] Commit/push as Zanark, verify public GIFs and monitor exact deployment.
 
 Acceptance criteria:
@@ -30,12 +30,27 @@ Preserve approved animated logos, the frozen PDF and unrelated dirty PNGs.
 No shipping runtime/core/material/lighting changes or weaker CI gates.
 
 Completion evidence:
-Source files exist locally. Capture/encoding and review are in progress.
-Previous media and GIF-first layout remain historical completed work; this
-workstream records the owner's subsequent explicit rejection of menu footage.
+Native recording starts in EJS_onGameStart, after core/cartridge loading:
+30.014s GBA/90.037s DS, zero game-input presses. All26scene GIFs are new;
+all25prior hashes change. Complete showcase windows retain27.5s/275frames
+and82s/656frames, without ordinary tail trim or loop wrap. Feature clips
+reuse footage inside these windows; final captured frames hold at exact ends.
+800x618,76,919,967bytes total, each<10MiB; only full DS uses8fps/64colors,
+all others10fps/128colors. All2719GIFframes fully decode,loop0 and durations
+match; three temporal samples per clip differ. Native temporal samples and
+26first frames reviewed with extra bounded GBA/reflection samples, not every
+frame visually reviewed. Canonical capture page errors0. Agent's51protected
+files unchanged; independent logo/PDF checks pass. All26READMEhashes match;
+all49relative file targets exist. Six reproduction scripts have no personal
+paths/private hashes/receipt payloads; recorder syntax and focused mock
+encoding tests pass. Replay limits and reproduction documented in Media.
+ROMs/raw videos/stores/receipts remain private. Exact publication pending.
 
 Completion log:
 2026-11-07: Owner specifies untouched30/90second openings,2.5/8second lead-in
 exclusions and a new local DS source, then explicitly expands the replacement
 to every GIF in every README section and requests a push. Acquire native
 sources before reusing their verified windows for live scene choreography.
+2026-11-07: Native capture, all26scene replacements, bounded visual review
+and full output-integrity qualification complete. Preserve full82s by
+reducing only DS showcase frame rate/palette, not its duration or dimensions.

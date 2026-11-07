@@ -2,6 +2,7 @@ import { chromium, expect as baseExpect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { openingReplay, replayTime, replayReceipt } from './capture-opening-replay.mjs';
 
 const output = process.argv[2];
 if (!output) throw new Error('Provide an output directory for the original capture and timing receipt.');
@@ -25,12 +26,14 @@ const begin = name => { clips[name] = { start: (Date.now() - started) / 1000 }; 
 const end = name => { clips[name].duration = (Date.now() - started) / 1000 - clips[name].start; };
 const wait = milliseconds => page.waitForTimeout(milliseconds);
 const scene = page.locator('#scene');
+let replay;
 
 try {
   await page.goto(baseURL);
   await expect(scene).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await page.locator('#scene-loading').waitFor({ state: 'hidden', timeout: 90000 });
   await wait(1200);
+  await openingReplay(page);
   await page.screenshot({ path: resolve(output, '3d-table.png') });
   begin('pickup-inspect');
   await wait(700);
@@ -80,6 +83,7 @@ try {
   await page.locator('#pickup').click();
   await expect(scene).toHaveAttribute('data-view', 'playing');
   await wait(700);
+  if (await scene.getAttribute('data-power') === 'on') await page.locator('#hardware-power').click();
   begin('power-on');
   await wait(500);
   await page.locator('#hardware-power').click();
@@ -110,12 +114,13 @@ try {
   } finally { release(); }
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
-  await wait(mediaRom ? 14000 : 1000);
-  if (mediaRom) {
-    await page.locator('#scene-canvas').focus();
-    await page.keyboard.press('Enter');
-    await wait(1800);
-  }
+  await replayTime(page, 'gba', 0, false);
+  begin('gba-gameplay');
+  await wait(27500);
+  end('gba-gameplay');
+  clips['gba-gameplay'].encodedDuration = 27.5;
+  clips['gba-gameplay'].sourceWindow = [2.5, 30];
+  await replayTime(page, 'gba', 0);
   begin('cozy-lights');
   await page.locator('#put-down').click();
   await expect(scene).toHaveAttribute('data-view', 'table');
@@ -155,7 +160,7 @@ try {
     return view.project(view.model.screen);
   });
   begin('lcd-reflections');
-  clips['lcd-reflections'].lighting = { lamp: 'off', room: 'off', source: 'Retained native LCD' };
+  clips['lcd-reflections'].lighting = { lamp: 'off', room: 'off', source: 'Replayed verified native opening' };
   await wait(1000);
   await page.mouse.move(litScreen.x, litScreen.y);
   await page.mouse.down();
@@ -251,9 +256,10 @@ try {
   await page.mouse.move(10, 10);
   await wait(800);
   end('movable-dock');
+  replay = await replayReceipt(page);
 
-  // All interaction GIFs use the supplied game; static UI references use homebrew.
-  if (mediaRom) {
+  // Still-image production is opt-in; the opening refresh owns scene GIFs only.
+  if (process.env.BBA_CAPTURE_STILLS === '1' && mediaRom) {
     await page.locator('#tools-open').click();
     await page.locator('#demo').click();
     await expect(page.locator('#game-title')).toHaveText('Pixel Lab', { timeout: 90000 });
@@ -262,32 +268,39 @@ try {
     if (await page.locator('#tools').isVisible()) await page.locator('#tools-close').click();
     await wait(1500);
   }
-  await page.mouse.move(10, 10);
-  await page.locator('.scene-actions').screenshot({ path: resolve(output, 'readme-dock.png') });
-  await page.locator('#tools-open').click();
-  await page.locator('#save').click();
-  await expect(page.locator('#export')).toBeEnabled();
-  await page.locator('.drawer-section[aria-labelledby="progress-heading"]')
-    .screenshot({ path: resolve(output, 'readme-saves.png') });
-  await page.locator('#shader').scrollIntoViewIfNeeded();
-  await page.locator('.drawer-section[aria-labelledby="sound-heading"]')
-    .screenshot({ path: resolve(output, 'crt-presets.png') });
-  await page.locator('#tools-close').click();
-  await page.locator('#quick-screen-fullscreen').click();
-  await expect(page.locator('#screen-focus')).toBeVisible();
-  await wait(800);
-  await page.mouse.move(10, 10);
-  await page.screenshot({ path: resolve(output, 'readme-fullscreen.png') });
-  await page.locator('#screen-focus-close').click();
+  if (process.env.BBA_CAPTURE_STILLS === '1') {
+    await page.mouse.move(10, 10);
+    await page.locator('.scene-actions').screenshot({ path: resolve(output, 'readme-dock.png') });
+    await page.locator('#tools-open').click();
+    await page.locator('#save').click();
+    await expect(page.locator('#export')).toBeEnabled();
+    await page.locator('.drawer-section[aria-labelledby="progress-heading"]')
+      .screenshot({ path: resolve(output, 'readme-saves.png') });
+    await page.locator('#shader').scrollIntoViewIfNeeded();
+    await page.locator('.drawer-section[aria-labelledby="sound-heading"]')
+      .screenshot({ path: resolve(output, 'crt-presets.png') });
+    await page.locator('#tools-close').click();
+    await page.locator('#quick-screen-fullscreen').click();
+    await expect(page.locator('#screen-focus')).toBeVisible();
+    await wait(800);
+    await page.mouse.move(10, 10);
+    await page.screenshot({ path: resolve(output, 'readme-fullscreen.png') });
+    await page.locator('#screen-focus-close').click();
+  }
   if (errors.length) throw new Error(errors.join('\n'));
+} catch (error) {
+  errors.push(error.message);
+  await page.screenshot({ path: resolve(output, 'capture-failure.png') });
+  throw error;
 } finally {
   const video = await page.video().path();
+  replay ??= await replayReceipt(page).catch(() => null);
   await context.close();
   await browser.close();
   await writeFile(resolve(output, 'capture.json'), JSON.stringify({
-    baseURL, checkoutCommit, capturedAt: new Date().toISOString(), video, clips, errors,
+    baseURL, checkoutCommit, capturedAt: new Date().toISOString(), video, clips, errors, replay,
     viewport: { width: 1100, height: 850 },
-    showcaseRom: mediaRom ? 'Explicitly selected supplied ROM, GIF footage only; not a test fixture.' : 'Original Pixel Lab.',
+    showcaseRom: 'Verified newly captured native opening replay. Game keys demonstrate scene feedback only, not native input response.',
     stillsRom: 'Original Pixel Lab or no cartridge.',
     note: 'Actual browser recording; cartridge download deliberately held during genuine insertion. Underside uses Inspect/keyboard tilt; dock/save/shader stills crop real UI. checkoutCommit identifies the local checkout, not independent remote identity. Media capture is not game correctness, audio or performance testing.',
   }, null, 2));

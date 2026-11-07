@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/118
 Milestone: A GIF-first README with linked documentation.
 Dependencies: 117.
@@ -9,7 +9,7 @@ Tasks:
 - [x] Keep all25 interaction GIFs and the three approved animated logos.
 - [x] Reduce captions and replace long explanations with guide links.
 - [x] Retain historical still references in the linked media documentation.
-- [ ] Check links/media, publish as Zanark and monitor exact-revision deployment.
+- [x] Check links/media, publish as Zanark and monitor exact-revision deployment.
 
 Acceptance criteria:
 The README primarily shows actual GIFs, not paragraphs of technical detail.
@@ -27,7 +27,11 @@ guides. Historical still references move to Media; no recapture or artwork
 change. Word count including Markdown/alt text falls from2319to683
 (about71%less); all25GIFs retain exact committed bytes. Relative file targets
 in the README and all three edited guides exist. Approved artwork and frozen
-book remain unchanged. Monitored publication pending.
+book remain unchanged. GitHub-rendered44b5dc2README verifies25scene GIFs
+and linked guides. Subsequent Zanark dd269de retains this README and deploys
+through Pages42387259958:119declared/98PASS/21SKIP/0FAIL/0UNRUN.
+The owner's later120request separately supersedes footage preservation:
+replace every scene GIF and add a full GBA opening, retaining this visual layout.
 
 Completion log:
 2026-11-07: Owner explicitly requests less README text and as many useful
@@ -35,3 +39,5 @@ GIFs as possible, with separate linked files for detailed explanations.
 Preserve all25 fresh motion clips rather than replacing them with text or
 stills. Put the policy in the documentation map so future contributors can
 follow it without relying on chat history.
+2026-11-07: Actual exact-revision deployment now qualifies the published
+GIF-first layout. The subsequent all-footage replacement remains120.

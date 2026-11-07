@@ -1,6 +1,6 @@
 # BowserBOY verification scope
 
-The prototype has separate evidence layers. Test coverage alone is neither
+The player has separate evidence layers. Test coverage alone is neither
 human acceptance nor deployment; the actual release evidence is recorded below.
 
 The [engineering book](book/README.md) explains the mechanisms and failure
@@ -8,6 +8,36 @@ lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
+
+### Wider Pear gaze and bounded input-test recovery
+
+Zanark source `dd269dea6f5cc6ada0038a2245b0ec3a420768c5`,
+[Pages42387259958](https://github.com/Zanark/BowserBoy/actions/runs/42387259958),
+successfully builds, completes all19verification shards and deploys.
+Independent terminal accounting: **119 declared /98 passed /21 skipped /
+0 failed /0 unrun**. The21parked cases remain coverage debt.
+
+Horizontal face rotation increases0.22to0.55radians; positive vertical travel
+increases0.18to0.75model units while downward travel stays0.18. Three focused
+local cases pass55.8s without retries, including actual pointer travel,
+all36expression/gaze combinations with six foremost cheek freckles, and
+rendered airborne/landing recovery. Actual Pages pointer checks verify
+upward motion of both eyes, mouth and all six freckles, horizontal response,
+the fixed anchor and zero page errors. This is technical/visible verification,
+not owner aesthetic approval.
+
+Earlier Pages42384194922 failed exactly one input-remapping case and did not
+deploy:119declared/97passed/21skipped/1failed/0unrun. Its trace shows timed
+autosave disabling binding buttons between actionability and physical click.
+The one bounded repair switches off timed saves through the existing UI in
+that input-only test. Every original remap/physical-travel/release assertion
+and every CI gate remains; no shipping autosave behavior changes.
+
+All48public runtime, entry and demo byte comparisons match the exact commit
+from a clean detached verification checkout. The additional build-only
+`.nojekyll` endpoint still returns404: the strict49-check verifier exits1
+with that recorded exception, not49passes. Active capture scripts and private
+ROM/video artifacts were excluded from the runtime commit.
 
 ### Published recovery: 92 passed, 17 explicitly parked
 

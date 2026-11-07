@@ -14,6 +14,30 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Untouched opening media locally complete (120):
+  Native game-start callback captures30.014s/90.037s with zero game-input
+  presses. Exact showcase windows27.5s/82s, no tail trim/wrap. Real browser
+  scene interactions use capture-only recorded-LCD sources, explicitly not
+  native game-input demonstrations. All26GIFs new,25old hashes replaced;
+  76,919,967bytes,800x618,each<10MiB. DS full82s requires8fps/64colors;
+  other clips10fps/128colors. Native temporal samples,26scene first frames
+  and bounded uncertain GBA/reflection samples reviewed. Independent parent
+  pass fully decodes2719frames, checksloop0/durations/dimensions and three
+  differing samples per clip. Canonical capture errors0;51protected baseline
+  files unchanged; independent logos/PDF preserved.26READMEhashes and49
+  relative targets qualify. Six sanitized reproduction scripts; no runtime
+  media edits, ROM/raw-video/store/receipt publication. Delivery pending.
+- 2026-11-07 / Upward/horizontal Pear and GIF-first layout delivered:
+  Zanark dd269dea6f5cc6ada0038a2245b0ec3a420768c5 deployed by
+  Pages42387259958. Independent119declared/98PASS/21SKIP/0FAIL/0UNRUN,
+  all19shards and deploy succeed. Actual public pointer verifies upward
+  eyes/mouth/all6freckles, horizontal travel and fixed anchor/errors0.
+  Clean exact-commit public verifier matches48runtime/entry/demo assets;
+  build-only.nojekyll404 keeps strict49-check verifier exit1, not all-green.
+  Exact remapping scenario passes CI after one bounded UI autosave isolation;
+  no assertions/gates weakened and21parks remain debt.118/119/121actual
+  issues117/118/120 independently CLOSED/completed/Project Done.120still
+  tracks the separate all-scene media replacement.
 - 2026-11-07 / Upward Pear face travel (121):
   Owner marks the forehead and asks for more upward movement too. Increase
   positive vertical travel0.18to0.75model units, preserving0.18downward and

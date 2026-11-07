@@ -25,35 +25,35 @@ Two consoles. Three desk lamps. Your own local games.
   <img src="assets/ds-logo-shimmer.png" alt="BowserBOY DS logo with shimmering twin screens">
 </picture>
 
-![HeartGold running on both native DS displays](docs/images/ds-gameplay.gif?v=dual-console-20261107)
+![HeartGold's untouched opening across both DS displays](docs/images/ds-gameplay.gif?v=untouched-opening-20261107)
 
-*Two live screens. One little escape.*
+*HeartGold's first 90 seconds, minus the initial 8. No game inputs.*
 
-![NDS selection immediately returns to the console and animates cartridge loading](docs/images/ds-cartridge.gif?v=dual-console-20261107)
+![NDS selection immediately returns to the console and animates cartridge loading](docs/images/ds-cartridge.gif?v=untouched-opening-20261107)
 
 *Pick a cartridge. It slides in from below while the loading LCD animates; the full boot takes longer.*
 
-![Physical DS button presses and pointer input on the lower touchscreen](docs/images/ds-controls.gif?v=dual-console-20261107)
+![Physical DS button movement alongside the untouched opening footage](docs/images/ds-controls.gif?v=untouched-opening-20261107)
 
-*Real button travel. A working lower touchscreen.*
+*Real button travel. The opening keeps playing.*
 
-![Pick up the clipped stylus, touch the lower screen and put it back](docs/images/ds-stylus.gif?v=dual-console-20261107)
+![Pick up the clipped stylus, trace across the lower screen and put it back](docs/images/ds-stylus.gif?v=untouched-opening-20261107)
 
-*Hover. Pick up. Tap. Escape to put it back.*
+*Hover. Pick up. Trace. Escape to put it back.*
 
-![Rotate the DS body, adjust its hinge and lock the gameplay pose](docs/images/ds-inspect.gif?v=dual-console-20261107)
+![Rotate the DS body, adjust its hinge and lock the gameplay pose](docs/images/ds-inspect.gif?v=untouched-opening-20261107)
 
 *Turn the body. Open the hinge. Lock it your way.*
 
-![Zoom the live DS view between 50 and 100 percent](docs/images/ds-play-zoom.gif?v=dual-console-20261107)
+![Zoom the DS opening view between 50 and 100 percent](docs/images/ds-play-zoom.gif?v=untouched-opening-20261107)
 
 *Both screens, fitted together. Zoom from 50% to 100%.*
 
-![The upright DS under independent tripod and room lighting combinations](docs/images/ds-lighting.gif?v=dual-console-20261107)
+![The upright DS under independent tripod and room lighting combinations](docs/images/ds-lighting.gif?v=untouched-opening-20261107)
 
 *Lamp only. Lamp + room. Room only. Your choice.*
 
-![Tilt the running DS with every desk and room lamp switched off](docs/images/ds-lcd-reflections.gif?v=dual-console-20261107)
+![Tilt the DS opening footage with every desk and room lamp switched off](docs/images/ds-lcd-reflections.gif?v=untouched-opening-20261107)
 
 *Lights out. Just the two LCDs lighting their surroundings.*
 
@@ -63,47 +63,51 @@ Two consoles. Three desk lamps. Your own local games.
 
 [![BowserBOYADVANCED - animated purple console logo](docs/images/bowserboyadvanced-logo-glow.png)](assets/logo.png)
 
-![Pick up, inspect and put down the purple handheld](docs/images/pickup-inspect.gif?v=dual-console-20261107)
+![Celia's GAME untouched opening on the purple handheld](docs/images/gba-gameplay.gif?v=untouched-opening-20261107)
+
+*The first 30 seconds, minus the initial 2.5. No game inputs.*
+
+![Pick up, inspect and put down the purple handheld](docs/images/pickup-inspect.gif?v=untouched-opening-20261107)
 
 *Pick it up. Turn it over. Make it yours.*
 
-![Keyboard presses move A and B and rock the diagonal D-pad](docs/images/button-feedback.gif?v=dual-console-20261107)
+![Keyboard presses move A and B and rock the diagonal D-pad](docs/images/button-feedback.gif?v=untouched-opening-20261107)
 
 *Press. Rock. Release.*
 
-![Move between fitted and close-up ordinary play views](docs/images/play-zoom.gif?v=dual-console-20261107)
+![Move between fitted and close-up ordinary play views](docs/images/play-zoom.gif?v=untouched-opening-20261107)
 
 *50% to 100%. No fullscreen needed.*
 
-![Hold Space for native fast-forward and release to resume normal speed](docs/images/hold-space.gif?v=dual-console-20261107)
+![Hold and release the Space fast-forward control while the recorded opening plays](docs/images/hold-space.gif?v=untouched-opening-20261107)
 
-*Hold Space for 2x. Let go for 1x.*
+*Hold Space. Release. Keep your hands on the keyboard.*
 
-![Power on into the original animated console startup](docs/images/power-on.gif?v=dual-console-20261107)
+![Power on into the original animated console startup](docs/images/power-on.gif?v=untouched-opening-20261107)
 
 *Waving lettering. Sparkles. An original 8-bit-style chime.*
 
-![A selected local cartridge slides into the handheld](docs/images/cartridge.gif?v=dual-console-20261107)
+![A selected local cartridge slides into the handheld](docs/images/cartridge.gif?v=untouched-opening-20261107)
 
 *Slot it in. Your game files stay on your device.*
 
-![Switch the woven tripod and room lights independently](docs/images/cozy-lights.gif?v=dual-console-20261107)
+![Switch the woven tripod and room lights independently](docs/images/cozy-lights.gif?v=untouched-opening-20261107)
 
 *Warm woven shade. Ash tripod. Independent room light.*
 
-![Tilt the handheld in complete lamp darkness to move its LCD light across the desk](docs/images/lcd-reflections.gif?v=dual-console-20261107)
+![Tilt the handheld in complete lamp darkness to move its LCD light across the desk](docs/images/lcd-reflections.gif?v=untouched-opening-20261107)
 
 *Every lamp off. Celia's GAME and the screen's moving pool of light.*
 
-![Fullscreen gameplay with dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=dual-console-20261107)
+![Fullscreen opening footage with dark margins and independent zoom](docs/images/screen-fullscreen.gif?v=untouched-opening-20261107)
 
 *Just the game. Full 3:2 picture, with adjustable zoom.*
 
-![Drag, collapse, move and reset the console tools dock](docs/images/movable-dock.gif?v=dual-console-20261107)
+![Drag, collapse, move and reset the console tools dock](docs/images/movable-dock.gif?v=untouched-opening-20261107)
 
 *Drag the grip. Collapse it. Make a little room.*
 
-![Close the visible settings drawer by clicking outside it](docs/images/settings-backdrop.gif?v=dual-console-20261107)
+![Close the visible settings drawer by clicking outside it](docs/images/settings-backdrop.gif?v=untouched-opening-20261107)
 
 *Click outside. Back to your game.*
 
@@ -111,31 +115,31 @@ Two consoles. Three desk lamps. Your own local games.
 
 ## Make the desk yours
 
-![Move the blue DS and purple GBA independently using the placement controls](docs/images/console-movement.gif?v=dual-console-20261107)
+![Move the blue DS and purple GBA independently using the placement controls](docs/images/console-movement.gif?v=untouched-opening-20261107)
 
 *Lift. Move. Drop. Shown with keyboard placement; pointer dragging works too.*
 
-![Switch the tripod and room through independent combinations and complete lamp darkness](docs/images/lighting-overview.gif?v=dual-console-20261107)
+![Switch the tripod and room through independent combinations and complete lamp darkness](docs/images/lighting-overview.gif?v=untouched-opening-20261107)
 
 *Tripod only. Both. Room only. All off. The tripod stays fixed.*
 
 ### Pear boy
 
-![Adjust Pear's light through 10, 40, 70 and 100 percent, then off and on](docs/images/pear-lighting.gif?v=dual-console-20261107)
+![Adjust Pear's light through 10, 40, 70 and 100 percent, then off and on](docs/images/pear-lighting.gif?v=untouched-opening-20261107)
 
 *A warm little glow. 10% to 100%, or off.*
 
-![Lift Pear, move him in depth and drop him through scream, bounce and landing recovery](docs/images/pear-movement.gif?v=dual-console-20261107)
+![Lift Pear, move him in depth and drop him through scream, bounce and landing recovery](docs/images/pear-movement.gif?v=untouched-opening-20261107)
 
 *Scream. Bounce. Tiny angry eyes. Pout. Smile. Always three dots per cheek.*
 
 ### The little axolotl
 
-![Switch the axolotl between Sleep 50 percent, Bright 100 percent and off](docs/images/axolotl-lighting.gif?v=dual-console-20261107)
+![Switch the axolotl between Sleep 50 percent, Bright 100 percent and off](docs/images/axolotl-lighting.gif?v=untouched-opening-20261107)
 
 *Sleep at 50%. Shine at 100%. Tiny feet, pink gills, warm glow.*
 
-![Lift, move, adjust depth and drop the axolotl lamp](docs/images/axolotl-movement.gif?v=dual-console-20261107)
+![Lift, move, adjust depth and drop the axolotl lamp](docs/images/axolotl-movement.gif?v=untouched-opening-20261107)
 
 *Move the lamp. Its light follows.*
 
@@ -152,4 +156,4 @@ Two consoles. Three desk lamps. Your own local games.
 [Recording details &amp; historical gallery](docs/MEDIA.md) &middot;
 [Development journal](TODO/04_DEVELOPMENT_LEDGER.todo)
 
-*Actual browser recordings with the owner's local Celia's GAME (GBA) and HeartGold (DS); shown interactions only, not universal compatibility. Bring legally obtained games; no ROM collection or BIOS is included. Independent project, not affiliated with Nintendo. [Credits &amp; licenses](THIRD_PARTY_NOTICES.md).*
+*Real scene interactions with replayed, untouched Celia's GAME and HeartGold openings on the screens; not live game-input demonstrations. [Recording details](docs/MEDIA.md). Bring legally obtained games; no ROM collection or BIOS is included. Independent project, not affiliated with Nintendo. [Credits &amp; licenses](THIRD_PARTY_NOTICES.md).*
