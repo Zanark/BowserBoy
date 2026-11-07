@@ -19,6 +19,7 @@
 | Capture editions, artwork and motion provenance | [Media](MEDIA.md) |
 | NDS development journey and engineering, including shared infrastructure | [Two Screens, One Little Escape](nds-book/README.md), [PDF](nds-book/published/Two-Screens-One-Little-Escape.pdf), [offline reader](nds-book/published/Reading-Edition.html), [review](nds-book/REVIEW.md) |
 | Preserved GBA engineering book | [Building a Little Escape](book/README.md), [PDF](book/published/Building-a-Little-Escape.pdf), [second edition/build](book/editions/2026-11/README.md), [historical review](book/editions/2026-11/REVIEW.md) |
+| Complete procedural 3D construction and agent reconstruction | [From Shapes to a Living Desk](modeling-book/README.md), [328-page PDF](modeling-book/published/From-Shapes-to-a-Living-Desk.pdf), [offline reader](modeling-book/published/Reading-Edition.html), [review](modeling-book/REVIEW.md) |
 | Workstreams and causal development history | [TODO index](../TODO/00_INDEX.todo), [ledger](../TODO/04_DEVELOPMENT_LEDGER.todo) |
 | Dependencies and supplied artwork | [Third-party notices](../THIRD_PARTY_NOTICES.md) |
 
@@ -44,6 +45,7 @@ policy for this repository.
 | `docs/`, `docs/images/` | Current guides, evidence and captioned showcase media |
 | `docs/book/` | Preserved first Markdown edition, second-edition additions and independent local production tooling |
 | `docs/nds-book/` | Independent DS manuscript, source register and separately published PDF/offline reader; no GBA-specific chapters |
+| `docs/modeling-book/` | Independent 38-chapter construction manual for all models, diagnostic atlas and separately published PDF/offline reader |
 | `TODO/` | Stable numbered workstreams, index and development ledger |
 | `docs/releases/` | Versioned public milestones, package manifests and checksums |
 | `assets/demos/` | Separately authorized media/demo assets, not correctness fixtures or static build inputs |
@@ -60,7 +62,9 @@ readers and manual release attachment. This does not add the book to the static
 application build or change the frozen first-release archive.
 `docs/nds-book/published/` holds the independent DS PDF, scriptless offline reader
 and edition receipts; `docs/nds-book/output/` and `.nds-candidate/` are ignored.
-Neither book is part of the emulator's Pages application payload.
+`docs/modeling-book/published/` holds the independent modeling edition;
+its `output/` and production `.models-candidate/` are ignored local artifacts.
+None of the books is part of the emulator's Pages application payload.
 Release ZIPs are generated local artifacts. All are ignored by Git.
 Old failure evidence is archived outside the repository before cleanup, not
 silently treated as current evidence. Private context state, memory, journal,

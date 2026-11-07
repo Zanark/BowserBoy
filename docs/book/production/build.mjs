@@ -17,7 +17,7 @@ const included = new Map([...chapters, ...sections].map(item => [path.normalize(
 const coverPath = `${edition}\\cover.png`;
 const inputs = new Set([...included.keys(), notesPath, coverPath, ...assets, ...evidence,
   `${edition}\\catalogue.mjs`, `${edition}\\README.md`,
-  ...['build.mjs', 'render.mjs', 'bootstrap.mjs', 'lib.mjs', 'print.css', 'review.py', 'production.test.mjs',
+  ...['build.mjs', 'render.mjs', 'bootstrap.mjs', 'lib.mjs', 'edition.mjs', 'print.css', 'review.py', 'production.test.mjs',
     'package.json', 'package-lock.json', 'requirements.txt'].map(name => `docs\\book\\production\\${name}`)]);
 await fs.mkdir(candidate, { recursive: true });
 await fs.rm(path.join(candidate, 'READY.json'), { force: true });

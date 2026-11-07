@@ -1,0 +1,306 @@
+[
+  {
+    "id": "MD01",
+    "title": "Evidence, libraries and the actual toolchain",
+    "part": 1,
+    "openingPage": 10,
+    "startPage": 11,
+    "endPage": 17
+  },
+  {
+    "id": "MD02",
+    "title": "The modeling contract and visual references",
+    "part": 1,
+    "openingPage": 18,
+    "startPage": 19,
+    "endPage": 25
+  },
+  {
+    "id": "MD03",
+    "title": "Coordinate systems and transform ownership",
+    "part": 1,
+    "openingPage": 26,
+    "startPage": 27,
+    "endPage": 33
+  },
+  {
+    "id": "MD04",
+    "title": "The procedural geometry toolkit",
+    "part": 1,
+    "openingPage": 34,
+    "startPage": 35,
+    "endPage": 41
+  },
+  {
+    "id": "MD05",
+    "title": "GBA shell, silhouette and layered construction",
+    "part": 1,
+    "openingPage": 42,
+    "startPage": 43,
+    "endPage": 50
+  },
+  {
+    "id": "MD06",
+    "title": "GBA LCD, curved glass and frame",
+    "part": 1,
+    "openingPage": 51,
+    "startPage": 52,
+    "endPage": 58
+  },
+  {
+    "id": "MD07",
+    "title": "GBA controls, grips and tactile details",
+    "part": 1,
+    "openingPage": 59,
+    "startPage": 60,
+    "endPage": 66
+  },
+  {
+    "id": "MD08",
+    "title": "Cartridges, small details and markings",
+    "part": 1,
+    "openingPage": 67,
+    "startPage": 68,
+    "endPage": 75
+  },
+  {
+    "id": "MD09",
+    "title": "Procedural textures and asset boundaries",
+    "part": 1,
+    "openingPage": 76,
+    "startPage": 77,
+    "endPage": 83
+  },
+  {
+    "id": "MD10",
+    "title": "DS assembly and the parameter map",
+    "part": 2,
+    "openingPage": 85,
+    "startPage": 86,
+    "endPage": 92
+  },
+  {
+    "id": "MD11",
+    "title": "Hinges, lids and articulation",
+    "part": 2,
+    "openingPage": 93,
+    "startPage": 94,
+    "endPage": 99
+  },
+  {
+    "id": "MD12",
+    "title": "DS shells, recesses and hardware",
+    "part": 2,
+    "openingPage": 100,
+    "startPage": 101,
+    "endPage": 107
+  },
+  {
+    "id": "MD13",
+    "title": "DS controls and readable markings",
+    "part": 2,
+    "openingPage": 108,
+    "startPage": 109,
+    "endPage": 115
+  },
+  {
+    "id": "MD14",
+    "title": "Dual LCDs and curved glass",
+    "part": 2,
+    "openingPage": 116,
+    "startPage": 117,
+    "endPage": 123
+  },
+  {
+    "id": "MD15",
+    "title": "Stylus construction and touch geometry",
+    "part": 2,
+    "openingPage": 124,
+    "startPage": 125,
+    "endPage": 131
+  },
+  {
+    "id": "MD16",
+    "title": "Cartridge insertion and loading choreography",
+    "part": 2,
+    "openingPage": 132,
+    "startPage": 133,
+    "endPage": 139
+  },
+  {
+    "id": "MD17",
+    "title": "Inspection, camera and manipulation",
+    "part": 2,
+    "openingPage": 140,
+    "startPage": 141,
+    "endPage": 148
+  },
+  {
+    "id": "MD18",
+    "title": "The DS model regression atlas",
+    "part": 2,
+    "openingPage": 149,
+    "startPage": 150,
+    "endPage": 156
+  },
+  {
+    "id": "MD19",
+    "title": "Pear Boy: the parametric body",
+    "part": 3,
+    "openingPage": 158,
+    "startPage": 159,
+    "endPage": 165
+  },
+  {
+    "id": "MD20",
+    "title": "Projecting a face onto a curved shell",
+    "part": 3,
+    "openingPage": 166,
+    "startPage": 167,
+    "endPage": 173
+  },
+  {
+    "id": "MD21",
+    "title": "Expressions, gaze and six visible freckles",
+    "part": 3,
+    "openingPage": 174,
+    "startPage": 175,
+    "endPage": 181
+  },
+  {
+    "id": "MD22",
+    "title": "Limbs, rope and soft motion",
+    "part": 3,
+    "openingPage": 182,
+    "startPage": 183,
+    "endPage": 189
+  },
+  {
+    "id": "MD23",
+    "title": "Axolotl: the silicone body",
+    "part": 3,
+    "openingPage": 190,
+    "startPage": 191,
+    "endPage": 198
+  },
+  {
+    "id": "MD24",
+    "title": "Gills, tail and cute features",
+    "part": 3,
+    "openingPage": 199,
+    "startPage": 200,
+    "endPage": 206
+  },
+  {
+    "id": "MD25",
+    "title": "Companion light emission and material tuning",
+    "part": 3,
+    "openingPage": 207,
+    "startPage": 208,
+    "endPage": 214
+  },
+  {
+    "id": "MD26",
+    "title": "Dragging, gravity and dropping",
+    "part": 3,
+    "openingPage": 215,
+    "startPage": 216,
+    "endPage": 222
+  },
+  {
+    "id": "MD27",
+    "title": "Clearance, collision envelopes and home poses",
+    "part": 3,
+    "openingPage": 223,
+    "startPage": 224,
+    "endPage": 231
+  },
+  {
+    "id": "MD28",
+    "title": "The desk, room and tripod lamp",
+    "part": 4,
+    "openingPage": 233,
+    "startPage": 234,
+    "endPage": 241
+  },
+  {
+    "id": "MD29",
+    "title": "Light units, exposure and color",
+    "part": 4,
+    "openingPage": 242,
+    "startPage": 243,
+    "endPage": 248
+  },
+  {
+    "id": "MD30",
+    "title": "Shadows, reflections and shaders",
+    "part": 4,
+    "openingPage": 249,
+    "startPage": 250,
+    "endPage": 255
+  },
+  {
+    "id": "MD31",
+    "title": "Screen materials and pixel preservation",
+    "part": 4,
+    "openingPage": 256,
+    "startPage": 257,
+    "endPage": 262
+  },
+  {
+    "id": "MD32",
+    "title": "Picking, occlusion and input ownership",
+    "part": 4,
+    "openingPage": 263,
+    "startPage": 264,
+    "endPage": 270
+  },
+  {
+    "id": "MD33",
+    "title": "Render loops, GPU budgets and lifecycle",
+    "part": 4,
+    "openingPage": 271,
+    "startPage": 272,
+    "endPage": 277
+  },
+  {
+    "id": "MD34",
+    "title": "Algorithms and data structures",
+    "part": 4,
+    "openingPage": 278,
+    "startPage": 279,
+    "endPage": 285
+  },
+  {
+    "id": "MD35",
+    "title": "Design principles and failure boundaries",
+    "part": 4,
+    "openingPage": 286,
+    "startPage": 287,
+    "endPage": 294
+  },
+  {
+    "id": "MD36",
+    "title": "Validation and bounded recovery",
+    "part": 4,
+    "openingPage": 295,
+    "startPage": 296,
+    "endPage": 302
+  },
+  {
+    "id": "MD37",
+    "title": "The causal modeling history",
+    "part": 4,
+    "openingPage": 303,
+    "startPage": 304,
+    "endPage": 310
+  },
+  {
+    "id": "MD38",
+    "title": "Agent reconstruction and extension",
+    "part": 4,
+    "openingPage": 311,
+    "startPage": 312,
+    "endPage": 318
+  }
+]

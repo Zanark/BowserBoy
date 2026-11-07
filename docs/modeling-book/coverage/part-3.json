@@ -1,0 +1,245 @@
+{
+  "part": 3,
+  "chapters": ["MD19", "MD20", "MD21", "MD22", "MD23", "MD24", "MD25", "MD26", "MD27"],
+  "models": [
+    {
+      "model": "Pear Boy procedural companion",
+      "source": "src/pear-boy.js",
+      "symbol": "createPearBoy",
+      "components": [
+        "Ten authored radius-height controls; 97 sampled profile points; 64-sector lathed shell",
+        "Shared radius interpolation for surface attachments and rope/body contact",
+        "Cream emissive shell, vertical canvas diffusion map, four internal point emitters",
+        "Brown curved stem; extruded beveled leaf; tubular leaf vein",
+        "Body-axis face root; immutable cursor anchor; smoothed asymmetric vertical travel and yaw",
+        "Curious bead eyes and smile; scared squeezed eyes, cheeks, wobbly mouth and open scream",
+        "Angry eye outlines and whites, brows, blush strokes, mouth, tongue and forehead marks",
+        "Sad squeezed eyes, brows, rosy cheeks and puckered pout",
+        "Six permanent flattened-sphere freckles outside expression-specific groups",
+        "Subdivided nonindexed expression patches projected after XY construction",
+        "Four braided dynamic tube limbs; rounded hands and feet; transported normals and bounds",
+        "Soft-contact plane explicitly distinguished from collision geometry",
+        "Impact and paint-gated expression progression; reduced-motion behavior"
+      ],
+      "chapters": ["MD19", "MD20", "MD21", "MD22", "MD25", "MD26", "MD27"],
+      "tests": [
+        "tests/unit/pear-rope.test.mjs",
+        "tests/unit/pear-motion.test.mjs",
+        "tests/browser/pear-boy.spec.mjs",
+        "tests/browser/desk-clearance.spec.mjs"
+      ],
+      "limits": [
+        "Scoped component inventory, not line-by-line exhaustive proof",
+        "Visual silicone approximation, not physical transmission or subsurface simulation",
+        "Projection helper assumes authored valid heights; vertical radius scaling is not a full nonlinear reprojection",
+        "Six-dot center rays cover named sampled gaze/expression conditions, not every rendered pixel",
+        "Historical test receipts are not fresh executions in this authoring pass"
+      ]
+    },
+    {
+      "model": "Pear flexible-cord support",
+      "source": "src/pear-rope.js",
+      "symbol": "PearRope",
+      "components": [
+        "Seven particles, six rest lengths, current/previous-position integration at 1/120 second",
+        "Pinned root; weighted length relaxation; body radial contact; finite rounded desk edge",
+        "Hand and foot-specific contact sizes; hanging-tip orientation; lower safety floor",
+        "Teleport correction of current and previous points; quiet-step sleeping and settle/reset",
+        "Separate physics particles and visible Catmull-Rom tube sampling"
+      ],
+      "chapters": ["MD19", "MD22", "MD26", "MD27"],
+      "tests": ["tests/unit/pear-rope.test.mjs", "tests/browser/pear-boy.spec.mjs"],
+      "limits": [
+        "No arbitrary prop collisions or rope self-collision",
+        "Interpolated visible tube is not a continuously collision-tested solid",
+        "Fixed-step rope integration is distinct from DeskMotion body integration and presentation"
+      ]
+    },
+    {
+      "model": "Small axolotl night-light",
+      "source": "src/axolotl-lamp.js",
+      "symbol": "createAxolotlLamp",
+      "components": [
+        "Shared unit-sphere geometry; overlapping scaled body and head meshes",
+        "Analytic front ellipsoid projection; offset-position gradient-like eye/cheek orientation",
+        "Two bead eyes, two rosy cheeks and six-control curved tubular smile",
+        "Six mirrored/rotated extruded pink gill petals",
+        "Four yawed pink feet and twelve independently root-parented toes",
+        "Upturned extruded cream tail and thicker pink tip with local-axis centering",
+        "Shared cream/pink emissive materials and internal warm point emitter",
+        "Scene-authored root yaw, measured envelope, discrete brightness and shared movement controller"
+      ],
+      "chapters": ["MD23", "MD24", "MD25", "MD26", "MD27"],
+      "tests": ["tests/browser/dock.spec.mjs", "tests/browser/desk-clearance.spec.mjs"],
+      "limits": [
+        "Overlapping meshes are not a Boolean-unified watertight manufacturing mesh",
+        "No implemented expression, gill, toe or tail animation",
+        "Front helper has no invalid-domain clamp",
+        "Emitter location and native-room exposure affect visible brightness discrimination"
+      ]
+    },
+    {
+      "model": "Companion translation and drop support",
+      "source": "src/pear-motion.js",
+      "symbol": "DeskMotion; PearMotion",
+      "components": [
+        "Pickup/reset state; timestamped capped release velocity; stale-release cancellation",
+        "Fixed-step gravity, drag, workspace planes, obstacle support/underside/side resolution",
+        "Restitution, support friction and sleep threshold",
+        "Paint-aware descending and rising pose holds with retained integration time",
+        "Scene pointer-plane offset, wheel depth, keyboard movement, cancellation and reset integration"
+      ],
+      "chapters": ["MD22", "MD26", "MD27"],
+      "tests": [
+        "tests/unit/pear-motion.test.mjs",
+        "tests/browser/pear-boy.spec.mjs",
+        "tests/browser/dock.spec.mjs",
+        "tests/browser/console-movement.spec.mjs"
+      ],
+      "limits": [
+        "Translation controller does not implement rigid-body angular dynamics",
+        "Paint acknowledgement means a room-render submission, not proof of GPU completion or display scanout",
+        "At most five seconds admitted and 600 body steps per update",
+        "Companion positions are not persisted across reloads"
+      ]
+    },
+    {
+      "model": "Desk clearance and remembered poses",
+      "source": "src/desk-clearance.js",
+      "symbol": "nearestDeskPosition; HandheldScene.resolveDeskClearance",
+      "components": [
+        "Fixed-height horizontal forbidden rectangles expanded by local envelope and gap",
+        "Desired/edge candidate grid, squared-distance ordering and 1e-9 ranking tolerance",
+        "Scale-relative interior tolerance for floating-point reconstructed boundaries",
+        "Scene mode priorities, immovable active console and bounded console-order retry",
+        "Current rotated envelopes; full Pear limb envelope; explicit contact-plane exclusion",
+        "Prepaint reconciliation and invalidation on motion or changed geometry",
+        "First legal nonfocused console home capture; companion authored homes with occupied errors",
+        "Focus companion parking snapshots kept separate from remembered table placement"
+      ],
+      "chapters": ["MD19", "MD22", "MD23", "MD26", "MD27"],
+      "tests": [
+        "tests/unit/desk-clearance.test.mjs",
+        "tests/browser/desk-clearance.spec.mjs",
+        "tests/browser/console-movement.spec.mjs"
+      ],
+      "limits": [
+        "Envelope solver is not triangle-level collision detection or a global layout optimizer",
+        "Equal-rank candidate and model ordering remains policy",
+        "Legal initial console home capture has no explicit all-physics-sleep predicate",
+        "Companion authored homes are distinct from captured console homes"
+      ]
+    }
+  ],
+  "sources": [
+    "src/pear-boy.js",
+    "src/axolotl-lamp.js",
+    "src/pear-rope.js",
+    "src/pear-motion.js",
+    "src/desk-clearance.js",
+    "src/scene.js",
+    "src/handheld.js",
+    "package.json",
+    "tests/unit/pear-rope.test.mjs",
+    "tests/unit/pear-motion.test.mjs",
+    "tests/unit/desk-clearance.test.mjs",
+    "tests/browser/pear-boy.spec.mjs",
+    "tests/browser/desk-clearance.spec.mjs",
+    "tests/browser/console-movement.spec.mjs",
+    "tests/browser/dock.spec.mjs",
+    "TODO/84_PEAR_BOY.todo",
+    "TODO/107_PEAR_BOY_EXPRESSIONS.todo",
+    "TODO/110_SMALL_AXOLOTL_LAMP.todo",
+    "TODO/111_MOVABLE_AXOLOTL.todo",
+    "TODO/113_PEAR_BOY_CUTER_RECOVERY.todo",
+    "TODO/118_PEAR_BOY_FACE_TRAVEL.todo",
+    "TODO/121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo",
+    "TODO/93_MODE_BASED_MODEL_CLEARANCE.todo",
+    "docs/VERIFICATION.md",
+    "docs/modeling-book/catalogue.mjs"
+  ],
+  "research": [
+    {
+      "url": "https://threejs.org/docs/pages/BufferGeometry.html",
+      "consulted": "2026-11-07",
+      "supports": "Buffer attributes, indexed/nonindexed geometry, normal generation, bounds and disposal",
+      "scope": "Current public API guidance; pinned local implementation determines actual geometry behavior"
+    },
+    {
+      "url": "https://threejs.org/docs/pages/MeshStandardMaterial.html",
+      "consulted": "2026-11-07",
+      "supports": "Roughness and emissive color/intensity/map semantics; separating appearance from physical silicone",
+      "scope": "Current public API guidance, not a calibration or proof of native-room appearance"
+    },
+    {
+      "url": "https://threejs.org/docs/pages/Raycaster.html",
+      "consulted": "2026-11-07",
+      "supports": "Nearest-first intersections and mesh-facing behavior",
+      "scope": "Current public API guidance; ancestor visibility filtering is separately evidenced by local tests"
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame",
+      "consulted": "2026-11-07",
+      "supports": "Variable callback cadence, background pausing and elapsed-time reasoning",
+      "scope": "Browser timing guidance, not proof that render submission equals display completion"
+    }
+  ],
+  "history": [
+    {
+      "commit": "8df32ce28fe6943014fba28f3b6e19bf6af6a0aa",
+      "claim": "Initial procedural Pear implementation precedes subsequent motion and face corrections",
+      "source": "src/pear-boy.js; scoped git history; TODO/84_PEAR_BOY.todo"
+    },
+    {
+      "commit": "414c762d690f1211f59d2a3613222179c020aedf",
+      "claim": "Whole-face root transformation and finite seated desk-edge rope handling",
+      "source": "src/pear-boy.js; src/pear-rope.js; scoped git diff"
+    },
+    {
+      "commit": "1510777ff05b82414e8e1b5958e8c76e446a0eaa",
+      "claim": "Compact angry eyes, squeezed-eye pout, and scream interval change from .24 to .9 seconds",
+      "source": "src/pear-boy.js; scoped git diff; TODO/113_PEAR_BOY_CUTER_RECOVERY.todo"
+    },
+    {
+      "commit": "44b5dc2213bcf9ee464357cfa68ee44b8c1d9bbe",
+      "claim": "Horizontal gaze yaw increased from .22 to .55 radians",
+      "source": "src/pear-boy.js; scoped git diff; TODO/118_PEAR_BOY_FACE_TRAVEL.todo"
+    },
+    {
+      "commit": "dd269dea6f5cc6ada0038a2245b0ec3a420768c5",
+      "claim": "Positive vertical gaze travel increased from .18 to .75 model units; negative multiplier retained",
+      "source": "src/pear-boy.js; scoped git diff; TODO/121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo"
+    },
+    {
+      "commit": "f10fab1752c4d15167baeaaace4623820f0c2bee",
+      "claim": "Movable axolotl factory and scene integration; only scoped claims are reconstructed from the change",
+      "source": "src/axolotl-lamp.js; src/scene.js; scoped git diff; TODO/110_SMALL_AXOLOTL_LAMP.todo; TODO/111_MOVABLE_AXOLOTL.todo"
+    },
+    {
+      "commit": "120d9bd5a3e785d24a9bdc5e96d6e9b332613510",
+      "claim": "Paint-aware real descending/rising body pose presentation across slow render cadence",
+      "source": "src/pear-motion.js; src/scene.js; scoped git diff"
+    },
+    {
+      "commit": "85c0cc9ed8f9083868df77b01adb5e80c49435df",
+      "claim": "Mode-based desk clearance and integration policy",
+      "source": "src/desk-clearance.js; src/scene.js; scoped git history; TODO/93_MODE_BASED_MODEL_CLEARANCE.todo"
+    },
+    {
+      "commit": "6b5d2c552e6b3206bfb3ae36d845896773147a1c",
+      "claim": "Scale-relative interior tolerance addresses reconstructed-edge floating-point drift",
+      "source": "src/desk-clearance.js; scoped git diff; docs/VERIFICATION.md"
+    }
+  ],
+  "unverified": [
+    "Implementation baseline is 1e4ef518d6943ab1af39cef3b4d558f209a17891; current public reference pages are not that implementation snapshot.",
+    "Sources list includes selected scene integration, handheld canvas helper, dock assertions, task records and verification-ledger ranges rather than claiming all listed long files were read exhaustively.",
+    "Historical reconstruction describes recorded changes, not recovered internal reasoning or user approval.",
+    "Parent owns atlas capture, final image availability, native-room rendering, publication, issue/Project and MeshBoard updates.",
+    "The two planned neutral-studio atlas references do not establish native-room lighting, animation, or appearance approval.",
+    "No application build, browser rendering, unit-test execution, commit or publication was performed by this bounded authoring task.",
+    "Proposed diagnostics and extensions remain proposals; device-specific aesthetic and physical-phone acceptance were not established.",
+    "The chapters transfer explicit procedures and evidence, not a literal clone of agent memory.",
+    "All eighteen Mermaid diagrams passed parser validation without rendering; rendered typography, pagination and final A4 layout remain outside this task."
+  ]
+}

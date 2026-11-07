@@ -1,0 +1,612 @@
+{
+  "sourceBase": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+  "generatedAt": "2026-11-07T17:33:19.243Z",
+  "browser": "157.0.4341.42",
+  "three": "0.186.1",
+  "conditions": "Original procedural factory geometry; neutral studio lighting; model lights hidden and material emission disabled to inspect base surfaces; ACES exposure 1; orthographic views; DS returned lid group rotated 15 degrees around local X. Not application-room photometry, lamp-power appearance, animation, historical artwork or gameplay evidence.",
+  "generator": {
+    "path": "docs/modeling-book/tools/capture-model-atlas.mjs",
+    "sha256": "df29d2c257f983a4dda76683be09e10f1315d5c3a2ac135bf7deaf1f77bf9a2a"
+  },
+  "sourceInputs": [
+    {
+      "path": "src/handheld.js",
+      "sha256": "3eaf7f3fe8d7358460a7db90debf0840623e4ea53ba1f4a82a9de319ee719413",
+      "pinnedSha256": "a597c76b352c9ce46e0e68d8326c05cc98b4d3e2a65e51f462a8543c2bdca1d9",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "src/ds-handheld.js",
+      "sha256": "b53b91f23a0a67820a1eefe01fedc169150818c09bf44ac1a14d98e162b5808f",
+      "pinnedSha256": "de02d5aa30ef7a04273b3e28032f6f09e8f95cd4b40f799f1e08bbfd6bd99949",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "src/pear-boy.js",
+      "sha256": "5b28b4e61bcdcc96d2918dd20820c096cd46fa90d4eb97a53a767a453a538d28",
+      "pinnedSha256": "ef70272d8d340104704271cdde6cd35653f299e3c2b1fa97dfebe4b0896c0fd0",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "src/axolotl-lamp.js",
+      "sha256": "509ba0a5e3ef88a8ac5623fc115fe7db119828797706cb0f9be241e05dccf4f8",
+      "pinnedSha256": "41df9be765fac8ee987f2e82187f3915605485a1fbe7ea15bd52e270ee552005",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "src/lighting.js",
+      "sha256": "3fb4ef2be2a5823439d74625fba8d3e58497af43add90d8bc91cf34d74e4224c",
+      "pinnedSha256": "6a920fce8fd53d3e4ba53512a11a1db600db0d306090e60713c51fd53f3cb69a",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "src/brand.js",
+      "sha256": "14dc5311415fecf4e576bda0e03240999e2a4c6b69f9eadeec0415156fe6118b",
+      "pinnedSha256": "f3dfae39c54967ff93014f9144ddb7c929fc85d3ecf34e443fe81e54ce40faf6",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "src/pear-rope.js",
+      "sha256": "b3aced8a16a59240abe2e2981231a897d60cdb0d687354e59a62636d69e72137",
+      "pinnedSha256": "9c0b3eac67d646f774781f7bba1c3cfe4168eeab3c6664e7d5e53960260b5674",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    },
+    {
+      "path": "scripts/site-files.mjs",
+      "sha256": "5c74b5d32abbbfb21c58aa1c3105746e5802387ed807d88af37163ad00b1f681",
+      "pinnedSha256": "6711475a389940e94ccf58c8ca45e1e2b2e5204659a26730fb76cb31367500ea",
+      "identity": "Committed source matches after explicit CRLF-to-LF normalization; raw capture input separately hashed."
+    }
+  ],
+  "supportInputs": [
+    {
+      "path": "docs/book/production/lib.mjs",
+      "sha256": "0d706c9ff279d12c2a0f7c23c204e5104d17f03fa24dd9afb3d9029aec9239f7"
+    },
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "sha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82"
+    },
+    {
+      "path": "node_modules/three/package.json",
+      "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de"
+    },
+    {
+      "path": "docs/book/production/package-lock.json",
+      "sha256": "6056a2ad6bb374cc2c3ea7f79f8be54d216ecc0e34177f24b627a5a5896a2e4a"
+    }
+  ],
+  "servedResources": [
+    {
+      "url": "/src/handheld.js",
+      "sha256": "3eaf7f3fe8d7358460a7db90debf0840623e4ea53ba1f4a82a9de319ee719413",
+      "bytes": 33512
+    },
+    {
+      "url": "/src/ds-handheld.js",
+      "sha256": "b53b91f23a0a67820a1eefe01fedc169150818c09bf44ac1a14d98e162b5808f",
+      "bytes": 15885
+    },
+    {
+      "url": "/three/build/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "bytes": 662772
+    },
+    {
+      "url": "/src/axolotl-lamp.js",
+      "sha256": "509ba0a5e3ef88a8ac5623fc115fe7db119828797706cb0f9be241e05dccf4f8",
+      "bytes": 4221
+    },
+    {
+      "url": "/src/pear-boy.js",
+      "sha256": "5b28b4e61bcdcc96d2918dd20820c096cd46fa90d4eb97a53a767a453a538d28",
+      "bytes": 18387
+    },
+    {
+      "url": "/src/lighting.js",
+      "sha256": "3fb4ef2be2a5823439d74625fba8d3e58497af43add90d8bc91cf34d74e4224c",
+      "bytes": 8659
+    },
+    {
+      "url": "/src/brand.js",
+      "sha256": "14dc5311415fecf4e576bda0e03240999e2a4c6b69f9eadeec0415156fe6118b",
+      "bytes": 524
+    },
+    {
+      "url": "/src/pear-rope.js",
+      "sha256": "b3aced8a16a59240abe2e2981231a897d60cdb0d687354e59a62636d69e72137",
+      "bytes": 5852
+    },
+    {
+      "url": "/vendor/RectAreaLightUniformsLib.js",
+      "sha256": "494fef2d731ff1689050cc6040ad78d927c22b9125a12f532beb0374c2811c6e",
+      "bytes": 1014
+    },
+    {
+      "url": "/vendor/RectAreaLightTexturesLib.js",
+      "sha256": "6dd4043bb052594357a5eeff13dc0519f0a80b100b97ec80c12808f887897bc1",
+      "bytes": 314764
+    },
+    {
+      "url": "/three/build/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "bytes": 1458113
+    },
+    {
+      "url": "/assets/star.png",
+      "sha256": "691e6fd163272beb1472b1adb7ad2757c6162cf0b7e873015895e1896454599d",
+      "bytes": 24970
+    },
+    {
+      "url": "/assets/glow.png",
+      "sha256": "0d2f6482a043a606cf32c289b73a809596d3b8b0855b4a13172c45e91b94dd1c",
+      "bytes": 16226
+    },
+    {
+      "url": "/assets/orbit.png",
+      "sha256": "bac393779796498f880128ab7705208d54b1d2526175c902b2edbf7bdad77753",
+      "bytes": 58137
+    },
+    {
+      "url": "/assets/logo.png",
+      "sha256": "de93ade069a3f7f949497f057e48892aaceb9e9ff38b35026c4bebe017cef1a1",
+      "bytes": 824013
+    }
+  ],
+  "captures": [
+    {
+      "file": "gba-front.png",
+      "sha256": "c92a482fb33852041ff8841ef5ee9cfbf5a596dd47bae26e5bcd1b292704baff",
+      "bytes": 57408,
+      "name": "gba",
+      "view": "front",
+      "api": [],
+      "bounds": {
+        "min": [
+          -4.3541669845581055,
+          -2.575158341606558,
+          -0.6824999994039536
+        ],
+        "max": [
+          4.3541669845581055,
+          2.66000004529953,
+          0.782
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 398551,
+      "geometryMeshes": 90
+    },
+    {
+      "file": "gba-back.png",
+      "sha256": "43d0a745ab005d4842df2f86eba265dbd6f54be17c584194bba215b2a0971283",
+      "bytes": 57406,
+      "name": "gba",
+      "view": "back",
+      "api": [],
+      "bounds": {
+        "min": [
+          -4.3541669845581055,
+          -2.575158341606558,
+          -0.6824999994039536
+        ],
+        "max": [
+          4.3541669845581055,
+          2.66000004529953,
+          0.782
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 400458,
+      "geometryMeshes": 90
+    },
+    {
+      "file": "gba-three-quarter.png",
+      "sha256": "3dd1b8d1bba316dd799d895af799df608cb06fdb078dcbfe7f31a3d95a22334d",
+      "bytes": 70864,
+      "name": "gba",
+      "view": "three-quarter",
+      "api": [],
+      "bounds": {
+        "min": [
+          -4.3541669845581055,
+          -2.575158341606558,
+          -0.6824999994039536
+        ],
+        "max": [
+          4.3541669845581055,
+          2.66000004529953,
+          0.782
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 311645,
+      "geometryMeshes": 90
+    },
+    {
+      "file": "ds-front.png",
+      "sha256": "6904e949214ef8b22e59db883b85c95048c118edcd21c2de9fbcadd2f93a5c22",
+      "bytes": 85559,
+      "name": "ds",
+      "view": "front",
+      "api": [],
+      "bounds": {
+        "min": [
+          -4.269999980926514,
+          -4.86283333581686,
+          -0.31999999955296515
+        ],
+        "max": [
+          4.530000000596046,
+          4.65888327582131,
+          1.4296975064309176
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": 0.2617993877991494,
+      "submittedPixelsDifferingFromBackground": 453803,
+      "geometryMeshes": 115
+    },
+    {
+      "file": "ds-back.png",
+      "sha256": "38cc9d120d635a6a5813b36782717197b36005c67553575bb94723647812b721",
+      "bytes": 106864,
+      "name": "ds",
+      "view": "back",
+      "api": [],
+      "bounds": {
+        "min": [
+          -4.269999980926514,
+          -4.86283333581686,
+          -0.31999999955296515
+        ],
+        "max": [
+          4.530000000596046,
+          4.65888327582131,
+          1.4296975064309176
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": 0.2617993877991494,
+      "submittedPixelsDifferingFromBackground": 453913,
+      "geometryMeshes": 115
+    },
+    {
+      "file": "ds-three-quarter.png",
+      "sha256": "0a3b6b512c4dd46f1e66518b79df5073985d2b1bb5b17a54b01312e39e290fea",
+      "bytes": 95557,
+      "name": "ds",
+      "view": "three-quarter",
+      "api": [],
+      "bounds": {
+        "min": [
+          -4.269999980926514,
+          -4.86283333581686,
+          -0.31999999955296515
+        ],
+        "max": [
+          4.530000000596046,
+          4.65888327582131,
+          1.4296975064309176
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": 0.2617993877991494,
+      "submittedPixelsDifferingFromBackground": 229602,
+      "geometryMeshes": 115
+    },
+    {
+      "file": "pear-front.png",
+      "sha256": "52922810126cc33c421be9fdd95dfc4f41d0ee560b451e4c3d48cf6b2e08ae17",
+      "bytes": 108566,
+      "name": "pear",
+      "view": "front",
+      "api": [
+        "resetLimbs",
+        "updateLimbs",
+        "setFaceLifted",
+        "reactToImpact",
+        "acknowledgeFacePaint",
+        "updateFace"
+      ],
+      "bounds": {
+        "min": [
+          -3.4945353436576054,
+          -0.014905484393239021,
+          -3.1499999523162843
+        ],
+        "max": [
+          3.4945353436576054,
+          8.138250350952148,
+          4.053926743282134
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 120471,
+      "geometryMeshes": 52
+    },
+    {
+      "file": "pear-back.png",
+      "sha256": "fc85e6c9047ef57c717263f5b297b37f1239ca7a8b21a4dd73db0ea7f356b6cf",
+      "bytes": 99632,
+      "name": "pear",
+      "view": "back",
+      "api": [
+        "resetLimbs",
+        "updateLimbs",
+        "setFaceLifted",
+        "reactToImpact",
+        "acknowledgeFacePaint",
+        "updateFace"
+      ],
+      "bounds": {
+        "min": [
+          -3.4945353436576054,
+          -0.014905484393239021,
+          -3.1499999523162843
+        ],
+        "max": [
+          3.4945353436576054,
+          8.138250350952148,
+          4.053926743282134
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 247178,
+      "geometryMeshes": 52
+    },
+    {
+      "file": "pear-three-quarter.png",
+      "sha256": "ebc6c8e7af5113cbc122242d2210d655e78d6b667369aec529ba29b21584aee5",
+      "bytes": 82110,
+      "name": "pear",
+      "view": "three-quarter",
+      "api": [
+        "resetLimbs",
+        "updateLimbs",
+        "setFaceLifted",
+        "reactToImpact",
+        "acknowledgeFacePaint",
+        "updateFace"
+      ],
+      "bounds": {
+        "min": [
+          -3.4945353436576054,
+          -0.014905484393239021,
+          -3.1499999523162843
+        ],
+        "max": [
+          3.4945353436576054,
+          8.138250350952148,
+          4.053926743282134
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 94200,
+      "geometryMeshes": 52
+    },
+    {
+      "file": "axolotl-front.png",
+      "sha256": "e277680bc55e98b6e1a27aa67190e931b7629a081f4abb8d6220e8054948b64b",
+      "bytes": 88892,
+      "name": "axolotl",
+      "view": "front",
+      "api": [],
+      "bounds": {
+        "min": [
+          -2.55513256072998,
+          0,
+          -4.330026359558106
+        ],
+        "max": [
+          2.55513256072998,
+          2.75,
+          1.569101333618164
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 198393,
+      "geometryMeshes": 31
+    },
+    {
+      "file": "axolotl-back.png",
+      "sha256": "4279c93c373949585337560ff23b763c343dbfc5bbd8646fa1c984a887f8cd6b",
+      "bytes": 106290,
+      "name": "axolotl",
+      "view": "back",
+      "api": [],
+      "bounds": {
+        "min": [
+          -2.55513256072998,
+          0,
+          -4.330026359558106
+        ],
+        "max": [
+          2.55513256072998,
+          2.75,
+          1.569101333618164
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 263594,
+      "geometryMeshes": 31
+    },
+    {
+      "file": "axolotl-three-quarter.png",
+      "sha256": "668c8c1d97c4a2eb39a0b708ee2af5253bb8e6c9c60f7660bc82c607fb050123",
+      "bytes": 67219,
+      "name": "axolotl",
+      "view": "three-quarter",
+      "api": [],
+      "bounds": {
+        "min": [
+          -2.55513256072998,
+          0,
+          -4.330026359558106
+        ],
+        "max": [
+          2.55513256072998,
+          2.75,
+          1.569101333618164
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 82016,
+      "geometryMeshes": 31
+    },
+    {
+      "file": "lamp-front.png",
+      "sha256": "a231d75b3baa31f96db119a472cb7242b984ae6b91ae56a613cffdc9c519e284",
+      "bytes": 148821,
+      "name": "lamp",
+      "view": "front",
+      "api": [],
+      "bounds": {
+        "min": [
+          -18.79411785742816,
+          0,
+          -3.2941178574281578
+        ],
+        "max": [
+          -8.17471366008309,
+          17.676470589632277,
+          7.512345072829956
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 118005,
+      "geometryMeshes": 8
+    },
+    {
+      "file": "lamp-back.png",
+      "sha256": "8a4ea3f87c92fdbafbdfc78b4138b59b45a5043ad207f51f4ef705c6dda1b630",
+      "bytes": 153227,
+      "name": "lamp",
+      "view": "back",
+      "api": [],
+      "bounds": {
+        "min": [
+          -18.79411785742816,
+          0,
+          -3.2941178574281578
+        ],
+        "max": [
+          -8.17471366008309,
+          17.676470589632277,
+          7.512345072829956
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 201071,
+      "geometryMeshes": 8
+    },
+    {
+      "file": "lamp-three-quarter.png",
+      "sha256": "183d181e5f3958478f39c9dbb2cb5bd52ce4d7e905b52293c6462a32ec57d41d",
+      "bytes": 152308,
+      "name": "lamp",
+      "view": "three-quarter",
+      "api": [],
+      "bounds": {
+        "min": [
+          -18.79411785742816,
+          0,
+          -3.2941178574281578
+        ],
+        "max": [
+          -8.17471366008309,
+          17.676470589632277,
+          7.512345072829956
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 115182,
+      "geometryMeshes": 8
+    },
+    {
+      "file": "cartridge-front.png",
+      "sha256": "c1b5f2f57b755713c594d62935fc1c214dd685ca96f18ffc1c6efe604364f75c",
+      "bytes": 37633,
+      "name": "cartridge",
+      "view": "front",
+      "api": [],
+      "bounds": {
+        "min": [
+          -0.7749999761581421,
+          -0.6000000238418579,
+          -0.14499999582767487
+        ],
+        "max": [
+          0.7749999761581421,
+          0.6000000238418579,
+          0.21
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 596443,
+      "geometryMeshes": 9
+    },
+    {
+      "file": "cartridge-back.png",
+      "sha256": "fd2f0e7684abcb571f48b58225750eee7e7743649b221cab9099e4317ec4ad51",
+      "bytes": 11938,
+      "name": "cartridge",
+      "view": "back",
+      "api": [],
+      "bounds": {
+        "min": [
+          -0.7749999761581421,
+          -0.6000000238418579,
+          -0.14499999582767487
+        ],
+        "max": [
+          0.7749999761581421,
+          0.6000000238418579,
+          0.21
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 603435,
+      "geometryMeshes": 9
+    },
+    {
+      "file": "cartridge-three-quarter.png",
+      "sha256": "d91b142d144ca8e996b819d649d3fe3a1273fdab6a8ddb4bf2fa4442b347cc50",
+      "bytes": 40981,
+      "name": "cartridge",
+      "view": "three-quarter",
+      "api": [],
+      "bounds": {
+        "min": [
+          -0.7749999761581421,
+          -0.6000000238418579,
+          -0.14499999582767487
+        ],
+        "max": [
+          0.7749999761581421,
+          0.6000000238418579,
+          0.21
+        ]
+      },
+      "projection": "orthographic",
+      "dsLidRotationXRadians": null,
+      "submittedPixelsDifferingFromBackground": 329025,
+      "geometryMeshes": 9
+    }
+  ],
+  "externalRequests": 0
+}

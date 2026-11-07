@@ -6,6 +6,7 @@
   &nbsp;&middot;&nbsp; <a href="docs/GUIDE.md">Player guide &amp; local setup</a>
   &nbsp;&middot;&nbsp; <a href="docs/nds-book/README.md">NDS book</a>
   &nbsp;&middot;&nbsp; <a href="docs/book/README.md">GBA book</a>
+  &nbsp;&middot;&nbsp; <a href="docs/modeling-book/README.md">3D modeling book</a>
   &nbsp;&middot;&nbsp; <a href="docs/README.md">All documentation</a>
 </p>
 

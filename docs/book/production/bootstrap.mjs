@@ -41,7 +41,7 @@ try {
   }
   for (const heading of source.querySelectorAll('h2[id],h3[id]')) {
     const id = heading.id;
-    if (!/(?:CH|ND)\d{2}-[QA]\d{2}/.test(id)) continue;
+    if (!/(?:CH|ND|MD)\d{2}-[QA]\d{2}/.test(id)) continue;
     const target = id.includes('-Q') ? id.replace('-Q', '-A') : id.replace('-A', '-Q');
     const anchor = document.createElement('a');
     anchor.className = 'answer-jump';

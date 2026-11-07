@@ -1,0 +1,80 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/122
+Milestone: A transferable, extremely detailed 200+ page procedural 3D handbook.
+Dependencies: 122.
+Purpose: Preserve the actual modeling techniques, libraries, iterations,
+failure lessons and verification workflow for future agents, with researched
+extensions clearly distinguished from implemented behavior.
+
+Tasks:
+- [x] Audit every first-party model family and its supporting systems.
+- [x] Author a source-pinned, diagram-rich book with reconstruction recipes,
+      algorithms, design principles, worked examples and explained exercises.
+- [x] Produce diagnostic model views without altering application models.
+- [x] Render and inspect an actual searchable 200+ page PDF and offline reader.
+- [x] Publish a substantive new MeshBoard reference thread from the owned persona.
+- [ ] Link the manual, synchronize the actual issue/Project, publish as Zanark,
+      monitor exact deployments and persist the qualified handoff.
+
+Acceptance criteria:
+The book is independent of the existing GBA and NDS books, both preserved.
+At least 200 actual PDF pages; depth is demonstrated by original explanations,
+model coverage, grounded construction details and runnable reproduction paths,
+not inflated typography, filler or claims of complete agent-memory replication.
+Cover GBA, DS, cartridges, stylus, Pear Boy, axolotl, tripod lamp, desk/room,
+geometry, textures, materials, lights, transforms, input, motion, clearance,
+performance, diagnostic testing and the causal development workflow.
+Clearly label actual implementation, historical evidence, researched guidance
+and proposed extensions. Include public-safe source citations and provenance.
+No private ROMs, recordings, transcripts, context or unrelated artwork changes.
+Keep root README GIF-first. Verify the real MeshBoard thread and published
+artifact bytes separately from local rendering and human aesthetic approval.
+
+Completion evidence:
+Implementation cutoff: 1e4ef518d6943ab1af39cef3b4d558f209a17891.
+Nine unrelated historical PNG edits are protected and excluded.
+Frozen GBA PDF SHA256:
+25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad.
+Frozen NDS PDF SHA256:
+0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f.
+38 chapters/four parts; 63,587 explanatory prose words, 76 diagrams,
+152 learning markers and 65 distinct pinned implementation-source files.
+Qualified 328-page A4 PDF, 268 unique chapter-content pages; native text,
+416 diagram labels, anchors, bounds, 47 bookmarks and seven embedded fonts pass.
+Offline 328-page reader: zero scripts/network requests, decoded images/anchors.
+All328pages thumbnail-reviewed; native1/35/70/277/293 inspected separately.
+PDF SHA256:
+6e3bef30a90f8d872071b66a2059210b0a749aeaf26459bde2b55b357666409d.
+Reader SHA256:
+a7bbc64b9da2792749966adcf655dc3efbabf654435cd77a90b8e23180f4c68f.
+Owner aesthetic acceptance is not inferred. Public GitHub delivery pending.
+Owned modeling thread: root plus six substantive professional-English replies.
+Checked mesh index and real MeshBoard side panel/Threads tab preserve all seven
+exact source texts; replies remain outside general stream, zero browser errors.
+Thread: thread-session-8e7d69ac-bowser-procedural-modeling-20261107.
+Actual factory atlas: 18 PNGs, six families x three orthographic views;
+source/browser/camera/light-policy receipts, no ROM or application startup.
+One18-view contact sheet inspected: allfamilies recognizable and unclipped.
+Neutral studio disables model emitters/material emission; DS lid localX15deg.
+Nine JavaScript and two Python focused publishing regressions PASS.
+
+Completion log:
+2026-11-07: Owner explicitly requests a 200+ page, extremely detailed manual
+about all website 3D models and a new MeshBoard reference thread, for future
+agent reuse without dependence on this conversation. Workstream initialized.
+2026-11-07: Actual original-factory atlas and initial independent book route
+complete. Four authoring assignments remain active; no page or publication
+claim before real native qualification and artifact verification.
+2026-11-07: All38chapters integrated; the first327-page layout is correctly
+rejected for10overflow observations across3fragmented recipes. Modeling-only
+whole-recipe pagination resolves them without weakening gates. Real328-page
+PDF/native/offline qualification succeeds;10whole-book contact sheets and
+native1/35/70/277/293 inspected. Previous books remain byte-preserved.
+2026-11-07: Requested reference thread published through checked Mesh refresh;
+all seven source/index bodies match both real browser thread views exactly.
+Open root, six replies, root-only general stream and no owned attention pending.
+2026-11-07: Final publisher whitespace cleanup triggers complete requalification;
+all328final native pages pixel/text/link-identical to inspected edition,
+bookmarks identical. Exact final hashes above; no second human review claimed.
+Qualified working and committed Git input hashes distinguished in package:
+only Windows CRLF normalization accepted, installed dependencies separate.

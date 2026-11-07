@@ -15,3 +15,6 @@ docs/releases/**/*.zip
 /docs/book/production/.candidate/
 /docs/book/production/.nds-candidate/
 /docs/nds-book/output/
+/docs/book/production/.models-candidate/
+/docs/book/production/__pycache__/
+/docs/modeling-book/output/

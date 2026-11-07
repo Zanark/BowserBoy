@@ -1,0 +1,20 @@
+:root { --purple: #28564e; --rust: #97542e; --ink: #263d39; }
+@page {
+  @top-left { content: 'FROM SHAPES TO A LIVING DESK'; }
+}
+.cover.models-cover {
+  background: #193e37; color: #eaf5e9; padding: 31mm 23mm 23mm;
+  border-bottom: 10mm solid #d5ad76;
+}
+.models-cover .eyebrow { color: #e4c69f; font-size: 10pt; letter-spacing: 2px; }
+.models-cover h1 { color: #f7fae9; font: 39pt/1.12 Georgia, serif; margin: 12mm 0 7mm; }
+.models-cover .subtitle { color: #cee3d2; font: 14pt/1.45 Arial, sans-serif; }
+.models-cover .cover-models { width: 160mm; height: 75mm; object-fit: contain; margin: 11mm 0 8mm; }
+.models-cover .edition { color: #d3e2cc; border-top: 1pt solid #8da78f; padding-top: 5mm; font: 10pt/1.5 Arial, sans-serif; }
+.chapter-opening { background: #eef3e9; }
+.part-opening { background: #28564e; }
+.chapter-kicker { color: #28564e; }
+th { background: #e2ecdf; }
+a { color: #28564e; }
+.epoch { background: #f2f3e7; }
+pre { break-inside: avoid; }

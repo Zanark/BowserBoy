@@ -1,0 +1,298 @@
+{
+  "part": 2,
+  "chapters": [
+    "MD10",
+    "MD11",
+    "MD12",
+    "MD13",
+    "MD14",
+    "MD15",
+    "MD16",
+    "MD17",
+    "MD18"
+  ],
+  "models": [
+    {
+      "model": "DS lower-shell assembly",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "Root-owned lower parting line, rear shell and control deck",
+        "Nominal 8.5 by 4.75 footprint and layered local-Z depths",
+        "Shared roundedShape and centered beveled extrusion dependency",
+        "Battery seam, cover, screw recesses, slots and four square pads",
+        "Distinct front expansion opening and rear DS game-card slot"
+      ],
+      "chapters": ["MD10", "MD12", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:1284-1373 surface names, root-space bounds, pad properties and shoulder orientation"
+      ],
+      "limits": "Model-space dimensions are not physical measurements. Layered meshes and slot-shaped solids are not a watertight manufacturing enclosure or fully hollow connector."
+    },
+    {
+      "model": "DS upper shell and real paired recesses",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "Lid-owned parting line, outer extrusion, perimeter lip and inner lid",
+        "Centered rounded-square aperture paths at local offsets Y plus/minus .38",
+        "Separate blue inset floors and rear-view cross-section",
+        "Speaker-opening cylinder approximations and rubber bumpers",
+        "Topology versus dark-decal distinction"
+      ],
+      "chapters": ["MD10", "MD11", "MD12", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:1324-1350 rear rays hit two inset floors and intact shell between them"
+      ],
+      "limits": "Apertures and floors are implemented; speaker details are not claimed to be bored through the whole lid. No physical shell-thickness or internal-mechanism reconstruction is established."
+    },
+    {
+      "model": "DS hinge, leaves and indicators",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "Root-owned continuous barrel, right cap and two left half-cylinder caps",
+        "Cylinder local-axis rotation, narrow collars and lid-owned leaves",
+        "Microphone pinhole, MIC legend and indicator recesses",
+        "Green power indicator geometry and controller-powered emissive state",
+        "Joint-origin offset and opening-angle complement math"
+      ],
+      "chapters": ["MD10", "MD11", "MD13", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:927-1018 independent hinge and locked-pose integration scenario"
+      ],
+      "limits": "The hinge is a bounded transform and visual assembly, not simulated torque, detents or an interlocking axle. Factory API is returned lid.rotation.x in radians; application setDsHinge accepts opening degrees with state guards."
+    },
+    {
+      "model": "DS face caps, D-pad and top-edge shoulders",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "Lathed cap profile, recessed socket and child label",
+        "Complete ABXY diamond and generated-bezel outer-bound clearance",
+        "Single extruded molded cross with four anchors and direction indicators",
+        "Top-edge L/R frames converting local-Z travel into edge travel",
+        "START, SELECT and power geometry",
+        "Composite bounded rocking, compression, damping and held-mark feedback in DsController.paint",
+        "Fixed DS A/S face and Q/W shoulder mapping boundary"
+      ],
+      "chapters": ["MD10", "MD13", "MD18"],
+      "tests": [
+        "READ: tests/unit/ds-controls.test.mjs:29-76 signed edge heights, diagonal/opposite states, deck-surface clearance, exact return and elapsed-time response",
+        "READ: tests/browser/ds.spec.mjs:271-338 scene/runtime native key scenario",
+        "READ: tests/browser/ds.spec.mjs:1309-1364 cap/socket, D-pad and shoulder geometry assertions"
+      ],
+      "limits": "Unit fixtures do not instantiate the full shell. Projected HTML targets use anchors, a root-derived facing normal and estimated sizes, not exact perspective cap polygons. No tests were rerun."
+    },
+    {
+      "model": "DS markings, palette and underside emblem",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "CanvasTexture text planes and unlit transparent label materials",
+        "Dark navy cap legends versus light shell-mounted legends",
+        "Blue upper paint, lighter lower paint, pale accent and matte pads",
+        "Root-owned underside branding plane at preserved artwork aspect",
+        "Battery-cover separation, outward orientation and delayed image initialization"
+      ],
+      "chapters": ["MD10", "MD12", "MD13", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:1291-1355 emblem parent, outward hit, battery gap, fill and shell margins",
+        "READ: tests/browser/ds.spec.mjs source inventory includes reference shell-lighting and marking checks"
+      ],
+      "limits": "The bare factory does not load or reveal supplied branding artwork. Texture lettering is not modeled engraving. Color parameters do not guarantee identical appearance under every light."
+    },
+    {
+      "model": "DS dual displays and illumination boundary",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "Lid-owned upper and root-owned lower planar 4.5 by 3.375 LCDs",
+        "Fine beveled edge, metallic surround, black recess and forward display plane",
+        "Viewport metadata and square native-pixel scale",
+        "DsController status/native unlit materials versus reflective powered-off glass",
+        "Top/bottom framebuffer region validation and nearest-filter native output",
+        "Independent ScreenIllumination sampling and experimental control spill",
+        "Explicit distinction from the shared GBA curved-outline setter"
+      ],
+      "chapters": ["MD10", "MD14", "MD17", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:168-270 dual-screen native integration scenario",
+        "READ: tests/browser/ds.spec.mjs:1413-1486 active status material, actual shell-hit and light-invariant LCD pixel assertions"
+      ],
+      "limits": "DS LCD geometry is planar at the cutoff. Curved DS cover geometry is a labeled proposal, not implementation. Active unlit invariants do not apply to reflective powered-off glass; no physical optical stack or universal integer screen-space pixel guarantee is claimed."
+    },
+    {
+      "model": "DS docked and held stylus",
+      "source": "src/ds-handheld.js",
+      "symbol": "createDsHandheld",
+      "components": [
+        "Tapered shaft, pull tab, hook, groove, nose and scaled rounded nib",
+        "Explicit extreme-tip anchor at local Y -2.1276",
+        "Shell-owned docking channel and retaining clips",
+        "Isolated stylus material and back-sided hover halo",
+        "Scene-owned non-pickable .8-scale held clone",
+        "Ray-depth lift, camera-relative back orientation and rotated tip-offset subtraction"
+      ],
+      "chapters": ["MD10", "MD15", "MD17", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:413-495 locked-orientation, zoom and high-DPI stylus scenario",
+        "READ: tests/browser/ds.spec.mjs scenario inventory identifies pickup/return and quick-tap cases"
+      ],
+      "limits": "The held pen is a visual, not a sensor. Original dock geometry remains in bounds even when hidden. The contact solver was explained but not exercised or image-inspected during authoring."
+    },
+    {
+      "model": "DS touch-contact geometry and queue",
+      "source": "src/ds-touch.js",
+      "symbol": "DsTouchQueue",
+      "components": [
+        "DsController.touchAt nearest relevant lower-LCD hit gate",
+        "dsTouchFromUv finite-range validation and vertical inversion",
+        "Separate down/up edges, coalesced moves and nextFrame spacing",
+        "Generation invalidation and immediate release on cancellation",
+        "Current camera/root matrices independent of the next GPU paint"
+      ],
+      "chapters": ["MD14", "MD15", "MD17", "MD18"],
+      "tests": [
+        "READ: tests/unit/ds-touch.test.mjs:16-72 quick taps, drag coalescing, cancellation and asynchronous delivery errors",
+        "READ: tests/browser/ds.spec.mjs scenario inventory includes resize/deferred-paint and quick-contact checks"
+      ],
+      "limits": "Read assertions are not fresh native-runtime results. Queue correctness alone does not establish rendered nib alignment or game-space drawing accuracy."
+    },
+    {
+      "model": "DS card prop and loading presentation",
+      "source": "src/ds-controller.js",
+      "symbol": "DsController.load / loadingStatus / paintLoading / paint",
+      "components": [
+        "Root-owned procedural card and separately named rear slot",
+        "Immediate tools closure and play view before awaited identification",
+        "Local-Y 3.1 to .44 smoothstep card interpolation over 1800 ms elapsed painted-call intervals",
+        "Twelve-frame original canvas loading illustration and reduced-motion static frame",
+        "Native framebuffer validation before active texture handoff",
+        "Retained old session on rejected replacement and explicit cancelled-startup path",
+        "Distinct GBA cartridge framing and shared desk-transition midpoint boundaries"
+      ],
+      "chapters": ["MD12", "MD16", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:80-166 immediate reveal, changing LCD, native handoff, invalid replacement retention, reduced motion and cancellation"
+      ],
+      "limits": "Local Y is not an unconditional world direction. The front expansion opening is not the rear DS-card slot. The illustration is not byte progress. The DS slide does not inherit the GBA helper's explicit framing boundary, and sparse paints need not display every intermediate pose."
+    },
+    {
+      "model": "Shared DS inspection and camera boundary",
+      "source": "src/scene.js",
+      "symbol": "setDsHinge / setDsPoseLocked / dsPoseBounds / updateCameraTargets / updateViewMatrices",
+      "components": [
+        "Distinct desk, Inspect and session-locked play transforms",
+        "Finite opening guard and 30-180 degree clamping",
+        "Root/lid candidate deltas and conservative geometry-box envelope",
+        "Two-unit minimum world-Y fit, viewport reservations and depth-aware camera distance",
+        "Immediate input-matrix refresh and lid-aware projected targets",
+        "Default play-position lighting diagnosis versus paint/exposure changes"
+      ],
+      "chapters": ["MD10", "MD11", "MD15", "MD17", "MD18"],
+      "tests": [
+        "READ: tests/browser/ds.spec.mjs:927-1107 hinge, pose lock and phone-fit scenarios",
+        "READ: tests/browser/ds.spec.mjs:1284-1373 geometry and clearance assertions",
+        "READ: tests/browser/ds.spec.mjs:1413-1486 upright lamp-lighting fixture"
+      ],
+      "limits": "Conservative bounds are not exact silhouettes or complete accessibility proof. Fitting does not remove occlusion. No production render, full browser run, hosted qualification or owner approval was performed."
+    }
+  ],
+  "sources": [
+    "docs/modeling-book/catalogue.mjs",
+    "package.json",
+    "node_modules/three/package.json",
+    "src/ds-handheld.js",
+    "src/ds-controller.js",
+    "src/ds-touch.js",
+    "src/ds-cartridge.js",
+    "src/cartridge-motion.js",
+    "src/transition-motion.js",
+    "src/handheld.js",
+    "src/scene.js",
+    "src/lighting.js",
+    "tests/browser/ds.spec.mjs",
+    "tests/unit/ds-controls.test.mjs",
+    "tests/unit/ds-touch.test.mjs",
+    "TODO/87_DS_HINGE_GAMEPLAY_POSE.todo",
+    "TODO/89_PICKABLE_DS_STYLUS.todo",
+    "TODO/95_DS_REAR_MARKINGS.todo",
+    "TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo",
+    "TODO/97_DS_DIRECTIONAL_DPAD.todo",
+    "TODO/100_LARGER_DS_REAR_EMBLEM.todo",
+    "TODO/103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo",
+    "TODO/115_DS_IMMEDIATE_LOADING.todo",
+    "TODO/116_DS_UPRIGHT_LIGHTING.todo",
+    "docs/nds-book/chapters/08-physical-ds/README.md"
+  ],
+  "research": [
+    {
+      "url": "https://threejs.org/docs/pages/Object3D.html",
+      "consulted": "2026-11-07",
+      "supports": "Local versus world matrices, parent-child transform ownership and radian rotations; recommendations for current-matrix diagnostics.",
+      "scope": "Successfully fetched official current documentation. Current reference guidance is distinguished from the repository's installed and declared Three.js 0.186.1 implementation; newer pivot properties are not claimed as used."
+    },
+    {
+      "url": "https://threejs.org/docs/pages/Raycaster.html",
+      "consulted": "2026-11-07",
+      "supports": "NDC camera-ray setup, nearest-first intersections, hit UVs and front-face considerations for touch and aperture diagnostics.",
+      "scope": "Successfully fetched official current documentation. Used as conceptual guidance, not a substitute for reading DsController.touchAt or proof of a new runtime test."
+    },
+    {
+      "url": "https://threejs.org/docs/pages/ExtrudeGeometry.html",
+      "consulted": "2026-11-07",
+      "supports": "Depth versus bevel size/thickness, segment options and the need to rebuild rather than mutate recorded constructor parameters.",
+      "scope": "Successfully fetched official current documentation. Actual DS dimensions and helper behavior come from the pinned local source, not default values in current docs."
+    }
+  ],
+  "history": [
+    {
+      "commit": "6f5083a56a55d9ba526f8952811d4cfc8b44d7d7",
+      "claim": "Scoped diff centers both lid-hole paths and their inset floors and reparents supplied branding from the lid to the lower underside.",
+      "source": "src/ds-handheld.js; TODO/95_DS_REAR_MARKINGS.todo"
+    },
+    {
+      "commit": "89d905fd0a31de6f7364e75a73e0c607885497f9",
+      "claim": "Scoped diff moves the complete ABXY diamond outward by .2 model units; accompanying task grounds socket/beveled-bezel clearance and independent DS key ownership.",
+      "source": "src/ds-handheld.js; TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo"
+    },
+    {
+      "commit": "c59de69157ac6a090436f57c448bb3f0e5a8e4a9",
+      "claim": "Scoped controller diff replaces repeated shared-cross flat depression with bounded composite directional rocking, damping, compression and held-mark material changes.",
+      "source": "src/ds-controller.js; TODO/97_DS_DIRECTIONAL_DPAD.todo"
+    },
+    {
+      "commit": "e8856369620d4afd49af9967d205bcb1383243b4",
+      "claim": "Scoped history identifies independent hinge/locked gameplay work; the model diff replaces the earlier lower-edge power slider approximation with a real front cap and icon.",
+      "source": "src/ds-handheld.js; TODO/87_DS_HINGE_GAMEPLAY_POSE.todo"
+    },
+    {
+      "commit": "e1896cebf4b2b75d3849abaa00433c1d378fcb8b",
+      "claim": "Scoped controller diff reveals DS play and loading feedback before awaited file identification, adds the original loading illustration and clears loading at native handoff or cleanup.",
+      "source": "src/ds-controller.js; TODO/115_DS_IMMEDIATE_LOADING.todo"
+    },
+    {
+      "commit": "9be851e96098e0dfd4beedffd911185cf33a11a6",
+      "claim": "Scoped scene diff changes the shared DS play position from (5,5.1,8) to (-2,5.1,-8); task history records lighting diagnosis and rejection of an intermediate rotation-clearance failure.",
+      "source": "src/scene.js; TODO/116_DS_UPRIGHT_LIGHTING.todo"
+    },
+    {
+      "commit": "0fdd81b259cfbb0703b13078c9d56c77901c1673",
+      "claim": "Scoped git log identifies the pickable-pen introduction; the associated task explains stable dock bounds and a separate camera-facing held visual.",
+      "source": "git log scoped to DS source; TODO/89_PICKABLE_DS_STYLUS.todo"
+    }
+  ],
+  "unverified": [
+    "No unit or browser test suite was rerun for this authoring task. Test entries describe source assertions read, not fresh passes.",
+    "No production render, publication, commit, push or model modification was performed by this part author.",
+    "Parent-supplied ds-front.png, ds-back.png and ds-three-quarter.png are referenced only as neutral-studio constructor diagnostics. Their contents were not image-viewed; parent must verify capture pose and asset availability.",
+    "No physical dimensions, manufactured tolerances, mechanically complete connectors, watertight enclosure, internal hinge mechanism or exact optical glass stack are established.",
+    "The DS displays are planar at the source cutoff; a curved DS cover is a labeled extension proposal, not the current construction workflow.",
+    "Powered-off reflective glass is not covered by the active unlit-LCD pixel invariant.",
+    "Read historical local/hosted results and parked coverage debt are not asserted as current qualification, deployment success or owner approval.",
+    "Bounds traversal is conservative and includes geometry without a visibility filter; it is not exact silhouette fitting or a proof that every control is visible.",
+    "The part covers named construction and interaction boundaries, not every source line or all emulator/save/rendering internals.",
+    "Official research pages are current documentation consulted on 2026-11-07, not a claim that the pinned 0.186.1 source uses every feature on those pages."
+  ]
+}

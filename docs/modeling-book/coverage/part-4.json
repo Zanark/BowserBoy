@@ -1,0 +1,300 @@
+{
+  "part": 4,
+  "chapters": [
+    "MD28", "MD29", "MD30", "MD31", "MD32", "MD33",
+    "MD34", "MD35", "MD36", "MD37", "MD38"
+  ],
+  "models": [
+    {
+      "model": "Desk support and room surfaces",
+      "source": "src/scene.js",
+      "symbol": "HandheldScene constructor",
+      "components": [
+        "1000 by 2.4 by 26 tabletop box with upper face at world Y zero",
+        "independent repeated tabletop and edge wood materials",
+        "rear plaster wall plane",
+        "lower floor plane",
+        "separate switch-controlled scene background",
+        "actual loose cartridge props acknowledged without invented room decor"
+      ],
+      "chapters": ["MD28", "MD35", "MD38"],
+      "tests": ["tests/browser/desk-clearance.spec.mjs", "tests/browser/scene.spec.mjs"],
+      "limits": "Oversized scenery is a framing expedient, not surveyed architecture. This part does not duplicate cartridge anatomy. No ceiling mesh, window, chair or extra decorative props are invented."
+    },
+    {
+      "model": "Tripod lamp procedural body",
+      "source": "src/lighting.js",
+      "symbol": "createDeskLamp",
+      "components": [
+        "metric-local body scale 1/.017 and world placement",
+        "shared centered extruded ash leg geometry repeated three times",
+        "procedural wood grain and cream trim",
+        "short shade-support cylinder",
+        "open drum shade with procedural warp/weft fabric",
+        "two torus rims sharing the shade material",
+        "emissive spherical diffuser",
+        "no separately modeled tall pole",
+        "no mechanical switch geometry; lampToggle metadata and scene/UI dispatch"
+      ],
+      "chapters": ["MD28", "MD29", "MD35", "MD38"],
+      "tests": ["tests/browser/scene.spec.mjs", "tests/browser/desk-clearance.spec.mjs"],
+      "limits": "Neutral-studio atlas renders are parent-supplied diagnostic illustrations, not room-light evidence. Their pixels were not inspected by this author. No aesthetic approval or hardware-accurate replica claim."
+    },
+    {
+      "model": "Tripod and room light hierarchy",
+      "source": "src/lighting.js",
+      "symbol": "createDeskLamp; createRoomLighting",
+      "components": [
+        "inverse-square spotlight with scale-adjusted coefficient",
+        "transmitted-shade rectangle",
+        "open-bottom rectangle",
+        "finite world-owned tabletop bounce patch",
+        "ceiling rectangle and hemisphere light",
+        "light objects retained with zero intensity when switched off",
+        "room background switched separately from visible surfaces"
+      ],
+      "chapters": ["MD28", "MD29", "MD30", "MD37", "MD38"],
+      "tests": ["tests/browser/scene.spec.mjs", "tests/browser/ds.spec.mjs"],
+      "limits": "Authored finite fill is not computed global illumination; coefficients are not photometer measurements. Current official documentation is concept guidance, not pinned-runtime evidence."
+    },
+    {
+      "model": "Screen and companion illumination integration",
+      "source": "src/lighting.js",
+      "symbol": "ScreenIllumination; HandheldScene.setPearBrightness; HandheldScene.setAxolotl",
+      "components": [
+        "sRGB-byte to linear lookup array",
+        "24 by 16 mean-color sample canvas",
+        "125-millisecond live sample cadence",
+        "elapsed-time exponential smoothing and settled threshold",
+        "forward emitter and control spill",
+        "Pear and axolotl brightness coefficients",
+        "four-family exposure decision and indicator compensation"
+      ],
+      "chapters": ["MD29", "MD31", "MD33", "MD35", "MD38"],
+      "tests": ["tests/browser/pear-boy.spec.mjs", "tests/browser/scene.spec.mjs", "tests/browser/ds.spec.mjs"],
+      "limits": "Mean-color lighting is not per-pixel transport. Companion geometry belongs to Part 3. LCD-only fixtures must disable both companions as well as controlling tripod and room lights."
+    },
+    {
+      "model": "Shadow and reflected-environment model",
+      "source": "src/scene.js",
+      "symbol": "HandheldScene.updateDsReflections; HandheldScene.render",
+      "components": [
+        "manual PCF shadow-map invalidation",
+        "caster and receiver flags with shade overrides",
+        "Pear stylized contact plane excluded from picking and clearance",
+        "128-square half-float cube target",
+        "cube camera at DS root and PMREM filtering",
+        "both consoles hidden during capture",
+        "physical-material Set and old-filter disposal",
+        "settled refresh behind direct-light responsiveness"
+      ],
+      "chapters": ["MD30", "MD33", "MD35", "MD38"],
+      "tests": ["tests/browser/scene.spec.mjs", "tests/browser/pear-boy.spec.mjs"],
+      "limits": "No self/mutual console reflection, screen-space reflection, path tracing or parallax-correct full-room solution. Retained CI-parked lighting assertions are not new passing results."
+    },
+    {
+      "model": "Active LCD, inactive glass and CRT image treatment",
+      "source": "src/scene.js",
+      "symbol": "HandheldScene.setScreen; HandheldScene.showPowerOff; DsController.paintScreens; drawLcdCrt",
+      "components": [
+        "active basic non-tone-mapped materials",
+        "GBA live sRGB canvas with linear min/mag filters and no mips",
+        "DS native 256 by 192 canvases with nearest filters and no mips",
+        "retained native framebuffer validation and unsmoothed region copies",
+        "reflective physical powered-off glass",
+        "curved GBA outline with direct XY UV mapping",
+        "WeakMap CRT pattern/vignette cache and restored drawing state",
+        "validated native preset list distinct from built-in canvas treatment"
+      ],
+      "chapters": ["MD30", "MD31", "MD35", "MD37", "MD38"],
+      "tests": ["tests/browser/ds.spec.mjs", "tests/browser/scene.spec.mjs"],
+      "limits": "Nearest filtering is not universal across both consoles. Pixel preservation is bounded by projection/minification. Status-image tests do not establish native gameplay or touch."
+    },
+    {
+      "model": "Picking, touch and input-ownership model",
+      "source": "src/scene.js",
+      "symbol": "HandheldScene.pick; HandheldScene.beginConsoleMove; DsController.touchAt; DsController.projectControls",
+      "components": [
+        "CSS-rectangle normalized device coordinates",
+        "nearest root hits and specific contact-plane/stylus exclusions",
+        "mode-gated pointer dispatch",
+        "camera-facing drag plane, grab offset and pointer capture",
+        "four-pixel movement threshold",
+        "wheel-depth and keyboard movement semantics",
+        "whole-DS-root lower-screen occlusion test",
+        "immediate world matrices and projected DOM controls",
+        "session/origin-bound native messaging and comprehensive release"
+      ],
+      "chapters": ["MD32", "MD35", "MD38"],
+      "tests": ["tests/browser/ds.spec.mjs", "tests/browser/desk-clearance.spec.mjs"],
+      "limits": "Specific DS lid/stylus occlusion is not a general scene-wide occlusion solver. Visible cap motion, message delivery and native response are distinct evidence."
+    },
+    {
+      "model": "Renderer scheduling and lifecycle",
+      "source": "src/scene.js",
+      "symbol": "HandheldScene.render; HandheldScene.waitForFirstPaint; HandheldScene.dispose",
+      "components": [
+        "DPR capped at two without adaptive density reduction",
+        "feature-detected fence insertion, flush and zero-timeout polling",
+        "strict greater-than-100-millisecond recovery threshold",
+        "1000-millisecond settled-play and 200-millisecond moving recovery caps",
+        "native screen copies before room-paint gate",
+        "idle suppression, context-loss reporting and source quarantine",
+        "paint-aware transitions and required motion acknowledgments",
+        "explicit replaced and final GPU-resource disposal"
+      ],
+      "chapters": ["MD33", "MD35", "MD36", "MD37", "MD38"],
+      "tests": ["tests/browser/scene.spec.mjs", "tests/browser/pixel-lab.mjs", "tests/unit/pear-motion.test.mjs"],
+      "limits": "Fences prove GPU command completion, not human-visible scanout. No-fence fallback differs. Existing disposal is not a complete future-proof resource tracker; new texture slots and shared ownership need explicit treatment."
+    },
+    {
+      "model": "Clearance and simplified motion algorithms",
+      "source": "src/desk-clearance.js",
+      "symbol": "nearestDeskPosition; DeskMotion; HandheldScene.resolveDeskClearance; HandheldScene.dsPoseBounds",
+      "components": [
+        "asymmetric relative Box3 extents and vertically relevant obstacles",
+        "forbidden root rectangles and Set candidate coordinates",
+        "Cartesian candidate search, squared-distance ordering and stable ties",
+        "eight-epsilon magnitude tolerance",
+        "staged priorities and both equal-ranked console placement orders",
+        "hypothetical DS root/lid transformed geometry bounds",
+        "1/120-second integration bounded to 600 substeps",
+        "fall/bounce/rise presentation and queued elapsed time"
+      ],
+      "chapters": ["MD28", "MD34", "MD35", "MD36", "MD37", "MD38"],
+      "tests": ["tests/unit/desk-clearance.test.mjs", "tests/unit/pear-motion.test.mjs", "tests/browser/desk-clearance.spec.mjs"],
+      "limits": "Worst-case nearest search O(n^3) time/O(n) coordinate storage excludes geometry traversal. Not all permutations/global packing, free-rotation sweep detection, angular momentum or full rigid-body physics."
+    },
+    {
+      "model": "Evidence, publication and agent-extension boundary",
+      "source": "docs/VERIFICATION.md",
+      "symbol": "Verification evidence layers; numbered TODO workflow; siteFiles allowlist",
+      "components": [
+        "eight-field numbered workstream and causal ledger",
+        "actual issue backlink and Project readback, not number guessing",
+        "one bounded repair followed by explicit parking and retained assertions",
+        "exact-run and shard reconciliation",
+        "source/unit/browser/visual/publication evidence separation",
+        "approved decoded brand assets and explicit nonrecursive runtime allowlist",
+        "GIF-first root navigation and preserved standalone books",
+        "complete scoped reconstruction and extension assignment"
+      ],
+      "chapters": ["MD35", "MD36", "MD37", "MD38"],
+      "tests": [],
+      "limits": "Describing workflow grants no sync, build, commit or publish permission. No runtime tests, render, build or deployment were executed for manuscript authoring. Human aesthetic acceptance remains pending."
+    }
+  ],
+  "sources": [
+    "docs/modeling-book/catalogue.mjs",
+    "package.json",
+    "src/lighting.js",
+    "src/scene.js",
+    "src/lcd-crt.js",
+    "src/preferences.js",
+    "src/desk-clearance.js",
+    "src/pear-motion.js",
+    "src/transition-motion.js",
+    "src/cartridge-motion.js",
+    "src/handheld.js",
+    "src/ds-controller.js",
+    "src/brand.js",
+    "scripts/site-files.mjs",
+    "scripts/build.mjs",
+    "tests/unit/desk-clearance.test.mjs",
+    "tests/unit/pear-motion.test.mjs",
+    "tests/browser/scene.spec.mjs",
+    "tests/browser/pixel-lab.mjs",
+    "tests/browser/desk-clearance.spec.mjs",
+    "tests/browser/ds.spec.mjs",
+    "tests/browser/pear-boy.spec.mjs",
+    "docs/ARCHITECTURE.md",
+    "docs/VERIFICATION.md",
+    "docs/GUIDE.md",
+    "docs/GITHUB-TRACKING.md",
+    "README.md",
+    "TODO/04_DEVELOPMENT_LEDGER.todo",
+    "TODO/116_DS_UPRIGHT_LIGHTING.todo"
+  ],
+  "research": [
+    {
+      "url": "https://threejs.org/manual/pages/color-management.html",
+      "consulted": "2026-11-07",
+      "supports": "Linear-sRGB lighting, sRGB color inputs and output, distinction from noncolor data maps.",
+      "scope": "Checked current official conceptual guidance, not proof of Three.js 0.186.1 runtime behavior."
+    },
+    {
+      "url": "https://threejs.org/docs/pages/MeshPhysicalMaterial.html",
+      "consulted": "2026-11-07",
+      "supports": "Clearcoat and roughness interpretation; reflective physical surfaces and material tradeoffs.",
+      "scope": "Checked current reference includes newer revision information. Source assignments and pinned package remain authoritative."
+    },
+    {
+      "url": "https://threejs.org/manual/pages/shadows.html",
+      "consulted": "2026-11-07",
+      "supports": "Shadow caster/receiver/light roles, extra scene-view costs and contact-shadow approximation tradeoffs.",
+      "scope": "Checked current official guidance; no application performance measurements inferred."
+    },
+    {
+      "url": "https://threejs.org/manual/pages/cleanup.html",
+      "consulted": "2026-11-07",
+      "supports": "Explicit geometry/material/texture disposal and unique-resource tracking.",
+      "scope": "Checked current guidance; a generalized resource tracker is proposed extension work, not claimed implementation."
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices",
+      "consulted": "2026-11-07",
+      "supports": "Avoid blocking queries, flush before asynchronous fence waits, conservative memory budgeting and eager deletion.",
+      "scope": "Checked current browser recommendations; no claim that project implements adaptive quality or measured universal performance."
+    }
+  ],
+  "history": [
+    {
+      "commit": "9be851e96098e0dfd4beedffd911185cf33a11a6",
+      "claim": "Checked scene diff moves DS play from (5,5.1,8) to (-2,5.1,-8) without changing material/light/exposure; historical TODO observations remain separately labeled.",
+      "source": "src/scene.js; TODO/116_DS_UPRIGHT_LIGHTING.todo; tests/browser/ds.spec.mjs"
+    },
+    {
+      "commit": "34484498de6be19a48c5191c4d717035bf84a320",
+      "claim": "Checked diff introduces GPU completion fences, separates DS screen copying from room-only paint and starts transitions from real performance.now; earlier threshold differs from pinned current threshold.",
+      "source": "src/scene.js; src/ds-controller.js"
+    },
+    {
+      "commit": "836fc093bc4e72b06898e983cdf524c8fe772047",
+      "claim": "Checked recovery diff retains severe-load waiting while avoiding extra delay for moderate completed frames; exact 100/101-millisecond boundary and real-time fixture rest are distinguished.",
+      "source": "src/scene.js; tests/browser/scene.spec.mjs"
+    },
+    {
+      "commit": "120d9bd5a3e785d24a9bdc5e96d6e9b332613510",
+      "claim": "Checked motion diff preserves fall/bounce/rise presentation under sparse paints with bounded integration.",
+      "source": "src/pear-motion.js; tests/unit/pear-motion.test.mjs"
+    },
+    {
+      "commit": "6b5d2c552e6b3206bfb3ae36d845896773147a1c",
+      "claim": "Checked diff introduces magnitude-scaled eight-epsilon strict-interior tolerance while retaining squared-distance stable ties and real-overlap rejection.",
+      "source": "src/desk-clearance.js; tests/unit/desk-clearance.test.mjs"
+    },
+    {
+      "commit": "06e9c8240b6f3a8c5e2c91a408db0be61ccdfef2",
+      "claim": "Checked CRT implementation introduces reusable cached mask/vignette treatment for built-in images, distinct from native preset shaders.",
+      "source": "src/lcd-crt.js; src/preferences.js"
+    },
+    {
+      "commit": "19f499643c9d02a0be219713ae0059d9fd531309",
+      "claim": "Checked CI/verification change documents loader-aware restoration and explicit parking after bounded repair. Reverted broad SwiftShader attempt is not proof of a sole root cause.",
+      "source": "docs/VERIFICATION.md; tests/browser/scene.spec.mjs"
+    }
+  ],
+  "unverified": [
+    "No application build, browser run, unit suite, render, commit, push, tracking synchronization or publication was performed by this manuscript author.",
+    "Recipes and numerical worked examples are construction instructions/source-derived arithmetic, not fresh application execution receipts.",
+    "Sources list includes scoped reads for controller, handheld, guide and browser suites; it does not assert every listed large file was exhaustively read.",
+    "Historical performance, pixel and test-run observations belong to the cited revisions and documented fixtures, not to this authoring session.",
+    "Retained CI-parked browser scenarios remain explicit coverage debt. The strict historical 49-entry public checker was not converted into 49 passes.",
+    "Parent-supplied lamp atlas paths are used diagnostically; this author did not inspect image pixels or certify their capture provenance.",
+    "No human aesthetic approval, hardware-calibrated photometry, universal pixel preservation or exact physical replica is claimed.",
+    "Current-orientation AABBs and hypothetical endpoint bounds do not prove full rotational swept clearance.",
+    "The scene uses hand-authored procedural Three.js and simplified upright motion/clearance, not Blender/CAD/model import or a full rigid-body engine.",
+    "Shared-resource and future texture-slot disposal require explicit ownership review for extensions.",
+    "Mermaid parser validation and manuscript checks are documentation-only evidence, not application render or deployment proof."
+  ]
+}

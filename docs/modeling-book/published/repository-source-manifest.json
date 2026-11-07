@@ -1,0 +1,583 @@
+{
+  "policy": "source-manifest.json identifies exact qualified working inputs. This receipt identifies corresponding committed Git bytes; accepted differences are exclusively CRLF-to-LF normalization. Installed dependencies are separate. No claim of byte-identical fresh-machine rebuilding.",
+  "implementationCutoff": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+  "inputs": [
+    {
+      "path": "docs/modeling-book/coverage/part-1.json",
+      "qualifiedWorkingSha256": "5a8bb9a5f3b16e28432eaf8527a99eaba413698894bb606e9e72e62179d58762",
+      "committedGitSha256": "5ac150c9fe126165fb965a94f3c8314d77a43e4c25e4ca21d0386e30e0d42945",
+      "bytes": 19949,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "qualifiedWorkingSha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82",
+      "committedGitSha256": "cc0db424c41a4ac3aa0a887268e6902a259a60dcd0fece03ab7a1621995997b1",
+      "bytes": 4748,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "node_modules/three/package.json",
+      "qualifiedWorkingSha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "distribution": "Installed dependency; not Git source."
+    },
+    {
+      "path": "node_modules/@playwright/test/package.json",
+      "qualifiedWorkingSha256": "6b1c8bb530059f2555530e8dcc1b3803565237e17598683b3766c0fa313b3fd6",
+      "distribution": "Installed dependency; not Git source."
+    },
+    {
+      "path": "docs/modeling-book/coverage/part-2.json",
+      "qualifiedWorkingSha256": "ec20099c250528b4c8718df529d74ba8d4be3f84afa60c1c4c68946780b905aa",
+      "committedGitSha256": "49bd9a995977a651ace3a86a43bd5e2f15e4719f8f1649b8260433bfe7dee5e0",
+      "bytes": 17496,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/coverage/part-3.json",
+      "qualifiedWorkingSha256": "74add4ef351934e2b6f6cf748f5afb3f05a3d7e3faeae5b922e0a9b55c590e2e",
+      "committedGitSha256": "79fac27dc5c0a4058a8a6882999e71ba5f52ee1d69a2811048b7e0d65af16161",
+      "bytes": 13158,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/coverage/part-4.json",
+      "qualifiedWorkingSha256": "799fe51d655c124aef65b974e73548c252bd4fcbb8e60ae10be6c9a30064b2bd",
+      "committedGitSha256": "0b36b1b673b275f04c03e2ee2b78936b5145ec3c11e8497baefe9f38e8b8bdc8",
+      "bytes": 17134,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/capture-manifest.json",
+      "qualifiedWorkingSha256": "de8554494859305dbb0f48fe5eddbad1ee1d800b936059a4c17dab6f70430d9a",
+      "committedGitSha256": "de8554494859305dbb0f48fe5eddbad1ee1d800b936059a4c17dab6f70430d9a",
+      "bytes": 18198,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/gba-front.png",
+      "qualifiedWorkingSha256": "c92a482fb33852041ff8841ef5ee9cfbf5a596dd47bae26e5bcd1b292704baff",
+      "committedGitSha256": "c92a482fb33852041ff8841ef5ee9cfbf5a596dd47bae26e5bcd1b292704baff",
+      "bytes": 57408,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/gba-back.png",
+      "qualifiedWorkingSha256": "43d0a745ab005d4842df2f86eba265dbd6f54be17c584194bba215b2a0971283",
+      "committedGitSha256": "43d0a745ab005d4842df2f86eba265dbd6f54be17c584194bba215b2a0971283",
+      "bytes": 57406,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/gba-three-quarter.png",
+      "qualifiedWorkingSha256": "3dd1b8d1bba316dd799d895af799df608cb06fdb078dcbfe7f31a3d95a22334d",
+      "committedGitSha256": "3dd1b8d1bba316dd799d895af799df608cb06fdb078dcbfe7f31a3d95a22334d",
+      "bytes": 70864,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/ds-front.png",
+      "qualifiedWorkingSha256": "6904e949214ef8b22e59db883b85c95048c118edcd21c2de9fbcadd2f93a5c22",
+      "committedGitSha256": "6904e949214ef8b22e59db883b85c95048c118edcd21c2de9fbcadd2f93a5c22",
+      "bytes": 85559,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/ds-back.png",
+      "qualifiedWorkingSha256": "38cc9d120d635a6a5813b36782717197b36005c67553575bb94723647812b721",
+      "committedGitSha256": "38cc9d120d635a6a5813b36782717197b36005c67553575bb94723647812b721",
+      "bytes": 106864,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/ds-three-quarter.png",
+      "qualifiedWorkingSha256": "0a3b6b512c4dd46f1e66518b79df5073985d2b1bb5b17a54b01312e39e290fea",
+      "committedGitSha256": "0a3b6b512c4dd46f1e66518b79df5073985d2b1bb5b17a54b01312e39e290fea",
+      "bytes": 95557,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/pear-front.png",
+      "qualifiedWorkingSha256": "52922810126cc33c421be9fdd95dfc4f41d0ee560b451e4c3d48cf6b2e08ae17",
+      "committedGitSha256": "52922810126cc33c421be9fdd95dfc4f41d0ee560b451e4c3d48cf6b2e08ae17",
+      "bytes": 108566,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/pear-back.png",
+      "qualifiedWorkingSha256": "fc85e6c9047ef57c717263f5b297b37f1239ca7a8b21a4dd73db0ea7f356b6cf",
+      "committedGitSha256": "fc85e6c9047ef57c717263f5b297b37f1239ca7a8b21a4dd73db0ea7f356b6cf",
+      "bytes": 99632,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/pear-three-quarter.png",
+      "qualifiedWorkingSha256": "ebc6c8e7af5113cbc122242d2210d655e78d6b667369aec529ba29b21584aee5",
+      "committedGitSha256": "ebc6c8e7af5113cbc122242d2210d655e78d6b667369aec529ba29b21584aee5",
+      "bytes": 82110,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/axolotl-front.png",
+      "qualifiedWorkingSha256": "e277680bc55e98b6e1a27aa67190e931b7629a081f4abb8d6220e8054948b64b",
+      "committedGitSha256": "e277680bc55e98b6e1a27aa67190e931b7629a081f4abb8d6220e8054948b64b",
+      "bytes": 88892,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/axolotl-back.png",
+      "qualifiedWorkingSha256": "4279c93c373949585337560ff23b763c343dbfc5bbd8646fa1c984a887f8cd6b",
+      "committedGitSha256": "4279c93c373949585337560ff23b763c343dbfc5bbd8646fa1c984a887f8cd6b",
+      "bytes": 106290,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/axolotl-three-quarter.png",
+      "qualifiedWorkingSha256": "668c8c1d97c4a2eb39a0b708ee2af5253bb8e6c9c60f7660bc82c607fb050123",
+      "committedGitSha256": "668c8c1d97c4a2eb39a0b708ee2af5253bb8e6c9c60f7660bc82c607fb050123",
+      "bytes": 67219,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/lamp-front.png",
+      "qualifiedWorkingSha256": "a231d75b3baa31f96db119a472cb7242b984ae6b91ae56a613cffdc9c519e284",
+      "committedGitSha256": "a231d75b3baa31f96db119a472cb7242b984ae6b91ae56a613cffdc9c519e284",
+      "bytes": 148821,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/lamp-back.png",
+      "qualifiedWorkingSha256": "8a4ea3f87c92fdbafbdfc78b4138b59b45a5043ad207f51f4ef705c6dda1b630",
+      "committedGitSha256": "8a4ea3f87c92fdbafbdfc78b4138b59b45a5043ad207f51f4ef705c6dda1b630",
+      "bytes": 153227,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/lamp-three-quarter.png",
+      "qualifiedWorkingSha256": "183d181e5f3958478f39c9dbb2cb5bd52ce4d7e905b52293c6462a32ec57d41d",
+      "committedGitSha256": "183d181e5f3958478f39c9dbb2cb5bd52ce4d7e905b52293c6462a32ec57d41d",
+      "bytes": 152308,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/cartridge-front.png",
+      "qualifiedWorkingSha256": "c1b5f2f57b755713c594d62935fc1c214dd685ca96f18ffc1c6efe604364f75c",
+      "committedGitSha256": "c1b5f2f57b755713c594d62935fc1c214dd685ca96f18ffc1c6efe604364f75c",
+      "bytes": 37633,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/cartridge-back.png",
+      "qualifiedWorkingSha256": "fd2f0e7684abcb571f48b58225750eee7e7743649b221cab9099e4317ec4ad51",
+      "committedGitSha256": "fd2f0e7684abcb571f48b58225750eee7e7743649b221cab9099e4317ec4ad51",
+      "bytes": 11938,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/cartridge-three-quarter.png",
+      "qualifiedWorkingSha256": "d91b142d144ca8e996b819d649d3fe3a1273fdab6a8ddb4bf2fa4442b347cc50",
+      "committedGitSha256": "d91b142d144ca8e996b819d649d3fe3a1273fdab6a8ddb4bf2fa4442b347cc50",
+      "bytes": 40981,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/tools/capture-model-atlas.mjs",
+      "qualifiedWorkingSha256": "df29d2c257f983a4dda76683be09e10f1315d5c3a2ac135bf7deaf1f77bf9a2a",
+      "committedGitSha256": "28174d42b4a739a14198a506f61cd57e2959c19469d67dddc72496b343b7d205",
+      "bytes": 12380,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/lib.mjs",
+      "qualifiedWorkingSha256": "0d706c9ff279d12c2a0f7c23c204e5104d17f03fa24dd9afb3d9029aec9239f7",
+      "committedGitSha256": "f0de520e59b3f80d8b4ae57e4e2da95fdcad716241fa482db9bdc8bdb731d78d",
+      "bytes": 2920,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/package-lock.json",
+      "qualifiedWorkingSha256": "6056a2ad6bb374cc2c3ea7f79f8be54d216ecc0e34177f24b627a5a5896a2e4a",
+      "committedGitSha256": "0e88f1bbbcff5200b4117b78a77aa6eec51de9f8735f410ab71a4f4aae902263",
+      "bytes": 57347,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/orientation.md",
+      "qualifiedWorkingSha256": "f7383453ae09cbf47720bfc0ffe109d2bf83eb485785cc6df8541776fb30e42d",
+      "committedGitSha256": "839c6a2d5cb91d38a4e7cd4ca87b33d2e2b13f00acaf8283695cb8e848e2f0fc",
+      "bytes": 13264,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/assets/model-atlas.png",
+      "qualifiedWorkingSha256": "12f70c3477ac8b0ea739d226290c6a2df9bb4f4bab2997419c2e92dadc0e079c",
+      "committedGitSha256": "12f70c3477ac8b0ea739d226290c6a2df9bb4f4bab2997419c2e92dadc0e079c",
+      "bytes": 221630,
+      "lineEndingsNormalized": false
+    },
+    {
+      "path": "docs/modeling-book/chapters/01-evidence-and-toolchain/README.md",
+      "qualifiedWorkingSha256": "730ae7e0ee3c104acc868516149181ed0c326ed9a33a23e787ee0ebbd0883759",
+      "committedGitSha256": "85bdacc3be097c82d41d0c565f24f014837d3f968e0e839cb143d03a6918e660",
+      "bytes": 15256,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/02-modeling-contract-and-references/README.md",
+      "qualifiedWorkingSha256": "1df013580a47a128589b5234ca20ff3fc6579403973cac31f9eae6feb0612923",
+      "committedGitSha256": "c660f79a4aab65692cdda2139e63f2e9721f01fbcfcd8d926d525ba792d8d863",
+      "bytes": 14842,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/03-coordinate-systems-and-transforms/README.md",
+      "qualifiedWorkingSha256": "3f61e6eb695d27bcba944348480481f3c630a753f633ac8c5be1cf8309f93828",
+      "committedGitSha256": "4d4819fc764ef5297515a9992721b39f69fd1458c915a8ba5666582a34a7fb4f",
+      "bytes": 15108,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/04-procedural-geometry-toolkit/README.md",
+      "qualifiedWorkingSha256": "c3b592f2bdf805aa4c3ae1b1548d21c97632b23823160371cdf03cfc0c4e7895",
+      "committedGitSha256": "00e179ee61b7d0547fd50aa27e45bc3b9ea3ce55b7d08079a963d574959b6dfa",
+      "bytes": 14794,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/05-gba-shell-and-silhouette/README.md",
+      "qualifiedWorkingSha256": "f6ac908218edd2a765c4de178252ae4226e112e5fac28c587c246f44641e888e",
+      "committedGitSha256": "f8bf2e90bb3a9d9ab2b7469fa91494e895bcd6a0e38011f40b62c0fa11a2674e",
+      "bytes": 15018,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/06-gba-lcd-glass-and-frame/README.md",
+      "qualifiedWorkingSha256": "7e6160277ee034ab199b1517ce6b0a38d270aa98452a65badad351e869a34fb0",
+      "committedGitSha256": "03fd703702beca1c2d073484affe881911ff34c608612b7e550c23d13ee7b065",
+      "bytes": 15087,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/07-gba-controls-and-grips/README.md",
+      "qualifiedWorkingSha256": "a0c8a84246c5ba4eb4497d5bdca67ccc301988b1131d4a53d8c25e0af1610be3",
+      "committedGitSha256": "9d113588da69189460bbbd27552c501bf0f4b295112a56d04b7e81f5caed8dde",
+      "bytes": 15283,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/08-cartridges-details-and-markings/README.md",
+      "qualifiedWorkingSha256": "1e2106c04a66c24eb7e13196b1398f816e3dbc4551d32f3308e4fcadcb4647d1",
+      "committedGitSha256": "09215b499d0fda67f28f6ade72b44e17d3affe45c55b351a4e11c48bc151ba07",
+      "bytes": 15178,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/09-procedural-textures-and-asset-boundaries/README.md",
+      "qualifiedWorkingSha256": "516e1bf63be56ea76897522f6cb86046359fa7ef88f0a38f74719185138d981f",
+      "committedGitSha256": "0809b59977fb8a3c851a9197fa3a7145ccf3f392d1fbfeabe3b6db6026688421",
+      "bytes": 15843,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/10-ds-assembly-and-parameter-map/README.md",
+      "qualifiedWorkingSha256": "3de269551593a1edb5306f96ef5f3847dd80272c07d8a019de4bb5bae2c5eb4f",
+      "committedGitSha256": "e5158dcc8a336d8745e17cd21aae5528d2b5c774f1d67280c6c8c4d4723fc4bc",
+      "bytes": 14273,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/11-hinges-lids-and-articulation/README.md",
+      "qualifiedWorkingSha256": "4e38983be85b75ea0174299f39080ac1628028acced2ba840189e4004b36b9f6",
+      "committedGitSha256": "3bbd7e822ed14eba045c5150a92bdd1fcf009f57cc47dff8c939a19368ca98d7",
+      "bytes": 13522,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/12-ds-shells-recesses-and-hardware/README.md",
+      "qualifiedWorkingSha256": "cd016585043b86d4ef6d44c01fa0c26ff8e7ebe22202e122d66f36165d67d8f5",
+      "committedGitSha256": "62bcd99f53e67efb5dce92248460b151d80afa7b622397601ee951de7ca32a20",
+      "bytes": 13579,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/13-ds-controls-and-readable-markings/README.md",
+      "qualifiedWorkingSha256": "ab11067509e7991896a694aa9c51b600c5f107e89e4e95d3b9176c27339a56a3",
+      "committedGitSha256": "d32dff2d328cd63af7f5215be51af5770e823435f6bb9874fea143d7287276a8",
+      "bytes": 13747,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/14-dual-lcds-and-curved-glass/README.md",
+      "qualifiedWorkingSha256": "cab67205c4a0209f50117450fb3a1ad213d697e3ea8d84c91009a38528687a98",
+      "committedGitSha256": "d860816e653ac62a9f9074c9fecb305f27b1015278074f87c57303614cd0a8e8",
+      "bytes": 13941,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/15-stylus-and-touch-geometry/README.md",
+      "qualifiedWorkingSha256": "bbfd6264aa3c8dd723d8f6d0a70de2e4ec03100fe6a335b4f3c8de3771df4f95",
+      "committedGitSha256": "cb3a459c57a156dfad9ff885e8b3c091d74ded8f2a0caf2aa0519697332d016e",
+      "bytes": 13541,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/16-cartridge-insertion-and-loading/README.md",
+      "qualifiedWorkingSha256": "80de9fc45c3823f41268553626919eec97573ae2f8df48bb820f4d8a4ea8b73b",
+      "committedGitSha256": "720d3ef8401d74d3dc058635ea7a266b52b9eb923b4be2b2ddcbf8051496b443",
+      "bytes": 14021,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/17-inspection-camera-and-manipulation/README.md",
+      "qualifiedWorkingSha256": "d6be4a609023de3e8f183a3c5f43dfb7aa86242bcc3f80b342d55cd8aad0b29a",
+      "committedGitSha256": "f41d93cf5954948040e39c3b421ca029ce41cd01be523525384f8725be0d0069",
+      "bytes": 14430,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/18-ds-model-regression-atlas/README.md",
+      "qualifiedWorkingSha256": "de24617131989ff1f1b7b4a10fb12a204308fa55d0f0d097d26b423d365256b5",
+      "committedGitSha256": "c994b3e264e2e4aa79f163e8b8f7ae9a2bca503a230a08aa186b9362c93a2246",
+      "bytes": 14973,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/19-pear-body-parametric-surface/README.md",
+      "qualifiedWorkingSha256": "d781c9449bcb2c6f2f259ff44bc21cab846a2d4f1c819704c4c542d89ec8a14d",
+      "committedGitSha256": "422863365363f8c332b766f9dfdca039adb0833c267d2c62c9511cd0ca2bba25",
+      "bytes": 14635,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/20-pear-face-and-curved-projection/README.md",
+      "qualifiedWorkingSha256": "33c5a9eb2d5c22e0b8f2be22274581dc16534212095a0ca556a2fe69068afee0",
+      "committedGitSha256": "b4b948f6fab1bed5172b7bddc7fdfcc52c2cde14c98c6ec504b5324cfd20e0cb",
+      "bytes": 14403,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/21-expressions-gaze-and-freckles/README.md",
+      "qualifiedWorkingSha256": "621302b982717ea32da8bfe9bc0e6f8859eb44cb878bee505ecc25f80be63dc6",
+      "committedGitSha256": "8aaa9b62d52067b41408fd295a66f8bdb3977a4f3580aa2aa99ba9f148b6bbb1",
+      "bytes": 14770,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/22-limbs-rope-and-soft-motion/README.md",
+      "qualifiedWorkingSha256": "d7d11928980d4873bc1214032b131f9baf4bdca346a6396ae2f6547c2757182e",
+      "committedGitSha256": "4a509c9605e2269edf6cb44e7c7d89139f5210a031e10bc5ec3eb7f776b52102",
+      "bytes": 14070,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/23-axolotl-silicone-body/README.md",
+      "qualifiedWorkingSha256": "859b035b974e0f1214333722630323ba75735433aebc8623395b858ba3b6fa61",
+      "committedGitSha256": "aa62b4d0cbe04e59484da7fe6458873bf5c46fa87f0d4d35042ad959de9093a8",
+      "bytes": 13869,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/24-gills-tail-and-cute-features/README.md",
+      "qualifiedWorkingSha256": "98d6f4f88628aeba5d8ebdda81a97b66c69445e707e972d1045f3545e0c04bd6",
+      "committedGitSha256": "3584621a6fb7482fb8e892c671f2a3ca5cee7d541d03140333782e600b11684c",
+      "bytes": 13801,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/25-companion-light-emission/README.md",
+      "qualifiedWorkingSha256": "07b35214d0e717b9982ca217650a52f5c85668035f3c252a1b17c3eaf7998409",
+      "committedGitSha256": "b77adb7790d80a22a657d542c6eb8a430ee125074c2d3cc0fde89ab823ba705c",
+      "bytes": 15078,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/26-drag-gravity-and-drop/README.md",
+      "qualifiedWorkingSha256": "7f7600c72061a14e504a9a16cd12211d734b78eeddeec4d7bf8364dd45fffcd1",
+      "committedGitSha256": "c573c2e7b3898ace88f4cdd7e2e51b6b3c952ad9ad020d22d44bb2764467cf35",
+      "bytes": 14984,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/27-clearance-and-home-poses/README.md",
+      "qualifiedWorkingSha256": "1932a0f9da4e217db53a98e99e82478f74623c71ecfaa587cb4f378320765ccd",
+      "committedGitSha256": "a6906850405b2c0cda56b59929492acaabf1ac17424ee924892be6cbaecfcdec",
+      "bytes": 14974,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/28-desk-room-and-tripod-lamp/README.md",
+      "qualifiedWorkingSha256": "e29119d86ee85154fd03d5f9a9a386b0cd825de5aa63ce4bdfde7004301a5a8e",
+      "committedGitSha256": "64cbf70c50a7b3decce5cc1a7fc340b73682d9e1985b17fc2fbcc3cff82c99b5",
+      "bytes": 13818,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/29-light-units-exposure-and-color/README.md",
+      "qualifiedWorkingSha256": "abd473a605117767c5733d5cba108eed02ae23b17128b95500c7e179227b0859",
+      "committedGitSha256": "27914a5f38a1b39c43b5c6b28ef6f31e47ea4d7d519c9eb27b1531e6daf33761",
+      "bytes": 12943,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/30-shadows-reflections-and-shaders/README.md",
+      "qualifiedWorkingSha256": "04d2ba92d3644c87438fed427e8d1da5146cadffce1864552311e068326ac55d",
+      "committedGitSha256": "9569ffdd497fbf4f79c4e6de1403c5dcb35cba4099e2ee1e9812687a9a8b39eb",
+      "bytes": 13323,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/31-screen-materials-and-pixel-preservation/README.md",
+      "qualifiedWorkingSha256": "bd273a2c6f8ae1b8b0697d79c282a48ff82b3bbde5c82d8958fe0d9338e1ada6",
+      "committedGitSha256": "c8e258f4bb7e2c0067536b30774c35f894b92a9d993f9b7cfd28597882057002",
+      "bytes": 13803,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/32-picking-occlusion-and-input-ownership/README.md",
+      "qualifiedWorkingSha256": "9145df7b583574629db32d3f556c2603e9dcea3b5a508bc41364b04e2fa57a31",
+      "committedGitSha256": "d5890f5fd0cfdfc5b185f402380205caa565051570b098f09b75f6372f698557",
+      "bytes": 13892,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/33-render-loop-gpu-budgets-and-lifecycle/README.md",
+      "qualifiedWorkingSha256": "5e2a7975526375b93bb1992c5925ce97af85e04f943b43a8937dbe71ba0c71fa",
+      "committedGitSha256": "ca9c1a39e65bac346e5054d92767d7b3b239cd52cde60f723833dbfcb5d0c11e",
+      "bytes": 14076,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/34-algorithms/README.md",
+      "qualifiedWorkingSha256": "5e2878211bfe07bcd76d0ba877ebe237fdda3516f86bc1ec92d179f45c38882a",
+      "committedGitSha256": "511429bdd79159c0317916c8751b207725bdf2dae17ba272876ee946bf7e1bd0",
+      "bytes": 13346,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/35-design-principles/README.md",
+      "qualifiedWorkingSha256": "e8edbcd970d236bfdf2ded0456693dd589d74779c560c3c5922677a3a7f9c895",
+      "committedGitSha256": "6d6a63ae592b28157c706eb5689247860db65d69d87f8b789fe924d5fc996e69",
+      "bytes": 14588,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/36-validation-recovery-and-history/README.md",
+      "qualifiedWorkingSha256": "7a29d4ce2f256ea1b1894d67613bca081533478bd22529124c2ebed5b7031bd0",
+      "committedGitSha256": "a1fd8a1a91ca3bdd0ae1c4851798a789f7c9a2a60bdf1ded877075b759fde1ab",
+      "bytes": 14138,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/37-causal-modeling-history/README.md",
+      "qualifiedWorkingSha256": "cb206cf29d44f397b59ed57a0f068c62d14308c6ca099c4cd527a3ddefbbdb63",
+      "committedGitSha256": "971ed845554e5c47aba068658b69df6f3268ad9661b4d68ebf78ba279f91559d",
+      "bytes": 14390,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/chapters/38-agent-reconstruction-and-extension/README.md",
+      "qualifiedWorkingSha256": "16e1b81b0f234f017f6fea8d2ec5c3fc3dcb8bd626da553242573d1d16d8b41f",
+      "committedGitSha256": "a8c152f8187e6dff39aa1f3aa5e170bcee6a501733d9ae2c71268027cac1ea84",
+      "bytes": 13932,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/AGENT-HANDOFF.md",
+      "qualifiedWorkingSha256": "8e0f9e9a041e1728239204ae626aa8fe1c76a259627c6964a8a400efbf7c3ade",
+      "committedGitSha256": "35ee3fb427b28378ec10569a8213cc11f7f514fb86bec25f92a75961a151a3b5",
+      "bytes": 18571,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/SOURCES.md",
+      "qualifiedWorkingSha256": "56e9b2da026fc46b9aed99cfca14627da985cdb41801558594518c61b8539199",
+      "committedGitSha256": "db21f5f82899a61d667e816282a914205ccaabf65e73b5b1dfcc6da23479b481",
+      "bytes": 7987,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/build-models.mjs",
+      "qualifiedWorkingSha256": "61e9831d08407b11e153ce2548215d3cf01bb534978e6f0aea5a3b05ffbff090",
+      "committedGitSha256": "30eb0fcc25fd5f7c487fe28a8943472bfbbeccfa58b7174c2c5b052baffc1a67",
+      "bytes": 17100,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/render.mjs",
+      "qualifiedWorkingSha256": "d1e923fb1b1ac6efe304c78bbca18d25b2e121b2923dfef4f0b6f66b173ed0ef",
+      "committedGitSha256": "93b4263786fd214bd3613f0efdf142bead69f53e18e47e77486c17f229d26e20",
+      "bytes": 18027,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/bootstrap.mjs",
+      "qualifiedWorkingSha256": "4b026b1d73c5f86675bd0da9ba41f9e59ee9dbf2e3f9526aba3b59bdd15121c2",
+      "committedGitSha256": "8a6811a3d832e4113debbf543a760415183c688ae6d47e7ea0e2961f4144492f",
+      "bytes": 4090,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/edition.mjs",
+      "qualifiedWorkingSha256": "eaad48053de96f52476002c37b2c0300c2ae02ebf406fff2a511711fd0e6ddad",
+      "committedGitSha256": "215439dc6b7cef1ad785e65a78d9de53dfb404a62e413bde93375935e854db3a",
+      "bytes": 2742,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/print.css",
+      "qualifiedWorkingSha256": "4711e207f2541fa4f214b7af3600199077423b7d8b44cff9960c467c895029e7",
+      "committedGitSha256": "caeb614fabc03069047ee70efa538fde95615d304cb7d3378fc14d882b5c64b9",
+      "bytes": 5520,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/models.css",
+      "qualifiedWorkingSha256": "a3418365b3f6d3970e757959fe23ab5e54130b16f58488b802a67b577acda6d3",
+      "committedGitSha256": "e076ab2e4d3a4c9dfad05af4f1795e15c142e727099c04052cfb7c2c46178965",
+      "bytes": 958,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/review-native.py",
+      "qualifiedWorkingSha256": "d2b01830793067d510440fa470c414edfce9d6a654bbbd86c43c21e266cfb85b",
+      "committedGitSha256": "81e4b9222e5800bdcf2c87d0645d26566e9d99edb14cb2a59e17d01b6131fcf0",
+      "bytes": 8333,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/native_rules.py",
+      "qualifiedWorkingSha256": "efb58f526aba44ad17701c0624b6883266e3001bc864593a140c22474bce3d8b",
+      "committedGitSha256": "34e5f8307358a4dad96555a18be04ee715a0c1da1b01e48d515e504c58153143",
+      "bytes": 911,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/package.json",
+      "qualifiedWorkingSha256": "274cc40f7108bd788fe4c170eb42c478c66d681407cf7b56dbef401ea0187110",
+      "committedGitSha256": "24f1e54332afaf29840c534b0971048a3121c9f379f1adf950a6ce17b7bfe8dd",
+      "bytes": 438,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/book/production/requirements.txt",
+      "qualifiedWorkingSha256": "8134699e9eeda1be9b7bf8d6ee9b74b1abac05bcdcd0b4d4e0185dfe38d2a0c7",
+      "committedGitSha256": "4dd8c09de0370f642ac733601b0e4be238bb8cc715fce3fe191548c74eeef167",
+      "bytes": 31,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "docs/modeling-book/tools/make-atlas-plates.py",
+      "qualifiedWorkingSha256": "44617aa407e31901a7fc41f2f238a79f11e88adb779e7a91184a78e5bc12b035",
+      "committedGitSha256": "e63a632d0ba305aa8ea633349babe92fc910a53aa138d358233259ef1047baa7",
+      "bytes": 1924,
+      "lineEndingsNormalized": true
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "qualifiedWorkingSha256": "98237d2e1647a7caca58e21c896e085dd4f77ba5e2aec1b8bcb46a10b55778b3",
+      "committedGitSha256": "6088a4dc53a5609a51728f22d60bca3379eb8ea9f5cf97e215d3738f3e396469",
+      "bytes": 9912,
+      "lineEndingsNormalized": true
+    }
+  ]
+}

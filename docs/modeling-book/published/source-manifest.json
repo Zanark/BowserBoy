@@ -1,0 +1,3180 @@
+{
+  "title": "From Shapes to a Living Desk",
+  "subtitle": "Procedural 3D modeling: the complete BowserBOY agent handbook",
+  "stem": "From-Shapes-to-a-Living-Desk",
+  "edition": "First modeling edition / 2026-11",
+  "sourceBase": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+  "subject": "Independent procedural 3D modeling, construction workflow and agent reconstruction handbook",
+  "identityNote": "Runtime cutoff is pinned; exact manuscript, atlas and production hashes identify this later book. Supplemental main-branch links are explicitly living, not cutoff evidence.",
+  "chapters": [
+    {
+      "id": "MD01",
+      "title": "Evidence, libraries and the actual toolchain",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\01-evidence-and-toolchain\\README.md"
+    },
+    {
+      "id": "MD02",
+      "title": "The modeling contract and visual references",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\02-modeling-contract-and-references\\README.md"
+    },
+    {
+      "id": "MD03",
+      "title": "Coordinate systems and transform ownership",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\03-coordinate-systems-and-transforms\\README.md"
+    },
+    {
+      "id": "MD04",
+      "title": "The procedural geometry toolkit",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\04-procedural-geometry-toolkit\\README.md"
+    },
+    {
+      "id": "MD05",
+      "title": "GBA shell, silhouette and layered construction",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\05-gba-shell-and-silhouette\\README.md"
+    },
+    {
+      "id": "MD06",
+      "title": "GBA LCD, curved glass and frame",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\06-gba-lcd-glass-and-frame\\README.md"
+    },
+    {
+      "id": "MD07",
+      "title": "GBA controls, grips and tactile details",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\07-gba-controls-and-grips\\README.md"
+    },
+    {
+      "id": "MD08",
+      "title": "Cartridges, small details and markings",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\08-cartridges-details-and-markings\\README.md"
+    },
+    {
+      "id": "MD09",
+      "title": "Procedural textures and asset boundaries",
+      "part": 1,
+      "source": "docs\\modeling-book\\chapters\\09-procedural-textures-and-asset-boundaries\\README.md"
+    },
+    {
+      "id": "MD10",
+      "title": "DS assembly and the parameter map",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\10-ds-assembly-and-parameter-map\\README.md"
+    },
+    {
+      "id": "MD11",
+      "title": "Hinges, lids and articulation",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\11-hinges-lids-and-articulation\\README.md"
+    },
+    {
+      "id": "MD12",
+      "title": "DS shells, recesses and hardware",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\12-ds-shells-recesses-and-hardware\\README.md"
+    },
+    {
+      "id": "MD13",
+      "title": "DS controls and readable markings",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\13-ds-controls-and-readable-markings\\README.md"
+    },
+    {
+      "id": "MD14",
+      "title": "Dual LCDs and curved glass",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\14-dual-lcds-and-curved-glass\\README.md"
+    },
+    {
+      "id": "MD15",
+      "title": "Stylus construction and touch geometry",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\15-stylus-and-touch-geometry\\README.md"
+    },
+    {
+      "id": "MD16",
+      "title": "Cartridge insertion and loading choreography",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\16-cartridge-insertion-and-loading\\README.md"
+    },
+    {
+      "id": "MD17",
+      "title": "Inspection, camera and manipulation",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\17-inspection-camera-and-manipulation\\README.md"
+    },
+    {
+      "id": "MD18",
+      "title": "The DS model regression atlas",
+      "part": 2,
+      "source": "docs\\modeling-book\\chapters\\18-ds-model-regression-atlas\\README.md"
+    },
+    {
+      "id": "MD19",
+      "title": "Pear Boy: the parametric body",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\19-pear-body-parametric-surface\\README.md"
+    },
+    {
+      "id": "MD20",
+      "title": "Projecting a face onto a curved shell",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\20-pear-face-and-curved-projection\\README.md"
+    },
+    {
+      "id": "MD21",
+      "title": "Expressions, gaze and six visible freckles",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\21-expressions-gaze-and-freckles\\README.md"
+    },
+    {
+      "id": "MD22",
+      "title": "Limbs, rope and soft motion",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\22-limbs-rope-and-soft-motion\\README.md"
+    },
+    {
+      "id": "MD23",
+      "title": "Axolotl: the silicone body",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\23-axolotl-silicone-body\\README.md"
+    },
+    {
+      "id": "MD24",
+      "title": "Gills, tail and cute features",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\24-gills-tail-and-cute-features\\README.md"
+    },
+    {
+      "id": "MD25",
+      "title": "Companion light emission and material tuning",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\25-companion-light-emission\\README.md"
+    },
+    {
+      "id": "MD26",
+      "title": "Dragging, gravity and dropping",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\26-drag-gravity-and-drop\\README.md"
+    },
+    {
+      "id": "MD27",
+      "title": "Clearance, collision envelopes and home poses",
+      "part": 3,
+      "source": "docs\\modeling-book\\chapters\\27-clearance-and-home-poses\\README.md"
+    },
+    {
+      "id": "MD28",
+      "title": "The desk, room and tripod lamp",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\28-desk-room-and-tripod-lamp\\README.md"
+    },
+    {
+      "id": "MD29",
+      "title": "Light units, exposure and color",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\29-light-units-exposure-and-color\\README.md"
+    },
+    {
+      "id": "MD30",
+      "title": "Shadows, reflections and shaders",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\30-shadows-reflections-and-shaders\\README.md"
+    },
+    {
+      "id": "MD31",
+      "title": "Screen materials and pixel preservation",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\31-screen-materials-and-pixel-preservation\\README.md"
+    },
+    {
+      "id": "MD32",
+      "title": "Picking, occlusion and input ownership",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\32-picking-occlusion-and-input-ownership\\README.md"
+    },
+    {
+      "id": "MD33",
+      "title": "Render loops, GPU budgets and lifecycle",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\33-render-loop-gpu-budgets-and-lifecycle\\README.md"
+    },
+    {
+      "id": "MD34",
+      "title": "Algorithms and data structures",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\34-algorithms\\README.md"
+    },
+    {
+      "id": "MD35",
+      "title": "Design principles and failure boundaries",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\35-design-principles\\README.md"
+    },
+    {
+      "id": "MD36",
+      "title": "Validation and bounded recovery",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\36-validation-recovery-and-history\\README.md"
+    },
+    {
+      "id": "MD37",
+      "title": "The causal modeling history",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\37-causal-modeling-history\\README.md"
+    },
+    {
+      "id": "MD38",
+      "title": "Agent reconstruction and extension",
+      "part": 4,
+      "source": "docs\\modeling-book\\chapters\\38-agent-reconstruction-and-extension\\README.md"
+    }
+  ],
+  "parts": [
+    {
+      "number": 1,
+      "title": "Foundations and the Game Boy Advance"
+    },
+    {
+      "number": 2,
+      "title": "The articulated Nintendo DS"
+    },
+    {
+      "number": 3,
+      "title": "Characters, softness and movement"
+    },
+    {
+      "number": 4,
+      "title": "A complete, verifiable 3D world"
+    }
+  ],
+  "sections": [
+    {
+      "id": "orientation",
+      "title": "How to use this reconstruction manual",
+      "source": "docs\\modeling-book\\orientation.md"
+    },
+    {
+      "id": "agent-handoff",
+      "title": "The standalone agent handoff",
+      "source": "docs\\modeling-book\\AGENT-HANDOFF.md"
+    },
+    {
+      "id": "sources",
+      "title": "Sources, model coverage and research limits",
+      "source": "docs\\modeling-book\\SOURCES.md"
+    }
+  ],
+  "tocItems": [
+    {
+      "id": "orientation",
+      "title": "How to use this reconstruction manual"
+    },
+    {
+      "id": "part-1",
+      "title": "Part 1 - Foundations and the Game Boy Advance",
+      "part": true
+    },
+    {
+      "id": "opening-MD01",
+      "title": "MD01 - Evidence, libraries and the actual toolchain"
+    },
+    {
+      "id": "opening-MD02",
+      "title": "MD02 - The modeling contract and visual references"
+    },
+    {
+      "id": "opening-MD03",
+      "title": "MD03 - Coordinate systems and transform ownership"
+    },
+    {
+      "id": "opening-MD04",
+      "title": "MD04 - The procedural geometry toolkit"
+    },
+    {
+      "id": "opening-MD05",
+      "title": "MD05 - GBA shell, silhouette and layered construction"
+    },
+    {
+      "id": "opening-MD06",
+      "title": "MD06 - GBA LCD, curved glass and frame"
+    },
+    {
+      "id": "opening-MD07",
+      "title": "MD07 - GBA controls, grips and tactile details"
+    },
+    {
+      "id": "opening-MD08",
+      "title": "MD08 - Cartridges, small details and markings"
+    },
+    {
+      "id": "opening-MD09",
+      "title": "MD09 - Procedural textures and asset boundaries"
+    },
+    {
+      "id": "part-2",
+      "title": "Part 2 - The articulated Nintendo DS",
+      "part": true
+    },
+    {
+      "id": "opening-MD10",
+      "title": "MD10 - DS assembly and the parameter map"
+    },
+    {
+      "id": "opening-MD11",
+      "title": "MD11 - Hinges, lids and articulation"
+    },
+    {
+      "id": "opening-MD12",
+      "title": "MD12 - DS shells, recesses and hardware"
+    },
+    {
+      "id": "opening-MD13",
+      "title": "MD13 - DS controls and readable markings"
+    },
+    {
+      "id": "opening-MD14",
+      "title": "MD14 - Dual LCDs and curved glass"
+    },
+    {
+      "id": "opening-MD15",
+      "title": "MD15 - Stylus construction and touch geometry"
+    },
+    {
+      "id": "opening-MD16",
+      "title": "MD16 - Cartridge insertion and loading choreography"
+    },
+    {
+      "id": "opening-MD17",
+      "title": "MD17 - Inspection, camera and manipulation"
+    },
+    {
+      "id": "opening-MD18",
+      "title": "MD18 - The DS model regression atlas"
+    },
+    {
+      "id": "part-3",
+      "title": "Part 3 - Characters, softness and movement",
+      "part": true
+    },
+    {
+      "id": "opening-MD19",
+      "title": "MD19 - Pear Boy: the parametric body"
+    },
+    {
+      "id": "opening-MD20",
+      "title": "MD20 - Projecting a face onto a curved shell"
+    },
+    {
+      "id": "opening-MD21",
+      "title": "MD21 - Expressions, gaze and six visible freckles"
+    },
+    {
+      "id": "opening-MD22",
+      "title": "MD22 - Limbs, rope and soft motion"
+    },
+    {
+      "id": "opening-MD23",
+      "title": "MD23 - Axolotl: the silicone body"
+    },
+    {
+      "id": "opening-MD24",
+      "title": "MD24 - Gills, tail and cute features"
+    },
+    {
+      "id": "opening-MD25",
+      "title": "MD25 - Companion light emission and material tuning"
+    },
+    {
+      "id": "opening-MD26",
+      "title": "MD26 - Dragging, gravity and dropping"
+    },
+    {
+      "id": "opening-MD27",
+      "title": "MD27 - Clearance, collision envelopes and home poses"
+    },
+    {
+      "id": "part-4",
+      "title": "Part 4 - A complete, verifiable 3D world",
+      "part": true
+    },
+    {
+      "id": "opening-MD28",
+      "title": "MD28 - The desk, room and tripod lamp"
+    },
+    {
+      "id": "opening-MD29",
+      "title": "MD29 - Light units, exposure and color"
+    },
+    {
+      "id": "opening-MD30",
+      "title": "MD30 - Shadows, reflections and shaders"
+    },
+    {
+      "id": "opening-MD31",
+      "title": "MD31 - Screen materials and pixel preservation"
+    },
+    {
+      "id": "opening-MD32",
+      "title": "MD32 - Picking, occlusion and input ownership"
+    },
+    {
+      "id": "opening-MD33",
+      "title": "MD33 - Render loops, GPU budgets and lifecycle"
+    },
+    {
+      "id": "opening-MD34",
+      "title": "MD34 - Algorithms and data structures"
+    },
+    {
+      "id": "opening-MD35",
+      "title": "MD35 - Design principles and failure boundaries"
+    },
+    {
+      "id": "opening-MD36",
+      "title": "MD36 - Validation and bounded recovery"
+    },
+    {
+      "id": "opening-MD37",
+      "title": "MD37 - The causal modeling history"
+    },
+    {
+      "id": "opening-MD38",
+      "title": "MD38 - Agent reconstruction and extension"
+    },
+    {
+      "id": "agent-handoff",
+      "title": "The standalone agent handoff",
+      "source": "docs\\modeling-book\\AGENT-HANDOFF.md"
+    },
+    {
+      "id": "sources",
+      "title": "Sources, model coverage and research limits",
+      "source": "docs\\modeling-book\\SOURCES.md"
+    }
+  ],
+  "expectedDiagrams": 76,
+  "learningMarkers": [
+    "MD01-W01",
+    "MD01-R01",
+    "MD01-Q01",
+    "MD01-A01",
+    "MD02-W01",
+    "MD02-R01",
+    "MD02-Q01",
+    "MD02-A01",
+    "MD03-W01",
+    "MD03-R01",
+    "MD03-Q01",
+    "MD03-A01",
+    "MD04-W01",
+    "MD04-R01",
+    "MD04-Q01",
+    "MD04-A01",
+    "MD05-W01",
+    "MD05-R01",
+    "MD05-Q01",
+    "MD05-A01",
+    "MD06-W01",
+    "MD06-R01",
+    "MD06-Q01",
+    "MD06-A01",
+    "MD07-W01",
+    "MD07-R01",
+    "MD07-Q01",
+    "MD07-A01",
+    "MD08-W01",
+    "MD08-R01",
+    "MD08-Q01",
+    "MD08-A01",
+    "MD09-W01",
+    "MD09-R01",
+    "MD09-Q01",
+    "MD09-A01",
+    "MD10-W01",
+    "MD10-R01",
+    "MD10-Q01",
+    "MD10-A01",
+    "MD11-W01",
+    "MD11-R01",
+    "MD11-Q01",
+    "MD11-A01",
+    "MD12-W01",
+    "MD12-R01",
+    "MD12-Q01",
+    "MD12-A01",
+    "MD13-W01",
+    "MD13-R01",
+    "MD13-Q01",
+    "MD13-A01",
+    "MD14-W01",
+    "MD14-R01",
+    "MD14-Q01",
+    "MD14-A01",
+    "MD15-W01",
+    "MD15-R01",
+    "MD15-Q01",
+    "MD15-A01",
+    "MD16-W01",
+    "MD16-R01",
+    "MD16-Q01",
+    "MD16-A01",
+    "MD17-W01",
+    "MD17-R01",
+    "MD17-Q01",
+    "MD17-A01",
+    "MD18-W01",
+    "MD18-R01",
+    "MD18-Q01",
+    "MD18-A01",
+    "MD19-W01",
+    "MD19-R01",
+    "MD19-Q01",
+    "MD19-A01",
+    "MD20-W01",
+    "MD20-R01",
+    "MD20-Q01",
+    "MD20-A01",
+    "MD21-W01",
+    "MD21-R01",
+    "MD21-Q01",
+    "MD21-A01",
+    "MD22-W01",
+    "MD22-R01",
+    "MD22-Q01",
+    "MD22-A01",
+    "MD23-W01",
+    "MD23-R01",
+    "MD23-Q01",
+    "MD23-A01",
+    "MD24-W01",
+    "MD24-R01",
+    "MD24-Q01",
+    "MD24-A01",
+    "MD25-W01",
+    "MD25-R01",
+    "MD25-Q01",
+    "MD25-A01",
+    "MD26-W01",
+    "MD26-R01",
+    "MD26-Q01",
+    "MD26-A01",
+    "MD27-W01",
+    "MD27-R01",
+    "MD27-Q01",
+    "MD27-A01",
+    "MD28-W01",
+    "MD28-R01",
+    "MD28-Q01",
+    "MD28-A01",
+    "MD29-W01",
+    "MD29-R01",
+    "MD29-Q01",
+    "MD29-A01",
+    "MD30-W01",
+    "MD30-R01",
+    "MD30-Q01",
+    "MD30-A01",
+    "MD31-W01",
+    "MD31-R01",
+    "MD31-Q01",
+    "MD31-A01",
+    "MD32-W01",
+    "MD32-R01",
+    "MD32-Q01",
+    "MD32-A01",
+    "MD33-W01",
+    "MD33-R01",
+    "MD33-Q01",
+    "MD33-A01",
+    "MD34-W01",
+    "MD34-R01",
+    "MD34-Q01",
+    "MD34-A01",
+    "MD35-W01",
+    "MD35-R01",
+    "MD35-Q01",
+    "MD35-A01",
+    "MD36-W01",
+    "MD36-R01",
+    "MD36-Q01",
+    "MD36-A01",
+    "MD37-W01",
+    "MD37-R01",
+    "MD37-Q01",
+    "MD37-A01",
+    "MD38-W01",
+    "MD38-R01",
+    "MD38-Q01",
+    "MD38-A01"
+  ],
+  "minimumPages": 200,
+  "minimumBodyPages": 200,
+  "minimumProseWords": 52000,
+  "proseWords": 63587,
+  "chapterDepth": [
+    {
+      "id": "MD01",
+      "proseWords": 1681
+    },
+    {
+      "id": "MD02",
+      "proseWords": 1748
+    },
+    {
+      "id": "MD03",
+      "proseWords": 1728
+    },
+    {
+      "id": "MD04",
+      "proseWords": 1734
+    },
+    {
+      "id": "MD05",
+      "proseWords": 1763
+    },
+    {
+      "id": "MD06",
+      "proseWords": 1742
+    },
+    {
+      "id": "MD07",
+      "proseWords": 1742
+    },
+    {
+      "id": "MD08",
+      "proseWords": 1782
+    },
+    {
+      "id": "MD09",
+      "proseWords": 1755
+    },
+    {
+      "id": "MD10",
+      "proseWords": 1620
+    },
+    {
+      "id": "MD11",
+      "proseWords": 1637
+    },
+    {
+      "id": "MD12",
+      "proseWords": 1660
+    },
+    {
+      "id": "MD13",
+      "proseWords": 1628
+    },
+    {
+      "id": "MD14",
+      "proseWords": 1611
+    },
+    {
+      "id": "MD15",
+      "proseWords": 1615
+    },
+    {
+      "id": "MD16",
+      "proseWords": 1624
+    },
+    {
+      "id": "MD17",
+      "proseWords": 1659
+    },
+    {
+      "id": "MD18",
+      "proseWords": 1610
+    },
+    {
+      "id": "MD19",
+      "proseWords": 1801
+    },
+    {
+      "id": "MD20",
+      "proseWords": 1785
+    },
+    {
+      "id": "MD21",
+      "proseWords": 1767
+    },
+    {
+      "id": "MD22",
+      "proseWords": 1748
+    },
+    {
+      "id": "MD23",
+      "proseWords": 1761
+    },
+    {
+      "id": "MD24",
+      "proseWords": 1811
+    },
+    {
+      "id": "MD25",
+      "proseWords": 1809
+    },
+    {
+      "id": "MD26",
+      "proseWords": 1810
+    },
+    {
+      "id": "MD27",
+      "proseWords": 1793
+    },
+    {
+      "id": "MD28",
+      "proseWords": 1689
+    },
+    {
+      "id": "MD29",
+      "proseWords": 1493
+    },
+    {
+      "id": "MD30",
+      "proseWords": 1517
+    },
+    {
+      "id": "MD31",
+      "proseWords": 1570
+    },
+    {
+      "id": "MD32",
+      "proseWords": 1583
+    },
+    {
+      "id": "MD33",
+      "proseWords": 1564
+    },
+    {
+      "id": "MD34",
+      "proseWords": 1531
+    },
+    {
+      "id": "MD35",
+      "proseWords": 1603
+    },
+    {
+      "id": "MD36",
+      "proseWords": 1556
+    },
+    {
+      "id": "MD37",
+      "proseWords": 1517
+    },
+    {
+      "id": "MD38",
+      "proseWords": 1540
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/modeling-book/coverage/part-1.json",
+      "sha256": "5a8bb9a5f3b16e28432eaf8527a99eaba413698894bb606e9e72e62179d58762",
+      "bytes": 20343
+    },
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "sha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82",
+      "bytes": 4818
+    },
+    {
+      "path": "node_modules/three/package.json",
+      "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "bytes": 3672
+    },
+    {
+      "path": "node_modules/@playwright/test/package.json",
+      "sha256": "6b1c8bb530059f2555530e8dcc1b3803565237e17598683b3766c0fa313b3fd6",
+      "bytes": 754
+    },
+    {
+      "path": "docs/modeling-book/coverage/part-2.json",
+      "sha256": "ec20099c250528b4c8718df529d74ba8d4be3f84afa60c1c4c68946780b905aa",
+      "bytes": 17794
+    },
+    {
+      "path": "docs/modeling-book/coverage/part-3.json",
+      "sha256": "74add4ef351934e2b6f6cf748f5afb3f05a3d7e3faeae5b922e0a9b55c590e2e",
+      "bytes": 13403
+    },
+    {
+      "path": "docs/modeling-book/coverage/part-4.json",
+      "sha256": "799fe51d655c124aef65b974e73548c252bd4fcbb8e60ae10be6c9a30064b2bd",
+      "bytes": 17434
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/capture-manifest.json",
+      "sha256": "de8554494859305dbb0f48fe5eddbad1ee1d800b936059a4c17dab6f70430d9a",
+      "bytes": 18198
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/gba-front.png",
+      "sha256": "c92a482fb33852041ff8841ef5ee9cfbf5a596dd47bae26e5bcd1b292704baff",
+      "bytes": 57408
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/gba-back.png",
+      "sha256": "43d0a745ab005d4842df2f86eba265dbd6f54be17c584194bba215b2a0971283",
+      "bytes": 57406
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/gba-three-quarter.png",
+      "sha256": "3dd1b8d1bba316dd799d895af799df608cb06fdb078dcbfe7f31a3d95a22334d",
+      "bytes": 70864
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/ds-front.png",
+      "sha256": "6904e949214ef8b22e59db883b85c95048c118edcd21c2de9fbcadd2f93a5c22",
+      "bytes": 85559
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/ds-back.png",
+      "sha256": "38cc9d120d635a6a5813b36782717197b36005c67553575bb94723647812b721",
+      "bytes": 106864
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/ds-three-quarter.png",
+      "sha256": "0a3b6b512c4dd46f1e66518b79df5073985d2b1bb5b17a54b01312e39e290fea",
+      "bytes": 95557
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/pear-front.png",
+      "sha256": "52922810126cc33c421be9fdd95dfc4f41d0ee560b451e4c3d48cf6b2e08ae17",
+      "bytes": 108566
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/pear-back.png",
+      "sha256": "fc85e6c9047ef57c717263f5b297b37f1239ca7a8b21a4dd73db0ea7f356b6cf",
+      "bytes": 99632
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/pear-three-quarter.png",
+      "sha256": "ebc6c8e7af5113cbc122242d2210d655e78d6b667369aec529ba29b21584aee5",
+      "bytes": 82110
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/axolotl-front.png",
+      "sha256": "e277680bc55e98b6e1a27aa67190e931b7629a081f4abb8d6220e8054948b64b",
+      "bytes": 88892
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/axolotl-back.png",
+      "sha256": "4279c93c373949585337560ff23b763c343dbfc5bbd8646fa1c984a887f8cd6b",
+      "bytes": 106290
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/axolotl-three-quarter.png",
+      "sha256": "668c8c1d97c4a2eb39a0b708ee2af5253bb8e6c9c60f7660bc82c607fb050123",
+      "bytes": 67219
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/lamp-front.png",
+      "sha256": "a231d75b3baa31f96db119a472cb7242b984ae6b91ae56a613cffdc9c519e284",
+      "bytes": 148821
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/lamp-back.png",
+      "sha256": "8a4ea3f87c92fdbafbdfc78b4138b59b45a5043ad207f51f4ef705c6dda1b630",
+      "bytes": 153227
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/lamp-three-quarter.png",
+      "sha256": "183d181e5f3958478f39c9dbb2cb5bd52ce4d7e905b52293c6462a32ec57d41d",
+      "bytes": 152308
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/cartridge-front.png",
+      "sha256": "c1b5f2f57b755713c594d62935fc1c214dd685ca96f18ffc1c6efe604364f75c",
+      "bytes": 37633
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/cartridge-back.png",
+      "sha256": "fd2f0e7684abcb571f48b58225750eee7e7743649b221cab9099e4317ec4ad51",
+      "bytes": 11938
+    },
+    {
+      "path": "docs/modeling-book/assets/atlas/cartridge-three-quarter.png",
+      "sha256": "d91b142d144ca8e996b819d649d3fe3a1273fdab6a8ddb4bf2fa4442b347cc50",
+      "bytes": 40981
+    },
+    {
+      "path": "docs/modeling-book/tools/capture-model-atlas.mjs",
+      "sha256": "df29d2c257f983a4dda76683be09e10f1315d5c3a2ac135bf7deaf1f77bf9a2a",
+      "bytes": 12604
+    },
+    {
+      "path": "docs/book/production/lib.mjs",
+      "sha256": "0d706c9ff279d12c2a0f7c23c204e5104d17f03fa24dd9afb3d9029aec9239f7",
+      "bytes": 2983
+    },
+    {
+      "path": "docs/book/production/package-lock.json",
+      "sha256": "6056a2ad6bb374cc2c3ea7f79f8be54d216ecc0e34177f24b627a5a5896a2e4a",
+      "bytes": 58809
+    },
+    {
+      "path": "docs/modeling-book/orientation.md",
+      "sha256": "f7383453ae09cbf47720bfc0ffe109d2bf83eb485785cc6df8541776fb30e42d",
+      "bytes": 13349
+    },
+    {
+      "path": "docs/modeling-book/assets/model-atlas.png",
+      "sha256": "12f70c3477ac8b0ea739d226290c6a2df9bb4f4bab2997419c2e92dadc0e079c",
+      "bytes": 221630
+    },
+    {
+      "path": "docs/modeling-book/chapters/01-evidence-and-toolchain/README.md",
+      "sha256": "730ae7e0ee3c104acc868516149181ed0c326ed9a33a23e787ee0ebbd0883759",
+      "bytes": 15380
+    },
+    {
+      "path": "docs/modeling-book/chapters/02-modeling-contract-and-references/README.md",
+      "sha256": "1df013580a47a128589b5234ca20ff3fc6579403973cac31f9eae6feb0612923",
+      "bytes": 14964
+    },
+    {
+      "path": "docs/modeling-book/chapters/03-coordinate-systems-and-transforms/README.md",
+      "sha256": "3f61e6eb695d27bcba944348480481f3c630a753f633ac8c5be1cf8309f93828",
+      "bytes": 15233
+    },
+    {
+      "path": "docs/modeling-book/chapters/04-procedural-geometry-toolkit/README.md",
+      "sha256": "c3b592f2bdf805aa4c3ae1b1548d21c97632b23823160371cdf03cfc0c4e7895",
+      "bytes": 14923
+    },
+    {
+      "path": "docs/modeling-book/chapters/05-gba-shell-and-silhouette/README.md",
+      "sha256": "f6ac908218edd2a765c4de178252ae4226e112e5fac28c587c246f44641e888e",
+      "bytes": 15150
+    },
+    {
+      "path": "docs/modeling-book/chapters/06-gba-lcd-glass-and-frame/README.md",
+      "sha256": "7e6160277ee034ab199b1517ce6b0a38d270aa98452a65badad351e869a34fb0",
+      "bytes": 15223
+    },
+    {
+      "path": "docs/modeling-book/chapters/07-gba-controls-and-grips/README.md",
+      "sha256": "a0c8a84246c5ba4eb4497d5bdca67ccc301988b1131d4a53d8c25e0af1610be3",
+      "bytes": 15411
+    },
+    {
+      "path": "docs/modeling-book/chapters/08-cartridges-details-and-markings/README.md",
+      "sha256": "1e2106c04a66c24eb7e13196b1398f816e3dbc4551d32f3308e4fcadcb4647d1",
+      "bytes": 15314
+    },
+    {
+      "path": "docs/modeling-book/chapters/09-procedural-textures-and-asset-boundaries/README.md",
+      "sha256": "516e1bf63be56ea76897522f6cb86046359fa7ef88f0a38f74719185138d981f",
+      "bytes": 15975
+    },
+    {
+      "path": "docs/modeling-book/chapters/10-ds-assembly-and-parameter-map/README.md",
+      "sha256": "3de269551593a1edb5306f96ef5f3847dd80272c07d8a019de4bb5bae2c5eb4f",
+      "bytes": 14402
+    },
+    {
+      "path": "docs/modeling-book/chapters/11-hinges-lids-and-articulation/README.md",
+      "sha256": "4e38983be85b75ea0174299f39080ac1628028acced2ba840189e4004b36b9f6",
+      "bytes": 13647
+    },
+    {
+      "path": "docs/modeling-book/chapters/12-ds-shells-recesses-and-hardware/README.md",
+      "sha256": "cd016585043b86d4ef6d44c01fa0c26ff8e7ebe22202e122d66f36165d67d8f5",
+      "bytes": 13701
+    },
+    {
+      "path": "docs/modeling-book/chapters/13-ds-controls-and-readable-markings/README.md",
+      "sha256": "ab11067509e7991896a694aa9c51b600c5f107e89e4e95d3b9176c27339a56a3",
+      "bytes": 13870
+    },
+    {
+      "path": "docs/modeling-book/chapters/14-dual-lcds-and-curved-glass/README.md",
+      "sha256": "cab67205c4a0209f50117450fb3a1ad213d697e3ea8d84c91009a38528687a98",
+      "bytes": 14067
+    },
+    {
+      "path": "docs/modeling-book/chapters/15-stylus-and-touch-geometry/README.md",
+      "sha256": "bbfd6264aa3c8dd723d8f6d0a70de2e4ec03100fe6a335b4f3c8de3771df4f95",
+      "bytes": 13664
+    },
+    {
+      "path": "docs/modeling-book/chapters/16-cartridge-insertion-and-loading/README.md",
+      "sha256": "80de9fc45c3823f41268553626919eec97573ae2f8df48bb820f4d8a4ea8b73b",
+      "bytes": 14150
+    },
+    {
+      "path": "docs/modeling-book/chapters/17-inspection-camera-and-manipulation/README.md",
+      "sha256": "d6be4a609023de3e8f183a3c5f43dfb7aa86242bcc3f80b342d55cd8aad0b29a",
+      "bytes": 14564
+    },
+    {
+      "path": "docs/modeling-book/chapters/18-ds-model-regression-atlas/README.md",
+      "sha256": "de24617131989ff1f1b7b4a10fb12a204308fa55d0f0d097d26b423d365256b5",
+      "bytes": 15112
+    },
+    {
+      "path": "docs/modeling-book/chapters/19-pear-body-parametric-surface/README.md",
+      "sha256": "d781c9449bcb2c6f2f259ff44bc21cab846a2d4f1c819704c4c542d89ec8a14d",
+      "bytes": 14899
+    },
+    {
+      "path": "docs/modeling-book/chapters/20-pear-face-and-curved-projection/README.md",
+      "sha256": "33c5a9eb2d5c22e0b8f2be22274581dc16534212095a0ca556a2fe69068afee0",
+      "bytes": 14667
+    },
+    {
+      "path": "docs/modeling-book/chapters/21-expressions-gaze-and-freckles/README.md",
+      "sha256": "621302b982717ea32da8bfe9bc0e6f8859eb44cb878bee505ecc25f80be63dc6",
+      "bytes": 15042
+    },
+    {
+      "path": "docs/modeling-book/chapters/22-limbs-rope-and-soft-motion/README.md",
+      "sha256": "d7d11928980d4873bc1214032b131f9baf4bdca346a6396ae2f6547c2757182e",
+      "bytes": 14334
+    },
+    {
+      "path": "docs/modeling-book/chapters/23-axolotl-silicone-body/README.md",
+      "sha256": "859b035b974e0f1214333722630323ba75735433aebc8623395b858ba3b6fa61",
+      "bytes": 14135
+    },
+    {
+      "path": "docs/modeling-book/chapters/24-gills-tail-and-cute-features/README.md",
+      "sha256": "98d6f4f88628aeba5d8ebdda81a97b66c69445e707e972d1045f3545e0c04bd6",
+      "bytes": 14065
+    },
+    {
+      "path": "docs/modeling-book/chapters/25-companion-light-emission/README.md",
+      "sha256": "07b35214d0e717b9982ca217650a52f5c85668035f3c252a1b17c3eaf7998409",
+      "bytes": 15363
+    },
+    {
+      "path": "docs/modeling-book/chapters/26-drag-gravity-and-drop/README.md",
+      "sha256": "7f7600c72061a14e504a9a16cd12211d734b78eeddeec4d7bf8364dd45fffcd1",
+      "bytes": 15264
+    },
+    {
+      "path": "docs/modeling-book/chapters/27-clearance-and-home-poses/README.md",
+      "sha256": "1932a0f9da4e217db53a98e99e82478f74623c71ecfaa587cb4f378320765ccd",
+      "bytes": 15256
+    },
+    {
+      "path": "docs/modeling-book/chapters/28-desk-room-and-tripod-lamp/README.md",
+      "sha256": "e29119d86ee85154fd03d5f9a9a386b0cd825de5aa63ce4bdfde7004301a5a8e",
+      "bytes": 14068
+    },
+    {
+      "path": "docs/modeling-book/chapters/29-light-units-exposure-and-color/README.md",
+      "sha256": "abd473a605117767c5733d5cba108eed02ae23b17128b95500c7e179227b0859",
+      "bytes": 13187
+    },
+    {
+      "path": "docs/modeling-book/chapters/30-shadows-reflections-and-shaders/README.md",
+      "sha256": "04d2ba92d3644c87438fed427e8d1da5146cadffce1864552311e068326ac55d",
+      "bytes": 13590
+    },
+    {
+      "path": "docs/modeling-book/chapters/31-screen-materials-and-pixel-preservation/README.md",
+      "sha256": "bd273a2c6f8ae1b8b0697d79c282a48ff82b3bbde5c82d8958fe0d9338e1ada6",
+      "bytes": 14083
+    },
+    {
+      "path": "docs/modeling-book/chapters/32-picking-occlusion-and-input-ownership/README.md",
+      "sha256": "9145df7b583574629db32d3f556c2603e9dcea3b5a508bc41364b04e2fa57a31",
+      "bytes": 14168
+    },
+    {
+      "path": "docs/modeling-book/chapters/33-render-loop-gpu-budgets-and-lifecycle/README.md",
+      "sha256": "5e2a7975526375b93bb1992c5925ce97af85e04f943b43a8937dbe71ba0c71fa",
+      "bytes": 14370
+    },
+    {
+      "path": "docs/modeling-book/chapters/34-algorithms/README.md",
+      "sha256": "5e2878211bfe07bcd76d0ba877ebe237fdda3516f86bc1ec92d179f45c38882a",
+      "bytes": 13630
+    },
+    {
+      "path": "docs/modeling-book/chapters/35-design-principles/README.md",
+      "sha256": "e8edbcd970d236bfdf2ded0456693dd589d74779c560c3c5922677a3a7f9c895",
+      "bytes": 14892
+    },
+    {
+      "path": "docs/modeling-book/chapters/36-validation-recovery-and-history/README.md",
+      "sha256": "7a29d4ce2f256ea1b1894d67613bca081533478bd22529124c2ebed5b7031bd0",
+      "bytes": 14463
+    },
+    {
+      "path": "docs/modeling-book/chapters/37-causal-modeling-history/README.md",
+      "sha256": "cb206cf29d44f397b59ed57a0f068c62d14308c6ca099c4cd527a3ddefbbdb63",
+      "bytes": 14726
+    },
+    {
+      "path": "docs/modeling-book/chapters/38-agent-reconstruction-and-extension/README.md",
+      "sha256": "16e1b81b0f234f017f6fea8d2ec5c3fc3dcb8bd626da553242573d1d16d8b41f",
+      "bytes": 14282
+    },
+    {
+      "path": "docs/modeling-book/AGENT-HANDOFF.md",
+      "sha256": "8e0f9e9a041e1728239204ae626aa8fe1c76a259627c6964a8a400efbf7c3ade",
+      "bytes": 18714
+    },
+    {
+      "path": "docs/modeling-book/SOURCES.md",
+      "sha256": "56e9b2da026fc46b9aed99cfca14627da985cdb41801558594518c61b8539199",
+      "bytes": 8038
+    },
+    {
+      "path": "docs/book/production/build-models.mjs",
+      "sha256": "61e9831d08407b11e153ce2548215d3cf01bb534978e6f0aea5a3b05ffbff090",
+      "bytes": 17363
+    },
+    {
+      "path": "docs/book/production/render.mjs",
+      "sha256": "d1e923fb1b1ac6efe304c78bbca18d25b2e121b2923dfef4f0b6f66b173ed0ef",
+      "bytes": 18283
+    },
+    {
+      "path": "docs/book/production/bootstrap.mjs",
+      "sha256": "4b026b1d73c5f86675bd0da9ba41f9e59ee9dbf2e3f9526aba3b59bdd15121c2",
+      "bytes": 4169
+    },
+    {
+      "path": "docs/book/production/edition.mjs",
+      "sha256": "eaad48053de96f52476002c37b2c0300c2ae02ebf406fff2a511711fd0e6ddad",
+      "bytes": 2799
+    },
+    {
+      "path": "docs/book/production/print.css",
+      "sha256": "4711e207f2541fa4f214b7af3600199077423b7d8b44cff9960c467c895029e7",
+      "bytes": 5592
+    },
+    {
+      "path": "docs/book/production/models.css",
+      "sha256": "a3418365b3f6d3970e757959fe23ab5e54130b16f58488b802a67b577acda6d3",
+      "bytes": 978
+    },
+    {
+      "path": "docs/book/production/review-native.py",
+      "sha256": "d2b01830793067d510440fa470c414edfce9d6a654bbbd86c43c21e266cfb85b",
+      "bytes": 8493
+    },
+    {
+      "path": "docs/book/production/native_rules.py",
+      "sha256": "efb58f526aba44ad17701c0624b6883266e3001bc864593a140c22474bce3d8b",
+      "bytes": 931
+    },
+    {
+      "path": "docs/book/production/package.json",
+      "sha256": "274cc40f7108bd788fe4c170eb42c478c66d681407cf7b56dbef401ea0187110",
+      "bytes": 456
+    },
+    {
+      "path": "docs/book/production/requirements.txt",
+      "sha256": "8134699e9eeda1be9b7bf8d6ee9b74b1abac05bcdcd0b4d4e0185dfe38d2a0c7",
+      "bytes": 33
+    },
+    {
+      "path": "docs/modeling-book/tools/make-atlas-plates.py",
+      "sha256": "44617aa407e31901a7fc41f2f238a79f11e88adb779e7a91184a78e5bc12b035",
+      "bytes": 1963
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "98237d2e1647a7caca58e21c896e085dd4f77ba5e2aec1b8bcb46a10b55778b3",
+      "bytes": 10075
+    }
+  ],
+  "images": [
+    {
+      "source": "docs/modeling-book/assets/model-atlas.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "6524edf825e8b347a465d72809f53a83be0d08de45dfee0b05cb38fe3dc7b752"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/gba-three-quarter.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "7387ddc470c6f9d21fa3cc7d5e87872de538518f6b2cd643ed0087cdf909911d"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/cartridge-three-quarter.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "598a66a65d3069992d6b2c854c26602a8f67321eb54228c1e0c19626738d88f7"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/gba-back.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "156d88767e2516702a581e028f68fcf1ea246f8cccd4a272049d99afe3b786cd"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/ds-front.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "9d72fc8a63e8c5794c596d5ea8f228bec04c05cc870401920ae4153e151eeb73"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/ds-back.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "43353c770e2ceb11a60082bcabcdf2edd131ab8236a10985c8b9de3db00d51cd"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/ds-three-quarter.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "675fd581de649abe44315a50552180836ad9399cb8ad53d8c045c007657f7ad5"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/pear-front.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "a76381bfbf7f3325ec69b5da6b4150cb945f989d27db609193b51b6fef3cfdac"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/axolotl-three-quarter.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "9a6275c7b0d9b419cb7ea91ed2037a35ed2ec689777bee1b3b8252872ad45e70"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/lamp-front.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "427e52bc0c96ded93b1f00f2853fbcbb0a820c707eb7a90ac017c0e5b6705551"
+    },
+    {
+      "source": "docs/modeling-book/assets/atlas/lamp-three-quarter.png",
+      "transform": "metadata-clean PNG",
+      "sha256": "a2f9d30af2c51d2a1944e1defe73c918cee9dd0dbbffb9532d1b360e2e680160"
+    }
+  ],
+  "sourceReferences": [
+    {
+      "path": "src/handheld.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "a597c76b352c9ce46e0e68d8326c05cc98b4d3e2a65e51f462a8543c2bdca1d9",
+      "lines": 686
+    },
+    {
+      "path": "src/brand.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "f3dfae39c54967ff93014f9144ddb7c929fc85d3ecf34e443fe81e54ce40faf6",
+      "lines": 16
+    },
+    {
+      "path": "package.json",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "ad8189b9fee384bcb51f56a4eb6dd0f9c33f61e0ae8a90d79eed71fa905f26b8",
+      "lines": 25
+    },
+    {
+      "path": "package-lock.json",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "f92699dd0cb7d232b6e5811de61baee13518165c28b36fd2bf480433e84f855b",
+      "lines": 73
+    },
+    {
+      "path": "web/index.html",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "9f2b9c0f50a1f0751034316c0c0a291f57453d8bead154512ee44061836252bc",
+      "lines": 239
+    },
+    {
+      "path": "scripts/build.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "57c62edb29fade9291d48766176686832d6f800b2a39951469d54e2b9005ee67",
+      "lines": 17
+    },
+    {
+      "path": "scripts/site-files.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "6711475a389940e94ccf58c8ca45e1e2b2e5204659a26730fb76cb31367500ea",
+      "lines": 27
+    },
+    {
+      "path": "tests/browser/scene.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "e4a82a27a50d3d678d5c5ab74c299059fc5bb5851058bf77a041a8ecb7184d61",
+      "lines": 1647
+    },
+    {
+      "path": "tests/browser/player.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "e2721f1b2cc9500fce65ec62f5cda953b7d6339094dbde3b0d75e51afd466eca",
+      "lines": 1112
+    },
+    {
+      "path": "TODO/06_3D_TABLETOP.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "cb9ba13d0acbaaa4eeadf85c6dec8e3f3f0914c228003c2353fd705bb4e67e3a",
+      "lines": 64
+    },
+    {
+      "path": "TODO/07_REFERENCE_SHAPE.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "12d37dc6ad73323e5440663b741585812d5effafdc1e3e325704edb1d34d570f",
+      "lines": 52
+    },
+    {
+      "path": "TODO/13_CURVED_LCD_BORDER.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "448b0b42effffa2d773157d17a8e35d4f42a94908ccbdb077ea61ff6a2f9cb2e",
+      "lines": 46
+    },
+    {
+      "path": "docs/book/chapters/04-handheld-geometry/README.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "b6a88927df81c771233b1a1611f06d6db92b00444fd85f6987ae781fe248c1d2",
+      "lines": 172
+    },
+    {
+      "path": "docs/book/chapters/05-pixels-and-light/README.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "e54c766902b4f2390244effa9af1ef36f0e821c4cf41a025fd8588156c76a1a2",
+      "lines": 93
+    },
+    {
+      "path": "docs/book/production/package.json",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "24f1e54332afaf29840c534b0971048a3121c9f379f1adf950a6ce17b7bfe8dd",
+      "lines": 19
+    },
+    {
+      "path": "src/ds-handheld.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "de02d5aa30ef7a04273b3e28032f6f09e8f95cd4b40f799f1e08bbfd6bd99949",
+      "lines": 276
+    },
+    {
+      "path": "src/ds-controller.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "6acc6b3ed13ba23be3bc91d6bbbce512713a5c6c31a8cab89dcb41d88289f1b3",
+      "lines": 720
+    },
+    {
+      "path": "src/ds-touch.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "9cbee0ba33db86b824778e47ec2d1f613cc44206f4a1d79228562af258fb6b7e",
+      "lines": 49
+    },
+    {
+      "path": "src/ds-cartridge.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "811124d86338203c9d6e6a4d81ace0ef045dcf6732c72edce8037f5299f2854f",
+      "lines": 116
+    },
+    {
+      "path": "src/cartridge-motion.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "52440c7b93ac97450afab6d29ad8cbc9f62c74835201291fde0ec408cbc97675",
+      "lines": 12
+    },
+    {
+      "path": "src/transition-motion.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "88c20941e33ec538852bb5e4be225170ad22ceaca620e1ffd6b675af26e51c90",
+      "lines": 9
+    },
+    {
+      "path": "src/scene.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "eede4292c441624af5ae67ea8e93f8529065e6cd394851d980d1ee42bd5b2b04",
+      "lines": 1452
+    },
+    {
+      "path": "src/lighting.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "6a920fce8fd53d3e4ba53512a11a1db600db0d306090e60713c51fd53f3cb69a",
+      "lines": 190
+    },
+    {
+      "path": "tests/browser/ds.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "d339a073c1fea57a441df92008ee976a50f91bed4c6157b73fc5a3b4871ee288",
+      "lines": 1765
+    },
+    {
+      "path": "tests/unit/ds-controls.test.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "36e4cb98ac07830f52fc2f084cc6e552178db2790528c539ffbe6f060a70d3c2",
+      "lines": 78
+    },
+    {
+      "path": "tests/unit/ds-touch.test.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "6177da2bd27d342d0a5e376fc8d1737cf47ceceeeda5663b7af9581a2f2e7420",
+      "lines": 73
+    },
+    {
+      "path": "TODO/87_DS_HINGE_GAMEPLAY_POSE.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "100722fef315cc470b128f8dce1636450a01ec9a9d6bc7c079cd29ef685683dd",
+      "lines": 70
+    },
+    {
+      "path": "TODO/89_PICKABLE_DS_STYLUS.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "9d5a399bf420027b0d4d007ac60d70f21712e41c36e160fa176348c2c725a1fc",
+      "lines": 44
+    },
+    {
+      "path": "TODO/95_DS_REAR_MARKINGS.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "07465f848637befd3d19acf542cbfe3deeafa0ee630b0b3b342161ae1ff2d04a",
+      "lines": 54
+    },
+    {
+      "path": "TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "be12e64402a78c0dd733a14b7cb69fb56c92d68b7b4ff118587739ba4dee665c",
+      "lines": 64
+    },
+    {
+      "path": "TODO/97_DS_DIRECTIONAL_DPAD.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "334cb9b7a1ffdb73e458b6a50b9a7862920a975e142579ab48e2ff22f55a804a",
+      "lines": 84
+    },
+    {
+      "path": "TODO/100_LARGER_DS_REAR_EMBLEM.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "4f1c069ed3cfd6dda40f44003e1ed30f0a7558227eb30d6df4ce3819dbfbdde3",
+      "lines": 40
+    },
+    {
+      "path": "TODO/103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "a426c00353eebf04fb58d6c28acee7ac8ac1063e35d9837aed6c15810ffd16f0",
+      "lines": 50
+    },
+    {
+      "path": "TODO/115_DS_IMMEDIATE_LOADING.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "466bebfc802fef43a163dfcaeeebe3eae691cf3da1d999ca39fe8ebaf0288994",
+      "lines": 47
+    },
+    {
+      "path": "TODO/116_DS_UPRIGHT_LIGHTING.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "5b711f93260abfffc6e122fe31739ed5b506355dfc1dba24c88401d92fe4f5b4",
+      "lines": 57
+    },
+    {
+      "path": "docs/nds-book/chapters/08-physical-ds/README.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "28b95038184cf1b95ec2c7e488a3bcc745c90c114445d7efa1fa8fa023e522de",
+      "lines": 203
+    },
+    {
+      "path": "src/pear-boy.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "ef70272d8d340104704271cdde6cd35653f299e3c2b1fa97dfebe4b0896c0fd0",
+      "lines": 378
+    },
+    {
+      "path": "src/axolotl-lamp.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "41df9be765fac8ee987f2e82187f3915605485a1fbe7ea15bd52e270ee552005",
+      "lines": 92
+    },
+    {
+      "path": "src/pear-rope.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "9c0b3eac67d646f774781f7bba1c3cfe4168eeab3c6664e7d5e53960260b5674",
+      "lines": 153
+    },
+    {
+      "path": "src/pear-motion.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "ce34d78bad36d38635a14f4d993deba14fb8c27a1bedbb27cddca9112d610d1b",
+      "lines": 158
+    },
+    {
+      "path": "src/desk-clearance.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "1425cd2f3d1c9eb46e665c9060884e8efe934d5cf458d47b6760adfdf4b1c8cd",
+      "lines": 36
+    },
+    {
+      "path": "tests/unit/pear-rope.test.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "32587be69f095d99a1f6f360fe4a2fe2eec7355d5a67ac6dc8a52a278ed7f2c2",
+      "lines": 108
+    },
+    {
+      "path": "tests/unit/pear-motion.test.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "4911b113dcd2efae0a7fb8aadb16a2dee57591af9333bc87de8c37b50cb8c704",
+      "lines": 181
+    },
+    {
+      "path": "tests/unit/desk-clearance.test.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "da8b8d0f7e62b2d94fbc8d3ca313f078182c6e0e72a3198baeda13d455d279dd",
+      "lines": 124
+    },
+    {
+      "path": "tests/browser/pear-boy.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "cdf96905a4a174600a3deeb360c6b0cd81984f09aee7c54b78813ea514d14c1c",
+      "lines": 507
+    },
+    {
+      "path": "tests/browser/desk-clearance.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "4c5689094769e66d892c871452fc2005c5ee9e24e5c72f0f6aaa07b28b9505ce",
+      "lines": 228
+    },
+    {
+      "path": "tests/browser/console-movement.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "7da94eb3d500d97b97457ec7f8ebf2b2ad85f5fb5dc187641112ecba2d8ca4aa",
+      "lines": 278
+    },
+    {
+      "path": "tests/browser/dock.spec.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "a0903f7b287f0f0405e67017bc31cd74db0965eb1d125d9913f3b391f01fa029",
+      "lines": 1753
+    },
+    {
+      "path": "TODO/84_PEAR_BOY.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "f4474bf226be13cedf272045b47b33d32c86505bff6eabe659f8f8ed1c867b62",
+      "lines": 105
+    },
+    {
+      "path": "TODO/107_PEAR_BOY_EXPRESSIONS.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "2d9b20861ff1d7c4492db9eb54135e997cbe6960fc42f5e24f2902cb3c9c2997",
+      "lines": 42
+    },
+    {
+      "path": "TODO/110_SMALL_AXOLOTL_LAMP.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "ed91f255036029356ed1a14ba059b0d4ef887c16b612566147ed75c566c75935",
+      "lines": 59
+    },
+    {
+      "path": "TODO/111_MOVABLE_AXOLOTL.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "a64f5a047dc3b0270b06603ea082a077a2c606a6004e7638cd62644870c75e19",
+      "lines": 51
+    },
+    {
+      "path": "TODO/113_PEAR_BOY_CUTER_RECOVERY.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "9fddee2d20a7198b1465fda92d2e71af35f0e473a6e9cc6817bb9be920e378e8",
+      "lines": 40
+    },
+    {
+      "path": "TODO/118_PEAR_BOY_FACE_TRAVEL.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "e3edce867c87b25278bb01bf89c5d835705e77f9c9c6e2a90acc5dc25828966f",
+      "lines": 48
+    },
+    {
+      "path": "TODO/121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "d97739844d1c1d63030c45c02a0513381eabdfdc59b0a62e3974ff6eda4ea50a",
+      "lines": 44
+    },
+    {
+      "path": "TODO/93_MODE_BASED_MODEL_CLEARANCE.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "4e964695984accc00a79bd0be9895b442fdf6aa16bdc1733c57843464bffee3f",
+      "lines": 110
+    },
+    {
+      "path": "docs/VERIFICATION.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "74fffe6793d9d63b0ca614f66ed687b04819c8c092f3488836fc8aa4b904f541",
+      "lines": 3353
+    },
+    {
+      "path": "src/lcd-crt.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "99883e987eeb3af91b5b4fbfc915334722d7acfa48ad0064fd4cacf7271b6586",
+      "lines": 40
+    },
+    {
+      "path": "src/preferences.js",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "3d91ee7122a4da7076d60c822ed9c7c2028d43171d7e8ebcf362e153309bcd6f",
+      "lines": 118
+    },
+    {
+      "path": "tests/browser/pixel-lab.mjs",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "244ab25c468b2be0540fd1b971b7f728496a9bd05748a88e341600152787e430",
+      "lines": 103
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "e8a368e49e61f9dc1472f9d257e1d6e28d83c4181011eed3ef0ddbd2a2df8c98",
+      "lines": 1167
+    },
+    {
+      "path": "docs/GUIDE.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "704f2809a68e2cd2575edb77b3ea66c84b246e40a8e2df1dd1637cafccab5acd",
+      "lines": 819
+    },
+    {
+      "path": "docs/GITHUB-TRACKING.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "c4ed1c15e2d6fe97c294434caf30bcd0dd85eee8dd8782435be5d5eaf9f82c07",
+      "lines": 64
+    },
+    {
+      "path": "README.md",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "18bc3721efdcfe96333bb18268d42ad39e4289b0fd01ab18860458899c531428",
+      "lines": 161
+    },
+    {
+      "path": "TODO/04_DEVELOPMENT_LEDGER.todo",
+      "revision": "1e4ef518d6943ab1af39cef3b4d558f209a17891",
+      "sha256": "aa505b26d5dcda11094bdf1b7362279922039f3444ae7ade2c1491edfd434fd8",
+      "lines": 2698
+    }
+  ],
+  "supplementalReferences": [],
+  "nonCutoffInputs": [
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "sha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    },
+    {
+      "path": "node_modules/three/package.json",
+      "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    },
+    {
+      "path": "node_modules/@playwright/test/package.json",
+      "sha256": "6b1c8bb530059f2555530e8dcc1b3803565237e17598683b3766c0fa313b3fd6",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    },
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "sha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    },
+    {
+      "path": "node_modules/three/package.json",
+      "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    },
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "sha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    },
+    {
+      "path": "docs/modeling-book/catalogue.mjs",
+      "sha256": "93aabeded7cd9207aaae6cc389908baca8d3ce7686e91e321f8fd38eff4a4d82",
+      "policy": "Actual later manuscript or installed dependency read; not an implementation-cutoff file."
+    }
+  ],
+  "coverage": [
+    {
+      "part": 1,
+      "chapters": [
+        "MD01",
+        "MD02",
+        "MD03",
+        "MD04",
+        "MD05",
+        "MD06",
+        "MD07",
+        "MD08",
+        "MD09"
+      ],
+      "models": [
+        {
+          "model": "GBA casing and silhouette",
+          "source": "src/handheld.js",
+          "symbol": "createHandheld",
+          "components": [
+            "Original XY shell path with stepped crown, shoulder transitions and quadratic bottom bow",
+            "Shell seam",
+            "Rear shell",
+            "Front shell",
+            "Front face with speaker apertures",
+            "Six rotated speaker holes and Recessed speaker grille floors",
+            "Shared purple, rear, seam and dark materials"
+          ],
+          "chapters": [
+            "MD02",
+            "MD03",
+            "MD04",
+            "MD05"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:1351-1391; real-3D case samples LCD, speaker-depth and D-pad-well surfaces; inspected, not executed here",
+            "tests/browser/scene.spec.mjs:946-983; active aperture-lighting cases contain per-control rest/press brightness assertions; inspected, not executed here"
+          ],
+          "limits": [
+            "Pinned implementation: 1e4ef518d6943ab1af39cef3b4d558f209a17891",
+            "Scene units are not verified millimeters; Bezier control points are not necessarily silhouette extrema",
+            "Layered overlapping exterior solids are not a certified watertight manufacturing model",
+            "Historical test success and reference review do not establish current human approval"
+          ]
+        },
+        {
+          "model": "GBA LCD and frame",
+          "source": "src/handheld.js",
+          "symbol": "createLcdGeometries; crtShape; createHandheld",
+          "components": [
+            "Bezel surround",
+            "Charcoal bezel",
+            "Curved or flat screen geometry at local viewport 4.05 by 2.7",
+            "LCD recess with matching curved or rounded-rectangle perimeter",
+            "Live LCD basic material, no tone mapping, no cast/receive shadows",
+            "Linear rectangular UV restoration and viewport metadata"
+          ],
+          "chapters": [
+            "MD03",
+            "MD04",
+            "MD06"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:1370-1388; center raycast requires Live LCD",
+            "tests/browser/scene.spec.mjs:1438-1517; CRT case specifies retained native source, sampled clipping, shortest edge gap and UV limits; skipped under CI at line 1439",
+            "tests/browser/player.spec.mjs:222-273; native preset loop checks direct video material and curved geometry only for CRT Geom"
+          ],
+          "limits": [
+            "No separately modeled transmissive GBA glass slab exists in this factory",
+            "Curved means fitted XY perimeter, not a physical Z-bulged lens",
+            "Edge-fit assertions are sampled and content/preset dependent",
+            "Runtime framebuffer ownership is described only to establish the geometry boundary; full adapter lifecycle is outside Part 1",
+            "No browser suite was run during this authoring"
+          ]
+        },
+        {
+          "model": "GBA controls and cap assembly",
+          "source": "src/handheld.js",
+          "symbol": "createHandheld; buttonCap; control",
+          "components": [
+            "D-pad cross, scaled opening, socket floor and pivot well",
+            "Four raised directional arrows and independent anchors on one shared D-pad mesh",
+            "A/B lathed caps and sockets",
+            "Start/Select caps and shell-owned molded labels",
+            "L/R shoulder boxes, lettering and anchors",
+            "Rest transforms and control-specific travel metadata",
+            "Rubber, silver, buttonMark and padMark material relationships"
+          ],
+          "chapters": [
+            "MD03",
+            "MD04",
+            "MD07"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:946-983; aperture depth and lit pressed-cap assertions",
+            "tests/browser/scene.spec.mjs:986-1029; complete cap compression/release/unlit-response case unconditionally parked at line 987",
+            "tests/browser/scene.spec.mjs:1385-1391; sampled D-pad well depth",
+            "tests/browser/player.spec.mjs:693-716; shell inputs reach native core; this is not engraving-depth evidence"
+          ],
+          "limits": [
+            "Factory metadata is not the runtime animation implementation",
+            "Nominal radial gap is not a complete swept-volume collision proof",
+            "No fresh illumination or response pass claimed",
+            "Contact forces, springs, switch internals and manufacturing tolerances are not modeled"
+          ]
+        },
+        {
+          "model": "Recessed A/B glyph geometry",
+          "source": "src/handheld.js",
+          "symbol": "actionButtonGlyph; alphaContours; recessedLetter",
+          "components": [
+            "Browser-rasterized bold 95px Arial input",
+            "Half-alpha contour tracing and closed-loop validation",
+            "Outer glyph and counter holes",
+            "Reconstructed domed cap face and solid counter islands",
+            "Glyph floor at local z .047",
+            "Explicit wall triangles and computed wall normals",
+            "Preserved lathe rim normals and assigned top normals"
+          ],
+          "chapters": [
+            "MD01",
+            "MD03",
+            "MD04",
+            "MD07",
+            "MD09"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:946-983; surrounding cap lighting and aperture probes, not complete glyph-overlap qualification",
+            "docs/book/chapters/04-handheld-geometry/README.md:64-79; historical explanation records original-glyph overlap qualification; no new execution or complete current glyph-test inventory asserted"
+          ],
+          "limits": [
+            "Only A and B accepted",
+            "System font selection and browser rasterization remain inputs",
+            "No bundled or newly licensed Arial font claimed",
+            "Contour count checks do not prove all arbitrary artwork topology",
+            "Historical glyph tests were not rediscovered as a separate complete test suite for this part"
+          ]
+        },
+        {
+          "model": "GBA underside power and edge hardware",
+          "source": "src/handheld.js",
+          "symbol": "createHandheld; cylinder; label",
+          "components": [
+            "Rotated Underside power assembly",
+            "Power slider track",
+            "Power switch with five child Switch grip meshes",
+            "Mount-owned POWER canvas label",
+            "Power light cylinder and material",
+            "Cartridge slot",
+            "Link port",
+            "Headphone socket"
+          ],
+          "chapters": [
+            "MD03",
+            "MD07",
+            "MD08"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:746-863; larger-LCD and underside-slider case includes placement, orientation, clearance and following-target checks",
+            "tests/browser/player.spec.mjs:693-716; native input integration context, not port-interior proof"
+          ],
+          "limits": [
+            "Ports and switch are exterior abstractions, not electronics or connector specifications",
+            "Factory does not implement host projected-target behavior by itself",
+            "Power-mount Euler values are authored placement, not a recovered exact shell-normal construction",
+            "LED shape and initial material are covered; dynamic illumination is outside the independent factory analysis"
+          ]
+        },
+        {
+          "model": "Battery cover, grips, rear engraving and screws",
+          "source": "src/handheld.js",
+          "symbol": "createHandheld; engraveRearLogo; alphaContours",
+          "components": [
+            "Battery cover and four child Battery thumb grip meshes",
+            "Rear-cap removal retaining original side and bevel geometry",
+            "512 by 171 alpha mask at threshold 16",
+            "Nested contour classification and parity-adjusted winding",
+            "Engraved battery-cover face",
+            "Orbital battery-cover logo color floor",
+            "Rear logo groove walls",
+            "Five screw sockets, screws and slot cues"
+          ],
+          "chapters": [
+            "MD03",
+            "MD04",
+            "MD08",
+            "MD09"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:1351 onward; back inspection integration context, not exhaustive rear-logo topology or screw metrology",
+            "docs/book/chapters/04-handheld-geometry/README.md:122-128; earlier rear-logo historical account has superseded dimensions; current dimensions taken from pinned implementation"
+          ],
+          "limits": [
+            "Current engraving width 3.45 and depth .024 are scene units",
+            "Color texture resolution and cavity-mask resolution differ",
+            "No physical engraving measurement, thread geometry or new rights audit",
+            "No claim that cited inspection tests exhaustively validate every rear component"
+          ]
+        },
+        {
+          "model": "Molded shell and shoulder typography",
+          "source": "src/handheld.js",
+          "symbol": "moldedShapes; moldedText; moldedLabel; makerMark",
+          "components": [
+            "Explicit limited polygon alphabet",
+            "Counter polygons for A, B and R",
+            "Extruded molded text",
+            "Rounded START/SELECT outline rings",
+            "Raised maker lettering and chamfered frame",
+            "Shoulder-owned L/R marks"
+          ],
+          "chapters": [
+            "MD04",
+            "MD07",
+            "MD08"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:1351 onward; general model integration, not a complete alphabet or typography test",
+            "docs/book/chapters/04-handheld-geometry/README.md:26-47; historical relief-versus-color explanation"
+          ],
+          "limits": [
+            "Not a general font engine",
+            "Distinct from canvas labels and recovered A/B Arial outlines",
+            "Unsupported arbitrary strings need explicit glyph additions or another representation"
+          ]
+        },
+        {
+          "model": "Standalone and loaded cartridge prop",
+          "source": "src/handheld.js",
+          "symbol": "createCartridge; createHandheld",
+          "components": [
+            "Original cartridge prop rounded body",
+            "Cartridge label backing",
+            "Title and subtitle canvas planes",
+            "Five Cartridge grip meshes",
+            "Loaded cartridge instance at scale 1.9,1.9,1",
+            "Initial invisible state and tools metadata"
+          ],
+          "chapters": [
+            "MD01",
+            "MD08",
+            "MD09"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:229-251; real-loading motion sampling includes geometry-derived table clearance",
+            "tests/browser/scene.spec.mjs:283-296; insertion movement, seated state and parent relationship",
+            "tests/browser/player.spec.mjs:569-586; failed-runtime request and seated cartridge state context"
+          ],
+          "limits": [
+            "No contacts, detailed rear connector, separate rear screw or manufacturing seam in this factory",
+            "Procedural exterior prop is not generated from ROM contents",
+            "Nominal body dimensions differ from full beveled group bounds",
+            "Factory fitting is covered; runtime choreography belongs to other source modules and later book scope"
+          ]
+        },
+        {
+          "model": "Canvas labels and reusable texture helper",
+          "source": "src/handheld.js",
+          "symbol": "canvasTexture; textTexture; label",
+          "components": [
+            "Canvas allocation and explicit missing-context error",
+            "sRGB texture tagging and anisotropy 4",
+            "128-pixel-high aspect-dependent text canvas",
+            "Centered browser text rasterization",
+            "Transparent lit label planes with depthWrite false"
+          ],
+          "chapters": [
+            "MD01",
+            "MD04",
+            "MD08",
+            "MD09"
+          ],
+          "tests": [
+            "No dedicated exhaustive canvas-helper test was established from the two inspected browser spec files",
+            "Pedagogical cartridge and texture recipes in chapters are proposed diagnostics, not executed historical tests"
+          ],
+          "limits": [
+            "System font and rasterizer variability",
+            "Transparent sorting is not eliminated by depthWrite false",
+            "Canvas pixel size is not a scene-unit dimension",
+            "No clean-machine font or GPU reproduction claimed"
+          ]
+        },
+        {
+          "model": "Derived bezel wordmark",
+          "source": "src/handheld.js",
+          "symbol": "createHandheld (bezelWordmark painter)",
+          "components": [
+            "Supplied image crop into a 1536 by 174 canvas",
+            "Neutral-channel alpha selection",
+            "Seven-by-seven solid-core seeds",
+            "Eight-neighbor component reconstruction",
+            "Source-in chrome bands and source-atop tint",
+            "Metallic chroma bezel wordmark plane and lit material",
+            "Returned shared bezel texture"
+          ],
+          "chapters": [
+            "MD01",
+            "MD08",
+            "MD09"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs:1351 onward; integration context, not a complete wordmark-alpha test",
+            "docs/book/chapters/04-handheld-geometry/README.md:95-120; historical derivative and shared-presentation explanation; no fresh pixel-identity result claimed"
+          ],
+          "limits": [
+            "Artwork crop and solid-core assumptions are specific to supplied image",
+            "Baked chrome colors are stylization, not traced view-dependent reflections",
+            "Full rear artwork and front letter-only derivative are distinct products",
+            "No claim of a new source-artwork license investigation"
+          ]
+        },
+        {
+          "model": "Supplied brand image inputs",
+          "source": "src/brand.js",
+          "symbol": "loadBrand",
+          "components": [
+            "logo.png",
+            "star.png",
+            "orbit.png",
+            "glow.png",
+            "Asynchronous Image.decode and exported image cache"
+          ],
+          "chapters": [
+            "MD01",
+            "MD02",
+            "MD03",
+            "MD08",
+            "MD09"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs startup asset readiness cases read as context",
+            "This part does not claim that all four image exports are directly used by handheld.js; it imports brandImage only"
+          ],
+          "limits": [
+            "The loader does not establish how the original supplied PNGs were authored",
+            "Image cache is not geometry, material or generated-texture caching",
+            "Images were not viewed during this task"
+          ]
+        },
+        {
+          "model": "Procedural wood texture",
+          "source": "src/handheld.js",
+          "symbol": "createWood",
+          "components": [
+            "1024 by 1024 canvas",
+            "Seed 41 linear congruential generator",
+            "Eight 128-pixel plank bands",
+            "110 sine-displaced grain strokes per plank",
+            "Dark/light seam accents",
+            "RepeatWrapping and repeat 2,2"
+          ],
+          "chapters": [
+            "MD01",
+            "MD09"
+          ],
+          "tests": [
+            "No dedicated pixel-determinism test was established from the inspected browser specs",
+            "MD09 same-environment hash recipe is a teaching diagnostic, not an executed test receipt"
+          ],
+          "limits": [
+            "Arithmetic repeatability does not certify cross-browser byte identity",
+            "Factory returns a texture, not the desk mesh, material or world-scale UV layout",
+            "Desk, room, lighting, DS, characters and runtime lifecycle are owned by later parts"
+          ]
+        }
+      ],
+      "sources": [
+        "docs/modeling-book/catalogue.mjs",
+        "src/handheld.js",
+        "src/brand.js",
+        "package.json",
+        "package-lock.json",
+        "node_modules/three/package.json",
+        "node_modules/@playwright/test/package.json",
+        "web/index.html",
+        "scripts/build.mjs",
+        "scripts/site-files.mjs",
+        "tests/browser/scene.spec.mjs",
+        "tests/browser/player.spec.mjs",
+        "TODO/06_3D_TABLETOP.todo",
+        "TODO/07_REFERENCE_SHAPE.todo",
+        "TODO/13_CURVED_LCD_BORDER.todo",
+        "docs/book/chapters/04-handheld-geometry/README.md",
+        "docs/book/chapters/05-pixels-and-light/README.md",
+        "docs/book/production/package.json"
+      ],
+      "research": [
+        {
+          "url": "https://threejs.org/docs/pages/Object3D.html",
+          "consulted": "2026-11-07",
+          "supports": "Local position, rotation, scale, parent/child hierarchy and local/world matrix explanation.",
+          "scope": "Latest authoritative documentation used for recommendations and mathematical explanation, not proof of original project version, development history or unused newer API features."
+        },
+        {
+          "url": "https://threejs.org/docs/pages/BufferGeometry.html",
+          "consulted": "2026-11-07",
+          "supports": "Indexed versus non-indexed triangle attributes, bounding-box computation, vertex normal averaging and explicit resource disposal.",
+          "scope": "Latest authoritative documentation; pinned source establishes actual calls. No claim that all documented features are used or were available in earlier history."
+        },
+        {
+          "url": "https://threejs.org/docs/pages/CanvasTexture.html",
+          "consulted": "2026-11-07",
+          "supports": "Canvas-backed texture construction and inherited sampling defaults; compared with explicit project overrides.",
+          "scope": "Latest authoritative documentation; not version-frozen project history. Three earlier manual URLs returned 404 and are not cited as research evidence."
+        }
+      ],
+      "history": [
+        {
+          "commit": "0e8b6498a9bf91b60a323da919ac8c8382d47f75",
+          "claim": "Initial scoped history adds src/handheld.js; inspected early helper source contains procedural rounded paths, centered extrusion and canvas texture construction. This is reconstruction from the committed file, not recovered author thoughts.",
+          "source": "src/handheld.js; git show and scoped git log"
+        },
+        {
+          "commit": "72da407f03ddf872bdd7b3c19e4a9bba92445998",
+          "claim": "Adds crtShape and createLcdGeometries, fits curved LCD perimeter and explicitly restores rectangular UV mapping. Historical screen dimensions differ from pinned implementation.",
+          "source": "src/handheld.js; inspected line-level git show diff"
+        },
+        {
+          "commit": "706563fe0355d6455a3c1ba1ff8fd9bafd3fa2a4",
+          "claim": "Adds control apertures to the thin face and replaces raised socket lids with recessed receiving floors, preserving the separate cap assembly.",
+          "source": "src/handheld.js; inspected line-level git show diff"
+        },
+        {
+          "commit": "e8e51c6845740da4a37ac4b60c066a88ec1fcb86",
+          "claim": "Changes action glyph construction from hand-authored rounded outlines to recovered browser-rendered bold 95px Arial contours, footprint and baseline. No deterministic cross-platform font guarantee follows.",
+          "source": "src/handheld.js; inspected git show metadata and relevant line-level diff"
+        },
+        {
+          "commit": "cf53ecc05ea27a9c26e60a87d0306de1bce78bc5",
+          "claim": "Rear engraving width changes from 2.95 to 3.45 and depth from .006 to .024 scene units.",
+          "source": "src/handheld.js; inspected complete small git show diff"
+        }
+      ],
+      "unverified": [
+        "No render, book build, application build, browser regression execution, commit, push or publication performed by this authoring task.",
+        "Actual atlas capture existence and visual quality are parent integration responsibilities; only approved gba-back, gba-three-quarter and cartridge-three-quarter paths are embedded.",
+        "No images were viewed and no existing historical PNGs were modified.",
+        "No clean-machine reproduction, physical hardware dimensions, calibrated reference metrology or current human visual approval established.",
+        "Original creative tools for supplied PNG artwork are not established by the code.",
+        "Root installed versions were checked as Three 0.186.1 and @playwright/test 1.64.1; book production dependencies are a separate toolchain.",
+        "The complete cap-response case is parked; the detailed CRT case is skipped in CI. Other inspected assertions are not fresh execution receipts.",
+        "No exhaustive current test inventory for rear engraving, molded alphabet, wordmark topology or glyph-overlap qualification is claimed.",
+        "Examples and extension designs are pedagogical proposals. Their code was syntax-checked where feasible but model/texture recipes were not executed as application tests.",
+        "Coverage describes concrete component ownership and limitations, not a claim that every line or every website model has been covered.",
+        "Latest documentation was consulted for explanatory guidance, not used as evidence for pinned version history.",
+        "The chapters retain required YAML frontmatter before the H1; the parent may need a title-first export transform for the requested manuscript convention."
+      ]
+    },
+    {
+      "part": 2,
+      "chapters": [
+        "MD10",
+        "MD11",
+        "MD12",
+        "MD13",
+        "MD14",
+        "MD15",
+        "MD16",
+        "MD17",
+        "MD18"
+      ],
+      "models": [
+        {
+          "model": "DS lower-shell assembly",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "Root-owned lower parting line, rear shell and control deck",
+            "Nominal 8.5 by 4.75 footprint and layered local-Z depths",
+            "Shared roundedShape and centered beveled extrusion dependency",
+            "Battery seam, cover, screw recesses, slots and four square pads",
+            "Distinct front expansion opening and rear DS game-card slot"
+          ],
+          "chapters": [
+            "MD10",
+            "MD12",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:1284-1373 surface names, root-space bounds, pad properties and shoulder orientation"
+          ],
+          "limits": "Model-space dimensions are not physical measurements. Layered meshes and slot-shaped solids are not a watertight manufacturing enclosure or fully hollow connector."
+        },
+        {
+          "model": "DS upper shell and real paired recesses",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "Lid-owned parting line, outer extrusion, perimeter lip and inner lid",
+            "Centered rounded-square aperture paths at local offsets Y plus/minus .38",
+            "Separate blue inset floors and rear-view cross-section",
+            "Speaker-opening cylinder approximations and rubber bumpers",
+            "Topology versus dark-decal distinction"
+          ],
+          "chapters": [
+            "MD10",
+            "MD11",
+            "MD12",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:1324-1350 rear rays hit two inset floors and intact shell between them"
+          ],
+          "limits": "Apertures and floors are implemented; speaker details are not claimed to be bored through the whole lid. No physical shell-thickness or internal-mechanism reconstruction is established."
+        },
+        {
+          "model": "DS hinge, leaves and indicators",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "Root-owned continuous barrel, right cap and two left half-cylinder caps",
+            "Cylinder local-axis rotation, narrow collars and lid-owned leaves",
+            "Microphone pinhole, MIC legend and indicator recesses",
+            "Green power indicator geometry and controller-powered emissive state",
+            "Joint-origin offset and opening-angle complement math"
+          ],
+          "chapters": [
+            "MD10",
+            "MD11",
+            "MD13",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:927-1018 independent hinge and locked-pose integration scenario"
+          ],
+          "limits": "The hinge is a bounded transform and visual assembly, not simulated torque, detents or an interlocking axle. Factory API is returned lid.rotation.x in radians; application setDsHinge accepts opening degrees with state guards."
+        },
+        {
+          "model": "DS face caps, D-pad and top-edge shoulders",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "Lathed cap profile, recessed socket and child label",
+            "Complete ABXY diamond and generated-bezel outer-bound clearance",
+            "Single extruded molded cross with four anchors and direction indicators",
+            "Top-edge L/R frames converting local-Z travel into edge travel",
+            "START, SELECT and power geometry",
+            "Composite bounded rocking, compression, damping and held-mark feedback in DsController.paint",
+            "Fixed DS A/S face and Q/W shoulder mapping boundary"
+          ],
+          "chapters": [
+            "MD10",
+            "MD13",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/unit/ds-controls.test.mjs:29-76 signed edge heights, diagonal/opposite states, deck-surface clearance, exact return and elapsed-time response",
+            "READ: tests/browser/ds.spec.mjs:271-338 scene/runtime native key scenario",
+            "READ: tests/browser/ds.spec.mjs:1309-1364 cap/socket, D-pad and shoulder geometry assertions"
+          ],
+          "limits": "Unit fixtures do not instantiate the full shell. Projected HTML targets use anchors, a root-derived facing normal and estimated sizes, not exact perspective cap polygons. No tests were rerun."
+        },
+        {
+          "model": "DS markings, palette and underside emblem",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "CanvasTexture text planes and unlit transparent label materials",
+            "Dark navy cap legends versus light shell-mounted legends",
+            "Blue upper paint, lighter lower paint, pale accent and matte pads",
+            "Root-owned underside branding plane at preserved artwork aspect",
+            "Battery-cover separation, outward orientation and delayed image initialization"
+          ],
+          "chapters": [
+            "MD10",
+            "MD12",
+            "MD13",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:1291-1355 emblem parent, outward hit, battery gap, fill and shell margins",
+            "READ: tests/browser/ds.spec.mjs source inventory includes reference shell-lighting and marking checks"
+          ],
+          "limits": "The bare factory does not load or reveal supplied branding artwork. Texture lettering is not modeled engraving. Color parameters do not guarantee identical appearance under every light."
+        },
+        {
+          "model": "DS dual displays and illumination boundary",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "Lid-owned upper and root-owned lower planar 4.5 by 3.375 LCDs",
+            "Fine beveled edge, metallic surround, black recess and forward display plane",
+            "Viewport metadata and square native-pixel scale",
+            "DsController status/native unlit materials versus reflective powered-off glass",
+            "Top/bottom framebuffer region validation and nearest-filter native output",
+            "Independent ScreenIllumination sampling and experimental control spill",
+            "Explicit distinction from the shared GBA curved-outline setter"
+          ],
+          "chapters": [
+            "MD10",
+            "MD14",
+            "MD17",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:168-270 dual-screen native integration scenario",
+            "READ: tests/browser/ds.spec.mjs:1413-1486 active status material, actual shell-hit and light-invariant LCD pixel assertions"
+          ],
+          "limits": "DS LCD geometry is planar at the cutoff. Curved DS cover geometry is a labeled proposal, not implementation. Active unlit invariants do not apply to reflective powered-off glass; no physical optical stack or universal integer screen-space pixel guarantee is claimed."
+        },
+        {
+          "model": "DS docked and held stylus",
+          "source": "src/ds-handheld.js",
+          "symbol": "createDsHandheld",
+          "components": [
+            "Tapered shaft, pull tab, hook, groove, nose and scaled rounded nib",
+            "Explicit extreme-tip anchor at local Y -2.1276",
+            "Shell-owned docking channel and retaining clips",
+            "Isolated stylus material and back-sided hover halo",
+            "Scene-owned non-pickable .8-scale held clone",
+            "Ray-depth lift, camera-relative back orientation and rotated tip-offset subtraction"
+          ],
+          "chapters": [
+            "MD10",
+            "MD15",
+            "MD17",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:413-495 locked-orientation, zoom and high-DPI stylus scenario",
+            "READ: tests/browser/ds.spec.mjs scenario inventory identifies pickup/return and quick-tap cases"
+          ],
+          "limits": "The held pen is a visual, not a sensor. Original dock geometry remains in bounds even when hidden. The contact solver was explained but not exercised or image-inspected during authoring."
+        },
+        {
+          "model": "DS touch-contact geometry and queue",
+          "source": "src/ds-touch.js",
+          "symbol": "DsTouchQueue",
+          "components": [
+            "DsController.touchAt nearest relevant lower-LCD hit gate",
+            "dsTouchFromUv finite-range validation and vertical inversion",
+            "Separate down/up edges, coalesced moves and nextFrame spacing",
+            "Generation invalidation and immediate release on cancellation",
+            "Current camera/root matrices independent of the next GPU paint"
+          ],
+          "chapters": [
+            "MD14",
+            "MD15",
+            "MD17",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/unit/ds-touch.test.mjs:16-72 quick taps, drag coalescing, cancellation and asynchronous delivery errors",
+            "READ: tests/browser/ds.spec.mjs scenario inventory includes resize/deferred-paint and quick-contact checks"
+          ],
+          "limits": "Read assertions are not fresh native-runtime results. Queue correctness alone does not establish rendered nib alignment or game-space drawing accuracy."
+        },
+        {
+          "model": "DS card prop and loading presentation",
+          "source": "src/ds-controller.js",
+          "symbol": "DsController.load / loadingStatus / paintLoading / paint",
+          "components": [
+            "Root-owned procedural card and separately named rear slot",
+            "Immediate tools closure and play view before awaited identification",
+            "Local-Y 3.1 to .44 smoothstep card interpolation over 1800 ms elapsed painted-call intervals",
+            "Twelve-frame original canvas loading illustration and reduced-motion static frame",
+            "Native framebuffer validation before active texture handoff",
+            "Retained old session on rejected replacement and explicit cancelled-startup path",
+            "Distinct GBA cartridge framing and shared desk-transition midpoint boundaries"
+          ],
+          "chapters": [
+            "MD12",
+            "MD16",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:80-166 immediate reveal, changing LCD, native handoff, invalid replacement retention, reduced motion and cancellation"
+          ],
+          "limits": "Local Y is not an unconditional world direction. The front expansion opening is not the rear DS-card slot. The illustration is not byte progress. The DS slide does not inherit the GBA helper's explicit framing boundary, and sparse paints need not display every intermediate pose."
+        },
+        {
+          "model": "Shared DS inspection and camera boundary",
+          "source": "src/scene.js",
+          "symbol": "setDsHinge / setDsPoseLocked / dsPoseBounds / updateCameraTargets / updateViewMatrices",
+          "components": [
+            "Distinct desk, Inspect and session-locked play transforms",
+            "Finite opening guard and 30-180 degree clamping",
+            "Root/lid candidate deltas and conservative geometry-box envelope",
+            "Two-unit minimum world-Y fit, viewport reservations and depth-aware camera distance",
+            "Immediate input-matrix refresh and lid-aware projected targets",
+            "Default play-position lighting diagnosis versus paint/exposure changes"
+          ],
+          "chapters": [
+            "MD10",
+            "MD11",
+            "MD15",
+            "MD17",
+            "MD18"
+          ],
+          "tests": [
+            "READ: tests/browser/ds.spec.mjs:927-1107 hinge, pose lock and phone-fit scenarios",
+            "READ: tests/browser/ds.spec.mjs:1284-1373 geometry and clearance assertions",
+            "READ: tests/browser/ds.spec.mjs:1413-1486 upright lamp-lighting fixture"
+          ],
+          "limits": "Conservative bounds are not exact silhouettes or complete accessibility proof. Fitting does not remove occlusion. No production render, full browser run, hosted qualification or owner approval was performed."
+        }
+      ],
+      "sources": [
+        "docs/modeling-book/catalogue.mjs",
+        "package.json",
+        "node_modules/three/package.json",
+        "src/ds-handheld.js",
+        "src/ds-controller.js",
+        "src/ds-touch.js",
+        "src/ds-cartridge.js",
+        "src/cartridge-motion.js",
+        "src/transition-motion.js",
+        "src/handheld.js",
+        "src/scene.js",
+        "src/lighting.js",
+        "tests/browser/ds.spec.mjs",
+        "tests/unit/ds-controls.test.mjs",
+        "tests/unit/ds-touch.test.mjs",
+        "TODO/87_DS_HINGE_GAMEPLAY_POSE.todo",
+        "TODO/89_PICKABLE_DS_STYLUS.todo",
+        "TODO/95_DS_REAR_MARKINGS.todo",
+        "TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo",
+        "TODO/97_DS_DIRECTIONAL_DPAD.todo",
+        "TODO/100_LARGER_DS_REAR_EMBLEM.todo",
+        "TODO/103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo",
+        "TODO/115_DS_IMMEDIATE_LOADING.todo",
+        "TODO/116_DS_UPRIGHT_LIGHTING.todo",
+        "docs/nds-book/chapters/08-physical-ds/README.md"
+      ],
+      "research": [
+        {
+          "url": "https://threejs.org/docs/pages/Object3D.html",
+          "consulted": "2026-11-07",
+          "supports": "Local versus world matrices, parent-child transform ownership and radian rotations; recommendations for current-matrix diagnostics.",
+          "scope": "Successfully fetched official current documentation. Current reference guidance is distinguished from the repository's installed and declared Three.js 0.186.1 implementation; newer pivot properties are not claimed as used."
+        },
+        {
+          "url": "https://threejs.org/docs/pages/Raycaster.html",
+          "consulted": "2026-11-07",
+          "supports": "NDC camera-ray setup, nearest-first intersections, hit UVs and front-face considerations for touch and aperture diagnostics.",
+          "scope": "Successfully fetched official current documentation. Used as conceptual guidance, not a substitute for reading DsController.touchAt or proof of a new runtime test."
+        },
+        {
+          "url": "https://threejs.org/docs/pages/ExtrudeGeometry.html",
+          "consulted": "2026-11-07",
+          "supports": "Depth versus bevel size/thickness, segment options and the need to rebuild rather than mutate recorded constructor parameters.",
+          "scope": "Successfully fetched official current documentation. Actual DS dimensions and helper behavior come from the pinned local source, not default values in current docs."
+        }
+      ],
+      "history": [
+        {
+          "commit": "6f5083a56a55d9ba526f8952811d4cfc8b44d7d7",
+          "claim": "Scoped diff centers both lid-hole paths and their inset floors and reparents supplied branding from the lid to the lower underside.",
+          "source": "src/ds-handheld.js; TODO/95_DS_REAR_MARKINGS.todo"
+        },
+        {
+          "commit": "89d905fd0a31de6f7364e75a73e0c607885497f9",
+          "claim": "Scoped diff moves the complete ABXY diamond outward by .2 model units; accompanying task grounds socket/beveled-bezel clearance and independent DS key ownership.",
+          "source": "src/ds-handheld.js; TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo"
+        },
+        {
+          "commit": "c59de69157ac6a090436f57c448bb3f0e5a8e4a9",
+          "claim": "Scoped controller diff replaces repeated shared-cross flat depression with bounded composite directional rocking, damping, compression and held-mark material changes.",
+          "source": "src/ds-controller.js; TODO/97_DS_DIRECTIONAL_DPAD.todo"
+        },
+        {
+          "commit": "e8856369620d4afd49af9967d205bcb1383243b4",
+          "claim": "Scoped history identifies independent hinge/locked gameplay work; the model diff replaces the earlier lower-edge power slider approximation with a real front cap and icon.",
+          "source": "src/ds-handheld.js; TODO/87_DS_HINGE_GAMEPLAY_POSE.todo"
+        },
+        {
+          "commit": "e1896cebf4b2b75d3849abaa00433c1d378fcb8b",
+          "claim": "Scoped controller diff reveals DS play and loading feedback before awaited file identification, adds the original loading illustration and clears loading at native handoff or cleanup.",
+          "source": "src/ds-controller.js; TODO/115_DS_IMMEDIATE_LOADING.todo"
+        },
+        {
+          "commit": "9be851e96098e0dfd4beedffd911185cf33a11a6",
+          "claim": "Scoped scene diff changes the shared DS play position from (5,5.1,8) to (-2,5.1,-8); task history records lighting diagnosis and rejection of an intermediate rotation-clearance failure.",
+          "source": "src/scene.js; TODO/116_DS_UPRIGHT_LIGHTING.todo"
+        },
+        {
+          "commit": "0fdd81b259cfbb0703b13078c9d56c77901c1673",
+          "claim": "Scoped git log identifies the pickable-pen introduction; the associated task explains stable dock bounds and a separate camera-facing held visual.",
+          "source": "git log scoped to DS source; TODO/89_PICKABLE_DS_STYLUS.todo"
+        }
+      ],
+      "unverified": [
+        "No unit or browser test suite was rerun for this authoring task. Test entries describe source assertions read, not fresh passes.",
+        "No production render, publication, commit, push or model modification was performed by this part author.",
+        "Parent-supplied ds-front.png, ds-back.png and ds-three-quarter.png are referenced only as neutral-studio constructor diagnostics. Their contents were not image-viewed; parent must verify capture pose and asset availability.",
+        "No physical dimensions, manufactured tolerances, mechanically complete connectors, watertight enclosure, internal hinge mechanism or exact optical glass stack are established.",
+        "The DS displays are planar at the source cutoff; a curved DS cover is a labeled extension proposal, not the current construction workflow.",
+        "Powered-off reflective glass is not covered by the active unlit-LCD pixel invariant.",
+        "Read historical local/hosted results and parked coverage debt are not asserted as current qualification, deployment success or owner approval.",
+        "Bounds traversal is conservative and includes geometry without a visibility filter; it is not exact silhouette fitting or a proof that every control is visible.",
+        "The part covers named construction and interaction boundaries, not every source line or all emulator/save/rendering internals.",
+        "Official research pages are current documentation consulted on 2026-11-07, not a claim that the pinned 0.186.1 source uses every feature on those pages."
+      ]
+    },
+    {
+      "part": 3,
+      "chapters": [
+        "MD19",
+        "MD20",
+        "MD21",
+        "MD22",
+        "MD23",
+        "MD24",
+        "MD25",
+        "MD26",
+        "MD27"
+      ],
+      "models": [
+        {
+          "model": "Pear Boy procedural companion",
+          "source": "src/pear-boy.js",
+          "symbol": "createPearBoy",
+          "components": [
+            "Ten authored radius-height controls; 97 sampled profile points; 64-sector lathed shell",
+            "Shared radius interpolation for surface attachments and rope/body contact",
+            "Cream emissive shell, vertical canvas diffusion map, four internal point emitters",
+            "Brown curved stem; extruded beveled leaf; tubular leaf vein",
+            "Body-axis face root; immutable cursor anchor; smoothed asymmetric vertical travel and yaw",
+            "Curious bead eyes and smile; scared squeezed eyes, cheeks, wobbly mouth and open scream",
+            "Angry eye outlines and whites, brows, blush strokes, mouth, tongue and forehead marks",
+            "Sad squeezed eyes, brows, rosy cheeks and puckered pout",
+            "Six permanent flattened-sphere freckles outside expression-specific groups",
+            "Subdivided nonindexed expression patches projected after XY construction",
+            "Four braided dynamic tube limbs; rounded hands and feet; transported normals and bounds",
+            "Soft-contact plane explicitly distinguished from collision geometry",
+            "Impact and paint-gated expression progression; reduced-motion behavior"
+          ],
+          "chapters": [
+            "MD19",
+            "MD20",
+            "MD21",
+            "MD22",
+            "MD25",
+            "MD26",
+            "MD27"
+          ],
+          "tests": [
+            "tests/unit/pear-rope.test.mjs",
+            "tests/unit/pear-motion.test.mjs",
+            "tests/browser/pear-boy.spec.mjs",
+            "tests/browser/desk-clearance.spec.mjs"
+          ],
+          "limits": [
+            "Scoped component inventory, not line-by-line exhaustive proof",
+            "Visual silicone approximation, not physical transmission or subsurface simulation",
+            "Projection helper assumes authored valid heights; vertical radius scaling is not a full nonlinear reprojection",
+            "Six-dot center rays cover named sampled gaze/expression conditions, not every rendered pixel",
+            "Historical test receipts are not fresh executions in this authoring pass"
+          ]
+        },
+        {
+          "model": "Pear flexible-cord support",
+          "source": "src/pear-rope.js",
+          "symbol": "PearRope",
+          "components": [
+            "Seven particles, six rest lengths, current/previous-position integration at 1/120 second",
+            "Pinned root; weighted length relaxation; body radial contact; finite rounded desk edge",
+            "Hand and foot-specific contact sizes; hanging-tip orientation; lower safety floor",
+            "Teleport correction of current and previous points; quiet-step sleeping and settle/reset",
+            "Separate physics particles and visible Catmull-Rom tube sampling"
+          ],
+          "chapters": [
+            "MD19",
+            "MD22",
+            "MD26",
+            "MD27"
+          ],
+          "tests": [
+            "tests/unit/pear-rope.test.mjs",
+            "tests/browser/pear-boy.spec.mjs"
+          ],
+          "limits": [
+            "No arbitrary prop collisions or rope self-collision",
+            "Interpolated visible tube is not a continuously collision-tested solid",
+            "Fixed-step rope integration is distinct from DeskMotion body integration and presentation"
+          ]
+        },
+        {
+          "model": "Small axolotl night-light",
+          "source": "src/axolotl-lamp.js",
+          "symbol": "createAxolotlLamp",
+          "components": [
+            "Shared unit-sphere geometry; overlapping scaled body and head meshes",
+            "Analytic front ellipsoid projection; offset-position gradient-like eye/cheek orientation",
+            "Two bead eyes, two rosy cheeks and six-control curved tubular smile",
+            "Six mirrored/rotated extruded pink gill petals",
+            "Four yawed pink feet and twelve independently root-parented toes",
+            "Upturned extruded cream tail and thicker pink tip with local-axis centering",
+            "Shared cream/pink emissive materials and internal warm point emitter",
+            "Scene-authored root yaw, measured envelope, discrete brightness and shared movement controller"
+          ],
+          "chapters": [
+            "MD23",
+            "MD24",
+            "MD25",
+            "MD26",
+            "MD27"
+          ],
+          "tests": [
+            "tests/browser/dock.spec.mjs",
+            "tests/browser/desk-clearance.spec.mjs"
+          ],
+          "limits": [
+            "Overlapping meshes are not a Boolean-unified watertight manufacturing mesh",
+            "No implemented expression, gill, toe or tail animation",
+            "Front helper has no invalid-domain clamp",
+            "Emitter location and native-room exposure affect visible brightness discrimination"
+          ]
+        },
+        {
+          "model": "Companion translation and drop support",
+          "source": "src/pear-motion.js",
+          "symbol": "DeskMotion; PearMotion",
+          "components": [
+            "Pickup/reset state; timestamped capped release velocity; stale-release cancellation",
+            "Fixed-step gravity, drag, workspace planes, obstacle support/underside/side resolution",
+            "Restitution, support friction and sleep threshold",
+            "Paint-aware descending and rising pose holds with retained integration time",
+            "Scene pointer-plane offset, wheel depth, keyboard movement, cancellation and reset integration"
+          ],
+          "chapters": [
+            "MD22",
+            "MD26",
+            "MD27"
+          ],
+          "tests": [
+            "tests/unit/pear-motion.test.mjs",
+            "tests/browser/pear-boy.spec.mjs",
+            "tests/browser/dock.spec.mjs",
+            "tests/browser/console-movement.spec.mjs"
+          ],
+          "limits": [
+            "Translation controller does not implement rigid-body angular dynamics",
+            "Paint acknowledgement means a room-render submission, not proof of GPU completion or display scanout",
+            "At most five seconds admitted and 600 body steps per update",
+            "Companion positions are not persisted across reloads"
+          ]
+        },
+        {
+          "model": "Desk clearance and remembered poses",
+          "source": "src/desk-clearance.js",
+          "symbol": "nearestDeskPosition; HandheldScene.resolveDeskClearance",
+          "components": [
+            "Fixed-height horizontal forbidden rectangles expanded by local envelope and gap",
+            "Desired/edge candidate grid, squared-distance ordering and 1e-9 ranking tolerance",
+            "Scale-relative interior tolerance for floating-point reconstructed boundaries",
+            "Scene mode priorities, immovable active console and bounded console-order retry",
+            "Current rotated envelopes; full Pear limb envelope; explicit contact-plane exclusion",
+            "Prepaint reconciliation and invalidation on motion or changed geometry",
+            "First legal nonfocused console home capture; companion authored homes with occupied errors",
+            "Focus companion parking snapshots kept separate from remembered table placement"
+          ],
+          "chapters": [
+            "MD19",
+            "MD22",
+            "MD23",
+            "MD26",
+            "MD27"
+          ],
+          "tests": [
+            "tests/unit/desk-clearance.test.mjs",
+            "tests/browser/desk-clearance.spec.mjs",
+            "tests/browser/console-movement.spec.mjs"
+          ],
+          "limits": [
+            "Envelope solver is not triangle-level collision detection or a global layout optimizer",
+            "Equal-rank candidate and model ordering remains policy",
+            "Legal initial console home capture has no explicit all-physics-sleep predicate",
+            "Companion authored homes are distinct from captured console homes"
+          ]
+        }
+      ],
+      "sources": [
+        "src/pear-boy.js",
+        "src/axolotl-lamp.js",
+        "src/pear-rope.js",
+        "src/pear-motion.js",
+        "src/desk-clearance.js",
+        "src/scene.js",
+        "src/handheld.js",
+        "package.json",
+        "tests/unit/pear-rope.test.mjs",
+        "tests/unit/pear-motion.test.mjs",
+        "tests/unit/desk-clearance.test.mjs",
+        "tests/browser/pear-boy.spec.mjs",
+        "tests/browser/desk-clearance.spec.mjs",
+        "tests/browser/console-movement.spec.mjs",
+        "tests/browser/dock.spec.mjs",
+        "TODO/84_PEAR_BOY.todo",
+        "TODO/107_PEAR_BOY_EXPRESSIONS.todo",
+        "TODO/110_SMALL_AXOLOTL_LAMP.todo",
+        "TODO/111_MOVABLE_AXOLOTL.todo",
+        "TODO/113_PEAR_BOY_CUTER_RECOVERY.todo",
+        "TODO/118_PEAR_BOY_FACE_TRAVEL.todo",
+        "TODO/121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo",
+        "TODO/93_MODE_BASED_MODEL_CLEARANCE.todo",
+        "docs/VERIFICATION.md",
+        "docs/modeling-book/catalogue.mjs"
+      ],
+      "research": [
+        {
+          "url": "https://threejs.org/docs/pages/BufferGeometry.html",
+          "consulted": "2026-11-07",
+          "supports": "Buffer attributes, indexed/nonindexed geometry, normal generation, bounds and disposal",
+          "scope": "Current public API guidance; pinned local implementation determines actual geometry behavior"
+        },
+        {
+          "url": "https://threejs.org/docs/pages/MeshStandardMaterial.html",
+          "consulted": "2026-11-07",
+          "supports": "Roughness and emissive color/intensity/map semantics; separating appearance from physical silicone",
+          "scope": "Current public API guidance, not a calibration or proof of native-room appearance"
+        },
+        {
+          "url": "https://threejs.org/docs/pages/Raycaster.html",
+          "consulted": "2026-11-07",
+          "supports": "Nearest-first intersections and mesh-facing behavior",
+          "scope": "Current public API guidance; ancestor visibility filtering is separately evidenced by local tests"
+        },
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame",
+          "consulted": "2026-11-07",
+          "supports": "Variable callback cadence, background pausing and elapsed-time reasoning",
+          "scope": "Browser timing guidance, not proof that render submission equals display completion"
+        }
+      ],
+      "history": [
+        {
+          "commit": "8df32ce28fe6943014fba28f3b6e19bf6af6a0aa",
+          "claim": "Initial procedural Pear implementation precedes subsequent motion and face corrections",
+          "source": "src/pear-boy.js; scoped git history; TODO/84_PEAR_BOY.todo"
+        },
+        {
+          "commit": "414c762d690f1211f59d2a3613222179c020aedf",
+          "claim": "Whole-face root transformation and finite seated desk-edge rope handling",
+          "source": "src/pear-boy.js; src/pear-rope.js; scoped git diff"
+        },
+        {
+          "commit": "1510777ff05b82414e8e1b5958e8c76e446a0eaa",
+          "claim": "Compact angry eyes, squeezed-eye pout, and scream interval change from .24 to .9 seconds",
+          "source": "src/pear-boy.js; scoped git diff; TODO/113_PEAR_BOY_CUTER_RECOVERY.todo"
+        },
+        {
+          "commit": "44b5dc2213bcf9ee464357cfa68ee44b8c1d9bbe",
+          "claim": "Horizontal gaze yaw increased from .22 to .55 radians",
+          "source": "src/pear-boy.js; scoped git diff; TODO/118_PEAR_BOY_FACE_TRAVEL.todo"
+        },
+        {
+          "commit": "dd269dea6f5cc6ada0038a2245b0ec3a420768c5",
+          "claim": "Positive vertical gaze travel increased from .18 to .75 model units; negative multiplier retained",
+          "source": "src/pear-boy.js; scoped git diff; TODO/121_PEAR_BOY_UPWARD_FACE_TRAVEL.todo"
+        },
+        {
+          "commit": "f10fab1752c4d15167baeaaace4623820f0c2bee",
+          "claim": "Movable axolotl factory and scene integration; only scoped claims are reconstructed from the change",
+          "source": "src/axolotl-lamp.js; src/scene.js; scoped git diff; TODO/110_SMALL_AXOLOTL_LAMP.todo; TODO/111_MOVABLE_AXOLOTL.todo"
+        },
+        {
+          "commit": "120d9bd5a3e785d24a9bdc5e96d6e9b332613510",
+          "claim": "Paint-aware real descending/rising body pose presentation across slow render cadence",
+          "source": "src/pear-motion.js; src/scene.js; scoped git diff"
+        },
+        {
+          "commit": "85c0cc9ed8f9083868df77b01adb5e80c49435df",
+          "claim": "Mode-based desk clearance and integration policy",
+          "source": "src/desk-clearance.js; src/scene.js; scoped git history; TODO/93_MODE_BASED_MODEL_CLEARANCE.todo"
+        },
+        {
+          "commit": "6b5d2c552e6b3206bfb3ae36d845896773147a1c",
+          "claim": "Scale-relative interior tolerance addresses reconstructed-edge floating-point drift",
+          "source": "src/desk-clearance.js; scoped git diff; docs/VERIFICATION.md"
+        }
+      ],
+      "unverified": [
+        "Implementation baseline is 1e4ef518d6943ab1af39cef3b4d558f209a17891; current public reference pages are not that implementation snapshot.",
+        "Sources list includes selected scene integration, handheld canvas helper, dock assertions, task records and verification-ledger ranges rather than claiming all listed long files were read exhaustively.",
+        "Historical reconstruction describes recorded changes, not recovered internal reasoning or user approval.",
+        "Parent owns atlas capture, final image availability, native-room rendering, publication, issue/Project and MeshBoard updates.",
+        "The two planned neutral-studio atlas references do not establish native-room lighting, animation, or appearance approval.",
+        "No application build, browser rendering, unit-test execution, commit or publication was performed by this bounded authoring task.",
+        "Proposed diagnostics and extensions remain proposals; device-specific aesthetic and physical-phone acceptance were not established.",
+        "The chapters transfer explicit procedures and evidence, not a literal clone of agent memory.",
+        "All eighteen Mermaid diagrams passed parser validation without rendering; rendered typography, pagination and final A4 layout remain outside this task."
+      ]
+    },
+    {
+      "part": 4,
+      "chapters": [
+        "MD28",
+        "MD29",
+        "MD30",
+        "MD31",
+        "MD32",
+        "MD33",
+        "MD34",
+        "MD35",
+        "MD36",
+        "MD37",
+        "MD38"
+      ],
+      "models": [
+        {
+          "model": "Desk support and room surfaces",
+          "source": "src/scene.js",
+          "symbol": "HandheldScene constructor",
+          "components": [
+            "1000 by 2.4 by 26 tabletop box with upper face at world Y zero",
+            "independent repeated tabletop and edge wood materials",
+            "rear plaster wall plane",
+            "lower floor plane",
+            "separate switch-controlled scene background",
+            "actual loose cartridge props acknowledged without invented room decor"
+          ],
+          "chapters": [
+            "MD28",
+            "MD35",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/desk-clearance.spec.mjs",
+            "tests/browser/scene.spec.mjs"
+          ],
+          "limits": "Oversized scenery is a framing expedient, not surveyed architecture. This part does not duplicate cartridge anatomy. No ceiling mesh, window, chair or extra decorative props are invented."
+        },
+        {
+          "model": "Tripod lamp procedural body",
+          "source": "src/lighting.js",
+          "symbol": "createDeskLamp",
+          "components": [
+            "metric-local body scale 1/.017 and world placement",
+            "shared centered extruded ash leg geometry repeated three times",
+            "procedural wood grain and cream trim",
+            "short shade-support cylinder",
+            "open drum shade with procedural warp/weft fabric",
+            "two torus rims sharing the shade material",
+            "emissive spherical diffuser",
+            "no separately modeled tall pole",
+            "no mechanical switch geometry; lampToggle metadata and scene/UI dispatch"
+          ],
+          "chapters": [
+            "MD28",
+            "MD29",
+            "MD35",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs",
+            "tests/browser/desk-clearance.spec.mjs"
+          ],
+          "limits": "Neutral-studio atlas renders are parent-supplied diagnostic illustrations, not room-light evidence. Their pixels were not inspected by this author. No aesthetic approval or hardware-accurate replica claim."
+        },
+        {
+          "model": "Tripod and room light hierarchy",
+          "source": "src/lighting.js",
+          "symbol": "createDeskLamp; createRoomLighting",
+          "components": [
+            "inverse-square spotlight with scale-adjusted coefficient",
+            "transmitted-shade rectangle",
+            "open-bottom rectangle",
+            "finite world-owned tabletop bounce patch",
+            "ceiling rectangle and hemisphere light",
+            "light objects retained with zero intensity when switched off",
+            "room background switched separately from visible surfaces"
+          ],
+          "chapters": [
+            "MD28",
+            "MD29",
+            "MD30",
+            "MD37",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs",
+            "tests/browser/ds.spec.mjs"
+          ],
+          "limits": "Authored finite fill is not computed global illumination; coefficients are not photometer measurements. Current official documentation is concept guidance, not pinned-runtime evidence."
+        },
+        {
+          "model": "Screen and companion illumination integration",
+          "source": "src/lighting.js",
+          "symbol": "ScreenIllumination; HandheldScene.setPearBrightness; HandheldScene.setAxolotl",
+          "components": [
+            "sRGB-byte to linear lookup array",
+            "24 by 16 mean-color sample canvas",
+            "125-millisecond live sample cadence",
+            "elapsed-time exponential smoothing and settled threshold",
+            "forward emitter and control spill",
+            "Pear and axolotl brightness coefficients",
+            "four-family exposure decision and indicator compensation"
+          ],
+          "chapters": [
+            "MD29",
+            "MD31",
+            "MD33",
+            "MD35",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/pear-boy.spec.mjs",
+            "tests/browser/scene.spec.mjs",
+            "tests/browser/ds.spec.mjs"
+          ],
+          "limits": "Mean-color lighting is not per-pixel transport. Companion geometry belongs to Part 3. LCD-only fixtures must disable both companions as well as controlling tripod and room lights."
+        },
+        {
+          "model": "Shadow and reflected-environment model",
+          "source": "src/scene.js",
+          "symbol": "HandheldScene.updateDsReflections; HandheldScene.render",
+          "components": [
+            "manual PCF shadow-map invalidation",
+            "caster and receiver flags with shade overrides",
+            "Pear stylized contact plane excluded from picking and clearance",
+            "128-square half-float cube target",
+            "cube camera at DS root and PMREM filtering",
+            "both consoles hidden during capture",
+            "physical-material Set and old-filter disposal",
+            "settled refresh behind direct-light responsiveness"
+          ],
+          "chapters": [
+            "MD30",
+            "MD33",
+            "MD35",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs",
+            "tests/browser/pear-boy.spec.mjs"
+          ],
+          "limits": "No self/mutual console reflection, screen-space reflection, path tracing or parallax-correct full-room solution. Retained CI-parked lighting assertions are not new passing results."
+        },
+        {
+          "model": "Active LCD, inactive glass and CRT image treatment",
+          "source": "src/scene.js",
+          "symbol": "HandheldScene.setScreen; HandheldScene.showPowerOff; DsController.paintScreens; drawLcdCrt",
+          "components": [
+            "active basic non-tone-mapped materials",
+            "GBA live sRGB canvas with linear min/mag filters and no mips",
+            "DS native 256 by 192 canvases with nearest filters and no mips",
+            "retained native framebuffer validation and unsmoothed region copies",
+            "reflective physical powered-off glass",
+            "curved GBA outline with direct XY UV mapping",
+            "WeakMap CRT pattern/vignette cache and restored drawing state",
+            "validated native preset list distinct from built-in canvas treatment"
+          ],
+          "chapters": [
+            "MD30",
+            "MD31",
+            "MD35",
+            "MD37",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/ds.spec.mjs",
+            "tests/browser/scene.spec.mjs"
+          ],
+          "limits": "Nearest filtering is not universal across both consoles. Pixel preservation is bounded by projection/minification. Status-image tests do not establish native gameplay or touch."
+        },
+        {
+          "model": "Picking, touch and input-ownership model",
+          "source": "src/scene.js",
+          "symbol": "HandheldScene.pick; HandheldScene.beginConsoleMove; DsController.touchAt; DsController.projectControls",
+          "components": [
+            "CSS-rectangle normalized device coordinates",
+            "nearest root hits and specific contact-plane/stylus exclusions",
+            "mode-gated pointer dispatch",
+            "camera-facing drag plane, grab offset and pointer capture",
+            "four-pixel movement threshold",
+            "wheel-depth and keyboard movement semantics",
+            "whole-DS-root lower-screen occlusion test",
+            "immediate world matrices and projected DOM controls",
+            "session/origin-bound native messaging and comprehensive release"
+          ],
+          "chapters": [
+            "MD32",
+            "MD35",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/ds.spec.mjs",
+            "tests/browser/desk-clearance.spec.mjs"
+          ],
+          "limits": "Specific DS lid/stylus occlusion is not a general scene-wide occlusion solver. Visible cap motion, message delivery and native response are distinct evidence."
+        },
+        {
+          "model": "Renderer scheduling and lifecycle",
+          "source": "src/scene.js",
+          "symbol": "HandheldScene.render; HandheldScene.waitForFirstPaint; HandheldScene.dispose",
+          "components": [
+            "DPR capped at two without adaptive density reduction",
+            "feature-detected fence insertion, flush and zero-timeout polling",
+            "strict greater-than-100-millisecond recovery threshold",
+            "1000-millisecond settled-play and 200-millisecond moving recovery caps",
+            "native screen copies before room-paint gate",
+            "idle suppression, context-loss reporting and source quarantine",
+            "paint-aware transitions and required motion acknowledgments",
+            "explicit replaced and final GPU-resource disposal"
+          ],
+          "chapters": [
+            "MD33",
+            "MD35",
+            "MD36",
+            "MD37",
+            "MD38"
+          ],
+          "tests": [
+            "tests/browser/scene.spec.mjs",
+            "tests/browser/pixel-lab.mjs",
+            "tests/unit/pear-motion.test.mjs"
+          ],
+          "limits": "Fences prove GPU command completion, not human-visible scanout. No-fence fallback differs. Existing disposal is not a complete future-proof resource tracker; new texture slots and shared ownership need explicit treatment."
+        },
+        {
+          "model": "Clearance and simplified motion algorithms",
+          "source": "src/desk-clearance.js",
+          "symbol": "nearestDeskPosition; DeskMotion; HandheldScene.resolveDeskClearance; HandheldScene.dsPoseBounds",
+          "components": [
+            "asymmetric relative Box3 extents and vertically relevant obstacles",
+            "forbidden root rectangles and Set candidate coordinates",
+            "Cartesian candidate search, squared-distance ordering and stable ties",
+            "eight-epsilon magnitude tolerance",
+            "staged priorities and both equal-ranked console placement orders",
+            "hypothetical DS root/lid transformed geometry bounds",
+            "1/120-second integration bounded to 600 substeps",
+            "fall/bounce/rise presentation and queued elapsed time"
+          ],
+          "chapters": [
+            "MD28",
+            "MD34",
+            "MD35",
+            "MD36",
+            "MD37",
+            "MD38"
+          ],
+          "tests": [
+            "tests/unit/desk-clearance.test.mjs",
+            "tests/unit/pear-motion.test.mjs",
+            "tests/browser/desk-clearance.spec.mjs"
+          ],
+          "limits": "Worst-case nearest search O(n^3) time/O(n) coordinate storage excludes geometry traversal. Not all permutations/global packing, free-rotation sweep detection, angular momentum or full rigid-body physics."
+        },
+        {
+          "model": "Evidence, publication and agent-extension boundary",
+          "source": "docs/VERIFICATION.md",
+          "symbol": "Verification evidence layers; numbered TODO workflow; siteFiles allowlist",
+          "components": [
+            "eight-field numbered workstream and causal ledger",
+            "actual issue backlink and Project readback, not number guessing",
+            "one bounded repair followed by explicit parking and retained assertions",
+            "exact-run and shard reconciliation",
+            "source/unit/browser/visual/publication evidence separation",
+            "approved decoded brand assets and explicit nonrecursive runtime allowlist",
+            "GIF-first root navigation and preserved standalone books",
+            "complete scoped reconstruction and extension assignment"
+          ],
+          "chapters": [
+            "MD35",
+            "MD36",
+            "MD37",
+            "MD38"
+          ],
+          "tests": [],
+          "limits": "Describing workflow grants no sync, build, commit or publish permission. No runtime tests, render, build or deployment were executed for manuscript authoring. Human aesthetic acceptance remains pending."
+        }
+      ],
+      "sources": [
+        "docs/modeling-book/catalogue.mjs",
+        "package.json",
+        "src/lighting.js",
+        "src/scene.js",
+        "src/lcd-crt.js",
+        "src/preferences.js",
+        "src/desk-clearance.js",
+        "src/pear-motion.js",
+        "src/transition-motion.js",
+        "src/cartridge-motion.js",
+        "src/handheld.js",
+        "src/ds-controller.js",
+        "src/brand.js",
+        "scripts/site-files.mjs",
+        "scripts/build.mjs",
+        "tests/unit/desk-clearance.test.mjs",
+        "tests/unit/pear-motion.test.mjs",
+        "tests/browser/scene.spec.mjs",
+        "tests/browser/pixel-lab.mjs",
+        "tests/browser/desk-clearance.spec.mjs",
+        "tests/browser/ds.spec.mjs",
+        "tests/browser/pear-boy.spec.mjs",
+        "docs/ARCHITECTURE.md",
+        "docs/VERIFICATION.md",
+        "docs/GUIDE.md",
+        "docs/GITHUB-TRACKING.md",
+        "README.md",
+        "TODO/04_DEVELOPMENT_LEDGER.todo",
+        "TODO/116_DS_UPRIGHT_LIGHTING.todo"
+      ],
+      "research": [
+        {
+          "url": "https://threejs.org/manual/pages/color-management.html",
+          "consulted": "2026-11-07",
+          "supports": "Linear-sRGB lighting, sRGB color inputs and output, distinction from noncolor data maps.",
+          "scope": "Checked current official conceptual guidance, not proof of Three.js 0.186.1 runtime behavior."
+        },
+        {
+          "url": "https://threejs.org/docs/pages/MeshPhysicalMaterial.html",
+          "consulted": "2026-11-07",
+          "supports": "Clearcoat and roughness interpretation; reflective physical surfaces and material tradeoffs.",
+          "scope": "Checked current reference includes newer revision information. Source assignments and pinned package remain authoritative."
+        },
+        {
+          "url": "https://threejs.org/manual/pages/shadows.html",
+          "consulted": "2026-11-07",
+          "supports": "Shadow caster/receiver/light roles, extra scene-view costs and contact-shadow approximation tradeoffs.",
+          "scope": "Checked current official guidance; no application performance measurements inferred."
+        },
+        {
+          "url": "https://threejs.org/manual/pages/cleanup.html",
+          "consulted": "2026-11-07",
+          "supports": "Explicit geometry/material/texture disposal and unique-resource tracking.",
+          "scope": "Checked current guidance; a generalized resource tracker is proposed extension work, not claimed implementation."
+        },
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices",
+          "consulted": "2026-11-07",
+          "supports": "Avoid blocking queries, flush before asynchronous fence waits, conservative memory budgeting and eager deletion.",
+          "scope": "Checked current browser recommendations; no claim that project implements adaptive quality or measured universal performance."
+        }
+      ],
+      "history": [
+        {
+          "commit": "9be851e96098e0dfd4beedffd911185cf33a11a6",
+          "claim": "Checked scene diff moves DS play from (5,5.1,8) to (-2,5.1,-8) without changing material/light/exposure; historical TODO observations remain separately labeled.",
+          "source": "src/scene.js; TODO/116_DS_UPRIGHT_LIGHTING.todo; tests/browser/ds.spec.mjs"
+        },
+        {
+          "commit": "34484498de6be19a48c5191c4d717035bf84a320",
+          "claim": "Checked diff introduces GPU completion fences, separates DS screen copying from room-only paint and starts transitions from real performance.now; earlier threshold differs from pinned current threshold.",
+          "source": "src/scene.js; src/ds-controller.js"
+        },
+        {
+          "commit": "836fc093bc4e72b06898e983cdf524c8fe772047",
+          "claim": "Checked recovery diff retains severe-load waiting while avoiding extra delay for moderate completed frames; exact 100/101-millisecond boundary and real-time fixture rest are distinguished.",
+          "source": "src/scene.js; tests/browser/scene.spec.mjs"
+        },
+        {
+          "commit": "120d9bd5a3e785d24a9bdc5e96d6e9b332613510",
+          "claim": "Checked motion diff preserves fall/bounce/rise presentation under sparse paints with bounded integration.",
+          "source": "src/pear-motion.js; tests/unit/pear-motion.test.mjs"
+        },
+        {
+          "commit": "6b5d2c552e6b3206bfb3ae36d845896773147a1c",
+          "claim": "Checked diff introduces magnitude-scaled eight-epsilon strict-interior tolerance while retaining squared-distance stable ties and real-overlap rejection.",
+          "source": "src/desk-clearance.js; tests/unit/desk-clearance.test.mjs"
+        },
+        {
+          "commit": "06e9c8240b6f3a8c5e2c91a408db0be61ccdfef2",
+          "claim": "Checked CRT implementation introduces reusable cached mask/vignette treatment for built-in images, distinct from native preset shaders.",
+          "source": "src/lcd-crt.js; src/preferences.js"
+        },
+        {
+          "commit": "19f499643c9d02a0be219713ae0059d9fd531309",
+          "claim": "Checked CI/verification change documents loader-aware restoration and explicit parking after bounded repair. Reverted broad SwiftShader attempt is not proof of a sole root cause.",
+          "source": "docs/VERIFICATION.md; tests/browser/scene.spec.mjs"
+        }
+      ],
+      "unverified": [
+        "No application build, browser run, unit suite, render, commit, push, tracking synchronization or publication was performed by this manuscript author.",
+        "Recipes and numerical worked examples are construction instructions/source-derived arithmetic, not fresh application execution receipts.",
+        "Sources list includes scoped reads for controller, handheld, guide and browser suites; it does not assert every listed large file was exhaustively read.",
+        "Historical performance, pixel and test-run observations belong to the cited revisions and documented fixtures, not to this authoring session.",
+        "Retained CI-parked browser scenarios remain explicit coverage debt. The strict historical 49-entry public checker was not converted into 49 passes.",
+        "Parent-supplied lamp atlas paths are used diagnostically; this author did not inspect image pixels or certify their capture provenance.",
+        "No human aesthetic approval, hardware-calibrated photometry, universal pixel preservation or exact physical replica is claimed.",
+        "Current-orientation AABBs and hypothetical endpoint bounds do not prove full rotational swept clearance.",
+        "The scene uses hand-authored procedural Three.js and simplified upright motion/clearance, not Blender/CAD/model import or a full rigid-body engine.",
+        "Shared-resource and future texture-slot disposal require explicit ownership review for extensions.",
+        "Mermaid parser validation and manuscript checks are documentation-only evidence, not application render or deployment proof."
+      ]
+    }
+  ],
+  "preservedBooks": [
+    {
+      "path": "docs/book/published/Building-a-Little-Escape.pdf",
+      "sha256": "25875beab7d925f9d014de89842b560216729c799e673f5a7218291aa75db1ad"
+    },
+    {
+      "path": "docs/nds-book/published/Two-Screens-One-Little-Escape.pdf",
+      "sha256": "0e6c1e5a422c32fe87d9ff968379f2f93cbe9ac8213d3d813ae70eb0ce85567f"
+    },
+    {
+      "path": "docs/nds-book/published/Reading-Edition.html",
+      "sha256": "fec54ba4ce2733d4b17ee772ebfc0c5e3c8937cba6beb72bb00d18ead707b894"
+    }
+  ],
+  "atlasPolicy": "Original procedural factory geometry; neutral studio lighting; model lights hidden and material emission disabled to inspect base surfaces; ACES exposure 1; orthographic views; DS returned lid group rotated 15 degrees around local X. Not application-room photometry, lamp-power appearance, animation, historical artwork or gameplay evidence.",
+  "exclusions": [
+    "private ROMs and firmware",
+    "raw recordings",
+    "private context and raw chats",
+    "unrelated dirty artwork",
+    "claims of perfect agent-memory replication"
+  ]
+}

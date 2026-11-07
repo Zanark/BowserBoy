@@ -8,6 +8,13 @@ export const escape = value => String(value).replace(/[&<>"']/g, ch =>
 export const slug = value => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 export const urlPath = value => value.replaceAll('\\', '/');
 
+export function stripFrontMatter(text, location) {
+  if (!/^---\r?\n/.test(text)) return text;
+  const match = /^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/.exec(text);
+  if (!match) throw new Error(`Unclosed front matter: ${location}`);
+  return text.slice(match[0].length).replace(/^\s*\r?\n/, '');
+}
+
 export async function confined(root, relative) {
   const resolvedRoot = await fs.realpath(root);
   if (path.isAbsolute(relative) || /^[a-z]:/i.test(relative)) throw new Error(`Absolute input: ${relative}`);
@@ -27,7 +34,7 @@ export async function confined(root, relative) {
 }
 
 export function checkLearning(text, id) {
-  const markers = [...text.matchAll(/^#{2,3} ((?:CH|ND)\d{2}-[WRQA]\d{2})\b/gm)].map(match => match[1]);
+  const markers = [...text.matchAll(/^#{2,3} ((?:CH|ND|MD)\d{2}-[WRQA]\d{2})\b/gm)].map(match => match[1]);
   if (new Set(markers).size !== markers.length) throw new Error(`Duplicate learning marker in ${id}`);
   for (const role of ['W', 'R', 'Q', 'A']) {
     if (!markers.includes(`${id}-${role}01`)) throw new Error(`Missing ${id}-${role}01`);

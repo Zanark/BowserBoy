@@ -115,8 +115,8 @@ for (const section of sections.slice(1)) {
   blocks.push(`<article id="${section.id}" class="reference">${await render((await read(section.source)).toString('utf8'), section.source, section.id)}</article>`);
 }
 const logo = (await read('assets\\ds-logo.png')).toString('base64');
-for (const file of ['build-nds.mjs', 'render.mjs', 'bootstrap.mjs', 'lib.mjs', 'print.css', 'nds.css',
-  'review-nds.py', 'package.json', 'package-lock.json', 'requirements.txt']) await read(`docs\\book\\production\\${file}`);
+for (const file of ['build-nds.mjs', 'render.mjs', 'bootstrap.mjs', 'lib.mjs', 'edition.mjs', 'print.css', 'nds.css',
+  'review-nds.py', 'review-native.py', 'native_rules.py', 'package.json', 'package-lock.json', 'requirements.txt']) await read(`docs\\book\\production\\${file}`);
 await read('docs\\nds-book\\catalogue.mjs');
 const tocItems = [{ id: 'orientation', title: 'Before opening the DS' },
   ...parts.flatMap(part => [{ id: `part-${part.number}`, title: `Part ${part.number} - ${part.title}`, part: true },

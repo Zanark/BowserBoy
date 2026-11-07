@@ -1,0 +1,394 @@
+{
+  "part": 1,
+  "chapters": [
+    "MD01",
+    "MD02",
+    "MD03",
+    "MD04",
+    "MD05",
+    "MD06",
+    "MD07",
+    "MD08",
+    "MD09"
+  ],
+  "models": [
+    {
+      "model": "GBA casing and silhouette",
+      "source": "src/handheld.js",
+      "symbol": "createHandheld",
+      "components": [
+        "Original XY shell path with stepped crown, shoulder transitions and quadratic bottom bow",
+        "Shell seam",
+        "Rear shell",
+        "Front shell",
+        "Front face with speaker apertures",
+        "Six rotated speaker holes and Recessed speaker grille floors",
+        "Shared purple, rear, seam and dark materials"
+      ],
+      "chapters": ["MD02", "MD03", "MD04", "MD05"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:1351-1391; real-3D case samples LCD, speaker-depth and D-pad-well surfaces; inspected, not executed here",
+        "tests/browser/scene.spec.mjs:946-983; active aperture-lighting cases contain per-control rest/press brightness assertions; inspected, not executed here"
+      ],
+      "limits": [
+        "Pinned implementation: 1e4ef518d6943ab1af39cef3b4d558f209a17891",
+        "Scene units are not verified millimeters; Bezier control points are not necessarily silhouette extrema",
+        "Layered overlapping exterior solids are not a certified watertight manufacturing model",
+        "Historical test success and reference review do not establish current human approval"
+      ]
+    },
+    {
+      "model": "GBA LCD and frame",
+      "source": "src/handheld.js",
+      "symbol": "createLcdGeometries; crtShape; createHandheld",
+      "components": [
+        "Bezel surround",
+        "Charcoal bezel",
+        "Curved or flat screen geometry at local viewport 4.05 by 2.7",
+        "LCD recess with matching curved or rounded-rectangle perimeter",
+        "Live LCD basic material, no tone mapping, no cast/receive shadows",
+        "Linear rectangular UV restoration and viewport metadata"
+      ],
+      "chapters": ["MD03", "MD04", "MD06"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:1370-1388; center raycast requires Live LCD",
+        "tests/browser/scene.spec.mjs:1438-1517; CRT case specifies retained native source, sampled clipping, shortest edge gap and UV limits; skipped under CI at line 1439",
+        "tests/browser/player.spec.mjs:222-273; native preset loop checks direct video material and curved geometry only for CRT Geom"
+      ],
+      "limits": [
+        "No separately modeled transmissive GBA glass slab exists in this factory",
+        "Curved means fitted XY perimeter, not a physical Z-bulged lens",
+        "Edge-fit assertions are sampled and content/preset dependent",
+        "Runtime framebuffer ownership is described only to establish the geometry boundary; full adapter lifecycle is outside Part 1",
+        "No browser suite was run during this authoring"
+      ]
+    },
+    {
+      "model": "GBA controls and cap assembly",
+      "source": "src/handheld.js",
+      "symbol": "createHandheld; buttonCap; control",
+      "components": [
+        "D-pad cross, scaled opening, socket floor and pivot well",
+        "Four raised directional arrows and independent anchors on one shared D-pad mesh",
+        "A/B lathed caps and sockets",
+        "Start/Select caps and shell-owned molded labels",
+        "L/R shoulder boxes, lettering and anchors",
+        "Rest transforms and control-specific travel metadata",
+        "Rubber, silver, buttonMark and padMark material relationships"
+      ],
+      "chapters": ["MD03", "MD04", "MD07"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:946-983; aperture depth and lit pressed-cap assertions",
+        "tests/browser/scene.spec.mjs:986-1029; complete cap compression/release/unlit-response case unconditionally parked at line 987",
+        "tests/browser/scene.spec.mjs:1385-1391; sampled D-pad well depth",
+        "tests/browser/player.spec.mjs:693-716; shell inputs reach native core; this is not engraving-depth evidence"
+      ],
+      "limits": [
+        "Factory metadata is not the runtime animation implementation",
+        "Nominal radial gap is not a complete swept-volume collision proof",
+        "No fresh illumination or response pass claimed",
+        "Contact forces, springs, switch internals and manufacturing tolerances are not modeled"
+      ]
+    },
+    {
+      "model": "Recessed A/B glyph geometry",
+      "source": "src/handheld.js",
+      "symbol": "actionButtonGlyph; alphaContours; recessedLetter",
+      "components": [
+        "Browser-rasterized bold 95px Arial input",
+        "Half-alpha contour tracing and closed-loop validation",
+        "Outer glyph and counter holes",
+        "Reconstructed domed cap face and solid counter islands",
+        "Glyph floor at local z .047",
+        "Explicit wall triangles and computed wall normals",
+        "Preserved lathe rim normals and assigned top normals"
+      ],
+      "chapters": ["MD01", "MD03", "MD04", "MD07", "MD09"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:946-983; surrounding cap lighting and aperture probes, not complete glyph-overlap qualification",
+        "docs/book/chapters/04-handheld-geometry/README.md:64-79; historical explanation records original-glyph overlap qualification; no new execution or complete current glyph-test inventory asserted"
+      ],
+      "limits": [
+        "Only A and B accepted",
+        "System font selection and browser rasterization remain inputs",
+        "No bundled or newly licensed Arial font claimed",
+        "Contour count checks do not prove all arbitrary artwork topology",
+        "Historical glyph tests were not rediscovered as a separate complete test suite for this part"
+      ]
+    },
+    {
+      "model": "GBA underside power and edge hardware",
+      "source": "src/handheld.js",
+      "symbol": "createHandheld; cylinder; label",
+      "components": [
+        "Rotated Underside power assembly",
+        "Power slider track",
+        "Power switch with five child Switch grip meshes",
+        "Mount-owned POWER canvas label",
+        "Power light cylinder and material",
+        "Cartridge slot",
+        "Link port",
+        "Headphone socket"
+      ],
+      "chapters": ["MD03", "MD07", "MD08"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:746-863; larger-LCD and underside-slider case includes placement, orientation, clearance and following-target checks",
+        "tests/browser/player.spec.mjs:693-716; native input integration context, not port-interior proof"
+      ],
+      "limits": [
+        "Ports and switch are exterior abstractions, not electronics or connector specifications",
+        "Factory does not implement host projected-target behavior by itself",
+        "Power-mount Euler values are authored placement, not a recovered exact shell-normal construction",
+        "LED shape and initial material are covered; dynamic illumination is outside the independent factory analysis"
+      ]
+    },
+    {
+      "model": "Battery cover, grips, rear engraving and screws",
+      "source": "src/handheld.js",
+      "symbol": "createHandheld; engraveRearLogo; alphaContours",
+      "components": [
+        "Battery cover and four child Battery thumb grip meshes",
+        "Rear-cap removal retaining original side and bevel geometry",
+        "512 by 171 alpha mask at threshold 16",
+        "Nested contour classification and parity-adjusted winding",
+        "Engraved battery-cover face",
+        "Orbital battery-cover logo color floor",
+        "Rear logo groove walls",
+        "Five screw sockets, screws and slot cues"
+      ],
+      "chapters": ["MD03", "MD04", "MD08", "MD09"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:1351 onward; back inspection integration context, not exhaustive rear-logo topology or screw metrology",
+        "docs/book/chapters/04-handheld-geometry/README.md:122-128; earlier rear-logo historical account has superseded dimensions; current dimensions taken from pinned implementation"
+      ],
+      "limits": [
+        "Current engraving width 3.45 and depth .024 are scene units",
+        "Color texture resolution and cavity-mask resolution differ",
+        "No physical engraving measurement, thread geometry or new rights audit",
+        "No claim that cited inspection tests exhaustively validate every rear component"
+      ]
+    },
+    {
+      "model": "Molded shell and shoulder typography",
+      "source": "src/handheld.js",
+      "symbol": "moldedShapes; moldedText; moldedLabel; makerMark",
+      "components": [
+        "Explicit limited polygon alphabet",
+        "Counter polygons for A, B and R",
+        "Extruded molded text",
+        "Rounded START/SELECT outline rings",
+        "Raised maker lettering and chamfered frame",
+        "Shoulder-owned L/R marks"
+      ],
+      "chapters": ["MD04", "MD07", "MD08"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:1351 onward; general model integration, not a complete alphabet or typography test",
+        "docs/book/chapters/04-handheld-geometry/README.md:26-47; historical relief-versus-color explanation"
+      ],
+      "limits": [
+        "Not a general font engine",
+        "Distinct from canvas labels and recovered A/B Arial outlines",
+        "Unsupported arbitrary strings need explicit glyph additions or another representation"
+      ]
+    },
+    {
+      "model": "Standalone and loaded cartridge prop",
+      "source": "src/handheld.js",
+      "symbol": "createCartridge; createHandheld",
+      "components": [
+        "Original cartridge prop rounded body",
+        "Cartridge label backing",
+        "Title and subtitle canvas planes",
+        "Five Cartridge grip meshes",
+        "Loaded cartridge instance at scale 1.9,1.9,1",
+        "Initial invisible state and tools metadata"
+      ],
+      "chapters": ["MD01", "MD08", "MD09"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:229-251; real-loading motion sampling includes geometry-derived table clearance",
+        "tests/browser/scene.spec.mjs:283-296; insertion movement, seated state and parent relationship",
+        "tests/browser/player.spec.mjs:569-586; failed-runtime request and seated cartridge state context"
+      ],
+      "limits": [
+        "No contacts, detailed rear connector, separate rear screw or manufacturing seam in this factory",
+        "Procedural exterior prop is not generated from ROM contents",
+        "Nominal body dimensions differ from full beveled group bounds",
+        "Factory fitting is covered; runtime choreography belongs to other source modules and later book scope"
+      ]
+    },
+    {
+      "model": "Canvas labels and reusable texture helper",
+      "source": "src/handheld.js",
+      "symbol": "canvasTexture; textTexture; label",
+      "components": [
+        "Canvas allocation and explicit missing-context error",
+        "sRGB texture tagging and anisotropy 4",
+        "128-pixel-high aspect-dependent text canvas",
+        "Centered browser text rasterization",
+        "Transparent lit label planes with depthWrite false"
+      ],
+      "chapters": ["MD01", "MD04", "MD08", "MD09"],
+      "tests": [
+        "No dedicated exhaustive canvas-helper test was established from the two inspected browser spec files",
+        "Pedagogical cartridge and texture recipes in chapters are proposed diagnostics, not executed historical tests"
+      ],
+      "limits": [
+        "System font and rasterizer variability",
+        "Transparent sorting is not eliminated by depthWrite false",
+        "Canvas pixel size is not a scene-unit dimension",
+        "No clean-machine font or GPU reproduction claimed"
+      ]
+    },
+    {
+      "model": "Derived bezel wordmark",
+      "source": "src/handheld.js",
+      "symbol": "createHandheld (bezelWordmark painter)",
+      "components": [
+        "Supplied image crop into a 1536 by 174 canvas",
+        "Neutral-channel alpha selection",
+        "Seven-by-seven solid-core seeds",
+        "Eight-neighbor component reconstruction",
+        "Source-in chrome bands and source-atop tint",
+        "Metallic chroma bezel wordmark plane and lit material",
+        "Returned shared bezel texture"
+      ],
+      "chapters": ["MD01", "MD08", "MD09"],
+      "tests": [
+        "tests/browser/scene.spec.mjs:1351 onward; integration context, not a complete wordmark-alpha test",
+        "docs/book/chapters/04-handheld-geometry/README.md:95-120; historical derivative and shared-presentation explanation; no fresh pixel-identity result claimed"
+      ],
+      "limits": [
+        "Artwork crop and solid-core assumptions are specific to supplied image",
+        "Baked chrome colors are stylization, not traced view-dependent reflections",
+        "Full rear artwork and front letter-only derivative are distinct products",
+        "No claim of a new source-artwork license investigation"
+      ]
+    },
+    {
+      "model": "Supplied brand image inputs",
+      "source": "src/brand.js",
+      "symbol": "loadBrand",
+      "components": [
+        "logo.png",
+        "star.png",
+        "orbit.png",
+        "glow.png",
+        "Asynchronous Image.decode and exported image cache"
+      ],
+      "chapters": ["MD01", "MD02", "MD03", "MD08", "MD09"],
+      "tests": [
+        "tests/browser/scene.spec.mjs startup asset readiness cases read as context",
+        "This part does not claim that all four image exports are directly used by handheld.js; it imports brandImage only"
+      ],
+      "limits": [
+        "The loader does not establish how the original supplied PNGs were authored",
+        "Image cache is not geometry, material or generated-texture caching",
+        "Images were not viewed during this task"
+      ]
+    },
+    {
+      "model": "Procedural wood texture",
+      "source": "src/handheld.js",
+      "symbol": "createWood",
+      "components": [
+        "1024 by 1024 canvas",
+        "Seed 41 linear congruential generator",
+        "Eight 128-pixel plank bands",
+        "110 sine-displaced grain strokes per plank",
+        "Dark/light seam accents",
+        "RepeatWrapping and repeat 2,2"
+      ],
+      "chapters": ["MD01", "MD09"],
+      "tests": [
+        "No dedicated pixel-determinism test was established from the inspected browser specs",
+        "MD09 same-environment hash recipe is a teaching diagnostic, not an executed test receipt"
+      ],
+      "limits": [
+        "Arithmetic repeatability does not certify cross-browser byte identity",
+        "Factory returns a texture, not the desk mesh, material or world-scale UV layout",
+        "Desk, room, lighting, DS, characters and runtime lifecycle are owned by later parts"
+      ]
+    }
+  ],
+  "sources": [
+    "docs/modeling-book/catalogue.mjs",
+    "src/handheld.js",
+    "src/brand.js",
+    "package.json",
+    "package-lock.json",
+    "node_modules/three/package.json",
+    "node_modules/@playwright/test/package.json",
+    "web/index.html",
+    "scripts/build.mjs",
+    "scripts/site-files.mjs",
+    "tests/browser/scene.spec.mjs",
+    "tests/browser/player.spec.mjs",
+    "TODO/06_3D_TABLETOP.todo",
+    "TODO/07_REFERENCE_SHAPE.todo",
+    "TODO/13_CURVED_LCD_BORDER.todo",
+    "docs/book/chapters/04-handheld-geometry/README.md",
+    "docs/book/chapters/05-pixels-and-light/README.md",
+    "docs/book/production/package.json"
+  ],
+  "research": [
+    {
+      "url": "https://threejs.org/docs/pages/Object3D.html",
+      "consulted": "2026-11-07",
+      "supports": "Local position, rotation, scale, parent/child hierarchy and local/world matrix explanation.",
+      "scope": "Latest authoritative documentation used for recommendations and mathematical explanation, not proof of original project version, development history or unused newer API features."
+    },
+    {
+      "url": "https://threejs.org/docs/pages/BufferGeometry.html",
+      "consulted": "2026-11-07",
+      "supports": "Indexed versus non-indexed triangle attributes, bounding-box computation, vertex normal averaging and explicit resource disposal.",
+      "scope": "Latest authoritative documentation; pinned source establishes actual calls. No claim that all documented features are used or were available in earlier history."
+    },
+    {
+      "url": "https://threejs.org/docs/pages/CanvasTexture.html",
+      "consulted": "2026-11-07",
+      "supports": "Canvas-backed texture construction and inherited sampling defaults; compared with explicit project overrides.",
+      "scope": "Latest authoritative documentation; not version-frozen project history. Three earlier manual URLs returned 404 and are not cited as research evidence."
+    }
+  ],
+  "history": [
+    {
+      "commit": "0e8b6498a9bf91b60a323da919ac8c8382d47f75",
+      "claim": "Initial scoped history adds src/handheld.js; inspected early helper source contains procedural rounded paths, centered extrusion and canvas texture construction. This is reconstruction from the committed file, not recovered author thoughts.",
+      "source": "src/handheld.js; git show and scoped git log"
+    },
+    {
+      "commit": "72da407f03ddf872bdd7b3c19e4a9bba92445998",
+      "claim": "Adds crtShape and createLcdGeometries, fits curved LCD perimeter and explicitly restores rectangular UV mapping. Historical screen dimensions differ from pinned implementation.",
+      "source": "src/handheld.js; inspected line-level git show diff"
+    },
+    {
+      "commit": "706563fe0355d6455a3c1ba1ff8fd9bafd3fa2a4",
+      "claim": "Adds control apertures to the thin face and replaces raised socket lids with recessed receiving floors, preserving the separate cap assembly.",
+      "source": "src/handheld.js; inspected line-level git show diff"
+    },
+    {
+      "commit": "e8e51c6845740da4a37ac4b60c066a88ec1fcb86",
+      "claim": "Changes action glyph construction from hand-authored rounded outlines to recovered browser-rendered bold 95px Arial contours, footprint and baseline. No deterministic cross-platform font guarantee follows.",
+      "source": "src/handheld.js; inspected git show metadata and relevant line-level diff"
+    },
+    {
+      "commit": "cf53ecc05ea27a9c26e60a87d0306de1bce78bc5",
+      "claim": "Rear engraving width changes from 2.95 to 3.45 and depth from .006 to .024 scene units.",
+      "source": "src/handheld.js; inspected complete small git show diff"
+    }
+  ],
+  "unverified": [
+    "No render, book build, application build, browser regression execution, commit, push or publication performed by this authoring task.",
+    "Actual atlas capture existence and visual quality are parent integration responsibilities; only approved gba-back, gba-three-quarter and cartridge-three-quarter paths are embedded.",
+    "No images were viewed and no existing historical PNGs were modified.",
+    "No clean-machine reproduction, physical hardware dimensions, calibrated reference metrology or current human visual approval established.",
+    "Original creative tools for supplied PNG artwork are not established by the code.",
+    "Root installed versions were checked as Three 0.186.1 and @playwright/test 1.64.1; book production dependencies are a separate toolchain.",
+    "The complete cap-response case is parked; the detailed CRT case is skipped in CI. Other inspected assertions are not fresh execution receipts.",
+    "No exhaustive current test inventory for rear engraving, molded alphabet, wordmark topology or glyph-overlap qualification is claimed.",
+    "Examples and extension designs are pedagogical proposals. Their code was syntax-checked where feasible but model/texture recipes were not executed as application tests.",
+    "Coverage describes concrete component ownership and limitations, not a claim that every line or every website model has been covered.",
+    "Latest documentation was consulted for explanatory guidance, not used as evidence for pinned version history.",
+    "The chapters retain required YAML frontmatter before the H1; the parent may need a title-first export transform for the requested manuscript convention."
+  ]
+}
