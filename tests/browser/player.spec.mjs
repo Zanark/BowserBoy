@@ -254,9 +254,29 @@ test('screen shader menu exposes every native CRT preset, renders each and remem
     expect(sample.presetMatches, `The real native core loads ${shader}, not a label-only choice`).toBe(true);
     expect(sample.green, `${shader} retains actual original-cartridge pixels`).toBeGreaterThan(5);
     expect(sample.identity).toBe(identity);
-    expect(await page.evaluate(async () => (await import('./src/app.js')).view.screenCurved))
-      .toBe(shader === 'crt-geom.glslp');
+    const display = await page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      return { curved: view.screenCurved,
+        direct: view.source.matches('canvas[data-bba-display]') &&
+          view.model.screen.material.isMeshBasicMaterial &&
+          view.model.screen.material.map.image === view.source };
+    });
+    expect(display.curved).toBe(shader === 'crt-geom.glslp');
+    expect(display.direct, 'Native video replaces the entire baked placeholder, with no host CRT pass').toBe(true);
   }
+  await page.locator('#shader').selectOption('disabled');
+  await expect(page.locator('#shader')).toBeEnabled();
+  const unfiltered = await runtime.evaluate(async () => {
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const emulator = window.EJS_emulator;
+    const context = new OffscreenCanvas(emulator.canvas.width, emulator.canvas.height).getContext('2d');
+    context.drawImage(emulator.canvas, 0, 0);
+    const { data } = context.getImageData(10, 10, 30, 30);
+    const colors = new Set();
+    for (let i = 0; i < data.length; i += 4) colors.add(`${data[i]},${data[i + 1]},${data[i + 2]}`);
+    return { shader: emulator.getSettingValue('shader'), colors: colors.size };
+  });
+  expect(unfiltered).toEqual({ shader: 'disabled', colors: 1 });
   await testInfo.attach('native-crt-presets', { body: JSON.stringify(samples), contentType: 'application/json' });
   await page.locator('#shader').selectOption('crt-aperture.glslp');
   await expect(page.locator('#shader')).toBeEnabled();
@@ -768,6 +788,12 @@ test('first visit is off, original startup plays only on the power switch, and i
   await page.addInitScript(() => {
     window.bootEvents = [];
     window.startupInk = 0;
+    window.crtPatterns = new WeakMap();
+    const createPattern = CanvasRenderingContext2D.prototype.createPattern;
+    CanvasRenderingContext2D.prototype.createPattern = function (...args) {
+      window.crtPatterns.set(this.canvas, (window.crtPatterns.get(this.canvas) ?? 0) + 1);
+      return createPattern.apply(this, args);
+    };
     const drawImage = CanvasRenderingContext2D.prototype.drawImage;
     CanvasRenderingContext2D.prototype.drawImage = function (...args) {
       drawImage.apply(this, args);
@@ -804,6 +830,66 @@ test('first visit is off, original startup plays only on the power switch, and i
     body: await page.screenshot({ path: 'docs/images/startup.png' }), contentType: 'image/png',
   });
   await expect(page.locator('#scene')).toHaveAttribute('data-booting', 'false');
+  const crt = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const contrast = (image, rows = 160) => {
+      const step = image.height / rows;
+      const x = Math.floor(image.width * .4), y = step * 8, width = Math.floor(image.width * .2);
+      const { data } = image.getContext('2d').getImageData(x, y, width, step * 12);
+      const phases = Array(step).fill(0);
+      for (let row = 0; row < step * 12; row++)
+        for (let column = 0; column < width; column++)
+          for (let channel = 0; channel < 3; channel++)
+            phases[row % step] += data[(row * width + column) * 4 + channel];
+      return (phases[0] - phases[step - 1]) / (width * 12 * 3);
+    };
+    const { drawLcdCrt } = await import('./src/lcd-crt.js');
+    const probe = document.createElement('canvas');
+    probe.width = 720; probe.height = 480;
+    const context = probe.getContext('2d');
+    context.fillStyle = '#808080'; context.fillRect(0, 0, probe.width, probe.height);
+    context.globalAlpha = .5; context.globalCompositeOperation = 'screen';
+    drawLcdCrt(context);
+    const center = [...context.getImageData(360, 240, 3, 1).data];
+    const edge = [...context.getImageData(0, 0, 1, 1).data];
+    const restored = { alpha: context.globalAlpha, composite: context.globalCompositeOperation };
+    probe.width = 960; probe.height = 640;
+    context.fillStyle = '#808080'; context.fillRect(0, 0, probe.width, probe.height);
+    drawLcdCrt(context);
+    const { DsController } = await import('./src/ds-controller.js');
+    const { MeshBasicMaterial } = await import('three');
+    const screens = [0, 1].map(() => ({ material: new MeshBasicMaterial() }));
+    DsController.prototype.status.call({ model: { screens }, view: {} }, 'INSERT CARTRIDGE', 'OPEN DS CARTRIDGES');
+    const ds = screens.map(screen => {
+      const result = contrast(screen.material.map.image, 192);
+      screen.material.map.dispose(); screen.material.dispose();
+      return result;
+    });
+    const idle = view.model.screen.material.map.image;
+    const gl = view.renderer.getContext(), debug = gl.getExtension('WEBGL_debug_renderer_info');
+    window.idleCrtTexture = view.model.screen.material.map;
+    return { startup: contrast(window.startupSource), idle: contrast(idle),
+      startupPatterns: window.crtPatterns.get(window.startupSource),
+      idlePatterns: window.crtPatterns.get(idle), version: window.idleCrtTexture.version,
+      ds, center, edge, restored, resized: contrast(probe), resizePatterns: window.crtPatterns.get(probe),
+      renderer: gl.getParameter(debug ? debug.UNMASKED_RENDERER_WEBGL : gl.RENDERER) };
+  });
+  await test.info().attach('built-in-crt', { body: JSON.stringify(crt), contentType: 'application/json' });
+  expect(crt.startup, 'Actual startup pixels contain scanlines').toBeGreaterThan(1);
+  expect(crt.idle, 'Actual empty-cartridge pixels contain scanlines').toBeGreaterThan(1);
+  expect(crt.startupPatterns, 'Animated startup reuses one tiny CRT pattern').toBe(1);
+  expect(crt.idlePatterns).toBe(1);
+  expect(crt.ds.every(value => value > 1), 'Both actual DS status drawers bake scanlines').toBe(true);
+  expect(crt.center[0]).toBeGreaterThan(crt.center[1]);
+  expect(crt.center[5]).toBeGreaterThan(crt.center[4]);
+  expect(crt.center[10]).toBeGreaterThan(crt.center[8]);
+  expect(crt.edge[0], 'The corners have soft CRT shading').toBeLessThan(crt.center[0]);
+  expect(crt.restored).toEqual({ alpha: .5, composite: 'screen' });
+  expect(crt.resized).toBeGreaterThan(1);
+  expect(crt.resizePatterns, 'A resized canvas replaces its cached mask once').toBe(2);
+  await page.waitForTimeout(100);
+  expect(await page.evaluate(() => window.idleCrtTexture.version),
+    'Static idle CRT does not schedule texture repaints').toBe(crt.version);
   await expect(page.getByRole('button', { name: 'Turn power off', exact: true })).toBeEnabled();
   await expect(page.locator('#frame-host iframe')).toHaveCount(0);
   expect(await page.evaluate(() => window.bootEvents.filter((value) => value === 'true'))).toHaveLength(1);

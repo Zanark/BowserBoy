@@ -1,0 +1,56 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/93
+Milestone: Consistent CRT presentation before native cartridge video.
+Dependencies: 27 native CRT presets; 74 full hosted gate for publication.
+Purpose: Give the built-in startup, empty and loading LCD canvases a CRT
+appearance without applying a second effect to EmulatorJS video.
+
+Tasks:
+- [x] Trace built-in drawing and native framebuffer handoff.
+- [x] Add cached phosphor/scanline mask and subtle edge shading.
+- [x] Apply only during built-in GBA/DS canvas drawing.
+- [x] Qualify startup/idle pixels, caching and native/unfiltered bypass.
+- [x] Update affected guides and causal development history.
+- [x] Synchronize actual issue/Project and local backlink.
+- [ ] Commit/push as Zanark and monitor exact-source Pages outcome.
+
+Acceptance criteria:
+The original GBA startup and empty/loading screen have visible scanlines,
+subtle RGB phosphor texture and edge shading. DS built-in status LCDs use
+the same bounded treatment at their own row density. Native framebuffer
+handoff replaces the entire placeholder: no host CRT overlay, shader pass,
+pixel readback or per-game-frame processing. All nine actual native presets
+and Unfiltered remain authoritative and unchanged. Cache tiny patterns and
+gradients across startup frames; idle canvases do not animate or repaint
+for this effect. Preserve full resolution, materials, lights, native
+deadlines, retries0 and the complete deployment gate.
+
+Completion evidence:
+Syntax,56units, build and whitespace pass. Existing startup/native CRT
+cases pass Edge33.1s and explicitly verified SwiftShader71.441s at1440x1100,
+original deadlines/retries0. Expanded startup checks pass Edge18.6s and
+SwiftShader32.990s: actual startup contrast5.306, idle3.667; one pattern per
+canvas and unchanged idle texture version1. Actual DS status method on a
+disposable two-screen fixture gives contrast5.444each at192logical rows;
+this is not native DS gameplay qualification. Neutral-gray RGB columns,
+corner shading, caller state restoration and resize invalidation pass.
+All nine actual native presets use the native canvas directly; Unfiltered
+retains a single-color native background, without a second baked CRT.
+Final generated startup capture visually reviewed. Existing97cases and
+19shards unchanged. Publication and owner acceptance remain separate/open.
+Two bounded fills are added to existing placeholder drawing, not zero
+startup cost; no extra animation, render pass or per-game-frame work.
+
+Completion log:
+2026-11-07: Owner identifies unfiltered startup/empty LCDs and requests a
+lightweight local CRT effect that disappears when native video takes over.
+Choose baked canvas treatment over extra room/postprocessing passes or
+an animated DOM overlay. Native upload and DS gameplay copy paths unchanged.
+2026-11-07: Focused full-quality Edge/software qualification passes, including
+cache reuse/resize, DS status drawing and all native preset handoffs.
+The preceding6b5d2c5hosted run42342237115failed87PASS/10FAIL, deployment
+skipped. Those nine DS/one Pear failures are not repaired by CRT styling;
+preserve the complete hosted gate for this source.
+2026-11-07: Trusted Zanark scoped sync creates actual issue93and Project1
+item, verifies body/state/In progress/backlink. Workstream remains OPEN
+pending current-source hosted qualification; local tests are not publication.

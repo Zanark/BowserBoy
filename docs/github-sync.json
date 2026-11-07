@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "93",
-      "file": "TODO/93_MODE_BASED_MODEL_CLEARANCE.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/92",
-      "number": 92,
-      "nodeId": "I_kwDOVhqp0s8AAAABdNKc5g",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGurfI",
+      "id": "94",
+      "file": "TODO/94_PRE_CARTRIDGE_CRT.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/93",
+      "number": 93,
+      "nodeId": "I_kwDOVhqp0s8AAAABdOBKLw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGvYt4",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "dc75881ae4e5b85cbc07df775f8967c7967681cc41f8003c238c90f75b21e61f"
+      "bodySha256": "23b1f31a9925d073fa864fc4b89a4a4b5a8646824286acceb1f516406f0703e7"
     }
   ]
 }

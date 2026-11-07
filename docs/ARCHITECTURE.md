@@ -512,6 +512,18 @@ and legacy default. Advanced native selections synchronize with existing options
 while non-CRT native selections retain the separate read-only indicator.
 Missing shader resources
 fail explicitly rather than quietly substituting another CRT effect.
+
+Built-in startup and idle/loading canvases have a separate, baked treatment
+from `src/lcd-crt.js`: a tiny RGB phosphor/scanline tile and soft radial
+vignette, cached per canvas in a `WeakMap`. Two canvas fills run only when
+that built-in content is drawn; there is no added timer, noise animation,
+pixel readback or room postprocessing pass. Startup reuses its mask and
+gradient; idle status screens stay static. GBA uses 160 logical rows and DS
+status LCDs use 192. `setScreen` replaces the complete GBA texture with the
+native framebuffer; DS replaces its status textures with native-copy targets.
+Neither gameplay path calls the treatment, so native CRT presets (or
+Unfiltered) never receive a second host filter.
+
 The core canvas normally uses `preserveDrawingBuffer: false`; an actual probe
 produced all-black texture copies despite a working on-screen core. The adapter
 therefore disables native auto-start, waits for `EJS_ready`, wraps only that

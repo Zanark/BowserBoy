@@ -553,6 +553,11 @@ CSS imitation. **Screen shader** offers all nine native CRT presets:
 Geom (default), Aperture, Beam, Caligari, Easymode, Lottes, Mattias, Yeetron
 and ZFast, plus **Unfiltered**. Choices apply without restarting the game and
 are remembered; an explicit saved choice is not overwritten by the default.
+Before a game supplies video, the built-in startup and empty/loading LCDs
+have their own subtle scanlines, phosphor texture and edge shading. This
+static treatment is baked into those placeholder images and disappears
+with them when EmulatorJS takes over; it never stacks with your chosen
+native filter, including **Unfiltered**.
 Click a key binding and press its
 replacement; duplicate assignments and reserved browser keys are rejected.
 Keys, sound and filter settings persist in checked local browser storage; failed writes

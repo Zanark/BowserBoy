@@ -5,6 +5,7 @@ import { bindKeyboard } from './keyboard.js';
 import { canvasTexture } from './handheld.js';
 import { DsSaveStore } from './ds-store.js';
 import { playDsStartupSound } from './startup.js';
+import { drawLcdCrt } from './lcd-crt.js';
 
 const $ = id => document.getElementById(id);
 
@@ -285,6 +286,7 @@ export class DsController {
           ctx.font = 'bold 26px monospace'; ctx.fillText(index ? title : 'BOWSERBOY DS', w / 2, 165, w - 24);
           ctx.fillStyle = '#8ed6e0'; ctx.font = '17px monospace'; ctx.fillText(index ? detail : 'TWO SCREENS. ONE LITTLE ESCAPE.', w / 2, 215, w - 24);
         }
+        drawLcdCrt(ctx, 192);
       });
       screen.material.map?.dispose(); screen.material.dispose();
       screen.material = new THREE.MeshBasicMaterial({ map, toneMapped: false });

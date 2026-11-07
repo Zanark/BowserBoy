@@ -9,6 +9,36 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Pre-cartridge CRT: local qualification, publication pending
+
+The built-in startup and GBA/DS status canvases now bake a cached RGB
+phosphor/scanline mask and soft vignette into existing drawing. Two bounded
+fills add placeholder drawing cost; there is no additional animation,
+room render pass, pixel readback or per-game-frame processing. Native
+framebuffer replacement removes the complete baked placeholder.
+
+The existing startup and native CRT cases pass Edge33.1s and explicitly
+verified ANGLE SwiftShader71.441s at1440x1100, original deadlines/retries0.
+Expanded startup assertions pass Edge18.6s/software32.990s: actual startup
+scanline contrast5.306, idle3.667, exactly one pattern per canvas, and idle
+texture version1 unchanged. Neutral-gray pixels verify separate RGB columns
+and shaded corners; caller alpha/composite restoration and one cache
+replacement after resizing also pass. Calling the actual DS status method
+on a disposable two-screen fixture gives contrast5.444each at192logical
+rows. This fixture is not a native DS gameplay qualification.
+
+All nine actual native presets retain direct native-canvas texture identity.
+Unfiltered produces a flat native background, without a second host effect.
+The final generated startup capture was visually reviewed. Syntax,56units,
+build and whitespace pass;97cases/19shards and all release gates remain.
+The frozen published PDF remains unchanged.
+
+The preceding `6b5d2c552e6b3206bfb3ae36d845896773147a1c` run,
+[Pages42342237115](https://github.com/Zanark/BowserBoy/actions/runs/42342237115),
+finishes **failure:87passed/10failed**, deployment skipped. Nine DS cases
+and one Pear case remain unresolved; CRT styling does not claim to fix them.
+Current-source hosted qualification and owner visual acceptance remain open.
+
 ### Exact boundary restoration; DS software latency remains open
 
 Corrective `120d9bd5a3e785d24a9bdc5e96d6e9b332613510`,

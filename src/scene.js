@@ -8,6 +8,7 @@ import { createDsHandheld } from './ds-handheld.js';
 import { createPearBoy } from './pear-boy.js';
 import { DeskMotion, PearMotion } from './pear-motion.js';
 import { nearestDeskPosition } from './desk-clearance.js';
+import { drawLcdCrt } from './lcd-crt.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -1011,6 +1012,7 @@ export class HandheldScene {
       context.fillText(title, width / 2, 324, width - 40);
       context.font = '16px monospace';
       context.fillText(detail, width / 2, 367, width - 40);
+      drawLcdCrt(context);
     });
     this.setDisplay(new THREE.MeshBasicMaterial({ map, toneMapped: false }));
   }

@@ -1,4 +1,5 @@
 import { brandImage, starImage, orbitImage, glowImage, loadBrand } from './brand.js';
+import { drawLcdCrt } from './lcd-crt.js';
 
 export const STARTUP_DURATION = 3200;
 
@@ -71,6 +72,7 @@ export function drawStartup(canvas, elapsed, reducedMotion = false) {
   context.fillRect(83, 145, reducedMotion ? 74 : 74 * Math.min(1, elapsed / STARTUP_DURATION), 1);
   context.globalAlpha = 1;
   context.restore();
+  drawLcdCrt(context);
 }
 export async function playStartup(view) {
   await loadBrand();

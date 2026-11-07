@@ -93,6 +93,7 @@ BowserBOY workstreams
 91_DS_STARTUP_CHIME.todo - IN_PROGRESS: original soft-glass DS power-on sound, distinct from GBA.
 92_CONSOLE_SELECTOR_PALETTES.todo - IN_PROGRESS: GBA purple/magenta and DS blue/cyan selectors pass local/hosted branding;617e8d2 publication blocked by5other failures.
 93_MODE_BASED_MODEL_CLEARANCE.todo - IN_PROGRESS: actual spatial clearance; consoles lead in focus, pear-boy then props then consoles on the table.
+94_PRE_CARTRIDGE_CRT.todo - IN_PROGRESS: cached built-in CRT pixels; native video replaces the effect without stacking.
 
 Current pending work
 --------------------

@@ -14,6 +14,24 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Cached pre-cartridge CRT, native ownership preserved:
+  Owner identifies smooth startup/INSERT CARTRIDGE screens. Bake a tiny
+  repeating RGB phosphor/scanline tile and cached radial vignette into
+  existing startup/GBA status/DS status drawing. No DOM overlay, room pass,
+  readback or additional animation; gameplay upload/copy paths unchanged.
+  Add two bounded placeholder fills, not a claim of zero startup cost.
+  Native canvas replaces the entire baked placeholder, including Unfiltered.
+  Existing startup/native CRT cases pass Edge33.1s and verified full-size
+  SwiftShader71.441s. Expanded startup checks pass Edge18.6s/software32.990s:
+  actual startup contrast5.306/idle3.667, one pattern each, static version1;
+  neutral-gray RGB/corners, caller state and resize cache replacement pass.
+  Actual DS status method on a disposable two-screen fixture gives5.444
+  contrast each; not native DS gameplay qualification. All nine real native
+  presets retain direct native texture identity; Unfiltered background flat.
+  Syntax/56units/build/whitespace pass;97cases/19shards unchanged.
+  Final startup image visually reviewed; frozen PDF unchanged. Prior
+  6b5d2c5/Pages42342237115fails87PASS/10FAIL, deploy skipped. Existing
+  nine DS/one Pear failures remain open; current CRT publication pending.
 - 2026-11-07 / Exact edge restoration and measured DS GPU stalls:
   Zanark source120d9bd/Pages42340494361 finishes88PASS/9FAIL; build and
   14/19verification shards pass, deploy skipped. New clearance and actual
