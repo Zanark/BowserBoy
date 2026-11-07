@@ -67,3 +67,8 @@ No application source, assertion, resolution, deadline or gate is changed.
 Local check/59units/build pass; all109original titles and every original
 nonblank test line are preserved. Executing exactly the17intended exclusions
 confirms17SKIP/0FAIL; this is exclusion verification, not restored coverage.
+2026-11-07:7154546/Pages42363020619 completes92PASS/17SKIP/0FAIL/
+0NOT_RUN across19shards; build/deployment succeed. Both formerly suite-
+aborted cases pass without being skipped. Public runtime bytes and two
+startup scenarios qualify the delivered release, not these17parked cases.
+Keep this workstream BLOCKED/open until each original hosted case is restored.

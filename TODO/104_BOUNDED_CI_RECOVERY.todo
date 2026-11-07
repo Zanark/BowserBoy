@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/103
 Milestone: Complete the owner's requested Pages deployment without endless retries.
 Dependencies: 74 current hosted qualification; 101 startup; 102 lighting; 103 DS finish.
@@ -14,8 +14,8 @@ Tasks:
 - [x] Qualify the directly coupled DS dark-fill repair once.
 - [x] Inspect every second-attempt shard and explicitly park seven remaining failures.
 - [x] Rebalance the native DS cases without skipping suite-aborted scenarios.
-- [ ] Pass the retained build/browser gates and complete Pages deployment.
-- [ ] Verify actual deployed source and report passing/skipped coverage honestly.
+- [x] Pass the retained build/browser gates and complete Pages deployment.
+- [x] Verify actual deployed source and report passing/skipped coverage honestly.
 
 Acceptance criteria:
 The actual Pages deployment succeeds. Every skipped case has a named, visible
@@ -51,14 +51,29 @@ cases and rebalance three unchanged native save/restart cases away from the
 D-pad cluster. The key case was previously unrun; rolled/upside-down passed
 the preceding attempt, so not every failure is a consecutive recurrence.
 Current inventory:109cases,17CI skips,2local skips,92retained cases;
-remaining exact-source retained gate and actual deployment pending.
+the actual exact-source result is recorded below.
 Local syntax,59unit cases and fresh production build pass. Inventory comparison
 retains all109original scenario names. A line-multiset comparison retains every
 original nonblank test line, including all assertions and the moved case bodies.
 The exact exclusion selection executes17SKIP/0FAIL without extra cases.
 All four retained DS save/restart/deferred-resize cases pass locally in69.1s;
 neither previously suite-aborted scenario is hidden by the parking selection.
+Exact71545469be6956687dc2166a33e30ba48bd346a1/Pages42363020619:
+92passed,17skipped,0failed,0did not run across all19shards. Build and
+deployment both succeed with their original prerequisites. The previously
+suite-aborted isolation/resize cases execute successfully.
+Actual https://zanark.github.io/BowserBoy/ matches all46runtime-file and
+directory-entry byte comparisons against committed source/build inputs.
+The verifier's additional .nojekyll expectation fails with404; the downloaded
+github-pages artifact also omits that build-only marker. Preserve this
+exception rather than claiming47matched files or a wholly passing verifier.
+Both original public startup-cover cases pass: desktop shimmering logo and
+reduced-motion phone, including held real assets/GPU completion and scene
+readiness. Seventeen parked scenarios remain unresolved in105.
 
 Completion log:
 2026-11-07: Owner prioritizes pipeline recovery, authorizes one repair attempt
 then parking if the case fails again, and explicitly requests commit/push/deploy.
+2026-11-07:7154546 completes the retained hosted gate and actual Pages
+publication. Verify deployed bytes and both public startup scenarios; retain
+the .nojekyll exception and parked coverage debt. No owner-approval claim.

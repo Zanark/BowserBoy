@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/100
 Milestone: Reveal a complete desk instead of partially loaded models.
 Dependencies: 74 release qualification; 99 DS header glow.
@@ -11,8 +11,8 @@ Tasks:
 - [x] Wait for branding, reflections, GPU completion and browser presentation.
 - [x] Surface startup failures with retry and explicit WebGL recovery controls.
 - [x] Exercise delayed assets/GPU, desktop/phone and real failure/reload paths.
-- [ ] Complete qualification under the bounded CI recovery policy in104.
-- [ ] Verify actual GitHub issue/Project synchronization and publication.
+- [x] Complete qualification under the bounded CI recovery policy in104.
+- [x] Verify actual GitHub issue/Project synchronization and publication.
 
 Acceptance criteria:
 The initial desk remains inert behind the cover until its complete first
@@ -25,10 +25,20 @@ The four new startup cases and existing unavailable-WebGL recovery case pass
 locally at original quality/deadlines with retries0. Delayed real branding
 and held GPU fences keep the cover visible. Desktop shimmer and reduced-
 motion phone coverage pass. All59 units and a fresh static build pass.
-The preceding103-case baseline passed before these changes; the new full
-final-source run remains pending and is not qualified by that baseline.
+The preceding103-case baseline passed before these changes. The later full
+local qualification completes104PASS/5FAIL; it is not an all-passing gate.
+7154546/Pages42363020619 completes92PASS/17SKIP/0FAIL/0NOT_RUN,
+including the retained startup/failure/recovery cases, and deploys.
+All46public runtime-file/directory-entry comparisons match. The separate
+build-only .nojekyll marker is absent from the artifact/public URL.
+Both original startup-cover scenarios pass against actual Pages: held real
+assets/GPU completion, desktop shimmer and reduced-motion phone. Actual
+issue100/Project/backlink synchronization is verified. Owner acceptance is
+not inferred from these technical results.
 
 Completion log:
 2026-11-07: Owner requests a startup cover using the shimmering website logo.
 Separate initial presentation from app construction, wait for real completion,
 and keep failure/retry/recovery explicit instead of revealing a partial desk.
+2026-11-07: Publish7154546 through the retained gate; independently exercise
+both original startup-cover cases on the actual public site successfully.

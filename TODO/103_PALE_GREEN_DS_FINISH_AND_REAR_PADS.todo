@@ -16,7 +16,7 @@ Tasks:
 - [x] Replace four black rectangular feet with matte pale-green square pads.
 - [x] Check actual pixels, labels, rear geometry and native shoulder presses.
 - [ ] Complete qualification under the bounded CI recovery policy in104.
-- [ ] Verify actual GitHub issue/Project synchronization and publication.
+- [x] Verify actual GitHub issue/Project synchronization and publication.
 
 Acceptance criteria:
 Green stays pale but lively. Navy legends remain darker than their button
@@ -33,7 +33,12 @@ photometry plus new pale-accent brightness/saturation, dark-label pixels and
 shared metallic reflection checks. Actual underside capture reviewed: four
 green squares, unobstructed enlarged emblem and top-edge shoulder housings.
 No new lights, reflection captures or animation loop are introduced. A fresh
-build passes. Full final-source browser qualification is running, not passed.
+build passes. Historical full local qualification completes104PASS/5FAIL.
+7154546/Pages42363020619 publishes with92PASS/17SKIP and matching public
+runtime bytes. Actual issue102/Project/backlink synchronization is verified.
+Native shoulder-motion, placement and reference-lighting CI cases remain
+parked in105. These local passes do not restore hosted coverage or establish
+owner acceptance; this workstream remains IN_PROGRESS.
 
 Completion log:
 2026-11-07: Owner selects DS-only accents, then requests darker text, pale but

@@ -9,6 +9,30 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Published recovery: 92 passed, 17 explicitly parked
+
+Exact source `71545469be6956687dc2166a33e30ba48bd346a1`,
+[Pages42363020619](https://github.com/Zanark/BowserBoy/actions/runs/42363020619),
+completes **92 passed /17 skipped /0 failed /0 did not run** across all19
+actual shard summaries. Build and deployment succeed with their original
+prerequisites. Both formerly suite-aborted isolation/resize cases pass.
+The site is live at **https://zanark.github.io/BowserBoy/**.
+
+All **46 public runtime-file and directory-entry byte comparisons match**
+committed source/build inputs, including original deterministic demo ROMs.
+The verifier also checks `.nojekyll`; that additional check returns404, and
+the downloaded Pages artifact omits this build-only marker. The complete
+47-check verifier therefore has one explicit exception, not47passes.
+Both original startup-cover cases pass against actual Pages: held branding
+and GPU completion, desktop shimmer, reduced-motion phone, complete scene
+readiness and pickup.
+
+The17parked cases remain open under
+[issue104](https://github.com/Zanark/BowserBoy/issues/104); deployment does
+not restore those scenarios or establish owner visual acceptance. There is
+no all-local-tests-passing claim. The following pending-publication and
+qualification descriptions are historical and superseded by this result.
+
 ### Deployment recovery: one attempt, then explicitly park recurring failures
 
 The owner's latest instruction supersedes the earlier requirement for every

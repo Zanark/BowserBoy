@@ -13,7 +13,7 @@ Tasks:
 - [x] Check natural-frame response, rapid last-state-wins input and real pixels.
 - [x] Preserve existing DS cyan and strict GPU scheduling assertions.
 - [ ] Complete qualification under the bounded CI recovery policy in104.
-- [ ] Verify actual GitHub issue/Project synchronization and publication.
+- [x] Verify actual GitHub issue/Project synchronization and publication.
 
 Acceptance criteria:
 Real lighting responds without queued stale states or extra shader variants.
@@ -28,7 +28,12 @@ unchanged cyan assertion. A20% increase was also insufficiently color-safe.
 The final132/22 levels increase both original light outputs10%; the actual
 tabletop brightness comparison and original warm/room DS color case pass.
 No DS shell color/material or renderer exposure was changed to mask that
-regression. Full final-source local qualification and publication are pending.
+regression. Historical full local qualification completes104PASS/5FAIL.
+7154546/Pages42363020619 publishes with92PASS/17SKIP and matching public
+runtime bytes. Actual issue101/Project/backlink synchronization is verified.
+The original1000ms light-response CI case and DS reference-color case remain
+parked in105. Local passes do not restore hosted qualification; this workstream
+remains IN_PROGRESS, with responsiveness uncertainty and owner review open.
 
 Completion log:
 2026-11-07: Owner reports slow unpredictable light switches and requests a

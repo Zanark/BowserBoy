@@ -12,7 +12,7 @@ Tasks:
 - [x] Qualify actual model bounds, battery clearance and reviewed rear capture.
 - [ ] Complete qualification under the bounded CI recovery policy in104.
 - [x] Synchronize the actual GitHub issue/Project and local backlink.
-- [ ] Commit/push as Zanark and monitor exact-source publication.
+- [x] Commit/push as Zanark and monitor exact-source publication.
 
 Acceptance criteria:
 The rear logo is visibly larger and fills most of the clear lower-body area
@@ -27,7 +27,11 @@ and taller. Its supplied2149:732aspect, center(-1.65,-2.43,-.265), rear
 orientation and original material remain unchanged. Syntax/whitespace and
 served-source checks pass. Actual emblem bounds/battery/edge clearance pass;
 the latest rear capture is reviewed with the four square pads and relocated
-shoulders. Full final-source local and hosted qualification remain pending.
+shoulders. Historical full local qualification completes104PASS/5FAIL.
+7154546/Pages42363020619 publishes successfully with92PASS/17SKIP;
+actual public runtime bytes match. The wider DS placement/branding CI case
+remains parked under105; full hosted visual coverage and owner acceptance
+remain open, rather than being inferred from successful deployment.
 
 Completion log:
 2026-11-07: Owner supplies an underside screenshot and requests a bigger rear

@@ -1,7 +1,7 @@
 BowserBOY workstreams
 ====================
 105_PARKED_BROWSER_CASES.todo - BLOCKED: seventeen explicitly parked cases (fifteen CI-only, two also local); restore coverage later.
-104_BOUNDED_CI_RECOVERY.todo - IN_PROGRESS: second hosted qualification90PASS/7FAIL/10SKIP/2NOT_RUN; park remaining failures and rebalance native shards before actual deployment.
+104_BOUNDED_CI_RECOVERY.todo - DONE:7154546 publishes through92PASS/17SKIP/0FAIL/0NOT_RUN;46public byte checks and two public startup cases pass; build-only marker exception recorded.
 01_PLAYABLE_PROTOTYPE.todo - Local-ROM player and polished static shell.
 02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.
 03_VERIFICATION_AND_DELIVERY.todo - Real-runtime evidence and documentation.
@@ -100,20 +100,28 @@ BowserBOY workstreams
 96_DS_CONTROL_CLEARANCE_AND_KEYS.todo - IN_PROGRESS: caps/sockets clear the touchscreen; DS A/S=Y/X, Q/W=L/R; local native scene/runtime and GBA regression pass.
 97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: all four corrected native D-pad scenarios pass hosted at5b250f2;95PASS/7FAIL skips publication.
 98_SEPARATE_LIGHTING_DOCK.todo - IN_PROGRESS: independent Lighting case passes hosted at e042d17;94PASS/9FAIL skips publication.
-99_DS_HEADER_BLUE_GLOW.todo - IN_PROGRESS: static blue DS header halo/edge in local preview; actual render qualification pending.
-100_LARGER_DS_REAR_EMBLEM.todo - IN_PROGRESS: existing underside emblem approximately41%larger, original aspect/position preserved; actual clearance/render qualification pending.
-101_SHIMMERING_SCENE_STARTUP.todo - IN_PROGRESS: delayed assets/GPU, shimmer, phone and failure/recovery cases pass; actual publication pending.
-102_RESPONSIVE_BRIGHTER_ROOM_LIGHTING.todo - IN_PROGRESS: natural-frame switching and brighter tabletop pass; original GPU and DS cyan requirements retained.
-103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo - IN_PROGRESS: brighter pale accents, navy legends, metallic trim, top-edge L/R and four square green rubber pads; three affected DS cases pass.
+99_DS_HEADER_BLUE_GLOW.todo - IN_PROGRESS/published: local halo pixels pass; wider hosted branding case parked, owner review open.
+100_LARGER_DS_REAR_EMBLEM.todo - IN_PROGRESS/published: local bounds/clearance pass; wider hosted placement case parked, owner review open.
+101_SHIMMERING_SCENE_STARTUP.todo - DONE: retained hosted startup/failure checks and both actual public startup-cover scenarios pass at7154546.
+102_RESPONSIVE_BRIGHTER_ROOM_LIGHTING.todo - IN_PROGRESS/published: local response/brightness pass; original1000ms response and DS reference-color CI cases parked.
+103_PALE_GREEN_DS_FINISH_AND_REAR_PADS.todo - IN_PROGRESS/published: local native/geometry/pixel checks pass; shoulder/placement/reference CI cases parked, owner review open.
 
 Current pending work
 --------------------
--104/105: Owner prioritizes deployment over another full local repair loop.
+-104/105:7154546/Pages42363020619 completes92PASS/17SKIP/0FAIL/
+  0NOT_RUN across19shards; build and actual deployment succeed. Both suite-
+  aborted cases from the preceding attempt now pass. All46public runtime/
+  entry byte checks match and two actual public startup-cover cases pass.
+  The verifier's additional .nojekyll check returns404; the downloaded Pages
+  artifact omits this build-only marker.104is technically complete;105stays
+  BLOCKED/open for17restorations, not relabelled fixed. Owner review remains
+  separate. The following earlier gate descriptions are historical.
+-104/105 historical: Owner prioritizes deployment over another full local repair loop.
   Exact19f4996/Pages42361581620 finishes90PASS/7FAIL/10SKIP/2NOT_RUN;
   build passes and deployment skips. Preserve all109declarations; park exactly
   seven observed failures after bounded qualification and retain both suite-
   aborted cases. Rebalance native saves/restarts within the same19shards.
-  Expected coverage92retained/17CI skips; actual next hosted gate is pending.
+  Later7154546observes92PASS/17SKIP and successful publication as above.
 -101/102/103: New startup, lighting and DS finish/layout cases are locally
   qualified. Room light output rises10%, preserving the original cyan test;
   larger increases washed out the lid. Top-edge L/R native presses and the
@@ -124,7 +132,8 @@ Current pending work
   emblem. Changes are served through the local source preview. Preserve the
   blue halo's actual pixels and the enlarged emblem's actual bounds/clearance
   now pass. The preceding baseline completed103/103 before newer edits; it
-  does not qualify final source. Publication remains pending the retained gate.
+  does not qualify final source. Publication is now verified at7154546;
+  broader hosted placement/branding coverage remains parked.
 -98: Lamp/Room/Pear controls now use a separate warm, accessible Lighting dock;
   console tools retain their themed movement/collapse. Phone play placement
   avoids the DS upper screen; table/Inspect retain space for the visible brand.

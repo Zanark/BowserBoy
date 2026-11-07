@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Retained gate and actual public publication succeed:
+  Exact71545469be6956687dc2166a33e30ba48bd346a1/Pages42363020619
+  completes92PASS/17SKIP/0FAIL/0NOT_RUN across all19actual shard logs.
+  Build and deploy succeed with unchanged dependencies. Previously aborted
+  isolation/resize cases now pass. The17parked cases remain coverage debt.
+  Actual https://zanark.github.io/BowserBoy/ matches46runtime/entry byte
+  comparisons. Preserve the verifier's additional failed .nojekyll404:
+  the downloaded github-pages artifact also omits this build-only marker.
+  Both original public startup-cover scenarios pass, including actual held
+  branding/GPU readiness, shimmering desktop and reduced-motion phone.
+  The first anchored full-title grep selects no tests; corrected unanchored
+  selection actually runs both. No scenario assertion was changed.
+  Local preview5173responds200; nine dirty PNGs and frozen PDF preserved.
+ 104is complete;105remains BLOCKED/open.101has technical public evidence;
+ 99/100/102/103stay open for parked qualification/owner review, with their
+  implementation and publication facts distinguished from acceptance.
 - 2026-11-07 / Second bounded qualification and explicit remaining parking:
   Exact19f4996/Pages42361581620 completes90PASS/7FAIL/10SKIP/2NOT_RUN
   across19shards. Build passes; deploy skips. Local qualification completed

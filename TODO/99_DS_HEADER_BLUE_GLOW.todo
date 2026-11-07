@@ -12,7 +12,7 @@ Tasks:
 - [x] Preserve reduced-motion behavior, original artwork and other branding.
 - [ ] Complete qualification under the bounded CI recovery policy in104.
 - [x] Synchronize the actual GitHub issue/Project and local backlink.
-- [ ] Commit/push as Zanark and monitor exact-source publication.
+- [x] Commit/push as Zanark and monitor exact-source publication.
 
 Acceptance criteria:
 The DS header has a visible blue halo and contrasting edge over the lantern.
@@ -23,8 +23,12 @@ Technical checks and local preview are not owner acceptance or deployment.
 Completion evidence:
 The DS-specific CSS rule adds three static alpha-shaped drop shadows.
 Actual warm-background halo pixels pass. Original artwork, other console
-branding and play-mode hiding remain covered. The current final-source local
-suite is running; hosted publication remains pending under104's bounded policy.
+branding and play-mode hiding remain covered locally. Historical full local
+qualification completes104PASS/5FAIL, not an all-passing final gate.
+7154546/Pages42363020619 publishes successfully with92PASS/17SKIP.
+Actual public runtime bytes match; two public startup-cover cases pass.
+The wider DS placement/branding CI case remains parked under105, so full
+hosted visual coverage and owner acceptance remain open.
 
 Completion log:
 2026-11-07: Owner supplies a screenshot where the lantern obscures the DS
