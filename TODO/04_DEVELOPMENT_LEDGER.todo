@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / First bounded attempt regresses; exact cases parked:
+  Complete18ecdc0/Pages42360102291 totals52PASS/55FAIL/2NOT_RUN across
+  all19shards; build passes and deployment skips. Owner correctly flags the
+  increase. Actual logs distinguish new premature startup-readiness checks
+  from later native/rendering failures; do not claim a common proven cause.
+  Restore preceding CI launch settings because explicit SwiftShader failed
+  qualification. Normal navigation/reload awaits the actual loading cover
+  within the original120s case budget, preserving15s assertions, failure
+  scenarios, resolution and gates. Park the nine recurring historical cases
+  only in CI, with105holding follow-up; keep local assertions executable.
+  New pale plastic fill masks dark-room LCD spill and breaks idle-stylus
+  darkness: make fill follow actual room lights and compensate exposure.
+  Its focused repair attempt and the second hosted result remain pending.
 - 2026-11-07 / Bounded CI recovery takes priority:
   Owner explicitly requests commit, push and completed deployment, authorizing
   one repair attempt per failing case and then tracked skips if it recurs.

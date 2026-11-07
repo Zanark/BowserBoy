@@ -1,0 +1,45 @@
+Status: BLOCKED
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/104
+Milestone: Restore explicitly parked browser coverage after deployment recovery.
+Dependencies: 104 bounded CI deployment recovery; owner returns to parked work.
+Purpose: Preserve exact failed scenarios for later repair without calling skips fixes.
+
+Tasks:
+- [ ] Restore native fast-forward/VSync cartridge-clock ratios (dock).
+- [ ] Restore complete native DS boot/buttons/physical-stylus coverage (DS).
+- [ ] Restore naturally repainted DS quick-tap pixels (DS).
+- [ ] Restore DS side-stylus lighting/drawing/return coverage (DS).
+- [ ] Restore DS hinge/gameplay-pose coverage (DS).
+- [ ] Restore DS placement/inspection/branding coverage (DS).
+- [ ] Restore warm/room DS reference-lighting coverage (DS).
+- [ ] Restore Pear edge-foot placement coverage (Pear).
+- [ ] Restore retained native CRT framebuffer/reload coverage (scene).
+- [ ] Restore physical cap compression/unlit-response fixture paints (scene).
+
+Acceptance criteria:
+Each exact case passes its original assertions, resolution and deadlines on the
+hosted browser before removing its skip. Eight cases remain runnable locally;
+side-stylus and physical-cap cases are parked locally too after recurring there.
+Passing retained gates or separate focused checks does not restore skipped CI
+coverage. Do not silently drop, broaden or convert these cases to passing tests.
+
+Completion evidence:
+The preceding source e042d17/Pages42354807179 failed these nine cases.
+The owner's authorized repair attempt 18ecdc0/Pages42360102291 failed them
+again. The complete latter run totals 52 passed, 55 failed and 2 did not run;
+build passed and deploy was skipped. All 19 shard logs were inspected.
+Exact case titles remain in their original test declarations, with visible
+skip reasons linking actual issue104. The remaining46newly hosted-failed cases are not automatically
+parked: loader-aware setup, the directly coupled DS fill correction and restored
+preceding launch settings get one bounded qualification attempt first.
+The109-case local run totals104PASS/5FAIL. One focused DS repair attempt gives
+3PASS/1FAIL: independent LCD spill, placement and reference lighting pass;
+side-stylus still fails buttonsBlack and remains parked without weakening it.
+One focused startup/scene attempt gives11PASS/1FAIL: startup failure/recovery,
+lighting, setup, native startup and LCD spill pass; physical-cap fixture still
+fails complete-frame submission and is added here. Ten CI skips/two local skips
+are now explicit. No claim that all local tests pass.
+
+Completion log:
+2026-11-07: Owner explicitly authorizes one repair attempt then parking.
+Park recurring cases explicitly; retain every original assertion for restoration.

@@ -8,9 +8,6 @@ export default defineConfig({
   retries: 0,
   use: {
     channel: process.env.BROWSER_CHANNEL || 'msedge',
-    launchOptions: process.env.CI ? {
-      args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
-    } : {},
     baseURL: 'http://127.0.0.1:5174/BowserBoyAdvance/',
     viewport: { width: 1440, height: 1100 },
     trace: 'retain-on-failure',

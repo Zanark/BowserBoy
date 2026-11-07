@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { installRoomPaintFixture } from './pixel-lab.mjs';
+import { installRoomPaintFixture, waitForDesk } from './pixel-lab.mjs';
 
 async function ready(page) {
   await page.goto('./');
+  await waitForDesk(page);
   await expect(page.locator('#consoles-open')).toBeEnabled();
   await expect.poll(() => page.evaluate(async () =>
     Number.isFinite((await import('./src/app.js')).view.lastPaint))).toBe(true);

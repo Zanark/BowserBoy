@@ -8,8 +8,10 @@ explicitly park recurring cases instead of blocking deployment indefinitely.
 Tasks:
 - [x] Inspect all nine failed-case traces from Pages42354807179.
 - [x] Select explicit full-resolution ANGLE SwiftShader for CI qualification.
-- [ ] Observe the exact-source hosted repair attempt.
-- [ ] Park only recurring failed cases with explicit reasons and follow-up tracking.
+- [x] Observe the exact-source hosted repair attempt.
+- [x] Park only recurring failed cases with explicit reasons and follow-up tracking.
+- [x] Prepare loader-aware setup and restore preceding CI launch settings.
+- [x] Qualify the directly coupled DS dark-fill repair once.
 - [ ] Pass the retained build/browser gates and complete Pages deployment.
 - [ ] Verify actual deployed source and report passing/skipped coverage honestly.
 
@@ -25,7 +27,21 @@ Downloaded and inspected actual failure traces: native speed clock; DS boot;
 DS quick taps; DS side stylus; DS hinge; DS placement; DS reference lighting;
 Pear edge feet; GBA CRT reload readiness. Explicit CI SwiftShader is the first
 bounded environment repair, not a confirmed cause or a claim of passing.
-The current 109-case local run remains active; final results are pending.
+Exact source18ecdc0291a37267164efeaddc8775ed5b4834ae/Pages42360102291:
+52 passed,55 failed,2 did not run across all19shards; build passed and
+deploy skipped. This is a regression, not a successful environment repair.
+Revert unproven explicit SwiftShader selection to preceding launch settings.
+Await the real startup cover before normal scenarios inside the unchanged120s
+test budget; preserve15s assertions and deliberate startup-failure scenarios.
+Nine recurring cases are visibly CI-skipped and tracked in105. A recurring
+local physical-cap failure adds one case; it and side-stylus are skipped
+locally too. Do not automatically skip the46new hosted failures before their
+bounded setup/launch/material correction has been qualified.
+The109-case local run completes104PASS/5FAIL. The focused DS repair gives
+3PASS/1FAIL; focused startup/setup/scene repair11PASS/1FAIL. Actual LCD spill,
+DS placement/reference colors and startup/light checks pass. Recurring
+side-stylus and physical-cap failures are parked instead of retrying.
+Current inventory:109cases,10CI skips,2local skips; remaining gates pending.
 
 Completion log:
 2026-11-07: Owner prioritizes pipeline recovery, authorizes one repair attempt

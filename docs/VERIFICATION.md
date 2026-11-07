@@ -25,7 +25,36 @@ it is not a proven root-cause correction. Existing startup/GPU-readiness and
 lighting-scheduling changes accompany this run. Record exact-SHA hosted
 results before deciding which individual cases need parking.
 
-### Current source: focused checks pass; full local gate running
+### First bounded attempt regressed; recovery remains in progress
+
+Exact source `18ecdc0291a37267164efeaddc8775ed5b4834ae`,
+[Pages42360102291](https://github.com/Zanark/BowserBoy/actions/runs/42360102291):
+**52 passed /55 failed /2 did not run**, all19shards inspected. Build passed;
+deployment was skipped. Explicit SwiftShader did not qualify and is reverted
+to the preceding launch settings; this does not prove which changes caused
+every failure.
+
+Normal browser setup now waits for the real startup cover to finish within
+the unchanged120s case budget. All15s assertions, full rendering quality and
+deliberate startup-failure scenarios remain. The nine historical cases that
+failed again are visibly skipped in CI, with individual reasons and
+[parked follow-up105](../TODO/105_PARKED_BROWSER_CASES.todo). Local execution
+remains enabled for eight; side-stylus also failed its local repair and is
+parked there. The46newly failed cases receive one bounded qualification of
+loader-aware setup, restored launch settings and the coupled DS fill repair;
+they are not blanket-skipped.
+
+The local109-case run completes **104 passed /5 failed**. The correction
+removes artificial DS fill when room lights are off and compensates exposure
+when on. Focused DS qualification gives **3 passed /1 failed**: LCD spill,
+placement and reference lighting pass; side-stylus remains parked. Focused
+startup/setup/scene qualification gives **11 passed /1 failed**: the physical-cap
+fixture still fails complete-frame submission and is parked too, without
+changing its assertions. **Ten CI skips; two local skips.** A passing complete
+current-source local suite is not claimed. Current hosted retained gates and
+deployment are still pending.
+
+### Earlier focused checks; full local outcome pending
 
 The preceding unmodified103-case baseline passed locally. It does not qualify
 later edits. The rebuilt final source adds six browser cases, retaining the

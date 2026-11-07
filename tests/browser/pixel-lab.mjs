@@ -1,5 +1,7 @@
 import { expect } from '@playwright/test';
 
+export const waitForDesk = page => page.locator('#scene-loading').waitFor({ state: 'hidden' });
+
 export const installRoomPaintFixture = page => page.evaluate(async () => {
   const { view } = await import('./src/app.js');
   let recovery;

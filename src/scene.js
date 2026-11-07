@@ -1129,6 +1129,12 @@ export class HandheldScene {
     if (this.model.led.material.emissiveIntensity > 0) {
       this.model.led.material.emissiveIntensity = 80 * .018 / this.renderer.toneMappingExposure;
     }
+    // Plastic fill follows room lighting, leaving dark controls to actual LCD spill.
+    for (const material of this.ds.accentMaterials) {
+      if (exposure === .018) material.emissive.copy(material.color);
+      else material.emissive.set(0);
+      material.emissiveIntensity = 4 * .018 / this.renderer.toneMappingExposure;
+    }
     if (this.cartridgeMotion) {
       const fraction = THREE.MathUtils.clamp(
         (cartridgeElapsed - cartridgeFramingDuration) / cartridgeSlideDuration, 0, 1);

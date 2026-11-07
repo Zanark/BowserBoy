@@ -271,5 +271,5 @@ export function createDsHandheld() {
     mesh(root, 'Shell-integrated stylus retaining clip', roundedBox(.35, .16, .10, .035), baseShell, 4.30, y, .055);
   }
   return { root, lid, hinge, screens, screen: screens[1], controls, led, power, cartridge,
-    stylus, stylusTip, stylusGlow, stylusPlastic, branding };
+    stylus, stylusTip, stylusGlow, stylusPlastic, branding, accentMaterials: [buttonPlastic, rubber] };
 }

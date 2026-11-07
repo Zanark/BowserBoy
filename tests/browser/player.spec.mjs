@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { readFile, mkdir } from 'node:fs/promises';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
-import { nativeFrame, demoReady, powerOn, denyScreenWakeLock } from './pixel-lab.mjs';
+import { nativeFrame, demoReady, powerOn, denyScreenWakeLock, waitForDesk } from './pixel-lab.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const demoBytes = () => Buffer.from(createDemoRom());
@@ -63,6 +63,7 @@ const readStored = (page) => page.evaluate(() => new Promise((resolve, reject) =
 }));
 const startSavedDemo = async (page) => {
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   await openTools(page);
   await page.locator('#autosave-toggle').click();
@@ -78,6 +79,7 @@ const startSavedDemo = async (page) => {
 test('native settings keep the live runtime, persist options and leave the LCD and power lifecycle intact', async ({ page }) => {
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
+  await waitForDesk(page);
   await openTools(page);
   const nativeSettings = page.getByRole('button', { name: 'Advanced EmulatorJS settings', exact: true });
   await expect(nativeSettings).toBeDisabled();
@@ -165,6 +167,7 @@ test('native settings keep the live runtime, persist options and leave the LCD a
   await page.locator('#native-close').click();
   await expect(page.locator('#native-open')).toBeEnabled();
   await page.reload();
+  await waitForDesk(page);
   await startDemo(page);
   const resumed = page.frames().find((frame) => frame.url().endsWith('player.html'));
   expect(await resumed.evaluate(() => window.EJS_emulator.getSettingValue('ff-ratio'))).toBe('2.0');
@@ -173,6 +176,7 @@ test('native settings keep the live runtime, persist options and leave the LCD a
 test('enabling native VSync warns immediately about audio dropouts without overriding the choice', async ({ page }) => {
   page.on('dialog', dialog => dialog.accept());
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   await openTools(page);
   await page.locator('#autosave-toggle').click();
@@ -194,6 +198,7 @@ test('enabling native VSync warns immediately about audio dropouts without overr
   await page.locator('#native-close').click();
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('bowser-boy-advance-preferences')).emulatorOptions?.vsync)).toBe('enabled');
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   runtime = page.frames().find(frame => frame.url().endsWith('player.html'));
   await openTools(page);
@@ -217,6 +222,7 @@ test('screen shader menu exposes every native CRT preset, renders each and remem
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('./');
+  await waitForDesk(page);
   await openTools(page);
   await expect(page.locator('#shader')).toHaveValue('crt-geom.glslp');
   await startDemo(page);
@@ -281,6 +287,7 @@ test('screen shader menu exposes every native CRT preset, renders each and remem
   await page.locator('#shader').selectOption('crt-aperture.glslp');
   await expect(page.locator('#shader')).toBeEnabled();
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await openTools(page);
   await expect(page.locator('#shader')).toHaveValue('crt-aperture.glslp');
@@ -294,6 +301,7 @@ test('screen shader menu exposes every native CRT preset, renders each and remem
 
 test('static shell, responsive layout, errors, keyboard help and private-file boundaries', async ({ page, request }) => {
   await page.goto('./');
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.getByRole('heading', { name: 'BowserBOY', exact: true })).toBeVisible();
   await expect(page.locator('#tools')).not.toBeVisible();
@@ -337,6 +345,7 @@ test('real mGBA renders, responds to input and restores manual progress', async 
   page.on('request', (request) => methods.push(request.method()));
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
+  await waitForDesk(page);
   await denyScreenWakeLock(page);
   await startDemo(page);
   // Isolate manual backup actions from the periodic checkpoint's busy controls.
@@ -400,6 +409,7 @@ test('native GBA reload restores saved progress under a renamed cartridge', asyn
   page.on('dialog', (dialog) => dialog.accept());
   const checkpointImage = await startSavedDemo(page);
   await page.reload();
+  await waitForDesk(page);
   await upload(page, 'Renamed cartridge.gba');
   await expect(page.locator('#notice')).toContainText('latest checkpoint has been restored');
   await expect.poll(() => image(page)).toBe(checkpointImage);
@@ -414,6 +424,7 @@ test('native automatic checkpoint interval stores moved progress without pressin
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('request', (request) => methods.push(request.method()));
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   // The actual automatic interval must write without pressing Save.
   await openTools(page);
@@ -434,6 +445,7 @@ test('native backups reject other ROMs and storage failure retains emergency exp
   page.on('request', (request) => methods.push(request.method()));
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   await openTools(page);
   await page.locator('#autosave-toggle').click();
@@ -474,6 +486,7 @@ test('native backups reject other ROMs and storage failure retains emergency exp
 
 test('IndexedDB transactions retain both slots and reject aborted writes', async ({ page }) => {
   await page.goto('./');
+  await waitForDesk(page);
   const result = await page.evaluate(async () => {
     const { SaveStore } = await import('./src/save-store.js');
     const { RUNTIME } = await import('./src/cartridge.js');
@@ -521,6 +534,7 @@ test('blocked browser storage is explicit rather than a false save success', asy
     Object.defineProperty(window, 'indexedDB', { get() { throw new DOMException('Storage denied', 'SecurityError'); } });
   });
   await page.goto('./');
+  await waitForDesk(page);
   await expect(page.locator('#storage-badge')).toHaveText('SAVE ERROR');
   await expect(page.locator('#notice')).toContainText('Progress has not been saved');
   await expect(page.locator('#save')).toBeDisabled();
@@ -536,6 +550,7 @@ test('unavailable app save storage keeps power-cycle battery data explicitly ses
     };
   });
   await page.goto('./');
+  await waitForDesk(page);
   await expect(page.locator('#storage-badge')).toHaveText('SAVE ERROR');
   await startDemo(page);
   await move(page, 'ArrowRight');
@@ -553,6 +568,7 @@ test('a failed runtime CDN request has a visible retryable error', async ({ page
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.route('https://cdn.emulatorjs.org/**', (route) => route.abort('failed'));
   await page.goto('./');
+  await waitForDesk(page);
   await openTools(page);
   await page.locator('#demo').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
@@ -572,6 +588,7 @@ test.describe('touch layout', () => {
   test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
   test('physical touch controls operate the core without covering the LCD', async ({ page }) => {
     await page.goto('./');
+    await waitForDesk(page);
     await startDemo(page);
     await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
     const player = page.frameLocator('#frame-host iframe');
@@ -595,6 +612,7 @@ test.describe('touch layout', () => {
 
 test('remapped keyboard and sound preferences persist and physical inputs release correctly', async ({ page }) => {
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   await page.waitForTimeout(100);
   const original = await image(page);
@@ -643,6 +661,7 @@ test('remapped keyboard and sound preferences persist and physical inputs releas
   await page.keyboard.press('Escape');
   await expect(page.locator('#tools')).toBeVisible();
   await page.reload();
+  await waitForDesk(page);
   await openTools(page);
   await expect(page.locator('[data-binding="a"]')).toHaveText('C');
   await expect(page.locator('#volume')).toHaveValue('99');
@@ -660,6 +679,7 @@ test('blocked preference writes explicitly retain session-only controls and soun
     Storage.prototype.setItem = function () { throw new DOMException('Preferences denied', 'SecurityError'); };
   });
   await page.goto('./');
+  await waitForDesk(page);
   await openTools(page);
   await page.locator('[data-binding="a"]').click();
   await page.keyboard.press('KeyC');
@@ -670,6 +690,7 @@ test('blocked preference writes explicitly retain session-only controls and soun
 
 test('all shell buttons reach the core, mixed input releases safely, and fullscreen retains the console', async ({ page }) => {
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   await expect(page.locator('#notice')).toBeVisible();
   await page.locator('#notice-dismiss').click();
@@ -729,6 +750,7 @@ test('all shell buttons reach the core, mixed input releases safely, and fullscr
 
 test('supplied chrome website wordmark preserves both artwork assets and responsive header, but hides in play view', async ({ page, request }) => {
   await page.goto('./');
+  await waitForDesk(page);
   const logo = page.locator('.desk-heading img');
   await expect(logo).toBeVisible();
   await expect(page.locator('.desk-heading > span')).toHaveCount(0);
@@ -816,6 +838,7 @@ test('first visit is off, original startup plays only on the power switch, and i
     }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-booting'] });
   });
   await page.goto('./');
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await expect(page.locator('#frame-host iframe')).toHaveCount(0);
@@ -894,6 +917,7 @@ test('first visit is off, original startup plays only on the power switch, and i
   await expect(page.locator('#frame-host iframe')).toHaveCount(0);
   expect(await page.evaluate(() => window.bootEvents.filter((value) => value === 'true'))).toHaveLength(1);
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'on');
   expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
@@ -901,6 +925,7 @@ test('first visit is off, original startup plays only on the power switch, and i
   await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   expect(await page.evaluate(() => window.bootEvents)).toEqual([]);
@@ -909,6 +934,7 @@ test('first visit is off, original startup plays only on the power switch, and i
 test('inserting a cartridge does not power on, and refresh resumes the remembered powered cartridge without another boot animation', async ({ page }) => {
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
+  await waitForDesk(page);
   await openTools(page);
   // Keep the separately tested autosave lock out of the physical power gesture.
   await page.locator('#autosave-toggle').click();
@@ -917,6 +943,7 @@ test('inserting a cartridge does not power on, and refresh resumes the remembere
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await expect(page.locator('#frame-host iframe')).toHaveCount(0);
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await expect(page.locator('#game-title')).toHaveText('Pixel Lab');
@@ -937,6 +964,7 @@ test('inserting a cartridge does not power on, and refresh resumes the remembere
     }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-booting'] });
   });
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'on');
   await expect(page.locator('#pause')).toBeEnabled();
@@ -946,6 +974,7 @@ test('inserting a cartridge does not power on, and refresh resumes the remembere
   await page.getByRole('button', { name: 'Turn power off', exact: true }).click();
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await page.reload();
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('#scene')).toHaveAttribute('data-power', 'off');
   await expect(page.locator('#game-title')).toHaveText('Pixel Lab');
@@ -964,6 +993,7 @@ test('device storage upgrades old checkpoints intact and rejects interrupted pow
     };
   });
   await page.goto('./');
+  await waitForDesk(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   const result = await page.evaluate(async () => {
     const { SaveStore } = await import('./src/save-store.js');
@@ -992,6 +1022,7 @@ test('device storage upgrades old checkpoints intact and rejects interrupted pow
 
 test('power switch destroys the runtime and cold boots only the in-game save, including after reload', async ({ page }) => {
   await page.goto('./');
+  await waitForDesk(page);
   await openTools(page);
   // The timer has its own test; keep its disabled-control window out of power-switch gestures.
   await page.locator('#autosave-toggle').click();
@@ -1043,6 +1074,7 @@ test('power switch destroys the runtime and cold boots only the in-game save, in
   expect(await page.evaluate(() => window.reinsertions)).toBe(0);
   await expect(page.locator('#scene')).toHaveAttribute('data-cartridge', 'seated');
   await page.reload();
+  await waitForDesk(page);
   await upload(page, 'Renamed cartridge.gba');
   await expect.poll(() => image(page)).toBe(batteryImage);
   expect((await readStored(page))[0].manual).toEqual(before.manual);
@@ -1050,6 +1082,7 @@ test('power switch destroys the runtime and cold boots only the in-game save, in
 
 test('power-off storage failure leaves the live game recoverable instead of discarding its save', async ({ page }) => {
   await page.goto('./');
+  await waitForDesk(page);
   await startDemo(page);
   const frame = page.frames().find((item) => item.url().endsWith('player.html'));
   // Scope the injected write failure to the explicit power-off save.

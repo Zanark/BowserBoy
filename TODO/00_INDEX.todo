@@ -1,5 +1,6 @@
 BowserBOY workstreams
 ====================
+105_PARKED_BROWSER_CASES.todo - BLOCKED: ten explicitly parked cases (eight CI-only, two also local); restore coverage later.
 104_BOUNDED_CI_RECOVERY.todo - IN_PROGRESS: one CI repair attempt, then explicitly tracked recurring-case skips; actual deployment required.
 01_PLAYABLE_PROTOTYPE.todo - Local-ROM player and polished static shell.
 02_PROGRESS_AND_BACKUPS.todo - Origin-local saves and portable checkpoints.
