@@ -14,7 +14,7 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
-- 2026-11-08 / Supplied book covers qualified locally (124):
+- 2026-11-08 / Supplied book covers delivered (124):
   Use the owner's two exact PNGs in NDS/modeling PDF and scriptless readers.
   85/328pages retain all84/327interior pages pixel-identically at1.3x, with
   exact text/navigation/bookmarks; exclude regenerated PDF xref IDs only.
@@ -24,14 +24,21 @@ Completion log:
   five default-closed sections/two nested companions and390px layout.
   Keep common desk links outside
   axolotl's child disclosure. No chapter rewrite or runtime acceptance claim.
-  Prior editions remain at immutablec613465. Repository publication pending;
-  unrelated prior Pages42404649055 failure is not repaired by these changes.
+  Prior editions remain at immutablec613465. Zanark964c67a publishes35files;
+  all30public package/cover/README files byte-match exact committed objects.
+  Actual GitHub shelf was inspected.0f65147 corrects heading aliases only;
+  public Edge verifies unique permalinks, five closed disclosures/nested
+  controls and three-cover mobile bounds33..357at390px. Books unchanged.
+  At02:16IST, exact material Pages42412230616 remains IN_PROGRESS (build
+  and9browser shards succeed,10continue); correction42412516851PENDING.
+  No new deployment success or repair of prior42404649055 is inferred.
+  124DONE for verified repository delivery; one bounded closure receipt follows.
 - 2026-11-08 / Actual GitHub anchor correction (124):
   Public964c67a matches all30package/cover/README files byte-for-byte.
   Actual GitHub adds heading permalink IDs to raw summary headings, unlike
   the Markdown API preview. Remove five redundant explicit aliases instead
   of accepting duplicate IDs. Original legacy DS anchor remains intact.
-  Books are unchanged; actual public README interaction recheck follows.
+  Books are unchanged; actual public README interaction recheck passes.
 - 2026-11-08 / Modeling hosting recovered; delivery complete (123):
   Owner requests push. Fresh API/deployment-log inspection observes exact
   c613465 Pages42398430974 attempt3 already SUCCESS; hosting reports success,

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/123
 Milestone: Supplied covers, linked book shelf and default-collapsed README.
 Dependencies: 122, 123.
@@ -12,7 +12,7 @@ Tasks:
 - [x] Make every section from BowserBOY DS onward collapsible, closed by default.
 - [x] Render and qualify both books; compare unchanged interior pages.
 - [x] Reconcile manifests, checksums, review scope and actual issue/Project.
-- [ ] Commit/push as Zanark, verify public bytes and monitor exact revision.
+- [x] Commit/push as Zanark, verify public bytes and monitor exact revision.
 
 Acceptance criteria:
 The supplied images appear uncropped on page one of the corresponding PDF
@@ -42,10 +42,24 @@ Git bytes, with only declared text newline normalization and installed-only
 dependencies allowed. Updated reviews distinguish old cover inspection from
 the current native cover and unchanged interiors.
 The GBA PDF retains25875bea...; chapter counts/content are not rewritten.
-Pending exact repository publication and workflow observation.
+Zanark964c67a11134cdbc8071dab089f50d2de35e87ee publishes the covers and books;
+all30public exact-commit files match, including both complete packages, both
+original PNGs and README. Zanark0f6514715f218dc5dff32e4aef48c72203779c4d
+removes duplicate GitHub heading aliases without changing either book.
+Actual GitHub/Edge verifies the corrected README's three decoded covers,
+matching image/text PDF targets, unique heading permalinks, five closed
+disclosures, working nested companions,26original GIF names and390px shelf
+bounds33..357. The actual three-cover row was visually inspected.
+At02:16IST, material Pages42412230616 remains IN_PROGRESS: build and nine
+browser shards succeed, ten continue; correction Pages42412516851 is PENDING.
+Repository downloads are delivered; no successful new Pages deployment or
+repair of earlier42404649055 is inferred. No retry or gate change requested.
 The user explicitly authorizes both supplied covers and commit/push.
 
 Completion log:
 2026-11-08: Began the requested cover-only revision and ordered README shelf.
 Starting worktree clean at659651e; prior unrelated README/PNG edits were already
 committed externally. No existing changes reverted or silently included.
+2026-11-08: Both supplied-cover editions and corrected README are public,
+byte-verified and browser-qualified. Actual issue/Project closure follows
+independent delivery verification, then one bounded tracking-receipt push.
