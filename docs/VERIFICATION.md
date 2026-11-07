@@ -18,12 +18,12 @@ fixed coverage. Keep the build and remaining browser verification as deployment
 prerequisites, with unchanged assertions, rendering resolution and deadlines.
 
 The nine failures from Pages42354807179 have been inspected through their
-actual trace artifacts. The first bounded CI repair selects ANGLE SwiftShader
+actual trace artifacts. The first bounded CI repair selected ANGLE SwiftShader
 explicitly instead of relying on Chromium's automatic software fallback.
 This is the same full-resolution backend used for local software qualification;
 it is not a proven root-cause correction. Existing startup/GPU-readiness and
-lighting-scheduling changes accompany this run. Record exact-SHA hosted
-results before deciding which individual cases need parking.
+lighting-scheduling changes accompanied that run. Its actual failure and the
+subsequent exact-SHA qualification are recorded below.
 
 ### First bounded attempt regressed; recovery remains in progress
 
@@ -51,15 +51,52 @@ placement and reference lighting pass; side-stylus remains parked. Focused
 startup/setup/scene qualification gives **11 passed /1 failed**: the physical-cap
 fixture still fails complete-frame submission and is parked too, without
 changing its assertions. **Ten CI skips; two local skips.** A passing complete
-current-source local suite is not claimed. Current hosted retained gates and
-deployment are still pending.
+current-source local suite is not claimed. The next hosted attempt is recorded
+below; these local results are historical qualification, not a final-source gate.
 
-### Earlier focused checks; full local outcome pending
+### Second hosted attempt: 90 passed, seven failures explicitly parked
+
+Exact source `19f499643c9d02a0be219713ae0059d9fd531309`,
+[Pages42361581620](https://github.com/Zanark/BowserBoy/actions/runs/42361581620):
+**90 passed /7 failed /10 skipped /2 did not run** across all19shards.
+Build passed; deployment was skipped. Loader-aware setup and restored launch
+settings reduced55failures to7; this does not prove a single cause for them.
+
+The remaining failures are native DS shoulder motion; flat-corner, rolled and
+upside-down desktop stylus pixels; independent DS LCD spill; the original1000ms
+light-response bound; and GBA LCD/control spill. These exact seven cases are
+explicitly CI-parked under [issue104](https://github.com/Zanark/BowserBoy/issues/104),
+without deleting or weakening their assertions. The key case previously did
+not run; rolled/upside-down passed that preceding attempt. Do not describe every
+failure as a second consecutive failure.
+
+DS/GBA core isolation and deferred-paint resize did not run after the600s suite
+limit; **neither is skipped**. Three existing native save/restart declarations
+move after lighter DS cases to rebalance the same19test-level shards. Every
+original case body, assertion, deadline, resolution and deployment prerequisite
+is retained. The high-DPI phone stylus scenario also remains enabled.
+
+Current declared coverage: **109 cases,17 CI skips,92 retained; two skips also
+apply locally**. Fifteen parked cases remain locally runnable. This is coverage
+debt, not a claim that those cases are fixed. The next exact-source retained
+gate and actual deployment remain pending.
+Local syntax, all59units and a fresh production build pass. Inventory comparison
+retains all109original titles, and a line-multiset comparison preserves every
+original nonblank test line. The exact CI exclusion selection executes
+**17 skipped /0 failed**, with no extra selected cases; this verifies the
+parking boundaries, not those scenarios' behavior.
+The three moved save/restart cases and the retained deferred-paint resize
+case also pass locally: **four passed /zero skipped,69.1seconds**. Both
+previously suite-aborted scenarios remain executable. This does not substitute
+for their hosted qualification.
+
+### Earlier focused local qualification
 
 The preceding unmodified103-case baseline passed locally. It does not qualify
 later edits. The rebuilt final source adds six browser cases, retaining the
-original quality, deadlines, retries0 and19hosted shards. The complete local
-suite is currently running; **nothing new is deployed**.
+original quality, deadlines, retries0 and19hosted shards. Its historical local
+outcome is104PASS/5FAIL, as recorded above; it is no longer running.
+**Publication remains unestablished until an actual successful deployment.**
 
 Focused startup checks pass for real delayed assets/GPU completion, desktop
 shimmer, reduced-motion phone, module/branding failures and reload recovery.
@@ -93,7 +130,7 @@ The owner's earlier local-first requirement is superseded by the bounded
 repair/explicit-parking instruction above. The source
 preview is available while work continues. The103-case baseline completed
 before the newer edits; the final-source run is separate. Check/all59units/
-fresh build pass. Do not rebuild dist underneath the active final-source run.
+fresh build pass. No local browser suite is currently active.
 
 ### Separate lighting dock: locally qualified, publication pending
 

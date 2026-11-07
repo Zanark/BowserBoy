@@ -12,6 +12,8 @@ Tasks:
 - [x] Park only recurring failed cases with explicit reasons and follow-up tracking.
 - [x] Prepare loader-aware setup and restore preceding CI launch settings.
 - [x] Qualify the directly coupled DS dark-fill repair once.
+- [x] Inspect every second-attempt shard and explicitly park seven remaining failures.
+- [x] Rebalance the native DS cases without skipping suite-aborted scenarios.
 - [ ] Pass the retained build/browser gates and complete Pages deployment.
 - [ ] Verify actual deployed source and report passing/skipped coverage honestly.
 
@@ -41,7 +43,21 @@ The109-case local run completes104PASS/5FAIL. The focused DS repair gives
 3PASS/1FAIL; focused startup/setup/scene repair11PASS/1FAIL. Actual LCD spill,
 DS placement/reference colors and startup/light checks pass. Recurring
 side-stylus and physical-cap failures are parked instead of retrying.
-Current inventory:109cases,10CI skips,2local skips; remaining gates pending.
+Exact19f499643c9d02a0be219713ae0059d9fd531309/Pages42361581620:
+90passed,7failed,10skipped,2did not run; build passes and deploy skips.
+Inspect all19shards, including the600s suite limits in7/8. Explicitly park the
+seven observed remaining failures under105; preserve the two suite-aborted
+cases and rebalance three unchanged native save/restart cases away from the
+D-pad cluster. The key case was previously unrun; rolled/upside-down passed
+the preceding attempt, so not every failure is a consecutive recurrence.
+Current inventory:109cases,17CI skips,2local skips,92retained cases;
+remaining exact-source retained gate and actual deployment pending.
+Local syntax,59unit cases and fresh production build pass. Inventory comparison
+retains all109original scenario names. A line-multiset comparison retains every
+original nonblank test line, including all assertions and the moved case bodies.
+The exact exclusion selection executes17SKIP/0FAIL without extra cases.
+All four retained DS save/restart/deferred-resize cases pass locally in69.1s;
+neither previously suite-aborted scenario is hidden by the parking selection.
 
 Completion log:
 2026-11-07: Owner prioritizes pipeline recovery, authorizes one repair attempt

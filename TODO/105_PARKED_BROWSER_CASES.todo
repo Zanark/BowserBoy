@@ -15,10 +15,17 @@ Tasks:
 - [ ] Restore Pear edge-foot placement coverage (Pear).
 - [ ] Restore retained native CRT framebuffer/reload coverage (scene).
 - [ ] Restore physical cap compression/unlit-response fixture paints (scene).
+- [ ] Restore native DS A/S/Q/W shoulder-motion qualification (DS).
+- [ ] Restore desktop stylus pixels at flat corners (DS).
+- [ ] Restore desktop stylus pixels in the rolled pose (DS).
+- [ ] Restore desktop stylus pixels in the upside-down pose (DS).
+- [ ] Restore independent framebuffer-colored spill from both DS LCDs (DS).
+- [ ] Restore the original 1000ms light-switch paint bound (scene).
+- [ ] Restore experimental GBA LCD/control spill within its original deadline (scene).
 
 Acceptance criteria:
 Each exact case passes its original assertions, resolution and deadlines on the
-hosted browser before removing its skip. Eight cases remain runnable locally;
+hosted browser before removing its skip. Fifteen cases remain runnable locally;
 side-stylus and physical-cap cases are parked locally too after recurring there.
 Passing retained gates or separate focused checks does not restore skipped CI
 coverage. Do not silently drop, broaden or convert these cases to passing tests.
@@ -43,3 +50,20 @@ are now explicit. No claim that all local tests pass.
 Completion log:
 2026-11-07: Owner explicitly authorizes one repair attempt then parking.
 Park recurring cases explicitly; retain every original assertion for restoration.
+2026-11-07: Exact19f499643c9d02a0be219713ae0059d9fd531309/
+Pages42361581620 completes90PASS/7FAIL/10SKIP/2NOT_RUN. All19shards
+inspected; build passes and deployment skips. The bounded loader/launch/fill
+qualification reduces55failures to7 but does not restore these seven cases.
+Park exactly those seven observed failures above, preserving all assertions.
+The native-key case previously did not run; rolled/upside-down previously
+passed that attempt. Do not describe every new failure as a second consecutive
+failure or diagnose a universal GPU cause. Flat corners, independent DS spill,
+light response and GBA spill also failed the preceding hosted attempt.
+Current inventory:109cases,17CI skips,2local skips,92retained CI cases.
+High-DPI phone stylus remains enabled. DS/GBA isolation and resize did not run
+after600s suite exhaustion; neither is skipped. Move the three existing native
+save/restart cases away from the D-pad cluster to rebalance the same19shards.
+No application source, assertion, resolution, deadline or gate is changed.
+Local check/59units/build pass; all109original titles and every original
+nonblank test line are preserved. Executing exactly the17intended exclusions
+confirms17SKIP/0FAIL; this is exclusion verification, not restored coverage.

@@ -14,6 +14,26 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Second bounded qualification and explicit remaining parking:
+  Exact19f4996/Pages42361581620 completes90PASS/7FAIL/10SKIP/2NOT_RUN
+  across19shards. Build passes; deploy skips. Local qualification completed
+  104PASS/5FAIL, focused DS3PASS/1FAIL and startup/setup11PASS/1FAIL;
+  the two local recurrences were explicitly parked. Actual second hosted
+  logs narrow remaining failures to native shoulder motion, three desktop
+  stylus poses, independent DS spill, original1000ms light response and GBA
+  spill. Preserve assertions and park these seven explicitly under105.
+  The key case was previously unrun, and two poses previously passed; do not
+  invent consecutive failures. Isolation/resize instead exhaust the600s
+  suite budget and are not skipped. Move three unchanged native save/restart
+  declarations away from the D-pad cluster, preserving19shards, original
+  120s/15s bounds, full resolution, retries0 and build/browser dependencies.
+  No application-source change. Next exact-source92retained/17parked gate
+  and real publication remain pending.
+  Local syntax/59units/build pass; inventory retains all109titles and every
+  original nonblank test line. Exact exclusion execution confirms17SKIP/0FAIL.
+  The four retained native saves/restarts/deferred-resize cases pass69.1s.
+  Both actual issue bodies/states/Project stages/backlinks are independently
+  fetched and verified; skips remain coverage debt, not fixes.
 - 2026-11-07 / First bounded attempt regresses; exact cases parked:
   Complete18ecdc0/Pages42360102291 totals52PASS/55FAIL/2NOT_RUN across
   all19shards; build passes and deployment skips. Owner correctly flags the
@@ -26,7 +46,7 @@ Completion log:
   only in CI, with105holding follow-up; keep local assertions executable.
   New pale plastic fill masks dark-room LCD spill and breaks idle-stylus
   darkness: make fill follow actual room lights and compensate exposure.
-  Its focused repair attempt and the second hosted result remain pending.
+  Its focused repair and second hosted results are recorded in the later entry.
 - 2026-11-07 / Bounded CI recovery takes priority:
   Owner explicitly requests commit, push and completed deployment, authorizing
   one repair attempt per failing case and then tracked skips if it recurs.
