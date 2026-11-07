@@ -14,6 +14,21 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / DS D-pad hosted failure and scenario isolation:
+  Zanarkc59de69/Pages42350879338 fails92PASS/7FAIL, deploy SKIPPED.
+  The newly introduced complete D-pad case also fails, not only older cases.
+  Download exact shard7trace: all scene directions and runtime Up reach
+  correct signed physical edges, individual marks and neutral releases.
+  Runtime Down native input is forwarded at121.8s on the trace clock, then
+  the overall120s test budget expires before physical settling can be polled.
+  Boot takes about44s; repeated pose evaluations take6.5-6.8s. The trace
+  establishes cumulative scenario-budget exhaustion, not a proven reversed
+  direction, native-input failure or infrastructure root cause.
+  Separate scene keys, runtime keys, diagonal/opposite holds and mixed
+  pointer/key/blur into independently booted cases with the same assertions,
+ 120s/15s deadlines, retries0, full viewport/quality and19shards.
+  All four pass Edge55.5s and explicit full-size SwiftShader2.8m.
+ 102browser cases; no production/performance change or publication claimed.
 - 2026-11-07 / DS directional D-pad rocking:
   Owner cannot visually distinguish the pressed arrow. DS animation moves
   the entire shared cross flat and repeats it for four map entries. Animate

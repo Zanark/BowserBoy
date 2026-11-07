@@ -12,7 +12,9 @@ Tasks:
 - [x] Qualify actual native keys/pointer and visible physical edge movement.
 - [x] Update affected guides, technical evidence and development history.
 - [x] Verify actual GitHub issue/Project/body/status and local backlink.
-- [ ] Commit/push as Zanark and monitor exact-source Pages qualification.
+- [x] Commit/push as Zanark and monitor the initial exact-source Pages gate.
+- [x] Inspect the failed D-pad trace and isolate independent native scenarios.
+- [ ] Commit/push the qualified test correction and monitor its exact gate.
 
 Acceptance criteria:
 The pressed edge visibly lowers and the opposite edge rises for all four
@@ -35,11 +37,22 @@ reviewed; final held capture confirms the dark-room direction cue is readable.
 The new case forwards original native4/5/6/7down/up under scene/runtime
 focus and checks real physical edge heights, diagonal/opposite axes,
 individual held marks, mixed pointer/key ownership, release and blur.
-99browser cases use the unchanged19shards. Frozen published PDF unchanged.
+Initial99browser cases use the unchanged19shards. Frozen published PDF unchanged.
 Actual issue96 OPEN/Project1 In progress/body/membership/backlink verified.
-This is local qualification; exact-source publication and owner acceptance
-are not established. The final monitored outcome belongs in the actual issue
-receipt, not a claim that the source snapshot is already deployed.
+Zanarkc59de69/Pages42350879338 finishes92PASS/7FAIL, deployment SKIPPED.
+The new D-pad case fails too; do not describe this as only unrelated failures.
+Its trace proves correct scene cardinal poses and runtime Up, then reaches
+runtime Down at the overall120s deadline. Boot consumes about44s; individual
+physical-pose evaluations repeatedly take6.5-6.8s. No reversed-direction or
+stuck-pose cause is established. Six other DS/scene cases also fail.
+Replace the overpacked case with four independently booted scenarios:
+scene keys, runtime keys, diagonal/opposite holds and mixed-source/blur.
+Retain every native transition, actual pose/mark assertion,120s case/15s
+expectation deadline, retries0, full viewport/quality and unchanged19shards.
+All four corrected cases pass Edge55.5s and explicit SwiftShader2.8m.
+The suite now has102cases. This correction changes tests, not production
+motion or rendering performance. Exact-source publication and owner
+acceptance remain unestablished.
 
 Completion log:
 2026-11-07: Owner reports that D-pad arrow direction is visually unclear.
@@ -50,3 +63,11 @@ First Edge3cases and explicit full-size SwiftShader2cases pass. Actual
 held/rest screenshots reveal that physical tilt alone remains difficult to
 read in the dark room. Add held-direction highlighting to the existing
 engravings; repeat the affected qualification against the final source.
+2026-11-07: Pushc59de69 as Zanark; monitor Pages42350879338 to its failed
+92/7result and skipped deployment. Inspect exact shard7trace rather than
+retrying or attributing the new failure to infrastructure. The first five
+direction/release pairs complete with correct signed physical edges/marks;
+the sixth native down is forwarded only as the test's overall budget expires.
+Independently boot four distinct behaviors so each gets the original
+deadline and failure isolation without dropping assertions or reducing
+render quality. All four pass Edge and explicit full-size SwiftShader.

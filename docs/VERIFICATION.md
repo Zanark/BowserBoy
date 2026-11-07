@@ -9,7 +9,7 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
-### DS directional D-pad: local qualification, publication pending
+### DS directional D-pad: hosted failure investigated, correction qualified locally
 
 The shared physical cross now rocks once per paint toward native held
 directions rather than depressing flat four times. Diagonal tilt is bounded;
@@ -38,6 +38,23 @@ There are99browser cases using the unchanged19shards. The frozen published
 PDF is unchanged. Actual issue96/Project1 membership/status/body/backlink
 are verified OPEN/In progress. Exact-source deployment and owner acceptance
 are not established by this local evidence.
+
+Zanark source `c59de69`, automatic Pages **42350879338**, subsequently finishes
+**92 passed / 7 failed; deployment skipped**. The new D-pad case fails too.
+Its exact shard7 trace shows correct physical direction, marks and neutral
+release for all scene arrows and runtime Up. Runtime Down reaches the original
+native input just as the overall120s case budget expires. Boot takes about44s;
+successive physical-pose evaluations repeatedly take6.5-6.8s. This establishes
+an overpacked scenario's cumulative budget exhaustion, not a demonstrated
+direction or rendering-performance fix. The other six DS/scene failures remain.
+
+The correction independently boots four scenarios: scene cardinal keys,
+runtime cardinal keys, diagonal/opposite holds, and mixed-source release/blur.
+It preserves every original native transition/physical edge/mark assertion,
+120s case and15s expectation deadlines, retries0, full viewport/rendering
+quality and19shards. All four pass **Edge55.5s** and **explicit full-size
+SwiftShader2.8m**. The inventory is now102cases. Production source is unchanged;
+the corrected exact-source hosted gate and publication remain pending.
 
 ### DS button clearance and A/S face keys: local qualification
 

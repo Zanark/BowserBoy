@@ -96,15 +96,18 @@ BowserBOY workstreams
 94_PRE_CARTRIDGE_CRT.todo - IN_PROGRESS: cached built-in CRT pixels; native video replaces the effect without stacking.
 95_DS_REAR_MARKINGS.todo - IN_PROGRESS: centered actual lid recesses and lower-body underside emblem, locally qualified.
 96_DS_CONTROL_CLEARANCE_AND_KEYS.todo - IN_PROGRESS: caps/sockets clear the touchscreen; DS A/S=Y/X, Q/W=L/R; local native scene/runtime and GBA regression pass.
-97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: directional DS cross rocking and dark-room held marks; native Edge/software and GBA regression qualified, publication pending.
+97_DS_DIRECTIONAL_DPAD.todo - IN_PROGRESS: directional DS cross/marks; initial hosted D-pad case exhausts total budget; four isolated native scenarios locally qualified, publication blocked.
 
 Current pending work
 --------------------
--97: Native directional rocking and held marks qualified: Edge3cases1.2m,
-  explicit full-size SwiftShader2cases2.6m,59units/check/build pass.
-  Diagonal/opposite axes, mixed holds, release/blur and actual cap visibility
-  pass; GBA unchanged.99cases/19shards retained. Actual issue96 verified.
-  Commit/push as Zanark and monitor exact-source gate; no publication claimed.
+-97: Zanarkc59de69/Pages42350879338 finishes92PASS/7FAIL, deploy SKIPPED.
+  The new D-pad case fails too. Exact trace shows five correct directions
+  and releases, then overall120s exhaustion at runtime Down after slow
+  repeated pose evaluations. Four independently booted behavior cases retain
+  every native/physical assertion and original deadlines/retries0/quality.
+  Corrected cases pass Edge55.5s/explicit full-size SwiftShader2.8m.
+ 102cases/unchanged19shards;59units previously pass, production unchanged.
+  Actual issue96 remains open; corrective source delivery/monitoring pending.
 -96: Exact89d905f/Pages42348904006 finishes89PASS/9FAIL, deploy skipped.
   Both changed cases pass hosted; actual issue95 outcome6703695208 verified.
   Seven DS, scene CRT readiness and new Pear edge-foot settling failures

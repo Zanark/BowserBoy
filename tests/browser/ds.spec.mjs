@@ -175,7 +175,7 @@ test('DS A/S face keys and Q/W shoulders reach native buttons from the scene and
   expect(errors).toEqual([]);
 });
 
-test('DS D-pad rocks toward native directions, combines holds and springs back after pointer release or blur', async ({ page }, testInfo) => {
+async function bootDsDpad(page) {
   const errors = await bootDsDemo(page);
   const frame = await dsFrame(page);
   await frame.evaluate(() => {
@@ -206,10 +206,13 @@ test('DS D-pad rocks toward native directions, combines holds and springs back a
       (horizontal ? pad.horizontal * horizontal > .1 : Math.abs(pad.horizontal) < .00001) &&
       (held ? pad.depression > .011 : pad.depression === 0) && pad.tilt <= .16001;
   }).toBe(true);
-  for (const [focus, target] of [
-    ['scene', page.locator('#scene-canvas')], ['runtime', frame.locator('canvas').first()],
-  ]) {
-    await target.focus();
+  return { errors, frame, pose, expectRock };
+}
+
+for (const focus of ['scene', 'runtime']) {
+  test(`DS D-pad ${focus} keys rock and mark the actual native direction and return to neutral`, async ({ page }, testInfo) => {
+    const { errors, frame, pose, expectRock } = await bootDsDpad(page);
+    await (focus === 'scene' ? page.locator('#scene-canvas') : frame.locator('canvas').first()).focus();
     for (const [key, button, vertical, horizontal] of [
       ['ArrowUp', 4, -1, 0], ['ArrowDown', 5, 1, 0],
       ['ArrowLeft', 6, 0, 1], ['ArrowRight', 7, 0, -1],
@@ -227,7 +230,13 @@ test('DS D-pad rocks toward native directions, combines holds and springs back a
       await expectRock(0, 0, false);
       expect((await pose()).highlighted).toEqual([]);
     }
-  }
+    await page.screenshot({ path: testInfo.outputPath('ds-dpad-rest.png') });
+    expect(errors).toEqual([]);
+  });
+}
+
+test('DS D-pad diagonal and opposite holds preserve individual marks and bounded physical tilt', async ({ page }) => {
+  const { errors, pose, expectRock } = await bootDsDpad(page);
   await page.locator('#scene-canvas').focus();
   await page.keyboard.down('ArrowUp');
   await page.keyboard.down('ArrowRight');
@@ -243,6 +252,12 @@ test('DS D-pad rocks toward native directions, combines holds and springs back a
   await page.keyboard.up('ArrowDown');
   await expectRock(0, 0, false);
   expect((await pose()).highlighted).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
+test('DS D-pad mixed pointer and keyboard holds release only the final source and blur returns to neutral', async ({ page }) => {
+  const { errors, frame, expectRock } = await bootDsDpad(page);
+  await page.locator('#scene-canvas').focus();
   await frame.evaluate(() => { window.dsPadTransitions = []; });
   await page.locator('[data-ds-control="right"]').hover();
   await page.mouse.down();
@@ -259,7 +274,6 @@ test('DS D-pad rocks toward native directions, combines holds and springs back a
   await page.evaluate(() => window.dispatchEvent(new Event('blur')));
   await expectRock(0, 0, false);
   await page.keyboard.up('ArrowDown');
-  await page.screenshot({ path: testInfo.outputPath('ds-dpad-rest.png') });
   expect(errors).toEqual([]);
 });
 
