@@ -355,11 +355,12 @@ test('pear-boy moves in all three axes and falls through visible frames before a
       });
       if (!view.pearMotion.sleeping) requestAnimationFrame(window.recordPearFall);
     };
+    view.canvas.addEventListener('pointerup',
+      () => requestAnimationFrame(window.recordPearFall), { once: true });
     return view.pear.root.position.y;
   });
   await page.waitForTimeout(120);
   await page.mouse.up();
-  await page.evaluate(() => requestAnimationFrame(window.recordPearFall));
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.pearMotion.sleeping)).toBe(true);
   const fall = await page.evaluate(() => window.pearFalls);
   expect(fall.some(frame => frame.y > 0 && frame.y < samples - .1 && frame.vy < 0 && frame.scared)).toBe(true);

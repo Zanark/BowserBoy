@@ -30,6 +30,22 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Pages76ae3f8/42322152049 finishesFAILURE: build/10browser shards pass,
+9fail,deploy skipped. Shard8 passes complete quick taps, high-DPI phone
+precision, deferred-paint phone/stylus mapping and independent LCD spill.
+Upside-down precision exhausts120s before its third physical probe after
+all three native marks and the first two physical pixels pass; trace calls
+repeatedly take5.8-6s. Flat/rolled precision, transitions/pen/shell, pear
+intermediate motion, GBA branding/fast-forward and CRT reload still fail.
+No new public deployment or full hosted recovery is claimed.
+
+Arm the pear fall recorder from actual pointerup rather than a later protocol
+evaluation, and record DS resume notices before boot so autosave cannot hide
+their emission. Preserve real intermediate-motion/bounce/no-penetration and
+nondefault native-restoration assertions, with unchanged deadlines/retries.
+Each corrected case passes independently in Edge and SwiftShader: pear
+9.6s/10.1s, DS reload26.7s/33.5s. No production or coverage change.
+
 Pages8f7f665/42319766498 finishesFAILURE: build/12browser shards pass,
 7fail and deployment skips. Failing shards6-11and19 retain native boot,
 transition, pixel/latency, pear intermediate-motion and reload failures.

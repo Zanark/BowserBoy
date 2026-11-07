@@ -73,7 +73,7 @@ BowserBOY workstreams
 71_FULL_RESOLUTION_RENDERING.todo - DONE: full-resolution c3d9dbd deployed via 53/53 ten-way gate42115330741; public assets, 2x buffer/captures and five affected browser cases verified.
 72_FIRST_PUBLIC_RELEASE.todo - DONE: owner-designated v1.0.0; checksummed 33-entry local static ZIP, extracted native/renderer qualification, documentation hub and conservative cleanup.
 73_STORSEGEL_LAMP_AND_SHOWCASE.todo - DONE public: warm woven STORSEGEL-style shade/ash tripod, smaller green night-safe LED, all eleven current README GIFs/nine stills; qualified1b0385b/Pages42135170801.
-74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:93cases across19shards;8f7f665 hosted gate fails, stale DS hotspot correction qualified locally, software quick latency unresolved.
+74_MORE_ISOLATED_CI.todo - IN_PROGRESS recovery:93cases/19shards;76ae3f8 gate fails despite hosted phone/quick passes; event-time fixtures qualify locally, full recovery/software quick unresolved.
 75_MANUAL_GITHUB_RELEASE.todo - DONE implemented/pushed: active at9ff921b; first manual42179152331 correctly blocked by source guard, no GitHub Release created.
 76_BOOKMAKER_EDITION.todo - DONE local:96-page/fourteen-chapter PDF, offline reader, current engineering lessons and bounded native review; not published.
 77_SUPPLIED_BOOK_COVER_AND_RELEASE.todo - DONE local: supplied full cover, tracked reviewed PDF/README link and checksum-verified release companion; remote publication remains blocked.

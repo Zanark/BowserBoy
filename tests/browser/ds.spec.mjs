@@ -226,8 +226,16 @@ test('DS reload resumes the latest manual checkpoint rather than a cold game', a
   await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
   await page.locator('#select-ds').click();
   await page.locator('#ds-open').click();
+  await page.evaluate(() => {
+    window.dsResumeStatuses = [];
+    new MutationObserver(records => {
+      window.dsResumeStatuses.push(...records.flatMap(record =>
+        Array.from(record.addedNodes, node => node.textContent)));
+    }).observe(document.getElementById('ds-status'), { childList: true });
+  });
   await page.locator('#ds-demo').click();
-  await expect(page.locator('#ds-status')).toContainText('Latest DS checkpoint resumed', { timeout: 90000 });
+  await expect.poll(() => page.evaluate(() => window.dsResumeStatuses), { timeout: 90000 })
+    .toContain('Latest DS checkpoint resumed. GBA saves are separate.');
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(savedLeft);
   expect(errors).toEqual([]);
 });

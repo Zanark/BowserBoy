@@ -29,6 +29,15 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Pages76ae3f8/42322152049 fails overall: build/10browser shards pass,9fail,
+deploy skipped. Complete native quick taps now pass hosted together with
+high-DPI phone precision and deferred-paint phone/stylus mapping. The
+upside-down trace verifies all three native marks and its first two physical
+LCD pixels, then exhausts120s before the third physical probe; repeated
+parent evaluations/iframe retrieval take5.8-6s. Flat/rolled precision and
+other hosted cases remain failed. Local software quick1604.5ms/1500ms
+remains unqualified; no public or owner acceptance is inferred.
+
 Pages8f7f665/42319766498 fails: build and12browser shards pass,7fail,
 deploy skips. Phone projections remain identical after the matrix correction.
 The remaining desktop-positioned stylus hotspot waits for a room paint;

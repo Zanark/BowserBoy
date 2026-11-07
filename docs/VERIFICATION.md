@@ -11,6 +11,28 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact source `76ae3f8e3e7b887064923e79c89fd780e190ae92`,
+[Pages42322152049](https://github.com/Zanark/BowserBoy/actions/runs/42322152049),
+finishes **failure**: build and ten browser shards pass, nine fail;
+deployment is skipped. Shard8 now passes the complete quick-tap case,
+high-DPI phone precision, deferred-paint phone/stylus regression and independent
+LCD spill. Its upside-down case verifies all three native marks and the first
+two physical LCD pixels, but exhausts120s before the third physical probe.
+Trace evaluations and even iframe retrieval repeatedly take about5.8-6seconds.
+Other failures include flat/rolled precision, DS transitions/held pen/shell,
+pear intermediate motion, GBA Inspect branding/fast-forward and CRT reload.
+This is neither full hosted recovery nor a public release.
+
+Two remaining fixtures now observe actual browser events before the next
+automation round trip. The pear fall recorder is armed before pointer release
+and starts from that real `pointerup`, preserving the descending/scared,
+bounce and no-penetration assertions. It passes independently in Edge9.6s
+and SwiftShader10.1s. The DS reload case records emitted status-node text
+before boot, so a later autosave cannot erase the resume notification before
+the automation poll. It still requires the exact resume notice and the saved,
+nondefault native framebuffer marker; Edge26.7s and SwiftShader33.5s pass.
+Neither correction changes application behavior, coverage, retries or deadlines.
+
 Exact source `8f7f665c8a9afeae53d6b60446ea68f47409f5db`,
 [Pages42319766498](https://github.com/Zanark/BowserBoy/actions/runs/42319766498),
 finishes **failure**: build and twelve browser shards pass, seven fail;

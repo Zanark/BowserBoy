@@ -34,6 +34,12 @@ full-resolution rendering, the separate consoles and unrelated pending work.
 Default feet hang below the desk edge; farther-back placements rest on top.
 
 Completion evidence:
+The falling-frame recorder now starts from the actual pointerup event,
+armed before release, not a later automation evaluation that may miss the
+real descent. Descending/scared, bounce and no-penetration assertions remain.
+The corrected case passes independently in Edge9.6s and SwiftShader10.1s.
+No physics, rendering, deadline or retry change; hosted qualification pending.
+
 Subsequent42306381192 failure exposes multi-second callbacks beyond the
 earlier500ms bound. Body/rope catch-up now accepts at most5seconds and600
 fixed120Hzsteps; multi-second trajectory-equivalence units pass. The current
@@ -67,6 +73,8 @@ Body remains upright with box-based prop collisions. Ropes collide with the
 pear and desk only; arbitrary prop surfaces/moving supports are not simulated.
 
 Completion log:
+2026-11-07: Start observation at release time rather than after a protocol
+round trip; preserve the real visible-fall contract and verify both renderers.
 2026-11-07: Preserve fixed-step physical time through bounded multi-second
 stalls and distinguish actual completed paint from transient dirty state.
 The earlier hosted recovery failed; these local results are not deployment.

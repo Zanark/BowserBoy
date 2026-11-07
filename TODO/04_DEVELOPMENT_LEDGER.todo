@@ -14,6 +14,23 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Exact hotspot-correction hosted outcome:
+  Pages76ae3f8/42322152049 fails: build/10browser shards pass,9fail,
+  deploy skipped. Complete quick taps, high-DPI phone precision, no-paint
+  phone/stylus mapping and independent LCD spill now pass hosted shard8.
+  Upside-down native marks and first two physical pixels pass, but120s
+  expires before the third physical probe; trace calls repeatedly take
+  5.8-6s. Other precision/transition/pen/shell, pear, GBA branding/fast-forward
+  and CRT reload failures remain. Preserve the actual failure and gates.
+- 2026-11-07 / Observe transient native notices and motion in the event turn:
+  A protocol call after pointer release can miss the pear's real descent.
+  Arm its existing recorder before release and start it on actual pointerup.
+  Edge9.6s and SwiftShader10.1s pass unchanged descent/scared, bounce and
+  no-penetration assertions. DS reload can emit its resume notification and
+  later replace it with an autosave notice before automation samples the DOM.
+  Observe emitted text before boot; retain exact notification and saved,
+  nondefault native framebuffer checks. Edge26.7s and SwiftShader33.5s pass.
+  No application, deadline, retry or coverage change; no hosted/public claim.
 - 2026-11-07 / Stale stylus hotspots survive the matrix correction:
   Exact8f7f665/42319766498 fails: build/12browser shards pass,7fail,
   deployment skips. Phone coordinates are identical to the preceding failure.
