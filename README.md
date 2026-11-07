@@ -14,7 +14,7 @@ Two consoles. Three desk lamps. Your own local games.
 
 [Nintendo DS](#bowserboy-ds) &middot; [Game Boy Advance](#bowserboyadvanced) &middot; [The desk &amp; lamps](#make-the-desk-yours)
 
-![The purple GBA, blue DS, woven tripod, Pear and axolotl together](docs/images/desk-fresh-table.png?v=dual-console-20261107)
+![Move the blue DS and purple GBA independently using the placement controls](docs/images/console-movement.gif?v=untouched-opening-20261107)
 
 *One shared desk. Separate consoles, saves and controls.*
 
@@ -116,10 +116,6 @@ Two consoles. Three desk lamps. Your own local games.
 [Controls &amp; settings](docs/GUIDE.md) &middot; [Saving &amp; backups](docs/SAVING.md)
 
 ## Make the desk yours
-
-![Move the blue DS and purple GBA independently using the placement controls](docs/images/console-movement.gif?v=untouched-opening-20261107)
-
-*Lift. Move. Drop. Shown with keyboard placement; pointer dragging works too.*
 
 ![Switch the tripod and room through independent combinations and complete lamp darkness](docs/images/lighting-overview.gif?v=untouched-opening-20261107)
 
