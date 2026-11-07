@@ -608,7 +608,7 @@ test('larger LCD halves bezel gaps and the underside power slider works at deskt
   await page.screenshot({ path: testInfo.outputPath('underside-power-detail.png') });
 });
 
-test('pressed caps remain lit inside physical shell apertures instead of disappearing under socket lids', async ({ page }, testInfo) => {
+async function prepareControlLighting(page) {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.locator('#pickup').click();
@@ -618,65 +618,79 @@ test('pressed caps remain lit inside physical shell apertures instead of disappe
     view.renderer.setAnimationLoop(null);
     view.renderer.setPixelRatio(1);
   });
-  const openings = await page.evaluate(async () => {
-    const { view } = await import('./src/app.js');
-    const { Raycaster, Vector3 } = await import('three');
-    const root = view.model.root, face = root.getObjectByName('Front face with speaker apertures');
-    face.geometry.computeBoundingBox();
-    root.updateWorldMatrix(true, true);
-    const top = face.position.z + face.geometry.boundingBox.max.z;
-    return [['a', .304, 0], ['b', .304, 0], ['start', .17, 0], ['select', .17, 0], ['up', .644, 0]]
-      .map(([id, x, y]) => {
-        const mesh = view.model.controls.get(id).mesh;
-        const origin = root.localToWorld(new Vector3(mesh.position.x + x, mesh.position.y + y, 2));
-        const direction = new Vector3(0, 0, -1).transformDirection(root.matrixWorld);
-        const hit = new Raycaster(origin, direction).intersectObject(root, true)[0];
-        return { id, recessed: !!hit && root.worldToLocal(hit.point.clone()).z < top - .015 };
-      });
+}
+
+const sampleControlLighting = (page, id, pressed) => page.evaluate(async ({ id, pressed }) => {
+  const { view } = await import('./src/app.js');
+  const { Vector3 } = await import('three');
+  view.setControl(id, pressed);
+  view.changed = true;
+  view.nextPaint = 0;
+  view.renderedLastFrame = false;
+  view.render(view.lastRender + 250);
+  const mesh = view.model.controls.get(id).mesh;
+  const points = ['up', 'down', 'left', 'right'].includes(id) ?
+    [[0, .48, .05], [0, -.48, .05], [-.48, 0, .05], [.48, 0, .05]] :
+    ['start', 'select'].includes(id) ?
+      [[-.05, .04, .05], [.05, .04, .05], [-.05, -.04, .05], [.05, -.04, .05]] :
+      [[-.11, .10, .05], [.11, .10, .05], [-.11, -.10, .05], [.11, -.10, .05]];
+  const gl = view.renderer.getContext(), values = [];
+  for (const point of points) {
+    const projected = mesh.localToWorld(new Vector3(...point)).project(view.camera);
+    const x = Math.round((projected.x + 1) * view.canvas.width / 2);
+    const y = Math.round((projected.y + 1) * view.canvas.height / 2);
+    const pixels = new Uint8Array(5 * 5 * 4);
+    gl.readPixels(x - 2, y - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    let total = 0;
+    for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
+    values.push(total / 75);
+  }
+  return values;
+}, { id, pressed });
+
+for (const ids of [['a', 'b', 'start', 'select'], ['up', 'down', 'left', 'right']]) {
+  test(`pressed caps remain lit inside physical shell apertures (${ids.join(', ')})`, async ({ page }, testInfo) => {
+    await prepareControlLighting(page);
+    const openings = await page.evaluate(async ids => {
+      const { view } = await import('./src/app.js');
+      const { Raycaster, Vector3 } = await import('three');
+      const root = view.model.root, face = root.getObjectByName('Front face with speaker apertures');
+      face.geometry.computeBoundingBox();
+      root.updateWorldMatrix(true, true);
+      const top = face.position.z + face.geometry.boundingBox.max.z;
+      return [['a', .304, 0], ['b', .304, 0], ['start', .17, 0], ['select', .17, 0], ['up', .644, 0]]
+        .filter(([id]) => ids.includes(id))
+        .map(([id, x, y]) => {
+          const mesh = view.model.controls.get(id).mesh;
+          const origin = root.localToWorld(new Vector3(mesh.position.x + x, mesh.position.y + y, 2));
+          const direction = new Vector3(0, 0, -1).transformDirection(root.matrixWorld);
+          const hit = new Raycaster(origin, direction).intersectObject(root, true)[0];
+          return { id, recessed: !!hit && root.worldToLocal(hit.point.clone()).z < top - .015 };
+        });
+    }, ids);
+    for (const { id, recessed } of openings) expect(recessed, `${id} has a recessed opening, not a raised socket lid`).toBe(true);
+    const sample = (id, pressed) => sampleControlLighting(page, id, pressed);
+    const readings = [];
+    for (const id of ids) {
+      const rest = await sample(id, false);
+      const pressed = await sample(id, true);
+      readings.push({ id, rest, pressed });
+      if (['a', 'up'].includes(id)) await page.screenshot({ path: testInfo.outputPath(`${id}-pressed.png`) });
+      await sample(id, false);
+    }
+    await testInfo.attach('pressed-light-readings', { body: JSON.stringify(readings), contentType: 'application/json' });
+    for (const { id, rest, pressed } of readings) {
+      for (let point = 0; point < rest.length; point++) {
+        expect(rest[point], `${id} resting cap probe ${point}`).toBeGreaterThan(60);
+        expect(pressed[point], `${id} pressed cap probe ${point}`).toBeGreaterThan(rest[point] * .6);
+      }
+    }
   });
-  for (const { id, recessed } of openings) expect(recessed, `${id} has a recessed opening, not a raised socket lid`).toBe(true);
-  const sample = (id, pressed) => page.evaluate(async ({ id, pressed }) => {
-    const { view } = await import('./src/app.js');
-    const { Vector3 } = await import('three');
-    view.setControl(id, pressed);
-    view.changed = true;
-    view.nextPaint = 0;
-    view.renderedLastFrame = false;
-    view.render(view.lastRender + 250);
-    const mesh = view.model.controls.get(id).mesh;
-    const points = ['up', 'down', 'left', 'right'].includes(id) ?
-      [[0, .48, .05], [0, -.48, .05], [-.48, 0, .05], [.48, 0, .05]] :
-      ['start', 'select'].includes(id) ?
-        [[-.05, .04, .05], [.05, .04, .05], [-.05, -.04, .05], [.05, -.04, .05]] :
-        [[-.11, .10, .05], [.11, .10, .05], [-.11, -.10, .05], [.11, -.10, .05]];
-    const gl = view.renderer.getContext(), values = [];
-    for (const point of points) {
-      const projected = mesh.localToWorld(new Vector3(...point)).project(view.camera);
-      const x = Math.round((projected.x + 1) * view.canvas.width / 2);
-      const y = Math.round((projected.y + 1) * view.canvas.height / 2);
-      const pixels = new Uint8Array(5 * 5 * 4);
-      gl.readPixels(x - 2, y - 2, 5, 5, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-      let total = 0;
-      for (let i = 0; i < pixels.length; i += 4) total += pixels[i] + pixels[i + 1] + pixels[i + 2];
-      values.push(total / 75);
-    }
-    return values;
-  }, { id, pressed });
-  const readings = [];
-  for (const id of ['a', 'b', 'up', 'down', 'left', 'right', 'start', 'select']) {
-    const rest = await sample(id, false);
-    const pressed = await sample(id, true);
-    readings.push({ id, rest, pressed });
-    if (['a', 'up'].includes(id)) await page.screenshot({ path: testInfo.outputPath(`${id}-pressed.png`) });
-    await sample(id, false);
-  }
-  await testInfo.attach('pressed-light-readings', { body: JSON.stringify(readings), contentType: 'application/json' });
-  for (const { id, rest, pressed } of readings) {
-    for (let point = 0; point < rest.length; point++) {
-      expect(rest[point], `${id} resting cap probe ${point}`).toBeGreaterThan(60);
-      expect(pressed[point], `${id} pressed cap probe ${point}`).toBeGreaterThan(rest[point] * .6);
-    }
-  }
+}
+
+test('physical cap compression, release and unlit response retain their bounds', async ({ page }, testInfo) => {
+  await prepareControlLighting(page);
+  const sample = (id, pressed) => sampleControlLighting(page, id, pressed);
   const response = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     const { mesh } = view.model.controls.get('a');
@@ -891,9 +905,7 @@ test('mapped inputs move real button meshes and release after remapping and focu
   expect(errors).toEqual([]);
 });
 
-test('green power LED and native LCD light follow room switches, content and power off', async ({ page }) => {
-  const errors = [];
-  page.on('pageerror', (error) => errors.push(error.message));
+async function prepareNativeLighting(page) {
   await page.goto('./');
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
   await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
@@ -903,7 +915,13 @@ test('green power LED and native LCD light follow room switches, content and pow
   await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
   await demoReady(page);
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
-  const runtime = page.frames().find((frame) => frame.url().endsWith('player.html'));
+  return page.frames().find((frame) => frame.url().endsWith('player.html'));
+}
+
+test('green power LED and native LCD light follow room switches in retained gameplay', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  const runtime = await prepareNativeLighting(page);
   const identity = await runtime.evaluate(() => window.lightingIdentity = crypto.randomUUID());
   const ledColor = async () => {
     const point = await page.evaluate(async () => {
@@ -951,7 +969,22 @@ test('green power LED and native LCD light follow room switches, content and pow
   for (let axis = 0; axis < 3; axis++) expect(nativeLight.normal[axis]).toBeCloseTo(nativeLight.front[axis], 5);
   const spill = await surfaceLight(page, [0, 0, 3]);
   expect(spill, 'The mostly-black Pixel Lab picture does not brightly light the desk').toBeLessThan(5);
-  await page.screenshot({ path: 'docs/images/lcd-light.png' });
+  await page.screenshot({ path: testInfo.outputPath('lcd-light.png') });
+  expect(errors).toEqual([]);
+});
+
+test('native LCD emission follows framebuffer color, orientation and power off', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  const runtime = await prepareNativeLighting(page);
+  await page.locator('#lamp-toggle').click();
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.renderer.toneMappingExposure)).toBeCloseTo(.45, 4);
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  await page.locator('#scene-canvas').hover();
+  await page.mouse.wheel(0, 350);
+  await page.waitForTimeout(300);
   await page.locator('#tools-open').click();
   await page.locator('#pause').click();
   await expect(page.locator('#pause')).toHaveText('Resume game');
@@ -996,7 +1029,7 @@ test('green power LED and native LCD light follow room switches, content and pow
   expect(off.emission).toBe(0);
   expect(off.powerX).toBe(-.1);
   expect(await surfaceLight(page, [0, 3.5, 0]), 'Unlit body, printed logo and switched-off LCD do not glow').toBeLessThan(1);
-  await page.screenshot({ path: 'docs/images/dark-power-off.png' });
+  await page.screenshot({ path: testInfo.outputPath('dark-power-off.png') });
   expect(errors).toEqual([]);
 });
 

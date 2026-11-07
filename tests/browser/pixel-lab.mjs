@@ -1,5 +1,19 @@
 import { expect } from '@playwright/test';
 
+export const denyScreenWakeLock = async (page) => {
+  const cdp = await page.context().newCDPSession(page);
+  const { targetInfo } = await cdp.send('Target.getTargetInfo');
+  await cdp.send('Browser.setPermission', {
+    permission: { name: 'screen-wake-lock' },
+    setting: 'denied',
+    origin: new URL(page.url()).origin,
+    browserContextId: targetInfo.browserContextId,
+  });
+  // Detaching would clear the denial; the test's browser context owns this session.
+  expect(await page.evaluate(async () =>
+    (await navigator.permissions.query({ name: 'screen-wake-lock' })).state)).toBe('denied');
+};
+
 export const powerOn = async (page) => {
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true', { timeout: 90000 });
   await expect(page.locator('#hardware-power')).toBeEnabled({ timeout: 90000 });

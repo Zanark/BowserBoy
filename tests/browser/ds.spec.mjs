@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { demoReady, powerOn } from './pixel-lab.mjs';
+import { demoReady, powerOn, denyScreenWakeLock } from './pixel-lab.mjs';
 
 const dsFrame = async page => (await page.locator('#ds-runtime-mount iframe').elementHandle()).contentFrame();
 const stylusFits = (page, limitY = .98) => page.evaluate(async limit => {
@@ -232,99 +232,94 @@ test('DS reload resumes the latest manual checkpoint rather than a cold game', a
   expect(errors).toEqual([]);
 });
 
-test('DS stylus draws under the pointer across locked orientations, zoom and high-DPI touch', async ({ page }, testInfo) => {
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
-  await page.goto('./');
-  await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
-  await page.locator('#select-ds').click();
-  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
-  await page.locator('#ds-open').click();
-  await page.locator('#ds-demo').click();
-  await expect(page.locator('#ds-status')).toContainText('DS cartridge running', { timeout: 90000 });
-  await page.evaluate(async () => clearInterval((await import('./src/app.js')).view.dsController.autosave));
-  const poses = [
-    { rotation: [0, 0, 0], hinge: 180, points: [[200, 150], [0, 0], [255, 191]] },
-    { rotation: [-.25, .3, .25], hinge: 135, points: [[28, 32], [120, 90], [224, 184]] },
-    { rotation: [.15, -.2, Math.PI], hinge: 155, points: [[52, 60], [156, 116], [188, 180]] },
-    { rotation: [-.15, .2, -.25], hinge: 150, points: [[76, 32], [88, 136], [232, 136]], phone: true },
-  ];
+for (const pose of [
+  { name: 'flat corners', rotation: [0, 0, 0], hinge: 180, points: [[200, 150], [0, 0], [255, 191]] },
+  { name: 'rolled', rotation: [-.25, .3, .25], hinge: 135, points: [[28, 32], [120, 90], [224, 184]] },
+  { name: 'upside-down', rotation: [.15, -.2, Math.PI], hinge: 155, points: [[52, 60], [156, 116], [188, 180]] },
+  { name: 'high-DPI phone', rotation: [-.15, .2, -.25], hinge: 150, points: [[76, 32], [88, 136], [232, 136]], phone: true },
+]) {
+test(`DS stylus draws under the pointer across locked orientations, zoom and high-DPI touch (${pose.name})`, async ({ page }, testInfo) => {
+  const errors = await bootDsDemo(page);
   const cdp = await page.context().newCDPSession(page);
-  for (const pose of poses) {
-    if (pose.phone) {
-      await page.setViewportSize({ width: 390, height: 844 });
-      await cdp.send('Emulation.setDeviceMetricsOverride', {
-        width: 390, height: 844, deviceScaleFactor: 2, mobile: false,
-      });
-      expect(await page.evaluate(() => devicePixelRatio)).toBe(2);
-    }
-    await page.locator('#inspect').click();
-    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
-    if (await page.locator('#ds-pose-lock').getAttribute('aria-pressed') === 'true') await page.locator('#ds-pose-lock').click();
-    await page.evaluate(async ({ rotation, hinge }) => {
-      const { view } = await import('./src/app.js'), { Euler } = await import('three');
-      view.ds.root.quaternion.setFromEuler(new Euler(...rotation));
-      view.setDsHinge(hinge);
-    }, pose);
-    await page.locator('#ds-pose-lock').click();
-    await page.locator('#inspect').click();
-    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
-    await page.locator('#play-zoom').fill(pose.phone ? '65' : '50');
-    await page.locator('#scene-canvas').focus();
-    for (const [index, [x, y]] of pose.points.entries()) {
-      const pointer = await page.evaluate(async ({ x, y }) => {
-        const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
-        const point = view.ds.screens[1].localToWorld(new Vector3(
-          ((x + .5) / 256 - .5) * 4.5, (.5 - (y + .5) / 192) * 3.375, 0,
-        )).project(view.camera);
-        const bounds = view.canvas.getBoundingClientRect();
-        const event = { clientX: bounds.left + (point.x + 1) * bounds.width / 2,
-          clientY: bounds.top + (1 - point.y) * bounds.height / 2 };
-        return { x: event.clientX, y: event.clientY, mapped: view.dsController.touchAt(event) };
-      }, { x, y });
-      expect(pointer.mapped).toEqual({ x, y });
-      expect((await framePixels(page, { x, y })).probe).not.toEqual([255, 255, 0]);
-      if (pose.phone) {
-        await cdp.send('Input.dispatchTouchEvent', { type: index ? 'touchMove' : 'touchStart', touchPoints: [{ id: 1, x: pointer.x, y: pointer.y }] });
-      } else {
-        await page.mouse.move(pointer.x, pointer.y);
-        if (!index) await page.mouse.down();
-      }
-      const actual = await page.evaluate(async () => (await import('./src/app.js')).view.dsController.lastTouch);
-      expect(Math.abs(actual.x - x)).toBeLessThanOrEqual(1);
-      expect(Math.abs(actual.y - y)).toBeLessThanOrEqual(1);
-      await expect.poll(async () => (await framePixels(page, { x, y })).probe,
-        { message: `native stylus mark at (${x}, ${y}), rotation ${pose.rotation}` }).toEqual([255, 255, 0]);
-      await expect(page.locator('#scene-canvas')).toBeFocused();
-      expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeDefined();
-      const { brush } = await framePixels(page, { x, y });
-      expect(brush.count, `isolated native brush at (${x}, ${y})`).toBe(64);
-      expect(Math.abs(brush.left - Math.max(0, Math.min(248, x - 4)))).toBeLessThanOrEqual(1);
-      expect(Math.abs(brush.top - 192 - Math.max(0, Math.min(184, y - 4)))).toBeLessThanOrEqual(1);
-      await expect.poll(() => page.evaluate(async ({ x, y }) => {
-        const { view } = await import('./src/app.js'), bounds = view.canvas.getBoundingClientRect();
-        view.renderer.render(view.scene, view.camera);
-        const gl = view.renderer.getContext(), rgba = new Uint8Array(36);
-        // LCD corners can land between antialiased drawing-buffer pixels.
-        gl.readPixels(Math.floor((x - bounds.left) / bounds.width * view.canvas.width) - 1,
-          Math.floor((1 - (y - bounds.top) / bounds.height) * view.canvas.height) - 1,
-          3, 3, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
-        return rgba.some((value, i) => i % 4 === 0 && value >= 245 && rgba[i + 1] >= 245 && rgba[i + 2] <= 10);
-      }, pointer), { message: `yellow physical LCD pixel directly under (${x}, ${y})` }).toBe(true);
-    }
-    if (pose.phone) {
-      await page.evaluate(() => window.dispatchEvent(new Event('blur')));
-      expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
-      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-    } else await page.mouse.up();
-    await page.screenshot({ path: testInfo.outputPath(pose.phone ? 'ds-precise-stylus-phone.png' : `ds-precise-stylus-${pose.hinge}.png`) });
+  if (pose.phone) {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: 390, height: 844, deviceScaleFactor: 2, mobile: false,
+    });
+    expect(await page.evaluate(() => devicePixelRatio)).toBe(2);
   }
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'inspecting');
+  if (await page.locator('#ds-pose-lock').getAttribute('aria-pressed') === 'true') await page.locator('#ds-pose-lock').click();
+  await page.evaluate(async ({ rotation, hinge }) => {
+    const { view } = await import('./src/app.js'), { Euler } = await import('three');
+    view.ds.root.quaternion.setFromEuler(new Euler(...rotation));
+    view.setDsHinge(hinge);
+  }, pose);
+  await page.locator('#ds-pose-lock').click();
+  await page.locator('#inspect').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.locator('#play-zoom').fill(pose.phone ? '65' : '50');
+  await page.locator('#scene-canvas').focus();
+  for (const [index, [x, y]] of pose.points.entries()) {
+    const pointer = await page.evaluate(async ({ x, y }) => {
+      const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+      const point = view.ds.screens[1].localToWorld(new Vector3(
+        ((x + .5) / 256 - .5) * 4.5, (.5 - (y + .5) / 192) * 3.375, 0,
+      )).project(view.camera);
+      const bounds = view.canvas.getBoundingClientRect();
+      const event = { clientX: bounds.left + (point.x + 1) * bounds.width / 2,
+        clientY: bounds.top + (1 - point.y) * bounds.height / 2 };
+      return { x: event.clientX, y: event.clientY, mapped: view.dsController.touchAt(event) };
+    }, { x, y });
+    expect(pointer.mapped).toEqual({ x, y });
+    expect((await framePixels(page, { x, y })).probe).not.toEqual([255, 255, 0]);
+    if (pose.phone) {
+      await cdp.send('Input.dispatchTouchEvent', { type: index ? 'touchMove' : 'touchStart', touchPoints: [{ id: 1, x: pointer.x, y: pointer.y }] });
+    } else {
+      await page.mouse.move(pointer.x, pointer.y);
+      if (!index) await page.mouse.down();
+    }
+    const actual = await page.evaluate(async () => (await import('./src/app.js')).view.dsController.lastTouch);
+    expect(Math.abs(actual.x - x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(actual.y - y)).toBeLessThanOrEqual(1);
+    let pixels;
+    await expect.poll(async () => {
+      pixels = await framePixels(page, { x, y });
+      return pixels.probe;
+    },
+      { message: `native stylus mark at (${x}, ${y}), rotation ${pose.rotation}` }).toEqual([255, 255, 0]);
+    await expect(page.locator('#scene-canvas')).toBeFocused();
+    expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeDefined();
+    const { brush } = pixels;
+    expect(brush.count, `isolated native brush at (${x}, ${y})`).toBe(64);
+    expect(Math.abs(brush.left - Math.max(0, Math.min(248, x - 4)))).toBeLessThanOrEqual(1);
+    expect(Math.abs(brush.top - 192 - Math.max(0, Math.min(184, y - 4)))).toBeLessThanOrEqual(1);
+    await expect.poll(() => page.evaluate(async ({ x, y }) => {
+      const { view } = await import('./src/app.js'), bounds = view.canvas.getBoundingClientRect();
+      view.renderer.render(view.scene, view.camera);
+      const gl = view.renderer.getContext(), rgba = new Uint8Array(36);
+      // LCD corners can land between antialiased drawing-buffer pixels.
+      gl.readPixels(Math.floor((x - bounds.left) / bounds.width * view.canvas.width) - 1,
+        Math.floor((1 - (y - bounds.top) / bounds.height) * view.canvas.height) - 1,
+        3, 3, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+      return rgba.some((value, i) => i % 4 === 0 && value >= 245 && rgba[i + 1] >= 245 && rgba[i + 2] <= 10);
+    }, pointer), { message: `yellow physical LCD pixel directly under (${x}, ${y})` }).toBe(true);
+  }
+  if (pose.phone) {
+    await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+    expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  } else await page.mouse.up();
+  await page.screenshot({ path: testInfo.outputPath(pose.phone ? 'ds-precise-stylus-phone.png' : `ds-precise-stylus-${pose.hinge}.png`) });
   await cdp.detach();
   expect(errors).toEqual([]);
 });
+}
 
 test('DS quick taps reach their clicked pixels without holding, with and without the pen', async ({ page }, testInfo) => {
   await page.goto('./');
+  await denyScreenWakeLock(page);
   await expect(page.locator('#select-ds')).toBeEnabled({ timeout: 90000 });
   await page.locator('#select-ds').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
@@ -388,15 +383,14 @@ test('DS quick taps reach their clicked pixels without holding, with and without
       native.imageSmoothingEnabled = false;
       native.drawImage(ds.source, 0, 0, 256, 384);
       const displayed = ds.outputs[1].getContext('2d');
-      return targets.every(({ x, y }) => {
-        for (const [context, offset] of [[native, 192], [displayed, 0]]) {
-          const pixel = context.getImageData(x, y + offset, 1, 1).data;
-          if (pixel[0] !== 255 || pixel[1] !== 255 || pixel[2] !== 0) return false;
-        }
-        return true;
-      });
+      return targets.map(({ x, y }) => ({
+        x, y,
+        native: [...native.getImageData(x, y + 192, 1, 1).data].slice(0, 3),
+        displayed: [...displayed.getImageData(x, y, 1, 1).data].slice(0, 3),
+      }));
     }, targets), { timeout: 1500, intervals: [20, 40, 80],
-      message: 'every quick tap reaches the native framebuffer and naturally repainted lower LCD' }).toBe(true);
+      message: 'every quick tap reaches the native framebuffer and naturally repainted lower LCD' })
+      .toEqual(targets.map(({ x, y }) => ({ x, y, native: [255, 255, 0], displayed: [255, 255, 0] })));
     expect(await page.evaluate(async () => (await import('./src/app.js')).view.dsController.touchPointer)).toBeUndefined();
     await expect.poll(() => frame.evaluate(() => window.touchEdges.at(-1)?.type)).toBe('mouseup');
   }

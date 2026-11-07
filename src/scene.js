@@ -41,6 +41,16 @@ export class HandheldScene {
     this.renderer.shadowMap.autoUpdate = false;
     this.renderer.localClippingEnabled = true;
     this.canvas = this.renderer.domElement;
+    const gl = this.renderer.getContext();
+    this.paintSyncAvailable = ['fenceSync', 'clientWaitSync', 'deleteSync', 'flush']
+      .every(method => typeof gl[method] === 'function');
+    this.restoreRoomGpu = () => {
+      this.paintFence = null;
+      this.paintSyncFailed = false;
+      this.nextPaint = 0;
+      this.changed = true;
+    };
+    this.canvas.addEventListener('webglcontextrestored', this.restoreRoomGpu);
     this.canvas.id = 'scene-canvas';
     this.canvas.tabIndex = 0;
     this.canvas.setAttribute('aria-label', 'Interactive 3D desk. Drag a console or pear-boy in 3D, scroll for depth, release to drop. Console orientation stays fixed while moving. Click a console to play; click pear-boy to switch his light. Dock movement controls: arrows move, Page Up/Down lift, Enter drops, Escape cancels. Inspect: drag or arrows rotate, plus/minus zoom.');
@@ -769,7 +779,7 @@ export class HandheldScene {
     this.cameraMotion = null;
     this.zoom = 1;
     this.transition = {
-      elapsed: 0, lastPaint: null, duration: this.reducedMotion.matches ? 0 : 850,
+      started: performance.now(), elapsed: 0, lastPaint: null, duration: this.reducedMotion.matches ? 0 : 850,
       deskTransition,
       position: this.activeModel.root.position.clone(), rotation: this.activeModel.root.quaternion.clone(),
       camera: this.camera.position.clone(), look: this.lookAt.clone(),
@@ -906,20 +916,56 @@ export class HandheldScene {
     return { x: (point.x + 1) * this.width / 2, y: (1 - point.y) * this.height / 2 };
   }
 
+  fenceRoomPaint() {
+    if (!this.paintSyncAvailable) return;
+    const gl = this.renderer.getContext();
+    this.paintFence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+    if (this.paintFence) gl.flush();
+    else if (!gl.isContextLost()) this.failRoomPaint();
+  }
+
+  failRoomPaint() {
+    if (!this.paintSyncFailed) {
+      this.paintSyncFailed = true;
+      this.onError(new Error('Room GPU synchronization failed. The game is retained; reload to retry rendering.'));
+    }
+  }
+
   render(time) {
     if (document.fullscreenElement?.id === 'screen-focus') {
       this.lastRender = time;
       this.renderedLastFrame = false;
       return;
     }
+    const gl = this.renderer.getContext();
+    if (gl.isContextLost()) {
+      this.paintFence = null;
+      this.lastRender = time;
+      this.dsController?.paintScreens();
+      return;
+    }
     const delta = Math.max(0, (time - (this.lastRender ?? time - 16.67)) / 1000);
     this.lastRender = time;
-    if (this.renderedLastFrame) {
+    if (this.paintFence) {
+      const status = gl.clientWaitSync(this.paintFence, 0, 0);
+      if (status !== gl.TIMEOUT_EXPIRED) {
+        gl.deleteSync(this.paintFence);
+        this.paintFence = null;
+        if (status === gl.WAIT_FAILED) {
+          this.failRoomPaint();
+        } else {
+          const elapsed = time - this.paintSubmitted;
+          const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion ? 1000 : 200;
+          this.nextPaint = time + (elapsed > 50 ? Math.min(recoveryLimit, elapsed * 2) : 0);
+        }
+      }
+    } else if (this.renderedLastFrame) {
       const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion ? 1000 : 200;
       this.nextPaint = time + (delta > .05 ? Math.min(recoveryLimit, delta * 2000) : 0);
     }
     this.renderedLastFrame = false;
-    const paintDue = time >= (this.nextPaint ?? 0) && !this.nativeBusy && !document.querySelector('dialog[open]');
+    const paintDue = !this.paintFence && !this.paintSyncFailed && time >= (this.nextPaint ?? 0) &&
+      !this.nativeBusy && !document.querySelector('dialog[open]');
     const cartridgeMotion = this.cartridgeMotion;
     const cartridgeElapsed = cartridgeMotion ? nextCartridgeElapsed(cartridgeMotion, time, paintDue) : 0;
     const transition = this.transition;
@@ -1028,6 +1074,7 @@ export class HandheldScene {
     const faceMoving = this.pear.updateFace(delta, this.pearGaze, this.reducedMotion.matches);
     this.changed ||= buttonsMoving || bodyMoving || limbsMoving || faceMoving || consolesMoving;
     this.dsController?.paintStylus();
+    this.dsController?.paintScreens();
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
     if (this.source) this.model.screen.material.map.needsUpdate = true;
@@ -1067,6 +1114,10 @@ export class HandheldScene {
     if (this.dsReflectionsDirty && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&
         !consolesMoving && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
+    // Canvas light readbacks can drain the entire GPU queue. Wait without blocking
+    // before sampling or submitting another room frame; native LCD copies stay live.
+    this.fenceRoomPaint();
+    this.paintSubmitted = time;
     if (transition) {
       transition.elapsed = transitionElapsed;
       transition.lastPaint = time;
@@ -1115,6 +1166,8 @@ export class HandheldScene {
     document.removeEventListener('pointerleave', this.clearPearCursor);
     window.removeEventListener('blur', this.clearPearCursor);
     this.renderer.setAnimationLoop(null);
+    this.canvas.removeEventListener('webglcontextrestored', this.restoreRoomGpu);
+    if (this.paintFence) this.renderer.getContext().deleteSync(this.paintFence);
     this.observer.disconnect();
     this.dsReflection?.dispose();
     this.dsReflectionCube.dispose();

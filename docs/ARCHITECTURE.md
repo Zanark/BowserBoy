@@ -66,9 +66,9 @@ scene/app event boundary for independent power, brightness, movement and reset.
 
 `src/pear-motion.js` advances an upright body at 120Hz with gravity, bounded
 release velocity, box-based prop collisions, desk bounds, bounce, friction
-and sleep. Body and rope accumulators accept up to500ms of elapsed time per
-callback, retaining fixed120Hz substeps rather than slowing simulated time at
-2Hz software-rendered callback rates. Pointer drags use a camera-facing plane
+and sleep. Body and rope accumulators accept up to5s of elapsed time per
+callback, bounded to600 fixed120Hz substeps rather than slowing simulated time
+under multi-second software-rendered stalls. Pointer drags use a camera-facing plane
 plus grab offset; wheel depth translates that plane by the actual clamped displacement. Keyboard
 steps clear pointer-style release velocity for deliberate placement. Cancellation
 restores the original pose and clears momentum. The contact shadow stays on
@@ -289,6 +289,15 @@ Version-sensitive engine access is in `src/player.js` and `src/audio.js`. The ru
 `https://cdn.emulatorjs.org/4.2.3/data/`; this pins the release path, not the
 CDN operator's bytes with an integrity guarantee. GBA uses the `mgba` core and
 the `gba` control scheme. Threads are explicitly off.
+
+The native configuration hook also sets `suspend_screensaver_enable = false`
+for both systems. OS screen-sleep inhibition is not required for gameplay.
+The distributed core's `PlatformEmscriptenDoSetWakeLock` otherwise requests
+`navigator.wakeLock` and can leak a denied permission as an unhandled rejection.
+Disable that optional native behavior through its configuration, not by
+granting browser permissions, replacing the Wake Lock API or suppressing global
+errors. Native GBA restoration and DS quick-tap cases explicitly deny screen
+wake locks before boot and retain their real framebuffer/input assertions.
 
 The documented loader globals configure ROM/name, controls, buttons, readiness
 and start callbacks. The pinned source also supplies the internal operations
@@ -539,11 +548,13 @@ reporting seating on a skipped callback before painting the seated cartridge.
 Completed motions clear their state so an idle console can stop drawing.
 Framing does not trigger a view-mode callback, pause the core or reset input.
 
-View pickup/put-down transitions use `src/transition-motion.js` to retain
-the initial and lifted-middle presentations under sparse paints. Unpainted
+View transitions use `src/transition-motion.js` to measure elapsed time from
+the request, including a stalled first paint. Only desk pickup/put-down
+transitions retain a painted lifted midpoint; ordinary play/Inspect changes
+can reach their final pose on the first eligible late paint. Unpainted
 callbacks cannot commit transition time, and completion is published only
-after the final pose is actually rendered. Ordinary and reduced-motion
-durations remain covered separately.
+after the final pose is actually rendered. Reduced-motion durations remain
+covered separately.
 Native loading proceeds independently: there is no animation-based startup
 delay, invented percentage or looping reinsertion during a long download.
 
@@ -673,6 +684,17 @@ a view transition or cartridge animation, and 200 ms otherwise. Frames taking
 calculation. This changes scheduling under load, never backing resolution. Cheap
 pose/button calculations still advance and retain dirty shadows across skipped
 paints. Light damping uses elapsed time since the actual previous paint.
+
+On contexts with GPU synchronization support, each complete room draw submits
+one fence. Later callbacks poll it with a zero timeout and do not submit another
+room draw until it completes. Recovery uses elapsed submission-to-completion
+time, not merely the CPU duration of `renderer.render()`. Fence failures surface
+through the existing error notice; context restoration resets scheduling.
+The renderer still draws the complete scene at its original resolution, without
+a tiled presentation canvas or retained parent drawing buffer.
+DS native framebuffer halves copy before the room-paint gate, so recovery does
+not leave the copied LCDs stale. Correct copies and bounded GPU submissions do
+not themselves establish that native readbacks meet the responsiveness deadline.
 
 `player.html` hides the engine toolbar, context menu, virtual
 gamepad and its separate mobile menu opener. The latter is not a child of the

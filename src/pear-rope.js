@@ -64,8 +64,8 @@ export class PearRope {
       this.positions[0].copy(this.rest[0]).add(origin);
     }
     if (this.sleeping) return false;
-    // Catch up sparse room paints without unbounded work after a suspended tab.
-    this.accumulator += Math.max(0, Math.min(seconds, .5));
+    // Cover multi-second software-render stalls, bounded to 600 steps after suspension.
+    this.accumulator += Math.max(0, Math.min(seconds, 5));
     let updated = moved;
     let stepped = false;
     while (this.accumulator + 1e-10 >= step) {

@@ -79,6 +79,34 @@ test('sparse console paints retain the lift and only publish completion with ali
   expect(result.alignment).toBeLessThan(1);
 });
 
+test('a stalled Inspect transition completes on its next eligible real paint', async ({ page }) => {
+  await ready(page);
+  await page.locator('#pickup').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  const result = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+    view.renderedLastFrame = false;
+    view.nextPaint = 0;
+    view.setView('inspecting');
+    const time = performance.now();
+    const before = view.renderer.info.render.frame;
+    try {
+      view.nativeBusy = true;
+      view.render(time + 2000);
+      const deferred = { mode: view.host.dataset.view, frame: view.renderer.info.render.frame };
+      view.nativeBusy = false;
+      view.render(time + 4000);
+      return { before, deferred, mode: view.host.dataset.view, frame: view.renderer.info.render.frame };
+    } finally {
+      view.nativeBusy = false;
+    }
+  });
+  expect(result.deferred).toEqual({ mode: 'moving', frame: result.before });
+  expect(result.mode).toBe('inspecting');
+  expect(result.frame).toBeGreaterThan(result.before);
+});
+
 for (const system of ['gba', 'ds']) {
   test(`${system} drags in 3D without rotating, drops, and returns to its moved desk position`, async ({ page }, testInfo) => {
     const errors = [];

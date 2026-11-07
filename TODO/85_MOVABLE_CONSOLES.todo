@@ -25,6 +25,14 @@ Keyboard and touch work; reset is available. Pear-boy and both native cores,
 input, screens and saves retain their existing behavior. No push/deployment.
 
 Completion evidence:
+Subsequent hosted-failure correction measures ordinary transitions from the
+request, including a stalled first paint. Only actual desk lifts require a
+painted midpoint; completion still follows the actual final render. Shared
+body catch-up now accepts5seconds/600fixed120Hzsteps. A stationary-recovery
+failure is reproduced before correction; five targeted SwiftShader motion
+cases and15related units pass. Integrated44units/syntax/build pass.
+Fresh hosted/public qualification remains pending.
+
 CI recovery: view transitions retain a painted lifted midpoint and publish
 completion after rendering;500ms body/rope catch-up preserves fixed120Hz
 steps under sparse paints. Landscape dock gaps become3px while preserving
@@ -48,6 +56,9 @@ Scoped85apply verifies issue83 OPEN, its BowserBOY Project/In progress item,
 managed body and local backlink. Independent gh read confirms state/status.
 
 Completion log:
+2026-11-07: Count elapsed time from the transition request, retaining the
+real desk-lift midpoint and render-committed completion. Preserve fixed
+orientation and the native-friendly stationary paint recovery interval.
 2026-11-07: Correct sparse-paint motion and landscape dock wrapping exposed
 by the hosted gate; preserve orientation locks, sharpness and touch targets.
 2026-11-07: Owner explicitly requests commit, context refresh, then consoles

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { readFile, mkdir } from 'node:fs/promises';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
-import { nativeFrame, demoReady, powerOn } from './pixel-lab.mjs';
+import { nativeFrame, demoReady, powerOn, denyScreenWakeLock } from './pixel-lab.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const demoBytes = () => Buffer.from(createDemoRom());
@@ -61,6 +61,19 @@ const readStored = (page) => page.evaluate(() => new Promise((resolve, reject) =
     tx.oncomplete = () => db.close();
   };
 }));
+const startSavedDemo = async (page) => {
+  await page.goto('./');
+  await startDemo(page);
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await move(page);
+  await move(page, 'x', 60);
+  await openTools(page);
+  await page.getByRole('button', { name: 'Save checkpoint', exact: true }).click();
+  await expect(page.locator('#notice')).toContainText('Checkpoint saved.');
+  return image(page);
+};
 
 test('native settings keep the live runtime, persist options and leave the LCD and power lifecycle intact', async ({ page }) => {
   page.on('dialog', (dialog) => dialog.accept());
@@ -297,13 +310,14 @@ test('static shell, responsive layout, errors, keyboard help and private-file bo
   }
 });
 
-test('real mGBA renders, responds to input, resumes and restores exported progress', async ({ page }) => {
+test('real mGBA renders, responds to input and restores manual progress', async ({ page }) => {
   const errors = [];
   const methods = [];
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('request', (request) => methods.push(request.method()));
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
+  await denyScreenWakeLock(page);
   await startDemo(page);
   // Isolate manual backup actions from the periodic checkpoint's busy controls.
   await openTools(page);
@@ -331,7 +345,18 @@ test('real mGBA renders, responds to input, resumes and restores exported progre
   await page.getByRole('button', { name: 'Restore', exact: true }).click();
   await expect(page.locator('#notice')).toContainText('Quick-save checkpoint restored.');
   await expect.poll(() => image(page)).toBe(checkpointImage);
+  expect(methods.every((method) => ['GET', 'HEAD'].includes(method))).toBe(true);
+  expect(errors).toEqual([]);
+});
 
+test('native GBA portable backups restore exported progress', async ({ page }) => {
+  const errors = [];
+  const methods = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('request', (request) => methods.push(request.method()));
+  page.on('dialog', (dialog) => dialog.accept());
+  const checkpointImage = await startSavedDemo(page);
+  const [record] = await readStored(page);
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export backup', exact: false }).click();
   const download = await downloadPromise;
@@ -343,7 +368,17 @@ test('real mGBA renders, responds to input, resumes and restores exported progre
   await page.locator('#backup-file').setInputFiles(backupPath);
   await expect(page.locator('#notice')).toContainText('Backup imported and stored');
   await expect.poll(() => image(page)).toBe(checkpointImage);
+  expect(methods.every((method) => ['GET', 'HEAD'].includes(method))).toBe(true);
+  expect(errors).toEqual([]);
+});
 
+test('native GBA reload restores saved progress under a renamed cartridge', async ({ page }) => {
+  const errors = [];
+  const methods = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('request', (request) => methods.push(request.method()));
+  page.on('dialog', (dialog) => dialog.accept());
+  const checkpointImage = await startSavedDemo(page);
   await page.reload();
   await upload(page, 'Renamed cartridge.gba');
   await expect(page.locator('#notice')).toContainText('latest checkpoint has been restored');

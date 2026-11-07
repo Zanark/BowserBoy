@@ -20,9 +20,14 @@ async function state(page) {
 }
 
 async function pixel(page, point) {
-  // Power/UI state changes before a recovery-gated WebGL frame reaches the canvas.
+  const previousPaint = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.changed = true;
+    return view.lastPaint ?? -1;
+  });
+  // Motion can dirty the next frame before polling sees the completed one.
   await expect.poll(() => page.evaluate(async () =>
-    (await import('./src/app.js')).view.changed)).toBe(false);
+    (await import('./src/app.js')).view.lastPaint ?? -1)).toBeGreaterThan(previousPaint);
   const position = await page.evaluate(async point => {
     const { view } = await import('./src/app.js');
     const { Vector3 } = await import('three');

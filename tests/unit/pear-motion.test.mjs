@@ -8,15 +8,17 @@ function settle(motion, obstacles = []) {
   assert.equal(motion.sleeping, true);
 }
 
-test('sparse 2Hz callbacks retain the same falling trajectory and contacts as 120Hz', () => {
-  const sparse = new PearMotion(new Vector3(15, 15, -5));
+test('sparse and multi-second callbacks retain the same falling trajectory and contacts as 120Hz', () => {
   const regular = new PearMotion(new Vector3(15, 15, -5));
   const obstacles = [new Box3(new Vector3(12, 0, -8), new Vector3(18, 3, -2))];
-  for (let i = 0; i < 4; i++) sparse.update(1 / 2, obstacles);
-  for (let i = 0; i < 240; i++) regular.update(1 / 120, obstacles);
-  assert.ok(sparse.position.distanceTo(regular.position) < 1e-8);
-  assert.ok(sparse.velocity.distanceTo(regular.velocity) < 1e-8);
-  assert.equal(sparse.sleeping, true);
+  for (let i = 0; i < 360; i++) regular.update(1 / 120, obstacles);
+  for (const interval of [.5, 3]) {
+    const sparse = new PearMotion(new Vector3(15, 15, -5));
+    for (let i = 0; i < 3 / interval; i++) sparse.update(interval, obstacles);
+    assert.ok(sparse.position.distanceTo(regular.position) < 1e-8);
+    assert.ok(sparse.velocity.distanceTo(regular.velocity) < 1e-8);
+    assert.equal(sparse.sleeping, true);
+  }
 });
 
 test('a lifted pear falls, bounces and settles instead of snapping onto the desk', () => {

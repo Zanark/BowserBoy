@@ -244,6 +244,11 @@ function initialize(data) {
     EJS_ready: () => {
       const emulator = window.EJS_emulator;
       configureAudioBuffer(window.EJS_GameManager);
+      const getRetroArchCfg = window.EJS_GameManager.prototype.getRetroArchCfg;
+      window.EJS_GameManager.prototype.getRetroArchCfg = function () {
+        // Screen-sleep permission must not be a prerequisite for native gameplay.
+        return `${getRetroArchCfg.call(this)}\nsuspend_screensaver_enable = false\n`;
+      };
       // Only this core's canvas retains its post-shader framebuffer for the 3D LCD.
       const getContext = emulator.canvas.getContext.bind(emulator.canvas);
       emulator.canvas.getContext = (type, options) => getContext(type,

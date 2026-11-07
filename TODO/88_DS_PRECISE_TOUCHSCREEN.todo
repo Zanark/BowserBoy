@@ -14,6 +14,7 @@ Tasks:
 - [x] Coalesce drag moves and cancel queued contacts on input/lifecycle changes.
 - [x] Qualify quick mouse/touch taps and existing native/pen lifecycle together.
 - [x] Update affected documentation, contributor context and GitHub tracking.
+- [ ] Qualify the hosted recovery and deployed native touchscreen.
 - [ ] Owner visual review.
 
 Acceptance criteria:
@@ -28,6 +29,46 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+The software denial fixture now retains its CDP session; detaching restores
+prompt, as an isolated probe proves. Native GBA manual restoration passes with
+denial asserted. DS also boots under denial and records all four quick-tap
+native marks yellow, but every copied lower-LCD target remains green. Copying
+was gated by expensive room paints. With decoupled copying, all four native
+and copied targets are yellow, but the evaluation itself takes5093ms and
+misses1500ms. The flat precision case passes two native/physical targets and
+the third native mark, then exhausts120s in a pointer-state evaluation.
+Trivial evaluations take4-10s; responsiveness remains unqualified while
+actual rendering stalls are investigated. The original compound case exhausts120s at
+its second corner. Four independent locked-pose cases retain all twelve
+targets, actual held mouse/touch drags and native/physical checks; reuse the
+successful native snapshot for each brush assertion. No deadlines changed.
+The subsequent GPU-backpressure correction passes flat-corner precision
+but quick taps still exceed1500ms: correct native/copied pixels arrive
+after1977ms. Profiled readback stalls near1.5s and boot backlog up to32s
+remain under bounded diagnosis. The final handback again passes flat precision
+but fails quick taps at3618ms. A separate profile measures first native readback
+at2492ms versus3-5ms idle, despite0.1-0.3ms drawImage and about7ms output reads.
+Remove the unqualified tiled/snapshot overlay experiment: it still fails and
+publishes transition state before its complete frame finishes. Retain minimal
+single-full-frame GPU fences and independent native-half copies. The agent
+hands back the runtime lane. Fresh minimal-fence Edge regression passes all
+nine cases2.8m, including all four precise poses, twelve quick mouse/touch
+contacts, held pen and independent spill, plus GBA restore and CRT Geom.
+Syntax,44units and build pass. The fresh two-case software gate passes CRT
+but fails quick taps: its first four native/copied targets are all yellow,
+yet the predicate takes1518.7ms against1500ms. Preserve that actual failure.
+Do not equate Edge qualification or eventual pixels with hosted deployment.
+
+Hosted recovery728739e/42306381192 fails: build passes, eight browser shards
+pass, eleven fail and deployment skips. Exact quick-tap trace returns false
+in117ms, then native+copied TRUE after3160.8ms, beyond its1500ms deadline.
+Precision native yellow/brush assertions pass at(120,90); physical sampling
+returns false after2558.3ms and TRUE after5099.9ms, too late for its deadline.
+These results establish delayed host evaluations, not lost native input or
+a coordinate-mapping regression. Retain the deadlines and investigate the
+render/motion cause. Diagnostic assertions now report each target's native
+and displayed RGB separately rather than collapsing both into one boolean.
+
 Responsiveness follow-up: owner rejects localhost Twin Lab touch response and
 reports lag. All eight ordinary clicks reproduce missing native and copied-LCD
 marks despite correct host/native coordinates and current served ROM bytes.

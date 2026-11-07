@@ -581,6 +581,8 @@ export class DsController {
       const pressed = [...this.model.controls].some(([key, value]) => value.mesh === control.mesh && this.pressed.has(key));
       control.mesh.position.z = control.mesh.userData.restZ - (pressed ? .065 : 0);
     }
+  }
+  paintScreens() {
     if (!this.source) return;
     try {
       const regions = dsScreenRegions(this.source.width, this.source.height);

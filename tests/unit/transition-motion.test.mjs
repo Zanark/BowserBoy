@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { nextTransitionElapsed } from '../../src/transition-motion.js';
 
 test('sparse paints retain the initial pose and lifted midpoint before completing a transition', () => {
-  const transition = { elapsed: 0, lastPaint: null, duration: 850 };
+  const transition = { started: 100, elapsed: 0, lastPaint: null, duration: 850, deskTransition: true };
   const presented = [];
   for (const time of [100, 2900, 5700]) {
     transition.elapsed = nextTransitionElapsed(transition, time, true);
@@ -11,6 +11,15 @@ test('sparse paints retain the initial pose and lifted midpoint before completin
     presented.push(transition.elapsed);
   }
   assert.deepEqual(presented, [0, 425, 850]);
+});
+
+test('ordinary transitions do not restart their duration after a stalled first paint', () => {
+  const transition = { started: 100, elapsed: 0, lastPaint: null, duration: 850 };
+  assert.equal(nextTransitionElapsed(transition, 1000, false), 0);
+  assert.equal(nextTransitionElapsed(transition, 1100, true), 850);
+  transition.elapsed = 100;
+  transition.lastPaint = 200;
+  assert.equal(nextTransitionElapsed(transition, 2000, true), 850);
 });
 
 test('unpainted callbacks and backwards timestamps cannot advance the committed transition', () => {

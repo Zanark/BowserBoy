@@ -9,6 +9,101 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Hosted recovery remains blocked
+
+Exact source `728739eac4a168095ba095a6fbcab02d826bbadd`,
+[Pages42306381192](https://github.com/Zanark/BowserBoy/actions/runs/42306381192),
+finishes **failure**: build succeeds, eight browser shards pass, eleven fail,
+and deployment is skipped. Local qualification below is not hosted success.
+
+The quick-tap trace's first native/copied check returns false in117ms;
+the next returns **true after3160.8ms**, exceeding the1500ms deadline.
+The precision case passes native yellow-pixel and64-pixel brush assertions
+at(120,90); its physical-render polls take2558.3ms/false and5099.9ms/true.
+This evidence establishes delayed host evaluation, not a new UV-mapping or
+native-contact-loss defect. Preserve input mapping and responsiveness gates.
+New diagnostic output distinguishes each target's native and copied RGB.
+Other failures include view transitions remaining `moving`, pear settling,
+paint barriers and full-resolution readbacks. Investigation remains active.
+Job19's CRT case fails its final post-reload scene-ready15s assertion;
+the preceding native framebuffer, curved-border and flat-mode checks complete.
+Do not conflate this failure with the separate all-preset menu case.
+
+The original compound GBA lifecycle reaches its120s deadline at the final
+post-reload boot. Isolate manual restore, portable backup and renamed reload
+as independent native cases, retaining every original assertion and deadline.
+The inventory audit finds **92 cases exactly once across19shards**
+(16x5+3x4), without duplicates, omissions or extra selections.
+
+The local correction counts ordinary play/Inspect transitions from their
+request time, including a stalled first paint; only actual desk lifts require
+a painted midpoint. Completion still follows the actual final render.
+The stationary-recovery failure was reproduced before this correction.
+Body/rope catch-up now accepts at most5seconds/600fixed120Hzsteps, with
+multi-second trajectory-equivalence units. The pear-light fixture waits for
+`lastPaint` advancement, not a global dirty flag that motion can renew.
+Compound cap/LED checks are split into five independent cases, retaining all
+original assertions and deadlines. Integrated syntax, **44 units** and build
+pass. Five targeted SwiftShader motion cases and15related units pass, as does
+the actual pear warm-light/pickup case in1.2m. The five split cap/LED/LCD
+software cases pass separately in3.9m, full resolution, retries0.
+
+The next five-case native software gate fails all five on **Wake Lock permission
+request denied**. Transparent call-stack instrumentation identifies
+`PlatformEmscriptenDoSetWakeLock` in the distributed `mgba-legacy-wasm.data`,
+not the frontend loader or touchscreen projection. The adapter now disables
+optional native screensaver inhibition with
+`suspend_screensaver_enable = false`; OS screen-sleep permission must not be a
+gameplay prerequisite. Global errors stay visible, and no permission is granted
+or Wake Lock API replaced. Existing GBA manual-restore and DS quick-tap cases
+explicitly deny that permission and assert denial before native boot.
+The first corrected gate passes native GBA portable backup and renamed reload.
+Its denial fixture incorrectly detaches its CDP session, clearing the override;
+an isolated attached/denied versus detached/prompt probe proves the fixture
+error. Retaining the session for the test context corrects it, and actual GBA
+manual restore passes with denial explicitly asserted. The DS core also boots
+with denial asserted; its remaining quick-tap failure has yellow at all four
+native targets but stale green in every copied LCD target. Native sampling is
+not the remaining fault: LCD copying was gated by expensive room paints.
+Copy DS framebuffer halves independently of that room-paint recovery gate.
+The subsequent full-resolution software quick-tap/corner gate still fails.
+All four native and copied quick-tap targets are now yellow, but that
+evaluation takes5093ms, exceeding1500ms. The flat precision case passes
+its first two native/physical targets and the third native target, then
+exhausts120s in a pointer-state evaluation. Trivial evaluations take4-10s.
+This extraction corrects observed stale copies but does not yet qualify
+responsiveness; investigate actual rendering stalls before publication.
+The next targeted GPU-backpressure correction passes the full flat-corner
+precision case. Quick taps still fail: all native/copied marks are yellow,
+but their evaluation takes1977ms, beyond1500ms. Profiling identifies LCD
+readback stalls around1.5s and boot GPU backlog up to32s.
+The final bounded rendering handback again passes flat precision but fails
+quick taps at3618ms despite correct pixels. A separate profile measures the
+first native readback at2492ms versus3-5ms when idle; native drawImage costs
+only0.1-0.3ms and copied-output readback about7ms. This supports GPU waiting,
+not another coordinate correction.
+Reject the unqualified tiled/snapshot presentation experiment: it still misses
+the deadline and commits transition state before its complete frame finishes.
+Remove its overlay, retained parent buffer and new helper. Keep only the
+nonblocking single-full-frame fence scheduling and independent LCD copies.
+The fresh minimal-fence Edge gate passes **all nine cases in2.8m**: four
+locked precision poses, quick mouse/touch taps, held pen, independent LCD
+spill, genuine denied-wake-lock GBA manual restore and native CRT Geom.
+Fresh syntax, all44units and build also pass.
+The subsequent two-case SwiftShader gate passes CRT Geom, including its
+previously failing post-reload readiness check, but fails quick taps. Its
+first four native/copied targets are all yellow; the predicate returns in
+**1518.7ms**, still beyond1500ms. Keep this failure rather than rounding it
+into success. Local Edge qualification is not software or hosted qualification.
+The existing automatic nineteen-shard gate remains the publication barrier.
+
+The original twelve-target precision case exhausts its120s total deadline
+during its second corner, after the first native/physical target passes.
+Split the four locked poses into independent cases and reuse each successful
+native snapshot for its brush assertions. Retain all twelve targets, real held
+mouse/touch drags, physical probes, dimensions and assertion deadlines.
+Hosted/public qualification remains pending.
+
 ### Pickable DS pen, screen spill and original startup sound
 
 The docked stylus has isolated hover glow and a camera-facing held visual;

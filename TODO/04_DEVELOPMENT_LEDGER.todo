@@ -14,6 +14,68 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Minimal full-frame recovery qualifies Edge, not all software:
+  Fresh syntax,44units and build pass. Nine actual Edge cases pass2.8m:
+  four locked precise poses, quick mouse/touch contacts, held pen, independent
+  DS spill, denied-wake-lock GBA restore and native CRT Geom. A fresh two-case
+  SwiftShader gate passes CRT, including final post-reload readiness, but
+  fails quick taps. First four native/copied marks are all correct; the
+  predicate returns1518.7ms against1500ms. Preserve the failure and unchanged
+  gates; do not round away18.7ms or claim software/public responsiveness.
+- 2026-11-07 / Reject unqualified tiled presentation after final GPU profile:
+  Final rendering handback passes flat precision but fails quick taps3618ms.
+  Separate profiling measures first native readback2492ms versus3-5ms idle,
+  drawImage0.1-0.3ms and copied output about7ms. Eventual correct pixels do not
+  qualify responsiveness. Remove tiled scene snapshots, overlay canvas and
+  retained parent buffer: the experiment also commits transitions after its
+  first band rather than its complete frame. Keep minimal nonblocking
+  complete-frame fences and independent DS LCD copies. Archive the rejected
+  experiment privately, accept browser/dist handback and start fresh Edge
+  native/precision/pen/spill/CRT regression without changing any deadline.
+- 2026-11-07 / GPU-backpressure recovery is partial, not publication:
+  Profile actual software rendering and add nonblocking completion fences
+  rather than queuing unlimited room paints/readbacks. The full flat-corner
+  precision case now passes at unchanged resolution/deadline. Quick-tap
+  native/copied marks are correct but return in1977ms, beyond1500ms. Readback
+  stalls near1.5s and boot backlog up to32s remain under investigation.
+  Preserve the failing result; continue bounded single-frame diagnosis.
+- 2026-11-07 / Fresh DS copies expose remaining evaluation stalls:
+  Full-resolution SwiftShader quick-tap/corner gate still fails both cases.
+  Decoupled copying yields yellow at all four native AND copied targets, but
+  their evaluation takes5093ms and misses1500ms. Flat precision passes two
+  native/physical targets and its third native mark, then exhausts120s in a
+  pointer-state evaluation. Trivial calls take4-10s. Preserve these deadlines,
+  coordinates, resolution and errors; investigate actual render scheduling
+  rather than equating correct eventual pixels with responsive gameplay.
+  Syntax,44units and build pass before this gate. No new commit/deployment.
+- 2026-11-07 / Native screensaver permission and stale DS LCD copies:
+  Instrument the genuine rejected Wake Lock request without changing its
+  promise. Distributed mgba-legacy-wasm.data calls the Emscripten platform
+  screen-sleep hook. Disable optional native suspend_screensaver_enable through
+  supported configuration, retaining global errors and browser permissions.
+  Correct the test's CDP override lifetime: attached reports denied, detached
+  returns prompt. Actual manual GBA restoration passes with denial asserted;
+  portable and renamed-reload scenarios also pass. DS boots with denial but
+  its quick-tap trace shows all four native marks yellow while all copied
+  targets remain green. Copy LCD halves outside the expensive room-paint gate;
+  validate this source change before claiming responsiveness or publication.
+  Split the four locked precision poses after the compound120s case expires
+  at its second corner. Preserve all twelve points/drags/physical probes and
+  reuse successful native snapshots for brush assertions. Audit92cases
+  exactly once across19shards (16x5+3x4); no omissions or duplicate selection.
+- 2026-11-07 / Hosted recovery exposes delayed painting, not another UV offset:
+  Push728739e as Zanark and monitor exact-SHA Pages42306381192 to completion.
+  Build passes; eight browser shards pass, eleven fail; deployment skips.
+  Inspect actual native traces rather than infer lost input from a timeout.
+  Quick-tap source/copied sampling returns false in117ms, then TRUE after
+  3160.8ms, beyond1500ms. Precision native yellow/64-pixel brush passes;
+  physical polls return false after2558.3ms and TRUE after5099.9ms, too late.
+  Preserve mapping/native-frame queue and expose per-target native/copied RGB
+  in diagnostic assertions. Existing agents investigate motion/paint causes.
+  Original GBA lifecycle exhausts120s at the final reload boot. Separate its
+  manual restoration, portable backup and renamed reload into three native
+  scenarios, preserving original assertions and deadlines. Syntax passes;
+  runtime validation waits for the shared browser slot. No new deployment.
 - 2026-11-07 / Quick DS taps and unattended CI recovery:
   Owner rejects localhost Twin Lab responsiveness and reports lag. Eight
   quick clicks miss every native/copied mark despite correct coordinates and

@@ -34,6 +34,15 @@ full-resolution rendering, the separate consoles and unrelated pending work.
 Default feet hang below the desk edge; farther-back placements rest on top.
 
 Completion evidence:
+Subsequent42306381192 failure exposes multi-second callbacks beyond the
+earlier500ms bound. Body/rope catch-up now accepts at most5seconds and600
+fixed120Hzsteps; multi-second trajectory-equivalence units pass. The current
+five-case targeted SwiftShader motion gate and15related units pass.
+The pear warm-light/pickup fixture waits for lastPaint advancement, not a
+dirty flag that motion can renew; its actual SwiftShader case passes1.2m.
+Integrated44units/syntax/build pass. Fresh hosted/public qualification
+remains pending; no owner or physical-device acceptance is inferred.
+
 CI recovery: body and rope integration now catch up through bounded500ms
 stalls while retaining120Hz physics steps. Focused motion Edge gate passes
 7cases/2.0m; final software-rendered edge-return/rope pair passes1.2m.
@@ -58,6 +67,9 @@ Body remains upright with box-based prop collisions. Ropes collide with the
 pear and desk only; arbitrary prop surfaces/moving supports are not simulated.
 
 Completion log:
+2026-11-07: Preserve fixed-step physical time through bounded multi-second
+stalls and distinguish actual completed paint from transient dirty state.
+The earlier hosted recovery failed; these local results are not deployment.
 2026-11-07: Failed hosted captures expose stale pre-OFF wood pixels and
 physics time discarded under sparse callbacks. Wait for actual painted
 lighting state and preserve bounded fixed-step catch-up, not looser thresholds.
