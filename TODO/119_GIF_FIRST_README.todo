@@ -1,0 +1,37 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/118
+Milestone: A GIF-first README with linked documentation.
+Dependencies: 117.
+Purpose: Follow the owner's explicit request for a visual front page instead
+of extensive prose; preserve every fresh console, lighting and movement GIF.
+
+Tasks:
+- [x] Keep all25 interaction GIFs and the three approved animated logos.
+- [x] Reduce captions and replace long explanations with guide links.
+- [x] Retain historical still references in the linked media documentation.
+- [ ] Check links/media, publish as Zanark and monitor exact-revision deployment.
+
+Acceptance criteria:
+The README primarily shows actual GIFs, not paragraphs of technical detail.
+Player/developer guides, save instructions, architecture, book, release
+history, verification, provenance and development journal remain reachable.
+Preserve all25 existing GIFs and their bytes, approved artwork and frozen book.
+Keep short truthful captions, recording provenance, ROM/legal boundaries and
+the distinction between shown interactions and universal game compatibility.
+Retain the front-page policy in repository documentation for future edits.
+
+Completion evidence:
+The front page now groups the complete DS, GBA and desk/lamp motion gallery
+with short captions. Long controls, limits and deep dives link to existing
+guides. Historical still references move to Media; no recapture or artwork
+change. Word count including Markdown/alt text falls from2319to683
+(about71%less); all25GIFs retain exact committed bytes. Relative file targets
+in the README and all three edited guides exist. Approved artwork and frozen
+book remain unchanged. Monitored publication pending.
+
+Completion log:
+2026-11-07: Owner explicitly requests less README text and as many useful
+GIFs as possible, with separate linked files for detailed explanations.
+Preserve all25 fresh motion clips rather than replacing them with text or
+stills. Put the policy in the documentation map so future contributors can
+follow it without relying on chat history.

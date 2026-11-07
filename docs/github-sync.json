@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "117",
-      "file": "TODO/117_FRESH_CONSOLE_AND_LIGHTING_MEDIA.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/116",
-      "number": 116,
-      "nodeId": "I_kwDOVhqp0s8AAAABdSLEkw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGzElw",
+      "id": "119",
+      "file": "TODO/119_GIF_FIRST_README.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/118",
+      "number": 118,
+      "nodeId": "I_kwDOVhqp0s8AAAABdSeNkA",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGzUZs",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "117f545f78a2ff6a4be29a7e64db6638eec2c69b45c2aa3fd51f837e287f2ee2"
+      "bodySha256": "5bb7c4846c5581f08cb300ce03a22f61ddfaf5b5c885c005593a97e57c2a7dce"
     }
   ]
 }

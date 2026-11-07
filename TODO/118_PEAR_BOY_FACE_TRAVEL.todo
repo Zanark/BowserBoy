@@ -1,0 +1,38 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/117
+Milestone: Wider cursor-following Pear face travel.
+Dependencies: 113.
+Purpose: Let the whole Pear face move visibly farther toward the viewer's
+left/right when the cursor moves away, following the owner's marked face area.
+
+Tasks:
+- [x] Increase horizontal travel using the existing shell-following face rotation.
+- [x] Verify actual pointer travel, expressions and unobstructed cheek freckles.
+- [ ] Review the visible extremes and update affected documentation/evidence.
+- [ ] Commit/push as Zanark and monitor exact-revision deployment.
+
+Acceptance criteria:
+The cursor at far left moves both eyes, mouth and cheeks noticeably farther
+left on the body, without sliding geometry through the curved shell. Keep
+three cheek dots per side as the base for every expression. Preserve vertical
+travel, damped tracking, reduced motion and pickup/landing expression timing.
+Do not rotate or relocate the whole lamp or change its light output.
+Retain existing assertions, CI gates and bounded repair/parking policy.
+
+Completion evidence:
+Horizontal angular travel rises from0.22to0.55radians; vertical tracking,
+geometry, lights and expression timing stay unchanged. Both eyes move over
+0.75world units and5screen pixels left of neutral under actual pointer input.
+Existing pointer/pickup/release/reduced-motion coverage and visible fall/
+landing coverage pass together:2passed,27.6s. All six freckles are foremost
+ray hits in every expression at all nine X/Y gaze combinations.61unit tests,
+application syntax and static build pass. Actual default rendered curious face
+reviewed with eyes, smile and three dots per cheek visible; no owner approval.
+Monitored publication pending.
+
+Completion log:
+2026-11-07: Owner highlights the face region and shows a far-left cursor.
+Increase horizontal face rotation2.5x rather than translating facial meshes
+off their curved shell. Strengthen existing pointer-following coverage and
+check six freckles across all nine horizontal/vertical gaze combinations
+for calm, frightened, angry and recovering faces.

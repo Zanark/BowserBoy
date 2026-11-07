@@ -1,6 +1,6 @@
 # BowserBOY player and developer guide
 
-[Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoyAdvance/) | [Engineering book](book/README.md)
+[Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoy/) | [Engineering book](book/README.md)
 
 **First public release: [v1.0.0](releases/v1.0.0/README.md), 2026-11-06.**
 The owner designated the independently qualified `c3d9dbd` application as this
@@ -300,7 +300,9 @@ Keyboard steps place him deliberately without accumulating throwing speed.
 
 The longer, thick braided rope arms and legs swing and settle. His entire face
 (eyes, smile and freckles together) tracks
-mouse/pen movement. While held or falling, his squeezed eyes and pink cheeks
+mouse/pen movement. Horizontal travel is now 2.5 times wider, wrapping around
+the curved shell rather than sliding into it. Vertical travel and smooth
+tracking remain unchanged. While held or falling, his squeezed eyes and pink cheeks
 accompany alternating wobbly closed and peanut-shaped open scream mouths,
 with each mouth held for 900ms rather than flickering rapidly.
 A hard landing brings small round angry eyes with short furrowed brows,

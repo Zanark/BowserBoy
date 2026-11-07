@@ -80,8 +80,69 @@ caught an axolotl panel obscuring its lamp and a settings clip missing its
 drawer. Complete replacement takes now show unobstructed50/100/off/on states
 and an explicitly visible settings drawer followed by outside-click dismissal.
 Approved logo/orbital bytes and the frozen PDF remain unchanged.
-Publication and deployment require a separate exact-revision receipt in the
-workstream's linked issue; local recording alone is not public delivery.
+Publication: Zanark commit `bfa6582599204e70a3870e56c145e7b48ea386e6`.
+The rendered GitHub README contains all25GIFs;26public GIF/PNG assets return
+HTTP200 and exact committed bytes. [Pages42383181752](https://github.com/Zanark/BowserBoy/actions/runs/42383181752)
+successfully builds, runs all19verification shards and deploys:
+119declarations,98passed,21skipped,0failed,0unrun. The parked scenarios
+remain coverage debt. These delivery checks do not expand game compatibility
+or imply owner aesthetic approval.
+
+## Historical detail gallery
+
+These stills previously appeared on the front README. They remain available
+here while the front page prioritizes the complete motion gallery. They are
+references from earlier local capture rounds, not newly recorded or exact
+current-deployment evidence. Detailed operation and limitations are in the
+[player guide](GUIDE.md); release accounting belongs in
+[Verification](VERIFICATION.md), not the front-page captions.
+
+![DS rear-lid recesses and lower-body underside logo](images/ds-rear-markings.png)
+
+*Centered upper-lid recesses; supplied logo beside the lower battery cover.
+Actual local Inspect reference with Room lighting on.*
+
+![Blue-cyan DS with a lighter base in its earlier warm-lighting pose](images/ds-blue-cyan-warm.png)
+
+*Earlier fixed color-reference pose, Room off and displays dark. Base-only
+lighter pigment; no capture-only exposure or GBA material changes.*
+
+![DS control sockets clear the touchscreen bezel](images/ds-control-clearance.png)
+
+*Actual local Inspect reference for button-diamond and recessed-Y clearance.
+Controls and key bindings are explained in the DS guide.*
+
+The approved DS logo animates only its two screen rectangles on the README
+and Inspect heading. Reduced motion uses the static original; the loading LCD,
+tools and lower-body underside also retain static artwork. The inner lid has
+no emblem. The lettering, orbit and chrome borders do not animate.
+
+![Purple rear engraving and animated GBA Inspect heading](images/readme-back.png?v=woven-20261106)
+
+*The earlier rear-detail reference: larger purple lettering and deeper engraving.*
+
+![Frosted power notice over the fitted GBA play view](images/readme-notice.png?v=woven-20261106)
+
+*Overlay notices do not shrink the console; the header logo is hidden during play.*
+
+![GBA underside power slider revealed in Inspect](images/readme-underside.png?v=woven-20261106)
+
+*Ribbed underside slider, true power-off and cold boot.*
+
+![Native GBA screen and sound settings with CRT Geom selected](images/crt-presets.png?v=woven-20261106)
+
+*Nine native CRT presets, CRT Geom by default, plus Unfiltered.*
+
+![Purple console tools with a drag grip and separate fullscreen actions](images/readme-dock.png?v=woven-20261106)
+
+*Earlier expanded-dock reference; the current console tools start collapsed.*
+
+![Progress panel with an original-demo checkpoint](images/readme-saves.png?v=woven-20261106)
+
+*Local in-game saves, autosave, three checkpoint slots and portable backups.
+See [Saving](SAVING.md) for recovery boundaries.*
+
+## Earlier capture provenance
 
 ### Small axolotl night-light, 2026-11-07
 

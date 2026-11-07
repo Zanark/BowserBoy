@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/116
 Milestone: Fresh README recordings for both consoles and every desk lighting option.
 Dependencies: 111, 113, 115, 116.
@@ -10,7 +10,7 @@ Tasks:
 - [x] Record DS loading, native displays, input, Inspect, zoom and lighting.
 - [x] Record room/table lighting, both companion brightness controls and movement.
 - [x] Encode and inspect actual footage; update README embeds and media provenance.
-- [ ] Verify preservation, publish with Zanark and monitor exact-SHA deployment.
+- [x] Verify preservation, publish with Zanark and monitor exact-SHA deployment.
 
 Acceptance criteria:
 Every existing README interaction GIF is freshly recorded, with new DS and
@@ -36,8 +36,12 @@ Approved logos/orbital artwork/frozen book match the preceding revision.
 All64relative README file targets exist;25unique GIF embeds. Correct the three
 obsolete public-play links: old endpoint404, canonical BowserBoy endpoint200.
 Recorder syntax, existing61units and build pass. No runtime/core/CI changes.
-Publication and actual hosted CI/deployment are still pending; local media
-verification does not close this workstream.
+Published as Zanark in bfa6582599204e70a3870e56c145e7b48ea386e6.
+Actual GitHub-rendered README has25GIFs; all26raw GIF/PNG assets return200
+and exact committed bytes. Pages42383181752 completes successfully, including
+build, all19browser shards and deploy:119declared,98passed,21skipped,
+0failed,0unrun. Existing parked scenarios remain coverage debt.
+https://github.com/Zanark/BowserBoy/actions/runs/42383181752
 
 Completion log:
 2026-11-07: Owner explicitly supplies local GBA/DS games and requests fresh
@@ -50,3 +54,7 @@ states; assert and hold the drawer before outside-click dismissal. Record
 complete corrected lighting/GBA takes, encode and recheck all25GIFs.
 Keep local ROMs, original WebMs and detailed receipts private. Preserve the
 nine pre-existing dirty PNGs and approved artwork; publish only scoped media.
+2026-11-07: Read the actual successful watcher outcome and all19complete
+browser logs; independently account for every declared case. Raw public media
+and rendered README checks match the exact commit. Local recorder integrity,
+shown interactions and public delivery are verified separately.

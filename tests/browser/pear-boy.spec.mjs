@@ -302,15 +302,24 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
     return {
       point: view.project(face.anchor), gaze: face.gaze.toArray(),
       eyes: face.eyes.map(({ mesh }) => mesh.getWorldPosition(new Vector3()).toArray()),
+      projectedEyes: face.eyes.map(({ mesh }) => view.project(mesh)),
       smile: center(view.pear.root.getObjectByName('pear-boy smile')),
       freckles: face.root.children.filter(mesh => mesh.name === 'pear-boy cheek freckle').map(center),
       calm: face.calm.visible, scared: face.scared.visible,
       mouthOpen: face.openMouth.visible,
     };
   });
+  const { point } = await face();
+  await page.mouse.move(point.x, point.y);
+  await expect.poll(async () => Math.abs((await face()).gaze[0])).toBeLessThan(.001);
+  const neutral = await face();
   await page.mouse.move(20, 850);
   await expect.poll(async () => (await face()).gaze[0]).toBeLessThan(-.9);
   const left = await face();
+  for (let i = 0; i < 2; i++) {
+    expect(left.eyes[i][0]).toBeLessThan(neutral.eyes[i][0] - .75);
+    expect(left.projectedEyes[i].x).toBeLessThan(neutral.projectedEyes[i].x - 5);
+  }
   const clip = { x: Math.floor(left.point.x - 45), y: Math.floor(left.point.y - 20), width: 90, height: 75 };
   const leftPixels = await page.screenshot({ clip });
   await page.mouse.move(1425, 80);
@@ -377,8 +386,8 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
     const origin = pear.root.localToWorld(new Vector3(0, 4.5, 11));
     const visibility = [];
     const inspect = () => {
-      for (const gaze of [-1, 0, 1]) {
-        pear.updateFace(0, new Vector2(gaze, gaze), true);
+      for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
+        pear.updateFace(0, new Vector2(x, y), true);
         pear.root.updateWorldMatrix(true, true);
         visibility.push(pear.face.root.children.filter(mesh => mesh.name === 'pear-boy cheek freckle').map(dot => {
           raycaster.set(origin, dot.getWorldPosition(new Vector3()).sub(origin).normalize());

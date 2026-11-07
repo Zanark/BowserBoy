@@ -1,6 +1,6 @@
 # Documentation and repository map
 
-[Play](https://zanark.github.io/BowserBoyAdvance/) |
+[Play](https://zanark.github.io/BowserBoy/) |
 [Visual showcase](../README.md) |
 [Public releases](releases/README.md)
 
@@ -21,6 +21,16 @@
 | Rendered PDF, offline reader and current lessons | [Read the PDF](book/published/Building-a-Little-Escape.pdf), [second edition/build](book/editions/2026-11/README.md), [review record](book/editions/2026-11/REVIEW.md) |
 | Workstreams and causal development history | [TODO index](../TODO/00_INDEX.todo), [ledger](../TODO/04_DEVELOPMENT_LEDGER.todo) |
 | Dependencies and supplied artwork | [Third-party notices](../THIRD_PARTY_NOTICES.md) |
+
+## Front-page contract
+
+Keep the root README a GIF-first showcase: preserve useful interaction
+animations, use short captions, and link to this documentation rather than
+adding long explanations, control lists, test counts or development logs.
+Detailed controls belong in the player guide; capture provenance and older
+still references belong in [Media](MEDIA.md); technical deep dives belong
+in the architecture guide or engineering book. This is the owner's explicit
+policy for this repository.
 
 ## Folder responsibilities
 

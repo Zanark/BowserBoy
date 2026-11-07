@@ -14,6 +14,30 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Wider Pear gaze and GIF-first front page (118-119):
+  Owner highlights Pear's face area and a far-left cursor. Increase the
+  shell-following horizontal angle0.22to0.55rather than translating meshes
+  into the body; vertical travel, expression timing and real lights stay fixed.
+  Strengthen the existing actual-pointer case: each eye moves>0.75world
+  units and>5screen pixels left of neutral. Expand actual foremost freckle
+  rays to all9X/Ycombinations in each of4expressions, not visibility flags.
+  Existing cursor/pickup/cancel/reduced-motion and submitted fall/landing
+  cases pass2/2in27.6s.61units,syntax/build pass. Review actual rendered face;
+  no owner aesthetic approval. Publication still pending.
+  Owner also requests a much more visual README. Keep all25GIFs and3approved
+  animated logos byte-for-byte; cut2319to683words including Markdown/alt text,
+  about71%less. Use one-line captions and links to existing detailed guides.
+  Move9historical still references to Media, preserving their earlier local
+  provenance. Put the enduring front-page policy in the documentation map.
+  Relative file targets in README/three affected guides exist; unchanged GIF
+  bytes verified. Preserve9dirtyPNGs and frozen book; no recapture/core/CI
+  changes. Actual issues117/118 and Project In progress independently verified.
+- 2026-11-07 / Fresh media delivery (117):
+  Zanark source bfa6582599204e70a3870e56c145e7b48ea386e6 is published.
+  GitHub-rendered README includes25GIFs;26public raw assets return200 and
+  exact committed bytes, total56,117,141bytes. Pages42383181752 succeeds
+  build/all19shards/deploy. Complete logs independently account for119cases:
+  98PASS/21SKIP/0FAIL/0UNRUN.21parks remain debt, not fixes.
 - 2026-11-07 / Fresh dual-console and lighting README recordings (117):
   Replace all11existing interaction GIFs with the owner's selected GBA game;
   add8actual DS clips and6desk/lighting clips plus a fresh default-table still.
