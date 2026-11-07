@@ -1,0 +1,56 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/115
+Milestone: Make the straight DS readable under the physical table lamp.
+Dependencies: None.
+Purpose: Correct backlighting in the real default play pose without a fake
+camera light, brighter LCDs, changed metallic paint or global exposure boost.
+
+Tasks:
+- [x] Reproduce the actual upright shell darkness and measure real surface pixels.
+- [x] Move the fitted DS play position into the existing lamp's lit region.
+- [x] Add desktop/phone shell, lamp-off, room-light and unchanged-LCD regressions.
+- [x] Qualify native input, framing, loading and the new rendered lighting cases.
+- [x] Reconcile the guide, causal ledger and issue/Project synchronization.
+
+Acceptance criteria:
+The actual default straight play pose exposes blue/cyan shell corners under
+the table lamp alone at desktop and phone sizes. Samples must hit physical
+shell surfaces, not background or LCDs. Switching all lights off remains dark;
+room lighting still works. LCDs remain unlit, non-tone-mapped surfaces.
+Keep existing camera fit, collision clearance, Inspect/locked angles, stylus,
+native input and loading behavior. Preserve the existing parked coverage debt,
+unrelated dirty images and frozen published book. Publication needs exact-SHA
+deployment and actual public-site verification, separate from local evidence.
+
+Completion evidence:
+Investigation: old straight play at (5,5.1,8) places the front-facing shell
+ahead of the lamp's emitting region. Table-lamp-only samples are blue9 on
+the lid and10 on the deck. Enlarging tabletop bounce alone is ineffective.
+Initial lit target (-2,5.1,-2) exposes a full-rotation collision risk:
+the existing Inspect placement regression reports rotation gap -1.047.
+One bounded correction moves the shared target to (-2,5.1,-8).
+Final lamp-only lid blue108-113/deck117-157; all eight rays hit real shell.
+All eight go RGB0,0,0 with every lamp off. No material/light/exposure edits.
+Rendered960x720final default pose inspected; not owner aesthetic approval.
+Syntax, all61unit tests and static build pass. Final six-case browser run
+passes1.6m: real native dual-screen input/stylus, locked gameplay/hinge,
+phone fit, pickup/full-rotation clearance/live Inspect/branding, and both
+new default-upright desktop/phone lighting cases. Immediate upload/native
+handoff also passed before the final clearance-only position correction.
+The new fixture's first attempt incorrectly treats powered-off reflective
+LCD glass as unlit. Its one bounded repair uses the controller's real static
+status LCDs; real native LCD/input behavior is qualified separately above.
+No new skips, weaker assertions, timeout changes or reduced pixel ratio.
+Technical completion is separate from pending authorized publication:
+commit/push, exact-SHA Pages and public-site checks go in the final issue
+receipt, not an endless receipt-only documentation/deployment loop.
+
+Completion log:
+2026-11-07: Owner reports near-invisible straight DS and requests realistic
+table-lamp illumination. Diagnose and measure geometry before changing it.
+Preserve the renderer's existing two-unit desk clearance and fitted camera;
+change only the shared play-position constant used by bounds and targets.
+2026-11-07: Both new lighting cases pass after the bounded status-LCD
+fixture correction. The added placement check catches the initial position's
+rotation-envelope regression. Correct spatial separation once; all six
+final focused scenarios then pass with original assertions.

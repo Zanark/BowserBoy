@@ -14,6 +14,23 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Straight DS table-lamp illumination (116):
+  Reproduce near-black upright lid/deck under the actual default lamp:
+  lamp-only blue9/10. The front-facing DS atz8 is ahead of the lamp,
+  so increasing the small tabletop bounce does not fix the lid.
+  Initial lit target(-2,5.1,-2) fails existing full-rotation clearance:
+  gap-1.047. One bounded position correction selects(-2,5.1,-8);
+  retain automatic desk lift/camera bounds and original assertions.
+  Final lamp-only shell lid blue108-113/deck117-157; every ray hits shell,
+  all eight go black with all lamps off. No paint, exposure, emitter,
+  LCD or render-gate changes. Inspect actual960x720final rendering;
+  no aesthetic approval implied. First new fixture incorrectly assumes
+  powered-off reflective LCD glass is unlit. One bounded repair uses actual
+  static status LCDs; native emulation remains a separate real-core test.
+  Syntax,61units/build pass; final six browser cases pass1.6m, covering
+  real native dual-screen/stylus, locked pose, phone fit, placement/full
+  rotation/Inspect/branding and desktop/phone lighting. No new parks or
+  relaxed gates. Local completion; exact-SHA/publication receipt pending.
 - 2026-11-07 / Immediate DS loading handoff (115):
   Move DS selection, play framing and sidebar closure ahead of ROM header,
   digest and saved-checkpoint awaits. The delay remains real; expose it rather

@@ -150,7 +150,10 @@ The existing warm lamp, optional **Room** lighting and background are unchanged:
 no studio-light rig or white backdrop was added. Those warm sources still
 shift the metallic appearance and leave shadowed faces dark. Exact material
 values do not imply a lighting-independent match to the white-background
-reference photographs.
+reference photographs. The straight DS play pose sits inside the table lamp's
+actual light pool rather than in front of its emitting surface, revealing the
+blue lid and lighter lower shell without adding a camera light or brightening
+the LCDs. The lamp switch still removes that illumination.
 
 **Set your gameplay angle:** enter **Inspect**, then choose **Rotate body**
 or **Move hinge**. Drag to rotate the body; in hinge mode, drag upward to

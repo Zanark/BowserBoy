@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "115",
-      "file": "TODO/115_DS_IMMEDIATE_LOADING.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/114",
-      "number": 114,
-      "nodeId": "I_kwDOVhqp0s8AAAABdRrKtQ",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGyn1Q",
+      "id": "116",
+      "file": "TODO/116_DS_UPRIGHT_LIGHTING.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/115",
+      "number": 115,
+      "nodeId": "I_kwDOVhqp0s8AAAABdR9Dwg",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGy308",
       "state": "closed",
       "reason": "completed",
       "projectStatus": "Done",
-      "bodySha256": "4c3571f5f72c512b68c0a80c2ffdcd8a55207c89d78f7085fac7b1fa2e117d28"
+      "bodySha256": "49e5fbdae1b1f71ba3a070861bb1ebb8b1e009de95b9c2ca06ca48c92b5804cb"
     }
   ]
 }

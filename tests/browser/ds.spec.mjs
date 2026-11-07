@@ -1409,6 +1409,84 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   expect(errors).toEqual([]);
 });
 
+for (const viewport of [{ width: 960, height: 720 }, { width: 390, height: 844 }]) {
+test(`upright DS is lit by the table lamp without washing out LCDs (${viewport.width}px)`, async ({ page }, testInfo) => {
+  await page.setViewportSize(viewport);
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await waitForDesk(page);
+  await page.locator('#select-ds').click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false);
+    view.setAxolotlEnabled(false);
+    view.dsController.status('LIGHTING TEST', 'STATIC LCD COLOR');
+  });
+  const sample = async () => {
+    await expect.poll(() => page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      return view.transition === null && !view.dsReflectionsDirty;
+    })).toBe(true);
+    return page.evaluate(async () => {
+      const { view } = await import('./src/app.js');
+      const { Vector2, Vector3, Raycaster, Quaternion } = await import('three');
+      view.renderer.render(view.scene, view.camera);
+      const gl = view.renderer.getContext(), ray = new Raycaster();
+      const pixel = (parent, position) => {
+        const point = parent.localToWorld(new Vector3(...position)).project(view.camera);
+        ray.setFromCamera(new Vector2(point.x, point.y), view.camera);
+        const rgba = new Uint8Array(4);
+        gl.readPixels(Math.round((point.x + 1) * view.canvas.width / 2),
+          Math.round((point.y + 1) * view.canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+        return { hit: ray.intersectObjects(view.scene.children, true)[0]?.object.name,
+          inFrame: Math.abs(point.x) < 1 && Math.abs(point.y) < 1, rgb: [...rgba].slice(0, 3) };
+      };
+      return {
+        straight: view.ds.root.quaternion.angleTo(new Quaternion()) < .00001 &&
+          Math.abs(view.ds.lid.rotation.x) < .00001,
+        shell: [
+          ...[[-3.4, 2.4, .15], [3.4, 2.4, .15], [-3.4, 3.8, .15], [3.4, 3.8, .15]]
+            .map(point => pixel(view.ds.lid, point)),
+          ...[[-3, -3.4, .25], [3.7, -3.1, .25], [-3, -4.2, .25], [3.7, -4.2, .25]]
+            .map(point => pixel(view.ds.root, point)),
+        ],
+        lcds: view.ds.screens.map(screen => ({ ...pixel(screen, [0, 0, 0]),
+          unlit: screen.material.isMeshBasicMaterial && !screen.material.toneMapped })),
+      };
+    });
+  };
+  await expect(page.locator('#room-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#lamp-toggle')).toHaveAttribute('aria-pressed', 'true');
+  const lit = await sample();
+  expect(lit.straight).toBe(true);
+  for (const [index, surface] of lit.shell.entries()) {
+    expect(surface.hit).toBe(index < 4 ? 'Metallic blue recessed inner lid' : 'Metallic blue control deck');
+    expect(surface.inFrame).toBe(true);
+    const [red, green, blue] = surface.rgb;
+    expect(blue, 'the real lamp reveals every sampled shell corner').toBeGreaterThan(75);
+    expect(blue).toBeGreaterThan(green);
+    expect(green).toBeGreaterThan(red * 1.3);
+  }
+  await page.screenshot({ path: testInfo.outputPath('upright-ds-table-lamp.png') });
+  await page.locator('#lamp-toggle').click();
+  const dark = await sample();
+  for (const surface of dark.shell) expect(Math.max(...surface.rgb)).toBeLessThan(3);
+  await page.locator('#room-toggle').click();
+  const room = await sample();
+  for (const surface of room.shell) expect(Math.max(...surface.rgb)).toBeGreaterThan(75);
+  await testInfo.attach('upright-ds-lighting-pixels', {
+    body: JSON.stringify({ lit, dark, room }), contentType: 'application/json',
+  });
+  for (const state of [lit, dark, room]) {
+    expect(state.lcds.every(lcd => lcd.unlit && lcd.inFrame)).toBe(true);
+    expect(state.lcds.map(lcd => lcd.rgb)).toEqual(lit.lcds.map(lcd => lcd.rgb));
+  }
+  expect(errors).toEqual([]);
+});
+}
+
 test('DS shell retains bright blue-cyan in its reference lighting pose under warm companion light and room light', async ({ page }, testInfo) => {
   test.skip(!!process.env.CI, 'Parked after failed CI repair: DS readiness/reference-lighting qualification; follow-up https://github.com/Zanark/BowserBoy/issues/104');
   await page.goto('./');

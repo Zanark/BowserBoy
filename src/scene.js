@@ -17,7 +17,8 @@ const playPosition = new THREE.Vector3(0, 3.5, 0);
 const tablePosition = new THREE.Vector3(-.6, .68, .4);
 const dsTablePosition = new THREE.Vector3(10.3, .32, -7.2);
 const dsTableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.4));
-const dsPlayPosition = new THREE.Vector3(5, 5.1, 8);
+// Keep the upright face behind the lamp's emitting surface, not backlit in front of it.
+const dsPlayPosition = new THREE.Vector3(-2, 5.1, -8);
 const dsPlayQuaternion = new THREE.Quaternion();
 const dsTableHinge = THREE.MathUtils.degToRad(70);
 const pearHome = new THREE.Vector3(15.3, 0, 7.3);
