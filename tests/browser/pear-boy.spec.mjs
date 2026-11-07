@@ -371,15 +371,28 @@ test('pear-boy moves in all three axes and falls through visible frames before a
   const samples = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
     window.pearFalls = [];
+    window.pearFallPaints = [];
+    let released = false;
+    const read = () => ({
+      y: view.pear.root.position.y, vy: view.pearMotion.velocity.y,
+      scared: view.pear.face.scared.visible, sleeping: view.pearMotion.sleeping,
+    });
+    const originalRender = view.renderer.render;
+    view.renderer.render = function (...args) {
+      const sample = released && args[0] === view.scene && args[1] === view.camera ? read() : null;
+      const result = originalRender.apply(this, args);
+      if (sample) window.pearFallPaints.push(sample);
+      return result;
+    };
+    window.stopPearFallPaints = () => { view.renderer.render = originalRender; };
     window.recordPearFall = () => {
-      window.pearFalls.push({
-        y: view.pear.root.position.y, vy: view.pearMotion.velocity.y,
-        scared: view.pear.face.scared.visible, sleeping: view.pearMotion.sleeping,
-      });
+      window.pearFalls.push(read());
       if (!view.pearMotion.sleeping) requestAnimationFrame(window.recordPearFall);
     };
-    view.canvas.addEventListener('pointerup',
-      () => requestAnimationFrame(window.recordPearFall), { once: true });
+    view.canvas.addEventListener('pointerup', () => {
+      released = true;
+      requestAnimationFrame(window.recordPearFall);
+    }, { once: true });
     return view.pear.root.position.y;
   });
   await page.waitForTimeout(120);
@@ -390,6 +403,15 @@ test('pear-boy moves in all three axes and falls through visible frames before a
   expect(fall.some(frame => frame.vy > 0)).toBe(true);
   expect(fall.every(frame => frame.y >= 0)).toBe(true);
   expect((await state(page)).position[1]).toBe(0);
+  await expect.poll(() => page.evaluate(() =>
+    window.pearFallPaints.some(frame => frame.y === 0 && frame.vy === 0 && frame.sleeping))).toBe(true);
+  const paints = await page.evaluate(() => {
+    window.stopPearFallPaints();
+    return window.pearFallPaints;
+  });
+  expect(paints.some(frame => frame.y > 0 && frame.y < samples - .1 && frame.vy < 0 && frame.scared)).toBe(true);
+  expect(paints.some(frame => frame.y > 0 && frame.vy > 0 && frame.scared)).toBe(true);
+  expect(paints.every(frame => frame.y >= 0)).toBe(true);
   await page.locator('#pear-open').click();
   await page.locator('#pear-home').click();
   await page.locator('#pear-move').click();

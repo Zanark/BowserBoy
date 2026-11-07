@@ -16,6 +16,7 @@ export class DeskMotion {
     this.position.copy(position);
     this.velocity.set(0, 0, 0);
     this.accumulator = 0;
+    this.presentation = null;
     this.held = false;
     this.sleeping = position.y === this.workspace.min.y;
     this.lastMove = -Infinity;
@@ -27,6 +28,7 @@ export class DeskMotion {
     this.velocity.set(0, 0, 0);
     this.lastMove = -Infinity;
     this.accumulator = 0;
+    this.presentation = null;
   }
 
   moveTo(position, time) {
@@ -38,26 +40,33 @@ export class DeskMotion {
     this.lastMove = time;
   }
 
-  drop(time) {
+  drop(time, { requirePaint = false } = {}) {
     if (time - this.lastMove > 100) this.velocity.set(0, 0, 0);
     this.held = false;
     this.sleeping = false;
     this.accumulator = 0;
+    this.presentation = requirePaint ? { phase: 'fall', height: this.position.y, pending: false } : null;
+  }
+
+  acknowledgePaint() {
+    if (!this.presentation?.pending) return;
+    this.presentation = this.presentation.phase === 'fall' ? { phase: 'bounce', pending: false } : null;
   }
 
   update(seconds, obstacles) {
     if (this.held || this.sleeping) return false;
     // Cover multi-second software-render stalls, bounded to 600 steps after suspension.
     this.accumulator += Math.max(0, Math.min(seconds, 5));
-    let changed = false;
-    while (this.accumulator + 1e-10 >= step) {
+    if (this.presentation?.pending) return false;
+    let changed = false, steps = 0;
+    while (this.accumulator + 1e-10 >= step && steps++ < 600) {
       this.accumulator = Math.max(0, this.accumulator - step);
       this.previous.copy(this.position);
       this.velocity.y -= 45 * step;
       this.velocity.x *= .998;
       this.velocity.z *= .998;
       this.position.addScaledVector(this.velocity, step);
-      let supported = false;
+      let supported = false, supportHeight = this.workspace.min.y;
       if (this.position.y <= this.workspace.min.y) {
         this.position.y = this.workspace.min.y;
         this.velocity.y = Math.abs(this.velocity.y) > 1.2 ? Math.abs(this.velocity.y) * .23 : 0;
@@ -78,8 +87,11 @@ export class DeskMotion {
         const minX = box.min.x - this.bounds.max.x, maxX = box.max.x - this.bounds.min.x;
         const minZ = box.min.z - this.bounds.max.z, maxZ = box.max.z - this.bounds.min.z;
         const p = this.position, before = this.previous;
-        if (p.x <= minX || p.x >= maxX || p.z <= minZ || p.z >= maxZ ||
-            p.y + this.bounds.min.y >= box.max.y || p.y + this.bounds.max.y <= box.min.y) continue;
+        if (p.x <= minX || p.x >= maxX || p.z <= minZ || p.z >= maxZ) continue;
+        if (this.presentation?.phase === 'fall' && box.max.y - this.bounds.min.y <= this.presentation.height) {
+          supportHeight = Math.max(supportHeight, box.max.y - this.bounds.min.y);
+        }
+        if (p.y + this.bounds.min.y >= box.max.y || p.y + this.bounds.max.y <= box.min.y) continue;
         if (before.y + this.bounds.min.y >= box.max.y) {
           p.y = box.max.y - this.bounds.min.y;
           this.velocity.y = Math.abs(this.velocity.y) > 1.2 ? Math.abs(this.velocity.y) * .23 : 0;
@@ -99,6 +111,19 @@ export class DeskMotion {
         }
       }
 
+      // Do not integrate an entire fall and rebound between two submitted room paints.
+      // The unconsumed fixed-step time remains queued until the renderer acknowledges each pose.
+      if (this.presentation?.phase === 'fall' && this.velocity.y < 0 &&
+          this.position.y < this.presentation.height &&
+          this.position.y <= (this.presentation.height + supportHeight) / 2) {
+        this.presentation.pending = true;
+      } else if (this.presentation?.phase === 'bounce' && supported && this.velocity.y > 0) {
+        this.presentation = { phase: 'rise', height: this.position.y + this.velocity.y ** 2 / (4 * 45), pending: false };
+      } else if (this.presentation?.phase === 'rise' && this.velocity.y > 0 &&
+          this.position.y >= this.presentation.height) {
+        this.presentation.pending = true;
+      }
+
       if (supported) {
         this.velocity.x *= .85;
         this.velocity.z *= .85;
@@ -106,10 +131,11 @@ export class DeskMotion {
           this.velocity.set(0, 0, 0);
           this.sleeping = true;
           this.accumulator = 0;
+          this.presentation = null;
         }
       }
       changed = true;
-      if (this.sleeping) break;
+      if (this.sleeping || this.presentation?.pending) break;
     }
     return changed;
   }

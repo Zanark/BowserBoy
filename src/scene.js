@@ -583,7 +583,7 @@ export class HandheldScene {
     this.consoleMove = null;
     const motion = this.consoleMotions[move.system];
     if (cancelled || (activate && !move.moved)) motion.reset(move.origin);
-    else motion.drop(performance.now());
+    else motion.drop(performance.now(), { requirePaint: true });
     this.consolePoses[move.system].position.copy(motion.position);
     delete this.host.dataset.consolePlacement;
     if (move.pointerId !== undefined && this.canvas.hasPointerCapture(move.pointerId)) this.canvas.releasePointerCapture(move.pointerId);
@@ -640,7 +640,7 @@ export class HandheldScene {
       if (this.pearTablePosition) this.pearTablePosition.copy(move.origin);
       this.pear.resetLimbs();
     } else {
-      this.pearMotion.drop(performance.now());
+      this.pearMotion.drop(performance.now(), { requirePaint: true });
     }
     this.pear.setFaceLifted(!this.pearMotion.sleeping);
     this.updatePearContact();
@@ -1222,6 +1222,8 @@ export class HandheldScene {
     if (this.dsReflectionsDirty && !this.transition && !this.drag && !this.pinch && !this.pearMove && !this.consoleMove &&
         !consolesMoving && this.pearMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
+    this.pearMotion.acknowledgePaint();
+    for (const motion of Object.values(this.consoleMotions)) motion.acknowledgePaint();
     // Canvas light readbacks can drain the entire GPU queue. Wait without blocking
     // before sampling or submitting another room frame; native LCD copies stay live.
     this.fenceRoomPaint();

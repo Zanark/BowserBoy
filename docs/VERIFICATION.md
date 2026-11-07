@@ -9,6 +9,48 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Clearance recovery: local results are not publication
+
+Exact clearance source `85c0cc9ed8f9083868df77b01adb5e80c49435df`,
+[Pages42338001528](https://github.com/Zanark/BowserBoy/actions/runs/42338001528),
+finishes **failure:85passed/11failed**, build and12browser shards passing,
+seven failing; deployment skipped. All three new geometry cases pass hosted3.
+
+Instrumentation finds48physics steps complete an entire fall/rebound without
+one main-room render. Physical drops now retain their actual descending and
+first rising poses until the main renderer submits them, keeping unconsumed
+fixed-step time. This does not fabricate poses, change gravity or lower quality.
+Two regressions fail without the source fix and pass afterward;55units pass.
+Four affected verified-SwiftShader cases pass68.304s, including actual submitted
+Pear falling/rising/grounded poses, DS drop/exact return and phone movement.
+
+Per-page/per-mount native Frame reuse replaces detached power-cycle frames.
+Actual DS boot/buttons/physical stylus passes78.309s. A broader seven-case
+software gate passes six: GBA movement, isolated DS/GBA power cycling,
+held stylus, hinge, branding and controlled photometry. Quick taps fail the
+unchanged1500ms bound: the first predicate returns all correct native/copied
+marks after2696ms. Real homebrew-readiness and batched-readback experiments
+also fail and are rejected; the original quick-tap test remains unchanged.
+Neither timeout nor varying passes establishes wrong coordinates or a
+production responsiveness improvement. Software quick latency remains open.
+
+Reference shell lighting previously fixes DS/camera poses but leaves the
+movable Pear emitter dependent on clearance. Its root movesX15.3to18.810796.
+Actual deck blue mean30becomes37.75when only historical emitter world positions
+are restored; restoring the full historical Pear gives42.5. Every sample hits
+the real metallic deck. The controlled fixture now fixes original emitter
+positions while retaining legal body clearance, original RGB/luminance
+thresholds and unchanged production lights/materials. Its software case passes;
+this is reference isolation, not a production brightness improvement.
+
+The hosted dark-room monolith spends64.098s in synthetic GPU-budget checks
+after physical/UI work, leaving~15s for its next independent phase.
+Separate physical lamp/UI and GPU-fence/recovery/native-operation contracts;
+both pass verified SwiftShader80.393s total. Every original assertion and each
+120s deadline/retries0/full-resolution setting remains. Exact list audit finds
+**97unique cases assigned once across19unchanged shards**, no missing,
+duplicate or extra assignments. No current-source deployment is yet qualified.
+
 ### Mode-based model clearance
 
 Workstream93adds physical horizontal clearance before actual room paints.
@@ -74,7 +116,7 @@ are not qualified as newly published.
 
 ### Hosted recovery remains blocked
 
-Latest palette source `617e8d2`, Pages42334881724, finishes **failure**:
+Previous palette source `617e8d2`, Pages42334881724, finishes **failure**:
 build and15browser shards pass, four fail6/8/11/16;88cases pass/5fail.
 DS Inspect remains `moving` after15s; upside-down physical-pixel probing,
 complete quick taps and dark-room insertion exhaust120s. Pear descent lacks

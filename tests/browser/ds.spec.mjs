@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { demoReady, powerOn, denyScreenWakeLock } from './pixel-lab.mjs';
+import { demoReady, powerOn, denyScreenWakeLock, runtimeFrame } from './pixel-lab.mjs';
 
-const dsFrame = async page => (await page.locator('#ds-runtime-mount iframe').elementHandle()).contentFrame();
+const dsFrame = page => runtimeFrame(page, '#ds-runtime-mount');
 const stylusFits = (page, limitY = .98) => page.evaluate(async limit => {
   const { view } = await import('./src/app.js'), { Box3, Vector3 } = await import('three');
   const box = new Box3().setFromObject(view.ds.stylus);
@@ -1133,6 +1133,18 @@ test('DS shell retains bright blue-cyan in its reference lighting pose under war
     const tangent = Math.tan(view.camera.fov * Math.PI / 360);
     const distance = Math.max(12 / view.camera.aspect, 9.8 * view.height / (view.height - 180)) / (2 * tangent);
     view.camera.position.copy(view.lookAt).add(new Vector3(0, 0, distance));
+    view.dsReflectionsDirty = view.changed = true;
+  });
+  await expect.poll(() => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.transition === null && !view.dsReflectionsDirty;
+  })).toBe(true);
+  // This is a controlled lighting reference: clearance may park the movable
+  // companion farther away, but must not change its reference emitter positions.
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+    const displacement = new Vector3(15.3, 0, 7.3).sub(view.pear.root.position);
+    for (const light of view.pear.lights) light.position.add(displacement);
     view.dsReflectionsDirty = view.changed = true;
   });
   for (const lighting of ['warm', 'room']) {

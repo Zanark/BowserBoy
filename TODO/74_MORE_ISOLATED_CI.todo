@@ -30,8 +30,25 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Latest pushed clearance85c0cc9/Pages42338001528 finishesFAILURE: build and
+12browser shards pass,7fail;85cases pass/11fail, deployment skipped.
+All3clearance cases pass hosted3. Preserve this failed run and its boundaries.
+Follow-up verifies55units, actual DS native boot/buttons/stylus78.309s,
+four real-motion cases68.304s and six of seven broader software cases.
+Quick-tap native/copied marks are all correct but first predicate returns
+after2696ms, beyond unchanged1500ms. Readiness and batched-readback experiments
+also fail and are rejected; original quick-tap test remains unchanged.
+Physical lamp/UI and independent GPU-fence contracts now run separately:
+both pass verified SwiftShader80.393s total, each retaining120s/retries0.
+The original monolith spends64.098s in GPU simulation after earlier UI work,
+leaving~15s for its next independent phase. No assertion/deadline is removed.
+Exact audit verifies97unique cases assigned once across19unchanged shards:
+first2six each, remaining17five; no missing/duplicate/extra. Current source
+full hosted recovery and new publication remain unqualified.
+
+Initial clearance qualification:
 Mode-clearance follow-up retains all93original cases and adds3geometry
-regressions. Current96cases are assigned exactly once across unchanged
+regressions. Its96cases are assigned exactly once across unchanged
 19shards, no duplicates. New3cases pass Edge and verified SwiftShader,
 46.2s at1440x1100. Syntax,51units, build and whitespace pass. Initial
 affected17case gate13PASS/4FAIL is followed by four corrected interaction

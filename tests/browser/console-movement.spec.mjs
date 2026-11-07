@@ -1,22 +1,40 @@
 import { test, expect } from '@playwright/test';
 import { installRoomPaintFixture } from './pixel-lab.mjs';
 
-async function state(page, system) {
-  return page.evaluate(async system => {
+async function state(page, system, afterTablePaint = false) {
+  const sample = await page.evaluate(async ({ system, afterTablePaint }) => {
     const { view } = await import('./src/app.js');
     const { Vector3 } = await import('three');
-    const model = system === 'ds' ? view.ds : view.model;
-    const screen = system === 'ds' ? model.screens[1] : model.screen;
-    const point = screen.getWorldPosition(new Vector3()).project(view.camera);
-    const bounds = view.canvas.getBoundingClientRect();
-    return {
-      position: model.root.position.toArray(), rotation: model.root.quaternion.toArray(),
-      savedPosition: view.consolePoses[system].position.toArray(),
-      sleeping: view.consoleMotions[system].sleeping, moving: view.consoleMove?.system ?? null,
-      selected: view.console, mode: view.mode,
-      point: { x: bounds.left + (point.x + 1) * bounds.width / 2, y: bounds.top + (1 - point.y) * bounds.height / 2 },
+    const read = () => {
+      const model = system === 'ds' ? view.ds : view.model;
+      const screen = system === 'ds' ? model.screens[1] : model.screen;
+      const point = screen.getWorldPosition(new Vector3()).project(view.camera);
+      const bounds = view.canvas.getBoundingClientRect();
+      return {
+        position: model.root.position.toArray(), rotation: model.root.quaternion.toArray(),
+        savedPosition: view.consolePoses[system].position.toArray(),
+        sleeping: view.consoleMotions[system].sleeping, moving: view.consoleMove?.system ?? null,
+        selected: view.console, mode: view.mode,
+        point: { x: bounds.left + (point.x + 1) * bounds.width / 2, y: bounds.top + (1 - point.y) * bounds.height / 2 },
+      };
     };
-  }, system);
+    if (!afterTablePaint) return read();
+    window.consoleTablePaint = null;
+    const original = view.renderer.render;
+    view.renderer.render = function (...args) {
+      const result = original.apply(this, args);
+      if (args[0] === view.scene && args[1] === view.camera && view.mode === 'table' &&
+          !view.transition && view.consoleMotions[system].sleeping) {
+        window.consoleTablePaint = read();
+        view.renderer.render = original;
+      }
+      return result;
+    };
+    view.changed = true;
+  }, { system, afterTablePaint });
+  if (!afterTablePaint) return sample;
+  await expect.poll(() => page.evaluate(() => window.consoleTablePaint !== null)).toBe(true);
+  return page.evaluate(() => window.consoleTablePaint);
 }
 
 async function ready(page) {
@@ -122,7 +140,7 @@ for (const system of ['gba', 'ds']) {
     const home = await state(page, system);
     await page.mouse.move(home.point.x, home.point.y);
     await page.mouse.down();
-    await page.mouse.move(home.point.x - 75, home.point.y - 150, { steps: 10 });
+    await page.mouse.move(home.point.x - (system === 'gba' ? 35 : 75), home.point.y - 150, { steps: 10 });
     await expect.poll(async () => (await state(page, system)).moving).toBe(system);
     await expect.poll(async () => (await state(page, system)).position[1]).toBeGreaterThan(home.position[1] + 2);
     const lifted = await state(page, system);
@@ -137,7 +155,8 @@ for (const system of ['gba', 'ds']) {
     const released = await state(page, system);
     await expect.poll(async () => (await state(page, system)).position[1]).toBeLessThan(released.position[1] - .2);
     await expect.poll(async () => (await state(page, system)).sleeping).toBe(true);
-    const moved = await state(page, system);
+    // Physics can sleep before the next paint applies higher-priority clearance.
+    const moved = await state(page, system, true);
     expect(moved.rotation).toEqual(home.rotation);
     expect(moved.position[0]).not.toBe(home.position[0]);
     const other = system === 'gba' ? 'ds' : 'gba';
@@ -171,7 +190,7 @@ for (const system of ['gba', 'ds']) {
     expect((await state(page, other)).position).toEqual(otherHome.position);
     await page.locator('#consoles-open').click();
     await page.locator('#consoles-home').click();
-    expect((await state(page, system)).position).toEqual(home.position);
+    expect((await state(page, system, true)).position).toEqual(home.position);
     expect(errors).toEqual([]);
   });
 }
@@ -243,7 +262,7 @@ test.describe('console touch', () => {
       await expect.poll(async () => (await state(page, system)).sleeping).toBe(true);
       await page.locator('#consoles-open').tap();
       await page.locator('#consoles-home').tap();
-      expect((await state(page, system)).position).toEqual(home.position);
+      expect((await state(page, system, true)).position).toEqual(home.position);
       await page.keyboard.press('Escape');
       await keyboardMove(page, system);
       await page.keyboard.press('PageUp');

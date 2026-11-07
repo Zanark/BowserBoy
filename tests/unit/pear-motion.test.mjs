@@ -40,6 +40,54 @@ test('a lifted pear falls, bounces and settles instead of snapping onto the desk
   assert.deepEqual(motion.velocity.toArray(), [0, 0, 0]);
 });
 
+test('paint-aware drops retain falling and rising poses and pending physics until each is painted', () => {
+  const motion = new PearMotion(new Vector3(20, 10, -8));
+  motion.drop(200, { requirePaint: true });
+  motion.update(3, []);
+  assert.ok(motion.position.y > 0 && motion.position.y < 10);
+  assert.ok(motion.velocity.y < 0);
+  const falling = motion.position.clone(), pending = motion.accumulator;
+  assert.equal(motion.update(.25, []), false);
+  assert.ok(motion.position.equals(falling));
+  assert.ok(motion.accumulator > pending);
+  motion.acknowledgePaint();
+  motion.update(0, []);
+  assert.ok(motion.position.y > 0);
+  assert.ok(motion.velocity.y > 0);
+  const rising = motion.position.clone();
+  assert.equal(motion.update(0, []), false);
+  assert.ok(motion.position.equals(rising));
+  motion.acknowledgePaint();
+  motion.update(0, []);
+  assert.equal(motion.sleeping, true);
+  assert.equal(motion.position.y, 0);
+  assert.equal(motion.accumulator, 0);
+});
+
+test('paint-aware drops respect raised supports and catching or resetting clears pending presentation', () => {
+  const motion = new DeskMotion(new Vector3(0, 10, 0), {
+    bounds: new Box3(new Vector3(-1, -.5, -1), new Vector3(1, 1, 1)),
+    workspace: new Box3(new Vector3(-10, .5, -10), new Vector3(10, 25, 10)),
+  });
+  const obstacles = [new Box3(new Vector3(-2, 0, -2), new Vector3(2, 8, 2))];
+  motion.drop(200, { requirePaint: true });
+  motion.update(3, obstacles);
+  assert.ok(motion.position.y > 8.5 && motion.position.y < 10);
+  assert.ok(motion.velocity.y < 0);
+  motion.pickUp();
+  const held = motion.position.clone();
+  assert.equal(motion.update(3, obstacles), false);
+  assert.ok(motion.position.equals(held));
+  motion.drop(400);
+  motion.update(3, obstacles);
+  assert.equal(motion.sleeping, true);
+  assert.equal(motion.position.y, 8.5);
+  motion.reset(new Vector3(0, 10, 0));
+  motion.update(3, obstacles);
+  assert.equal(motion.sleeping, true);
+  assert.equal(motion.position.y, 8.5);
+});
+
 test('three-dimensional release inertia is bounded, and catching or cancelling removes stale motion', () => {
   const position = new Vector3(20, 0, -8), motion = new PearMotion(position);
   motion.pickUp();

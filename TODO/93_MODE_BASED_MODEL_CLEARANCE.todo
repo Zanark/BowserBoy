@@ -27,6 +27,38 @@ All existing native/pixel deadlines, retries0, full-resolution rendering,
 materials, lighting and deployment gates remain unchanged.
 
 Completion evidence:
+Exact clearance source85c0cc9, automatic Pages42338001528, finishesFAILURE:
+build/12browser shards pass,7fail;85cases pass/11fail; deployment skipped.
+All3new clearance cases pass hosted shard3. This does not qualify publication.
+
+Follow-up keeps actual descending and first-rebound physical poses until
+the main room render submits each, retaining unconsumed fixed-step time.
+Before the fix,48physics steps cover fall/rebound without any main-room paint.
+Two focused unit regressions fail without the fix and pass with it;55units
+pass. Four affected verified-SwiftShader cases pass68.304s, including actual
+submitted Pear fall/rise/final poses, DS drop/return and phone movement.
+Three hosted movement fixtures pass separately after using a lamp-clear
+GBA wheel gesture and awaiting completed clearance before exact saved poses.
+
+Seven-case software follow-up passes6/fails1: GBA move, isolated DS/GBA
+power cycling, held stylus, hinge, branding and controlled photometry pass.
+The quick-tap1500ms probe returns all correct native/copied marks after2696ms
+and times out; input coordinates are not shown wrong. Actual demo readiness
+and batched readback experiments do not repair that gate and are rejected.
+The original test remains unchanged; software quick latency is unresolved.
+Clearance moves PearX15.3to18.810796; restoring only historical emitter world
+positions raises reference deck blue mean30to37.75. Controlled photometry
+now anchors those original emitters while retaining legal body clearance,
+all original RGB thresholds and unchanged production lighting/materials.
+
+Hosted dark-room trace spends64.098s on GPU simulations after physical/UI
+phases and exhausts120s in the next phase. Isolate independent physical/UI
+and GPU-fence cases; both pass verified SwiftShader80.393s total, retaining
+every assertion and each original120s/retries0/full-resolution contract.
+All97current cases are assigned exactly once across unchanged19shards,
+zero missing/duplicate/extra. New source hosted/public qualification pending.
+
+Initial clearance qualification:
 Three new actual-paint geometry cases pass Edge16.6s and explicitly verified
 ANGLE SwiftShader1440x1100,46.2s. They include sleeping/rotating/hinged
 clearance, exact table/saved poses and explicit Pear movement/reset overriding
@@ -43,6 +75,12 @@ No new publication or owner visual acceptance is claimed. Historical
 617e8d2/Pages42334881724 remains failed88PASS/5FAIL with deployment skipped.
 
 Completion log:
+2026-11-07:85c0cc9 is committed/pushed as Zanark and monitored to85PASS/
+11FAIL with deployment skipped. Preserve actual hosted failures. Follow-up
+fixes invisible physical motion rather than substituting RAF-only samples;
+qualifies native Frame reuse and controlled-light reference independently.
+Independent dark-room contract separation is97cases, not removed coverage.
+Actual issue/Project and normal exact-source deployment remain open.
 2026-11-07: Owner supplies clipping screenshot and explicit mode-dependent
 priorities. Existing Pear drag rejection gives consoles/props precedence
 on the table; sleeping physics cannot react to incoming rotated consoles.

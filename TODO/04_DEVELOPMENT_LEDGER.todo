@@ -14,6 +14,29 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Clearance hosted failure and actual-paint recovery:
+  Zanark source85c0cc9/automatic Pages42338001528 finishes85PASS/11FAIL;
+  build/12browser shards pass,7fail, deploy skipped. Three new clearance
+  cases pass hosted3. Trace/instrumentation proves48physics steps complete
+  a Pear fall/rebound without any main-room render. Opt-in physical drops
+  retain actual descending and first rising poses until renderer submission,
+  preserving unconsumed fixed-step elapsed time and original quality.
+  Two regressions fail before source fix, pass afterward;55units pass.
+  Four verified-SwiftShader movement cases pass68.304s, including actual
+  submitted fall/rise/final Pear poses. Frame reuse preserves detached-frame
+  replacement; native DS boot/buttons/physical stylus passes78.309s.
+  Broader seven-case gate is6PASS/1FAIL: quick-tap native/copied samples are
+  all correct but first predicate returns2696ms beyond unchanged1500ms.
+  Actual-readiness and batched-readback experiments also fail, are rejected;
+  original quick-tap test/deadline remains unchanged and latency unresolved.
+  Reference photometry fails28.75blue because clearance moves the movable
+  Pear emitter. Measured historical emitter-only positions give37.75blue;
+  anchor original reference emitters without moving legal Pear body or
+  changing production materials/light intensities/RGB thresholds. Passes.
+  Dark-room trace spends64.098s on synthetic GPU checks after physical/UI
+  phases. Separate independent contracts with every assertion and original
+ 120s/retries0 retained; both pass software80.393s. Audit97unique cases
+  assigned exactly once across19unchanged shards. Hosted release still open.
 - 2026-11-07 / Mode-based physical clearance:
   Owner's screenshot shows the inspected DS intersecting pear-boy. Existing
   Pear drag checks enforce the opposite table priority, while sleeping

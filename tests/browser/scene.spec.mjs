@@ -239,6 +239,13 @@ test('dark room has a working physical lamp, actual light falloff and a narrow a
     await page.locator('#put-down').click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
   }
+});
+
+test('room GPU fences preserve sharpness, recovery boundaries and native-operation gating', async ({ page }) => {
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.goto('./');
+  await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  await page.evaluate(async () => (await import('./src/app.js')).view.setPearEnabled(false));
   await expect.poll(() => page.evaluate(async () => (await import('./src/app.js')).view.screenIllumination.settled)).toBe(true);
   await installRoomPaintFixture(page);
   const budgets = await page.evaluate(async () => {

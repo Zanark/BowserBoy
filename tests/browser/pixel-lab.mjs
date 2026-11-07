@@ -58,8 +58,22 @@ export const powerOn = async (page) => {
   await page.locator('#hardware-power').click();
 };
 
+const runtimeFrames = new WeakMap();
+
+export const runtimeFrame = async (page, mount = '#runtime-mount') => {
+  let frames = runtimeFrames.get(page);
+  if (!frames) { frames = new Map(); runtimeFrames.set(page, frames); }
+  const cached = frames.get(mount);
+  // Repeated frame lookups add GPU-blocked protocol roundtrips to every pixel probe.
+  if (cached && !cached.isDetached()) return cached;
+  const frame = await (await page.locator(`${mount} iframe`).elementHandle()).contentFrame();
+  if (!frame) throw new Error('The emulator iframe is not attached.');
+  frames.set(mount, frame);
+  return frame;
+};
+
 export const nativeFrame = async (page) => {
-  const frame = await (await page.locator('#runtime-mount iframe').elementHandle()).contentFrame();
+  const frame = await runtimeFrame(page);
   return frame.evaluate(async () => {
   const png = await window.EJS_emulator.gameManager.screenshot();
   const bitmap = await createImageBitmap(new Blob([png], { type: 'image/png' }));
