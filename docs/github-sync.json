@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "95",
-      "file": "TODO/95_DS_REAR_MARKINGS.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/94",
-      "number": 94,
-      "nodeId": "I_kwDOVhqp0s8AAAABdOMQbw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGvh7w",
+      "id": "96",
+      "file": "TODO/96_DS_CONTROL_CLEARANCE_AND_KEYS.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/95",
+      "number": 95,
+      "nodeId": "I_kwDOVhqp0s8AAAABdOXMCw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGvs78",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "ad4f4b9122630280bff0edd9483cedb117cdcf268876c7e3d94719e9bc53925f"
+      "bodySha256": "6dea395b5c60f231f2a6770ab146149291d3efd07361f26881263c25866abced"
     }
   ]
 }

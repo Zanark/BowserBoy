@@ -9,6 +9,30 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### DS button clearance and A/S face keys: local qualification
+
+Shift the complete ABXY diamond outward by0.2model units, retaining the cap
+size, diamond spacing, screen dimensions and projected physical anchors.
+The expanded complete placement/branding case now checks actual geometry
+bounds, including bevels: every cap and socket clears the touchscreen border
+by more than0.05units and the shell edge by more than0.1units; the D-pad
+also clears the border. The actual front capture was visually reviewed.
+No new render work, material change or per-frame correction is introduced.
+
+DS A/S now mean Y/X; Q/W retain L/R without collisions. A new complete native
+keyboard case focuses both the real scene canvas and the real runtime canvas.
+It observes forwarded original `simulateInput` calls, checking distinct native
+button1/9/10/11 down/up transitions, not a stubbed success. The iframe no longer
+overlays GBA preferences onto fixed DS bindings. GBA defaults/remapping remain.
+
+Both expanded geometry and new native-key cases pass Edge together40.6s and
+explicit full-size SwiftShader together1.2m, original deadlines and retries0.
+The existing real GBA remapping/sound/pointer-release case passes Edge22.3s.
+Syntax,57unit tests, build, browser syntax and whitespace pass. The suite now
+contains98cases; existing19shards and release gates are retained. The frozen
+published PDF is unchanged. Current-source hosted qualification, publication
+and owner acceptance remain separate and pending.
+
 ### DS rear markings: local qualification, publication pending
 
 The two actual outer-lid cutouts and inset floors are centered together.
@@ -30,6 +54,16 @@ corrected selector executed once per backend, not a failed-case retry.
 Syntax,56units, build, browser syntax and whitespace pass. Existing97cases/
 19shards remain unchanged. The frozen published PDF is unchanged. Current
 source publication and owner acceptance remain open.
+
+Exact `6f5083a56a55d9ba526f8952811d4cfc8b44d7d7`
+[Pages42346966278](https://github.com/Zanark/BowserBoy/actions/runs/42346966278)
+finishes **failure:88passed/9failed**, deploy skipped. The expanded rear
+placement/branding case passes hosted. Seven DS cases, the GBA cold-boot
+case's final native upload readiness, and the scene CRT case's final reload
+readiness fail. The complete unchanged GBA case subsequently passes locally
+once on explicit SwiftShader1.1m; hosted cause/remedy remains unproved.
+Actual issue94's [outcome receipt](https://github.com/Zanark/BowserBoy/issues/94#issuecomment-6703473580)
+was independently verified. This is not a successful publication.
 
 ### Pre-cartridge CRT: local qualification, publication pending
 

@@ -169,6 +169,10 @@ The front-left power cap belongs to the physical control map, not the emulator's
 button share `togglePower`, checkpoint/error handling and cold-boot semantics.
 It remains available while powered off; an empty slot opens tools with guidance.
 Projected targets reject back-facing/offscreen caps and lid occlusion.
+The ABXY diamond is offset outward as a unit so both caps and recessed sockets
+clear the actual beveled touchscreen border without leaving the control deck.
+Targets still project from their physical cap anchors; no independent hitbox
+offset or per-frame collision correction is added. The D-pad also clears the border.
 Touch raycasts require the lower LCD to be the first actual DS surface,
 preventing stylus input through a folded lid or the rear shell.
 
@@ -875,6 +879,10 @@ off for recovery and cannot be undone accidentally by a sound preference update.
 originally pressed, ignores repeated keydowns, and releases on keyup/blur even
 if bindings change. The child intercepts native keyboard handling so old keys
 cannot bypass a remap through upstream controls. Existing gamepad mappings remain.
+DS uses its fixed `DS_CONTROLS` codes in both the scene host and runtime iframe:
+A/S send Y/X, Q/W send L/R. DS shoulder overrides clone rather than mutate the
+shared GBA control entries. The iframe applies `preferences.controls` only to
+GBA; otherwise inherited A/S shoulder bindings would shadow the DS face keys.
 
 Both keyboard paths add a default `fastForward: Space` action after the GBA
 bindings, preserving an explicit existing Space remap's priority. It uses the

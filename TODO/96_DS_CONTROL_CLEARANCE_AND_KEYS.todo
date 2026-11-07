@@ -1,0 +1,53 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/95
+Milestone: Clear touchscreen controls and consistent DS face-key bindings.
+Dependencies: 79 DS model/input; 74 complete hosted qualification for publication.
+Purpose: Stop the physical DS controls clipping into the touchscreen bezel
+and implement the owner's explicit keyboard A=Y and S=X request.
+
+Tasks:
+- [x] Move the complete face-button diamond clear without shrinking the screen.
+- [x] Verify actual caps/sockets, shell-edge clearance and the D-pad.
+- [x] Bind DS A/S to Y/X and retain shoulders on Q/W without changing GBA.
+- [x] Prevent inherited GBA keys overriding fixed DS keys in the runtime.
+- [x] Qualify real native down/up transitions from scene and runtime focus.
+- [x] Update directly affected help, guide, architecture and local evidence.
+- [x] Synchronize actual GitHub issue and Project membership/status/backlink.
+- [ ] Commit/push as Zanark and monitor the exact-source Pages release gate.
+
+Acceptance criteria:
+Every DS face cap and recessed socket clears the actual beveled touchscreen
+border and stays inside the deck. The D-pad also clears the border. Preserve
+cap sizes, diamond spacing, LCD size, materials, lights, projected anchors
+and rendering quality. In both scene and runtime keyboard focus, A and S
+deliver only native DS Y and X press/release; Q and W retain DS L and R.
+GBA keyboard defaults and saved remapping remain unchanged. Preserve all
+native assertions, original deadlines, retries0 and the complete deployment
+gate. Separate implementation, local verification, acceptance and publication.
+
+Completion evidence:
+The ABXY cluster shifts outward0.2model units. Expanded original complete
+placement/branding regression checks all8caps/socket bounds against the
+beveled bezel (>0.05gap) and deck edge (>0.1gap), plus D-pad clearance.
+Actual front capture visually reviewed. New complete native keyboard case
+forwards original simulateInput while observing exact button1/9/10/11
+down/up transitions from both real canvas focus contexts. Two cases pass
+Edge40.6s together and explicit full-size SwiftShader1.2m together, unchanged
+deadlines/retries0. Existing native GBA remapping/sound/release case passes
+Edge22.3s. Syntax,57units, build, browser syntax and whitespace pass.
+98browser cases, existing19shards; frozen PDF unchanged. Actual issue95 is
+OPEN with Project1 In progress; body/state/membership/status/backlink read
+back after scoped synchronization as verified Zanark. Current-source hosted
+qualification and publication pending.
+
+Completion log:
+2026-11-07: Owner's close-up shows the Y socket intruding into the touchscreen
+border and explicitly requests keyboard A=Y, S=X. Move the whole diamond,
+not only its label or projected hit target. Retain all DS controls by moving
+the displaced shoulders to Q/W; do not mutate shared GBA control definitions.
+2026-11-07: Inspect both keyboard owners. The shared runtime overlays
+preferences.controls after DS_CONTROLS, which would shadow the new DS face
+keys with GBA shoulders when the iframe has focus. Restrict that preference
+overlay to GBA. Native scene/runtime and unchanged GBA cases pass locally.
+2026-11-07: Actual issue95 and Project item created as Zanark; managed
+body/state/membership/status/backlink read back. No publication claimed.

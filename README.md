@@ -73,7 +73,7 @@ From the repository folder, run `npm run dev`, then open
 **Try Twin Lab** or an authorized uncompressed `.nds` file. The game card
 slides into the separate DS, and both LCDs display live output.
 
-Use arrows for the D-pad; **Z/X = A/B**, **C/V = X/Y**, **A/S = L/R**,
+Use arrows for the D-pad; **Z/X = A/B**, **A/S = Y/X**, **Q/W = L/R**,
 **Enter = Start**, **left Shift = Select**. Press the physical controls or
 click/drag the lower LCD for touchscreen input at its current orientation
 and zoom. Hover the side **stylus** to make it glow, then click to pick it up:
@@ -81,6 +81,12 @@ its tip follows the pointer while its back points toward you. **Escape**,
 right-click or **Put back** docks it; otherwise Escape opens DS tools.
 Gameplay hints stay on one bottom-left line instead of across the LCD.
 Both DS screens cast soft, screen-colored light onto their surroundings.
+
+![DS face-button sockets clear the touchscreen bezel and stay inside the shell](docs/images/ds-control-clearance.png)
+
+*The entire button diamond sits clear of the actual touchscreen bezel, including
+the recessed Y socket. D-pad clearance is preserved. Actual local Inspect capture;
+DS A/S now send Y/X, Q/W retain the shoulders, and GBA bindings are unchanged.*
 Switching GBA/DS pauses the inactive core rather than running both games.
 The visible front-left **Power** button saves before powering off; press
 it again to cold-boot the retained cartridge. Power-on plays an original

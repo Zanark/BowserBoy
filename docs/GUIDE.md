@@ -169,11 +169,12 @@ every game will. No commercial games are included or used as test fixtures.
 |---|---|
 | D-pad | Arrow keys |
 | A / B | Z / X |
-| X / Y | C / V |
-| L / R | A / S |
+| Y / X | A / S |
+| L / R | Q / W |
 | Start / Select | Enter / left Shift |
 | Touchscreen | Click or touch and drag the lower physical LCD |
 
+The face-button diamond and its recessed sockets clear the touchscreen bezel.
 Projected buttons follow the physical DS caps. Pointer release, cancellation
 and focus loss release inputs. DS keyboard mappings are fixed in this
 prototype; GBA remapping does not change them. Native gamepad behavior is not

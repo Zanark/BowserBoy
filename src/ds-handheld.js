@@ -150,7 +150,7 @@ export function createDsHandheld() {
     if (title) text(button, title, radius * 1.22, 0, 0, .052, '#EAF5FF', radius * 1.06);
     return button;
   };
-  for (const [id, x, y] of [['x', 3.1, -1.32], ['a', 3.64, -1.87], ['b', 3.1, -2.41], ['y', 2.55, -1.87]]) {
+  for (const [id, x, y] of [['x', 3.3, -1.32], ['a', 3.84, -1.87], ['b', 3.3, -2.41], ['y', 2.75, -1.87]]) {
     cap(id, x, y, .195, buttonPlastic);
   }
   const dpad = new THREE.Group();

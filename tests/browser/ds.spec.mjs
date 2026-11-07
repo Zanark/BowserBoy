@@ -150,6 +150,31 @@ test('separate DS boots original homebrew, splits both LCDs and accepts buttons 
   expect(errors).toEqual([]);
 });
 
+test('DS A/S face keys and Q/W shoulders reach native buttons from the scene and runtime without GBA overrides', async ({ page }) => {
+  const errors = await bootDsDemo(page);
+  const frame = await dsFrame(page);
+  await frame.evaluate(() => {
+    const manager = window.EJS_emulator.gameManager;
+    const simulate = manager.simulateInput.bind(manager);
+    window.dsKeyTransitions = [];
+    manager.simulateInput = (...args) => {
+      window.dsKeyTransitions.push(args);
+      return simulate(...args);
+    };
+  });
+  for (const target of [page.locator('#scene-canvas'), frame.locator('canvas').first()]) {
+    await target.focus();
+    for (const [key, button] of [['KeyA', 1], ['KeyS', 9], ['KeyQ', 10], ['KeyW', 11]]) {
+      await frame.evaluate(() => { window.dsKeyTransitions = []; });
+      await page.keyboard.down(key);
+      await expect.poll(() => frame.evaluate(() => window.dsKeyTransitions)).toEqual([[0, button, 1]]);
+      await page.keyboard.up(key);
+      await expect.poll(() => frame.evaluate(() => window.dsKeyTransitions)).toEqual([[0, button, 1], [0, button, 0]]);
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
 test('DS native backups restore the saved framebuffer after further input', async ({ page }, testInfo) => {
   const errors = await bootDsDemo(page);
   const savedLeft = (await framePixels(page)).marker.left;
@@ -1073,6 +1098,24 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
     const battery = view.ds.root.getObjectByName('Underside right battery cover');
     battery.geometry.computeBoundingBox();
     const batteryBounds = battery.geometry.boundingBox.clone().applyMatrix4(battery.matrix);
+    const baseBounds = name => {
+      const object = view.ds.root.getObjectByName(name), bounds = new Box3();
+      object.traverse(mesh => {
+        if (!mesh.geometry) return;
+        mesh.geometry.computeBoundingBox();
+        const box = mesh.geometry.boundingBox;
+        for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
+          bounds.expandByPoint(view.ds.root.worldToLocal(mesh.localToWorld(new Vector3(x, y, z))));
+        }
+      });
+      return bounds;
+    };
+    const bezel = baseBounds('Touch fine cyan bezel edge');
+    const shell = baseBounds('Metallic blue control deck');
+    const faceButtons = ['X', 'A', 'B', 'Y'].flatMap(label => ['button', 'recessed socket'].map(part => {
+      const box = baseBounds(`${label} ${part}`);
+      return { name: `${label} ${part}`, screenGap: box.min.x - bezel.max.x, shellGap: shell.max.x - box.max.x };
+    }));
     const stylus = new Box3().setFromObject(view.ds.stylus);
     const deck = new Box3().setFromObject(view.ds.root.getObjectByName('Metallic blue control deck'));
     view.renderer.render(view.scene, view.camera);
@@ -1088,6 +1131,7 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
       underside: hit(view.ds.root, [-1.65, -2.43, -1], [0, 0, 1]),
       emblemOnBase: emblem.parent === view.ds.root,
       batteryGap: batteryBounds.min.x - emblemBounds.max.x,
+      faceButtons, dpadGap: bezel.min.x - baseBounds('Electric blue cross D-pad').max.x,
       dockGap: stylus.min.x - deck.max.x, withinBase: stylus.min.y > deck.min.y && stylus.max.y < deck.max.y, cyan };
   });
   expect(surfaces.front).not.toContain('emblem');
@@ -1096,6 +1140,11 @@ test('DS placement clears props and pickup, inspection repaints live, and consol
   expect(surfaces.underside).toBe('Supplied transparent DS underside emblem');
   expect(surfaces.emblemOnBase, 'Underside branding must follow the lower body, not the hinge').toBe(true);
   expect(surfaces.batteryGap, 'The underside emblem must not overlap the battery cover').toBeGreaterThan(0);
+  for (const button of surfaces.faceButtons) {
+    expect(button.screenGap, `${button.name} must clear the actual beveled touchscreen bezel`).toBeGreaterThan(.05);
+    expect(button.shellGap, `${button.name} must remain inside the control deck`).toBeGreaterThan(.1);
+  }
+  expect(surfaces.dpadGap, 'The D-pad must also clear the touchscreen bezel').toBeGreaterThan(.05);
   expect(surfaces.dockGap).toBeLessThan(.15);
   expect(surfaces.withinBase).toBe(true);
   for (const [red, green, blue] of surfaces.cyan) {

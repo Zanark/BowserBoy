@@ -95,10 +95,16 @@ BowserBOY workstreams
 93_MODE_BASED_MODEL_CLEARANCE.todo - IN_PROGRESS: actual spatial clearance; consoles lead in focus, pear-boy then props then consoles on the table.
 94_PRE_CARTRIDGE_CRT.todo - IN_PROGRESS: cached built-in CRT pixels; native video replaces the effect without stacking.
 95_DS_REAR_MARKINGS.todo - IN_PROGRESS: centered actual lid recesses and lower-body underside emblem, locally qualified.
+96_DS_CONTROL_CLEARANCE_AND_KEYS.todo - IN_PROGRESS: caps/sockets clear the touchscreen; DS A/S=Y/X, Q/W=L/R; local native scene/runtime and GBA regression pass.
 
 Current pending work
 --------------------
--95: Actual-model rear rays and full placement/branding regression pass
+-96: Expanded actual geometry and new native keyboard cases pass Edge40.6s/
+  explicit SwiftShader1.2m; GBA remapping passes22.3s.57units pass,98browser
+  cases/19shards retained. Actual front capture reviewed. Publication pending.
+-95: Exact6f5083a/Pages42346966278 fails88PASS/9FAIL, deploy skipped.
+  Expanded rear placement case passes hosted; actual issue94 receipt verified.
+  Actual-model rear rays and full placement/branding regression pass
   Edge24.5s and explicit SwiftShader48.1s. Reviewed real rear capture;
   unchanged artwork is clear of the battery cover. Publication pending.
 -94: Exact06e9c82/Pages42345206094 finishes87PASS/10FAIL, deploy skipped.

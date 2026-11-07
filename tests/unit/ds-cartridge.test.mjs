@@ -1,8 +1,28 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { identifyDsRom, dsScreenRegions, dsTouchFromUv, encodeDsBackup, decodeDsBackup } from '../../src/ds-cartridge.js';
+import { DS_CONTROLS, identifyDsRom, dsScreenRegions, dsTouchFromUv, encodeDsBackup, decodeDsBackup } from '../../src/ds-cartridge.js';
+import { bindKeyboard } from '../../src/keyboard.js';
+import { defaultPreferences } from '../../src/preferences.js';
 import { createDsDemoRom } from '../../scripts/demo-ds-rom.mjs';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
+
+test('DS face and shoulder keys dispatch distinct press/release actions without changing GBA bindings', () => {
+  const target = new EventTarget(), inputs = [];
+  bindKeyboard(target, {
+    enabled: () => true,
+    getBindings: () => Object.fromEntries(DS_CONTROLS.map(({ id, code }) => [id, code])),
+    onInput: (...args) => inputs.push(args),
+    onMenu: () => false,
+  });
+  for (const [code, action] of [['KeyA', 'y'], ['KeyS', 'x'], ['KeyQ', 'l'], ['KeyW', 'r']]) {
+    for (const type of ['keydown', 'keyup']) {
+      target.dispatchEvent(Object.assign(new Event(type, { cancelable: true }), { code }));
+    }
+    assert.deepEqual(inputs.splice(0), [[action, true, code], [action, false, code]]);
+  }
+  assert.equal(defaultPreferences().controls.l, 'KeyA');
+  assert.equal(defaultPreferences().controls.r, 'KeyS');
+});
 
 test('DS identity survives rename, while rejecting GBA, DSi and truncated CPU ranges', async () => {
   const bytes = createDsDemoRom();

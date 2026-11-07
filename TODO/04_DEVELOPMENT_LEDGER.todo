@@ -14,6 +14,23 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / DS control clearance and A/S face keys:
+  Owner's close-up identifies the Y socket overlapping the touchscreen
+  border. Move the whole diamond outward0.2units, preserving cap sizes,
+  LCDs and anchor projection. Actual caps/sockets clear beveled bezel
+  >0.05and deck edge>0.1; D-pad also clears. DS A/S now send Y/X;
+  displaced shoulders remain on Q/W. Clone shared shoulder definitions,
+  leaving GBA unchanged. Runtime GBA-preference overlay would shadow
+  fixed DS keys under iframe focus: restrict it to GBA. New native case
+  forwards and observes exact native1/9/10/11down/up calls under both
+  scene and runtime focus. Two DS cases pass Edge40.6s/software1.2m;
+  existing native GBA remapping/sound/release case passes22.3s. Syntax/
+  57units/build/browser syntax/whitespace pass;98cases/19shards retained.
+  Actual front capture reviewed and captioned; frozen PDF unchanged.
+  Prior6f5083a/Pages42346966278 fails88PASS/9FAIL, deployment skipped:
+  expanded rear case passes hosted, seven DS and final GBA/scene readiness
+  failures remain. Exact issue94 outcome receipt verified. Current-source
+  publication and owner acceptance remain pending.
 - 2026-11-07 / Centered DS lid recesses and underside branding:
   Owner's rear screenshots reject offset paired squares and the colorful
   logo on the upper lid. Center both extruded cutouts and inset floors;

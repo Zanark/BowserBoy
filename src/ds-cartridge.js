@@ -5,9 +5,10 @@ export const DS_RUNTIME = 'emulatorjs-4.2.3-desmume';
 export const DS_MAX_ROM_BYTES = 512 * 1024 * 1024;
 export const DS_MAX_STATE_BYTES = 64 * 1024 * 1024;
 export const DS_CONTROLS = [
-  ...CONTROLS,
-  { id: 'x', label: 'X', button: 9, code: 'KeyC', gamepad: 'BUTTON_4' },
-  { id: 'y', label: 'Y', button: 1, code: 'KeyV', gamepad: 'BUTTON_3' },
+  ...CONTROLS.map(control => control.id === 'l' ? { ...control, code: 'KeyQ' }
+    : control.id === 'r' ? { ...control, code: 'KeyW' } : control),
+  { id: 'x', label: 'X', button: 9, code: 'KeyS', gamepad: 'BUTTON_4' },
+  { id: 'y', label: 'Y', button: 1, code: 'KeyA', gamepad: 'BUTTON_3' },
 ];
 export const DS_OPTIONS = Object.freeze({
   desmume_screens_layout: 'top/bottom',

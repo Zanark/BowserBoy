@@ -60,7 +60,8 @@ function input(action, pressed, source) {
 
 const keyboard = bindKeyboard(window, {
   enabled: () => started && inputEnabled && !settingsOpen,
-  getBindings: () => ({ ...Object.fromEntries(controls.map(({ id, code }) => [id, code])), ...preferences.controls, fastForward: 'Space' }),
+  getBindings: () => ({ ...Object.fromEntries(controls.map(({ id, code }) => [id, code])),
+    ...(system === 'gba' ? preferences.controls : {}), fastForward: 'Space' }),
   onInput: (action, pressed, code) => input(action, pressed, `player-key:${code}`),
   onMenu: () => { send(settingsOpen ? 'settings-close' : 'tools'); return true; },
   blockUnmapped: true,
