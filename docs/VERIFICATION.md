@@ -9,7 +9,7 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
-### Untouched-opening GIFs public; fullscreen fixture qualification pending
+### Untouched-opening GIFs published and deployed
 
 Zanark `c3b211eb55dd8d1908e4895b2a11a8c624703970` publishes all26fresh
 scene GIFs. The actual GitHub README renders all26; every public branch GIF
@@ -24,8 +24,17 @@ fullscreen-return trace completes the changed LCD read just after the original
 120s deadline. A single bounded fixture attempt disables unrelated companion
 lamps, retaining both fullscreen exit paths and every original assertion,
 viewport, resolution and deadline. It passes locally in30.8s without retry;
-hosted qualification remains pending. If the exact case fails again, follow
-the owner's explicit parking policy rather than making repeated repairs.
+hosted qualification subsequently succeeds in
+[Pages42389431053](https://github.com/Zanark/BowserBoy/actions/runs/42389431053)
+for exact Zanark `387537b602f44a5bc85d10ee0196d0ccb099e968`:
+**119 declared / 98 passed / 21 skipped / 0 failed / 0 unrun**.
+All19browser shards, build and deployment succeed. The exact fullscreen
+case passes without another skip; no repeated repair was required.
+Actual deployed runtime/entry/demo bytes match all48expected files for this
+revision. The unchanged strict49-check verifier still exits1 for its sole
+build-only`.nojekyll`404; this is not described as49passing checks.
+The21existing parked scenarios remain coverage debt. Technical publication
+does not establish the owner's aesthetic acceptance.
 
 ### Wider Pear gaze and bounded input-test recovery
 

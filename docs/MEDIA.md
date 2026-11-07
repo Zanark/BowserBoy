@@ -116,7 +116,7 @@ python scripts\render-readme.py --capture "$P\openings\encoding.json" --ffmpeg $
 The six reproduction scripts contain no personal absolute paths, private
 hashes or captured receipts. Recorder syntax, Python compilation and focused
 mock encoding tests pass. Temporary encoder tooling is removed and capture
-browsers are closed. Exact publication qualification remains in progress under
+browsers are closed. Exact publication qualification is complete under
 [workstream120](../TODO/120_UNTOUCHED_INTRO_README_MEDIA.todo).
 Zanark `c3b211eb55dd8d1908e4895b2a11a8c624703970` is public: actual GitHub
 rendering contains all26scene GIFs, and all26public branch GIFs return200 with
@@ -124,6 +124,14 @@ exact committed bytes. Its Pages run42388336737fails one unchanged fullscreen
 test and skips deployment; the bounded fixture qualification is tracked in
 [Verification](VERIFICATION.md). Public media delivery is not a successful
 exact-revision Pages deployment.
+The subsequent bounded fixture recovery
+`387537b602f44a5bc85d10ee0196d0ccb099e968` deploys successfully through
+[Pages42389431053](https://github.com/Zanark/BowserBoy/actions/runs/42389431053):
+119declared/98passed/21existing skips/0failed/0unrun. All19browser shards,
+build and deploy pass, including the exact fullscreen case without another
+skip. Actual deployed runtime/entry/demo bytes match48expected files; the
+strict verifier retains its existing build-only`.nojekyll`404exception.
+All26GIFs are publicly byte-verified; no further capture/review is pending.
 
 ### Earlier fresh GBA, DS and all lights, 2026-11-07 (superseded footage)
 

@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/119
 Milestone: Untouched game openings throughout the visual README.
 Dependencies: 117, 119.
@@ -12,7 +12,7 @@ Tasks:
 - [x] Newly record every scene GIF, including desk/lamp/movement sections.
 - [x] Document recorded-LCD replay versus live scene and native-input evidence.
 - [x] Review encoded openings and all scene GIFs; preserve approved artwork.
-- [ ] Commit/push as Zanark, verify public GIFs and monitor exact deployment.
+- [x] Commit/push as Zanark, verify public GIFs and monitor exact deployment.
 
 Acceptance criteria:
 The GBA source is the owner's selected Celia's GAME; the DS source is the
@@ -53,8 +53,16 @@ shows the second exit's changed LCD hash completing just after the120s test
 deadline, not a confirmed stuck LCD. One bounded test-only attempt switches
 off unrelated companion lamps, retaining both exits, original resolution,
 assertions and deadlines. Exact local case passes30.8s, no retry; hosted
-qualification pending.48public runtime/entry/demo byte checks still match;
+qualification now succeeds as recorded below.48public runtime/entry/demo byte checks still match;
 strict49-check verifier exits1 for the recorded build-only.nojekyll404.
+Zanark 387537b602f44a5bc85d10ee0196d0ccb099e968 deploys successfully in
+Pages42389431053:119declared/98PASS/21SKIP/0FAIL/0UNRUN, all19browser
+shards/build/deploy successful. Exact fullscreen case passes hosted, no new
+skip. Independent actual public source verification matches48runtime/entry/
+demo files for this SHA; strict verifier still exits1 solely for the existing
+build-only.nojekyll404.21existing parked cases remain explicit coverage debt.
+All26public GIF bytes and actual README rendering already independently pass.
+Technical delivery is complete; owner aesthetic approval is not inferred.
 
 Completion log:
 2026-11-07: Owner specifies untouched30/90second openings,2.5/8second lead-in
@@ -67,3 +75,7 @@ reducing only DS showcase frame rate/palette, not its duration or dimensions.
 2026-11-07: All26GIFs are publicly byte-verified on GitHub. Inspect the exact
 failed deployment trace before the single bounded fullscreen fixture attempt;
 if this exact case fails again, park it explicitly under105instead of looping.
+2026-11-07: The one bounded fixture repair passes the hosted gate without
+parking another case. Exact recovery revision deploys and actual public source
+bytes qualify with the existing marker exception. Close120and synchronize its
+actual issue119/Project item; one bounded completion-receipt publication only.

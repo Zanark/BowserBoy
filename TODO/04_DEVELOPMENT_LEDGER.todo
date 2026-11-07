@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Untouched opening media delivered (120):
+  Zanark387537b602f44a5bc85d10ee0196d0ccb099e968 deploys through exact
+  Pages42389431053:119declared/98PASS/21SKIP/0FAIL/0UNRUN; all19browser
+  shards, build and deploy successful. The bounded fullscreen fixture passes
+  hosted without another skip. All26README GIFs public/exact-byte verified,
+  full27.5s GBA/82s DS retained; actual rendered README includes all26.
+  Exact deployed source matches48runtime/entry/demo files; strict49check
+  retains sole build-only.nojekyll404 and exit1. Existing21parked cases are
+  coverage debt, not fixes.120DONE; no owner aesthetic acceptance inferred.
 - 2026-11-07 / Media public; exact CI fixture recovery (120):
   c3b211eGitHub README renders all26GIFs; all26public branch GIFs return200
   and exact bytes,76,919,967total. Pages42388336737 fails one fullscreen-return
