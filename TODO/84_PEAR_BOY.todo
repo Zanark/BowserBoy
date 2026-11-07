@@ -34,6 +34,11 @@ full-resolution rendering, the separate consoles and unrelated pending work.
 Default feet hang below the desk edge; farther-back placements rest on top.
 
 Completion evidence:
+Pages5b34678/42323482361 still fails the genuine intermediate descending/
+scared-frame assertion, despite the event-time recorder correction below.
+Build/13browser shards pass,6fail,deploy skipped. Local case success is not
+hosted motion qualification; keep the visible-fall acceptance open.
+
 The falling-frame recorder now starts from the actual pointerup event,
 armed before release, not a later automation evaluation that may miss the
 real descent. Descending/scared, bounce and no-penetration assertions remain.

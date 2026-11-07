@@ -185,7 +185,8 @@ test('inspection shows the animated purple console logo, with static reduced-mot
   expect(await heading.evaluate(element => getComputedStyle(element, '::after').display)).toBe('none');
   const first = await image.screenshot();
   await page.waitForTimeout(280);
-  expect((await image.screenshot()).equals(first)).toBe(false);
+  await expect.poll(async () => (await image.screenshot()).equals(first),
+    { message: 'inspection logo presents a different animated frame' }).toBe(false);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect.poll(() => image.evaluate(image => new URL(image.currentSrc).pathname)).toMatch(/\/assets\/logo\.png$/);
   await image.evaluate(image => image.decode());

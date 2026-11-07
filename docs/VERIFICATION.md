@@ -11,6 +11,31 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact event-time-fixture source `5b34678bd7174feb16dc1d42818a5ffd8acc2391`,
+[Pages42323482361](https://github.com/Zanark/BowserBoy/actions/runs/42323482361),
+finishes **failure**: build and13browser shards pass, six fail; deployment
+is skipped. Eight cases fail: DS lifecycle, upside-down precision, quick taps,
+held pen, hinge transition, cyan-shell readiness, pear intermediate descent
+and animated inspection branding. Flat/rolled precision, native reload,
+fast-forward and CRT reload pass in this run; do not infer a production fix
+for their earlier failures merely from this different hosted outcome.
+The pear event-time recorder still fails its real descent assertion hosted.
+
+A bounded fixture follow-up reuses the already booted native iframe within
+each precision case, rather than repeatedly resolving its unchanged element.
+The failed hosted trace spends about5.8s on individual `contentFrame` calls;
+native screenshot work itself is not that stall. Every target still requires
+a fresh native snapshot and actual physical-LCD readback. All four poses pass
+SwiftShader2.7m; traces show one iframe resolution per case. Edge passes all
+four plus reload1.4m. This does not qualify hosted120s performance.
+
+The inspection-logo trace captures equal images about5.015s apart; its actual
+72-frame APNG loops every5.04s. A fixed two-snapshot comparison can alias that
+loop. Poll for a genuinely different rendered image under the existing15s
+expectation deadline; retain the reduced-motion equality and280ms waits.
+The unchanged full case passes SwiftShader15.8s and Edge13.0s.
+No application rendering, case identity, configured deadline or retry changed.
+
 Exact source `76ae3f8e3e7b887064923e79c89fd780e190ae92`,
 [Pages42322152049](https://github.com/Zanark/BowserBoy/actions/runs/42322152049),
 finishes **failure**: build and ten browser shards pass, nine fail;

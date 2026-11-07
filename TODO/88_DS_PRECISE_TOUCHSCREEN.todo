@@ -29,6 +29,16 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Pages5b34678/42323482361 fails: build/13browser shards pass,6fail,
+deploy skipped. Flat/rolled native precision passes; upside-down physical
+sampling and the complete quick case exhaust120s. Do not extrapolate the
+previous hosted quick pass to this source/run.
+Repeated native iframe resolution costs about5.8s per call in the earlier
+failed trace. Retain one stable frame per precision case, with fresh native
+pixels and unchanged physical-LCD checks at all targets. All four software
+poses pass2.7m; traces verify exactly one iframe resolution per case. Edge
+four poses plus native reload pass1.4m. Hosted/public acceptance still pending.
+
 Pages76ae3f8/42322152049 fails overall: build/10browser shards pass,9fail,
 deploy skipped. Complete native quick taps now pass hosted together with
 high-DPI phone precision and deferred-paint phone/stylus mapping. The

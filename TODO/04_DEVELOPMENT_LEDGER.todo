@@ -14,6 +14,16 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Stable native-frame handles and loop-aware image observation:
+  Pages5b34678/42323482361 fails overall: build/13browser shards
+  pass,6fail,8failed cases,deploy skipped. Pear real descent remains failed;
+  passing CRT/fast-forward/flat/rolled cases do not prove a production fix.
+  Precision fixtures now retain one native iframe per case; failed trace
+  contentFrame calls cost about5.8s. All native snapshots/physical checks
+  remain. Software4PASS2.7m, Edge four poses/reload5PASS1.4m, trace count1each.
+  Logo captures5.015s apart can alias a5.04s loop; use existing15s polling for
+  actual changed rendered pixels. Full animation/reduced-motion case passes
+  software15.8s/Edge13.0s. No production, case, configured timeout or retry change.
 - 2026-11-07 / Exact hotspot-correction hosted outcome:
   Pages76ae3f8/42322152049 fails: build/10browser shards pass,9fail,
   deploy skipped. Complete quick taps, high-DPI phone precision, no-paint

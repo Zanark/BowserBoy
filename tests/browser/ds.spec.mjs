@@ -11,7 +11,7 @@ const stylusFits = (page, limitY = .98) => page.evaluate(async limit => {
   }
   return true;
 }, limitY);
-const framePixels = async (page, point) => (await dsFrame(page)).evaluate(async point => {
+const framePixels = async (page, point, frame) => (frame ?? await dsFrame(page)).evaluate(async point => {
   const png = await window.EJS_emulator.gameManager.screenshot();
   const bitmap = await createImageBitmap(new Blob([png], { type: 'image/png' }));
   const ctx = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
@@ -269,6 +269,7 @@ test(`DS stylus draws under the pointer across locked orientations, zoom and hig
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
   await page.locator('#play-zoom').fill(pose.phone ? '65' : '50');
   await page.locator('#scene-canvas').focus();
+  const nativeFrame = await dsFrame(page);
   for (const [index, [x, y]] of pose.points.entries()) {
     const pointer = await page.evaluate(async ({ x, y }) => {
       const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
@@ -281,7 +282,7 @@ test(`DS stylus draws under the pointer across locked orientations, zoom and hig
       return { x: event.clientX, y: event.clientY, mapped: view.dsController.touchAt(event) };
     }, { x, y });
     expect(pointer.mapped).toEqual({ x, y });
-    expect((await framePixels(page, { x, y })).probe).not.toEqual([255, 255, 0]);
+    expect((await framePixels(page, { x, y }, nativeFrame)).probe).not.toEqual([255, 255, 0]);
     if (pose.phone) {
       await cdp.send('Input.dispatchTouchEvent', { type: index ? 'touchMove' : 'touchStart', touchPoints: [{ id: 1, x: pointer.x, y: pointer.y }] });
     } else {
@@ -293,7 +294,7 @@ test(`DS stylus draws under the pointer across locked orientations, zoom and hig
     expect(Math.abs(actual.y - y)).toBeLessThanOrEqual(1);
     let pixels;
     await expect.poll(async () => {
-      pixels = await framePixels(page, { x, y });
+      pixels = await framePixels(page, { x, y }, nativeFrame);
       return pixels.probe;
     },
       { message: `native stylus mark at (${x}, ${y}), rotation ${pose.rotation}` }).toEqual([255, 255, 0]);
