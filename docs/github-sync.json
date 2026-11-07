@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "92",
-      "file": "TODO/92_CONSOLE_SELECTOR_PALETTES.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/91",
-      "number": 91,
-      "nodeId": "I_kwDOVhqp0s8AAAABdM-rLQ",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGuiCM",
+      "id": "93",
+      "file": "TODO/93_MODE_BASED_MODEL_CLEARANCE.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/92",
+      "number": 92,
+      "nodeId": "I_kwDOVhqp0s8AAAABdNKc5g",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGurfI",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "c38eb61aa664f0ce211601608fc7e4a9d5d13114702d842da9b6107c60e900e6"
+      "bodySha256": "b69bd0ccdb353a92b6c73b780c3daca69f31316efdf1e0a11872278f52c87b77"
     }
   ]
 }

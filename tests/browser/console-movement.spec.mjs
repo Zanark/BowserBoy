@@ -11,6 +11,7 @@ async function state(page, system) {
     const bounds = view.canvas.getBoundingClientRect();
     return {
       position: model.root.position.toArray(), rotation: model.root.quaternion.toArray(),
+      savedPosition: view.consolePoses[system].position.toArray(),
       sleeping: view.consoleMotions[system].sleeping, moving: view.consoleMove?.system ?? null,
       selected: view.console, mode: view.mode,
       point: { x: bounds.left + (point.x + 1) * bounds.width / 2, y: bounds.top + (1 - point.y) * bounds.height / 2 },
@@ -157,9 +158,16 @@ for (const system of ['gba', 'ds']) {
     expect((await state(page, system)).rotation).toEqual(home.rotation);
     await page.locator(`#select-${other}`).click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
-    expect((await state(page, system)).position).toEqual(moved.position);
+    expect((await state(page, system)).savedPosition).toEqual(moved.position);
+    expect(await page.evaluate(async system => {
+      const { view } = await import('./src/app.js');
+      const { Box3 } = await import('three');
+      const inactive = system === 'ds' ? view.ds.root : view.model.root;
+      return !new Box3().setFromObject(inactive).intersectsBox(new Box3().setFromObject(view.activeModel.root));
+    }, system)).toBe(true);
     await page.locator('#put-down').click();
     await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+    expect((await state(page, system)).position).toEqual(moved.position);
     expect((await state(page, other)).position).toEqual(otherHome.position);
     await page.locator('#consoles-open').click();
     await page.locator('#consoles-home').click();
@@ -227,7 +235,7 @@ test.describe('console touch', () => {
     for (const system of ['gba', 'ds']) {
       const home = await state(page, system);
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ ...home.point, id: 1 }] });
-      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: home.point.x - 18, y: home.point.y - 65, id: 1 }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: home.point.x + 18, y: home.point.y - 65, id: 1 }] });
       await expect.poll(async () => (await state(page, system)).moving).toBe(system);
       expect((await state(page, system)).position[1]).toBeGreaterThan(home.position[1]);
       expect((await state(page, system)).rotation).toEqual(home.rotation);

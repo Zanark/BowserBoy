@@ -14,6 +14,37 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Mode-based physical clearance:
+  Owner's screenshot shows the inspected DS intersecting pear-boy. Existing
+  Pear drag checks enforce the opposite table priority, while sleeping
+  physics ignores incoming console geometry. Add a nearest-valid horizontal
+  placement solver over actual current-orientation model envelopes before
+  room paints. Focus keeps the active console unchanged; both consoles
+  precede pear-boy. Stable table gives pear-boy precedence over props and
+  consoles. Preserve authored table poses through temporary focus clearance
+  and restore pear-boy's chosen XZ on return. No depth-order/visibility hack.
+  New3actual geometry cases pass Edge and verified SwiftShader1440x1100,
+  46.2s. Solver7new units include an actual11.2277-unit equidistant-side
+  rounding failure; stable ties and opposite console-order retry fix observed
+  instability/no-space. Explicit Pear moves/cancel/reset override the focus
+  anchor rather than being overwritten on return.
+  Affected17case Edge gate is13PASS/4FAIL, then the four corrected interaction
+  cases pass. New-priority assertions retain exact saved/restored table poses
+  and real separation; phone/clamp fixtures preserve their original outcomes.
+  All4actual native/physical DS poses, deferred mapping, hinge and Pear descent
+  pass in that initial gate. Existing placement/branding case passes27.9s.
+  Syntax,51units, build, whitespace and96case/19shard exact-once inventory pass.
+  Hosted publication pending; old five-failure evidence is not erased.
+- 2026-11-07 / Palette source passes hosted branding; publication blocked:
+  Verified Zanark32354314 commits/pushes617e8d22a5bd2eb8f34eed97f76c97aa2f73eb48,
+  with required trailers. Exact normal push Pages42334881724 is monitored
+  to FAILURE: build/15browser shards pass,4fail;88cases pass/5fail,
+  deployment skipped. Actual placement/branding/palette passes shard9;
+  corrected cap cases pass17. DS Inspect remains moving after15s;
+  upside-down physical pixel probing, quick taps and dark-room insertion
+  exhaust120s; pear lacks its required visible descending sample.
+  Variable successes are not proof that styling repaired performance.
+  Preserve every original gate; no manual/blind rerun or live claim.
 - 2026-11-07 / Selector palettes follow the actual supplied console logos:
   Owner's pictured GBA/DS controls previously share teal and selected lime.
   Inspect supplied assets rather than assume manufacturer branding: GBA is

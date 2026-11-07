@@ -50,7 +50,7 @@ async function pixel(page, point) {
   }, { data: png.toString('base64'), position });
 }
 
-test('pear-boy casts adjustable warm light, moves live, cancels and avoids the consoles', async ({ page }, testInfo) => {
+test('pear-boy casts adjustable warm light, moves live, cancels and makes table consoles yield', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('./');
@@ -103,11 +103,33 @@ test('pear-boy casts adjustable warm light, moves live, cancels and avoids the c
   await page.keyboard.press('Escape');
   expect((await state(page)).position).toEqual(home);
   await expect(page.locator('#tools')).not.toBeVisible();
-  const rejected = await page.evaluate(async () => {
+  const placement = await page.evaluate(async () => {
     const { view } = await import('./src/app.js');
-    return view.movePearTo(view.model.root.position.clone());
+    const desired = view.model.root.position.clone();
+    desired.y = 0;
+    view.beginPearMove();
+    const lastPaint = view.lastPaint;
+    return { accepted: view.movePearTo(desired), desired: desired.toArray(), lastPaint };
   });
-  expect(rejected).toBe(false);
+  expect(placement.accepted).toBe(true);
+  await expect.poll(() => page.evaluate(async () =>
+    (await import('./src/app.js')).view.lastPaint)).toBeGreaterThan(placement.lastPaint);
+  const clearance = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    const { Box3 } = await import('three');
+    const pear = new Box3().setFromObject(view.pear.root);
+    return {
+      position: view.pear.root.position.toArray(),
+      clear: [view.model.root, view.ds.root].every(root => !pear.intersectsBox(new Box3().setFromObject(root))),
+    };
+  });
+  expect(clearance.position).toEqual(placement.desired);
+  expect(clearance.clear).toBe(true);
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.finishPearMove(true);
+    view.resetConsolePositions();
+  });
   expect((await state(page)).position).toEqual(home);
   const point = (await state(page)).body;
   await page.mouse.move(point.x, point.y);
@@ -163,7 +185,8 @@ test('pear-boy sits at the desk edge with dangling feet and can be placed back o
   await page.screenshot({ path: testInfo.outputPath('pear-boy-on-table.png') });
   await page.locator('#pear-open').click();
   await page.locator('#pear-move').click();
-  for (let i = 0; i < 10; i++) await page.keyboard.press('ArrowDown');
+  // Step beyond the authored home to exercise the front workspace clamp.
+  for (let i = 0; i < 11; i++) await page.keyboard.press('ArrowDown');
   expect((await state(page)).position[2]).toBe(7.5);
   await page.keyboard.press('Enter');
   await expect.poll(async () => (await feet()).every(foot => foot.sleeping && foot.y < -.5)).toBe(true);

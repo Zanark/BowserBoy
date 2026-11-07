@@ -9,6 +9,45 @@ record or constitute fresh execution of historical tests.
 
 ## Current follow-up and manual-release status, 2026-11-07
 
+### Mode-based model clearance
+
+Workstream93adds physical horizontal clearance before actual room paints.
+Both consoles take precedence over pear-boy in play/Inspect; on the stable
+table the order is pear-boy, loose props, then consoles. The active focus
+pose is not moved, and temporary focus displacement does not overwrite
+saved console table positions. This is geometry-based separation, not a
+depth-test, render-order, visibility or resolution workaround.
+
+Three new actual-paint geometry regressions pass Edge, including sleeping
+Pear, body/hinge rotation, table precedence, saved poses and explicit Pear
+reset/movement superseding a focus snapshot. They also pass on an explicitly
+verified ANGLE SwiftShader backend at1440x1100,46.2s. Seven new unit cases
+cover multi-obstacle corners, empty/full workspaces, unchanged height/inputs
+and a floating-point tie that previously flipped a prop11.2277units.
+
+The affected17case Edge gate initially passes13and fails4. Two old assertions
+contradict the requested priority: Pear now displaces consoles on the table,
+and inactive consoles may yield temporarily while retaining their exact
+saved table pose. Corresponding assertions now check real separation and
+exact saved/restored poses. Phone and edge fixtures retain their lift/clamp
+requirements while using an unobstructed gesture and enough keyboard steps.
+The original phone gesture intersects the fixed lamp (X overlap0.27450,
+Z overlap2.63984) from the unchanged GBA home; mirroring its horizontal
+delta preserves the actual lift assertion without moving through the lamp.
+Ten0.65-unit Pear steps from7.3and back return7.3, not7.5; the eleventh
+downward step now genuinely exercises the unchanged7.5workspace clamp.
+The four corrected interaction cases pass45.8s; failures are retained as development
+evidence, not silently counted as an original17/17run. The original thirteen
+passes include all four native/physical DS orientation probes, deferred touch
+mapping, hinge, branding, sparse transition, keyboard movement and Pear descent.
+The existing DS placement/branding/lift/inspection case also passes27.9s.
+
+Syntax,51unit cases, build and whitespace pass. All93original browser cases
+remain alongside3new ones:96cases, each assigned exactly once across the
+unchanged19shards. Deadlines, retries0, full-resolution rendering and native
+pixel assertions remain unchanged. No publication or owner visual acceptance
+is inferred; historical native/performance failures below remain separate.
+
 ### Console selector logo palettes
 
 The GBA/DS picker now follows the supplied BowserBOY artwork: purple/magenta/
@@ -26,7 +65,25 @@ reviewed. Styling-fixture results do not establish native input performance,
 owner aesthetic acceptance or publication. Workstream92retains that boundary;
 the existing recovery failures below remain open.
 
+Exact committed/pushed palette source
+`617e8d22a5bd2eb8f34eed97f76c97aa2f73eb48` is monitored through normal
+[Pages42334881724](https://github.com/Zanark/BowserBoy/actions/runs/42334881724).
+The complete actual placement/branding/palette case **passes hosted shard9**.
+The overall gate nevertheless fails and deployment is skipped; these colors
+are not qualified as newly published.
+
 ### Hosted recovery remains blocked
+
+Latest palette source `617e8d2`, Pages42334881724, finishes **failure**:
+build and15browser shards pass, four fail6/8/11/16;88cases pass/5fail.
+DS Inspect remains `moving` after15s; upside-down physical-pixel probing,
+complete quick taps and dark-room insertion exhaust120s. Pear descent lacks
+the required visible falling sample. All corrected cap cases pass17.
+Flat/rolled/high-DPI precision, pen, hinge and other variable successes in
+this run do not establish a performance correction from selector CSS.
+Deployment is skipped; preserve all93cases/19shards, retries0, deadlines
+and full-resolution/native/physical assertions. No new public smoke can
+qualify this source until genuine publication succeeds.
 
 Exact cap-fixture source `7bc93c56fc63efd647a7ee6f4115011542e14fa4`,
 [Pages42333210355](https://github.com/Zanark/BowserBoy/actions/runs/42333210355),

@@ -22,6 +22,12 @@ at least44px high at desktop/mobile widths and labels/layout are unchanged.
 Supplied art, physical materials, native input and all deployment gates remain.
 
 Completion evidence:
+Exact pushed617e8d22a5bd2eb8f34eed97f76c97aa2f73eb48, automatic
+Pages42334881724 finishesFAILURE: build and15browser shards pass,
+four fail;88cases pass/5fail and deployment skips. The complete actual
+placement/branding/palette case passes hosted shard9. Remaining DS Inspect,
+upside-down physical pixel, quick-tap, pear descent and dark-room failures
+block publication; this color-only change does not repair their latency.
 Syntax,44unit tests, build, browser-file syntax and whitespace pass.
 The existing real 3D/branding selection case passes Edge24.4s, including
 purple/cyan border relationships, selected-only glows and exact GBA restore.
@@ -33,6 +39,10 @@ electric blue/cyan DS, white text and retained PROTOTYPE. No owner approval
 or successful new publication is inferred. Existing74/88recovery remains open.
 
 Completion log:
+2026-11-07: Commit/push as verified Zanark; normal exact-source push run
+https://github.com/Zanark/BowserBoy/actions/runs/42334881724
+is monitored to terminal failure. Palette regression passes hosted; deploy
+skipped. Keep publication unchecked and issue/Project In progress.
 2026-11-07: Owner requests selectors matching each console's logo. Inspect
 the actual supplied assets: GBA is purple/magenta/lavender; DS is blue/cyan/
 white, not stock Nintendo red. Reuse the existing console-specific dock

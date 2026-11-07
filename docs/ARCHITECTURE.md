@@ -40,8 +40,9 @@ root-coordinate workspace; the original resting root Y remains the floor.
 No angular velocity or desk quaternion changes are introduced.
 
 `src/scene.js` separates saved desk poses from play/Inspect transforms.
-Both bodies reference their own model position, but the selected body's
-physics is skipped while held for play/Inspect and during transitions.
+Both bodies reference their own model position, but console physics is
+skipped during play/Inspect and transitions so temporary clearance cannot
+be integrated into saved desk placements.
 Inactive-model motion explicitly invalidates room paints. Returning to the
 table copies the exact saved position/quaternion after interpolation.
 DS reflection capture waits until dragging/falling stops.
@@ -54,7 +55,40 @@ view and system changes cancel safely. Broad-phase box overlap rejects
 occupied held placements; released bodies use the shared contact solver.
 The dock exposes independent movement/reset without switching native cores.
 Positions are not persisted across reloads. Full rotating-body response,
-moving-support tracking, stable stacking and prop pushing are out of scope.
+moving-support tracking, stable stacking and impulse propagation are out of scope.
+
+## Mode-based physical clearance
+
+`src/desk-clearance.js` finds the nearest clear root position at unchanged
+height. Higher-priority world boxes become forbidden XZ rectangles expanded
+by the moving model's actual orientation bounds and a small gap. Candidate
+coordinates include both desired coordinates and every obstacle boundary;
+their cross-products handle corners and multiple blockers. All candidates
+are checked against every vertically overlapping obstacle and workspace.
+Equal-distance candidates use a stable numerical tie so recomputing local
+bounds from moved world geometry cannot flip props between opposite sides.
+
+`resolveDeskClearance` in `src/scene.js` runs immediately before room paints,
+including transition frames and the final table-restoration frame. Play and
+Inspect preserve the active console's position/quaternion/hinge; the other
+console is placed before pear-boy and loose props. Stable table placement
+instead preserves pear-boy, then places props, then consoles. The fixed lamp
+remains an obstacle. Sleeping objects participate, independent of fixed-step
+physics. Actual rope/hand/foot bounds are included; the contact-shadow plane
+is not a physical obstruction. Pose signatures avoid redoing settled layouts,
+while animated limbs invalidate their clearance envelope.
+
+Temporary focus displacements do not replace saved console table positions.
+Returning to stable table restores pear-boy's chosen XZ and reconciles the
+lower-priority models. Height, held state, vertical motion and table console
+quaternions are retained; displaced elevated bodies cannot stay asleep on a
+support they have left. Layout is planned before positions are applied.
+Explicit Pear moves, cancellation and reset supersede its saved focus-entry
+anchor, including during return transitions. Equal-ranked console placements
+retry the opposite order before declaring the workspace exhausted.
+Insufficient space reports an explicit error and withholds that room paint,
+rather than drawing intersections or claiming placement succeeded. Nothing
+changes material depth tests, visibility, camera framing or native touch mapping.
 
 ## pear-boy: movable light and constrained ropes
 

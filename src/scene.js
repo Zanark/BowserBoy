@@ -7,6 +7,7 @@ import { nextTransitionElapsed } from './transition-motion.js';
 import { createDsHandheld } from './ds-handheld.js';
 import { createPearBoy } from './pear-boy.js';
 import { DeskMotion, PearMotion } from './pear-motion.js';
+import { nearestDeskPosition } from './desk-clearance.js';
 
 const tableQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 0, -.2));
 const playQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(-.035, -.025, 0));
@@ -135,6 +136,7 @@ export class HandheldScene {
         new THREE.Vector3(24 - bounds.max.x, 25, 9.5 - bounds.max.z));
       this.consoleMotions[system] = new DeskMotion(root.position, { bounds, workspace });
     }
+    this.deskPropHomes = new Map(this.deskObjects.map(object => [object, object.position.clone()]));
     this.pearOn = true;
     this.pearBrightness = .7;
     this.updatePearLight();
@@ -621,6 +623,7 @@ export class HandheldScene {
     this.host.dataset.pearPlacement = occupied ? 'blocked' : 'clear';
     if (!occupied) {
       this.pearMotion.moveTo(position, performance.now());
+      if (this.pearTablePosition) this.pearTablePosition.copy(position);
       this.updatePearContact();
       this.changed = true;
     }
@@ -634,6 +637,7 @@ export class HandheldScene {
     this.pearMove = null;
     if (cancelled) {
       this.pearMotion.reset(move.origin);
+      if (this.pearTablePosition) this.pearTablePosition.copy(move.origin);
       this.pear.resetLimbs();
     } else {
       this.pearMotion.drop(performance.now());
@@ -651,6 +655,7 @@ export class HandheldScene {
   resetPearPosition() {
     this.finishPearMove(true);
     this.pearMotion.reset(pearHome);
+    if (this.pearTablePosition) this.pearTablePosition.copy(pearHome);
     this.pear.setFaceLifted(false);
     this.pear.resetLimbs();
     this.updatePearContact();
@@ -658,8 +663,95 @@ export class HandheldScene {
   }
 
   pearObstacles() {
-    return [this.model.root, this.ds.root, this.lamp.root, ...this.deskObjects]
+    return (this.mode === 'table' && !this.transition ? [this.lamp.root] :
+      [this.model.root, this.ds.root, this.lamp.root])
       .map(object => new THREE.Box3().setFromObject(object));
+  }
+
+  resolveDeskClearance(focused = this.mode !== 'table' || !!this.transition) {
+    const roots = [this.model.root, this.ds.root, this.pear.root, ...this.deskObjects];
+    const signature = () => [focused, this.ds.lid.rotation.x, !!this.cartridgeMotion,
+      ...roots.flatMap(root => [...root.position.toArray(), ...root.quaternion.toArray()])].join(',');
+    if (this.clearanceSignature === signature()) return true;
+    const enteringFocus = focused && !this.clearanceFocused;
+    const leavingFocus = !focused && this.clearanceFocused;
+    const pearTablePosition = enteringFocus ? this.pear.root.position.clone() : this.pearTablePosition;
+    const obstacles = [new THREE.Box3().setFromObject(this.lamp.root)];
+    const pearBounds = this.pear.bounds.clone();
+    this.pear.root.updateWorldMatrix(true, true);
+    for (const child of this.pear.root.children) {
+      if (child !== this.pear.contact) pearBounds.union(
+        new THREE.Box3().setFromObject(child).translate(this.pear.root.position.clone().negate()));
+    }
+    const placements = [];
+    let blocked;
+    const reportBlocked = () => {
+      if (this.clearanceBlocked !== blocked) this.onError(new Error(
+        `No clear desk space for ${blocked === this.pear.root ? 'pear-boy' : blocked.userData.console ?? 'a cartridge'}. Move objects apart or reset their positions.`));
+      this.clearanceBlocked = blocked;
+      return false;
+    };
+    const place = (root, desired, workspace, motion, pear = false) => {
+      const bounds = pear ? pearBounds : new THREE.Box3().setFromObject(root).translate(root.position.clone().negate());
+      const position = nearestDeskPosition(bounds, desired, workspace, obstacles);
+      if (!position) {
+        blocked = root;
+        return false;
+      }
+      placements.push({ root, position, motion, pear });
+      obstacles.push(bounds.clone().translate(position));
+      return true;
+    };
+    const placeConsole = system => {
+      const root = system === 'gba' ? this.model.root : this.ds.root;
+      const desired = focused || leavingFocus ? this.consolePoses[system].position : root.position;
+      return place(root, desired, this.consoleMotions[system].workspace, this.consoleMotions[system]);
+    };
+    if (focused) {
+      // The camera-facing console never moves to accommodate a lower-priority model.
+      obstacles.push(new THREE.Box3().setFromObject(this.activeModel.root));
+      if (!placeConsole(this.console === 'gba' ? 'ds' : 'gba')) return reportBlocked();
+      if (!place(this.pear.root, this.pear.root.position, this.pearMotion.workspace, this.pearMotion, true)) return reportBlocked();
+    } else {
+      const position = this.pear.root.position.clone();
+      if (leavingFocus) { position.x = pearTablePosition.x; position.z = pearTablePosition.z; }
+      placements.push({ root: this.pear.root, position, motion: this.pearMotion, pear: true });
+      obstacles.push(pearBounds.clone().translate(position));
+    }
+    for (const object of this.deskObjects) {
+      const bounds = new THREE.Box3().setFromObject(object).translate(object.position.clone().negate());
+      const workspace = new THREE.Box3(
+        new THREE.Vector3(-22 - bounds.min.x, object.position.y, -11.5 - bounds.min.z),
+        new THREE.Vector3(24 - bounds.max.x, object.position.y, 9.5 - bounds.max.z));
+      if (!place(object, this.deskPropHomes.get(object), workspace)) return reportBlocked();
+    }
+    if (!focused) {
+      const count = placements.length, obstacleCount = obstacles.length;
+      if (!['gba', 'ds'].every(placeConsole)) {
+        placements.length = count;
+        obstacles.length = obstacleCount;
+        // Equal-priority consoles must not trap the wider model behind the first placement.
+        if (!['ds', 'gba'].every(placeConsole)) return reportBlocked();
+      }
+    }
+    for (const { root, position, motion, pear } of placements) {
+      if (!root.position.equals(position)) {
+        root.position.copy(position);
+        if (motion) {
+          motion.previous.copy(position);
+          motion.velocity.x = motion.velocity.z = 0;
+          if (!motion.held && position.y > motion.workspace.min.y) motion.sleeping = false;
+        }
+        if (pear) { this.pear.resetLimbs(); this.updatePearContact(); }
+        this.changed = this.dsReflectionsDirty = true;
+      }
+      if (!focused && root.userData.console) this.consolePoses[root.userData.console].position.copy(position);
+    }
+    this.pearTablePosition = focused ? pearTablePosition : null;
+    this.clearanceFocused = focused;
+    this.clearanceBlocked = null;
+    this.clearanceSignature = signature();
+    return true;
   }
 
   updatePearContact() {
@@ -1060,7 +1152,7 @@ export class HandheldScene {
     }
     let consolesMoving = false;
     for (const system of ['gba', 'ds']) {
-      if ((system === this.console && this.mode !== 'table') || this.transition) continue;
+      if (this.mode !== 'table' || this.transition) continue;
       const motion = this.consoleMotions[system];
       if (motion.update(delta, motion.held || motion.sleeping ? [] : this.consoleObstacles(system))) {
         this.consolePoses[system].position.copy(motion.position);
@@ -1118,6 +1210,8 @@ export class HandheldScene {
         this.onError(new Error(`DS LCD ${index + 1} light sampling failed: ${error.message}. The game is retained; reload to retry lighting.`));
       }
     }
+    if (limbsMoving || this.cartridgeMotion || this.dsController?.inserting) this.clearanceSignature = null;
+    if (!this.resolveDeskClearance(this.mode !== 'table' || !!transition && transitionElapsed < transition.duration)) return;
     const activeRoot = this.activeModel.root;
     const poseChanged = this.lastModel !== activeRoot || !this.lastPosition?.equals(activeRoot.position) ||
       !this.lastRotation?.equals(activeRoot.quaternion) || !this.lastCamera?.equals(this.camera.position);

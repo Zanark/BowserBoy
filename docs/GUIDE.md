@@ -99,6 +99,14 @@ world-axis-aligned bounding boxes, not arbitrary rotating rigid bodies;
 moving supports, stacking stability and dynamic prop pushing are not simulated.
 This feature is local and has not been published.
 
+Clearance depends on the view: **play/Inspect prioritizes the selected console
+and other console before pear-boy**; **table prioritizes pear-boy, then loose
+cartridges, then consoles**. Lower-priority objects move sideways to free space,
+without changing height or console orientation. Temporary focus displacement
+does not replace a console's saved table position. Pear-boy also returns to his
+chosen table position, unless you explicitly move or reset him. This is physical
+spacing, not drawing through objects. Game boxes are not implemented yet.
+
 ## Nintendo DS local prototype
 
 Start the existing development server with `npm run dev` and open
@@ -266,8 +274,9 @@ not the gravity needed to complete a drop.
 *Actual local rendering of the scared expression and hanging rope limbs,
 not an edited reference image.*
 
-Movement stays within a bounded tabletop workspace and rejects occupied
-placement. Body collisions approximate props with boxes and keep the pear
+Movement stays within a bounded tabletop workspace and rejects the fixed lamp.
+On the table, loose props and consoles yield to pear-boy rather than blocking
+his chosen position. Clearance uses current-orientation boxes and keeps him
 upright; this is not a rotating rigid-body engine or full cloth simulation.
 Ropes collide with the pear body and the desk's top/front edge, not every prop
 surface. Reduced motion keeps a settled edge-aware pose rather than swinging.

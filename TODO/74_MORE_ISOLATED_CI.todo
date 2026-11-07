@@ -30,6 +30,23 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Mode-clearance follow-up retains all93original cases and adds3geometry
+regressions. Current96cases are assigned exactly once across unchanged
+19shards, no duplicates. New3cases pass Edge and verified SwiftShader,
+46.2s at1440x1100. Syntax,51units, build and whitespace pass. Initial
+affected17case gate13PASS/4FAIL is followed by four corrected interaction
+passes, without relaxing their lift/clamp/native or saved-pose requirements.
+Normal exact-source hosted qualification remains pending.
+
+Palette617e8d2/Pages42334881724 finishesFAILURE: build/15browser
+shards pass, four fail6/8/11/16;88cases pass/5fail,deploy skipped.
+Actual placement/branding/palette passes hosted9, cap cases pass17.
+DS Inspect remains moving after15s; upside-down physical probing and
+quick taps exhaust120s, as does dark-room insertion. Pear descent lacks
+the required visible falling sample. Other variable passes do not prove
+a performance correction from styling. Preserve all93cases/19shards and
+original native/physical assertions, deadlines, retries0 and full DPR.
+
 Cap-fixture7bc93c5/Pages42333210355 finishesFAILURE: build and11browser
 shards pass,8fail;81cases pass/12fail,deploy skipped. Three corrected cap
 cases pass hosted shard17. Shell/fullscreen also passes hosted and unchanged

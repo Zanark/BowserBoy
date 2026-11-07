@@ -1,0 +1,51 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/92
+Milestone: Physical model separation follows the current interaction mode.
+Dependencies: 84 pear-boy; 85 movable consoles; 87 DS inspection/hinge;
+74 full hosted gate for publication.
+Purpose: Prevent consoles, pear-boy and desk props from occupying the same
+space without hiding objects, changing depth ordering or lowering quality.
+
+Tasks:
+- [x] Identify missing sleeping-object and inspection/transition clearance.
+- [x] Implement nearest valid horizontal placement with complete obstacle checks.
+- [x] Prioritize both consoles in focus; preserve active rotation and hinge.
+- [x] Prioritize pear-boy, then loose props, then consoles on the table.
+- [x] Keep temporary focus displacement separate from saved table positions.
+- [x] Qualify focused geometry, movement, transition and native regressions.
+- [ ] Sync the actual issue/Project, commit/push and monitor normal deployment.
+
+Acceptance criteria:
+Every actual room paint has nonintersecting prioritized model envelopes.
+Play and Inspect keep the active console pose, hinge and controls unchanged
+while lower-priority objects yield, including sleeping pear-boy. Table
+movement lets pear-boy occupy lower-priority locations and moves props and
+consoles aside. Console orientation remains locked. Returning to the table
+restores pear-boy's chosen XZ placement and reconciles lower-priority models;
+temporary focus movement does not overwrite authored console desk poses.
+All existing native/pixel deadlines, retries0, full-resolution rendering,
+materials, lighting and deployment gates remain unchanged.
+
+Completion evidence:
+Three new actual-paint geometry cases pass Edge16.6s and explicitly verified
+ANGLE SwiftShader1440x1100,46.2s. They include sleeping/rotating/hinged
+clearance, exact table/saved poses and explicit Pear movement/reset overriding
+focus snapshots. Seven new unit cases cover the solver and an observed
+11.2277-unit numerical tie flip. Syntax,51units, build and whitespace pass.
+Affected17case Edge run is13PASS/4FAIL; four corrected interaction cases
+then pass45.8s without dropping cases or relaxing lift, clamp or native assertions.
+All4native/physical DS orientation probes, deferred mapping, hinge and Pear
+descent pass in the initial affected gate. Existing DS placement/branding/
+lift/inspection regression also passes27.9s after initial integration.
+All93original cases plus3new cases retained;96cases assigned exactly once
+across unchanged19shards. Deadlines, retries0 and resolution unchanged.
+No new publication or owner visual acceptance is claimed. Historical
+617e8d2/Pages42334881724 remains failed88PASS/5FAIL with deployment skipped.
+
+Completion log:
+2026-11-07: Owner supplies clipping screenshot and explicit mode-dependent
+priorities. Existing Pear drag rejection gives consoles/props precedence
+on the table; sleeping physics cannot react to incoming rotated consoles.
+Add actual spatial clearance immediately before room paints, with no
+render-order or visibility workaround. Local qualification completed as
+above; normal exact-source hosted gate and publication remain pending.

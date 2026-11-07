@@ -29,6 +29,14 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Palette617e8d2/Pages42334881724 fails overall: build/15browser shards
+pass, four fail;88cases pass/5fail,deploy skipped. Upside-down physical
+pixel probing and complete quick taps exhaust120s; DS Inspect remains
+moving after15s. Flat/rolled/high-DPI, deferred-camera mapping, pen,
+hinge, LCD spill and actual placement/branding/palette pass this run,
+not stable all-device responsiveness. Styling is not a native fix.
+No new public deployment or owner acceptance; preserve all original gates.
+
 Cap-fixture7bc93c5/Pages42333210355 fails overall: build/11browser shards
 pass,8fail;81cases pass/12fail,deploy skipped. Unlike836fc09, complete
 quick taps and upside-down precision fail120s in this run; flat/rolled
