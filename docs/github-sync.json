@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "119",
-      "file": "TODO/119_GIF_FIRST_README.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/118",
-      "number": 118,
-      "nodeId": "I_kwDOVhqp0s8AAAABdSeNkA",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGzUZs",
+      "id": "118",
+      "file": "TODO/118_PEAR_BOY_FACE_TRAVEL.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/117",
+      "number": 117,
+      "nodeId": "I_kwDOVhqp0s8AAAABdSd9qA",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhGzULA",
       "state": "open",
       "reason": null,
       "projectStatus": "In progress",
-      "bodySha256": "5bb7c4846c5581f08cb300ce03a22f61ddfaf5b5c885c005593a97e57c2a7dce"
+      "bodySha256": "53e29bed5597fd550c1d7edd98d5a57825075aea430ff97ae4608eaa525c31a2"
     }
   ]
 }

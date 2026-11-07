@@ -1149,6 +1149,9 @@ test('mapped inputs move real button meshes and release after remapping and focu
   await page.goto('./');
   await waitForDesk(page, { expandDock: true });
   await expect(page.locator('#scene')).toHaveAttribute('data-ready', 'true');
+  // Timed checkpoints disable binding buttons; this case isolates input remapping.
+  await page.locator('#quick-autosave').click();
+  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);

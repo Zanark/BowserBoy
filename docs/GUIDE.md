@@ -301,8 +301,9 @@ Keyboard steps place him deliberately without accumulating throwing speed.
 The longer, thick braided rope arms and legs swing and settle. His entire face
 (eyes, smile and freckles together) tracks
 mouse/pen movement. Horizontal travel is now 2.5 times wider, wrapping around
-the curved shell rather than sliding into it. Vertical travel and smooth
-tracking remain unchanged. While held or falling, his squeezed eyes and pink cheeks
+the curved shell rather than sliding into it. Looking upward moves the whole
+face just over four times farther toward his forehead; downward travel and
+smooth tracking remain unchanged. While held or falling, his squeezed eyes and pink cheeks
 accompany alternating wobbly closed and peanut-shaped open scream mouths,
 with each mouth held for 900ms rather than flickering rapidly.
 A hard landing brings small round angry eyes with short furrowed brows,

@@ -8,7 +8,7 @@ left/right when the cursor moves away, following the owner's marked face area.
 Tasks:
 - [x] Increase horizontal travel using the existing shell-following face rotation.
 - [x] Verify actual pointer travel, expressions and unobstructed cheek freckles.
-- [ ] Review the visible extremes and update affected documentation/evidence.
+- [x] Review the visible extremes and update affected documentation/evidence.
 - [ ] Commit/push as Zanark and monitor exact-revision deployment.
 
 Acceptance criteria:
@@ -29,6 +29,9 @@ ray hits in every expression at all nine X/Y gaze combinations.61unit tests,
 application syntax and static build pass. Actual default rendered curious face
 reviewed with eyes, smile and three dots per cheek visible; no owner approval.
 Monitored publication pending.
+Requalified with121's later upward-only increase: both Pear cases and the
+bounded remapping repair pass together3/3in55.8s without retries. All36
+expression/gaze combinations retain six foremost freckles.
 
 Completion log:
 2026-11-07: Owner highlights the face region and shows a far-left cursor.

@@ -1,0 +1,35 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/120
+Milestone: More expressive upward cursor-following Pear face travel.
+Dependencies: 118.
+Purpose: Move Pear's entire face farther up toward the forehead when looking
+up, following the owner's marked face region without moving the whole lamp.
+
+Tasks:
+- [x] Increase upward travel while preserving the previous downward range.
+- [x] Extend actual-pointer coverage for both eyes, smile and all six freckles.
+- [x] Qualify the rendered face at combined gaze extremes in every expression.
+- [ ] Commit/push as Zanark and monitor exact-revision deployment.
+
+Acceptance criteria:
+The upward cursor moves the whole face visibly farther toward the forehead.
+Keep the widened horizontal range, smooth tracking, reduced-motion behavior,
+pickup/landing timing and three cheek dots per side in every expression.
+Preserve the fixed gaze anchor and shell-following scale, lamp position and
+real light output. Retain all assertions and the bounded CI recovery policy.
+
+Completion evidence:
+Upward travel increases from0.18to0.75model units (4.17x); downward travel
+remains0.18and horizontal rotation remains0.55radians. Existing actual-pointer
+coverage now requires both eyes, mouth and every freckle to rise>0.65world
+units; both eyes must rise>5screen pixels. Existing foremost-ray checks still
+cover all9X/Ygaze combinations in all4expressions. Cursor, rendered landing
+and exact remapping-repair scenarios pass together:3passed in55.8s, no retries.
+All six freckles remain foremost ray hits at all36expression/gaze combinations.
+Rendered curious face reviewed: both eyes, smile and three dots per cheek
+remain visible.61unit tests, syntax and static build pass. Publication pending.
+
+Completion log:
+2026-11-07: Owner also requests more upward movement and marks the forehead
+region. Increase only the positive vertical range, retaining existing shell
+following instead of translating the whole lamp or changing its expressions.

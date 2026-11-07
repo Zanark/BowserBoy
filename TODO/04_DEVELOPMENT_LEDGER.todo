@@ -14,6 +14,43 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Upward Pear face travel (121):
+  Owner marks the forehead and asks for more upward movement too. Increase
+  positive vertical travel0.18to0.75model units, preserving0.18downward and
+  the preceding0.55radian horizontal range. Retain the fixed anchor, radial
+  shell scaling, expression timing, six freckles and real lights. Strengthen
+  actual-pointer coverage for upward eye/mouth/freckle travel, retaining all
+  existing9gaze-combination checks across4expressions. Actual-pointer,
+  rendered fall/landing and exact remapping-repair cases pass together:
+  3passed in55.8s without retries. All36expression/gaze combinations retain
+  six foremost freckles. Actual curious-face screenshot shows both eyes,
+  smile and three dots per cheek; no owner approval claim.61units,syntax
+  and static build pass. Runtime publication proceeds independently of
+  the still-active all-scene media capture.
+- 2026-11-07 / Earlier Pages gate failure:
+  Source44b5dc2, Pages42384194922 failed shard18: mapped inputs/remapping
+  expected A binding Q but retained Z at scene.spec.mjs:1198. Independent
+  accounting:119declared/97PASS/21SKIP/1FAIL/0UNRUN; deploy skipped. This is
+  not a Pear failure and the revision was not deployed. Diagnose exact trace
+  before a bounded repair; keep the assertions and existing21parked cases.
+  Exact trace subsequently shows an automatic checkpoint disabling every
+  keybinding between Playwright's actionability check and its physical click
+  (330845ms enabled,330861ms disabled). The click never arms capture. Bound
+  the repair to turning off timed checkpoints through the existing quick
+  control before this input-only scenario; keep every remapping, physical
+  travel and release assertion. No product input/autosave change. Exact
+  repaired scenario passes locally in16.7s, no retry; all assertions retained.
+  Existing21parked cases stay unchanged. Exact-revision CI remains pending.
+- 2026-11-07 / Untouched opening footage for every README section (120):
+  Owner rejects the orange DS tutorial and GBA controls screens, specifying
+  first30seconds of GBA with2.5seconds excluded and first90native DS seconds
+  with8seconds excluded, no game input beyond loading/power. The later
+  instruction applies this source footage to every scene GIF, not only the
+  console introduction. Acquire actual native opening sources first, then
+  reuse the trimmed windows while recording real scene interactions. Keep
+  capture-only playback distinct from native-input qualification; no shipping
+  core, geometry, material or light change is authorized by this media task.
+  Raw videos and source paths stay private; approved logos and book stay fixed.
 - 2026-11-07 / Wider Pear gaze and GIF-first front page (118-119):
   Owner highlights Pear's face area and a far-left cursor. Increase the
   shell-following horizontal angle0.22to0.55rather than translating meshes

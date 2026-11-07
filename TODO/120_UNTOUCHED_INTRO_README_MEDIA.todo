@@ -1,0 +1,41 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/119
+Milestone: Untouched game openings throughout the visual README.
+Dependencies: 117, 119.
+Purpose: Replace the owner's rejected tutorial/menu screens in every README
+section with the supplied games' unmodified opening animations.
+
+Tasks:
+- [ ] Record the first30seconds of the supplied GBA opening without game input.
+- [ ] Record the first90seconds of the supplied DS opening after native startup.
+- [ ] Exclude the first2.5GBAseconds and first8DSseconds from reusable footage.
+- [ ] Newly record every scene GIF, including desk/lamp/movement sections.
+- [ ] Document recorded-LCD replay versus live scene and native-input evidence.
+- [ ] Review encoded openings and all scene GIFs; preserve approved artwork.
+- [ ] Commit/push as Zanark, verify public GIFs and monitor exact deployment.
+
+Acceptance criteria:
+The GBA source is the owner's selected Celia's GAME; the DS source is the
+newly selected HeartGold file. No Start, A, B, direction or touchscreen input
+is used to acquire either opening. Native gameplay time excludes cartridge
+download/insertion/loading. Keep27.5seconds of GBA opening after2.5seconds
+and82seconds of DS opening after8seconds. Reuse these exact source windows
+across all freshly recorded README scene GIFs; no rejected orange tutorial
+or controls page. Include both consoles in tabletop/light demonstrations.
+Explain capture-only LCD playback honestly: scene controls are real browser
+interactions, but replayed game footage is not evidence of live game response.
+Keep the front page visual with short captions and linked detailed provenance.
+Keep ROMs, raw videos, browser stores and private receipts outside publication.
+Preserve approved animated logos, the frozen PDF and unrelated dirty PNGs.
+No shipping runtime/core/material/lighting changes or weaker CI gates.
+
+Completion evidence:
+Source files exist locally. Capture/encoding and review are in progress.
+Previous media and GIF-first layout remain historical completed work; this
+workstream records the owner's subsequent explicit rejection of menu footage.
+
+Completion log:
+2026-11-07: Owner specifies untouched30/90second openings,2.5/8second lead-in
+exclusions and a new local DS source, then explicitly expands the replacement
+to every GIF in every README section and requests a push. Acquire native
+sources before reusing their verified windows for live scene choreography.

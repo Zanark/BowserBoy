@@ -312,7 +312,20 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
   const { point } = await face();
   await page.mouse.move(point.x, point.y);
   await expect.poll(async () => Math.abs((await face()).gaze[0])).toBeLessThan(.001);
+  await expect.poll(async () => Math.abs((await face()).gaze[1])).toBeLessThan(.001);
   const neutral = await face();
+  await page.mouse.move(point.x, 20);
+  await expect.poll(async () => (await face()).gaze[1]).toBeGreaterThan(.99);
+  const up = await face();
+  for (let i = 0; i < 2; i++) {
+    expect(up.eyes[i][1]).toBeGreaterThan(neutral.eyes[i][1] + .65);
+    expect(up.projectedEyes[i].y).toBeLessThan(neutral.projectedEyes[i].y - 5);
+  }
+  for (const [before, after] of [[neutral.smile, up.smile],
+    ...neutral.freckles.map((point, index) => [point, up.freckles[index]])]) {
+    expect(after[1]).toBeGreaterThan(before[1] + .65);
+  }
+  expect(up.point).toEqual(neutral.point);
   await page.mouse.move(20, 850);
   await expect.poll(async () => (await face()).gaze[0]).toBeLessThan(-.9);
   const left = await face();

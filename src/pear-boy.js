@@ -252,7 +252,7 @@ export function createPearBoy() {
     if (face.gaze.distanceToSquared(target) < 1e-7) face.gaze.copy(target);
     let changed = face.gaze.x !== previousX || face.gaze.y !== previousY;
     if (changed) {
-      face.root.position.y = face.gaze.y * .18;
+      face.root.position.y = face.gaze.y * (face.gaze.y > 0 ? .75 : .18);
       face.root.rotation.y = face.gaze.x * .55;
       const radius = radiusAt(4.5 + face.root.position.y) / radiusAt(4.5);
       face.root.scale.set(radius, 1, radius);
