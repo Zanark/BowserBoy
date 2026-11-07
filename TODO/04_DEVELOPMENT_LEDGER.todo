@@ -14,6 +14,18 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-07 / Stale stylus hotspots survive the matrix correction:
+  Exact8f7f665/42319766498 fails: build/12browser shards pass,7fail,
+  deployment skips. Phone coordinates are identical to the preceding failure.
+  Camera synchronization was necessary but not sufficient. DS HTML hotspots
+  still wait for a GPU paint; picking up the desktop-positioned stylus after
+  resizing can move the physical LCD outside the visible viewport.
+  Extend the existing deferred-paint case with actual pickup/DPR2 and viewport
+  clipping: two probes are offscreen before correction. Reproject DS controls
+  at synchronous camera changes; six Edge precision/mapping/quick cases pass
+  1.6m and software mapping passes. Software quick second-batch reads remain
+  correct but late1604.5ms/1500ms; phone batch is not reached. Syntax/44units/
+  build pass. Preserve all assertions/deadlines and93case inventory.
 - 2026-11-07 / Hosted phone trace exposes stale camera matrices:
   Exact3448449/42317015074 fails: build and11browser shards pass,8fail,
   deployment skips. Both desktop quick-tap batches pass145.8/169.7ms, while

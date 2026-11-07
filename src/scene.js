@@ -426,6 +426,7 @@ export class HandheldScene {
     this.camera.lookAt(this.lookAt);
     this.camera.updateWorldMatrix(true, false);
     this.activeModel.root.updateWorldMatrix(true, true);
+    this.dsController?.projectControls();
   }
 
   dsPoseBounds(rotation, hinge) {

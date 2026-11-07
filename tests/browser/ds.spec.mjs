@@ -338,10 +338,18 @@ test('DS resize and zoom keep touch rays aligned while room painting is deferred
     view.nativeBusy = true;
   });
   await page.setViewportSize({ width: 390, height: 844 });
-  const targets = await page.evaluate(async () => {
-    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
     view.resize();
     view.setPlayZoom(.65);
+  });
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setDeviceMetricsOverride', {
+    width: 390, height: 844, deviceScaleFactor: 2, mobile: false,
+  });
+  await page.locator('#ds-stylus').click();
+  const targets = await page.evaluate(async () => {
+    const { view } = await import('./src/app.js'), { Vector3 } = await import('three');
     const bounds = view.canvas.getBoundingClientRect();
     const camera = view.camera.clone();
     camera.lookAt(view.lookAt);
@@ -352,13 +360,14 @@ test('DS resize and zoom keep touch rays aligned while room painting is deferred
       )).project(camera);
       const clientX = bounds.left + (point.x + 1) * bounds.width / 2;
       const clientY = bounds.top + (1 - point.y) * bounds.height / 2;
-      return { x, y, visible: clientX >= bounds.left && clientX < bounds.right &&
-        clientY >= bounds.top && clientY < bounds.bottom,
+      return { x, y, visible: clientX >= Math.max(0, bounds.left) && clientX < Math.min(innerWidth, bounds.right) &&
+        clientY >= Math.max(0, bounds.top) && clientY < Math.min(innerHeight, bounds.bottom),
         touch: view.dsController.touchAt({ clientX, clientY }) };
     });
   });
   expect(targets).toEqual([[32, 80], [128, 96], [212, 160]].map(([x, y]) =>
     ({ x, y, visible: true, touch: { x, y } })));
+  await cdp.detach();
 });
 
 test('DS quick taps reach their clicked pixels without holding, with and without the pen', async ({ page }, testInfo) => {
@@ -414,6 +423,10 @@ test('DS quick taps reach their clicked pixels without holding, with and without
       });
     }, pixels);
     for (const point of targets) {
+      expect(point.clientX).toBeGreaterThanOrEqual(0);
+      expect(point.clientX).toBeLessThan(page.viewportSize().width);
+      expect(point.clientY).toBeGreaterThanOrEqual(0);
+      expect(point.clientY).toBeLessThan(page.viewportSize().height);
       if (phone) {
         await cdp.send('Input.dispatchTouchEvent', {
           type: 'touchStart', touchPoints: [{ id: 1, x: point.clientX, y: point.clientY }],

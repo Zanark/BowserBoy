@@ -11,6 +11,23 @@ record or constitute fresh execution of historical tests.
 
 ### Hosted recovery remains blocked
 
+Exact source `8f7f665c8a9afeae53d6b60446ea68f47409f5db`,
+[Pages42319766498](https://github.com/Zanark/BowserBoy/actions/runs/42319766498),
+finishes **failure**: build and twelve browser shards pass, seven fail;
+deployment is skipped. Its phone quick-tap projections are identical to the
+previous failure. The matrix correction fixes a real defect, not this entire
+failure. The remaining stale desktop stylus hotspot is only reprojected after
+a room paint. Picking it up after resizing can move the LCD outside the visible
+viewport. Extend the deferred-paint regression with real stylus pickup and DPR2,
+and compare targets with the visible viewport, not just the canvas bounds.
+This strengthened case fails before the hotspot correction (two probes are
+offscreen), then passes when matrix synchronization also reprojects DS controls.
+Six Edge precision/mapping/quick-tap cases pass in1.6m; syntax,44units/build pass.
+The software mapping regression passes, but quick taps still exceed1500ms:
+all second-batch native/copied marks are yellow after1604.5ms. The third phone
+batch is not reached in that failed software case. Preserve this failure.
+No new deployment or public qualification is claimed.
+
 Exact source `34484498de6be19a48c5191c4d717035bf84a320`,
 [Pages42317015074](https://github.com/Zanark/BowserBoy/actions/runs/42317015074),
 also finishes **failure**: build and eleven browser shards pass, eight fail,

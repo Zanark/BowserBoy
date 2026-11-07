@@ -30,6 +30,19 @@ Do not claim a controlled speedup from one hosted run or assume account limits.
 
 Completion evidence
 -------------------
+Pages8f7f665/42319766498 finishesFAILURE: build/12browser shards pass,
+7fail and deployment skips. Failing shards6-11and19 retain native boot,
+transition, pixel/latency, pear intermediate-motion and reload failures.
+Sparse/movement/scene GPU-aware fixtures now pass hosted shards2,16,17.
+Identical phone projections expose stale stylus hotspots, separate from the
+real matrix defect. Strengthen existing mapping and native quick-tap cases
+with viewport visibility; reproject DS controls at synchronous camera changes.
+The expanded no-paint regression genuinely fails before correction and passes
+afterward. Six Edge precision/mapping/quick cases pass1.6m; software mapping
+passes, quick second-batch read fails1500ms at1604.5ms with correct pixels.
+Syntax/44units/build pass. Inventory stays93cases; no added or removed cases.
+All hosted gates remain required; no new publication is claimed.
+
 Pages3448449/42317015074 finishesFAILURE: build and11browser shards pass,
 8fail and deploy skips. Trace exposes offscreen phone touch projections,
 not lost desktop contacts: both desktop quick batches pass145.8/169.7ms.

@@ -29,6 +29,18 @@ Queued drag moves do not build a stale backlog; cancellation discards pending
 contacts rather than replaying them after blur, pause, tools or console changes.
 
 Completion evidence:
+Pages8f7f665/42319766498 fails: build and12browser shards pass,7fail,
+deploy skips. Phone projections remain identical after the matrix correction.
+The remaining desktop-positioned stylus hotspot waits for a room paint;
+picking it up after a phone resize can move the LCD outside the viewport.
+Extend the no-paint regression with actual pen pickup/DPR2 and independently
+visible viewport bounds. It fails before correction with two offscreen probes,
+then passes when camera synchronization also reprojects DS controls.
+Six Edge precision/mapping/quick-tap cases pass1.6m; syntax/44units/build pass.
+Software mapping passes; quick second-batch native/copied pixels are correct
+after1604.5ms, failing1500ms before the phone batch. Keep that failure and all
+deadlines. Hosted/public touchscreen qualification remains incomplete.
+
 Pages3448449/42317015074 fails: build and11browser shards pass,8fail,
 deploy skips. The exact trace passes both desktop quick-tap batches in
 145.8/169.7ms, but projects three upside-down phone targets outside the canvas

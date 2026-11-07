@@ -666,6 +666,11 @@ transforms immediately, independent of GPU eligibility. Resize, zoom and DS
 hinge reframing must not leave pointer rays using the prior camera pose while
 the native core and screen copies continue. Rendering also updates the camera
 inverse after `lookAt`, before a pending-fence early return.
+The same synchronization reprojects DS hardware/stylus HTML hotspots. Waiting
+for a GPU paint leaves desktop-sized hit targets after a phone resize; clicking
+the stale stylus target can move the visible viewport away from the LCD.
+Touch regressions require targets inside the viewport, not merely inside a
+canvas rectangle that may itself extend offscreen.
 
 Unchanged shadows are cached and idle static scenes stop painting once motion
 and illumination settle. Model, lamp, power, resize and button changes invalidate
