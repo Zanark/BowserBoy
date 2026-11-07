@@ -3,13 +3,14 @@ GitHub issue: https://github.com/Zanark/BowserBoy/issues/111
 Milestone: Publish the outstanding desk refinements with monitored Pages CI.
 Dependencies: 106_BOTTOM_LEFT_SCENE_TEXT.todo; 107_PEAR_BOY_EXPRESSIONS.todo;
 108_COLLAPSED_CONSOLE_DOCK.todo; 109_DS_SCREEN_SHIMMER.todo;
-110_SMALL_AXOLOTL_LAMP.todo; 111_MOVABLE_AXOLOTL.todo.
+110_SMALL_AXOLOTL_LAMP.todo; 111_MOVABLE_AXOLOTL.todo;
+113_PEAR_BOY_CUTER_RECOVERY.todo; 114_DS_CONSOLE_STATUS.todo.
 Purpose: Commit as Zanark, publish the approved application changes and
 observe the actual pipeline and live site instead of stopping at a push.
 
 Tasks:
 - [x] Qualify source/build/units and focused movement/UI browser coverage.
-- [ ] Commit and push scoped work as Zanark with unrelated media preserved.
+- [x] Commit and push scoped work as Zanark with unrelated media preserved.
 - [ ] Monitor all19browser shards, build and actual deployment.
 - [ ] Investigate observed failures and make bounded corrections.
 - [ ] Verify public runtime bytes and affected live interaction.
@@ -18,13 +19,27 @@ Tasks:
 Acceptance criteria:
 Exact pushed source and Pages run are recorded. All retained tests execute
 successfully and deployment succeeds. Existing17parked scenarios plus the
-one bounded-repair console fixture remain explicit coverage debt, not passes. No weakened assertions,
+bounded-repair console fixture and combined reduced-motion/WebGL case remain
+explicit coverage debt, not passes. No weakened assertions,
 timeouts or workflow gate to manufacture success. The deployed source and
 actual axolotl movement are independently checked. Unrelated nine existing
 screenshots and frozen published PDF are preserved.
 
 Completion evidence:
-Authorized by the owner; qualification and publication pending.
+First pushed source f10fab1/Pages42371648234 completes85PASS/11FAIL/
+18SKIP/0NOT_RUN across19shards. Build passes; deployment is skipped.
+The prior public source remains51658ad until independently verified otherwise.
+One bounded correction uses960x720fixtures for affected heavy native/UI
+cases, retaining assertions, deadlines and full renderer pixel ratio; the
+GPU-fence case retains its existing844x390viewport and high-DPI checks.
+Idle counting now awaits pending DS reflection work as well as scene/shadow
+settlement. Local eleven-case rerun gives10PASS/1FAIL. Park the complete
+reduced-motion/WebGL case under105, after its allowed failed repair.
+Correct the directly coupled recovery-dock product regression separately.
+New focused recovery-entry and normal desktop startup/DS-label cases pass.
+Final check/61units/build pass. Existing tripod fixture remains1920x1100;
+its original-viewport bounded rerun passes. Inventory115declarations implies
+96retained/19parked on CI; publication pending.
 
 Completion log:
 2026-11-07: Owner authorizes Zanark commits, push, deployment and monitored
@@ -37,3 +52,22 @@ the initial collision-free console homes. All three repaired cases pass.
 The extra console cancellation/wheel case fails its newly obstructed path;
 one attempted fixture repair is rejected, so park only that case under105.
 Current114declarations imply96retained/18parked on CI; hosted result pending.
+2026-11-07: Commit f10fab1752c4d15167baeaaace4623820f0c2bee pushed main
+as Zanark; exact Pages run42371648234 is being monitored. Owner then
+requests slower/cuter Pear expressions, tracked separately by113. Qualify
+and publish that revision before closing this monitored release.
+2026-11-07: All19first-run shard logs inspected:85pass/11fail/18skip/
+0unrun. D-pad traces eventually show correct rightward tilt/depression/
+highlight but the complete cases exhaust120s; do not claim a native-input
+defect. Idle failure's26extra draws are reproduced as pending cube-map
+reflection work, not perpetual redraw. Correct that settling predicate.
+Other native/scene cases time out at boot, transition, screenshot or fixture
+evaluation. Use bounded desktop fixtures rather than changing app sharpness,
+assertions or test timeouts. All11observed failures receive one rerun.
+2026-11-07: Owner says DS is no longer a prototype; current DS copy, guide
+anchors and notices reconciled under114 without rewriting historical media.
+2026-11-07: Bounded local rerun10PASS/1FAIL. Full reduced-motion/WebGL
+case still times out at hidden tools after recovery. Park it locally/CI
+without another full-case attempt. Open recovery controls now expands the
+dock explicitly; WebGL failure has no selectable scene console to reveal it.
+This fixes a default-collapsed-dock regression, not restored parked coverage.

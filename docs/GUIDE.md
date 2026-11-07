@@ -16,16 +16,16 @@ on the table. GBA tools/settings use the static Advance logo instead.
 **BowserBOY ADVANCED** is the first
 console: the current GBA handheld. Its original purple artwork still reads
 BowserBOY ADVANCE and stays unchanged on its rear and idle/loading/startup LCD.
-The physical bezel lettering also stays unchanged. The local working tree now
-adds a separate **BowserBOY DS** metallic teal/lime console, clipped stylus and selector;
-this DS prototype has not been published to Pages.
+The physical bezel lettering also stays unchanged. **BowserBOY DS** is the
+separate Nintendo DS console, with a metallic blue-cyan/green shell, clipped
+stylus, its own runtime and a shared console selector.
 
-The current local DS uses bright pale-pistachio green instead of neon lime.
+The DS uses bright pale-pistachio green instead of neon lime.
 Green hinge trim has metallic room reflections; buttons retain a softer finish
 and dark navy legends. START/SELECT/POWER labels stay light against the blue
 shell. L/R now sit on the top edge, with the original Q/W bindings retained.
 Four matte green square rubber pads replace the black underside feet.
-These working-tree refinements remain separate from the published GBA release.
+Its runtime, controls and saved progress remain separate from the GBA.
 
 The repository is now `Zanark/BowserBoy`; historical Pages URLs and the local
 `BowserBoyAdvance` checkout name are retained. The DS does not rename or
@@ -73,7 +73,7 @@ The shimmer pauses while hidden and is disabled for reduced-motion users.*
 
 **A little escape, on your desk.** The published GBA player is inside an actual
 3D indigo handheld, built for GitHub Pages. The following GBA figures predate
-the local DS prototype described below.
+the separate DS console described below.
 
 ![Current local-build table with chrome website branding, a white tripod lamp and movable tools](images/readme-table.png?v=storsegel-20261106)
 
@@ -114,10 +114,13 @@ does not replace a console's saved table position. Pear-boy also returns to his
 chosen table position, unless you explicitly move or reset him. This is physical
 spacing, not drawing through objects. Game boxes are not implemented yet.
 
-## Nintendo DS local prototype
+<a id="nintendo-ds-local-prototype"></a>
 
-Start the existing development server with `npm run dev` and open
-**http://127.0.0.1:5173**. Both consoles share the desk but are separate models.
+## Nintendo DS
+
+Open [BowserBOY online](https://zanark.github.io/BowserBoy/), or start the
+development server with `npm run dev` and open **http://127.0.0.1:5173**.
+Both consoles share the desk but are separate models.
 Use the **GBA / DS** selector or click either console on the table.
 With DS selected, **DS cartridges** opens its own tools; **Escape** also opens
 them during play. Pick up, put down, Inspect, zoom and room/lamp controls
@@ -189,8 +192,8 @@ every game will. No commercial games are included or used as test fixtures.
 
 The face-button diamond and its recessed sockets clear the touchscreen bezel.
 Projected buttons follow the physical DS caps. Pointer release, cancellation
-and focus loss release inputs. DS keyboard mappings are fixed in this
-prototype; GBA remapping does not change them. Native gamepad behavior is not
+and focus loss release inputs. DS keyboard mappings are fixed;
+GBA remapping does not change them. Native gamepad behavior is not
 independently qualified. Twin Lab's upper marker moves with the D-pad;
 press/drag the lower LCD to draw yellow marks.
 
@@ -259,7 +262,7 @@ The visible front-left power button has a minimum 44px pointer target and
 uses the same lifecycle as **Power off/on DS** in tools. Without a cartridge,
 it opens DS tools with an insertion explanation rather than pretending to boot.
 
-**Scope:** prototype for original DS direct boot with local cartridge files.
+**Scope:** original Nintendo DS direct boot with local cartridge files.
 No DSi, wireless/multiplayer, firmware-menu boot, offline-first guarantee or
 universal commercial-game compatibility. The GBA's CRT presets, advanced
 settings, three save slots, speed controls and LCD-only fullscreen are not
@@ -287,8 +290,10 @@ Keyboard steps place him deliberately without accumulating throwing speed.
 The longer, thick braided rope arms and legs swing and settle. His entire face
 (eyes, smile and freckles together) tracks
 mouse/pen movement. While held or falling, his squeezed eyes and pink cheeks
-accompany alternating wobbly closed and peanut-shaped open scream mouths.
-A hard landing changes his face from angry to worried, then back to normal;
+accompany alternating wobbly closed and peanut-shaped open scream mouths,
+with each mouth held for 900ms rather than flickering rapidly.
+A hard landing brings small round angry eyes with short furrowed brows,
+then squeezed eyes and a tiny puckered pout, then his normal smile;
 a small drop does not trigger that reaction. The signature three freckles on
 each cheek remain visible throughout. Reduced motion removes decorative
 swinging and mouth alternation, not gravity or the static recovery expressions.
@@ -684,7 +689,7 @@ view. Scroll within it for sound settings and help.*
 
 Checkpoints include an instant emulator state and cartridge battery-save bytes
 when the game provides them. Use the game's own save menu as usual.
-This prototype does **not** import/export raw `.sav` files or sync to the cloud.
+BowserBOY does **not** import/export raw `.sav` files or sync to the cloud.
 
 **Save manually before closing and export regularly.** Browser data can be
 cleared or evicted, and private browsing may discard it. Saves belong to the
@@ -792,5 +797,5 @@ controls are its physical shell buttons, not overlays on the game.*
 
 </details>
 
-Independent prototype; not affiliated with Nintendo. See
+Independent emulator project; not affiliated with Nintendo. See
 [third-party notices](../THIRD_PARTY_NOTICES.md) for runtime sources and licenses.

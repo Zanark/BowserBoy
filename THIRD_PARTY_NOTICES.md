@@ -1,6 +1,6 @@
 # Third-party notices and provenance
 
-This independent prototype is not affiliated with Nintendo. Game Boy Advance
+This independent project is not affiliated with Nintendo. Game Boy Advance
 and Nintendo DS are Nintendo trademarks. No firmware/BIOS images are included. The separately
 supplied demo ROM and box art below are not independently authored emulator
 assets; their publication relies on the user's redistribution confirmation.
@@ -28,7 +28,7 @@ automatically load the supplied ROM.
 - **mGBA**: the GBA emulation core selected by EmulatorJS.
   [Project/source](https://github.com/mgba-emu/mgba),
   [Mozilla Public License 2.0](https://github.com/mgba-emu/mgba/blob/master/LICENSE).
-- **DeSmuME**: the Nintendo DS core selected by the local prototype.
+- **DeSmuME**: the Nintendo DS core selected by BowserBOY DS.
   [Upstream source](https://github.com/TASEmulators/desmume),
   [libretro core source](https://github.com/libretro/desmume),
   [GNU GPL v2 license](https://github.com/libretro/desmume/blob/master/desmume/COPYING).
@@ -43,7 +43,7 @@ automatically load the supplied ROM.
   Shader code/resources remain supplied by that runtime, with their upstream
   notices; this application does not vendor, modify or rename the shader.
 
-The prototype does not vendor or modify those emulator runtime files. A
+The project does not vendor or modify those emulator runtime files. A
 versioned CDN URL is not an integrity hash or a full native-core reproducibility
 record. Before mirroring, modifying or redistributing a bundled emulator build,
 preserve its notices and provide corresponding source as its licenses require;
@@ -60,7 +60,7 @@ package. The latter two supply the rectangular-light LTC lookup resources.
 It also copies the full package license to `dist/vendor/THREE-LICENSE.txt`. That notice is
 included in the deployed artifact. No other dependency files are exposed.
 
-## Original prototype assets
+## Original project assets
 
 The cartridge icon, procedural handheld/table/cartridge/lamp geometry, canvas
 textures and project lettering, UI composition, and Pixel Lab
@@ -70,7 +70,7 @@ claim of booting on physical retail hardware.
 Its optional audio-test variant emits an original PSG test tone, not music or
 samples taken from a game. The ordinary bundled demo remains byte-identical.
 
-The DS prototype's **Twin Lab** generator in `scripts/demo-ds-rom.mjs` is
+The DS **Twin Lab** generator in `scripts/demo-ds-rom.mjs` is
 original ARM9/ARM7 homebrew, including its font, pixel graphics, button logic
 and SPI touchscreen reader. It omits Nintendo logo/BIOS/firmware bytes and
 is intended for emulator testing, not certification on retail hardware.

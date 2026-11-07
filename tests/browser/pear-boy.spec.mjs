@@ -361,6 +361,18 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
     const { Raycaster, Vector2, Vector3 } = await import('three');
     view.renderer.setAnimationLoop(null);
     const { pear } = view;
+    pear.setFaceLifted(true);
+    pear.acknowledgeFacePaint();
+    const mouths = [];
+    for (let cycle = 0; cycle < 2; cycle++) {
+      pear.updateFace(.6, new Vector2(), false);
+      mouths.push(pear.face.openMouth.visible);
+      pear.updateFace(.31, new Vector2(), false);
+      mouths.push(pear.face.openMouth.visible);
+      pear.acknowledgeFacePaint();
+    }
+    pear.updateFace(2, new Vector2(), true);
+    mouths.push(pear.face.openMouth.visible);
     const raycaster = new Raycaster();
     const origin = pear.root.localToWorld(new Vector3(0, 4.5, 11));
     const visibility = [];
@@ -382,9 +394,10 @@ test('pear-boy follows the cursor, fears pickup and relaxes on release or cancel
     pear.reactToImpact(20); inspect();
     pear.acknowledgeFacePaint();
     pear.updateFace(1, new Vector2(), false); inspect();
-    return visibility;
+    return { visibility, mouths };
   });
-  for (const visible of freckles) expect(visible).toEqual(Array(6).fill('pear-boy cheek freckle'));
+  expect(freckles.mouths).toEqual([false, true, true, false, false]);
+  for (const visible of freckles.visibility) expect(visible).toEqual(Array(6).fill('pear-boy cheek freckle'));
   expect(errors).toEqual([]);
 });
 

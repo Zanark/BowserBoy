@@ -23,11 +23,13 @@ Tasks:
 - [ ] Restore the original 1000ms light-switch paint bound (scene).
 - [ ] Restore experimental GBA LCD/control spill within its original deadline (scene).
 - [ ] Restore console wheel-only placement with the additional companion clearance (console movement).
+- [ ] Restore the complete reduced-motion pickup and unavailable-WebGL recovery scenario (scene).
 
 Acceptance criteria:
 Each exact case passes its original assertions, resolution and deadlines on the
 hosted browser before removing its skip. Sixteen cases remain runnable locally;
 side-stylus and physical-cap cases are parked locally too after recurring there.
+The reduced-motion/WebGL combined scenario is also parked locally.
 Passing retained gates or separate focused checks does not restore skipped CI
 coverage. Do not silently drop, broaden or convert these cases to passing tests.
 
@@ -82,3 +84,15 @@ Earlier rejection/cancellation portions ran, but the complete case is not
 qualified. This is coverage debt, not a proven console movement defect or fix.
 Current inventory114;18CI skips (16CI-only,2also local),96retained CI cases.
 The new desktop/touch axolotl cases and retained Pear light/movement pass.
+2026-11-07: First f10fab1/Pages42371648234 gives85PASS/11FAIL/18SKIP.
+One bounded11-case fixture repair gives10PASS/1FAIL locally. The complete
+reduced-motion/WebGL scenario still times out trying to open hidden tools
+after recovery. Park that exact complete case locally and on CI, retaining
+its original viewport/assertions/deadlines; do not keep retrying it now.
+Fix the directly coupled product regression separately: Open recovery
+controls must expand the newly default-collapsed dock because WebGL failure
+prevents selecting a console. A focused recovery-entry check does not restore
+this complete parked scenario's coverage.
+The new focused recovery-entry regression passes, as does the normal desktop
+startup/DS-label case; this does not restore the full parked scenario.
+Inventory115;19CI skips (16CI-only,3also local),96retained hosted cases.

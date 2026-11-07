@@ -23,9 +23,9 @@ still reads ADVANCE. That artwork is not the website's chrome logo.
 | GBA bezel and LCD-fullscreen bezel | Letter-only metallic texture | Console presentation, not website branding |
 | DS tools/Inspect, loading LCD and lower-body underside | `assets/ds-logo.png` | Latest supplied transparent DS identity; no lid emblem |
 
-The local DS prototype adds a separate model and stylus beside GBA, a console
+The DS adds a separate model and stylus beside GBA, a console
 selector and independent DeSmuME session. Decorative cartridges are still
-not a downloadable game library. This working-tree addition is not deployed.
+not a downloadable game library.
 
 The repository is `Zanark/BowserBoy`; historical Pages links and the local
 checkout name remain `BowserBoyAdvance`.
@@ -1159,7 +1159,7 @@ suite and job deadlines.
 - [Current option documentation](https://emulatorjs.org/docs/options/)
 - [Control identifiers](https://emulatorjs.org/docs4devs/control-mapping/)
 
-## Deliberately not in this prototype
+## Deliberately out of scope
 
 No cloud accounts/sync, server ROM library, offline/PWA guarantee, raw `.sav`
 interchange, GB/GBC support or complete game compatibility

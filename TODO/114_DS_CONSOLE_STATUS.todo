@@ -1,0 +1,31 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/113
+Milestone: Present BowserBOY DS as a supported console, not a prototype.
+Dependencies: 79_NINTENDO_DS_EMULATION.todo.
+Purpose: Apply the owner's product-status clarification consistently without
+claiming unsupported compatibility or rewriting historical evidence.
+
+Tasks:
+- [x] Remove current DS prototype labels from the UI and runtime errors.
+- [x] Reconcile README, guide, architecture, navigation and runtime notices.
+- [x] Preserve historical capture captions, filenames, work logs and frozen book.
+- [ ] Qualify the current source, publish and verify the live DS copy through112.
+- [ ] Synchronize issue/Project tracking and owned continuity.
+
+Acceptance criteria:
+Current DS surfaces say BowserBOY DS or Nintendo DS, not local prototype.
+DS guide anchors and inbound navigation match. Original-DS-only scope,
+fixed bindings, separate saves and unqualified compatibility limits remain.
+Historical provenance is not relabeled as current publication or approval.
+
+Completion evidence:
+Owner states DS is no longer a prototype. Current copy is updated, including
+the uppercase selector badge. Check,61units and build pass. Normal startup
+explicitly checks the selector and DS tools no longer say prototype.
+Deployment and live qualification remain pending under112.
+
+Completion log:
+2026-11-07: Owner explicitly promotes DS beyond prototype status. This is a
+product-label correction, not new emulator functionality or a compatibility claim.
+2026-11-07: Case-insensitive audit distinguishes historical filenames/anchors
+from current copy. Actual desktop startup/DS-label and recovery-entry cases pass.

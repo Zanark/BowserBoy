@@ -23,12 +23,14 @@
 ## Supported consoles
 
 - [**BowserBOYADVANCED**](#bowserboyadvanced) - Game Boy Advance.
-- [**BowserBOY DS**](#bowserboy-ds-local-prototype) - Nintendo DS, local prototype.
+- [**BowserBOY DS**](#bowserboy-ds) - Nintendo DS.
 
-*The DS is a local working-tree prototype, not a published Pages release.
-The existing GBA showcase below retains its historical captures.*
+*Both consoles share the BowserBOY desk. Showcase captions retain each
+capture's original provenance; they do not define the current release status.*
 
-## BowserBOY DS - local prototype
+<a id="bowserboy-ds-local-prototype"></a>
+
+## BowserBOY DS
 
 <picture>
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/ds-logo.png">
@@ -73,8 +75,9 @@ cover. Actual local Inspect capture with Room lighting on; not a deployed build.
 exposure and GBA materials are unchanged; the lower base alone uses a lighter
 blue pigment than the lid. Actual local capture, not a published build.*
 
-From the repository folder, run `npm run dev`, then open
-**http://127.0.0.1:5173**. Select **DS**, open **DS cartridges** and choose
+Open [BowserBOY online](https://zanark.github.io/BowserBoy/), or run
+`npm run dev` from the repository and open **http://127.0.0.1:5173**.
+Select **DS**, open **DS cartridges** and choose
 **Try Twin Lab** or an authorized uncompressed `.nds` file. The game card
 slides into the separate DS, and both LCDs display live output.
 
@@ -112,9 +115,9 @@ game compatibility are not claimed. No ROM collection, BIOS or firmware
 is included. Desktop Edge and a 390px responsive browser viewport are
 tested; real-phone performance and commercial games remain unqualified.
 The GBA's native shader/settings/fullscreen features are not all DS features.
-[Full instructions and limits](docs/GUIDE.md#nintendo-ds-local-prototype).
+[Full instructions and limits](docs/GUIDE.md#nintendo-ds).
 
-## Rearrange the desk - local prototype
+## Rearrange the desk
 
 ![The DS moved from its original desk position, beside the unchanged GBA and pear-boy](docs/images/console-movement.png)
 
@@ -142,8 +145,9 @@ desk. He sits on the front-right edge with his rope legs dangling below it.*
 
 Drag him upward or sideways, scroll for depth, then release to drop and bounce.
 His whole face follows the cursor. While held or falling, his cute squeezed eyes
-and rosy cheeks accompany alternating closed/open scream mouths. A hard landing
-brings an angry face, then a worried face, then his normal smile. All expressions
+and rosy cheeks accompany closed/open scream mouths, each held for almost a
+second. A hard landing brings small round angry eyes, then a squeezed-eye
+pout, then his normal smile. All expressions
 retain the signature three dots on each cheek. Reduced motion keeps the scream
 mouth still.
 Move him farther back to rest his feet on the table.

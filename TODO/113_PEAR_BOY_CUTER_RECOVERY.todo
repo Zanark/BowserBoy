@@ -1,0 +1,35 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/112
+Milestone: Slower screams and smaller, cuter landing and recovery faces.
+Dependencies: 107_PEAR_BOY_EXPRESSIONS.todo.
+Purpose: Apply the owner's visual feedback without losing the permanent
+three cheek dots or changing the drop physics and reaction sequence.
+
+Tasks:
+- [x] Hold each scream mouth longer instead of switching every240ms.
+- [x] Replace large angry eye wedges with small round eyes and short brows.
+- [x] Replace glossy worried eyes/frown with squeezed eyes and a tiny pout.
+- [x] Qualify timing, actual landing paints and all-expression freckle clearance.
+- [x] Review rendered faces and update docs, tracking and owned continuity.
+- [ ] Commit as Zanark and monitor the deployed revision through112.
+
+Acceptance criteria:
+Each scream mouth remains for900ms and reduced motion remains still.
+Angry eyes are compact, with readable brows rather than oversized wedges.
+Recovery uses squeezed-shut eyes, tiny forehead creases and a puckered mouth.
+All six signature cheek dots remain visible in every expression/gaze.
+Hard landing still presents angry, recovery and normal in order. No claim
+of owner visual approval follows automatically from technical qualification.
+
+Completion evidence:
+Check, all61unit tests, build and both focused Pear browser cases pass.
+Reviewed actual closed/open scream, compact angry eyes and squeezed-eye pout
+renders; six freckles remain visible. Deterministic900ms dwell, reduced motion
+and actual painted landing/recovery remain covered. This is not owner approval.
+Commit/deployment and public verification remain pending through112.
+
+Completion log:
+2026-11-07: Owner rejects rapid scream changes, large angry eyes and the
+glossy worried recovery. Use the supplied small round-eye alternative and
+squeezed-eye pout references; preserve freckles and existing motion.
+2026-11-07: Local qualification and actual four-state render review pass.

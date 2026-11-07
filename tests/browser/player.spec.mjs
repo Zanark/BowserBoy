@@ -932,6 +932,7 @@ test('first visit is off, original startup plays only on the power switch, and i
 });
 
 test('inserting a cartridge does not power on, and refresh resumes the remembered powered cartridge without another boot animation', async ({ page }) => {
+  await page.setViewportSize({ width: 960, height: 720 });
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('./');
   await waitForDesk(page, { expandDock: true });
@@ -1021,6 +1022,7 @@ test('device storage upgrades old checkpoints intact and rejects interrupted pow
 });
 
 test('power switch destroys the runtime and cold boots only the in-game save, including after reload', async ({ page }) => {
+  await page.setViewportSize({ width: 960, height: 720 });
   await page.goto('./');
   await waitForDesk(page, { expandDock: true });
   await openTools(page);

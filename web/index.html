@@ -29,7 +29,7 @@
       <p id="scene-error" role="alert" hidden></p>
       <nav class="console-picker" aria-label="Choose a console on the table">
         <button id="select-gba" aria-pressed="true" disabled>GBA</button>
-        <button id="select-ds" aria-pressed="false" disabled>DS <span>PROTOTYPE</span></button>
+        <button id="select-ds" aria-pressed="false" disabled>DS</button>
       </nav>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
@@ -205,7 +205,7 @@
     <dialog id="ds-tools" class="tools-drawer ds-tools" aria-labelledby="ds-title">
       <img class="panel-logo" src="./assets/ds-logo.png" alt="BowserBOY DS chrome neon emblem" width="2149" height="732">
       <div class="drawer-header"><div><p class="eyebrow">A SECOND CONSOLE. THE SAME TABLE.</p><h2 id="ds-title">BowserBOY DS</h2></div><button id="ds-close" class="close-button" aria-label="Close DS cartridges">&times;</button></div>
-      <p class="fineprint">Local prototype / Nintendo DS direct boot / EmulatorJS 4.2.3 + DeSmuME. Not a replacement for the GBA.</p>
+      <p class="fineprint">Nintendo DS direct boot / EmulatorJS 4.2.3 + DeSmuME. A separate console alongside the GBA.</p>
       <p id="ds-status" class="ds-status" role="status" aria-live="polite">Insert a DS cartridge or try the original Twin Lab demo.</p>
       <section class="drawer-section">
         <h3>Insert a DS game card</h3>
@@ -228,7 +228,7 @@
       <section class="drawer-section">
         <h3>Two screens. A real touchscreen.</h3>
         <p class="section-copy">Pick up DS to play. Click, tap or drag on its lower physical LCD to use the stylus. The slim lime stylus is clipped to the shell; touch is sent from your pointer.</p>
-        <p class="fineprint">Arrows = D-pad / Z = A / X = B / A = Y / S = X / Q = L / W = R / Enter = Start / left Shift = Select. Click the scene for keyboard focus. DS keys are fixed in this prototype; GBA remapping is unchanged.</p>
+        <p class="fineprint">Arrows = D-pad / Z = A / X = B / A = Y / S = X / Q = L / W = R / Enter = Start / left Shift = Select. Click the scene for keyboard focus. DS keys are fixed; GBA remapping is unchanged.</p>
         <div class="setting-row"><label for="ds-mute">Mute DS audio</label><input id="ds-mute" type="checkbox" disabled></div>
         <p class="fineprint">Selecting the other console pauses this one. Single-threaded WebAssembly needs internet on first load, but no isolation headers or backend. DS games can be CPU-heavy; phone speed and commercial-game compatibility are not guaranteed. DSi, microphone, lid gestures, multiplayer and BIOS-menu boot are not implemented. Unsupported ROMs and runtime/download errors are reported here.</p>
       </section>

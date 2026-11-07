@@ -187,6 +187,7 @@ test('DS A/S face keys and Q/W shoulders reach native buttons from the scene and
 });
 
 async function bootDsDpad(page) {
+  await page.setViewportSize({ width: 960, height: 720 });
   const errors = await bootDsDemo(page);
   const frame = await dsFrame(page);
   await frame.evaluate(() => {

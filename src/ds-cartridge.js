@@ -25,7 +25,7 @@ export async function identifyDsRom(file) {
   if (!file || !/\.nds$/i.test(file.name)) throw new Error('Choose an uncompressed Nintendo DS .nds file.');
   if (file.size < 512 || file.size > DS_MAX_ROM_BYTES) throw new Error('A DS ROM must be between 512 bytes and 512 MB.');
   const header = new DataView(await file.slice(0, 512).arrayBuffer());
-  if (header.getUint8(0x12) !== 0) throw new Error('This prototype supports original Nintendo DS games, not DSi-enhanced or DSi-only ROMs.');
+  if (header.getUint8(0x12) !== 0) throw new Error('BowserBOY DS supports original Nintendo DS games, not DSi-enhanced or DSi-only ROMs.');
   for (const [offset, ranges] of [[0x20, [[0x02000000, 0x02400000]]], [0x30, [[0x02000000, 0x02400000], [0x037f8000, 0x03810000]]]]) {
     const romOffset = header.getUint32(offset, true);
     const entry = header.getUint32(offset + 4, true) & ~1;
@@ -47,7 +47,7 @@ export async function identifyDsRom(file) {
 
 export function dsScreenRegions(width, height) {
   if (!Number.isInteger(width) || width < 256 || width > 2048 || width % 256 || height !== width * 1.5) {
-    throw new Error(`The DS display returned ${width}x${height}; this prototype requires top/bottom 256x384 with no gap, or an integer-scaled display.`);
+    throw new Error(`The DS display returned ${width}x${height}; BowserBOY DS requires top/bottom 256x384 with no gap, or an integer-scaled display.`);
   }
   return [{ x: 0, y: 0, width, height: height / 2 }, { x: 0, y: height / 2, width, height: height / 2 }];
 }

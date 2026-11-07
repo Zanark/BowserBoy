@@ -1310,6 +1310,7 @@ test('quick actions reach real core speed and retain the live LCD through screen
 });
 
 test('quick actions persist autosave off, restore selected slots and perform a safe physical restart', async ({ page }) => {
+  await page.setViewportSize({ width: 960, height: 720 });
   await demoWithAutosaveOff(page);
   let frame = runtime(page);
   const identity = await frame.evaluate(() => window.runtimeIdentity = crypto.randomUUID());

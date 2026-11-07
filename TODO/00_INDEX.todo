@@ -1,5 +1,7 @@
 BowserBOY workstreams
 ====================
+114_DS_CONSOLE_STATUS.todo - IN_PROGRESS: DS is a supported console, not a prototype; current copy corrected, publication tracked by112.
+113_PEAR_BOY_CUTER_RECOVERY.todo - IN_PROGRESS: slower scream changes, small round angry eyes and squeezed-eye pout, preserving all cheek dots.
 112_MONITORED_UI_RELEASE.todo - IN_PROGRESS: qualify outstanding UI work, commit as Zanark, deploy and monitor all actual CI jobs and the public site.
 111_MOVABLE_AXOLOTL.todo - DONE locally: desktop/touch drag/drop, depth, cancellation, rendered bounce, collision and actual GBA/DS focus restoration qualify; publication tracked by112.
 110_SMALL_AXOLOTL_LAMP.todo - DONE locally: smaller cream/pink fixed lamp, mesh power, independent50%/100% brightness, clearance and five focused browser cases; not deployed.

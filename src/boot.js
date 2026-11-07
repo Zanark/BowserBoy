@@ -10,7 +10,10 @@ function showDesk() {
 }
 
 retry.addEventListener('click', () => location.reload());
-recover.addEventListener('click', showDesk);
+recover.addEventListener('click', () => {
+  showDesk();
+  if (document.getElementById('dock-actions').hidden) document.getElementById('dock-toggle').click();
+});
 
 try {
   // Present the cover before synchronous model construction and shader work.
