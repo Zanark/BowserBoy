@@ -31,6 +31,14 @@ Two consoles. Three desk lamps. Your own local games.
 
 *One shared desk. Separate consoles, saves and controls.*
 
+![GBA gameplay on the purple handheld from the supplied demo recording](docs/images/gba-owner-demo.gif)
+
+*GBA demo: the first 30 seconds of the supplied recording.*
+
+![NDS gameplay across the blue console's two screens from the supplied demo recording](docs/images/nds-owner-demo.gif)
+
+*NDS demo: the first 30 seconds of the supplied recording.*
+
 <a id="bowserboy-ds-local-prototype"></a>
 
 <details>
@@ -182,4 +190,4 @@ Two consoles. Three desk lamps. Your own local games.
 [Recording details &amp; historical gallery](docs/MEDIA.md) &middot;
 [Development journal](TODO/04_DEVELOPMENT_LEDGER.todo)
 
-*Real scene interactions with replayed, untouched Celia's GAME and HeartGold openings on the screens; not live game-input demonstrations. [Recording details](docs/MEDIA.md). Bring legally obtained games; no ROM collection or BIOS is included. Independent project, not affiliated with Nintendo. [Credits &amp; licenses](THIRD_PARTY_NOTICES.md).*
+*The two demos above are supplied recordings. Earlier feature GIFs show real scene interactions with replayed, untouched Celia's GAME and HeartGold openings on the screens; not live game-input demonstrations. [Recording details](docs/MEDIA.md). Bring legally obtained games; no ROM collection or BIOS is included. Independent project, not affiliated with Nintendo. [Credits &amp; licenses](THIRD_PARTY_NOTICES.md).*

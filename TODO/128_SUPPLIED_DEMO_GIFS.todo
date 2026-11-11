@@ -1,0 +1,32 @@
+Status: DONE; locally verified; owner authorized the media-only commit/push on2026-11-11.
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/127
+Milestone: Add owner-supplied GBA and NDS demos without replacing historical media.
+Dependencies: Existing README showcase and owner-supplied recordings.
+Purpose: Show the first30seconds of both recordings directly below the shared-desk caption.
+
+Tasks:
+- [x] Follow the clarified append-only placement; preserve all existing GIFs.
+- [x] Convert seconds0-30 at original pacing, full uncropped frame and infinite loop.
+- [x] Add GBA then NDS demos below the shared-desk caption, outside collapsed sections.
+- [x] Document supplied-video provenance separately from historical untouched openings.
+- [x] Verify exact30second durations, full decode, links, sizes and unchanged old GIFs.
+
+Acceptance criteria:
+- Both new GIFs appear immediately below "One shared desk. Separate consoles, saves and controls."
+- Every existing GIF file/reference/caption remains; neither first console showcase is replaced.
+- Each new GIF is30seconds, infinitely looping, aspect-preserving and below10MiB.
+- Raw recordings remain outside the repository. No gameplay-input or publication claim is inferred.
+
+Completion evidence:
+- GBA:800x413,300frames,30000ms,5,547,843bytes, loop0.
+- NDS:800x412,300frames,30000ms,2,221,187bytes, loop0.
+- All frames decode;26prior README GIF references retained; no tracked GIF file modified.
+- First source frames visually inspected; no claim of watching the complete recordings.
+- README/MEDIA updated; technical verification is not owner acceptance or remote publication.
+
+Completion log:
+- 2026-11-11: Owner requested push. Publish only this media/README workstream and
+  its tracking; leave earlier shelf, movable-panel and feedback work uncommitted.
+- 2026-11-11: Initially scoped as two replacements; owner clarified append-only below shared desk.
+  Added two fresh filenames, preserved old editions, qualified mixed-media provenance.
+  No application changes, commit, push, deployment or feedback-recommendation implementation.

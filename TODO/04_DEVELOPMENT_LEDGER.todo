@@ -14,6 +14,15 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-11 / Supplied README demo additions (128, locally qualified):
+  Owner clarified append-only below shared-desk caption, not two replacements.
+  Encode0-30seconds from both supplied recordings at10fps/128colors, full frame,
+  original pacing and infinite loop. New GBA/NDS GIFs are5,547,843/2,221,187bytes;
+  each decodes300frames and30000ms. Preserve26prior GIF references and every old
+  GIF file. Separate supplied demos from historical replay provenance.
+  No application changes, commit/push/deployment or recommendation implementation.
+  Follow-up: owner explicitly requested push; publish only128media/README and
+  directly related tracking, retaining earlier local work outside that commit.
 - 2026-11-08 / Supplied book covers delivered (124):
   Use the owner's two exact PNGs in NDS/modeling PDF and scriptless readers.
   85/328pages retain all84/327interior pages pixel-identically at1.3x, with

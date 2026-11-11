@@ -8,16 +8,16 @@
   ],
   "verified": [
     {
-      "id": "124",
-      "file": "TODO/124_SUPPLIED_BOOK_COVERS.todo",
-      "issue": "https://github.com/Zanark/BowserBoy/issues/123",
-      "number": 123,
-      "nodeId": "I_kwDOVhqp0s8AAAABdVsmEw",
-      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhG2cqc",
+      "id": "128",
+      "file": "TODO/128_SUPPLIED_DEMO_GIFS.todo",
+      "issue": "https://github.com/Zanark/BowserBoy/issues/127",
+      "number": 127,
+      "nodeId": "I_kwDOVhqp0s8AAAABeXdeUw",
+      "itemId": "PVTI_lAHOAe2wCs4Bqc7wzhH4eRw",
       "state": "closed",
       "reason": "completed",
       "projectStatus": "Done",
-      "bodySha256": "01e49c1d293510f326cdf879cea900fd27aac75bef9a2381142b2508f9211db4"
+      "bodySha256": "dd5c8ac3f634955e52ec8b3c1af4d6f56e973289eae281caca15dd70e20af794"
     }
   ]
 }

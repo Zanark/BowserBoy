@@ -8,6 +8,29 @@ This is the user's explicit policy for this repository, not a portfolio-wide rul
 
 ## Sources and boundaries
 
+### Supplied demo additions, 2026-11-11
+
+The owner supplied GBA and NDS demo recordings and clarified that these are
+**additions**, not replacements. The two new GIFs appear immediately below
+"One shared desk. Separate consoles, saves and controls." in the README,
+in GBA then NDS order. Every existing GIF, reference and caption is preserved.
+
+| New GIF | Source window | Dimensions | Encoding |
+|---|---|---|---|
+| `images/gba-owner-demo.gif` | 0-30seconds of the supplied GBA demo | 800x413 | 10fps, 128-color palette |
+| `images/nds-owner-demo.gif` | 0-30seconds of the supplied NDS demo | 800x412 | 10fps, 128-color palette |
+
+Both use the original pacing, full uncropped frame with aspect-ratio-preserving
+scaling (rounded to whole pixels), infinite looping and no audio. Unlike the
+older opening edition below, these are owner-supplied demonstration videos;
+no claim of untouched openings, input provenance or runtime verification is
+made for them. The original MP4s remain outside the repository.
+
+Encoding follows `scripts/render-readme.py`'s FFmpeg palette pipeline:
+`fps=10,scale=800:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle`.
+Use input start zero, output `-t 30 -an -loop 0 -final_delay 10`, and a fresh
+output filename rather than overwriting the historical edition.
+
 ### Untouched opening edition, 2026-11-07
 
 The owner rejected the earlier tutorial/controls screens and explicitly
