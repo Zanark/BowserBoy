@@ -1,7 +1,7 @@
 BowserBOY workstreams
 ====================
-130_CHECKED_SAVE_RELEASE.todo - IN_PROGRESS:45385885549eighteen shards pass, last exceeds600s; actual replay placement corrected and seven consumers pass locally; deployment pending.
-129_NATIVE_GBA_SAVE_IMPORT.todo - DONE locally: raw GBA .sav import, battery-only restart and checkpoint preservation; not deployed.
+130_CHECKED_SAVE_RELEASE.todo - DONE:1acdf01/Pages45389315872attempt2deploys through all nineteen shards;54public byte matches and three hosted native-save cases pass.
+129_NATIVE_GBA_SAVE_IMPORT.todo - DONE: raw GBA .sav import, battery-only restart and checkpoint preservation; checked deployment and hosted verification through130.
 128_SUPPLIED_DEMO_GIFS.todo - DONE: two supplied30second demos below shared-desk caption; old GIFs preserved; owner authorized media-only publication.
 127_MESHBOARD_FEEDBACK_REVIEW.todo - IN_PROGRESS: mandatory peer review; first follow-up November15, recommendations/planned work only, implementation needs owner approval.
 126_MOVABLE_CONTROL_DOCKS.todo - DONE locally: console and lighting panels independently drag/collapse; desktop/mobile and existing dock actions qualified.

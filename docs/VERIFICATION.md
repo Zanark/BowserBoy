@@ -7,7 +7,27 @@ The [engineering book](book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
-## Checked save-import release recovery, 2026-11-24 (in progress)
+## Checked save-import release, 2026-11-24 (deployed)
+
+Release source
+[`1acdf01ec83ff104721bba6362cf27f95ca0fc72`](https://github.com/Zanark/BowserBoy/commit/1acdf01ec83ff104721bba6362cf27f95ca0fc72)
+successfully deploys in
+[Pages45389315872, attempt2](https://github.com/Zanark/BowserBoy/actions/runs/45389315872/attempts/2):
+build, all nineteen browser shards and deployment succeed (21successful jobs).
+Attempt1is retained: eighteen shards passed, while raw-save reload exceeded
+its120second total deadline. The native failed-job rerun uses identical source,
+assertions and limits; no gate is bypassed.
+
+All54actual public files match the exact workflow artifact, including the
+served`.nojekyll`marker. Three existing native-save cases pass against
+https://zanark.github.io/BowserBoy/ in1.2m: visible cold-boot/reload progress,
+unchanged checkpoint slots, invalid/cancelled import protection and explicit
+storage-failure/session-only retry. These use the original Pixel Lab ROM, not
+the owner's private save or a commercial game. Radical Red Continue-menu
+recovery and physical Android compatibility remain unverified.
+
+The following failed attempts and local qualifications are historical recovery
+evidence, superseded by the successful checked and hosted release above.
 
 Source `07e8e61` is pushed, but
 [Pages45364809276](https://github.com/Zanark/BowserBoy/actions/runs/45364809276)
@@ -96,7 +116,7 @@ selection and before shortcut/card gestures. All seven consumers pass locally
 in2.9m. No assertion, deadline, pixel resolution, skip or workflow change;
 checked deployment remains pending.
 
-## Native GBA cartridge-save import, 2026-11-24 (local only)
+## Native GBA cartridge-save import, 2026-11-24
 
 The ordinary save picker now accepts raw GBA `.sav` data separately from
 versioned checkpoint backups. `cartridge.test.mjs` verifies exact decoding for

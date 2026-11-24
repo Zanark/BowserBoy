@@ -1,4 +1,4 @@
-Status: IN_PROGRESS
+Status: DONE; checked release deployed and independently verified on2026-11-24.
 GitHub issue: https://github.com/Zanark/BowserBoy/issues/129
 Milestone: Repair blocking scene checks and publish native-save support.
 Dependencies: 129_NATIVE_GBA_SAVE_IMPORT.todo
@@ -8,8 +8,8 @@ Tasks:
 - [x] Repair stale loose-prop fixtures using current last-played library cartridges.
 - [x] Repair dock accessibility and sparse-frame shelf animation regressions.
 - [x] Investigate and repair remaining failed interaction checks at their actual boundary.
-- [ ] Run affected checks, preserve the complete Pages matrix and verify deployment.
-- [ ] Verify public release bytes and original-ROM save import on the hosted site.
+- [x] Run affected checks, preserve the complete Pages matrix and verify deployment.
+- [x] Verify public release bytes and original-ROM save import on the hosted site.
 - [x] Mirror this workstream to its GitHub issue and configured Project item.
 
 Acceptance criteria:
@@ -19,6 +19,17 @@ Acceptance criteria:
 - Public hosting and compatibility claims are limited to actual observed evidence.
 
 Completion evidence:
+- RELEASE:1acdf01ec83ff104721bba6362cf27f95ca0fc72/
+  Pages45389315872attempt2SUCCESS: build, all nineteen browser shards and
+  deployment succeed (21successful jobs). Exact remote main SHA verified.
+- All54public files, including.nojekyll, match the exact Pages artifact.
+  Three actual hosted native-save cases pass in1.2m: cold boot/reload with
+  preserved slots, invalid/cancelled imports, and storage-failure/session retry.
+  Public URL:https://zanark.github.io/BowserBoy/
+- Retain failed attempt1: eighteen shards pass; raw-save reload exceeds120s.
+  Native failed-job rerun uses identical source/assertions/limits, no gate bypass.
+- No supplied private ROM/save upload. Original Pixel Lab qualifies exercised
+  behavior; Radical Red Continue-menu and physical Android remain unverified.
 - 07e8e61 is pushed; Pages45364809276 build and all three native-save cases pass.
 - The release is blocked by ten scene/shelf/dock browser failures; deploy was skipped.
 - Archived decorative cartridges leave the initial desk intentionally empty; clearance
@@ -69,6 +80,9 @@ Completion evidence:
   before shortcut/card gestures. Original assertions and limits remain.
 
 Completion log:
+- 2026-11-24: Verified successful exact1acdf01Pages45389315872attempt2,
+  all54hosted bytes and three hosted native-save cases. Earlier failed runs
+  below are retained historical evidence, superseded by this checked release.
 - 2026-11-24: Verify actual shard placement, not merely independent test names.
   Preserve c3d39a8failed release. First relocated-fixture run6PASS/1FAIL:
   physical DS card click reached a busy guard. Await real final motion and
