@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-24 / Bounded native-library workloads (130):
+  267d6bf/Pages45381245377attempt1passes A-B-A in8.3m but exceeds shard600s;
+  other native/inspect deadline failures remain. Identical-source native
+  failed-job attempt2passes eighteen shards; DS checkpoint and shard11budget
+  still fail. Neither deploys. Separate GBA replay, DS replay and dual reload,
+  retaining original assertions,600s limits, nineteen shards and21parked cases.
+  DS persistence selects reduced motion. Four focused cases pass locally2.4m.
 - 2026-11-24 / Actual asynchronous start witness (130):
   bbc8259/Pages45378035528also fails; raw-save/zoom pass, cancellation polls
   the old idle state before preview begins. Await actual switch confirmation,

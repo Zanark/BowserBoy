@@ -1735,6 +1735,7 @@ test('DS and GBA retain isolated cores and saves while DS power starts cold', as
 });
 
 test('DS reload resumes the latest manual checkpoint rather than a cold game', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const errors = await bootDsDemo(page);
   await page.locator('#scene-canvas').focus();
   await page.keyboard.down('ArrowRight');

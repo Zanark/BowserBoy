@@ -72,6 +72,18 @@ reaching blur release near its deadline. Full resolution, assertions and
 individual deadlines remain unchanged. All five affected cases pass locally
 in2.9m; no successful new deployment is claimed.
 
+`267d6bf`/
+[Pages45381245377](https://github.com/Zanark/BowserBoy/actions/runs/45381245377)
+has two retained failed attempts. The first passes real shelf A-B-A in8.3m
+but exhausts its600s shard budget, alongside existing inspect/fullscreen
+timing failures. A native failed-job rerun on identical source passes eighteen
+shards; DS checkpoint reload and the remaining shard budget still fail.
+The next fixture change separates real GBA replay, real DS replay and dual-core
+preload/reload into independent cases, reusing the actual-load assertions.
+DS checkpoint persistence selects reduced motion. All four affected cases
+pass locally in2.4m. The nineteen-shard matrix,600s suite limit, original
+assertions and21pre-existing parked cases are unchanged; publication pending.
+
 ## Native GBA cartridge-save import, 2026-11-24 (local only)
 
 The ordinary save picker now accepts raw GBA `.sav` data separately from

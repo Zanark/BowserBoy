@@ -52,8 +52,21 @@ Completion evidence:
   fullscreen exits now have independent cases with all original assertions.
   Renamed-save and stylus-coordinate cases select reduced motion, preserving
   full-resolution native/physical LCD checks. Five focused cases pass in2.9m.
+- 267d6bf/Pages45381245377attempt1passes shelf A-B-A but hits the600s shard
+  budget after its8.3m case; two inspect waits and quick fullscreen also time
+  out. Identical-source failed-job attempt2passes eighteen shards, but shard11
+  hits a DS checkpoint deadline and the suite limit. Neither attempt deploys.
+- Split real GBA replay, real DS replay and dual-native preload/reload into
+  independent cases, retaining every original assertion and existing limits.
+  The shared actual-load helper retains phase/selection/iframe waits.
+  DS checkpoint persistence selects reduced motion. All four focused cases
+  pass locally in2.4m; nineteen-shard workflow and21parked cases unchanged.
 
 Completion log:
+- 2026-11-24: Native failed-job rerun on identical267d6bfretained, not hidden.
+  Its18green shards do not establish deployment. Slice the8.3m dual-console
+  case by replay and shared reload concerns rather than raising the600s
+  suite budget or skipping the final case. Four focused cases pass locally.
 - 2026-11-24: Preserve failed bbc8259/Pages45378035528and its exact shard11/8
   traces. Correct the asynchronous start witness rather than increasing idle
   timeout; retain sparse-frame shelf animation. Stylus trace reaches blur

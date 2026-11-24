@@ -26,6 +26,20 @@ async function attach(page, system, number) {
 
 const finished = page => expect(page.locator('#scene')).toHaveAttribute('data-game-box-phase', 'idle', { timeout: 90000 });
 
+async function playAttached(page, system, number) {
+  if (!await page.locator('#game-library').isVisible()) await page.locator('#game-library-open').click();
+  await expect(page.locator('#game-library')).toBeVisible();
+  await page.locator(`[data-slot="${system}-${number}"] .game-library-play`).click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-game-box', `${system}-${number}`, { timeout: 30000 });
+  await finished(page);
+  await expect.poll(async () => page.evaluate(async ({ system, number }) => {
+    const { library } = await import('./src/app.js');
+    return library.selection[system] === `${system}-${number}`;
+  }, { system, number }), { timeout: 90000 }).toBe(true);
+  const mount = system === 'gba' ? '#runtime-mount' : '#ds-runtime-mount';
+  await expect(page.locator(`${mount} iframe`)).toBeAttached();
+}
+
 test('six spine-out boxes render; physical click opens a real case and missing ROM stays honest', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -134,7 +148,8 @@ test('local ROM, original cover and title persist; invalid ROM does not replace 
   expect(retained).toEqual({ cover: 'image/png', games: 1 });
 });
 
-test('actual original GBA and DS runtimes replay A-B-A, shortcut current game and preload both on reload', async ({ page }) => {
+for (const system of ['gba', 'ds']) {
+test(`actual original ${system.toUpperCase()} runtime replays A-B-A and shortcuts the current game`, async ({ page }) => {
   test.setTimeout(600000);
   await ready(page);
   await page.evaluate(async () => {
@@ -147,73 +162,71 @@ test('actual original GBA and DS runtimes replay A-B-A, shortcut current game an
       return load(...args);
     };
   });
+  await attach(page, system, 1);
+  await attach(page, system, 2);
+  for (const number of [1, 2, 1]) {
+    await playAttached(page, system, number);
+    const loadPose = await page.evaluate(() => window.shelfLoadPoses.at(-1));
+    expect(loadPose.elapsed).toBeGreaterThanOrEqual(4250);
+    expect(['returning', 'idle']).toContain(loadPose.phase);
+  }
+  const before = await page.evaluate(async system => {
+    const { library, view } = await import('./src/app.js');
+    return { id: library.hooks.current(system), card: view.gameShelves.lastCards.get(system).uuid };
+  }, system);
+  await page.locator('#game-library-open').click();
+  await page.locator(`[data-slot="${system}-1"] .game-library-play`).click();
+  await expect(page.locator('#scene')).toHaveAttribute('data-game-box-phase', 'idle');
+  const after = await page.evaluate(async system => {
+    const { library, view } = await import('./src/app.js');
+    return { id: library.hooks.current(system), card: view.gameShelves.lastCards.get(system).uuid };
+  }, system);
+  expect(after).toEqual(before);
+  await page.locator('#put-down').click();
+  await expect.poll(async () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.mode === 'table' && !view.transition;
+  })).toBe(true);
+  const cardPoint = await page.evaluate(async system => {
+    const { view } = await import('./src/app.js');
+    return view.project(view.gameShelves.lastCards.get(system));
+  }, system);
+  await page.locator('#scene-canvas').click({ position: cardPoint });
+  await expect.poll(async () => page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    return view.mode === 'playing' && !view.transition;
+  })).toBe(true);
+  await finished(page);
+  expect(await page.evaluate(async system => (await import('./src/app.js')).view.gameShelves.lastCards.get(system).uuid, system)).toBe(before.card);
+  if (system === 'gba') {
+    await page.evaluate(() => document.getElementById('autosave-toggle').click());
+    await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
+    await page.locator('#game-library-open').click();
+    const confirmation = page.waitForEvent('dialog', { timeout: 90000 });
+    await page.locator('[data-slot="gba-2"] .game-library-play').click();
+    await (await confirmation).dismiss();
+    await finished(page);
+    await expect.poll(async () => page.evaluate(async () => {
+      const { library } = await import('./src/app.js');
+      return !library.busy && !library.hooks.isBusy();
+    })).toBe(true);
+    expect(await page.evaluate(async () => {
+      const { library, view } = await import('./src/app.js');
+      return { selected: library.selection.gba, id: library.hooks.current('gba'),
+        card: view.gameShelves.lastCards.get('gba').uuid };
+    })).toEqual({ selected: 'gba-1', id: before.id, card: before.card });
+    await page.evaluate(() => document.getElementById('autosave-toggle').click());
+    await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'true');
+  }
+});
+}
+
+test('actual original GBA and DS runtimes preload both on reload', async ({ page }) => {
+  test.setTimeout(600000);
+  await ready(page);
   for (const system of ['gba', 'ds']) {
     await attach(page, system, 1);
-    await attach(page, system, 2);
-    for (const number of [1, 2, 1]) {
-      if (!await page.locator('#game-library').isVisible()) await page.locator('#game-library-open').click();
-      await expect(page.locator('#game-library')).toBeVisible();
-      await page.locator(`[data-slot="${system}-${number}"] .game-library-play`).click();
-      await expect(page.locator('#scene')).toHaveAttribute('data-game-box', `${system}-${number}`, { timeout: 30000 });
-      await finished(page);
-      await expect.poll(async () => page.evaluate(async ({ system, number }) => {
-        const { library } = await import('./src/app.js');
-        return library.selection[system] === `${system}-${number}`;
-      }, { system, number }), { timeout: 90000 }).toBe(true);
-      const loadPose = await page.evaluate(() => window.shelfLoadPoses.at(-1));
-      expect(loadPose.elapsed).toBeGreaterThanOrEqual(4250);
-      expect(['returning', 'idle']).toContain(loadPose.phase);
-      const mount = system === 'gba' ? '#runtime-mount' : '#ds-runtime-mount';
-      await expect(page.locator(`${mount} iframe`)).toBeAttached();
-    }
-    const before = await page.evaluate(async system => {
-      const { library, view } = await import('./src/app.js');
-      return { id: library.hooks.current(system), card: view.gameShelves.lastCards.get(system).uuid };
-    }, system);
-    await page.locator('#game-library-open').click();
-    await page.locator(`[data-slot="${system}-1"] .game-library-play`).click();
-    await expect(page.locator('#scene')).toHaveAttribute('data-game-box-phase', 'idle');
-    const after = await page.evaluate(async system => {
-      const { library, view } = await import('./src/app.js');
-      return { id: library.hooks.current(system), card: view.gameShelves.lastCards.get(system).uuid };
-    }, system);
-    expect(after).toEqual(before);
-    await page.locator('#put-down').click();
-    await expect.poll(async () => page.evaluate(async () => {
-      const { view } = await import('./src/app.js');
-      return view.mode === 'table' && !view.transition;
-    })).toBe(true);
-    const cardPoint = await page.evaluate(async system => {
-      const { view } = await import('./src/app.js');
-      return view.project(view.gameShelves.lastCards.get(system));
-    }, system);
-    await page.locator('#scene-canvas').click({ position: cardPoint });
-    await expect.poll(async () => page.evaluate(async () => {
-      const { view } = await import('./src/app.js');
-      return view.mode === 'playing' && !view.transition;
-    })).toBe(true);
-    await finished(page);
-    expect(await page.evaluate(async system => (await import('./src/app.js')).view.gameShelves.lastCards.get(system).uuid, system)).toBe(before.card);
-    if (system === 'gba') {
-      await page.evaluate(() => document.getElementById('autosave-toggle').click());
-      await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
-      await page.locator('#game-library-open').click();
-      const confirmation = page.waitForEvent('dialog', { timeout: 90000 });
-      await page.locator('[data-slot="gba-2"] .game-library-play').click();
-      await (await confirmation).dismiss();
-      await finished(page);
-      await expect.poll(async () => page.evaluate(async () => {
-        const { library } = await import('./src/app.js');
-        return !library.busy && !library.hooks.isBusy();
-      })).toBe(true);
-      expect(await page.evaluate(async () => {
-        const { library, view } = await import('./src/app.js');
-        return { selected: library.selection.gba, id: library.hooks.current('gba'),
-          card: view.gameShelves.lastCards.get('gba').uuid };
-      })).toEqual({ selected: 'gba-1', id: before.id, card: before.card });
-      await page.evaluate(() => document.getElementById('autosave-toggle').click());
-      await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'true');
-    }
+    await playAttached(page, system, 1);
   }
   await page.reload();
   await waitForDesk(page);
