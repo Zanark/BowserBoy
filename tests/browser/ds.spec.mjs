@@ -413,6 +413,7 @@ for (const pose of [
 test(`DS stylus draws under the pointer across locked orientations, zoom and high-DPI touch (${pose.name})`, async ({ page }, testInfo) => {
   test.skip(!!process.env.CI && ['flat corners', 'rolled', 'upside-down'].includes(pose.name),
     'Parked after bounded loader/launch qualification: desktop native/physical LCD stylus pixels; follow-up https://github.com/Zanark/BowserBoy/issues/104');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const errors = await bootDsDemo(page);
   const cdp = await page.context().newCDPSession(page);
   if (pose.phone) {

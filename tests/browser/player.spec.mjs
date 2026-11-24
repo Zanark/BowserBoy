@@ -404,6 +404,7 @@ test('native GBA portable backups restore exported progress', async ({ page }) =
 });
 
 test('native GBA reload restores saved progress under a renamed cartridge', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const errors = [];
   const methods = [];
   page.on('pageerror', (error) => errors.push(error.message));

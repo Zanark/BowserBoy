@@ -14,6 +14,14 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-24 / Actual asynchronous start witness (130):
+  bbc8259/Pages45378035528also fails; raw-save/zoom pass, cancellation polls
+  the old idle state before preview begins. Await actual switch confirmation,
+  dismiss, then verify finished/idle and unchanged selection/runtime/card.
+  Three existing native cases hit total deadlines; separate fullscreen exits
+  and select reduced motion for renamed-save/stylus-coordinate checks.
+  All five affected cases pass locally2.9m, with original pixel resolution,
+  assertions and deadlines. No successful new deployment.
 - 2026-11-24 / Follow-up checked release (130):
   239aefb/Pages45374686884fails zoom and raw-reload total deadlines plus a
   cancelled shelf switch checking idle before animation completion; deploy

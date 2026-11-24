@@ -43,8 +43,23 @@ Completion evidence:
   reduced motion and reuses its existing initial screenshot. Cancellation waits
   for the existing animation boundary before checking idle. Original assertions,
   viewport, deadlines and complete workflow remain unchanged.
+- bbc8259/Pages45378035528also fails; deploy skipped. Raw import and zoom now
+  pass, but shelf cancellation still races pre-preview idle. Three existing
+  native reload/fullscreen/high-DPI stylus cases exhaust total deadlines.
+- Exact follow-up shelf trace disproves reordering alone: finished() can see
+  the old idle value before selectConsole starts preview. Await the actual
+  confirmation dialog and dismiss it before checking final idle. Both screen
+  fullscreen exits now have independent cases with all original assertions.
+  Renamed-save and stylus-coordinate cases select reduced motion, preserving
+  full-resolution native/physical LCD checks. Five focused cases pass in2.9m.
 
 Completion log:
+- 2026-11-24: Preserve failed bbc8259/Pages45378035528and its exact shard11/8
+  traces. Correct the asynchronous start witness rather than increasing idle
+  timeout; retain sparse-frame shelf animation. Stylus trace reaches blur
+  release after all three point/pixel checks before its total deadline.
+  Separate fullscreen exit methods; isolate save/coordinate checks from
+  decorative transitions. Five affected cases pass locally; release pending.
 - 2026-11-24: Downloaded exact45374686884shard11/15traces. Cancelled shelf
   switching polls idle for15s before its existing90s animation wait, while
   actual stage presentation can take39s on sparse paints; reorder those waits.

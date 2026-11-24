@@ -198,8 +198,9 @@ test('actual original GBA and DS runtimes replay A-B-A, shortcut current game an
       await page.evaluate(() => document.getElementById('autosave-toggle').click());
       await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
       await page.locator('#game-library-open').click();
-      page.once('dialog', dialog => dialog.dismiss());
+      const confirmation = page.waitForEvent('dialog', { timeout: 90000 });
       await page.locator('[data-slot="gba-2"] .game-library-play').click();
+      await (await confirmation).dismiss();
       await finished(page);
       await expect.poll(async () => page.evaluate(async () => {
         const { library } = await import('./src/app.js');

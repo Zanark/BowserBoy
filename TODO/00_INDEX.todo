@@ -1,6 +1,6 @@
 BowserBOY workstreams
 ====================
-130_CHECKED_SAVE_RELEASE.todo - IN_PROGRESS: follow-up45374686884failed three remaining timing cases; focused corrections pass locally, checked deployment still pending.
+130_CHECKED_SAVE_RELEASE.todo - IN_PROGRESS:45378035528also fails; actual cancellation-dialog witness and five focused native cases pass locally, checked deployment pending.
 129_NATIVE_GBA_SAVE_IMPORT.todo - DONE locally: raw GBA .sav import, battery-only restart and checkpoint preservation; not deployed.
 128_SUPPLIED_DEMO_GIFS.todo - DONE: two supplied30second demos below shared-desk caption; old GIFs preserved; owner authorized media-only publication.
 127_MESHBOARD_FEEDBACK_REVIEW.todo - IN_PROGRESS: mandatory peer review; first follow-up November15, recommendations/planned work only, implementation needs owner approval.

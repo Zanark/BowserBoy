@@ -58,6 +58,20 @@ waits for the existing animation boundary before its idle check. All three
 cases pass together locally in2.8m. Dedicated motion checks remain unchanged;
 this is not yet a successful checked or hosted release.
 
+`bbc8259`/
+[Pages45378035528](https://github.com/Zanark/BowserBoy/actions/runs/45378035528)
+also fails, with deployment skipped. Raw import and ordinary zoom pass, but
+the cancelled shelf flow still observes pre-animation idle; exact tracing
+disproves wait reordering alone. The fixture now awaits the actual native
+switch-confirmation dialog before dismissing it and checking final idle.
+Three existing native cases also exhaust total deadlines. Fullscreen Escape
+and button exits are independent cases retaining their LCD/runtime assertions;
+renamed-cartridge reload and precise high-DPI stylus cases use reduced motion.
+The latter trace completes all three native/physical pixel checks before
+reaching blur release near its deadline. Full resolution, assertions and
+individual deadlines remain unchanged. All five affected cases pass locally
+in2.9m; no successful new deployment is claimed.
+
 ## Native GBA cartridge-save import, 2026-11-24 (local only)
 
 The ordinary save picker now accepts raw GBA `.sav` data separately from
