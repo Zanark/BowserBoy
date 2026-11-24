@@ -34,8 +34,24 @@ Completion evidence:
   test passes without changing its assertions.
 - Workstream130maps to issue129/Project1In progress; issue body, state, membership
   and backlink read-back verified. Deployment remains pending.
+- Follow-up239aefb/Pages45374686884 fails three cases; deployment is skipped:
+  zoom reaches its final fullscreen check at the120s deadline, raw import
+  reaches reload at that same total deadline, and cancelled shelf switching
+  checks idle before waiting for its staged animation.
+- The three focused follow-up cases pass together locally in2.8m. Zoom disables
+  unrelated companion lights and timed autosaves; raw-save persistence selects
+  reduced motion and reuses its existing initial screenshot. Cancellation waits
+  for the existing animation boundary before checking idle. Original assertions,
+  viewport, deadlines and complete workflow remain unchanged.
 
 Completion log:
+- 2026-11-24: Downloaded exact45374686884shard11/15traces. Cancelled shelf
+  switching polls idle for15s before its existing90s animation wait, while
+  actual stage presentation can take39s on sparse paints; reorder those waits.
+  Raw import completes all byte/slot/cold-boot assertions before spending the
+  remaining total deadline on reload startup. Isolate that persistence case
+  from decorative motion; dedicated insertion/animation tests remain intact.
+  All three affected cases pass locally; checked publication still pending.
 - 2026-11-24: Local reproduction retained real failures. First fixture attempt
   used a last-played anchor occupied by the desk lamp; give the test an explicit
   clear anchor. Named selector icons exposed an additional41px mobile touch

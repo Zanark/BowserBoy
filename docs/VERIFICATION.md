@@ -45,6 +45,19 @@ Empty reload samples identified the actual animation/storage coupling; the
 original insertion test is unchanged. Deployment and hosted qualification
 remain pending; local checks do not establish publication.
 
+The follow-up `239aefb` run
+[Pages45374686884](https://github.com/Zanark/BowserBoy/actions/runs/45374686884)
+still skips deployment: zoom and raw-save reload reach their120second total
+deadlines, and the cancelled shelf switch checks idle before its staged
+animation finishes. Exact traces show successful raw byte/slot/cold-boot
+assertions before reload and a39second shelf phase on sparse paints.
+The next focused corrections retain all assertions, resolution and deadlines:
+zoom disables unrelated companion lights and timed autosaves; raw persistence
+selects reduced motion and reuses the initial native screenshot; cancellation
+waits for the existing animation boundary before its idle check. All three
+cases pass together locally in2.8m. Dedicated motion checks remain unchanged;
+this is not yet a successful checked or hosted release.
+
 ## Native GBA cartridge-save import, 2026-11-24 (local only)
 
 The ordinary save picker now accepts raw GBA `.sav` data separately from

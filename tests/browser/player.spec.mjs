@@ -1024,11 +1024,11 @@ test('device storage upgrades old checkpoints intact and rejects interrupted pow
 });
 
 test('raw .sav import cold boots native battery progress, preserves slots and survives reload', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   page.on('dialog', dialog => dialog.accept());
-  await startSavedDemo(page);
+  const expected = await startSavedDemo(page);
   const original = page.frames().find(frame => frame.url().endsWith('player.html'));
   const bytes = Buffer.from(await original.evaluate(() => [...window.EJS_emulator.gameManager.getSaveFile()]));
-  const expected = await image(page);
   await move(page, 'ArrowDown');
   await move(page, 'ArrowLeft');
   await openTools(page);

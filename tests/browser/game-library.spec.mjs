@@ -200,11 +200,11 @@ test('actual original GBA and DS runtimes replay A-B-A, shortcut current game an
       await page.locator('#game-library-open').click();
       page.once('dialog', dialog => dialog.dismiss());
       await page.locator('[data-slot="gba-2"] .game-library-play').click();
+      await finished(page);
       await expect.poll(async () => page.evaluate(async () => {
         const { library } = await import('./src/app.js');
         return !library.busy && !library.hooks.isBusy();
       })).toBe(true);
-      await finished(page);
       expect(await page.evaluate(async () => {
         const { library, view } = await import('./src/app.js');
         return { selected: library.selection.gba, id: library.hooks.current('gba'),

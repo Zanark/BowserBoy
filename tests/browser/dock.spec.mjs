@@ -463,6 +463,11 @@ test('ordinary play zoom fits desktop and phone without changing the native game
   page.on('dialog', dialog => dialog.accept());
   await page.goto('./');
   await ready(page);
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.setPearEnabled(false);
+    view.setAxolotlEnabled(false);
+  });
   const control = page.locator('#play-zoom-control');
   const slider = page.getByRole('slider', { name: 'Play view zoom', exact: true });
   await expect(control).toBeHidden();
@@ -470,6 +475,8 @@ test('ordinary play zoom fits desktop and phone without changing the native game
   await expect(control).toBeVisible();
   await expect(slider).toHaveValue('50');
   await expect(page.locator('#play-zoom-value')).toHaveText('50%');
+  await page.locator('#quick-autosave').click();
+  await expect(page.locator('#quick-autosave')).toHaveAttribute('aria-pressed', 'false');
   await page.locator('#tools-open').click();
   await page.locator('#demo').click();
   await powerOn(page);

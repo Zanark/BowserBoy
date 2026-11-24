@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-24 / Follow-up checked release (130):
+  239aefb/Pages45374686884fails zoom and raw-reload total deadlines plus a
+  cancelled shelf switch checking idle before animation completion; deploy
+  skipped. Preserve every assertion/deadline/viewport. Isolate zoom from
+  companion lights/autosaves and persistence from decorative motion; reuse the
+  existing native screenshot. Wait for the shelf animation before idle.
+  All three affected cases pass together locally in2.8m; publication pending.
 - 2026-11-24 / Release blockers locally qualified (130):
   Shelf motion now catches up to sparse paints while presenting every stage.
   Real library-card fixtures replace assumptions about archived decoration.
