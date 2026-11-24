@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { canvasTexture, createCartridge, createWood, roundedBox } from './handheld.js';
 import { GAME_SLOTS, gameSlot } from './game-library-catalog.js';
+import { nextGameBoxElapsed } from './game-box-motion.js';
 
 function part(parent, name, width, height, depth, material, x = 0, y = 0, z = 0, radius = .02) {
   const mesh = new THREE.Mesh(roundedBox(width, height, depth, radius, .008), material);
@@ -275,8 +276,7 @@ export class GameShelves {
     });
     if (!this.motion) return;
     const motion = this.motion, { box } = motion;
-    const elapsed = this.view.reducedMotion.matches ? 4900 :
-      Math.min(4900, motion.elapsed + Math.min(80, Math.max(0, time - (motion.lastPaint ?? time))));
+    const elapsed = nextGameBoxElapsed(motion, time, this.view.reducedMotion.matches);
     motion.nextElapsed = elapsed;
     const ease = (start, duration) => {
       const f = THREE.MathUtils.clamp((elapsed - start) / duration, 0, 1);

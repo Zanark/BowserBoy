@@ -14,6 +14,22 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-24 / Release blockers locally qualified (130):
+  Shelf motion now catches up to sparse paints while presenting every stage.
+  Real library-card fixtures replace assumptions about archived decoration.
+  Console selectors use named icons and44px touch targets. Fix the actual
+  animate=remember coupling: remembered manual reload animates, explicit shelf
+  preloads do not. Original insertion assertions remain unchanged.
+  Pear light/movement cases retain all assertions under separate120s deadlines;
+  DS halo comparison uses reduced motion.69units/check/build and15unique focused
+  browser cases pass across runs. Exact CI/hosted release remains pending.
+- 2026-11-24 / Checked release recovery (130, explicitly authorized):
+  Save-import07e8e61 is pushed. Pages45364809276 builds successfully and
+  all three raw-import cases pass; ten existing scene/shelf/dock cases fail,
+  so deploy is skipped. Owner selects "Repair the blocking failures and deploy."
+  Preserve the full matrix and distinguish these repairs from gated feedback
+  recommendations. Initial findings: intentionally empty loose-prop fixture,
+  newly icon-styled selectors missing labels/icons and80ms-per-paint shelf cap.
 - 2026-11-24 / Owner-authorized native-save deployment:
   Owner requests deploy after local129qualification. Prior main a0b56e4
   failed Pages45341117975on unrelated scene/shelf/dock cases. Publish129

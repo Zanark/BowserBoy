@@ -7,6 +7,44 @@ The [engineering book](book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Checked save-import release recovery, 2026-11-24 (in progress)
+
+Source `07e8e61` is pushed, but
+[Pages45364809276](https://github.com/Zanark/BowserBoy/actions/runs/45364809276)
+does not deploy: the build and all three raw-save browser cases pass, while
+ten pre-existing scene/shelf/dock cases fail. The owner explicitly authorizes
+repairing those blockers and deploying; workstream130 tracks that follow-through.
+
+The repairs retain the existing assertions and release matrix:
+
+- Clearance tests establish a real last-played library cartridge at an explicit
+  clear fixture anchor. The initial desk intentionally has no loose cartridges;
+  archived decoration remains detached.
+- Console selectors gain the dock's named icons and44px minimum touch width.
+- Shelf timing catches up to sparse submitted frames while stopping at every
+  authored unpacking boundary, rather than advancing at most80ms per paint.
+  Three unit cases cover sparse stages, uncommitted preparation, backwards
+  timestamps, normal duration and reduced motion.
+- Manual-cartridge reload animates independently of whether storage is rewritten.
+  The shelf feature had accidentally coupled those options. Shelf preloads still
+  explicitly disable insertion; the original reload geometry assertions remain.
+- The header pixel comparison selects reduced motion because its target is the
+  actual blue halo, not transition timing. Dedicated motion checks remain.
+- Pear lighting and movement are separate focused real-browser cases, retaining
+  all light, falloff, physical movement, cancellation and clearance assertions.
+  The original CI trace reached the final screenshot but exceeded120seconds;
+  no individual deadline was increased.
+
+All69unit tests, application syntax and static build pass. The final combined
+local run passes9clearance/dock/native-save/insertion cases. Earlier focused
+qualification also passes shelf stages/control gating, actual GBA/DS A-B-A
+loading, DS halo and both Pear cases. An initial last-played fixture anchor was
+occupied by the desk lamp; an explicit clear anchor preserves the displacement
+test. Named icons exposed an additional41px phone width, corrected to44px.
+Empty reload samples identified the actual animation/storage coupling; the
+original insertion test is unchanged. Deployment and hosted qualification
+remain pending; local checks do not establish publication.
+
 ## Native GBA cartridge-save import, 2026-11-24 (local only)
 
 The ordinary save picker now accepts raw GBA `.sav` data separately from

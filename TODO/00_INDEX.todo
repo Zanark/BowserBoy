@@ -1,5 +1,6 @@
 BowserBOY workstreams
 ====================
+130_CHECKED_SAVE_RELEASE.todo - IN_PROGRESS: owner authorizes blocking scene/shelf/dock repairs and checked deployment; previous run45364809276 failed, live site unchanged.
 129_NATIVE_GBA_SAVE_IMPORT.todo - DONE locally: raw GBA .sav import, battery-only restart and checkpoint preservation; not deployed.
 128_SUPPLIED_DEMO_GIFS.todo - DONE: two supplied30second demos below shared-desk caption; old GIFs preserved; owner authorized media-only publication.
 127_MESHBOARD_FEEDBACK_REVIEW.todo - IN_PROGRESS: mandatory peer review; first follow-up November15, recommendations/planned work only, implementation needs owner approval.

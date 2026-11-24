@@ -7,7 +7,14 @@ async function ready(page) {
   await expect(page.locator('#consoles-open')).toBeEnabled();
   await expect.poll(() => page.evaluate(async () =>
     Number.isFinite((await import('./src/app.js')).view.lastPaint))).toBe(true);
-  await page.evaluate(async () => (await import('./src/app.js')).view.renderer.setAnimationLoop(null));
+  await page.evaluate(async () => {
+    const { view } = await import('./src/app.js');
+    view.renderer.setAnimationLoop(null);
+    view.gameShelves.setLastPlayed('gba-1', 'Pixel Lab clearance fixture');
+    const prop = view.gameShelves.lastCards.get('gba');
+    prop.position.set(4.3, prop.position.y, -1.9);
+    view.deskPropHomes.set(prop, prop.position.clone());
+  });
 }
 
 test('table Pear placement displaces loose props before consoles and props return to their anchors', async ({ page }) => {

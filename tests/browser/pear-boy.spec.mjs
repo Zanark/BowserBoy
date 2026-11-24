@@ -51,14 +51,13 @@ async function pixel(page, point) {
   }, { data: png.toString('base64'), position });
 }
 
-test('pear-boy casts adjustable warm light, moves live, cancels and makes table consoles yield', async ({ page }, testInfo) => {
+test('pear-boy casts adjustable warm light with real falloff and brightness control', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('./');
   await waitForDesk(page);
   await expect(page.locator('#pear-open')).toBeEnabled();
   await expect.poll(async () => (await state(page)).fits).toBe(true);
-  const home = (await state(page)).position;
   await page.locator('#pear-open').click();
   await expect(page.getByRole('heading', { name: 'pear-boy', exact: true })).toBeVisible();
   const lit = await pixel(page, [11.5, .02, 8.5]);
@@ -84,6 +83,21 @@ test('pear-boy casts adjustable warm light, moves live, cancels and makes table 
   await page.keyboard.press('Escape');
   await expect(page.locator('#pear-controls')).not.toBeVisible();
   await expect(page.locator('#tools')).not.toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('pear-boy moves live, cancels and makes table consoles yield', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await waitForDesk(page);
+  await expect(page.locator('#pear-open')).toBeEnabled();
+  await expect.poll(async () => (await state(page)).fits).toBe(true);
+  const home = (await state(page)).position;
+  await page.locator('#pear-open').click();
+  await page.locator('#pear-brightness').focus();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Escape');
   const before = await pixel(page, [15.3, 1.8, 10]);
   const { body } = await state(page);
   await page.mouse.move(body.x, body.y);

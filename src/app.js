@@ -45,7 +45,7 @@ catch (error) {
 autoSave = preferences.autoSave;
 $('shader').replaceChildren(...CRT_SHADERS.map(({ label, value }) => new Option(label, value)),
   new Option('Unfiltered', 'disabled'));
-for (const [id, name, label] of [
+for (const [id, name, label, badge] of [
   ['pickup', 'pickup', 'Pick up handheld'], ['inspect', 'inspect', 'Inspect handheld'],
   ['put-down', 'down', 'Put down handheld'], ['lamp-toggle', 'lamp', 'Turn desk lamp off'],
   ['room-toggle', 'room', 'Turn room lights on'], ['tools-open', 'cartridge', 'Open cartridge and settings'],
@@ -53,7 +53,9 @@ for (const [id, name, label] of [
   ['quick-screen-fullscreen', 'screen', 'Fullscreen game screen'], ['screen-focus-close', 'close', 'Exit screen fullscreen'],
   ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
   ['consoles-open', 'drag', 'Move consoles'],
-]) icon($(id), name, label);
+  ['select-gba', 'cartridge', 'Game Boy Advance', 'GBA'],
+  ['select-ds', 'screen', 'Nintendo DS', 'DS'],
+]) icon($(id), name, label, badge);
 
 let dockMode = 'table';
 function closeSpeedMenu() {
@@ -273,7 +275,7 @@ async function rememberDevice(nextPowered = powered, file = cartridge) {
   }
 }
 
-async function loadRom(file, { remember = true, animate = remember } = {}) {
+async function loadRom(file, { remember = true, animate = true } = {}) {
   const identified = await identifyRom(file);
   if (!view) throw new Error(sceneFailure?.message ?? 'The 3D display is not available.');
   await storageReady;

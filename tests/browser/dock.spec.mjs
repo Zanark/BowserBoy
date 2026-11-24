@@ -369,6 +369,7 @@ test('inspection shows the animated purple console logo, with static reduced-mot
 });
 
 test('DS inspection header has an actual blue halo over warm light without changing other branding', async ({ page }, testInfo) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('./');
   await ready(page);
   await page.locator('#select-ds').click();

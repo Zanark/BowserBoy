@@ -1,0 +1,50 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/129
+Milestone: Repair blocking scene checks and publish native-save support.
+Dependencies: 129_NATIVE_GBA_SAVE_IMPORT.todo
+Purpose: Deliver the owner-authorized save-import release without bypassing browser gates.
+
+Tasks:
+- [x] Repair stale loose-prop fixtures using current last-played library cartridges.
+- [x] Repair dock accessibility and sparse-frame shelf animation regressions.
+- [x] Investigate and repair remaining failed interaction checks at their actual boundary.
+- [ ] Run affected checks, preserve the complete Pages matrix and verify deployment.
+- [ ] Verify public release bytes and original-ROM save import on the hosted site.
+- [x] Mirror this workstream to its GitHub issue and configured Project item.
+
+Acceptance criteria:
+- Existing clearance, animation, accessibility and native-save assertions remain meaningful.
+- No restored archived decoration, skipped release gate or private ROM/save upload.
+- Exact committed source passes the existing workflow and reaches the configured Pages site.
+- Public hosting and compatibility claims are limited to actual observed evidence.
+
+Completion evidence:
+- 07e8e61 is pushed; Pages45364809276 build and all three native-save cases pass.
+- The release is blocked by ten scene/shelf/dock browser failures; deploy was skipped.
+- Archived decorative cartridges leave the initial desk intentionally empty; clearance
+  fixtures still index deskObjects[0]. Shelf animation caps progress at80ms per paint,
+  even on multi-second frames. Console selector buttons newly inherit icon-dock
+  styling without its accessible labels/icons.
+- 69unit tests, syntax and static build pass. Final combined local run passes
+  all9clearance/dock/raw-save/insertion cases. Earlier qualification also passes
+  the shelf stage/control tests, real GBA/DS A-B-A flow, DS halo and both focused
+  Pear cases. No added skip, longer deadline or workflow gate change.
+- Manual-cartridge reload now animates independently of storage rewriting;
+  explicit shelf preload flags remain unchanged. The original reload insertion
+  test passes without changing its assertions.
+- Workstream130maps to issue129/Project1In progress; issue body, state, membership
+  and backlink read-back verified. Deployment remains pending.
+
+Completion log:
+- 2026-11-24: Local reproduction retained real failures. First fixture attempt
+  used a last-played anchor occupied by the desk lamp; give the test an explicit
+  clear anchor. Named selector icons exposed an additional41px mobile touch
+  width; add44px minimum. Investigating empty reload samples identified the
+  animate=remember regression; fixed production default, kept original test.
+- 2026-11-24: Exact CI Pear trace reaches final screenshot but exceeds120seconds.
+  Separate lighting and movement concerns without dropping assertions or
+  increasing deadlines. DS halo comparison uses reduced motion; animation
+  remains covered separately.
+- 2026-11-24: After the failed checked release, owner explicitly authorizes:
+  "Repair the blocking failures and deploy." Scope is the blocking regressions,
+  not the separately approval-gated MeshBoard recommendations.
