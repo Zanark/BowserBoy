@@ -14,6 +14,19 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-24 / Owner-authorized native-save deployment:
+  Owner requests deploy after local129qualification. Prior main a0b56e4
+  failed Pages45341117975on unrelated scene/shelf/dock cases. Publish129
+  through the existing checked workflow; no gate bypass or unrelated repair.
+- 2026-11-24 / Native GBA cartridge-save import (129, locally qualified):
+  Route .sav separately from JSON .bba-save. Bound standard EEPROM/SRAM/flash
+  sizes; require same-game/version confirmation because raw bytes lack identity.
+  Store battery boot and cold-launch without loading a state or replacing slots.
+  Failed writes keep the live game; explicit retry is session-only. Preserve
+  existing power-off protection. Three raw-import and three existing native
+  regression cases pass across focused runs, plus66unit tests/syntax/build.
+  Supplied128KBfile decodes byte-exact locally; no commercial-game/Android
+  compatibility claim and no private save bytes tracked. No commit/push/deploy.
 - 2026-11-11 / Supplied README demo additions (128, locally qualified):
   Owner clarified append-only below shared-desk caption, not two replacements.
   Encode0-30seconds from both supplied recordings at10fps/128colors, full frame,

@@ -7,6 +7,29 @@ The [engineering book](book/README.md) explains the mechanisms and failure
 lessons. Its source edition and local preview media do not replace this release
 record or constitute fresh execution of historical tests.
 
+## Native GBA cartridge-save import, 2026-11-24 (local only)
+
+The ordinary save picker now accepts raw GBA `.sav` data separately from
+versioned checkpoint backups. `cartridge.test.mjs` verifies exact decoding for
+all five supported sizes and rejection before reading unsupported input.
+All66unit tests and application syntax/static build pass.
+
+Three focused real-mGBA browser cases verify battery-only restart and visible
+saved position after page reload, unchanged checkpoint slots, invalid/cancelled
+imports leaving progress untouched, and storage failure retaining the live
+runtime before an explicit session-only retry. Existing portable-backup,
+power-cycle/reload and failed-power-off protection cases also pass. These are
+original Pixel Lab runtime tests, not mocked core calls or commercial-ROM tests.
+
+The supplied128KBsave passes exact local byte decoding; no bytes are committed
+or uploaded. Actual Radical Red menu recovery and physical Android behavior
+have not been independently qualified. Raw size checks cannot identify games,
+detect all corruption or convert emulator-specific containers. An initial
+native launch failed on a CDN CORS response; later real-core runs pass.
+Initial confirmation-handler omissions and import-retry gating failure were
+corrected rather than weakening assertions. No full-browser-suite, publication
+or owner-acceptance claim is made.
+
 ## Current follow-up and manual-release status, 2026-11-07
 
 ### Untouched-opening GIFs published and deployed

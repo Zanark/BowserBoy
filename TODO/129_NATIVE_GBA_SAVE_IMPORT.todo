@@ -1,0 +1,44 @@
+Status: DONE; locally qualified; owner authorized deployment on2026-11-24, publication pending.
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/128
+Milestone: Import ordinary GBA cartridge saves without treating them as checkpoints.
+Dependencies: Existing mGBA battery-save adapter and separate battery storage.
+Purpose: Let players bring compatible in-game .sav progress from other emulators.
+
+Tasks:
+- [x] Add bounded raw EEPROM/SRAM/flash import alongside existing .bba-save decoding.
+- [x] Confirm same-game/version responsibility and replacement before mutating progress.
+- [x] Persist battery-only boot, retain checkpoint slots and report storage errors.
+- [x] Explain raw-save versus checkpoint behavior and unsupported containers.
+- [x] Qualify native battery boot/reload, cancellation, invalid files and storage failure.
+- [x] Mirror this workstream to its GitHub issue and Project item.
+
+Acceptance criteria:
+- Supported .sav files bypass JSON backup parsing and retain exact bytes.
+- Imported in-game progress is available after cold boot and browser reload.
+- Existing checkpoint slots remain unchanged; invalid/cancelled imports do not mutate progress.
+- Browser write failure leaves the live game intact; session-only retry is explicit.
+- Private supplied saves and ROMs remain outside git; no deployment claim without evidence.
+
+Completion evidence:
+- Supplied local file metadata:131072bytes, a supported flash-save size.
+- Supplied file decodes with exact byte equality, without copying private data into git.
+- 66unit tests, syntax/build and whitespace checks pass.
+- Three focused raw-import native browser cases pass: visible in-game battery
+  progress after cold boot/reload, unchanged slots, invalid/cancelled imports,
+  aborted write preserving the live runtime and explicit session-only retry.
+- Existing portable-backup, battery power-cycle/reload and failed power-off
+  protection cases also pass. Uses original Pixel Lab, not a commercial ROM.
+- No game-specific Radical Red Continue-menu or physical Android qualification
+  claimed; accepted length and exact decoding do not prove semantic compatibility.
+
+Completion log:
+- 2026-11-24: Owner explicitly requests deployment. Commit/push the bounded
+  save-import update and verify exact Pages outcome. Existing main a0b56e4
+  previously failed unrelated scene/shelf/dock checks in run45341117975;
+  preserve checks and do not claim those failures are caused by this change.
+- 2026-11-24: Owner reports Pizza Boy A .sav rejected by .bba-save JSON parser.
+  Implementing GBA native-save import; no commit/push/deployment requested.
+- 2026-11-24: Initial native launch encountered upstream CDN CORS failure;
+  subsequent real-core runs pass. Test confirmations needed explicit handlers.
+  Corrected import-only storage-failure gating after retry regression exposed
+  repeated attempted writes. Preserved existing power-off failure behavior.

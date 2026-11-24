@@ -719,7 +719,21 @@ view. Scroll within it for sound settings and help.*
 
 Checkpoints include an instant emulator state and cartridge battery-save bytes
 when the game provides them. Use the game's own save menu as usual.
-BowserBOY does **not** import/export raw `.sav` files or sync to the cloud.
+**Import save / backup** also accepts raw GBA `.sav` cartridge saves from
+compatible emulators, including ordinary Pizza Boy A in-game save exports.
+Load and power on the same game and ROM version first, select the `.sav`,
+then confirm replacement. The game restarts; use **Continue / Load Game**
+inside the game, rather than Load checkpoint. Existing checkpoint slots are
+retained, not converted or replaced. Browser reload uses the imported battery
+save until a new checkpoint is captured. Export a backup before replacing
+progress you want to keep.
+
+Supported raw sizes are 512 bytes, 8 KB, 32 KB, 64 KB and 128 KB (EEPROM,
+SRAM or flash). Save states, compressed files and emulator-specific containers
+are not supported by renaming them `.sav`. Raw saves have no reliable game
+identity or integrity checksum, so a supported size does not prove that the
+game/version matches or that the file is uncorrupted. DS checkpoint imports
+remain separate. Raw `.sav` export and cloud sync are not provided.
 
 **Save manually before closing and export regularly.** Browser data can be
 cleared or evicted, and private browsing may discard it. Saves belong to the

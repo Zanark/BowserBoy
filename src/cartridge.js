@@ -56,6 +56,18 @@ export function validateBatterySave(sram) {
   return sram;
 }
 
+export async function decodeBatterySave(file) {
+  if (!file || !/\.sav$/i.test(file.name)) {
+    throw new Error('Choose a raw GBA .sav cartridge save, not an emulator checkpoint.');
+  }
+  if (![512, 8192, 32768, 65536, 131072].includes(file.size)) {
+    throw new Error('Unsupported GBA .sav size. Expected 512 bytes, 8 KB, 32 KB, 64 KB or 128 KB of raw EEPROM, SRAM or flash data; not a save state or compressed file.');
+  }
+  const sram = new Uint8Array(await file.arrayBuffer());
+  if (sram.byteLength !== file.size) throw new Error('The cartridge save could not be read completely.');
+  return sram;
+}
+
 export function validateCapture(capture) {
   if (!(capture?.state instanceof Uint8Array) || capture.state.byteLength === 0 ||
       capture.state.byteLength > MAX_STATE_BYTES) {

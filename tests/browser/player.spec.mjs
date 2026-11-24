@@ -1023,6 +1023,81 @@ test('device storage upgrades old checkpoints intact and rejects interrupted pow
   expect(result).toEqual({ powered: true, checkpoint: [9, 8, 7], failed: true });
 });
 
+test('raw .sav import cold boots native battery progress, preserves slots and survives reload', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
+  await startSavedDemo(page);
+  const original = page.frames().find(frame => frame.url().endsWith('player.html'));
+  const bytes = Buffer.from(await original.evaluate(() => [...window.EJS_emulator.gameManager.getSaveFile()]));
+  const expected = await image(page);
+  await move(page, 'ArrowDown');
+  await move(page, 'ArrowLeft');
+  await openTools(page);
+  await page.locator('#save').click();
+  await expect(page.locator('#notice')).toContainText('Checkpoint saved.');
+  const [before] = await readStored(page);
+  expect(await image(page)).not.toBe(expected);
+  await page.locator('#backup-file').setInputFiles({ name: 'Android game.sav', mimeType: 'application/octet-stream', buffer: bytes });
+  await expect(page.locator('#notice')).toContainText('Cartridge save imported and stored', { timeout: 90000 });
+  await expect.poll(() => image(page)).toBe(expected);
+  expect(original.isDetached()).toBe(true);
+  const [after] = await readStored(page);
+  for (const slot of ['manual', 'manual2', 'manual3', 'automatic']) expect(after[slot]).toEqual(before[slot]);
+  expect(after.bootMode).toBe('battery');
+  expect(Buffer.from(Object.values(after.battery.sram))).toEqual(bytes);
+  const current = page.frames().find(frame => frame.url().endsWith('player.html'));
+  expect(await current.evaluate(() => window.EJS_emulator.Module.FS.analyzePath('/game.state').exists)).toBe(false);
+  await page.reload();
+  await waitForDesk(page, { expandDock: true });
+  await expect(page.locator('#pause')).toBeEnabled({ timeout: 90000 });
+  await expect.poll(() => image(page)).toBe(expected);
+});
+
+test('invalid or cancelled raw imports do not replace the game or stored progress', async ({ page }) => {
+  await page.goto('./');
+  await waitForDesk(page, { expandDock: true });
+  await startDemo(page);
+  await openTools(page);
+  await page.locator('#autosave-toggle').click();
+  await expect(page.locator('#autosave-toggle')).toHaveAttribute('aria-pressed', 'false');
+  await page.locator('#save').click();
+  await expect(page.locator('#notice')).toContainText('Checkpoint saved.');
+  const frame = page.frames().find(item => item.url().endsWith('player.html'));
+  const before = await readStored(page);
+  await page.locator('#backup-file').setInputFiles({ name: 'bad.sav', mimeType: 'application/octet-stream', buffer: Buffer.alloc(123) });
+  await expect(page.locator('#notice')).toContainText('Unsupported GBA .sav size');
+  expect(frame.isDetached()).toBe(false);
+  expect(await readStored(page)).toEqual(before);
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.locator('#backup-file').setInputFiles({ name: 'cancel.sav', mimeType: 'application/octet-stream', buffer: Buffer.alloc(32768) });
+  await expect(page.locator('#import')).toBeEnabled();
+  expect(frame.isDetached()).toBe(false);
+  expect(await readStored(page)).toEqual(before);
+});
+
+test('raw import storage failure preserves the live game and allows explicit session-only retry', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
+  await startSavedDemo(page);
+  const original = page.frames().find(frame => frame.url().endsWith('player.html'));
+  const bytes = Buffer.from(await original.evaluate(() => [...window.EJS_emulator.gameManager.getSaveFile()]));
+  const before = await readStored(page);
+  await page.evaluate(() => {
+    const put = IDBObjectStore.prototype.put;
+    IDBObjectStore.prototype.put = function (...args) {
+      const request = put.apply(this, args);
+      if (this.name === 'games') this.transaction.abort();
+      return request;
+    };
+  });
+  await page.locator('#backup-file').setInputFiles({ name: 'game.sav', mimeType: 'application/octet-stream', buffer: bytes });
+  await expect(page.locator('#notice')).toContainText('running game has not been replaced');
+  expect(original.isDetached()).toBe(false);
+  expect(await readStored(page)).toEqual(before);
+  await page.locator('#backup-file').setInputFiles({ name: 'game.sav', mimeType: 'application/octet-stream', buffer: bytes });
+  await expect(page.locator('#notice')).toContainText('page session only', { timeout: 90000 });
+  expect(original.isDetached()).toBe(true);
+  expect(await readStored(page)).toEqual(before);
+});
+
 test('power switch destroys the runtime and cold boots only the in-game save, including after reload', async ({ page }) => {
   await page.setViewportSize({ width: 960, height: 720 });
   await page.goto('./');

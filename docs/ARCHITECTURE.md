@@ -1164,6 +1164,16 @@ suite and job deadlines.
 
 ## Deliberately out of scope
 
+Raw GBA `.sav` import uses `decodeBatterySave` in `src/cartridge.js` to bound
+standard EEPROM/SRAM/flash lengths before reading bytes. The host's existing
+save picker dispatches `.sav` to a confirmed battery-only operation, not
+`decodeBackup`. `SaveStore.putBattery` selects battery boot without replacing
+checkpoint slots; `launch(cartridge, null, sram)` uses the existing player's
+filesystem write, `loadSaveFiles` and core restart. No state-file load occurs.
+Storage failure aborts before destroying the live runtime and enables an
+explicit session-only retry. Raw bytes lack trustworthy ROM identification
+and checksums, so game/version compatibility remains the player's responsibility.
+
 No cloud accounts/sync, server ROM library, offline/PWA guarantee, raw `.sav`
-interchange, GB/GBC support or complete game compatibility
+export or DS raw-save import, GB/GBC support or complete game compatibility
 matrix. Those are future product decisions, not hidden capabilities.

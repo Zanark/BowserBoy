@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
-  MAX_ROM_BYTES, RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot,
+  MAX_ROM_BYTES, RUNTIME, decodeBackup, decodeBatterySave, encodeBackup, identifyRom, latestSlot,
 } from '../../src/cartridge.js';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
 
@@ -33,6 +33,25 @@ test('portable checkpoint preserves binary state and SRAM including null SRAM', 
     const restored = await decodeBackup(backupFile(await encodeBackup(game, data)), game.id);
     assert.deepEqual(restored, data);
   }
+});
+
+test('raw cartridge imports preserve supported EEPROM, SRAM and flash bytes exactly', async () => {
+  for (const size of [512, 8192, 32768, 65536, 131072]) {
+    const bytes = Uint8Array.from({ length: size }, (_, i) => (i * 13 + 19) & 255);
+    assert.deepEqual(await decodeBatterySave(new File([bytes], 'game.SAV')), bytes);
+  }
+});
+
+test('raw cartridge imports reject states, containers, empty and oversized files before reading', async () => {
+  for (const [name, size, error] of [
+    ['game.bba-save', 32768, /raw GBA/], ['game.state', 131072, /raw GBA/],
+    ['empty.sav', 0, /size/], ['container.sav', 131088, /size/],
+    ['huge.sav', 16 * 1024 * 1024, /size/],
+  ]) {
+    await assert.rejects(decodeBatterySave({ name, size, arrayBuffer() { assert.fail('must not read rejected data'); } }), error);
+  }
+  await assert.rejects(decodeBatterySave({ name: 'truncated.sav', size: 512,
+    arrayBuffer: async () => new ArrayBuffer(16) }), /completely/);
 });
 
 test('imports reject the wrong ROM, runtime, damaged binary and malformed backups', async () => {

@@ -1,4 +1,4 @@
-import { MANUAL_SLOTS, RUNTIME, decodeBackup, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
+import { MANUAL_SLOTS, RUNTIME, decodeBackup, decodeBatterySave, encodeBackup, identifyRom, latestSlot, validateBatterySave } from './cartridge.js';
 import { SaveStore } from './save-store.js';
 import { CONTROLS, CRT_GEOM, CRT_SHADERS, defaultPreferences, keyLabel, readPreferences, rebindControl, validatePreferences, withFastForward, writePreferences } from './preferences.js';
 import { bindKeyboard } from './keyboard.js';
@@ -581,7 +581,30 @@ $('backup-file').addEventListener('change', (event) => {
   event.target.value = '';
   if (!file) return;
   void operation(async () => {
-    if (!running) throw new Error('Load the matching cartridge before importing a backup.');
+    if (!running) throw new Error('Load and power on the matching GBA cartridge before importing a save or backup.');
+    if (/\.sav$/i.test(file.name)) {
+      const sram = await decodeBatterySave(file);
+      if (!confirm('Import this in-game cartridge save? Use the same game and ROM version that created it; raw .sav files cannot identify their game. This replaces its in-game save and restarts the running game. Unsaved progress will be lost. Checkpoint slots are kept separately; export a backup first if needed.')) return;
+      if (storageAvailable) {
+        try { record = await store.putBattery(game, sram); }
+        catch (error) {
+          storageAvailable = false;
+          storageFailure(error);
+          throw new Error('The cartridge save could not be stored. The running game has not been replaced. Export a backup, then retry importing for this session only.');
+        }
+      }
+      batterySave = sram;
+      releaseHostInputs();
+      await launch(cartridge, null, sram);
+      $('storage-badge').textContent = storageAvailable ? 'BATTERY IMPORTED' : 'SESSION ONLY';
+      $('save-status').textContent = storageAvailable ?
+        'In-game .sav imported. The game restarted from its cartridge save; checkpoint slots were not changed.' :
+        'In-game .sav loaded for this page session only. Browser saving is unavailable.';
+      notice(storageAvailable ?
+        'Cartridge save imported and stored. Choose Continue or Load Game in the game itself. Existing checkpoints are unchanged.' :
+        'Cartridge save imported for this page session only. Browser saving is unavailable; refreshing will lose it.', !storageAvailable);
+      return;
+    }
     const capture = await decodeBackup(file, game.id);
     if (!confirm('Import this backup? It replaces the running session and the selected checkpoint slot.')) return;
     if (storageAvailable) await persist(selectedSlot, capture);

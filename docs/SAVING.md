@@ -88,6 +88,32 @@ along with its saves; it is not a backup or cloud synchronization.
 
 ## Move to another browser or device
 
+### Import an in-game GBA save from another emulator
+
+Use **Import save / backup** with a raw `.sav` from the game's own save
+function (for example a Pizza Boy A cartridge save), not a save state.
+First load and power on the same game and ROM version. After confirmation,
+BowserBOY stores the battery bytes separately and cold-boots the game.
+Choose **Continue / Load Game** in the game's own menu. No instant checkpoint
+is loaded, and existing manual/automatic checkpoints are left intact.
+Restoring an old checkpoint later deliberately restores its older progress.
+
+Accepted sizes: 512 bytes, 8 KB, 32 KB, 64 KB and 128 KB. Raw saves cannot
+reliably identify the game/version or prove integrity. Save states, compressed
+files and emulator-specific save containers are unsupported; renaming them
+does not convert them. Keep the original file and export your current
+`.bba-save` backup before replacing progress. No file is uploaded.
+
+If a browser storage write fails, the running game is left unchanged.
+An explicit retry can load the save for this page session only, with a warning
+that reload will lose it. A successful stored import selects battery boot
+on reload until a subsequent checkpoint is captured. A runtime launch failure
+does not erase existing checkpoint slots; a successfully stored import remains
+available for a subsequent launch. This adds GBA raw-save import only, not
+raw export or DS raw-save support.
+
+### Move a BowserBOY checkpoint
+
 1. Export backup while the session is running and keep the downloaded file.
 2. Open BowserBOY on the other device, choose the exact same GBA ROM and turn the console on.
 3. Import that `.bba-save` file and confirm replacement of the current session.
