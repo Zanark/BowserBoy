@@ -7,6 +7,8 @@ import { playStartup, playStartupSound } from './startup.js';
 import { icon } from './icons.js';
 import { loadBrand } from './brand.js';
 import { DsController } from './ds-controller.js';
+import { GameLibrary } from './game-library.js';
+import { bindDock } from './dock.js';
 
 const $ = (id) => document.getElementById(id);
 const store = new SaveStore();
@@ -32,6 +34,7 @@ let heldFastForward = false;
 let ds = null;
 let gbaSuspended = false;
 let selectingConsole = false;
+export let library = null;
 export let view = null;
 export let sceneFailure = null;
 try { preferences = readPreferences(localStorage); }
@@ -49,96 +52,22 @@ for (const [id, name, label] of [
   ['quick-fullscreen', 'fullscreen', 'Fullscreen player'], ['quick-controls', 'keys', 'Change control keybindings'],
   ['quick-screen-fullscreen', 'screen', 'Fullscreen game screen'], ['screen-focus-close', 'close', 'Exit screen fullscreen'],
   ['quick-slots', 'slots', 'Choose checkpoint slot'], ['quick-restart', 'restart', 'Restart GBA: power off and on'],
-  ['dock-drag', 'drag', 'Move tools dock'], ['dock-toggle', 'expand', 'Expand tools dock'],
   ['consoles-open', 'drag', 'Move consoles'],
 ]) icon($(id), name, label);
 
-const dock = $('action-dock');
-const dockHandle = $('dock-drag');
-let dockPosition = null;
-let dockDrag = null;
 let dockMode = 'table';
-function positionDock(x, y) {
-  const bounds = $('player').getBoundingClientRect();
-  const margin = Math.min(8, Math.max(0, (bounds.width - dock.offsetWidth) / 2));
-  dockPosition = {
-    x: Math.max(margin, Math.min(bounds.width - dock.offsetWidth - margin, x)),
-    y: Math.max(8, Math.min(bounds.height - dock.offsetHeight - 8, y)),
-  };
-  dock.dataset.moved = '';
-  dock.style.setProperty('--dock-x', `${dockPosition.x}px`);
-  dock.style.setProperty('--dock-y', `${dockPosition.y}px`);
-}
-function finishDockDrag(event) {
-  if (!dockDrag || (event && event.pointerId !== dockDrag.id)) return;
-  const { id } = dockDrag;
-  dockDrag = null;
-  delete dock.dataset.dragging;
-  if (dockHandle.hasPointerCapture(id)) dockHandle.releasePointerCapture(id);
-}
-function resetDockPosition() {
-  finishDockDrag();
-  dockPosition = null;
-  delete dock.dataset.moved;
-}
 function closeSpeedMenu() {
   if ($('speed-menu').matches(':popover-open')) $('speed-menu').hidePopover();
 }
-dockHandle.addEventListener('pointerdown', (event) => {
-  if (!event.isPrimary || event.button !== 0 || dockDrag) return;
-  event.preventDefault();
-  closeSpeedMenu();
-  const box = dock.getBoundingClientRect();
-  const bounds = $('player').getBoundingClientRect();
-  dockDrag = { id: event.pointerId, x: event.clientX, y: event.clientY,
-    left: box.left - bounds.left, top: box.top - bounds.top, previous: dockPosition };
-  dock.dataset.dragging = '';
-  dockHandle.focus({ preventScroll: true });
-  dockHandle.setPointerCapture(event.pointerId);
-});
-dockHandle.addEventListener('pointermove', (event) => {
-  if (dockDrag?.id !== event.pointerId) return;
-  positionDock(dockDrag.left + event.clientX - dockDrag.x, dockDrag.top + event.clientY - dockDrag.y);
-});
-for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) dockHandle.addEventListener(name, finishDockDrag);
-dockHandle.addEventListener('keydown', (event) => {
-  const directions = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
-  if (!directions[event.code] && event.code !== 'Home') return;
-  if (event.altKey || event.ctrlKey || event.metaKey) return;
-  event.preventDefault();
-  event.stopPropagation();
-  closeSpeedMenu();
-  if (event.code === 'Home') resetDockPosition();
-  else {
-    finishDockDrag();
-    const box = dock.getBoundingClientRect();
-    const bounds = $('player').getBoundingClientRect();
-    const [x, y] = directions[event.code];
-    const step = event.shiftKey ? 40 : 10;
-    positionDock(box.left - bounds.left + x * step, box.top - bounds.top + y * step);
-  }
-});
-function setDockCollapsed(collapsed) {
-  finishDockDrag();
-  closeSpeedMenu();
-  $('dock-actions').hidden = collapsed;
-  dock.toggleAttribute('data-collapsed', collapsed);
-  $('dock-toggle').setAttribute('aria-expanded', String(!collapsed));
-  icon($('dock-toggle'), collapsed ? 'expand' : 'collapse', `${collapsed ? 'Expand' : 'Collapse'} tools dock`);
-  fitDock();
-}
-$('dock-toggle').addEventListener('click', () => setDockCollapsed(!$('dock-actions').hidden));
+const docks = [
+  bindDock($('action-dock'), 'tools dock', closeSpeedMenu),
+  bindDock($('console-dock'), 'console dock'),
+  bindDock($('lighting-dock'), 'lighting dock'),
+];
+const setDockCollapsed = docks[0].setCollapsed;
 document.querySelector('.skip-link').addEventListener('click', () => {
   if ($('dock-actions').hidden) $('dock-toggle').click();
 });
-function fitDock() {
-  finishDockDrag();
-  if (dockPosition) positionDock(dockPosition.x, dockPosition.y);
-}
-new ResizeObserver(fitDock).observe(dock);
-window.addEventListener('resize', fitDock);
-window.addEventListener('blur', () => finishDockDrag());
-document.addEventListener('fullscreenchange', fitDock);
 
 function renderQuickControls() {
   const number = MANUAL_SLOTS.indexOf(selectedSlot) + 1;
@@ -192,17 +121,19 @@ const storageReady = store.open().then(() => {
 });
 
 function updateControls() {
-  for (const id of ['select-gba', 'select-ds']) $(id).disabled = busy || selectingConsole || !!ds?.busy || !view;
+  const boxMoving = !!view?.gameShelves.motion;
+  if (library) $('game-library-open').disabled = busy || boxMoving || selectingConsole || !!ds?.busy || !!view?.transition;
+  for (const id of ['select-gba', 'select-ds']) $(id).disabled = busy || boxMoving || selectingConsole || !!ds?.busy || !view;
   for (const id of ['upload', 'rom-file', 'demo', 'volume', 'mute', 'shader', 'reset-controls']) $(id).disabled = busy;
   for (const id of ['pause', 'fullscreen', 'export', 'import', 'native-open']) $(id).disabled = !running || busy;
   $('native-close').disabled = busy;
-  $('hardware-power').disabled = busy || !view;
+  $('hardware-power').disabled = busy || boxMoving || !view;
   $('hardware-power').setAttribute('aria-pressed', String(powered));
   $('hardware-power').setAttribute('aria-label', `Turn power ${powered ? 'off' : 'on'}`);
   $('hardware-power').title = `Power ${powered ? 'off' : 'on'}`;
   $('scene').dataset.power = powered ? 'on' : 'off';
   $('load-cancel').hidden = !launchCallbacks;
-  for (const button of document.querySelectorAll('[data-control]')) button.disabled = !running;
+  for (const button of document.querySelectorAll('[data-control]')) button.disabled = !running || boxMoving;
   for (const button of document.querySelectorAll('[data-binding]')) button.disabled = busy;
   $('save').disabled = !running || busy || !storageAvailable;
   $('restore').disabled = !running || busy || !record?.[selectedSlot];
@@ -215,7 +146,8 @@ function updateControls() {
   $('quick-screen-fullscreen').disabled = !running || busy;
   for (const id of ['quick-controls', 'quick-slots', 'quick-fullscreen']) $(id).disabled = busy;
   $('power-led').classList.toggle('on', powered);
-  if (view) view.nativeBusy = running && busy;
+  // A cartridge switch must keep submitting the box's visible insertion frames.
+  if (view) view.nativeBusy = running && busy && !boxMoving;
   view?.setPower(powered);
   renderQuickControls();
 }
@@ -341,13 +273,13 @@ async function rememberDevice(nextPowered = powered, file = cartridge) {
   }
 }
 
-async function loadRom(file, { remember = true } = {}) {
+async function loadRom(file, { remember = true, animate = remember } = {}) {
   const identified = await identifyRom(file);
   if (!view) throw new Error(sceneFailure?.message ?? 'The 3D display is not available.');
   await storageReady;
   if (running) {
     if (autoSave && storageAvailable) await persist('automatic');
-    else if (!confirm('Switch cartridges? Automatic saving is off. Unsaved progress will be lost; cancel to save or export first.')) return;
+    else if (!confirm('Switch cartridges? Automatic saving is off. Unsaved progress will be lost; cancel to save or export first.')) return false;
   }
   let saved = null;
   if (storageAvailable) {
@@ -368,7 +300,7 @@ async function loadRom(file, { remember = true } = {}) {
   $('game-monogram').textContent = game.title.slice(0, 1).toUpperCase();
   $('quick-save-time').textContent = record?.manual ? new Date(record.manual.createdAt).toLocaleString() : 'Your safety net for the tricky bits.';
   if (!powered) {
-    view.insertCartridge(game.id, remember);
+    view.insertCartridge(game.id, animate);
     if (remember) view.setView('playing');
     if ($('tools').open) $('tools').close();
     view.showPowerOff();
@@ -377,9 +309,10 @@ async function loadRom(file, { remember = true } = {}) {
     $('power-label').textContent = 'POWER OFF / CARTRIDGE RETAINED';
     if (remember) notice(storageAvailable ? 'Cartridge inserted. Use the physical power switch to turn it on.' :
       'Cartridge inserted for this page session only. Browser storage is unavailable; refreshing cannot remember the power or cartridge.', !storageAvailable);
-    return;
+    return true;
   }
   const checkpoint = record?.bootMode === 'battery' ? null : latestSlot(record);
+  if (!animate) view.insertCartridge(game.id, false);
   await launch(file, checkpoint, checkpoint ? null : batterySave);
   if (storageAvailable && !$('storage-badge').classList.contains('error')) {
     $('storage-badge').textContent = checkpoint ? 'RESUMED' : 'LOCAL ONLY';
@@ -387,6 +320,7 @@ async function loadRom(file, { remember = true } = {}) {
       'ROM booted from the beginning with available in-game save data. Checkpoints remain separate.';
   }
   if (checkpoint) notice('Welcome back. Your latest checkpoint has been restored.');
+  return true;
 }
 
 function chooseRom(file) {
@@ -411,7 +345,7 @@ window.addEventListener('message', (event) => {
         break;
       }
       running = true;
-      void command('setInputEnabled', view.mode === 'playing' && !view.transition).catch((error) => notice(error.message, true));
+      void command('setInputEnabled', view.mode === 'playing' && !view.transition && !view.gameShelves.motion).catch((error) => notice(error.message, true));
       $('loading-screen').hidden = true;
       $('power-label').textContent = 'CARTRIDGE IN / GOOD TIMES ON';
       launchCallbacks?.resolve();
@@ -605,7 +539,7 @@ document.addEventListener('fullscreenchange', () => {
     releaseHostInputs();
     $('quick-screen-fullscreen').focus({ preventScroll: true });
   }
-  if (running) void command('setInputEnabled', focused || (view?.mode === 'playing' && !view.transition))
+  if (running) void command('setInputEnabled', !view.gameShelves.motion && (focused || (view?.mode === 'playing' && !view.transition)))
     .catch(error => notice(error.message, true));
 });
 function saveCheckpoint() {
@@ -914,7 +848,7 @@ window.addEventListener('keydown', (event) => {
 }, true);
 
 const keyboard = bindKeyboard(window, {
-  enabled: (event) => view?.console !== 'ds' && running && (document.fullscreenElement === $('screen-focus') || (view?.mode === 'playing' && !view.transition)) && !$('tools').open && !$('help').open && !$('frame-host').open && !$('ds-tools').open &&
+  enabled: (event) => view?.console !== 'ds' && running && !view?.gameShelves.motion && (document.fullscreenElement === $('screen-focus') || (view?.mode === 'playing' && !view.transition)) && !document.querySelector('dialog[open]') &&
     !event.target.closest?.('button, input, select, textarea, [contenteditable="true"]'),
   getBindings: () => ({ ...preferences.controls, fastForward: 'Space' }),
   onInput: (action, pressed, code) => sendInput(action, pressed, `host-key:${code}`),
@@ -925,12 +859,7 @@ const keyboard = bindKeyboard(window, {
     if (view?.axolotlMove) { view.finishAxolotlMove(true); return true; }
     if ($('pear-controls').matches(':popover-open')) { $('pear-controls').hidePopover(); return true; }
     if ($('axolotl-controls').matches(':popover-open')) { $('axolotl-controls').hidePopover(); return true; }
-    if (dockDrag) {
-      const previous = dockDrag.previous;
-      resetDockPosition();
-      if (previous) positionDock(previous.x, previous.y);
-      return true;
-    }
+    if (docks.some(dock => dock.cancelDrag())) return true;
     if (document.fullscreenElement === $('screen-focus')) { closeScreenFullscreen(); return true; }
     if (view?.console === 'ds') return false;
     if ($('tools').open || $('help').open || $('frame-host').open || $('ds-tools').open) return false;
@@ -1138,7 +1067,8 @@ try {
           'Drag to look around. Scroll to zoom. Your game keeps running.') :
           view?.console === 'ds' ? 'BowserBOY DS / touch the lower screen. Z/X = A/B. C/V = X/Y. DS for cartridges.' :
             'Yours for a little while. Z = A / X = B. Cartridges for keys, saves & settings.';
-      if (running) void command('setInputEnabled', view?.console !== 'ds' && (document.fullscreenElement === $('screen-focus') || (mode === 'playing' && !moving))).catch((error) => notice(error.message, true));
+      updateControls();
+      if (running) void command('setInputEnabled', !view.gameShelves.motion && view?.console !== 'ds' && (document.fullscreenElement === $('screen-focus') || (mode === 'playing' && !moving))).catch((error) => notice(error.message, true));
     },
     onError: (error) => { console.error('3D graphics:', error); notice(error.message, true); },
   });
@@ -1165,6 +1095,15 @@ try {
   for (const id of ['pickup', 'inspect', 'put-down', 'lamp-toggle', 'room-toggle', 'consoles-open']) $(id).disabled = true;
 }
 $('scene').addEventListener('graphics-restored', () => notice('3D graphics recovered. Your cartridge session was retained.'));
+$('scene').addEventListener('game-box-motion', () => {
+  releaseHostInputs();
+  ds?.releaseInputs();
+  ds?.update();
+  updateControls();
+  if (running) void command('setInputEnabled', !view.gameShelves.motion && view.console !== 'ds' &&
+    (document.fullscreenElement === $('screen-focus') || (view.mode === 'playing' && !view.transition)))
+    .catch(error => notice(error.message, true));
+});
 renderPreferences();
 if (preferenceWarning) {
   $('preferences-status').textContent = preferenceWarning;
@@ -1185,11 +1124,41 @@ async function restoreConsole() {
     $('power-label').textContent = 'POWER ON / INSERT CARTRIDGE';
   }
 }
-void restoreConsole().catch((error) => {
-  console.error('Restoring console:', error);
-  notice(`The console could not be restored: ${error.message}`, true);
+void restoreConsole().then(async () => {
+  if (!view) return;
+  library = new GameLibrary(view, store, {
+    storageAvailable: () => storageAvailable,
+    isBusy: () => busy || ds.busy || selectingConsole || !!view.transition || !!view.gameShelves.motion,
+    current: system => (system === 'gba' ? game : ds.game)?.id ?? null,
+    notice,
+    operation,
+    selectConsole,
+    load: async (slot, entry, { preload = false } = {}) => {
+      const file = new File([entry.file], entry.name);
+      if (slot.system === 'ds') {
+        if (!preload && ds.game?.id === entry.gameId) {
+          if (!ds.running) await ds.launch(ds.storageAvailable ? await ds.store.get(entry.gameId) : null, null);
+          return true;
+        }
+        await ds.load(file, { focus: false, animate: false, preload });
+        return true;
+      }
+      if (preload && game) return game.id === entry.gameId;
+      if (game?.id !== entry.gameId) {
+        if (!await loadRom(file, { remember: !preload, animate: false })) return false;
+      }
+      if (!preload && !powered) await togglePower();
+      return true;
+    },
+  });
+  await library.initialize();
+}).catch((error) => {
+  console.error(library ? 'Restoring game shelves:' : 'Restoring console:', error);
+  notice(library ? `Game shelves could not restore: ${error.message} Use Games to reattach a valid local file.` :
+    `The console could not be restored: ${error.message}`, true);
 }).finally(() => {
   busy = false;
+  if (library) { library.render(); $('game-library-open').disabled = false; }
   $('scene').dataset.ready = 'true';
   updateControls();
 });

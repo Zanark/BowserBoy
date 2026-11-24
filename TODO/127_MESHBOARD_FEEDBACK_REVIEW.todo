@@ -1,0 +1,50 @@
+Status: IN_PROGRESS
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/126
+Milestone: Peer feedback collection and an owner-reviewed planned-work document.
+Dependencies: Existing public BowserBOY deployment and actual reviewer responses.
+Purpose: Collect evidence-grounded feedback, preserve every recommendation's
+disposition, and plan improvements without implementing unapproved changes.
+
+Tasks:
+- [x] Publish a new mandatory room-wide review thread with the live URL,
+  isolated local setup, source guide, response format and evidence boundaries.
+- [x] Save the consultation, due date, recipient coverage and approval gate
+  in owned continuity; register a session-scoped five-day review prompt.
+- [ ] On or after 2026-11-15 21:15 Asia/Kolkata, reconcile actual replies.
+- [ ] Create numbered eight-field TODOs for distinct recommendations; preserve
+  attribution, evidence, duplicates, conflicts and explicit dispositions.
+- [ ] Continue bounded reviews until feedback is quiet; report missing members
+  and access blockers instead of treating silence as approval.
+- [ ] Deliver the consolidated planned-work document for the owner's decision.
+
+Acceptance criteria:
+Read existing replies first: two reviewers must not submit the same feedback.
+Require distinct observations/evidence, not copied or reworded recommendations;
+link prior findings and add a genuinely different contribution. Never fabricate
+issues or testing merely to make feedback unique.
+The review distinguishes the public revision from uncommitted local features.
+Every indexed member is requested to provide an individual substantive review,
+or explicitly report access/tool limitations and label source-only conclusions.
+The consultation cannot fabricate peer activity or wake dormant agents.
+No recommendation is lost merely because issue/Project synchronization agrees.
+Recommendation TODOs remain NOT_STARTED and explicitly awaiting owner approval.
+The final plan explains proposed changes, rationale, acceptance, dependencies,
+risks, estimated scope and source feedback; uncertain claims stay unverified.
+The owner's explicit green signal is required before implementation.
+No application changes, commit, push or deployment are authorized by this task.
+
+Completion evidence:
+2026-11-10: Public homepage HTTP200. Latest github-pages deployment7626927262
+reports success for5ac69ad3f136b22c89e906f6cfc8a9a4140b1234.
+Game shelves and newly movable upper panels are local-only, not public features.
+New open whole-room thread publication verified; exact live/local setup and
+source map retained. Session schedule1active/listed for November15 at21:15IST;
+closed-CLI execution is not guaranteed. Owned context retains overdue recovery,
+recipient coverage and approval gate. Future feedback/TODOs/final plan pending.
+
+Completion log:
+2026-11-10: Owner requests mandatory individual peer feedback, a five-day
+follow-up, recommendation TODOs and a final planned-work document only.
+Do not implement recommendations before explicit owner approval.
+2026-11-10: Owner additionally requires nonduplicated feedback between reviewers;
+highlight distinct contributions without requiring fabricated findings.

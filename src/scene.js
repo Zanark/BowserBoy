@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { canvasTexture, createCartridge, createHandheld, createLcdGeometries, createWood } from './handheld.js';
+import { canvasTexture, createHandheld, createLcdGeometries, createWood } from './handheld.js';
+import { GameShelves } from './game-boxes.js';
 import { createDeskLamp, createRoomLighting, ScreenIllumination } from './lighting.js';
 import { brandImage } from './brand.js';
 import { cartridgeFramingDuration, cartridgeSlideDuration, nextCartridgeElapsed } from './cartridge-motion.js';
@@ -96,17 +97,6 @@ export class HandheldScene {
     floor.receiveShadow = true;
     this.scene.add(floor);
     this.deskObjects = [];
-    for (const [color, title, subtitle, x, z, angle] of [
-      ['#648579', 'DAYDREAM', 'EMPTY CARTRIDGE', 4.3, -1.9, .42],
-      ['#b2a7b5', 'LITTLE WORLDS', 'EMPTY CARTRIDGE', 5.6, -.2, -.16],
-      ['#aaa48b', 'BBA', 'HOME BREW', -3.8, 4, -.43],
-    ]) {
-      const cartridge = createCartridge(color, title, subtitle);
-      cartridge.position.set(x, .18, z);
-      cartridge.rotation.set(-Math.PI / 2, 0, angle);
-      this.scene.add(cartridge);
-      this.deskObjects.push(cartridge);
-    }
     this.model = createHandheld();
     this.model.root.userData.console = 'gba';
     this.screenCurved = true;
@@ -122,6 +112,7 @@ export class HandheldScene {
     this.ds.root.position.copy(dsTablePosition);
     this.ds.root.quaternion.copy(dsTableQuaternion);
     this.scene.add(this.ds.root);
+    this.gameShelves = new GameShelves(this);
     this.pear = createPearBoy();
     this.pear.root.position.copy(pearHome);
     this.pearMotion = new PearMotion(this.pear.root.position);
@@ -181,6 +172,15 @@ export class HandheldScene {
       if (event.button !== 0) return;
       this.canvas.focus({ preventScroll: true });
       const hit = this.pick(event);
+      let gameObject = hit?.object;
+      while (gameObject && !gameObject.userData.gameSlot) gameObject = gameObject.parent;
+      if (gameObject?.userData.gameSlot) {
+        if (!this.transition && !this.gameShelves.motion && !this.consoleMove && !this.companionMove) {
+          this.onGameSlot?.(gameObject.userData.gameSlot);
+        }
+        return;
+      }
+      if (this.gameShelves.motion) return;
       if (!this.transition && hit?.object.userData.dsStylus && this.mode !== 'inspecting') {
         this.dsController?.pickUpStylus(event);
         return;
@@ -548,9 +548,13 @@ export class HandheldScene {
     const bounds = this.canvas.getBoundingClientRect();
     this.pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     this.raycaster.setFromCamera(this.pointer, this.camera);
-    return this.raycaster.intersectObjects([this.model.root, this.ds.root, this.lamp.root, this.pear.root, this.axolotl.root], true)
+    return this.raycaster.intersectObjects([this.model.root, this.ds.root, this.lamp.root, this.pear.root, this.axolotl.root,
+      this.gameShelves.root, ...this.gameShelves.lastCards.values()], true)
       .find(hit => hit.object !== this.pear.root.getObjectByName('pear-boy soft contact shadow') &&
-        !(this.dsController?.stylusHeld && hit.object.userData.dsStylus));
+        !(this.dsController?.stylusHeld && hit.object.userData.dsStylus) && (() => {
+          for (let object = hit.object; object; object = object.parent) if (!object.visible) return false;
+          return true;
+        })());
   }
 
   tablePoint(event, plane = this.companionMove?.plane ?? new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)) {
@@ -1203,7 +1207,7 @@ export class HandheldScene {
           this.failRoomPaint();
         } else {
           const elapsed = Math.max(0, time - this.paintSubmitted);
-          const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion ? 1000 : 200;
+          const recoveryLimit = this.mode === 'playing' && !this.transition && !this.cartridgeMotion && !this.gameShelves.motion ? 1000 : 200;
           // Moderate frames need no extra idle; severe stalls still need native-runtime headroom.
           this.nextPaint = time + (elapsed > 100 ? Math.min(recoveryLimit, elapsed * 2) : 0);
         }
@@ -1337,6 +1341,7 @@ export class HandheldScene {
     this.dsController?.paintScreens();
     // Recovery and modal tools leave the native core running without room paints.
     if (!paintDue) return;
+    this.gameShelves.paint(time);
     if (this.source) this.model.screen.material.map.needsUpdate = true;
     const lightDelta = Math.max(0, (time - (this.lastPaint ?? time - 16.67)) / 1000);
     this.dsController?.paint(time, lightDelta);
@@ -1373,9 +1378,10 @@ export class HandheldScene {
         !adapting && this.screenIllumination.settled && this.dsScreenIllumination.every(light => light.settled)) return;
     this.renderer.shadowMap.needsUpdate ||= !!this.changed || poseChanged || buttonsMoving;
     // Sample the actual room once per settled pose/light change, only for DS paint.
-    if (this.dsReflectionsDirty && !this.lightingChanged && !this.transition && !this.drag && !this.pinch && !this.companionMove && !this.consoleMove &&
+    if (this.dsReflectionsDirty && !this.lightingChanged && !this.transition && !this.gameShelves.motion && !this.drag && !this.pinch && !this.companionMove && !this.consoleMove &&
         !consolesMoving && this.pearMotion.sleeping && this.axolotlMotion.sleeping) this.updateDsReflections();
     this.renderer.render(this.scene, this.camera);
+    this.gameShelves.acknowledgePaint(time);
     this.pear.acknowledgeFacePaint();
     this.lightingChanged = false;
     this.pearMotion.acknowledgePaint();

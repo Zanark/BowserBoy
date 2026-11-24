@@ -1,4 +1,5 @@
 import { MANUAL_SLOTS, MAX_ROM_BYTES, RUNTIME, validateBatterySave, validateCapture } from './cartridge.js';
+import { gameSlot, validateLibraryEntry, validateLibrarySelection } from './game-library-catalog.js';
 
 function validateDevice(device) {
   const cartridge = device?.cartridge;
@@ -56,6 +57,27 @@ export class SaveStore {
       version: 1, powered, cartridge: file ? { name: file.name, bytes: file } : null,
     });
     await this.#transaction('readwrite', (store) => store.put(device, 'console'), false, 'device');
+  }
+
+  async getLibrarySlot(id) {
+    gameSlot(id);
+    const entry = await this.#transaction('readonly', store => store.get(`shelf:${id}`), false, 'device');
+    return entry === undefined ? null : validateLibraryEntry(id, entry);
+  }
+
+  async putLibrarySlot(id, entry) {
+    validateLibraryEntry(id, entry);
+    await this.#transaction('readwrite', store => store.put(entry, `shelf:${id}`), false, 'device');
+  }
+
+  async getLibrarySelection() {
+    const value = await this.#transaction('readonly', store => store.get('shelf:last'), false, 'device');
+    return value === undefined ? { version: 1, gba: null, ds: null } : validateLibrarySelection(value);
+  }
+
+  async putLibrarySelection(value) {
+    validateLibrarySelection(value);
+    await this.#transaction('readwrite', store => store.put(value, 'shelf:last'), false, 'device');
   }
 
   async putSlot(game, slot, capture) {

@@ -9,7 +9,7 @@ const ready = async (page, { expandDock = true } = {}) => {
 };
 
 const expectSeparateDocks = async page => {
-  const [tools, lighting] = await page.locator('.icon-dock').evaluateAll(docks =>
+  const [tools, lighting] = await page.locator('#action-dock, #lighting-dock').evaluateAll(docks =>
     docks.map(dock => dock.getBoundingClientRect().toJSON()));
   const { width, height } = page.viewportSize();
   for (const box of [tools, lighting]) {
@@ -189,6 +189,106 @@ test('tools dock supports real touch dragging and stays reachable after cancella
     await page.screenshot({ path: test.info().outputPath('movable-dock-phone.png') });
   } finally { await context.close(); }
 });
+
+for (const [name, dockId, handleId, toggleId, actionId] of [
+  ['console', 'console-dock', 'console-drag', 'console-toggle', 'select-ds'],
+  ['lighting', 'lighting-dock', 'lighting-drag', 'lighting-toggle', 'lamp-toggle'],
+]) {
+  test(`${name} dock independently drags, collapses, cancels and keeps its controls working`, async ({ page }) => {
+    await page.goto('./');
+    await ready(page);
+    const dock = page.locator(`#${dockId}`);
+    const handle = page.locator(`#${handleId}`);
+    const toggle = page.locator(`#${toggleId}`);
+    const action = page.locator(`#${actionId}`);
+    const other = page.locator(name === 'console' ? '#lighting-dock' : '#console-dock');
+    const unchanged = await other.boundingBox();
+    const original = await dock.boundingBox();
+    const grip = await handle.boundingBox();
+    await expect(handle).toHaveAccessibleName(`Move ${name} dock`);
+    await page.mouse.move(grip.x + 22, grip.y + 22);
+    await page.mouse.down();
+    await page.mouse.move(grip.x - 138, grip.y + 202, { steps: 6 });
+    await page.mouse.up();
+    const moved = await dock.boundingBox();
+    expect(moved.x).toBeCloseTo(original.x - 160, 0);
+    expect(moved.y).toBeCloseTo(original.y + 180, 0);
+    expect(await other.boundingBox()).toEqual(unchanged);
+    await expect(page.locator('#scene')).toHaveAttribute('data-view', 'table');
+    await expect(page.locator('#tools')).toBeHidden();
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggle).toHaveAccessibleName(`Expand ${name} dock`);
+    await expect(action).toBeHidden();
+    expect((await dock.boundingBox()).width).toBeLessThan(120);
+    await handle.focus();
+    await handle.press('Shift+ArrowDown');
+    const beforeCancel = await dock.boundingBox();
+    const nextGrip = await handle.boundingBox();
+    await page.mouse.move(nextGrip.x + 22, nextGrip.y + 22);
+    await page.mouse.down();
+    await page.mouse.move(30, 30, { steps: 5 });
+    await page.keyboard.press('Escape');
+    await page.mouse.up();
+    expect((await dock.boundingBox()).x).toBeCloseTo(beforeCancel.x, 0);
+    expect((await dock.boundingBox()).y).toBeCloseTo(beforeCancel.y, 0);
+    await expect(page.locator('#tools')).toBeHidden();
+    await toggle.click();
+    await expect(action).toBeVisible();
+    await handle.press('Home');
+    expect((await dock.boundingBox()).x).toBeCloseTo(original.x, 0);
+    expect((await dock.boundingBox()).y).toBeCloseTo(original.y, 0);
+    if (name === 'console') {
+      await action.click();
+      await expect(page.locator('#player')).toHaveAttribute('data-console', 'ds');
+    } else {
+      await action.click();
+      await expect(action).toHaveAttribute('aria-pressed', 'false');
+      await page.locator('#pear-open').click();
+      await expect(page.locator('#pear-controls')).toBeVisible();
+      await toggle.click();
+      await expect(page.locator('#pear-controls')).toBeHidden();
+      await toggle.click();
+    }
+    await page.screenshot({ path: test.info().outputPath(`${name}-dock-desktop.png`) });
+  });
+
+  test(`${name} dock supports touch and stays inside resized play views`, async ({ browser }) => {
+    const context = await browser.newContext({
+      baseURL: test.info().project.use.baseURL, viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true,
+    });
+    try {
+      const page = await context.newPage();
+      await page.goto('./');
+      await ready(page);
+      const dock = page.locator(`#${dockId}`);
+      const handle = page.locator(`#${handleId}`);
+      const toggle = page.locator(`#${toggleId}`);
+      const original = await dock.boundingBox();
+      const grip = await handle.boundingBox();
+      const touch = await context.newCDPSession(page);
+      const x = grip.x + 22, y = grip.y + 22;
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: y + 220 }] });
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      expect((await dock.boundingBox()).y).toBeCloseTo(original.y + 220, 0);
+      await page.locator('#pickup').tap();
+      await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');
+      for (const [width, height] of [[320, 568], [844, 390], [390, 844]]) {
+        await page.setViewportSize({ width, height });
+        await toggle.tap();
+        await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+        await toggle.tap();
+        await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+        await expect.poll(async () => {
+          const box = await dock.boundingBox();
+          return box.x >= 0 && box.y >= 0 && box.x + box.width <= width && box.y + box.height <= height;
+        }).toBe(true);
+      }
+      await page.screenshot({ path: test.info().outputPath(`${name}-dock-phone.png`) });
+    } finally { await context.close(); }
+  });
+}
 
 test('settings drawer closes on a backdrop click but not inside clicks or drags from inside', async ({ page }) => {
   await page.goto('./');
@@ -597,7 +697,7 @@ test('lighting dock controls shared lights independently of GBA and DS tools, vi
   await page.goto('./');
   await ready(page);
   const lighting = page.getByRole('navigation', { name: 'Room and desk lighting', exact: true });
-  await expect(lighting.locator('button')).toHaveCount(4);
+  await expect(lighting.locator('[data-dock-actions] button')).toHaveCount(4);
   await expect(page.locator('#action-dock').locator('#lamp-toggle, #room-toggle, #pear-open, #axolotl-open')).toHaveCount(0);
   await page.locator('#pickup').click();
   await expect(page.locator('#scene')).toHaveAttribute('data-view', 'playing');

@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { siteFiles, siteSource } from './site-files.mjs';
 import { createDemoRom } from './demo-rom.mjs';
 import { createDsDemoRom } from './demo-ds-rom.mjs';
+import { localLibraryResponse } from './local-library.mjs';
 
 const args = process.argv.slice(2);
 const value = (flag, fallback) => args.includes(flag) ? args[args.indexOf(flag) + 1] : fallback;
@@ -16,7 +17,7 @@ const dist = args.includes('--dist');
 const files = new Set((await siteFiles()).map((file) => file.replaceAll('\\', '/')));
 files.add('assets/pixel-lab.gba');
 files.add('assets/twin-lab.nds');
-const types = { html: 'text/html', css: 'text/css', js: 'text/javascript', svg: 'image/svg+xml', png: 'image/png', txt: 'text/plain', gba: 'application/octet-stream', nds: 'application/octet-stream' };
+const types = { html: 'text/html', css: 'text/css', js: 'text/javascript', json: 'application/json', svg: 'image/svg+xml', png: 'image/png', txt: 'text/plain', gba: 'application/octet-stream', nds: 'application/octet-stream' };
 
 createServer(async (request, response) => {
   try {
@@ -26,6 +27,14 @@ createServer(async (request, response) => {
     }
     const path = new URL(request.url, 'http://localhost').pathname;
     const relative = path.startsWith(basePath) ? path.slice(basePath.length) || 'index.html' : null;
+    const library = args.includes('--library') && relative ?
+      await localLibraryResponse(relative, join('.local', 'game-library')) : null;
+    if (library) {
+      response.writeHead(library.status, { 'Content-Type': library.type, 'Cache-Control': 'no-store',
+        'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer' });
+      response.end(request.method === 'HEAD' ? undefined : library.data);
+      return;
+    }
     if (!files.has(relative)) { response.writeHead(404).end('Not found'); return; }
     const data = !dist && relative === 'assets/pixel-lab.gba' ? createDemoRom() :
       !dist && relative === 'assets/twin-lab.nds' ? createDsDemoRom() :

@@ -203,7 +203,7 @@ export class DsController {
 
   preferences() { return { ...defaultPreferences(), shader: 'disabled', muted: $('ds-mute').checked }; }
   inputAllowed() {
-    return this.running && !this.busy && !this.paused && this.view.console === 'ds' &&
+    return this.running && !this.busy && !this.paused && !this.view.gameShelves.motion && this.view.console === 'ds' &&
       this.view.mode === 'playing' && !this.view.transition && !document.querySelector('dialog[open]');
   }
   feedback(message, error = false) {
@@ -342,10 +342,12 @@ export class DsController {
     map.needsUpdate = true;
     this.view.changed = true;
   }
-  async load(file) {
+  async load(file, { focus = true, animate = true, preload = false } = {}) {
     if ($('ds-tools').open) $('ds-tools').close();
-    await this.selectConsole('ds');
-    if (this.view.mode !== 'playing') this.view.setView('playing');
+    if (focus) {
+      await this.selectConsole('ds');
+      if (this.view.mode !== 'playing') this.view.setView('playing');
+    }
     this.loadingStatus('READING LOCAL ROM');
     this.feedback('Reading DS cartridge in the background. Your ROM stays in this browser.');
     try {
@@ -357,11 +359,16 @@ export class DsController {
       this.battery = saved?.sram ?? null;
       $('ds-game').textContent = `${game.title} / ${(game.size / 1024 / 1024).toFixed(2)} MB / LOCAL NDS`;
       this.model.cartridge.visible = true;
-      const moving = !this.view.reducedMotion.matches;
+      const moving = animate && !this.view.reducedMotion.matches;
       this.model.cartridge.position.y = moving ? 3.1 : .44;
       this.inserting = moving ? { elapsed: 0, lastPaint: null } : null;
       this.view.host.dataset.dsCartridge = moving ? 'inserting' : 'seated';
-      await this.launch(saved, null);
+      if (preload) {
+        this.powered = false;
+        this.status('DS CARTRIDGE RETAINED', 'CHOOSE ITS BOX OR TURN POWER ON');
+        this.feedback('Last shelf cartridge preloaded. Choose its box or turn on DS power to resume.');
+        this.update();
+      } else await this.launch(saved, null);
     } catch (error) {
       if (this.loading && !this.running) this.status('DS COULD NOT LOAD', 'OPEN DS CARTRIDGES TO RETRY');
       throw error;
@@ -679,7 +686,7 @@ export class DsController {
     for (const [id, control] of this.model.controls) {
       const button = id === 'power' ? $('ds-hardware-power') : document.querySelector(`[data-ds-control="${id}"]`);
       button.hidden = this.view.console !== 'ds' || this.view.mode !== 'playing' || !!this.view.transition;
-      button.disabled = id === 'power' ? this.busy : !this.inputAllowed();
+      button.disabled = id === 'power' ? this.busy || !!this.view.gameShelves.motion : !this.inputAllowed();
       if (button.hidden) continue;
       const world = control.anchor.getWorldPosition(new THREE.Vector3());
       const normal = new THREE.Vector3(0, 0, 1).transformDirection(this.model.root.matrixWorld);

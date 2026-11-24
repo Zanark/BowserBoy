@@ -1,0 +1,45 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/125
+Milestone: Independent movable, collapsible console and lighting panels.
+Dependencies: Existing tools-dock interaction and workstream125.
+Purpose: Give the GBA/DS selector and lighting panel the same drag/collapse
+interaction as the bottom tools dock without changing console or light state.
+
+Tasks:
+- [x] Reuse one shared drag/collapse implementation for all three docks.
+- [x] Add independent drag handles, collapse toggles and accessible help.
+- [x] Preserve console palettes, lighting actions and bottom-dock behavior.
+- [x] Qualify pointer, touch, keyboard, cancellation and resized play views.
+- [x] Update focused guide, development ledger and owned continuity.
+
+Acceptance criteria:
+Both new panels independently move with their handles and collapse without
+changing their actions. Mouse/touch capture prevents accidental scene drags.
+Arrow keys move, Shift increases steps, Home resets and Escape cancels a drag.
+Moved panels remain reachable after expanding, resize and play-view changes.
+Existing bottom-dock collapse, movement and console-reveal behavior remains.
+The two newly movable panels retain their previous expanded initial state;
+bottom tools remain initially collapsed. Positions reset on reload.
+No commit, push, deployment, book rebuild or ROM publication is required.
+
+Completion evidence:
+2026-11-09: Syntax/build and64/64unit tests PASS. All eight focused dock
+browser cases PASS together in1.1minutes, covering existing bottom tools,
+both new panels with desktop/mobile touch, real collapsed state, keyboard,
+cancellation/reset, resize/play views and unchanged GBA/DS lighting actions.
+Desktop/mobile captures of both requested panels actually reviewed.
+Technical qualification only; no physical-device or human-approval claim.
+
+Completion log:
+2026-11-09: User identified console selection and lighting in their screenshot.
+Extract the existing tools-dock mechanism rather than copying drag logic twice.
+Keep busy/load ownership and existing action IDs unchanged.
+2026-11-09: Touch qualification exposed missed clicks after dragging despite
+stable pickup bounds and unprevented touch events. SVG hit routing alone
+did not solve this. Add touch-action:manipulation to action buttons; keep
+touch-action:none only on drag handles. Both isolated mobile cases and the
+subsequent complete eight-case regression pass without forced clicks,
+off-center taps, sleeps or retries. Browser gesture-disambiguation behavior
+is the supported explanation, not a claim of a measured browser-internal cause.
+Correct lighting action inventory to exclude new handle/collapse buttons.
+Source remains local/uncommitted; no deployment or book production.

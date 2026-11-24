@@ -12,6 +12,7 @@
 | Create a GitHub Release manually | [Release workflow guide](releases/README.md#manual-github-releases) |
 | Current blockers and remaining work | [TODO index, Current pending work](../TODO/00_INDEX.todo) |
 | Playing, controls and local development | [Player/developer guide](GUIDE.md) |
+| Six physical game boxes, local ROM/cover paths and cached selection | [Game shelves and library](GAME-LIBRARY.md) |
 | Nintendo DS console, controls and save limits | [DS instructions](GUIDE.md#nintendo-ds) |
 | Saves, recovery and portable backups | [Saving guide](SAVING.md) |
 | Current implementation and boundaries | [Architecture](ARCHITECTURE.md) |

@@ -10,13 +10,14 @@ const vendor = new Map([
 ]);
 
 export function siteSource(file) {
+  if (file === join('library', 'manifest.json')) return join('web', file);
   if (['index.html', 'player.html', 'styles.css'].includes(file)) return join('web', file);
   if (file === join('assets', 'inspection-logo.png')) return join('docs', 'images', 'bowserboyadvanced-logo-glow.png');
   return vendor.get(file) ?? file;
 }
 
 export async function siteFiles() {
-  const files = ['index.html', 'player.html', 'styles.css', join('assets', 'inspection-logo.png'), ...vendor.keys()];
+  const files = ['index.html', 'player.html', 'styles.css', join('library', 'manifest.json'), join('assets', 'inspection-logo.png'), ...vendor.keys()];
   for (const directory of ['src', 'assets']) {
     for (const file of await readdir(directory, { withFileTypes: true })) {
       if (file.isFile() && /\.(js|svg|png)$/.test(file.name)) files.push(join(directory, file.name));

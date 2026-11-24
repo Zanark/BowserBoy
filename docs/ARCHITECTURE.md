@@ -24,8 +24,11 @@ still reads ADVANCE. That artwork is not the website's chrome logo.
 | DS tools/Inspect, loading LCD and lower-body underside | `assets/ds-logo.png` | Latest supplied transparent DS identity; no lid emblem |
 
 The DS adds a separate model and stylus beside GBA, a console
-selector and independent DeSmuME session. Decorative cartridges are still
-not a downloadable game library.
+selector and independent DeSmuME session. Separate three-box shelves now
+provide an origin-local game library, not a downloadable ROM collection.
+The earlier decorative cartridges are archived in a detached factory.
+See the [library contract](GAME-LIBRARY.md) for state ownership, physical
+animation, precise private paths and the empty public manifest boundary.
 
 The repository is `Zanark/BowserBoy`; historical Pages links and the local
 checkout name remain `BowserBoyAdvance`.

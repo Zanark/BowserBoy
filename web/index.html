@@ -27,10 +27,23 @@
       <div id="scene" data-view="table"></div>
       <header class="desk-heading"><div class="desk-brand"><h1><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/website-logo.png"><img src="./assets/website-logo.png" alt="BowserBOY" width="2148" height="732"></picture></h1><div id="notice-host"><div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" aria-label="Dismiss notification">&times;</button></div></div></div></header>
       <p id="scene-error" role="alert" hidden></p>
-      <nav class="console-picker" aria-label="Choose a console on the table">
+      <div id="console-dock" class="console-dock icon-dock movable-dock">
+        <button id="console-drag" data-dock-handle aria-describedby="console-dock-help"></button>
+        <button id="console-toggle" data-dock-toggle aria-expanded="true" aria-controls="console-actions"></button>
+        <span id="console-dock-help" class="sr-only">Drag to move the console dock, or use arrow keys while focused. Home resets its position. Escape cancels a drag.</span>
+      <nav id="console-actions" class="console-picker dock-actions" data-dock-actions aria-label="Choose a console on the table">
         <button id="select-gba" aria-pressed="true" disabled>GBA</button>
         <button id="select-ds" aria-pressed="false" disabled>DS</button>
       </nav>
+      </div>
+      <button id="game-library-open" class="game-library-open" aria-haspopup="dialog" aria-controls="game-library" disabled>Games</button>
+      <dialog id="game-library" aria-labelledby="game-library-heading">
+        <header><h2 id="game-library-heading">Your game shelves</h2><button id="game-library-close" aria-label="Close game shelves">&times;</button></header>
+        <p>Six physical boxes. Attach your own uncompressed ROM and PNG cover once, then click its box or last-played cartridge to play. Files stay in this browser; no ROM is uploaded.</p>
+        <p id="game-library-status" role="status" aria-live="polite">Empty boxes preview their original dummy artwork. No games are included.</p>
+        <h2>Game Boy Advance</h2><div id="game-library-gba" class="game-library-grid"></div>
+        <h2>Nintendo DS</h2><div id="game-library-ds" class="game-library-grid"></div>
+      </dialog>
       <div id="hardware-targets" aria-label="Physical handheld controls">
         <button data-control="l" aria-label="L shoulder button" disabled hidden></button>
         <button data-control="r" aria-label="R shoulder button" disabled hidden></button>
@@ -54,11 +67,11 @@
         <input id="ds-hinge" type="range" min="30" max="180" step="1" value="180">
         <p id="ds-pose-status" role="status">Unlocked: Back to play resets flat.</p>
       </div>
-      <nav id="action-dock" class="scene-actions icon-dock" aria-label="Handheld and cartridge tools" data-collapsed>
-        <button id="dock-drag" aria-describedby="dock-help"></button>
-        <button id="dock-toggle" aria-expanded="false" aria-controls="dock-actions"></button>
+      <nav id="action-dock" class="scene-actions icon-dock movable-dock" aria-label="Handheld and cartridge tools" data-collapsed>
+        <button id="dock-drag" data-dock-handle aria-describedby="dock-help"></button>
+        <button id="dock-toggle" data-dock-toggle aria-expanded="false" aria-controls="dock-actions"></button>
         <span id="dock-help" class="sr-only">Drag to move the dock, or use arrow keys while focused. Home resets its position. Escape cancels a drag.</span>
-        <div id="dock-actions" class="dock-actions" hidden>
+        <div id="dock-actions" class="dock-actions" data-dock-actions hidden>
         <button id="pickup">Pick up</button>
         <button id="inspect" aria-pressed="false" hidden>Inspect</button>
         <button id="put-down" hidden>Put down</button>
@@ -77,12 +90,17 @@
         <button id="ds-open" aria-label="Open DS cartridges and saves" aria-haspopup="dialog" aria-controls="ds-tools">DS</button>
         </div>
       </nav>
-      <nav id="lighting-dock" class="lighting-actions icon-dock" aria-label="Room and desk lighting">
+      <nav id="lighting-dock" class="lighting-actions icon-dock movable-dock" aria-label="Room and desk lighting">
+        <button id="lighting-drag" data-dock-handle aria-describedby="lighting-dock-help"></button>
+        <button id="lighting-toggle" data-dock-toggle aria-expanded="true" aria-controls="lighting-buttons"></button>
+        <span id="lighting-dock-help" class="sr-only">Drag to move the lighting dock, or use arrow keys while focused. Home resets its position. Escape cancels a drag.</span>
+        <div id="lighting-buttons" class="dock-actions" data-dock-actions>
         <span class="lighting-label" aria-hidden="true">Lighting</span>
         <button id="lamp-toggle" aria-pressed="true" aria-label="Turn desk lamp off"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14c-5-5-2-12 4-12s9 7 4 12l-1 2H9z"/></svg><span id="lamp-label">Lamp on</span></button>
         <button id="room-toggle" aria-pressed="false" aria-label="Turn room lights on"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2v3M6 5h12l3 6H3zM6 16l-2 3m8-3v5m6-5 2 3"/></svg><span id="room-label">Room off</span></button>
         <button id="pear-open" popovertarget="pear-controls" aria-haspopup="dialog" aria-label="pear-boy lighting controls" disabled></button>
         <button id="axolotl-open" popovertarget="axolotl-controls" aria-haspopup="dialog" aria-label="Axolotl lighting controls" disabled></button>
+        </div>
       </nav>
       <div id="console-controls" popover role="dialog" aria-labelledby="console-move-title" class="pear-controls">
         <p class="eyebrow">MAKE THE DESK YOURS</p>

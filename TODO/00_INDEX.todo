@@ -1,6 +1,9 @@
 BowserBOY workstreams
 ====================
 128_SUPPLIED_DEMO_GIFS.todo - DONE: two supplied30second demos below shared-desk caption; old GIFs preserved; owner authorized media-only publication.
+127_MESHBOARD_FEEDBACK_REVIEW.todo - IN_PROGRESS: mandatory peer review; first follow-up November15, recommendations/planned work only, implementation needs owner approval.
+126_MOVABLE_CONTROL_DOCKS.todo - DONE locally: console and lighting panels independently drag/collapse; desktop/mobile and existing dock actions qualified.
+125_GAME_SHELVES.todo - DONE: two wall shelves, six dummy game boxes, ordered unpacking/insertion and locally qualified click-to-play library.
 124_SUPPLIED_BOOK_COVERS.todo - DONE: supplied covers and unchanged interiors published964c67a; corrected collapsed README0f65147 publicly verified; new Pages checks not yet complete.
 123_PROCEDURAL_3D_MODELING_HANDBOOK.todo - DONE: 328-page book/8-message thread and15public files verified; exact material Pages42398430974 attempt3 succeeds, previous hosting timeouts retained.
 122_NDS_DEVELOPMENT_BOOK.todo - DONE: independent85-page NDS journey/engineering book and offline reader; public bytes/navigation verified, Zanark029c129/Pages42392917980 qualified; GBA book preserved.
@@ -396,3 +399,4 @@ No tests, assertions, deadlines or deployment dependencies were removed.
 Independent28-asset match and four actual live Edge cases1.6m pass.
 The current fullscreen guide figure follows that verified public deployment.
 See workstreams24/25; aesthetic approval and chaptered book remain separate.
+126_MOVABLE_CONTROL_DOCKS.todo - IN_PROGRESS: independently movable and collapsible console/lighting panels.

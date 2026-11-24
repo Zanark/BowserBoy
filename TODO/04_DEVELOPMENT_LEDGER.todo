@@ -23,6 +23,71 @@ Completion log:
   No application changes, commit/push/deployment or recommendation implementation.
   Follow-up: owner explicitly requested push; publish only128media/README and
   directly related tracking, retaining earlier local work outside that commit.
+- 2026-11-10 / Mandatory peer consultation (127, planning only):
+  Verify the public homepage and latest successful Pages source; separate
+  deployed5ac69ad from uncommitted shelves125/movable-panels126.
+  Prepare an individual whole-room feedback request with isolated local
+  hosting, source paths, evidence labels and explicit access-blocked reporting.
+  Save first follow-up November15 at21:15IST and session-only scheduling limits.
+  Keep recipient coverage, recommendation coverage and issue/Project mirroring
+  distinct. After actual feedback, create recommendation TODOs and final plan;
+  no implementation until the owner explicitly approves it.
+  Whole-room thread published; owner's follow-up requires distinct feedback
+  rather than repeated/reworded recommendations. Session review registered;
+  workstream127issue126OPEN/Project1In progress verified after initial Project
+  read-back lag, inspected before a0create/0update recovery. No product edits.
+- 2026-11-09 / Independent movable controls (126, locally qualified):
+  Extract bindDock once for bottom tools, console selection and lighting.
+  Separate handle/action selectors and independent position/collapse/capture
+  state; preserve initial expansion, palettes, Escape cancellation, Home reset,
+  keyboard movement and existing action/load ownership. Fit on resize/fullscreen.
+  Correct mobile play CSS so default lighting anchoring cannot override a
+  custom moved position. Resize/collapse tests assert actual ARIA state.
+  New touch qualification missed pickup clicks despite stable geometry and
+  unprevented touch events. SVG pointer-events:none alone did not fix it;
+  mobile emulation alone still left one case failing. Apply ordinary button
+  touch-action:manipulation, retain touch-action:none on drag handles only.
+  Both isolated mobile cases then pass, followed by all eight focused dock
+  cases together in1.1minutes; no forced/off-center click, delay or retry.
+  Gesture disambiguation is a supported explanation, not proven browser internals.
+  Update lighting test to inventory actions, not handle/collapse controls.
+  Syntax/build,64unit cases and whitespace checks pass. Actually inspect
+  both new panels in desktop and390px moved-play screenshots.
+  Preserve uncommitted125game shelves. No physical-device, human approval,
+  full-browser-suite, publication or source-commit claim.
+- 2026-11-09 / Physical game library (125, locally qualified):
+  Preserve the old decorative factory but detach it. Add three original GBA
+  cardboard boxes and three DS clamshell cases, separate spine-out shelves,
+  browser-local slots, exact opt-in loopback folders and last-card clearance.
+  Keep original save/load ownership and the public manifest empty.
+  Browser qualification caught rename losing its value during UI refresh;
+  capture the changed value before refreshing. A subsequent square DS-label
+  helper was accidentally nested inside the cover painter and broke startup;
+  move it to module scope rather than masking the error. Rebuilt startup,
+  physical DS preview, empty-ROM honesty and import/persistence then pass.
+  Actual screenshots expose dark print and unreadable shelf faces despite
+  viewport bounds passing: use unlit, non-tone-mapped print planes, retain
+  shaded bodies, and add first-hit picking checks for all six spines.
+  Gate game input during box motion and refresh retained cartridge labels.
+  The wall bevel made the original print planes sit inside the geometry:
+  move spines to.055 and covers to.055/.065 rather than brightening hidden
+  print. Desktop/mobile/open-case captures were actually reviewed and saved.
+  A discovery fixture declared binary Content-Length but supplied a typed
+  array as comma-separated text; serve Buffer.from(createDemoRom()) instead.
+  Bound manifest discovery at10seconds and qualify stalled-request recovery.
+  All five browser cases initially passed with concurrent loading, but that
+  did not fulfill cover -> open -> extract -> insert -> native load ordering.
+  Await a Promise resolved only after a submitted insertion frame at4250ms.
+  Correct test observation to discard preview's Promise when sampling an
+  intermediate pose; record the real loader hook instead of a narrow phase
+  that browser-click timing can miss. Motion then passed, but native switch
+  genuinely timed out: busy native ownership blocked the room frames that
+  insertion awaited. Keep rendering during box motion while busy controls
+  remain gated. Final rebuilt source:5/5shelf browser cases PASS in2.0minutes,
+  including actual original GBA/DS A-B-A/current/card/reload/cancel and
+  ordered loader invocation;64/64unit tests, syntax and build PASS.
+  No full-browser-suite or commercial-game compatibility claim; older parked
+  coverage stays parked. No commercial ROMs, book rebuild, commit or deployment.
 - 2026-11-08 / Supplied book covers delivered (124):
   Use the owner's two exact PNGs in NDS/modeling PDF and scriptless readers.
   85/328pages retain all84/327interior pages pixel-identically at1.3x, with

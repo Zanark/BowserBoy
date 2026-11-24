@@ -2,6 +2,10 @@
 
 [Visual showcase](../README.md) | [Play online](https://zanark.github.io/BowserBoy/) | [Engineering book](book/README.md)
 
+**Game shelves:** [attach ROMs/covers, use the six physical boxes, and find
+the exact private upload folders](GAME-LIBRARY.md). Disk uploads are local
+development only; Pages imports remain browser-local.
+
 **First public release: [v1.0.0](releases/v1.0.0/README.md), 2026-11-06.**
 The owner designated the independently qualified `c3d9dbd` application as this
 milestone. Full-resolution rendering, all53 hosted browser cases and five
@@ -10,6 +14,14 @@ See the [documentation/repository map](README.md) and
 [current verification](VERIFICATION.md#full-resolution-handheld-rendering-2026-11-06).
 
 ## Website and console names
+
+The console selector and lighting panel have independent **Move** handles and
+**Collapse/Expand** buttons, like the bottom tools dock. Drag with mouse or
+touch, or focus a handle and use arrow keys; Shift moves faster, Home resets
+that panel, and Escape cancels an active drag. Collapsing does not change the
+selected console or light settings. Both top panels start expanded; the bottom
+tools dock retains its collapsed start. Moved panels are kept within the player
+when resized or expanded, and positions reset on reload.
 
 **BowserBOY** is the website/table, using the supplied chrome sparkle logo
 on the table. GBA tools/settings use the static Advance logo instead.

@@ -1,0 +1,63 @@
+Status: DONE
+GitHub issue: https://github.com/Zanark/BowserBoy/issues/124
+Milestone: Two wall shelves, six game boxes and local click-to-play library.
+Dependencies: 14, 80, 111.
+Purpose: Replace the decorative loose cartridges with three GBA and three DS
+dummy boxes on separate shelves. Keep the archived layout recoverable and
+make the physical library usable without repeatedly locating a ROM.
+
+Tasks:
+- [x] Build original cardboard GBA boxes and hinged plastic DS cases.
+- [x] Stack three of each spine-out on separate labelled wall shelves.
+- [x] Archive the old loose-cartridge arrangement without deleting its factory.
+- [x] Animate cover presentation, opening, extraction and console insertion.
+- [x] Connect validated local ROMs to the existing console/save lifecycle.
+- [x] Keep each console's last cartridge on the desk; replay A -> B -> A,
+      not same-current selection; restore cached cartridges without unpacking.
+- [x] Define precise local ROM/cover folders and browser import alternatives.
+- [x] Qualify rebuilt desktop/mobile models, animation and selection behavior.
+- [x] Update focused documentation, development ledger and owned continuity.
+
+Acceptance criteria:
+Exactly three distinguishable GBA boxes and three DS cases with original dummy
+art and readable title spines are stacked horizontally on two wall shelves.
+First/different selection shows the complete appropriate opening sequence.
+Already-current selection retains the existing session without unpacking.
+Returning A -> B -> A replays it. Each console's successfully selected library
+cartridge has one stable casually placed desk prop participating in clearance.
+Browser imports stay origin-local and use existing ROM validation/save paths.
+Optional folder serving stays loopback-only; the normal static build excludes
+all private ROMs and covers. Dummy previews explicitly have no ROM.
+The old decorative layout remains recoverable. No commercial example art is
+copied. User titles/ROMs are not invented. No book rebuild/commit/push required.
+
+Completion evidence:
+- Final npm run check and npm run build PASS.
+- Final npm test:64PASS, zero failures/skips.
+- Final npx playwright test game-library.spec.mjs:5PASS in2.0minutes.
+  Six first-hit spine selections, visible case opening, empty-ROM honesty,
+  responsive models, submitted-frame/reduced-motion/input ownership, local
+  imports/title/cover persistence and invalid-input retention all qualified.
+  Actual original GBA/DS native runtimes qualify A -> B -> A, same-current
+  reuse, desk-card resume, cancellation and reload preloading. The real loader
+  hook records invocation at or after4250ms, following visible insertion.
+  Discovery, invalid manifests and10-second stalled-manifest recovery pass.
+- Desktop/mobile/open-case screenshots reviewed and retained in docs/images;
+  docs/GAME-LIBRARY.md embeds them with individual Figure captions.
+- This is local technical acceptance, not user approval or public deployment.
+  No commercial games/covers bundled and no book rebuild, commit or push.
+
+Completion log:
+2026-11-09: Resumed clean at5ac69ad; examined existing scene props, picking,
+presented-frame animations, clearance and GBA/DS load/save ownership. Chose
+browser-local cached slots plus opt-in loopback folder serving, not public
+distribution of unspecified commercial games. Artwork is original dummy art.
+2026-11-09: Final sequential loading exposed a genuine deadlock on switching
+an already-running GBA: the busy control owner prevented submitted room
+frames while the library awaited insertion. Keep nativeBusy false during
+box motion without releasing the busy controls; the real native A-B-A case
+then passes alongside all four other shelf cases on rebuilt final source.
+Do not erase earlier failed attempts or substitute concurrent loading.
+2026-11-09: Bounded125tracking sync verified the managed issue body, CLOSED
+state, Project1membership/Done status and local backlink for
+https://github.com/Zanark/BowserBoy/issues/124. No source commit or push.
