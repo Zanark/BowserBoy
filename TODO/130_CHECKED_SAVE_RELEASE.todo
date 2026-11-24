@@ -61,8 +61,18 @@ Completion evidence:
   The shared actual-load helper retains phase/selection/iframe waits.
   DS checkpoint persistence selects reduced motion. All four focused cases
   pass locally in2.4m; nineteen-shard workflow and21parked cases unchanged.
+- c3d39a8/Pages45385885549passes eighteen shards; shard11passes six cases but
+  still exceeds600s. Actual --list output shows adjacent replay cases stayed
+  together. Move GBA/DS replay into their existing native suites and share the
+  library fixtures; shard11now excludes both replays. All seven consumers
+  pass locally2.9m after waiting for final animation/operation completion
+  before shortcut/card gestures. Original assertions and limits remain.
 
 Completion log:
+- 2026-11-24: Verify actual shard placement, not merely independent test names.
+  Preserve c3d39a8failed release. First relocated-fixture run6PASS/1FAIL:
+  physical DS card click reached a busy guard. Await real final motion and
+  operation idle after selection and before gestures; seven consumers pass.
 - 2026-11-24: Native failed-job rerun on identical267d6bfretained, not hidden.
   Its18green shards do not establish deployment. Slice the8.3m dual-console
   case by replay and shared reload concerns rather than raising the600s

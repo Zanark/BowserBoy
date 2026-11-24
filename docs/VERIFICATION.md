@@ -84,6 +84,18 @@ DS checkpoint persistence selects reduced motion. All four affected cases
 pass locally in2.4m. The nineteen-shard matrix,600s suite limit, original
 assertions and21pre-existing parked cases are unchanged; publication pending.
 
+`c3d39a8`/
+[Pages45385885549](https://github.com/Zanark/BowserBoy/actions/runs/45385885549)
+passes eighteen shards, but the remaining shard passes six cases and exceeds
+600s: actual Playwright listing keeps adjacent replay cases together.
+Per-console replays now live in their existing GBA/DS native suites, sharing
+the original library fixture; actual shard11listing excludes both replays.
+An initial local6PASS/1FAIL exposed a physical-card gesture reaching a busy
+guard. The helper now awaits final animation and operation completion after
+selection and before shortcut/card gestures. All seven consumers pass locally
+in2.9m. No assertion, deadline, pixel resolution, skip or workflow change;
+checked deployment remains pending.
+
 ## Native GBA cartridge-save import, 2026-11-24 (local only)
 
 The ordinary save picker now accepts raw GBA `.sav` data separately from

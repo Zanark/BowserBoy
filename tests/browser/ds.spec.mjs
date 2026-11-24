@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { demoReady, powerOn, denyScreenWakeLock, runtimeFrame, waitForDesk } from './pixel-lab.mjs';
+import { replayLibrary } from './game-library-fixtures.mjs';
 
 const dsFrame = page => runtimeFrame(page, '#ds-runtime-mount');
 const stylusFits = (page, limitY = .98) => page.evaluate(async limit => {
@@ -1763,4 +1764,9 @@ test('DS reload resumes the latest manual checkpoint rather than a cold game', a
     .toContain('Latest DS checkpoint resumed. GBA saves are separate.');
   await expect.poll(async () => (await framePixels(page)).marker.left).toBe(savedLeft);
   expect(errors).toEqual([]);
+});
+
+test('actual original DS runtime replays A-B-A and shortcuts the current game', async ({ page }) => {
+  test.setTimeout(600000);
+  await replayLibrary(page, 'ds');
 });

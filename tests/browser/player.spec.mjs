@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFile, mkdir } from 'node:fs/promises';
 import { createDemoRom } from '../../scripts/demo-rom.mjs';
 import { nativeFrame, demoReady, powerOn, denyScreenWakeLock, waitForDesk } from './pixel-lab.mjs';
+import { replayLibrary } from './game-library-fixtures.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const demoBytes = () => Buffer.from(createDemoRom());
@@ -1158,6 +1159,11 @@ test('power switch destroys the runtime and cold boots only the in-game save, in
   await upload(page, 'Renamed cartridge.gba');
   await expect.poll(() => image(page)).toBe(batteryImage);
   expect((await readStored(page))[0].manual).toEqual(before.manual);
+});
+
+test('actual original GBA runtime replays A-B-A and shortcuts the current game', async ({ page }) => {
+  test.setTimeout(600000);
+  await replayLibrary(page, 'gba');
 });
 
 test('power-off storage failure leaves the live game recoverable instead of discarding its save', async ({ page }) => {

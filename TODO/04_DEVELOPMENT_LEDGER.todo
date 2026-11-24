@@ -14,6 +14,13 @@ Completion evidence:
 - Verified upstream v4.2.3 source maps gba to mgba.
 
 Completion log:
+- 2026-11-24 / Actual workload placement and completion (130):
+  c3d39a8/Pages45385885549passes eighteen shards, but contiguous assignment
+  keeps replay/preload together and shard11exceeds600s. Move replay cases
+  into existing GBA/DS native suites with shared fixture; actual --list now
+  excludes both replays from11. A local busy-guard failure requires final
+  motion/operation idle before card gestures. Seven consumers pass2.9m;
+  no assertion, timeout, pixel-resolution, skip or workflow change.
 - 2026-11-24 / Bounded native-library workloads (130):
   267d6bf/Pages45381245377attempt1passes A-B-A in8.3m but exceeds shard600s;
   other native/inspect deadline failures remain. Identical-source native
